@@ -1,14 +1,17 @@
 # Inspections
-Inspection API & Web App
+Inspection Reports API & Web App
 
-## Backend
-* .NET Core 3.1
-* Visual Studio Code or any other code editor
+BACKEND
+----------
+- .NET Core 3.1
+- Visual Studio Code or any other code editor
 
-## FrontEnd
+FRONTEND
+----------
 - NuxtJS
 - Yarn
 
-## Steps to build
+Steps to build
+---
 - TODO:
 
