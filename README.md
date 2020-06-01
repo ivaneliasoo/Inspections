@@ -1,5 +1,5 @@
 # Inspections
-Inspection Web App for SmartCodeBuilders
+Inspection API & Web App
 
 # Requirements
 ## Backend
