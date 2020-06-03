@@ -1,20 +1,8 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
+    <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app>
       <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
+        <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -33,7 +21,7 @@
         <v-icon>mdi-application</v-icon>
       </v-btn>
       <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
+        <v-icon>mdi-attach</v-icon>
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
@@ -50,9 +38,7 @@
       <v-list>
         <v-list-item @click.native="right = !right">
           <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
+            <v-icon light>mdi-repeat</v-icon>
           </v-list-item-action>
           <v-list-item-title>Switch drawer (click me)</v-list-item-title>
         </v-list-item>
@@ -73,20 +59,15 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          icon: 'mdi-copy',
+          title: 'Reports',
           to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
         }
       ],
       miniVariant: false,
-      right: true,
+      right: false,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'Inspections'
     }
   }
 }

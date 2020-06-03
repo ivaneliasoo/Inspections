@@ -30,7 +30,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['@/plugins/composition-api'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -38,7 +38,8 @@ export default {
     '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    'nuxt-typed-vuex'
   ],
   /*
    ** Nuxt.js modules
@@ -47,14 +48,48 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/auth',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '~/modules/i18n-json'
   ],
+  router: {
+    middleware: ['auth']
+  },
+  auth: {
+    redirect: {
+      login: '/Login',
+      home: true
+    },
+    localStorage: false,
+    cookie: {
+      prefix: 'inspections'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/token',
+            method: 'post',
+            propertyName: 'token'
+          },
+          user: {
+            url: '/user',
+            method: 'get',
+            propertyName: false
+          }
+        },
+        tokenRequired: false
+      }
+    }
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: `${process.env.BASE_URL}api/`
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -62,7 +97,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -80,6 +115,7 @@ export default {
    ** Build configuration
    */
   build: {
+    transpile: [/typed-vuex/],
     /*
      ** You can extend webpack config here
      */
