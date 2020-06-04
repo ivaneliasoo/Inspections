@@ -1,6 +1,6 @@
 ﻿using Inspections.Shared;
 
-namespace Inspections.Core
+namespace Inspections.Core.Domain.InspectionReportAggregate
 {
     public class EMALIcenseType : Enumeration
     {
