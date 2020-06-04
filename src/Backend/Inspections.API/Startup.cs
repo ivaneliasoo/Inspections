@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
@@ -45,7 +46,7 @@ namespace Inspections.API
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.Configure<ConnectionSettings>(Configuration.GetSection("ConnectionStrings"));
+            services.Configure<ClientSettings>(Configuration.GetSection("ConnectionStrings"));
             
             ConfigurarDbContextInMemoryDb(services);
         }
@@ -70,6 +71,7 @@ namespace Inspections.API
                 c.RoutePrefix = string.Empty;
             });
 
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -85,6 +87,7 @@ namespace Inspections.API
             services.AddDbContext<InspectionsContext>(c =>
            c.UseInMemoryDatabase("InspectionDb"));
         }
+
         private void ConfigurarDbContextInSqlDb(IServiceCollection services)
         {
             ILoggerFactory logger = LoggerFactory.Create((c) => { c.AddConsole(); });

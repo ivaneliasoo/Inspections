@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Inspections.API.Models.Configuration
 {
-    public class ConnectionSettings
+    public class ClientSettings
     {
         public string Inspections { get; set; }
     }

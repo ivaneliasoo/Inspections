@@ -20,6 +20,10 @@
     <ProjectReference Include="..\Inspections.Infrastructure\Inspections.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MediaUpload\img\Reports\" />
+  </ItemGroup>
+
 	<PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>
