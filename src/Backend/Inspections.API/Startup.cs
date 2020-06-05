@@ -47,9 +47,8 @@ namespace Inspections.API
             });
 
             services.Configure<ClientSettings>(Configuration.GetSection("ConnectionStrings"));
-
-            //ConfigurarDbContextInMemoryDb(services);
-            ConfigurarDbContextInSqlDb(services);
+            
+            ConfigurarDbContextInMemoryDb(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

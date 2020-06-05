@@ -1,12 +1,9 @@
-using Inspections.Shared;
-
-namespace Inspections.Core.Domain.CheckListAggregate
+﻿namespace Inspections.Core.Domain.CheckListAggregate
 {
-    public class CheckListParam:Entity<int>
+    public class CheckListParam
     {
-        public int CheckListItemId { get; set; }
         public string Key { get; set; }
-        public string Value { get; set; }
+        public object Value { get; set; }
         public CheckListParamType Type { get; set; }
     }
 }
