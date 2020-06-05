@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Inspections.Shared;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

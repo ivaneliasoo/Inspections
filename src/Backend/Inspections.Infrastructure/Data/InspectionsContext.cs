@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace Inspections.Infrastructure.Data
 {
     public class InspectionsContext : DbContext
