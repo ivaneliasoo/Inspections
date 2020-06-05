@@ -3,7 +3,7 @@
   <Class Name="Inspections.Core.Domain.CheckListAggregate.CheckList">
     <Position X="3.25" Y="3.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAAAIAAAAAgAAAAAAgAAAAgAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAAAAIAAAAAhAAAAAAgAAAAgAgADAAAAAA=</HashCode>
       <FileName>Domain\CheckListAggregate\CheckList.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -65,7 +65,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Inspections.Core.Domain.SignaturesAggregate.Signature" BaseTypeListCollapsed="true">
-    <Position X="8.5" Y="4.5" Width="1.25" />
+    <Position X="8.5" Y="5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAQAACAAIAAAEAAAAAAgAAAAAAAAgABAAAAAAAAAAA=</HashCode>
       <FileName>Domain\SignaturesAggregate\Signature.cs</FileName>

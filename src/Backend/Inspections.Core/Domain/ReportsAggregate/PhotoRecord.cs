@@ -5,17 +5,17 @@ using System.IO;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Inspections.Core.Domain.InspectionReportAggregate
+namespace Inspections.Core.Domain.ReportsAggregate
 {
     public class PhotoRecord : Entity<int>
     {
         private const string BasePath = "img/Reports";
-        
-        public Guid ReportId { get; private set; }
+
+        public int ReportId { get; private set; }
         public string FilePath { get; private set; }
         public string Label { get; private set; }
-
-        internal PhotoRecord(Guid reportId, string path, string label)
+        private PhotoRecord() { }
+        internal PhotoRecord(int reportId, string path, string label)
         {
             ReportId = reportId;
             Label = label;
