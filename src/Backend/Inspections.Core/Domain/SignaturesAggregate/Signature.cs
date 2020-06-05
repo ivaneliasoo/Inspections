@@ -14,6 +14,5 @@ namespace Inspections.Core.Domain.SignaturesAggregate
         public string Remarks { get; set; }
         public DateTimeOffset Date { get; set; }
         public bool Principal { get; set; }
-        public bool IsConfiguration { get; set; }
     }
 }

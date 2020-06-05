@@ -7,6 +7,7 @@
   <ItemGroup>
     <Folder Include="ApplicationServices\" />
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Data\InspectionsAggregateConfiguration\" />
     <Folder Include="Helpers\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
