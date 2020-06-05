@@ -1,4 +1,4 @@
-﻿using Inspections.Shared;
+using Inspections.Shared;
 
 namespace Inspections.Core.Domain.CheckListAggregate
 {
