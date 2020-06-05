@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Inspections.Shared
 {
-    public abstract class Entity<T>
+    public abstract class Entity<T> 
     {
 
         int? _requestedHashCode;
