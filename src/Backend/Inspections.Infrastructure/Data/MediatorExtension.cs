@@ -1,18 +1,17 @@
-﻿using Inspections.Infrastructure.Data;
 using Inspections.Shared;
 using MediatR;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IOSoft.HelpDesk.Infrastructure.Data
+namespace Inspections.Infrastructure.Data
 {
-    internal static class MediatorExtension 
+    internal static class MediatorExtension
     {
         internal static async Task DispatchDomainEventsAsync(this IMediator mediator, InspectionsContext ctx)
         {
             var domainEntities = ctx.ChangeTracker
-                .Entries<Entity<Guid>>()
+                .Entries<Entity<int>>()
                 .Where(o => o.Entity.DomainEvents != null && o.Entity.DomainEvents.Any());
 
             var domainEvents = domainEntities
