@@ -1,4 +1,5 @@
 ﻿using Inspections.Core.Domain.CheckListAggregate;
+
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
@@ -19,6 +20,7 @@ namespace Inspections.Infrastructure.Data
     {
         internal const string DEFAULT_SCHEMA = "Inspections";
         private readonly IMediator _mediator;
+
 
         public InspectionsContext(DbContextOptions options)
             :base(options)
