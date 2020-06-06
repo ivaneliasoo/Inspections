@@ -92,7 +92,7 @@ namespace Inspections.Infrastructure.Data
             {
                 entidad.Property("LastEdit").CurrentValue = DateTimeOffset.UtcNow;
                 // TODO: add JWT secutiry in API
-                entidad.Property("LastEditUser").CurrentValue = _userNameResolver.UserName;
+                entidad.Property("LastEditUser").CurrentValue = _userNameResolver.UserName ?? "Seed";
             }
             return base.SaveChangesAsync(cancellationToken);
         }
