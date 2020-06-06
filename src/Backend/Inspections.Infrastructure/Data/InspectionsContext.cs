@@ -23,6 +23,7 @@ namespace Inspections.Infrastructure.Data
         private readonly IMediator _mediator;
         private readonly IUserNameResolver _userNameResolver;
 
+
         public InspectionsContext(DbContextOptions options)
             : base(options)
         {

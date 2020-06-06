@@ -1,4 +1,5 @@
-using Inspections.Shared;
+﻿using Inspections.Shared;
+
 using MediatR;
 using System;
 using System.Linq;
