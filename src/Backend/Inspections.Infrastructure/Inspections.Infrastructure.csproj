@@ -5,13 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationServices\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Helpers\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
   </ItemGroup>

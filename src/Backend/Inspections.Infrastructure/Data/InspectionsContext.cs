@@ -1,3 +1,5 @@
+using Inspections.Core;
+using Inspections.Core.Domain;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
@@ -19,22 +21,24 @@ namespace Inspections.Infrastructure.Data
     {
         internal const string DEFAULT_SCHEMA = "Inspections";
         private readonly IMediator _mediator;
+        private readonly IUserNameResolver _userNameResolver;
+
         public InspectionsContext(DbContextOptions options)
-            :base(options)
+            : base(options)
         {
 
         }
-
-        public InspectionsContext(DbContextOptions options, IMediator mediator) : base(options)
+        public InspectionsContext(DbContextOptions options, IMediator mediator, IUserNameResolver userNameResolver) : base(options)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
-               .EnableSensitiveDataLogging()
-               .UseSqlServer("Data Source = .; User=sa; Password=15560367o%; Initial Catalog = InspectionsDb");
+            //optionsBuilder
+            //   .EnableSensitiveDataLogging()
+            //   .UseSqlServer("Data Source = .; User=sa; Password=15560367o%; Initial Catalog = InspectionsDb");
         }
 
         public DbSet<Report> Inspections { get; set; }
@@ -45,6 +49,9 @@ namespace Inspections.Infrastructure.Data
         public DbSet<PhotoRecord> Photos { get; set; }
         public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
         public DbSet<Signature> Signatures { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,7 +67,20 @@ namespace Inspections.Infrastructure.Data
             foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(e => !e.IsOwned()))
             {
                 modelBuilder.Entity(entityType.Name).Property<DateTimeOffset>("LastEdit").IsRequired();
+                modelBuilder.Entity(entityType.Name).Property<string>("LastEditUser").IsRequired().HasMaxLength(20);
             }
+
+
+            modelBuilder.Entity<User>()
+                .HasKey(p => p.UserName);
+
+            modelBuilder.Entity<User>()
+            .Property(p => p.UserName)
+                .HasMaxLength(20);
+            modelBuilder.Entity<User>()
+            .Property(p => p.Name).IsRequired().HasMaxLength(50);
+            modelBuilder.Entity<User>()
+            .Property(p => p.LastName).IsRequired().HasMaxLength(50);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -71,6 +91,8 @@ namespace Inspections.Infrastructure.Data
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
                 entidad.Property("LastEdit").CurrentValue = DateTimeOffset.UtcNow;
+                // TODO: add JWT secutiry in API
+                entidad.Property("LastEditUser").CurrentValue = _userNameResolver.UserName;
             }
             return base.SaveChangesAsync(cancellationToken);
         }
@@ -78,7 +100,7 @@ namespace Inspections.Infrastructure.Data
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
             await _mediator.DispatchDomainEventsAsync(this);
-            await this.SaveChangesAsync();
+            await SaveChangesAsync(cancellationToken);
             return true;
         }
     }

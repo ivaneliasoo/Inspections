@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Inspections.Core.Domain.CheckListAggregate
 {
-    public class CheckList : Entity<int>
+    public class CheckList : Entity<int>, IAggregateRoot
     {
         public string Text { get; private set; }
         public List<CheckListParam> TextParams { get; private set; }

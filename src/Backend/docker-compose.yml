@@ -1,22 +1,22 @@
 version: '3.4'
 
 services:
-  data:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    ports:
-      - 1435:1435
-    environment:
-      ACCEPT_EULA: Y
-      SA_PASSWORD: 15560367o%
-      MSSQL_PID: express
-      MSSQL_TCP_PORT: 1435
-    
   inspections.api:
-    depends_on: 
-        - data
+#    depends_on: 
+#        - sql.data
     ports:
         - "8088:80"
     image: ${DOCKER_REGISTRY-}inspectionsapi
     build:
       context: .
       dockerfile: Inspections.API/Dockerfile
+
+#  sql.data:
+#    image: mcr.microsoft.com/mssql/server:2019-latest
+#    ports:
+#      - 1435:1435
+#    environment:
+#      ACCEPT_EULA: Y
+#      SA_PASSWORD: 15560367o%
+#      MSSQL_PID: express
+#      MSSQL_TCP_PORT: 1435
