@@ -9,6 +9,7 @@ using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data;
 using Inspections.API.Features.Users.Models;
 using Microsoft.AspNetCore.Authorization;
+using Ardalis.GuardClauses;
 
 namespace Inspections.API.Features.Users
 {
@@ -26,14 +27,14 @@ namespace Inspections.API.Features.Users
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Select(x=> new UserDTO(x)).ToListAsync();
         }
 
         // GET: api/Users/username
         [HttpGet("{userName}")]
-        public ActionResult<User> GetUser(string userName)
+        public ActionResult<UserDTO> GetUser(string userName)
         {
             var user = _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
 
@@ -42,7 +43,7 @@ namespace Inspections.API.Features.Users
                 return NotFound();
             }
 
-            return user;
+            return new UserDTO(user);
         }
 
         // PUT: api/Users/5
@@ -88,9 +89,9 @@ namespace Inspections.API.Features.Users
         {
             var newUser = new User()
             {
-                UserName= user.UserName,
-                Name= user.Name,
-                LastName= user.LastName
+                UserName = user.UserName,
+                Name = user.Name,
+                LastName = user.LastName
             };
             _context.Users.Add(newUser);
             try
@@ -116,7 +117,7 @@ namespace Inspections.API.Features.Users
         [HttpDelete("{userName}")]
         public async Task<ActionResult<User>> DeleteUser(string userName)
         {
-            var user = _context.Users.Where(u=>u.UserName == userName).FirstOrDefault();
+            var user = _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
             if (user == null)
             {
                 return NotFound();
@@ -126,6 +127,35 @@ namespace Inspections.API.Features.Users
             await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        /// <summary>
+        /// Change User Password afeter validated
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        [HttpPatch("{userName}")]
+        public async Task<IActionResult> ChangePassword(string userName, ChangePasswordDTO passwordDTO)
+        {
+            Guard.Against.Null(passwordDTO, nameof(passwordDTO));
+
+            if (userName != passwordDTO.UserName)
+            {
+                return BadRequest();
+            }
+
+            var user = _context.Users.Where(u => u.UserName == userName && u.Password == passwordDTO.CurrentPassword).FirstOrDefault();
+
+            if (user == null || passwordDTO.NewPassword != passwordDTO.NewPasswordConfirmation)
+            {
+                return BadRequest();
+            }
+            user.Password = passwordDTO.NewPasswordConfirmation;
+            _context.Entry(user).State = EntityState.Modified;
+
+            var result = await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         private bool UserExists(string userName)

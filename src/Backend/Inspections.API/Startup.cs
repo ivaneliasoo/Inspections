@@ -62,14 +62,6 @@ namespace Inspections.API
                 options.SaveToken = true;
                 options.Events = new JwtBearerEvents()
                 {
-                    OnAuthenticationFailed = context =>
-                    {
-                        if (context.Exception != null)
-                        {
-                        }
-                        return Task.CompletedTask;
-                    },
-
                     OnTokenValidated = context =>
                     {
                         // Add the access_token as a claim, as we may actually need it
@@ -199,7 +191,7 @@ namespace Inspections.API
             if (!string.IsNullOrWhiteSpace(_userName))
             {
                 InspectionsContext usersRepo = services.BuildServiceProvider().GetRequiredService<InspectionsContext>();
-                var savedUser = usersRepo.Users.Where(u => u.UserName == _userName);
+                var savedUser = usersRepo.Users.Where(u => u.UserName == _userName).FirstOrDefault();
                 if (savedUser != null)
                 {
                     result = true;

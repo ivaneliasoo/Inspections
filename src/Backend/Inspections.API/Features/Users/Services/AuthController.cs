@@ -11,12 +11,12 @@ namespace Inspections.API.Features
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TokenController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly InspectionsContext _context;
         private readonly ITokenService _tokenService;
 
-        public TokenController(InspectionsContext context, ITokenService tokenService)
+        public AuthController(InspectionsContext context, ITokenService tokenService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
@@ -28,7 +28,7 @@ namespace Inspections.API.Features
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("token")]
         public IActionResult CreateToken(string username, string password)
         {
             var user = _context.Users.Where(u => u.UserName == username && u.Password == password).FirstOrDefault();
