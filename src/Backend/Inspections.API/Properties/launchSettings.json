@@ -20,7 +20,7 @@
     "Inspections.API": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/inspections",
+      "launchUrl": "index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

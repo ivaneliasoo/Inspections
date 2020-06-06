@@ -1,4 +1,5 @@
-﻿using Inspections.Infrastructure.Data;
+﻿using Inspections.Core.Domain;
+using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,6 +24,11 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
             {
                 log.LogInformation($"Initializing data {nameof(InspectionsContext)}");
                 //TODO: Load Default Data
+
+                if (!context.Users.Any())
+                {
+                    context.Users.Add(new User() { UserName = "demo", Password = "demo", Name = "demo", LastName = "user" });
+                }
             }
             catch (Exception ex)
             {
