@@ -4,6 +4,7 @@ using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
+using Inspections.Core.QueryModels;
 using Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguration;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -23,23 +24,16 @@ namespace Inspections.Infrastructure.Data
         private readonly IMediator _mediator;
         private readonly IUserNameResolver _userNameResolver;
 
-
         public InspectionsContext(DbContextOptions options)
             : base(options)
         {
 
         }
+
         public InspectionsContext(DbContextOptions options, IMediator mediator, IUserNameResolver userNameResolver) : base(options)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //optionsBuilder
-            //   .EnableSensitiveDataLogging()
-            //   .UseSqlServer("Data Source = .; User=sa; Password=15560367o%; Initial Catalog = InspectionsDb");
         }
 
         public DbSet<Report> Inspections { get; set; }
@@ -52,6 +46,11 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Signature> Signatures { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+
+        //Queries
+
+        public DbSet<ResumenCheckList> ResumenCheckLists { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,6 +81,9 @@ namespace Inspections.Infrastructure.Data
             .Property(p => p.Name).IsRequired().HasMaxLength(50);
             modelBuilder.Entity<User>()
             .Property(p => p.LastName).IsRequired().HasMaxLength(50);
+
+
+            modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToView(null);
 
             base.OnModelCreating(modelBuilder);
         }
