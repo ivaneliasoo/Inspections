@@ -35,7 +35,7 @@ jobs:
     - name: Test
       run: dotnet test src/Backend/Inspections.sln --no-restore --verbosity normal
     - name: Publish
-      run: dotnet publish src/Backend/Inspections.API/Inspections.API.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
+      run: dotnet publish src/Backend/Inspections.API/Inspections.API.csproj -c Release -o myapp
         # Deploy to Azure Web apps
     - name: 'Run Azure webapp deploy action using publish profile credentials'
       uses: azure/webapps-deploy@v2
