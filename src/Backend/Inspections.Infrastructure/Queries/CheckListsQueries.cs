@@ -37,7 +37,7 @@ namespace Inspections.Infrastructure.Queries
                         GROUP BY CheckListId
                     ) Params
                         ON cl.Id = Params.CheckListId
-                        INNER JOIN (
+                        LEFT JOIN (
                         SELECT CheckListId, COUNT(Id) AS TotalItems
                         FROM Inspections.CheckListItems
                         GROUP BY CheckListId
