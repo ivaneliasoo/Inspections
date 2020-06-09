@@ -29,6 +29,8 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                 {
                     context.Users.Add(new User() { UserName = "demo", Password = "demo", Name = "demo", LastName = "user" });
                 }
+
+                await context.SaveChangesAsync();
             }
             catch (Exception ex)
             {

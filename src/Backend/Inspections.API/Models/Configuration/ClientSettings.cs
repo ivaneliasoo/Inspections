@@ -7,6 +7,6 @@ namespace Inspections.API.Models.Configuration
 {
     public class ClientSettings
     {
-        public string Inspections { get; set; }
+        public string ReportsImagesFolder { get; set; }
     }
 }

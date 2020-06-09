@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\INspections.Shared\Inspections.Shared.csproj" />
+    <ProjectReference Include="..\Inspections.Shared\Inspections.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

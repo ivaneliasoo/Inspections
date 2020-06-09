@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Inspections.Core.Domain.ReportConfigurationAggregate
 {
-    public class ReportConfiguration : Entity<int>
+    public class ReportConfiguration : Entity<int>, IAggregateRoot
     {
         public ReportType Type { get; set; }
         public string Title { get; set; }

@@ -9,7 +9,12 @@ using System.Threading.Tasks;
 using Inspections.API.Features.Users.Services;
 using Inspections.API.Models.Configuration;
 using Inspections.Core;
+using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Queries;
 using Inspections.Infrastructure.Data;
+using Inspections.Infrastructure.Helpers;
+using Inspections.Infrastructure.Queries;
+using Inspections.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +30,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ZadERP.Api.Middleware;
 
 namespace Inspections.API
 {
@@ -131,6 +137,16 @@ namespace Inspections.API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserNameResolver, UserNameResolver>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddSingleton<IStorageHelper>(sh => new StorageHelper(Configuration.GetSection("ClientSettings:TempFolder").Value));
+
+            services.AddScoped<ICheckListsRepository, CheckListsRepository>();
+            services.AddScoped<IReportConfigurationsRepository, ReportsConfigurationsRepository>();
+            services.AddScoped<IReportsRepository, ReportsRepository>();
+            services.AddScoped<ISignaturesRepository, SignaturesRepository>();
+
+            services.AddScoped<ICheckListsQueries, CheckListsQueries>();
+
+
 
             //ConfigurarDbContextInMemoryDb(services);
             ConfigurarDbContextInSqlDb(services);
@@ -159,6 +175,9 @@ namespace Inspections.API
 
             app.UseRouting();
 
+
+            app.UseExceptionsMiddleware();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -168,7 +187,7 @@ namespace Inspections.API
             });
         }
 
-        private void ConfigurarDbContextInMemoryDb(IServiceCollection services)
+        private static void ConfigurarDbContextInMemoryDb(IServiceCollection services)
         {
             services.AddDbContext<InspectionsContext>(c =>
            c.UseInMemoryDatabase("InspectionDb"));
@@ -182,7 +201,8 @@ namespace Inspections.API
             c.UseLoggerFactory(logger).UseSqlServer(cn).EnableSensitiveDataLogging());
         }
 
-        private bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)
+        private static bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)
+
         {
             bool result = false;
 
