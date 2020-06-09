@@ -31,7 +31,7 @@ namespace Inspections.Infrastructure.Queries
                         LastEdit,
                         LastEditUser
                     FROM Inspections.CheckLists cl
-                        INNER JOIN (
+                        LEFT JOIN (
                         SELECT CheckListId, COUNT([Key]) AS TotalParams
                         FROM Inspections.CheckListParams
                         GROUP BY CheckListId
