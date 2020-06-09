@@ -10,6 +10,10 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.6.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4">
@@ -28,11 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Checklists\" />
-    <Folder Include="Features\Signatures\" />
-    <Folder Include="Features\ReportsConfiguration\Comands\" />
+    <Folder Include="Features\ReportsConfiguration\Commands\" />
     <Folder Include="Features\ReportsConfiguration\Handlers\" />
     <Folder Include="MediaUpload\img\Reports\" />
+    <Folder Include="TempFolder\" />
   </ItemGroup>
 
 	<PropertyGroup>
