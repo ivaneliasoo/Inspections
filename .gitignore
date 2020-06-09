@@ -348,3 +348,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/src/Backend/Inspections.API/Properties/serviceDependencies.json
+/src/Backend/Inspections.API/Properties/serviceDependencies.inspectionsscb - Web Deploy.json
