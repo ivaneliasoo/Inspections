@@ -1,6 +1,8 @@
 # Inspections
 Inspection Reports API & Web App
 
+![.NET Core](https://github.com/ivaneliasoo/Inspections/workflows/.NET%20Core/badge.svg)
+
 BACKEND
 ----------
 - .NET Core 3.1
