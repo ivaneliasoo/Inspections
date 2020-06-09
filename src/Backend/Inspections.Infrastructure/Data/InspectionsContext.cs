@@ -24,16 +24,19 @@ namespace Inspections.Infrastructure.Data
         private readonly IMediator _mediator;
         private readonly IUserNameResolver _userNameResolver;
 
+
         public InspectionsContext(DbContextOptions options)
             : base(options)
         {
 
         }
 
+
         public InspectionsContext(DbContextOptions options, IMediator mediator, IUserNameResolver userNameResolver) : base(options)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
+
         }
 
         public DbSet<Report> Inspections { get; set; }
@@ -51,7 +54,6 @@ namespace Inspections.Infrastructure.Data
         //Queries
 
         public DbSet<ResumenCheckList> ResumenCheckLists { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -96,6 +98,7 @@ namespace Inspections.Infrastructure.Data
                 entidad.Property("LastEdit").CurrentValue = DateTimeOffset.UtcNow;
                 // TODO: add JWT secutiry in API
                 entidad.Property("LastEditUser").CurrentValue = _userNameResolver.UserName ?? "Seed";
+
             }
             return base.SaveChangesAsync(cancellationToken);
         }

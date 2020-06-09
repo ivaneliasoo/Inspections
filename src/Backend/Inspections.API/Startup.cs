@@ -147,6 +147,7 @@ namespace Inspections.API
             services.AddScoped<ICheckListsQueries, CheckListsQueries>();
 
 
+
             //ConfigurarDbContextInMemoryDb(services);
             ConfigurarDbContextInSqlDb(services);
         }
@@ -174,6 +175,7 @@ namespace Inspections.API
 
             app.UseRouting();
 
+
             app.UseExceptionsMiddleware();
 
             app.UseAuthentication();
@@ -200,6 +202,7 @@ namespace Inspections.API
         }
 
         private static bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)
+
         {
             bool result = false;
 
