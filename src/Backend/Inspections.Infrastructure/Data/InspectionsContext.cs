@@ -92,13 +92,14 @@ namespace Inspections.Infrastructure.Data
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            foreach (var entidad in ChangeTracker.Entries()
+            foreach (var entity in ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
-                entidad.Property("LastEdit").CurrentValue = DateTimeOffset.UtcNow;
-                // TODO: add JWT secutiry in API
-                entidad.Property("LastEditUser").CurrentValue = _userNameResolver.UserName ?? "Seed";
+                if (entity.CurrentValues.EntityType.DisplayName() == "Responsable")
+                    continue;
 
+                entity.Property("LastEdit").CurrentValue = DateTimeOffset.UtcNow;
+                entity.Property("LastEditUser").CurrentValue = _userNameResolver.UserName ?? "Seed";
             }
             return base.SaveChangesAsync(cancellationToken);
         }

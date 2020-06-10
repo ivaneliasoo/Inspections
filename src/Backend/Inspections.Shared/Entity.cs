@@ -26,7 +26,7 @@ namespace Inspections.Shared
             }
         }
 
-        public IReadOnlyList<INotification> DomainEvents => _domainEvents.AsReadOnly();
+        public IReadOnlyList<INotification> DomainEvents => _domainEvents?.AsReadOnly();
         public void AddDomainEvent(INotification eventItem)
         {
             _domainEvents = _domainEvents ?? new List<INotification>();

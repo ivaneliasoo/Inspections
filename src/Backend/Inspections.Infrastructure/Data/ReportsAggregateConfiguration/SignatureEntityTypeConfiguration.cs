@@ -17,9 +17,13 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.Remarks).IsRequired(false);
             builder.Property(p => p.Date).IsRequired();
             builder.Property(p => p.Principal).IsRequired();
-            builder.OwnsOne(p => p.Responsable, s=> {
+            builder.OwnsOne(p => p.Responsable
+            , s =>
+            {
                 s.Property(p => p.Name).IsRequired();
                 s.Property(p => p.Type).IsRequired();
+                s.Ignore("LastEdit");
+                s.Ignore("LastEditUser");
             });
 
             builder.Ignore(p => p.DomainEvents);
