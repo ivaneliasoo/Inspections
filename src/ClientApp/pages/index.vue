@@ -3,17 +3,12 @@
     {{ name }}
   </div>
 </template>
-
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
-
-export default defineComponent({
-  setup(props, context) {
-    const name = computed(() => context.root.$accessor.inspections.name)
-
-    return {
-      name
-    }
-  }
+import { Vue, Component } from 'nuxt-property-decorator'
+@Component({
+  layout: 'Default'
 })
+export default class Login extends Vue {
+  name: String = ''
+}
 </script>
