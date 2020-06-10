@@ -31,9 +31,9 @@ namespace Inspections.API.Features.Signatures.Handlers
             newSignature.Responsable = new Responsable() { Name = request.ResponsableName, Type = request.ResponsableType };
             newSignature.IsConfiguration = false;
 
-            var result = await _signaturesRepository.AddAsync(newSignature).ConfigureAwait(false);
+            await _signaturesRepository.UpdateAsync(newSignature).ConfigureAwait(false);
 
-            return result.Id > 0;
+            return true;
         }
     }
 }
