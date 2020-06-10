@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspections.API", "Inspecti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspections.Core", "Inspections.Core\Inspections.Core.csproj", "{351CE50E-87B1-4F61-99DF-BA4F27681CA1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspections.Shared", "INspections.Shared\Inspections.Shared.csproj", "{708A8BA4-8909-4831-A053-73ADD9F4D798}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspections.Shared", "Inspections.Shared\Inspections.Shared.csproj", "{708A8BA4-8909-4831-A053-73ADD9F4D798}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspections.Infrastructure", "Inspections.Infrastructure\Inspections.Infrastructure.csproj", "{66F203C3-43DB-4379-AFD3-69932F286CB3}"
 EndProject
