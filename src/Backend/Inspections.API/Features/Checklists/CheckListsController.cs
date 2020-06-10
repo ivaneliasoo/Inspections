@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inspections.API.Features.Checklists
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CheckListsController : ControllerBase
     {

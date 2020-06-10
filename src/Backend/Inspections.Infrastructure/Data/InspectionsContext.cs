@@ -54,6 +54,7 @@ namespace Inspections.Infrastructure.Data
         //Queries
 
         public DbSet<ResumenCheckList> ResumenCheckLists { get; set; }
+        public DbSet<ResumenReportConfiguration> ResumenReportConfigurations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,6 +69,9 @@ namespace Inspections.Infrastructure.Data
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(e => !e.IsOwned()))
             {
+                if (entityType is ResumenReportConfiguration)
+                    continue;
+
                 modelBuilder.Entity(entityType.Name).Property<DateTimeOffset>("LastEdit").IsRequired();
                 modelBuilder.Entity(entityType.Name).Property<string>("LastEditUser").IsRequired().HasMaxLength(20);
             }
@@ -86,6 +90,7 @@ namespace Inspections.Infrastructure.Data
 
 
             modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey().ToView(null);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -97,6 +102,7 @@ namespace Inspections.Infrastructure.Data
             {
                 if (entity.CurrentValues.EntityType.DisplayName() == "Responsable")
                     continue;
+                
 
                 entity.Property("LastEdit").CurrentValue = DateTimeOffset.UtcNow;
                 entity.Property("LastEditUser").CurrentValue = _userNameResolver.UserName ?? "Seed";

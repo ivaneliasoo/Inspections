@@ -14,7 +14,7 @@ using Ardalis.GuardClauses;
 namespace Inspections.API.Features.Users
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -29,14 +29,14 @@ namespace Inspections.API.Features.Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
-            return await _context.Users.Select(x=> new UserDTO(x)).ToListAsync();
+            return await _context.Users.Select(x=> new UserDTO(x)).ToListAsync().ConfigureAwait(false);
         }
 
         // GET: api/Users/username
         [HttpGet("{userName}")]
-        public ActionResult<UserDTO> GetUser(string userName)
+        public async Task<ActionResult<UserDTO>> GetUserByUserName(string userName)
         {
-            var user = _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
+            var user = await _context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync().ConfigureAwait(false);
 
             if (user == null)
             {
@@ -50,7 +50,7 @@ namespace Inspections.API.Features.Users
         [HttpPut("{userName}")]
         public async Task<IActionResult> PutUser(string userName, UserDTO user)
         {
-            if (userName != user.UserName)
+            if (userName != user.UserName || string.IsNullOrWhiteSpace(userName))
             {
                 return BadRequest();
             }
@@ -66,7 +66,7 @@ namespace Inspections.API.Features.Users
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -96,7 +96,7 @@ namespace Inspections.API.Features.Users
             _context.Users.Add(newUser);
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateException)
             {
@@ -110,7 +110,7 @@ namespace Inspections.API.Features.Users
                 }
             }
 
-            return CreatedAtAction("GetUser", new { id = user.UserName }, user);
+            return CreatedAtAction("PostUser", new { id = user.UserName }, user);
         }
 
         // DELETE: api/Users/5
@@ -124,7 +124,7 @@ namespace Inspections.API.Features.Users
             }
 
             _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             return user;
         }
@@ -133,6 +133,7 @@ namespace Inspections.API.Features.Users
         /// Change User Password afeter validated
         /// </summary>
         /// <param name="userName"></param>
+        /// <param name="passwordDTO"></param>
         /// <returns></returns>
         [HttpPatch("{userName}")]
         public async Task<IActionResult> ChangePassword(string userName, ChangePasswordDTO passwordDTO)
@@ -153,7 +154,7 @@ namespace Inspections.API.Features.Users
             user.Password = passwordDTO.NewPasswordConfirmation;
             _context.Entry(user).State = EntityState.Modified;
 
-            var result = await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync().ConfigureAwait(false);
 
             return NoContent();
         }
