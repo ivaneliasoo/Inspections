@@ -26,6 +26,8 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
             SignatureDefinitions = signatureDefinitions;
         }
 
+        private UpdateReportConfigurationCommand() { }
+
         public int Id { get; set; }
         public ReportType Type { get;  set; }
         public string Title { get;  set; }

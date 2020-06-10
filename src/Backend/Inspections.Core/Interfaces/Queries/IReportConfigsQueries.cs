@@ -6,6 +6,6 @@ namespace Inspections.Infrastructure.Queries
 {
     public interface IReportConfigurationsQueries
     {
-        Task<IEnumerable<ResumenReportConfiguration>> GetByFilter(string filter);
+        IEnumerable<ResumenReportConfiguration> GetByFilter(string filter);
     }
 }

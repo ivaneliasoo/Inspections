@@ -10,12 +10,14 @@ namespace Inspections.API.Features.ReportsConfiguration.Model
     {
         public ReportConfigurationDTO(ReportConfiguration reportConfiguration)
         {
+            Id = reportConfiguration.Id;
             Type = reportConfiguration.Type;
             Title = reportConfiguration.Title;
             FormName = reportConfiguration.FormName;
             RemarksLabelText = reportConfiguration.RemarksLabelText;
         }
 
+        public int Id { get; set; }
         public ReportType Type { get; set; }
         public string Title { get; set; }
         public string FormName { get; set; }

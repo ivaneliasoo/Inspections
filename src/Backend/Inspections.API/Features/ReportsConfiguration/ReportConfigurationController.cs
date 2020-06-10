@@ -79,9 +79,9 @@ namespace Inspections.API.Features.ReportsConfiguration
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ResumenReportConfiguration>>> GetReportsConfig(string filter)
+        public ActionResult<IEnumerable<ResumenReportConfiguration>> GetReportsConfig(string filter)
         {
-            var reportConfig = await _reportConfigsQueries.GetByFilter(filter).ConfigureAwait(false);
+            var reportConfig = _reportConfigsQueries.GetByFilter(filter);
 
             if (reportConfig is null)
                 return BadRequest();

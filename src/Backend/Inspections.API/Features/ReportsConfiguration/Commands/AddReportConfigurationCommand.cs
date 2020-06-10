@@ -23,6 +23,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
             ChecksDefinition = checksDefinition;
             SignatureDefinitions = signatureDefinitions;
         }
+        private AddReportConfigurationCommand() { }
 
         public ReportType Type { get; set; }
         public string Title { get; set; }
