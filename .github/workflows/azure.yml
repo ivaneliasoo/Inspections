@@ -23,6 +23,10 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: 'src/ClientApp'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '10.x'                # set this to the node version to use
 
+defaults:
+  run:
+    working-directory: ./src/ClientApp
+
 jobs:
   build:
     name: Build
@@ -39,6 +43,7 @@ jobs:
       run: |
         npm ci
         npm run build
+      
 
     - name: copy publish files
       run: |
