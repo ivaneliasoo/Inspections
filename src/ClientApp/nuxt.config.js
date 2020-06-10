@@ -61,7 +61,7 @@ export default {
       login: '/Login',
       home: true
     },
-    localStorage: false,
+    localStorage: true,
     cookie: {
       prefix: 'inspections'
     },
@@ -71,7 +71,7 @@ export default {
           login: {
             url: '/token',
             method: 'post',
-            propertyName: 'token'
+            propertyName: false
           },
           user: {
             url: '/user',
@@ -88,7 +88,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: `${process.env.BASE_URL}api/`
+    baseURL: `${process.env.BASE_URL}`
   },
   /*
    ** vuetify module configuration
