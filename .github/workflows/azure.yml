@@ -41,7 +41,7 @@ jobs:
 
     - name: yarn install, build
       run: |
-        yarn install --prefer-local
+        yarn install
         yarn build
 
     - name: copy publish files
