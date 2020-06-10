@@ -39,10 +39,10 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
 
-    - name: yarn install, build
+    - name: npm install, build
       run: |
-        yarn install
-        yarn build
+        npm install
+        npm run build
 
     - name: copy publish files
       run: |
