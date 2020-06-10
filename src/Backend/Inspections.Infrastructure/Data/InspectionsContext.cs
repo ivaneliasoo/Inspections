@@ -103,6 +103,7 @@ namespace Inspections.Infrastructure.Data
                 if (entity.CurrentValues.EntityType.DisplayName() == "Responsable")
                     continue;
                 
+
                 entity.Property("LastEdit").CurrentValue = DateTimeOffset.UtcNow;
                 entity.Property("LastEditUser").CurrentValue = _userNameResolver.UserName ?? "Seed";
             }
