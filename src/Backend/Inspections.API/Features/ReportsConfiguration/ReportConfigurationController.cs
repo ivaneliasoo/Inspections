@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inspections.API.Features.ReportsConfiguration
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ReportConfigurationController : ControllerBase
     {

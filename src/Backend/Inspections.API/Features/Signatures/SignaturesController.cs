@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inspections.API.Features.Signatures
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SignaturesController : ControllerBase
     {
