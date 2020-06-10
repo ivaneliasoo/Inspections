@@ -54,6 +54,7 @@ namespace Inspections.Infrastructure.Data
         //Queries
 
         public DbSet<ResumenCheckList> ResumenCheckLists { get; set; }
+        public DbSet<ResumenReportConfiguration> ResumenReportConfigurations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -86,6 +87,7 @@ namespace Inspections.Infrastructure.Data
 
 
             modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey().ToView(null);
 
             base.OnModelCreating(modelBuilder);
         }

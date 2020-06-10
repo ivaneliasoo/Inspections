@@ -146,6 +146,7 @@ namespace Inspections.API
 
             services.AddScoped<ICheckListsQueries, CheckListsQueries>();
             services.AddScoped<ISignaturesQueries, SignaturesQueries>();
+            services.AddScoped<IReportConfigurationsQueries, ReportConfigurationsQueries>();
 
 
 
