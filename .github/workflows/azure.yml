@@ -76,8 +76,10 @@ jobs:
 
     - name: npm ci for production
       run: |
-        cd artifact
+        cd publish
         npm ci --production
+        ls
+        echo $PWD
 
     - uses: azure/login@v1
       with:
