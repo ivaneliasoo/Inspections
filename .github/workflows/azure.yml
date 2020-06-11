@@ -48,7 +48,7 @@ jobs:
     - name: copy publish files
       run: |
         mkdir publish
-        cp -r .nuxt server static nuxt.config.js package*.json web.config publish/
+        cp -r .nuxt server static nuxt.config.js package*.json publish/
         cd publish
         ls
         echo $PWD
