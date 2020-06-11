@@ -12,11 +12,16 @@
 #
 # For more information on GitHub Actions for Azure, refer to https://github.com/Azure/Actions
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
+name: NuxtJS Universal APP (UI)
 on:
   push:
     branches: [master]
+    paths: 
+      - src/ClientApp
   release:
     types: [created]
+    paths: 
+      - src/ClientApp
 
 env:
   AZURE_WEBAPP_NAME: your-app-name    # set this to your application's name
@@ -48,12 +53,15 @@ jobs:
       run: |
         mkdir publish
         cp -r .nuxt server static nuxt.config.js package*.json web.config publish/
+        cd publish
+        ls
+        echo $PWD
 
     - name: Upload publish files
       uses: actions/upload-artifact@v1
       with:
         name: artifact
-        path: publish
+        path: src/ClientApp/publish
         
   deploy:
     name: Deploy
@@ -64,6 +72,7 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: artifact
+        path: src/ClientApp/publish
 
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v1
@@ -72,8 +81,10 @@ jobs:
 
     - name: npm ci for production
       run: |
-        cd artifact
+        cd publish
         npm ci --production
+        ls
+        echo $PWD
 
     - uses: azure/login@v1
       with:
@@ -82,6 +93,5 @@ jobs:
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v1
       with: 
-        app-name: 'nuxt-ci'
-        slot-name: 'gh'
-        package: 'artifact'
+        app-name: 'ui-inspectionsscb'
+        package: 'src/ClientApp/publish'
