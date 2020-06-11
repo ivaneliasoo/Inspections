@@ -17,11 +17,11 @@ on:
   push:
     branches: [master]
     paths: 
-      - src/ClientApp
+      - 'src/ClientApp/*'
   release:
     types: [created]
     paths: 
-      - src/ClientApp
+      - 'src/ClientApp/*'
 
 env:
   AZURE_WEBAPP_NAME: your-app-name    # set this to your application's name
