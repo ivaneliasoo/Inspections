@@ -91,3 +91,4 @@ jobs:
         app-name: 'nuxt-ci'
         slot-name: 'gh'
         package: 'artifact'
+        path: src/ClientApp/publish 
