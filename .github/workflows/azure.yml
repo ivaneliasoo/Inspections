@@ -16,10 +16,12 @@ name: NuxtJS Universal APP (UI)
 on:
   push:
     branches: [master]
-    paths: src/ClientApp
+    paths: 
+      - src/ClientApp
   release:
     types: [created]
-    paths: src/ClientApp
+    paths: 
+      - src/ClientApp
 
 env:
   AZURE_WEBAPP_NAME: your-app-name    # set this to your application's name
