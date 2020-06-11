@@ -16,8 +16,6 @@ name: NuxtJS Universal APP (UI)
 on:
   push:
     branches: [master]
-    paths: 
-      - 'src/ClientApp/*'
   release:
     types: [created]
 
