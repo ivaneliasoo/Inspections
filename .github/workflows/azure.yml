@@ -50,12 +50,13 @@ jobs:
         cp -r .nuxt server static nuxt.config.js package*.json web.config publish/
         cd publish
         ls
+        echo $PWD
 
     - name: Upload publish files
       uses: actions/upload-artifact@v1
       with:
         name: artifact
-        path: publish
+        path: src/ClientApp/publish
         
   deploy:
     name: Deploy
