@@ -89,4 +89,4 @@ jobs:
       uses: azure/webapps-deploy@v1
       with: 
         app-name: 'ui-inspectionsscb'
-        package: 'artifact'
+        package: 'src/ClientApp/publish'
