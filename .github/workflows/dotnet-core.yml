@@ -3,10 +3,12 @@ name: .NET Core
 on:
   push:
     branches: [ master ]
-    paths: src/Backend
+    paths: 
+      - src/Backend
   pull_request:
     branches: [ master ]
-    paths: src/Backend
+    paths: 
+      - src/Backend
 
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions
