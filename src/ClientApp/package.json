@@ -1,5 +1,5 @@
 {
-  "name": "Inspections",
+  "name": "inspections",
   "version": "1.0.0",
   "description": " ",
   "author": "SmartCode Builders",
@@ -13,13 +13,8 @@
     "test": "jest"
   },
   "lint-staged": {
-    "*.{js,vue}": "yarn lint",
+    "*.{js,vue}": "npm run lint",
     "*.{css,vue}": "stylelint"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^0.4.0",
@@ -27,7 +22,6 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "vue": "^2.6.11",
     "@vue/composition-api": "^0.6.1",
     "inversify-props": "^2.0.1",
     "nuxt": "^2.0.0",

@@ -3,21 +3,15 @@
     <h1>{{ title }}</h1>
   </div>
 </template>
-
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
-export default defineComponent({
-  layout: 'gest',
-  setup() {
-    const title = ref('Login')
+import { Vue, Component } from 'nuxt-property-decorator'
 
-    return {
-      title
-    }
-  }
+@Component({
+  layout: 'gest'
 })
+export default class Login extends Vue {
+  title: String = 'Login'
+}
 </script>
 
-<style>
-
-</style>
+<style></style>
