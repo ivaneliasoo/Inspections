@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="Database" Category="Database" Bounds="-496.193333333333,-372.199940000132,1781.22666666667,1169.4" Group="Expanded" Label="Data Source=.;Initial Catalog=InspectionsDb;User ID=sa;Password=15560367o%" />
+    <Node Id="Inspections" Category="Schema" Bounds="-476.193333333333,-332.199940000132,1388.95666666667,1109.4" Group="Expanded" Label="Inspections" />
+    <Node Id="Inspections.CheckListItems" Category="Table" Bounds="323.566666666667,-64.319940000132,297.506666666667,197.88" Group="Expanded" Label="Inspections.CheckListItems" />
+    <Node Id="Inspections.CheckListItems_CheckListId" Category="Field Foreign" Bounds="343.566666666667,87.6000599998681,79.98,25.96" Description="int" Label="CheckListId" />
+    <Node Id="Inspections.CheckListItems_Checked" Category="Field" Bounds="438.343333333333,31.640059999868,65.3466666666667,25.96" Description="int" Label="Checked" />
+    <Node Id="Inspections.CheckListItems_Id" Category="Field Primary" Bounds="343.566666666667,-24.319940000132,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.CheckListItems_LastEdit" Category="Field" Bounds="503.566666666667,-24.319940000132,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.CheckListItems_LastEditUser" Category="Field" Bounds="453.546666666667,87.6000599998681,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.CheckListItems_Remarks" Category="Field Optional" Bounds="343.566666666667,31.640059999868,64.7766666666666,25.96" Description="ntext" Label="Remarks" />
+    <Node Id="Inspections.CheckListItems_Required" Category="Field" Bounds="533.690000000001,31.640059999868,67.3833333333333,25.96" Description="bit" Label="Required" />
+    <Node Id="Inspections.CheckListItems_Text" Category="Field" Bounds="423.566666666667,-24.319940000132,50,25.96" Description="ntext" Label="Text" />
+    <Node Id="Inspections.CheckListParams" Category="Table" Bounds="146.816666666667,-292.199940000132,291.006666666667,197.88" Group="Expanded" Label="Inspections.CheckListParams" />
+    <Node Id="Inspections.CheckListParams_CheckListId" Category="Field Foreign" Bounds="337.843333333334,-196.239940000132,79.98,25.96" Description="int" Label="CheckListId" />
+    <Node Id="Inspections.CheckListParams_CheckListItemId" Category="Field Foreign" Bounds="281.63,-140.279940000132,103.853333333333,25.96" Description="int" Label="CheckListItemId" />
+    <Node Id="Inspections.CheckListParams_Id" Category="Field Primary" Bounds="166.816666666667,-252.199940000132,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.CheckListParams_Key" Category="Field" Bounds="246.816666666667,-252.199940000132,50,25.96" Description="ntext" Label="Key" />
+    <Node Id="Inspections.CheckListParams_LastEdit" Category="Field" Bounds="246.816666666667,-196.239940000132,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.CheckListParams_LastEditUser" Category="Field" Bounds="166.816666666667,-140.279940000132,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.CheckListParams_Type" Category="Field" Bounds="166.816666666667,-196.239940000132,50,25.96" Description="int" Label="Type" />
+    <Node Id="Inspections.CheckListParams_Value" Category="Field" Bounds="326.816666666667,-252.199940000132,50,25.96" Description="ntext" Label="Value" />
+    <Node Id="Inspections.CheckLists" Category="Table" Bounds="127.411666666667,219.520059999868,329.816666666667,197.88" Group="Expanded" Label="Inspections.CheckLists" />
+    <Node Id="Inspections.CheckLists_Annotation" Category="Field Optional" Bounds="243.098333333334,315.480059999868,79.3166666666667,25.96" Description="ntext" Label="Annotation" />
+    <Node Id="Inspections.CheckLists_Id" Category="Field Primary" Bounds="147.411666666667,259.520059999868,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.CheckLists_IsConfiguration" Category="Field" Bounds="147.411666666667,371.440059999868,101.13,25.96" Description="bit" Label="IsConfiguration" />
+    <Node Id="Inspections.CheckLists_LastEdit" Category="Field" Bounds="307.411666666667,259.520059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.CheckLists_LastEditUser" Category="Field" Bounds="352.415,315.480059999868,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.CheckLists_ReportConfigurationId" Category="Field Foreign" Bounds="278.541666666667,371.440059999868,138.53,25.96" Description="int" Label="ReportConfigurationId" />
+    <Node Id="Inspections.CheckLists_ReportId" Category="Field Foreign" Bounds="147.411666666667,315.480059999868,65.6866666666667,25.96" Description="int" Label="ReportId" />
+    <Node Id="Inspections.CheckLists_Text" Category="Field" Bounds="227.411666666667,259.520059999868,50,25.96" Description="ntext" Label="Text" />
+    <Node Id="Inspections.Notes" Category="Table" Bounds="-456.193333333333,219.520059999868,261.026666666667,197.88" Group="Expanded" Label="Inspections.Notes" />
+    <Node Id="Inspections.Notes_Checked" Category="Field" Bounds="-436.193333333333,315.480059999868,65.3466666666667,25.96" Description="bit" Label="Checked" />
+    <Node Id="Inspections.Notes_Id" Category="Field Primary" Bounds="-436.193333333333,259.520059999868,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.Notes_LastEdit" Category="Field" Bounds="-276.193333333333,259.520059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.Notes_LastEditUser" Category="Field" Bounds="-436.193333333333,371.440059999868,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.Notes_ReportId" Category="Field Foreign" Bounds="-340.846666666666,315.480059999868,65.6866666666667,25.96" Description="int" Label="ReportId" />
+    <Node Id="Inspections.Notes_Text" Category="Field" Bounds="-356.193333333333,259.520059999868,50,25.96" Description="ntext" Label="Text" />
+    <Node Id="Inspections.Photos" Category="Table" Bounds="-164.193333333333,219.520059999868,261.026666666667,197.88" Group="Expanded" Label="Inspections.Photos" />
+    <Node Id="Inspections.Photos_FilePath" Category="Field" Bounds="-144.193333333333,315.480059999868,61.2233333333334,25.96" Description="ntext" Label="FilePath" />
+    <Node Id="Inspections.Photos_Id" Category="Field Primary" Bounds="-144.193333333333,259.520059999868,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.Photos_Label" Category="Field" Bounds="-64.193333333333,259.520059999868,50,25.96" Description="ntext" Label="Label" />
+    <Node Id="Inspections.Photos_LastEdit" Category="Field" Bounds="15.806666666667,259.520059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.Photos_LastEditUser" Category="Field" Bounds="-144.193333333333,371.440059999868,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.Photos_ReportId" Category="Field Foreign" Bounds="-52.9699999999997,315.480059999868,65.6866666666667,25.96" Description="int" Label="ReportId" />
+    <Node Id="Inspections.Reports" Category="Table" Bounds="115.096666666667,503.360059999868,354.446666666667,253.84" Group="Expanded" Label="Inspections.Reports" />
+    <Node Id="Inspections.ReportsConfiguration" Category="Table" Bounds="500.045,531.340059999868,268.55,197.88" Group="Expanded" Label="Inspections.ReportsConfiguration" />
+    <Node Id="Inspections.ReportsConfiguration_FormName" Category="Field" Bounds="611.071666666667,627.300059999868,79.0966666666667,25.96" Description="ntext" Label="FormName" />
+    <Node Id="Inspections.ReportsConfiguration_Id" Category="Field Primary" Bounds="520.045,571.340059999868,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.ReportsConfiguration_LastEdit" Category="Field" Bounds="520.045,627.300059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.ReportsConfiguration_LastEditUser" Category="Field" Bounds="520.045,683.260059999869,84.8133333333333,25.9599999999999" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.ReportsConfiguration_RemarksLabelText" Category="Field Optional" Bounds="634.858333333334,683.260059999869,113.736666666667,25.9599999999999" Description="ntext" Label="RemarksLabelText" />
+    <Node Id="Inspections.ReportsConfiguration_Title" Category="Field" Bounds="680.045,571.340059999868,50,25.96" Description="ntext" Label="Title" />
+    <Node Id="Inspections.ReportsConfiguration_Type" Category="Field" Bounds="600.045,571.340059999868,50,25.96" Description="int" Label="Type" />
+    <Node Id="Inspections.Reports_Address" Category="Field" Bounds="135.096666666667,599.320059999868,62.51,25.96" Description="ntext" Label="Address" />
+    <Node Id="Inspections.Reports_Date" Category="Field" Bounds="215.096666666667,543.360059999868,50,25.96" Description="datetime" Label="Date" />
+    <Node Id="Inspections.Reports_Id" Category="Field Primary" Bounds="135.096666666667,543.360059999868,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.Reports_LastEdit" Category="Field" Bounds="376.793333333334,543.360059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.Reports_LastEditUser" Category="Field" Bounds="227.606666666667,599.320059999868,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.Reports_License_LicenseType" Category="Field Optional" Bounds="291.86,655.280059999868,126.816666666667,25.96" Description="int" Label="License_LicenseType" />
+    <Node Id="Inspections.Reports_License_Number" Category="Field Optional" Bounds="342.42,599.320059999868,107.123333333333,25.96" Description="ntext" Label="License_Number" />
+    <Node Id="Inspections.Reports_License_Validity_End" Category="Field Optional" Bounds="135.096666666667,655.280059999868,126.763333333333,25.96" Description="datetime" Label="License_Validity_End" />
+    <Node Id="Inspections.Reports_License_Validity_Start" Category="Field Optional" Bounds="135.096666666667,711.240059999868,131.236666666667,25.96" Description="datetime" Label="License_Validity_Start" />
+    <Node Id="Inspections.Reports_Name" Category="Field" Bounds="295.096666666667,543.360059999868,51.6966666666667,25.96" Description="ntext" Label="Name" />
+    <Node Id="Inspections.Signatures" Category="Table" Bounds="487.876666666667,163.560059999868,404.886666666666,309.8" Group="Expanded" Label="Inspections.Signatures" />
+    <Node Id="Inspections.Signatures_Annotation" Category="Field Optional" Bounds="793.446666666667,259.520059999868,79.3166666666666,25.96" Description="ntext" Label="Annotation" />
+    <Node Id="Inspections.Signatures_Date" Category="Field" Bounds="667.876666666667,203.560059999868,50,25.96" Description="datetime" Label="Date" />
+    <Node Id="Inspections.Signatures_Designation" Category="Field Optional" Bounds="507.876666666667,315.480059999868,83.4466666666667,25.96" Description="ntext" Label="Designation" />
+    <Node Id="Inspections.Signatures_Id" Category="Field Primary" Bounds="507.876666666667,203.560059999868,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.Signatures_IsConfiguration" Category="Field" Bounds="736.136666666667,315.480059999868,101.13,25.96" Description="bit" Label="IsConfiguration" />
+    <Node Id="Inspections.Signatures_LastEdit" Category="Field" Bounds="747.876666666667,203.560059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.Signatures_LastEditUser" Category="Field" Bounds="621.323333333334,315.480059999868,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.Signatures_Principal" Category="Field" Bounds="602.653333333334,259.520059999868,65.1066666666667,25.96" Description="bit" Label="Principal" />
+    <Node Id="Inspections.Signatures_Remarks" Category="Field Optional" Bounds="507.876666666667,259.520059999868,64.7766666666666,25.96" Description="ntext" Label="Remarks" />
+    <Node Id="Inspections.Signatures_ReportConfigurationId" Category="Field Foreign" Bounds="507.876666666667,427.400059999868,138.53,25.96" Description="int" Label="ReportConfigurationId" />
+    <Node Id="Inspections.Signatures_ReportId" Category="Field Foreign" Bounds="697.76,259.520059999868,65.6866666666667,25.96" Description="int" Label="ReportId" />
+    <Node Id="Inspections.Signatures_Responsable_Name" Category="Field Optional" Bounds="654.126666666667,371.440059999868,123.183333333333,25.96" Description="ntext" Label="Responsable_Name" />
+    <Node Id="Inspections.Signatures_Responsable_Type" Category="Field Optional" Bounds="507.876666666667,371.440059999868,116.25,25.96" Description="int" Label="Responsable_Type" />
+    <Node Id="Inspections.Signatures_Title" Category="Field" Bounds="587.876666666667,203.560059999868,50,25.96" Description="ntext" Label="Title" />
+    <Node Id="dbo" Category="Schema" Bounds="942.763333333334,-332.199940000132,322.27,257.88" Group="Expanded" Label="dbo" />
+    <Node Id="dbo.Users" Category="Table" Bounds="962.763333333334,-292.199940000132,282.27,197.88" Group="Expanded" Label="dbo.Users" />
+    <Node Id="dbo.Users_LastEdit" Category="Field" Bounds="1064.46,-252.199940000132,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="dbo.Users_LastEditUser" Category="Field" Bounds="982.763333333333,-140.279940000132,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="dbo.Users_LastName" Category="Field" Bounds="982.763333333334,-196.239940000132,72.6133333333332,25.96" Description="nvarchar(50)" Label="LastName" />
+    <Node Id="dbo.Users_Name" Category="Field" Bounds="982.763333333334,-252.199940000132,51.6966666666667,25.96" Description="nvarchar(50)" Label="Name" />
+    <Node Id="dbo.Users_Password" Category="Field Optional" Bounds="1155.48666666667,-252.199940000132,69.5466666666666,25.96" Description="ntext" Label="Password" />
+    <Node Id="dbo.Users_UserName" Category="Field Primary" Bounds="1085.37666666667,-196.239940000132,75.4833333333336,25.96" Description="nvarchar(20)" Label="UserName" />
+  </Nodes>
+  <Links>
+    <Link Source="Database" Target="Inspections" Category="Contains" />
+    <Link Source="Database" Target="dbo" Category="Contains" />
+    <Link Source="Inspections" Target="Inspections.CheckListItems" Category="Contains" />
+    <Link Source="Inspections" Target="Inspections.CheckListParams" Category="Contains" />
+    <Link Source="Inspections" Target="Inspections.CheckLists" Category="Contains" />
+    <Link Source="Inspections" Target="Inspections.Notes" Category="Contains" />
+    <Link Source="Inspections" Target="Inspections.Photos" Category="Contains" />
+    <Link Source="Inspections" Target="Inspections.Reports" Category="Contains" />
+    <Link Source="Inspections" Target="Inspections.ReportsConfiguration" Category="Contains" />
+    <Link Source="Inspections" Target="Inspections.Signatures" Category="Contains" />
+    <Link Source="Inspections.CheckListItems" Target="Inspections.CheckListItems_CheckListId" Category="Contains" />
+    <Link Source="Inspections.CheckListItems" Target="Inspections.CheckListItems_Checked" Category="Contains" />
+    <Link Source="Inspections.CheckListItems" Target="Inspections.CheckListItems_Id" Category="Contains" />
+    <Link Source="Inspections.CheckListItems" Target="Inspections.CheckListItems_LastEdit" Category="Contains" />
+    <Link Source="Inspections.CheckListItems" Target="Inspections.CheckListItems_LastEditUser" Category="Contains" />
+    <Link Source="Inspections.CheckListItems" Target="Inspections.CheckListItems_Remarks" Category="Contains" />
+    <Link Source="Inspections.CheckListItems" Target="Inspections.CheckListItems_Required" Category="Contains" />
+    <Link Source="Inspections.CheckListItems" Target="Inspections.CheckListItems_Text" Category="Contains" />
+    <Link Source="Inspections.CheckListItems_CheckListId" Target="Inspections.CheckLists_Id" Category="Foreign Key" Label="FK_CheckListItems_CheckLists_CheckListId" />
+    <Link Source="Inspections.CheckListParams" Target="Inspections.CheckListParams_CheckListId" Category="Contains" />
+    <Link Source="Inspections.CheckListParams" Target="Inspections.CheckListParams_CheckListItemId" Category="Contains" />
+    <Link Source="Inspections.CheckListParams" Target="Inspections.CheckListParams_Id" Category="Contains" />
+    <Link Source="Inspections.CheckListParams" Target="Inspections.CheckListParams_Key" Category="Contains" />
+    <Link Source="Inspections.CheckListParams" Target="Inspections.CheckListParams_LastEdit" Category="Contains" />
+    <Link Source="Inspections.CheckListParams" Target="Inspections.CheckListParams_LastEditUser" Category="Contains" />
+    <Link Source="Inspections.CheckListParams" Target="Inspections.CheckListParams_Type" Category="Contains" />
+    <Link Source="Inspections.CheckListParams" Target="Inspections.CheckListParams_Value" Category="Contains" />
+    <Link Source="Inspections.CheckListParams_CheckListId" Target="Inspections.CheckLists_Id" Category="Foreign Key" Bounds="181.960254366056,-170.280942393741,190.022701997532,421.595853512202" Label="FK_CheckListParams_CheckLists_CheckListId" />
+    <Link Source="Inspections.CheckListParams_CheckListItemId" Target="Inspections.CheckListItems_Id" Category="Foreign Key" Bounds="337.475505145875,-114.320842393741,24.5710700653946,81.3844436664008" Label="FK_CheckListParams_CheckListItems_CheckListItemId" />
+    <Link Source="Inspections.CheckLists" Target="Inspections.CheckLists_Annotation" Category="Contains" />
+    <Link Source="Inspections.CheckLists" Target="Inspections.CheckLists_Id" Category="Contains" />
+    <Link Source="Inspections.CheckLists" Target="Inspections.CheckLists_IsConfiguration" Category="Contains" />
+    <Link Source="Inspections.CheckLists" Target="Inspections.CheckLists_LastEdit" Category="Contains" />
+    <Link Source="Inspections.CheckLists" Target="Inspections.CheckLists_LastEditUser" Category="Contains" />
+    <Link Source="Inspections.CheckLists" Target="Inspections.CheckLists_ReportConfigurationId" Category="Contains" />
+    <Link Source="Inspections.CheckLists" Target="Inspections.CheckLists_ReportId" Category="Contains" />
+    <Link Source="Inspections.CheckLists" Target="Inspections.CheckLists_Text" Category="Contains" />
+    <Link Source="Inspections.CheckLists_ReportConfigurationId" Target="Inspections.ReportsConfiguration_Id" Category="Foreign Key" Label="FK_CheckLists_ReportsConfiguration_ReportConfigurationId" />
+    <Link Source="Inspections.CheckLists_ReportId" Target="Inspections.Reports_Id" Category="Foreign Key" Label="FK_CheckLists_Reports_ReportId" />
+    <Link Source="Inspections.Notes" Target="Inspections.Notes_Checked" Category="Contains" />
+    <Link Source="Inspections.Notes" Target="Inspections.Notes_Id" Category="Contains" />
+    <Link Source="Inspections.Notes" Target="Inspections.Notes_LastEdit" Category="Contains" />
+    <Link Source="Inspections.Notes" Target="Inspections.Notes_LastEditUser" Category="Contains" />
+    <Link Source="Inspections.Notes" Target="Inspections.Notes_ReportId" Category="Contains" />
+    <Link Source="Inspections.Notes" Target="Inspections.Notes_Text" Category="Contains" />
+    <Link Source="Inspections.Notes_ReportId" Target="Inspections.Reports_Id" Category="Foreign Key" Label="FK_Notes_Reports_ReportId" />
+    <Link Source="Inspections.Photos" Target="Inspections.Photos_FilePath" Category="Contains" />
+    <Link Source="Inspections.Photos" Target="Inspections.Photos_Id" Category="Contains" />
+    <Link Source="Inspections.Photos" Target="Inspections.Photos_Label" Category="Contains" />
+    <Link Source="Inspections.Photos" Target="Inspections.Photos_LastEdit" Category="Contains" />
+    <Link Source="Inspections.Photos" Target="Inspections.Photos_LastEditUser" Category="Contains" />
+    <Link Source="Inspections.Photos" Target="Inspections.Photos_ReportId" Category="Contains" />
+    <Link Source="Inspections.Photos_ReportId" Target="Inspections.Reports_Id" Category="Foreign Key" Label="FK_Photos_Reports_ReportId" />
+    <Link Source="Inspections.Reports" Target="Inspections.Reports_Address" Category="Contains" />
+    <Link Source="Inspections.Reports" Target="Inspections.Reports_Date" Category="Contains" />
+    <Link Source="Inspections.Reports" Target="Inspections.Reports_Id" Category="Contains" />
+    <Link Source="Inspections.Reports" Target="Inspections.Reports_LastEdit" Category="Contains" />
+    <Link Source="Inspections.Reports" Target="Inspections.Reports_LastEditUser" Category="Contains" />
+    <Link Source="Inspections.Reports" Target="Inspections.Reports_License_LicenseType" Category="Contains" />
+    <Link Source="Inspections.Reports" Target="Inspections.Reports_License_Number" Category="Contains" />
+    <Link Source="Inspections.Reports" Target="Inspections.Reports_License_Validity_End" Category="Contains" />
+    <Link Source="Inspections.Reports" Target="Inspections.Reports_License_Validity_Start" Category="Contains" />
+    <Link Source="Inspections.Reports" Target="Inspections.Reports_Name" Category="Contains" />
+    <Link Source="Inspections.ReportsConfiguration" Target="Inspections.ReportsConfiguration_FormName" Category="Contains" />
+    <Link Source="Inspections.ReportsConfiguration" Target="Inspections.ReportsConfiguration_Id" Category="Contains" />
+    <Link Source="Inspections.ReportsConfiguration" Target="Inspections.ReportsConfiguration_LastEdit" Category="Contains" />
+    <Link Source="Inspections.ReportsConfiguration" Target="Inspections.ReportsConfiguration_LastEditUser" Category="Contains" />
+    <Link Source="Inspections.ReportsConfiguration" Target="Inspections.ReportsConfiguration_RemarksLabelText" Category="Contains" />
+    <Link Source="Inspections.ReportsConfiguration" Target="Inspections.ReportsConfiguration_Title" Category="Contains" />
+    <Link Source="Inspections.ReportsConfiguration" Target="Inspections.ReportsConfiguration_Type" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_Annotation" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_Date" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_Designation" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_Id" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_IsConfiguration" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_LastEdit" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_LastEditUser" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_Principal" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_Remarks" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_ReportConfigurationId" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_ReportId" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_Responsable_Name" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_Responsable_Type" Category="Contains" />
+    <Link Source="Inspections.Signatures" Target="Inspections.Signatures_Title" Category="Contains" />
+    <Link Source="Inspections.Signatures_ReportConfigurationId" Target="Inspections.ReportsConfiguration_Id" Category="Foreign Key" Bounds="549.89813524437,453.360404026842,24.349167143513,109.195719363825" Label="FK_Signatures_ReportsConfiguration_ReportConfigurationId" />
+    <Link Source="Inspections.Signatures_ReportId" Target="Inspections.Reports_Id" Category="Foreign Key" Label="FK_Signatures_Reports_ReportId" />
+    <Link Source="dbo" Target="dbo.Users" Category="Contains" />
+    <Link Source="dbo.Users" Target="dbo.Users_LastEdit" Category="Contains" />
+    <Link Source="dbo.Users" Target="dbo.Users_LastEditUser" Category="Contains" />
+    <Link Source="dbo.Users" Target="dbo.Users_LastName" Category="Contains" />
+    <Link Source="dbo.Users" Target="dbo.Users_Name" Category="Contains" />
+    <Link Source="dbo.Users" Target="dbo.Users_Password" Category="Contains" />
+    <Link Source="dbo.Users" Target="dbo.Users_UserName" Category="Contains" />
+  </Links>
+  <Categories>
+    <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
+    <Category Id="Database" />
+    <Category Id="Field" />
+    <Category Id="Field Foreign" />
+    <Category Id="Field Optional" />
+    <Category Id="Field Primary" />
+    <Category Id="Foreign Key" />
+    <Category Id="Schema" />
+    <Category Id="Table" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="Description" Label="Description" Description="Description" DataType="System.String" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="GraphDirection" DataType="Microsoft.VisualStudio.Diagrams.Layout.LayoutOrientation" />
+    <Property Id="Group" Label="Group" Description="Display the node as a group" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+  </Properties>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Table" ValueLabel="True">
+      <Condition Expression="HasCategory('Table')" />
+      <Setter Property="Background" Value="#FFC0C0C0" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Schema" ValueLabel="True">
+      <Condition Expression="HasCategory('Schema')" />
+      <Setter Property="Background" Value="#FF7F9169" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field Primary" ValueLabel="True">
+      <Condition Expression="HasCategory('Field Primary')" />
+      <Setter Property="Background" Value="#FF008000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field Optional" ValueLabel="True">
+      <Condition Expression="HasCategory('Field Optional')" />
+      <Setter Property="Background" Value="#FF808040" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field Foreign" ValueLabel="True">
+      <Condition Expression="HasCategory('Field Foreign')" />
+      <Setter Property="Background" Value="#FF8080FF" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field" ValueLabel="True">
+      <Condition Expression="HasCategory('Field')" />
+      <Setter Property="Background" Value="#FFC0A000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Database" ValueLabel="True">
+      <Condition Expression="HasCategory('Database')" />
+      <Setter Property="Background" Value="#FFFFFFFF" />
+    </Style>
+  </Styles>
+</DirectedGraph>

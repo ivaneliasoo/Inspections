@@ -15,7 +15,6 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.Checked).IsRequired();
             builder.Property(p => p.Required).IsRequired();
             builder.Property(p => p.Remarks).IsRequired(false);
-            builder.HasMany(p => p.TextParams).WithOne().HasForeignKey("CheckListFK");
 
             builder.Ignore(p => p.DomainEvents);
 

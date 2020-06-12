@@ -1,4 +1,6 @@
-﻿using Inspections.Shared;
+﻿using Inspections.Core.Domain.ReportConfigurationAggregate;
+using Inspections.Core.Domain.ReportsAggregate;
+using Inspections.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,5 +17,10 @@ namespace Inspections.Core.Domain.SignaturesAggregate
         public DateTimeOffset Date { get; set; }
         public bool Principal { get; set; }
         public bool IsConfiguration { get; set; }
+        public int? ReportId { get; set; }
+        public Report Report { get; set; }
+        public int? ReportConfigurationId { get; set; }
+        public ReportConfiguration  ReportConfiguration { get; set; }
+
     }
 }

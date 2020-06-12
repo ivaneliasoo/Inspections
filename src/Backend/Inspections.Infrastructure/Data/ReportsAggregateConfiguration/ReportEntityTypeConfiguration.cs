@@ -12,10 +12,10 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
 
         public void Configure(EntityTypeBuilder<Report> builder)
         {
-            builder.Ignore(p => p.CheckList);
-            builder.Ignore(p => p.PhotoRecords);
-            builder.Ignore(p => p.Notes);
-            builder.Ignore(p => p.Signatures);
+            //builder.Ignore(p => p.CheckList);
+            //builder.Ignore(p => p.PhotoRecords);
+            //builder.Ignore(p => p.Notes);
+            //builder.Ignore(p => p.Signatures);
 
             builder.ToTable("Reports", InspectionsContext.DEFAULT_SCHEMA);
             builder.Ignore(p => p.DomainEvents);
@@ -34,10 +34,22 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.Address).IsRequired();
             builder.Property(p => p.Date).IsRequired();
 
-            builder.Metadata.FindNavigation(nameof(Report.CheckList));
-            builder.Metadata.FindNavigation(nameof(Report.PhotoRecords));
-            builder.Metadata.FindNavigation(nameof(Report.Notes));
-            builder.Metadata.FindNavigation(nameof(Report.Signatures));
+            var navigationChecks = builder.Metadata.FindNavigation(nameof(Report.CheckList));
+            navigationChecks.SetField("checkList");
+            navigationChecks.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            var navsPhotos = builder.Metadata.FindNavigation(nameof(Report.PhotoRecords));
+            navsPhotos.SetField("photoRecords");
+            navsPhotos.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            var navigationNotes = builder.Metadata.FindNavigation(nameof(Report.Notes));
+            navigationNotes.SetField("notes");
+            navigationNotes.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            var navigationSignatures = builder.Metadata.FindNavigation(nameof(Report.Signatures));
+            navigationSignatures.SetField("signatures");
+            navigationSignatures.SetPropertyAccessMode(PropertyAccessMode.Field);
+
         }
     }
 }

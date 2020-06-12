@@ -2,12 +2,12 @@
 
 namespace Inspections.Infrastructure.Data.Migrations
 {
-    public partial class addforeignfieldonparams : Migration
+    public partial class Lastchanges : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CheckListParams_CheckListItems_CheckListFK",
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_CheckListParams",
                 schema: "Inspections",
                 table: "CheckListParams");
 
@@ -20,28 +20,35 @@ namespace Inspections.Infrastructure.Data.Migrations
                 oldType: "int");
 
             migrationBuilder.AlterColumn<int>(
-                name: "CheckListFK",
+                name: "CheckListId",
                 schema: "Inspections",
                 table: "CheckListParams",
                 nullable: true,
                 oldClrType: typeof(int),
                 oldType: "int");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_CheckListParams_CheckListItems_CheckListFK",
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_CheckListParams",
                 schema: "Inspections",
                 table: "CheckListParams",
-                column: "CheckListFK",
-                principalSchema: "Inspections",
-                principalTable: "CheckListItems",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CheckListParams_CheckListId",
+                schema: "Inspections",
+                table: "CheckListParams",
+                column: "CheckListId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CheckListParams_CheckListItems_CheckListFK",
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_CheckListParams",
+                schema: "Inspections",
+                table: "CheckListParams");
+
+            migrationBuilder.DropIndex(
+                name: "IX_CheckListParams_CheckListId",
                 schema: "Inspections",
                 table: "CheckListParams");
 
@@ -55,7 +62,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<int>(
-                name: "CheckListFK",
+                name: "CheckListId",
                 schema: "Inspections",
                 table: "CheckListParams",
                 type: "int",
@@ -63,15 +70,11 @@ namespace Inspections.Infrastructure.Data.Migrations
                 oldClrType: typeof(int),
                 oldNullable: true);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_CheckListParams_CheckListItems_CheckListFK",
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_CheckListParams",
                 schema: "Inspections",
                 table: "CheckListParams",
-                column: "CheckListFK",
-                principalSchema: "Inspections",
-                principalTable: "CheckListItems",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                columns: new[] { "CheckListId", "CheckListItemId" });
         }
     }
 }
