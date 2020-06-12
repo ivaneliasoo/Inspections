@@ -45,6 +45,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<int?>("ReportConfigurationId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ReportId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -52,6 +55,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ReportConfigurationId");
+
+                    b.HasIndex("ReportId");
 
                     b.ToTable("CheckLists","Inspections");
                 });
@@ -105,9 +110,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CheckListFK")
-                        .HasColumnType("int");
-
                     b.Property<int?>("CheckListId")
                         .HasColumnType("int");
 
@@ -135,9 +137,9 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CheckListFK");
-
                     b.HasIndex("CheckListId");
+
+                    b.HasIndex("CheckListItemId");
 
                     b.ToTable("CheckListParams","Inspections");
                 });
@@ -190,9 +192,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<bool>("Checked")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsConfiguration")
-                        .HasColumnType("bit");
-
                     b.Property<DateTimeOffset>("LastEdit")
                         .HasColumnType("datetimeoffset");
 
@@ -204,14 +203,13 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<int>("ReportId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("ShouldCheck")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReportId");
 
                     b.ToTable("Notes","Inspections");
                 });
@@ -245,6 +243,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReportId");
 
                     b.ToTable("Photos","Inspections");
                 });
@@ -318,6 +318,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<int?>("ReportConfigurationId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ReportId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -325,6 +328,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ReportConfigurationId");
+
+                    b.HasIndex("ReportId");
 
                     b.ToTable("Signatures","Inspections");
                 });
@@ -363,9 +368,13 @@ namespace Inspections.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckList", b =>
                 {
-                    b.HasOne("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", null)
+                    b.HasOne("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", "ReportConfiguration")
                         .WithMany("ChecksDefinition")
                         .HasForeignKey("ReportConfigurationId");
+
+                    b.HasOne("Inspections.Core.Domain.ReportsAggregate.Report", "Report")
+                        .WithMany("CheckList")
+                        .HasForeignKey("ReportId");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckListItem", b =>
@@ -379,13 +388,33 @@ namespace Inspections.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckListParam", b =>
                 {
-                    b.HasOne("Inspections.Core.Domain.CheckListAggregate.CheckListItem", null)
+                    b.HasOne("Inspections.Core.Domain.CheckListAggregate.CheckList", "CheckList")
                         .WithMany("TextParams")
-                        .HasForeignKey("CheckListFK");
+                        .HasForeignKey("CheckListId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Inspections.Core.Domain.CheckListAggregate.CheckList", null)
+                    b.HasOne("Inspections.Core.Domain.CheckListAggregate.CheckListItem", "CheckListItem")
                         .WithMany("TextParams")
-                        .HasForeignKey("CheckListId");
+                        .HasForeignKey("CheckListItemId")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.Note", b =>
+                {
+                    b.HasOne("Inspections.Core.Domain.ReportsAggregate.Report", null)
+                        .WithMany("Notes")
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.PhotoRecord", b =>
+                {
+                    b.HasOne("Inspections.Core.Domain.ReportsAggregate.Report", null)
+                        .WithMany("PhotoRecords")
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.Report", b =>
@@ -436,9 +465,13 @@ namespace Inspections.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Inspections.Core.Domain.SignaturesAggregate.Signature", b =>
                 {
-                    b.HasOne("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", null)
+                    b.HasOne("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", "ReportConfiguration")
                         .WithMany("SignatureDefinitions")
                         .HasForeignKey("ReportConfigurationId");
+
+                    b.HasOne("Inspections.Core.Domain.ReportsAggregate.Report", "Report")
+                        .WithMany("Signatures")
+                        .HasForeignKey("ReportId");
 
                     b.OwnsOne("Inspections.Core.Domain.SignaturesAggregate.Responsable", "Responsable", b1 =>
                         {

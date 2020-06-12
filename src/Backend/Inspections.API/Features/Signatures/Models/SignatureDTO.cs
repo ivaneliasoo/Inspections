@@ -24,12 +24,15 @@ namespace Inspections.API.Features.Signatures.Models
 
             Title = signature.Title;
             Annotation = signature.Annotation;
-            ResponsableType = signature.Responsable.Type;
-            ResponsableName = signature.Responsable.Name;
             Designation = signature.Designation;
             Remarks = signature.Remarks;
             Date = signature.Date;
             Principal = signature.Principal;
+            if (!signature.IsConfiguration)
+            {
+                ResponsableType = signature.Responsable.Type;
+                ResponsableName = signature.Responsable.Name;
+            }
         }
     }
 }

@@ -14,18 +14,18 @@ namespace Inspections.Core.Domain.ReportsAggregate
         public EMALicense License { get; set; }
         public DateTimeOffset Date { get; set; }
 
-        private readonly List<Signature> _signatures = new List<Signature>();
-        public IReadOnlyList<Signature> Signatures => _signatures.AsReadOnly();
+        private readonly List<Signature> signatures = new List<Signature>();
+        public IReadOnlyCollection<Signature> Signatures => signatures;
 
 
-        private readonly List<Note> _notes = new List<Note>();
-        public IReadOnlyList<Note> Notes => _notes.AsReadOnly();
+        private readonly List<Note> notes = new List<Note>();
+        public IReadOnlyCollection<Note> Notes => notes;
 
-        private readonly List<CheckList> _checkList = new List<CheckList>();
-        public IReadOnlyList<CheckList> CheckList => _checkList.AsReadOnly();
+        private readonly List<CheckList> checkList = new List<CheckList>();
+        public IReadOnlyCollection<CheckList> CheckList => checkList;
 
-        private readonly List<PhotoRecord> _photoRecord = new List<PhotoRecord>();
-        public IReadOnlyList<PhotoRecord> PhotoRecords => _photoRecord.AsReadOnly();
-        public bool Completed => !_checkList.Any(c => c.Completed);
+        private readonly List<PhotoRecord> photoRecords = new List<PhotoRecord>();
+        public IReadOnlyCollection<PhotoRecord> PhotoRecords => photoRecords;
+        public bool Completed => !checkList.Any(c => c.Completed);
     }
 }
