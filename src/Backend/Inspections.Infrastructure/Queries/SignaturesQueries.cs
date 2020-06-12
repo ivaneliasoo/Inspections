@@ -1,6 +1,7 @@
 ﻿using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Core.Interfaces.Queries;
 using Inspections.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Inspections.Infrastructure.Queries
 
         public Task<IEnumerable<Signature>> GetAllAsync(string filter)
         {
-            return Task.FromResult(_context.Set<Signature>().Where(s => s.Title.StartsWith(filter)).AsEnumerable());
+            return Task.FromResult(_context.Set<Signature>().Where(s => EF.Functions.Like(s.Title, $"%{filter}%")).AsEnumerable());
         }
     }
 }
