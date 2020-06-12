@@ -28,7 +28,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/composition-api'],
+  // plugins: ['@/plugins/composition-api'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -36,8 +36,7 @@ export default {
     '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
-    '@nuxtjs/vuetify',
-    'nuxt-typed-vuex'
+    '@nuxtjs/vuetify'
   ],
   /*
    ** Nuxt.js modules
@@ -46,10 +45,8 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/auth',
+    '@nuxtjs/auth'
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
-    '~/modules/i18n-json'
   ],
   router: {
     middleware: ['auth']
@@ -59,9 +56,9 @@ export default {
       login: '/Login',
       home: true
     },
-    localStorage: true,
+    localStorage: false,
     cookie: {
-      prefix: 'inspections'
+      prefix: 'UI'
     },
     strategies: {
       local: {
@@ -103,11 +100,11 @@ export default {
    ** Build configuration
    */
   build: {
-    transpile: [/typed-vuex/],
+    transpile: ['@nuxtjs/auth'],
     /*
      ** You can extend webpack config here *
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    extend(config, ctx) {}
+    extend(config, ctx) { }
   }
 }

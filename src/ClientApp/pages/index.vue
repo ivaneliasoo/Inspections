@@ -9,6 +9,10 @@ import { Vue, Component } from 'nuxt-property-decorator'
   layout: 'Default'
 })
 export default class Login extends Vue {
-  name: String = ''
+  get name (){
+    return this.$store.state.user
+  }
+
+
 }
 </script>
