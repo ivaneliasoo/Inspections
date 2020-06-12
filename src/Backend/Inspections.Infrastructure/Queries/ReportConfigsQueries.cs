@@ -54,9 +54,7 @@ namespace Inspections.Infrastructure.Queries
                 -- ) AS Reports
                 --     ON Reports.ReportConfigurationId = Config.Id
                 WHERE 1=1
-                    AND (Title LIKE '%{filter ?? string.Empty}%'
-                    OR FormName LIKE '%{filter ?? string.Empty}%') 
-            ");
+            ").Where(p=> EF.Functions.Like(p.Title, $"%{filter ?? string.Empty}%") || EF.Functions.Like(p.FormName, $"%{filter ?? string.Empty}%"));
         }
     }
 }

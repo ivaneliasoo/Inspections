@@ -15,17 +15,6 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.RemarksLabelText).IsRequired(false);
             builder.Property(p => p.FormName).IsRequired();
 
-            builder.HasMany(p => p.ChecksDefinition)
-                .WithOne()
-                .IsRequired(false)
-                .HasForeignKey("ReportConfigurationId");
-
-            builder.HasMany(p => p.SignatureDefinitions)
-                .WithOne()
-                .IsRequired(false)
-                .HasForeignKey("ReportConfigurationId");
-
-
             builder.Ignore(p => p.DomainEvents);
         }
     }

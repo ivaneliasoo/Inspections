@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Inspections.Infrastructure.Data.Migrations
 {
-    public partial class InitialDbConfig : Migration
+    public partial class Initia1l : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,39 +11,19 @@ namespace Inspections.Infrastructure.Data.Migrations
                 name: "Inspections");
 
             migrationBuilder.CreateTable(
-                name: "Notes",
-                schema: "Inspections",
+                name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ReportId = table.Column<int>(nullable: false),
-                    Text = table.Column<string>(nullable: false),
-                    Checked = table.Column<bool>(nullable: false),
-                    ShouldCheck = table.Column<bool>(nullable: false),
-                    IsConfiguration = table.Column<bool>(nullable: false),
-                    LastEdit = table.Column<DateTimeOffset>(nullable: false)
+                    UserName = table.Column<string>(maxLength: 20, nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    Password = table.Column<string>(nullable: true),
+                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Photos",
-                schema: "Inspections",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ReportId = table.Column<int>(nullable: false),
-                    FilePath = table.Column<string>(nullable: false),
-                    Label = table.Column<string>(nullable: false),
-                    LastEdit = table.Column<DateTimeOffset>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.UserName);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,7 +40,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                     License_Validity_Start = table.Column<DateTime>(nullable: true),
                     License_Validity_End = table.Column<DateTime>(nullable: true),
                     Date = table.Column<DateTimeOffset>(nullable: false),
-                    LastEdit = table.Column<DateTimeOffset>(nullable: false)
+                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,11 +59,62 @@ namespace Inspections.Infrastructure.Data.Migrations
                     Title = table.Column<string>(nullable: false),
                     FormName = table.Column<string>(nullable: false),
                     RemarksLabelText = table.Column<string>(nullable: true),
-                    LastEdit = table.Column<DateTimeOffset>(nullable: false)
+                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReportsConfiguration", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notes",
+                schema: "Inspections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReportId = table.Column<int>(nullable: false),
+                    Text = table.Column<string>(nullable: false),
+                    Checked = table.Column<bool>(nullable: false),
+                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notes_Reports_ReportId",
+                        column: x => x.ReportId,
+                        principalSchema: "Inspections",
+                        principalTable: "Reports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Photos",
+                schema: "Inspections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReportId = table.Column<int>(nullable: false),
+                    FilePath = table.Column<string>(nullable: false),
+                    Label = table.Column<string>(nullable: false),
+                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photos_Reports_ReportId",
+                        column: x => x.ReportId,
+                        principalSchema: "Inspections",
+                        principalTable: "Reports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,11 +124,13 @@ namespace Inspections.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ReportId = table.Column<int>(nullable: true),
+                    ReportConfigurationId = table.Column<int>(nullable: true),
                     Text = table.Column<string>(nullable: false),
                     Annotation = table.Column<string>(nullable: true),
                     IsConfiguration = table.Column<bool>(nullable: false),
                     LastEdit = table.Column<DateTimeOffset>(nullable: false),
-                    ReportConfigurationId = table.Column<int>(nullable: true)
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,6 +140,13 @@ namespace Inspections.Infrastructure.Data.Migrations
                         column: x => x.ReportConfigurationId,
                         principalSchema: "Inspections",
                         principalTable: "ReportsConfiguration",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CheckLists_Reports_ReportId",
+                        column: x => x.ReportId,
+                        principalSchema: "Inspections",
+                        principalTable: "Reports",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -126,8 +167,10 @@ namespace Inspections.Infrastructure.Data.Migrations
                     Date = table.Column<DateTimeOffset>(nullable: false),
                     Principal = table.Column<bool>(nullable: false),
                     IsConfiguration = table.Column<bool>(nullable: false),
+                    ReportId = table.Column<int>(nullable: true),
+                    ReportConfigurationId = table.Column<int>(nullable: true),
                     LastEdit = table.Column<DateTimeOffset>(nullable: false),
-                    ReportConfigurationId = table.Column<int>(nullable: true)
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,6 +180,13 @@ namespace Inspections.Infrastructure.Data.Migrations
                         column: x => x.ReportConfigurationId,
                         principalSchema: "Inspections",
                         principalTable: "ReportsConfiguration",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Signatures_Reports_ReportId",
+                        column: x => x.ReportId,
+                        principalSchema: "Inspections",
+                        principalTable: "Reports",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -153,7 +203,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                     Checked = table.Column<int>(nullable: false),
                     Required = table.Column<bool>(nullable: false),
                     Remarks = table.Column<string>(nullable: true),
-                    LastEdit = table.Column<DateTimeOffset>(nullable: false)
+                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -172,33 +223,31 @@ namespace Inspections.Infrastructure.Data.Migrations
                 schema: "Inspections",
                 columns: table => new
                 {
+                    CheckListId = table.Column<int>(nullable: false),
+                    CheckListItemId = table.Column<int>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CheckListItemId = table.Column<int>(nullable: false),
                     Key = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: false),
                     Type = table.Column<int>(nullable: false),
-                    CheckListFK = table.Column<int>(nullable: false),
-                    CheckListId = table.Column<int>(nullable: true),
-                    LastEdit = table.Column<DateTimeOffset>(nullable: false)
+                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CheckListParams", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CheckListParams_CheckListItems_CheckListFK",
-                        column: x => x.CheckListFK,
-                        principalSchema: "Inspections",
-                        principalTable: "CheckListItems",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_CheckListParams", x => new { x.CheckListId, x.CheckListItemId });
                     table.ForeignKey(
                         name: "FK_CheckListParams_CheckLists_CheckListId",
                         column: x => x.CheckListId,
                         principalSchema: "Inspections",
                         principalTable: "CheckLists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_CheckListParams_CheckListItems_CheckListItemId",
+                        column: x => x.CheckListItemId,
+                        principalSchema: "Inspections",
+                        principalTable: "CheckListItems",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -208,16 +257,10 @@ namespace Inspections.Infrastructure.Data.Migrations
                 column: "CheckListId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CheckListParams_CheckListFK",
+                name: "IX_CheckListParams_CheckListItemId",
                 schema: "Inspections",
                 table: "CheckListParams",
-                column: "CheckListFK");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CheckListParams_CheckListId",
-                schema: "Inspections",
-                table: "CheckListParams",
-                column: "CheckListId");
+                column: "CheckListItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CheckLists_ReportConfigurationId",
@@ -226,14 +269,41 @@ namespace Inspections.Infrastructure.Data.Migrations
                 column: "ReportConfigurationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CheckLists_ReportId",
+                schema: "Inspections",
+                table: "CheckLists",
+                column: "ReportId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notes_ReportId",
+                schema: "Inspections",
+                table: "Notes",
+                column: "ReportId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_ReportId",
+                schema: "Inspections",
+                table: "Photos",
+                column: "ReportId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Signatures_ReportConfigurationId",
                 schema: "Inspections",
                 table: "Signatures",
                 column: "ReportConfigurationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Signatures_ReportId",
+                schema: "Inspections",
+                table: "Signatures",
+                column: "ReportId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Users");
+
             migrationBuilder.DropTable(
                 name: "CheckListParams",
                 schema: "Inspections");
@@ -244,10 +314,6 @@ namespace Inspections.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Photos",
-                schema: "Inspections");
-
-            migrationBuilder.DropTable(
-                name: "Reports",
                 schema: "Inspections");
 
             migrationBuilder.DropTable(
@@ -264,6 +330,10 @@ namespace Inspections.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ReportsConfiguration",
+                schema: "Inspections");
+
+            migrationBuilder.DropTable(
+                name: "Reports",
                 schema: "Inspections");
         }
     }

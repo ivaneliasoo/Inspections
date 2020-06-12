@@ -26,8 +26,8 @@ namespace Inspections.Infrastructure.Queries
                 SELECT Id,
                         Text,
                         Annotation,
-                        Params.TotalParams,
-                        Items.TotalItems,
+                        ISNULL(Params.TotalParams, 0) TotalParams,
+                        ISNULL(Items.TotalItems, 0) TotalItems,
                         LastEdit,
                         LastEditUser
                     FROM Inspections.CheckLists cl
@@ -46,7 +46,7 @@ namespace Inspections.Infrastructure.Queries
                     WHERE 1=1
                         AND ([Text] LIKE {0}
                         OR Annotation LIKE {0}) 
-            ", $"%{filter}%");
+            ", $"%{filter ?? string.Empty}%");
         }
     }
 }

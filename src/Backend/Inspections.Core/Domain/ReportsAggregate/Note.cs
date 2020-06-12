@@ -7,7 +7,5 @@ namespace Inspections.Core.Domain.ReportsAggregate
         public int ReportId { get; set; }
         public string Text { get; set; }
         public bool Checked { get; set; }
-        public bool ShouldCheck { get; set; }
-        public bool IsConfiguration { get; set; }
     }
 }
