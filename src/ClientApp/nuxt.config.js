@@ -48,9 +48,9 @@ export default {
     '@nuxtjs/auth'
     // Doc: https://github.com/nuxt-community/dotenv-module
   ],
-  router: {
-    middleware: ['auth']
-  },
+  // router: {
+  //   middleware: ['auth']
+  // },
   auth: {
     redirect: {
       login: '/Login',

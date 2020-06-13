@@ -1,91 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="Database" Category="Database" Bounds="-496.193333333333,-372.199940000132,1781.22666666667,1169.4" Group="Expanded" Label="Data Source=.;Initial Catalog=InspectionsDb;User ID=sa;Password=15560367o%" />
-    <Node Id="Inspections" Category="Schema" Bounds="-476.193333333333,-332.199940000132,1388.95666666667,1109.4" Group="Expanded" Label="Inspections" />
-    <Node Id="Inspections.CheckListItems" Category="Table" Bounds="323.566666666667,-64.319940000132,297.506666666667,197.88" Group="Expanded" Label="Inspections.CheckListItems" />
-    <Node Id="Inspections.CheckListItems_CheckListId" Category="Field Foreign" Bounds="343.566666666667,87.6000599998681,79.98,25.96" Description="int" Label="CheckListId" />
-    <Node Id="Inspections.CheckListItems_Checked" Category="Field" Bounds="438.343333333333,31.640059999868,65.3466666666667,25.96" Description="int" Label="Checked" />
-    <Node Id="Inspections.CheckListItems_Id" Category="Field Primary" Bounds="343.566666666667,-24.319940000132,50,25.96" Description="int" Label="Id" />
-    <Node Id="Inspections.CheckListItems_LastEdit" Category="Field" Bounds="503.566666666667,-24.319940000132,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
-    <Node Id="Inspections.CheckListItems_LastEditUser" Category="Field" Bounds="453.546666666667,87.6000599998681,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
-    <Node Id="Inspections.CheckListItems_Remarks" Category="Field Optional" Bounds="343.566666666667,31.640059999868,64.7766666666666,25.96" Description="ntext" Label="Remarks" />
-    <Node Id="Inspections.CheckListItems_Required" Category="Field" Bounds="533.690000000001,31.640059999868,67.3833333333333,25.96" Description="bit" Label="Required" />
-    <Node Id="Inspections.CheckListItems_Text" Category="Field" Bounds="423.566666666667,-24.319940000132,50,25.96" Description="ntext" Label="Text" />
-    <Node Id="Inspections.CheckListParams" Category="Table" Bounds="146.816666666667,-292.199940000132,291.006666666667,197.88" Group="Expanded" Label="Inspections.CheckListParams" />
-    <Node Id="Inspections.CheckListParams_CheckListId" Category="Field Foreign" Bounds="337.843333333334,-196.239940000132,79.98,25.96" Description="int" Label="CheckListId" />
-    <Node Id="Inspections.CheckListParams_CheckListItemId" Category="Field Foreign" Bounds="281.63,-140.279940000132,103.853333333333,25.96" Description="int" Label="CheckListItemId" />
-    <Node Id="Inspections.CheckListParams_Id" Category="Field Primary" Bounds="166.816666666667,-252.199940000132,50,25.96" Description="int" Label="Id" />
-    <Node Id="Inspections.CheckListParams_Key" Category="Field" Bounds="246.816666666667,-252.199940000132,50,25.96" Description="ntext" Label="Key" />
-    <Node Id="Inspections.CheckListParams_LastEdit" Category="Field" Bounds="246.816666666667,-196.239940000132,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
-    <Node Id="Inspections.CheckListParams_LastEditUser" Category="Field" Bounds="166.816666666667,-140.279940000132,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
-    <Node Id="Inspections.CheckListParams_Type" Category="Field" Bounds="166.816666666667,-196.239940000132,50,25.96" Description="int" Label="Type" />
-    <Node Id="Inspections.CheckListParams_Value" Category="Field" Bounds="326.816666666667,-252.199940000132,50,25.96" Description="ntext" Label="Value" />
-    <Node Id="Inspections.CheckLists" Category="Table" Bounds="127.411666666667,219.520059999868,329.816666666667,197.88" Group="Expanded" Label="Inspections.CheckLists" />
-    <Node Id="Inspections.CheckLists_Annotation" Category="Field Optional" Bounds="243.098333333334,315.480059999868,79.3166666666667,25.96" Description="ntext" Label="Annotation" />
-    <Node Id="Inspections.CheckLists_Id" Category="Field Primary" Bounds="147.411666666667,259.520059999868,50,25.96" Description="int" Label="Id" />
-    <Node Id="Inspections.CheckLists_IsConfiguration" Category="Field" Bounds="147.411666666667,371.440059999868,101.13,25.96" Description="bit" Label="IsConfiguration" />
-    <Node Id="Inspections.CheckLists_LastEdit" Category="Field" Bounds="307.411666666667,259.520059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
-    <Node Id="Inspections.CheckLists_LastEditUser" Category="Field" Bounds="352.415,315.480059999868,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
-    <Node Id="Inspections.CheckLists_ReportConfigurationId" Category="Field Foreign" Bounds="278.541666666667,371.440059999868,138.53,25.96" Description="int" Label="ReportConfigurationId" />
-    <Node Id="Inspections.CheckLists_ReportId" Category="Field Foreign" Bounds="147.411666666667,315.480059999868,65.6866666666667,25.96" Description="int" Label="ReportId" />
-    <Node Id="Inspections.CheckLists_Text" Category="Field" Bounds="227.411666666667,259.520059999868,50,25.96" Description="ntext" Label="Text" />
-    <Node Id="Inspections.Notes" Category="Table" Bounds="-456.193333333333,219.520059999868,261.026666666667,197.88" Group="Expanded" Label="Inspections.Notes" />
-    <Node Id="Inspections.Notes_Checked" Category="Field" Bounds="-436.193333333333,315.480059999868,65.3466666666667,25.96" Description="bit" Label="Checked" />
-    <Node Id="Inspections.Notes_Id" Category="Field Primary" Bounds="-436.193333333333,259.520059999868,50,25.96" Description="int" Label="Id" />
-    <Node Id="Inspections.Notes_LastEdit" Category="Field" Bounds="-276.193333333333,259.520059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
-    <Node Id="Inspections.Notes_LastEditUser" Category="Field" Bounds="-436.193333333333,371.440059999868,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
-    <Node Id="Inspections.Notes_ReportId" Category="Field Foreign" Bounds="-340.846666666666,315.480059999868,65.6866666666667,25.96" Description="int" Label="ReportId" />
-    <Node Id="Inspections.Notes_Text" Category="Field" Bounds="-356.193333333333,259.520059999868,50,25.96" Description="ntext" Label="Text" />
-    <Node Id="Inspections.Photos" Category="Table" Bounds="-164.193333333333,219.520059999868,261.026666666667,197.88" Group="Expanded" Label="Inspections.Photos" />
-    <Node Id="Inspections.Photos_FilePath" Category="Field" Bounds="-144.193333333333,315.480059999868,61.2233333333334,25.96" Description="ntext" Label="FilePath" />
-    <Node Id="Inspections.Photos_Id" Category="Field Primary" Bounds="-144.193333333333,259.520059999868,50,25.96" Description="int" Label="Id" />
-    <Node Id="Inspections.Photos_Label" Category="Field" Bounds="-64.193333333333,259.520059999868,50,25.96" Description="ntext" Label="Label" />
-    <Node Id="Inspections.Photos_LastEdit" Category="Field" Bounds="15.806666666667,259.520059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
-    <Node Id="Inspections.Photos_LastEditUser" Category="Field" Bounds="-144.193333333333,371.440059999868,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
-    <Node Id="Inspections.Photos_ReportId" Category="Field Foreign" Bounds="-52.9699999999997,315.480059999868,65.6866666666667,25.96" Description="int" Label="ReportId" />
-    <Node Id="Inspections.Reports" Category="Table" Bounds="115.096666666667,503.360059999868,354.446666666667,253.84" Group="Expanded" Label="Inspections.Reports" />
-    <Node Id="Inspections.ReportsConfiguration" Category="Table" Bounds="500.045,531.340059999868,268.55,197.88" Group="Expanded" Label="Inspections.ReportsConfiguration" />
-    <Node Id="Inspections.ReportsConfiguration_FormName" Category="Field" Bounds="611.071666666667,627.300059999868,79.0966666666667,25.96" Description="ntext" Label="FormName" />
-    <Node Id="Inspections.ReportsConfiguration_Id" Category="Field Primary" Bounds="520.045,571.340059999868,50,25.96" Description="int" Label="Id" />
-    <Node Id="Inspections.ReportsConfiguration_LastEdit" Category="Field" Bounds="520.045,627.300059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
-    <Node Id="Inspections.ReportsConfiguration_LastEditUser" Category="Field" Bounds="520.045,683.260059999869,84.8133333333333,25.9599999999999" Description="nvarchar(20)" Label="LastEditUser" />
-    <Node Id="Inspections.ReportsConfiguration_RemarksLabelText" Category="Field Optional" Bounds="634.858333333334,683.260059999869,113.736666666667,25.9599999999999" Description="ntext" Label="RemarksLabelText" />
-    <Node Id="Inspections.ReportsConfiguration_Title" Category="Field" Bounds="680.045,571.340059999868,50,25.96" Description="ntext" Label="Title" />
-    <Node Id="Inspections.ReportsConfiguration_Type" Category="Field" Bounds="600.045,571.340059999868,50,25.96" Description="int" Label="Type" />
-    <Node Id="Inspections.Reports_Address" Category="Field" Bounds="135.096666666667,599.320059999868,62.51,25.96" Description="ntext" Label="Address" />
-    <Node Id="Inspections.Reports_Date" Category="Field" Bounds="215.096666666667,543.360059999868,50,25.96" Description="datetime" Label="Date" />
-    <Node Id="Inspections.Reports_Id" Category="Field Primary" Bounds="135.096666666667,543.360059999868,50,25.96" Description="int" Label="Id" />
-    <Node Id="Inspections.Reports_LastEdit" Category="Field" Bounds="376.793333333334,543.360059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
-    <Node Id="Inspections.Reports_LastEditUser" Category="Field" Bounds="227.606666666667,599.320059999868,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
-    <Node Id="Inspections.Reports_License_LicenseType" Category="Field Optional" Bounds="291.86,655.280059999868,126.816666666667,25.96" Description="int" Label="License_LicenseType" />
-    <Node Id="Inspections.Reports_License_Number" Category="Field Optional" Bounds="342.42,599.320059999868,107.123333333333,25.96" Description="ntext" Label="License_Number" />
-    <Node Id="Inspections.Reports_License_Validity_End" Category="Field Optional" Bounds="135.096666666667,655.280059999868,126.763333333333,25.96" Description="datetime" Label="License_Validity_End" />
-    <Node Id="Inspections.Reports_License_Validity_Start" Category="Field Optional" Bounds="135.096666666667,711.240059999868,131.236666666667,25.96" Description="datetime" Label="License_Validity_Start" />
-    <Node Id="Inspections.Reports_Name" Category="Field" Bounds="295.096666666667,543.360059999868,51.6966666666667,25.96" Description="ntext" Label="Name" />
-    <Node Id="Inspections.Signatures" Category="Table" Bounds="487.876666666667,163.560059999868,404.886666666666,309.8" Group="Expanded" Label="Inspections.Signatures" />
-    <Node Id="Inspections.Signatures_Annotation" Category="Field Optional" Bounds="793.446666666667,259.520059999868,79.3166666666666,25.96" Description="ntext" Label="Annotation" />
-    <Node Id="Inspections.Signatures_Date" Category="Field" Bounds="667.876666666667,203.560059999868,50,25.96" Description="datetime" Label="Date" />
-    <Node Id="Inspections.Signatures_Designation" Category="Field Optional" Bounds="507.876666666667,315.480059999868,83.4466666666667,25.96" Description="ntext" Label="Designation" />
-    <Node Id="Inspections.Signatures_Id" Category="Field Primary" Bounds="507.876666666667,203.560059999868,50,25.96" Description="int" Label="Id" />
-    <Node Id="Inspections.Signatures_IsConfiguration" Category="Field" Bounds="736.136666666667,315.480059999868,101.13,25.96" Description="bit" Label="IsConfiguration" />
-    <Node Id="Inspections.Signatures_LastEdit" Category="Field" Bounds="747.876666666667,203.560059999868,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
-    <Node Id="Inspections.Signatures_LastEditUser" Category="Field" Bounds="621.323333333334,315.480059999868,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
-    <Node Id="Inspections.Signatures_Principal" Category="Field" Bounds="602.653333333334,259.520059999868,65.1066666666667,25.96" Description="bit" Label="Principal" />
-    <Node Id="Inspections.Signatures_Remarks" Category="Field Optional" Bounds="507.876666666667,259.520059999868,64.7766666666666,25.96" Description="ntext" Label="Remarks" />
-    <Node Id="Inspections.Signatures_ReportConfigurationId" Category="Field Foreign" Bounds="507.876666666667,427.400059999868,138.53,25.96" Description="int" Label="ReportConfigurationId" />
-    <Node Id="Inspections.Signatures_ReportId" Category="Field Foreign" Bounds="697.76,259.520059999868,65.6866666666667,25.96" Description="int" Label="ReportId" />
-    <Node Id="Inspections.Signatures_Responsable_Name" Category="Field Optional" Bounds="654.126666666667,371.440059999868,123.183333333333,25.96" Description="ntext" Label="Responsable_Name" />
-    <Node Id="Inspections.Signatures_Responsable_Type" Category="Field Optional" Bounds="507.876666666667,371.440059999868,116.25,25.96" Description="int" Label="Responsable_Type" />
-    <Node Id="Inspections.Signatures_Title" Category="Field" Bounds="587.876666666667,203.560059999868,50,25.96" Description="ntext" Label="Title" />
-    <Node Id="dbo" Category="Schema" Bounds="942.763333333334,-332.199940000132,322.27,257.88" Group="Expanded" Label="dbo" />
-    <Node Id="dbo.Users" Category="Table" Bounds="962.763333333334,-292.199940000132,282.27,197.88" Group="Expanded" Label="dbo.Users" />
-    <Node Id="dbo.Users_LastEdit" Category="Field" Bounds="1064.46,-252.199940000132,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
-    <Node Id="dbo.Users_LastEditUser" Category="Field" Bounds="982.763333333333,-140.279940000132,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
-    <Node Id="dbo.Users_LastName" Category="Field" Bounds="982.763333333334,-196.239940000132,72.6133333333332,25.96" Description="nvarchar(50)" Label="LastName" />
-    <Node Id="dbo.Users_Name" Category="Field" Bounds="982.763333333334,-252.199940000132,51.6966666666667,25.96" Description="nvarchar(50)" Label="Name" />
-    <Node Id="dbo.Users_Password" Category="Field Optional" Bounds="1155.48666666667,-252.199940000132,69.5466666666666,25.96" Description="ntext" Label="Password" />
-    <Node Id="dbo.Users_UserName" Category="Field Primary" Bounds="1085.37666666667,-196.239940000132,75.4833333333336,25.96" Description="nvarchar(20)" Label="UserName" />
+    <Node Id="Database" Category="Database" Bounds="-1.58271649508754,-0.000723261371376793,1783.4877919515,1149.52675123346" Group="Expanded" Label="Data Source=.;Initial Catalog=InspectionsDb;User ID=sa;Password=15560367o%" />
+    <Node Id="Inspections" Category="Schema" Bounds="18.4172835049125,39.9993767386286,1391.21767883301,1089.52655123346" Group="Expanded" Label="Inspections" />
+    <Node Id="Inspections.CheckListItems" Category="Table" Bounds="1009.99048498845,235.478845265589,297.506666666666,197.88" Group="Expanded" Label="Inspections.CheckListItems" UseManualLocation="True" />
+    <Node Id="Inspections.CheckListItems_CheckListId" Category="Field Foreign" Bounds="1029.99053704466,387.399352888074,79.98,25.96" Description="int" Label="CheckListId" />
+    <Node Id="Inspections.CheckListItems_Checked" Category="Field" Bounds="1124.76716464882,331.439346174207,65.3466666666668,25.96" Description="int" Label="Checked" />
+    <Node Id="Inspections.CheckListItems_Id" Category="Field Primary" Bounds="1029.99054681028,275.479339460339,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.CheckListItems_LastEdit" Category="Field" Bounds="1189.99051914101,275.479339460339,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.CheckListItems_LastEditUser" Category="Field" Bounds="1139.97053785846,387.399352888074,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.CheckListItems_Remarks" Category="Field Optional" Bounds="1029.99051914101,331.439346174207,64.7766666666666,25.96" Description="ntext" Label="Remarks" />
+    <Node Id="Inspections.CheckListItems_Required" Category="Field" Bounds="1220.11382154987,331.439346174207,67.3833333333332,25.96" Description="bit" Label="Required" />
+    <Node Id="Inspections.CheckListItems_Text" Category="Field" Bounds="1109.99054681028,275.479339460339,50,25.96" Description="ntext" Label="Text" />
+    <Node Id="Inspections.CheckListParams" Category="Table" Bounds="643.01,80,291.006666666667,197.88" Group="Expanded" Label="Inspections.CheckListParams" />
+    <Node Id="Inspections.CheckListParams_CheckListId" Category="Field Foreign" Bounds="834.036666666667,175.96,79.98,25.96" Description="int" Label="CheckListId" />
+    <Node Id="Inspections.CheckListParams_CheckListItemId" Category="Field Foreign" Bounds="777.823333333333,231.92,103.853333333333,25.96" Description="int" Label="CheckListItemId" />
+    <Node Id="Inspections.CheckListParams_Id" Category="Field Primary" Bounds="663.01,120,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.CheckListParams_Key" Category="Field" Bounds="743.01,120,50,25.96" Description="ntext" Label="Key" />
+    <Node Id="Inspections.CheckListParams_LastEdit" Category="Field" Bounds="743.01,175.96,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.CheckListParams_LastEditUser" Category="Field" Bounds="663.01,231.92,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.CheckListParams_Type" Category="Field" Bounds="823.01,120,50,25.96" Description="int" Label="Type" />
+    <Node Id="Inspections.CheckListParams_Value" Category="Field" Bounds="663.01,175.96,50,25.96" Description="ntext" Label="Value" />
+    <Node Id="Inspections.CheckLists" Category="Table" Bounds="621.443996660023,557.648872903803,329.816680908203,197.8804" Group="Expanded" Label="Inspections.CheckLists" UseManualLocation="True" />
+    <Node Id="Inspections.CheckLists_Annotation" Category="Field Optional" Bounds="737.13067512682,653.609072903803,79.3166666666668,25.96" Description="ntext" Label="Annotation" />
+    <Node Id="Inspections.CheckLists_Id" Category="Field Primary" Bounds="641.44400723945,597.648972903803,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.CheckLists_IsConfiguration" Category="Field" Bounds="641.444009680856,709.569172903803,101.13,25.96" Description="bit" Label="IsConfiguration" />
+    <Node Id="Inspections.CheckLists_LastEdit" Category="Field" Bounds="801.444010087757,597.648972903803,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.CheckLists_LastEditUser" Category="Field" Bounds="846.447344234893,653.609111328125,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.CheckLists_ReportConfigurationId" Category="Field Foreign" Bounds="772.5740267707,709.569172903803,138.53,25.96" Description="int" Label="ReportConfigurationId" />
+    <Node Id="Inspections.CheckLists_ReportId" Category="Field Foreign" Bounds="641.443996660023,653.609072903803,65.6866666666667,25.96" Description="int" Label="ReportId" />
+    <Node Id="Inspections.CheckLists_Text" Category="Field" Bounds="721.44400723945,597.648972903803,50,25.96" Description="ntext" Label="Text" />
+    <Node Id="Inspections.Notes" Category="Table" Bounds="38.4173143276664,591.719850016261,261.026682332357,197.8804" Group="Expanded" Label="Inspections.Notes" />
+    <Node Id="Inspections.Notes_Checked" Category="Field" Bounds="58.4173143276664,687.680050016261,65.3466666666667,25.96" Description="bit" Label="Checked" />
+    <Node Id="Inspections.Notes_Id" Category="Field Primary" Bounds="58.4173271450492,631.719950016261,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.Notes_LastEdit" Category="Field" Bounds="218.417329993357,631.719950016261,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.Notes_LastEditUser" Category="Field" Bounds="58.4173224656873,743.640150016261,84.8133333333333,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.Notes_ReportId" Category="Field Foreign" Bounds="153.763980994333,687.680050016261,65.6866666666667,25.96" Description="int" Label="ReportId" />
+    <Node Id="Inspections.Notes_Text" Category="Field" Bounds="138.417327145049,631.719950016261,50,25.96" Description="ntext" Label="Text" />
+    <Node Id="Inspections.Photos" Category="Table" Bounds="330.417322465687,591.719850016261,261.026674194336,197.8804" Group="Expanded" Label="Inspections.Photos" />
+    <Node Id="Inspections.Photos_FilePath" Category="Field" Bounds="350.417324296742,687.680050016261,61.2233333333334,25.96" Description="ntext" Label="FilePath" />
+    <Node Id="Inspections.Photos_Id" Category="Field Primary" Bounds="350.417327145049,631.719950016261,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.Photos_Label" Category="Field" Bounds="430.417327145049,631.719950016261,50,25.96" Description="ntext" Label="Label" />
+    <Node Id="Inspections.Photos_LastEdit" Category="Field" Bounds="510.417329993356,631.719950016261,61.0266666666665,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.Photos_LastEditUser" Category="Field" Bounds="350.417322465687,743.640150016261,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.Photos_ReportId" Category="Field Foreign" Bounds="441.64065946113,687.680050016261,65.6866666666667,25.96" Description="int" Label="ReportId" />
+    <Node Id="Inspections.Reports" Category="Table" Bounds="288.943134769917,855.685173210162,354.446666666666,253.840000000001" Group="Expanded" Label="Inspections.Reports" UseManualLocation="True" />
+    <Node Id="Inspections.ReportsConfiguration" Category="Table" Bounds="974.061612915433,890.23396774926,268.55,197.88" Group="Expanded" Label="Inspections.ReportsConfiguration" UseManualLocation="True" />
+    <Node Id="Inspections.ReportsConfiguration_FormName" Category="Field" Bounds="1085.08835282429,986.194075040927,79.0966666666668,25.9600000000004" Description="ntext" Label="FormName" />
+    <Node Id="Inspections.ReportsConfiguration_Id" Category="Field Primary" Bounds="994.061612915433,930.234114103427,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.ReportsConfiguration_LastEdit" Category="Field" Bounds="994.061646281319,986.194075040927,61.0266666666666,25.9600000000004" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.ReportsConfiguration_LastEditUser" Category="Field" Bounds="994.06162349486,1042.15403597843,84.8133333333335,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.ReportsConfiguration_RemarksLabelText" Category="Field Optional" Bounds="1108.87498124226,1042.15403597843,113.736666666667,25.96" Description="ntext" Label="RemarksLabelText" />
+    <Node Id="Inspections.ReportsConfiguration_Title" Category="Field" Bounds="1074.06161291543,930.234114103427,50,25.96" Description="ntext" Label="Title" />
+    <Node Id="Inspections.ReportsConfiguration_Type" Category="Field" Bounds="1154.06161291543,930.234114103427,50,25.96" Description="int" Label="Type" />
+    <Node Id="Inspections.Reports_Address" Category="Field" Bounds="308.943219056573,951.645378331845,62.51,25.96" Description="ntext" Label="Address" />
+    <Node Id="Inspections.Reports_Date" Category="Field" Bounds="308.943290467706,895.685295324032,50,25.96" Description="datetime" Label="Date" />
+    <Node Id="Inspections.Reports_Id" Category="Field Primary" Bounds="388.943275208917,895.685295324032,49.9999999999999,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.Reports_LastEdit" Category="Field" Bounds="550.63996384824,895.685295324032,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.Reports_LastEditUser" Category="Field" Bounds="401.453295553969,951.645378331845,84.8133333333334,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.Reports_License_LicenseType" Category="Field Optional" Bounds="465.706633770114,1007.60524771661,126.816666666667,25.9599999999998" Description="int" Label="License_LicenseType" />
+    <Node Id="Inspections.Reports_License_Number" Category="Field Optional" Bounds="516.266587790297,951.645378331845,107.123333333333,25.96" Description="ntext" Label="License_Number" />
+    <Node Id="Inspections.Reports_License_Validity_End" Category="Field Optional" Bounds="308.943200339125,1007.60524771661,126.763333333333,25.9599999999998" Description="datetime" Label="License_Validity_End" />
+    <Node Id="Inspections.Reports_License_Validity_Start" Category="Field Optional" Bounds="308.943228008396,1063.56530020684,131.236666666667,25.96" Description="datetime" Label="License_Validity_Start" />
+    <Node Id="Inspections.Reports_Name" Category="Field" Bounds="468.943330547458,895.685295324032,51.6966666666667,25.96" Description="ntext" Label="Name" />
+    <Node Id="Inspections.Signatures" Category="Table" Bounds="984.748216732452,535.75970745976,404.886745605469,309.800666809636" Group="Expanded" Label="Inspections.Signatures" />
+    <Node Id="Inspections.Signatures_Annotation" Category="Field Optional" Bounds="1290.318285397,631.720012207031,79.3166666666666,25.96" Description="ntext" Label="Annotation" />
+    <Node Id="Inspections.Signatures_Date" Category="Field" Bounds="1004.74821673245,575.759830138606,50,25.96" Description="datetime" Label="Date" />
+    <Node Id="Inspections.Signatures_Designation" Category="Field Optional" Bounds="1004.74823127916,687.680030138606,83.4466666666667,25.96" Description="ntext" Label="Designation" />
+    <Node Id="Inspections.Signatures_Id" Category="Field Primary" Bounds="1084.74833880276,575.759830138606,50,25.96" Description="int" Label="Id" />
+    <Node Id="Inspections.Signatures_IsConfiguration" Category="Field" Bounds="1233.0082443,687.680065563965,101.13,25.96" Description="bit" Label="IsConfiguration" />
+    <Node Id="Inspections.Signatures_LastEdit" Category="Field" Bounds="1244.74833880276,575.759865563965,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="Inspections.Signatures_LastEditUser" Category="Field" Bounds="1118.19489794583,687.680042885119,84.8133333333335,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="Inspections.Signatures_Principal" Category="Field" Bounds="1099.52495124987,631.719930138606,65.1066666666666,25.96" Description="bit" Label="Principal" />
+    <Node Id="Inspections.Signatures_Remarks" Category="Field Optional" Bounds="1004.74827034166,631.719930138606,64.7766666666666,25.96" Description="ntext" Label="Remarks" />
+    <Node Id="Inspections.Signatures_ReportConfigurationId" Category="Field Foreign" Bounds="1004.74825162422,799.600274269396,138.53,25.96" Description="int" Label="ReportConfigurationId" />
+    <Node Id="Inspections.Signatures_ReportId" Category="Field Foreign" Bounds="1194.63161873034,631.719942885119,65.6866666666667,25.96" Description="int" Label="ReportId" />
+    <Node Id="Inspections.Signatures_Responsable_Name" Category="Field Optional" Bounds="1150.99823697578,743.640174269396,123.183333333333,25.96" Description="ntext" Label="Responsable_Name" />
+    <Node Id="Inspections.Signatures_Responsable_Type" Category="Field Optional" Bounds="1004.74823697578,743.640142885119,116.25,25.96" Description="int" Label="Responsable_Type" />
+    <Node Id="Inspections.Signatures_Title" Category="Field" Bounds="1164.74833880276,575.75980745976,50,25.96" Description="ntext" Label="Title" />
+    <Node Id="dbo" Category="Schema" Bounds="1439.6350323249,39.999726890016,322.270043131511,257.880625228907" Group="Expanded" Label="dbo" />
+    <Node Id="dbo.Users" Category="Table" Bounds="1459.6350323249,79.999826890016,282.27004313151,197.880425228907" Group="Expanded" Label="dbo.Users" />
+    <Node Id="dbo.Users_LastEdit" Category="Field" Bounds="1561.33171638659,119.999935299657,61.0266666666666,25.96" Description="datetime" Label="LastEdit" />
+    <Node Id="dbo.Users_LastEditUser" Category="Field" Bounds="1479.63504860094,231.920152118923,84.8133333333335,25.96" Description="nvarchar(20)" Label="LastEditUser" />
+    <Node Id="dbo.Users_LastName" Category="Field" Bounds="1479.63506274075,175.960035299657,72.6133333333332,25.96" Description="nvarchar(50)" Label="LastName" />
+    <Node Id="dbo.Users_Name" Category="Field" Bounds="1479.63502205065,119.999935299657,51.6966666666667,25.96" Description="nvarchar(50)" Label="Name" />
+    <Node Id="dbo.Users_Password" Category="Field Optional" Bounds="1652.35839851549,119.999952118923,69.5466666666666,25.96" Description="ntext" Label="Password" />
+    <Node Id="dbo.Users_UserName" Category="Field Primary" Bounds="1582.2484025845,175.960052118923,75.4833333333336,25.96" Description="nvarchar(20)" Label="UserName" />
   </Nodes>
   <Links>
     <Link Source="Database" Target="Inspections" Category="Contains" />
@@ -208,6 +208,7 @@
     <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
     <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
     <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
     <Property Id="Value" DataType="System.String" />
     <Property Id="ValueLabel" DataType="System.String" />
   </Properties>

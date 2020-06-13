@@ -28,8 +28,8 @@ namespace Inspections.Infrastructure.Queries
                       , [Title]
                       , [FormName]
                       , [RemarksLabelText]
-                      , DefinedCheckLists.CheckLists as DefinedCheckLists
-                      , DefinedSignatures.Signatures as DefinedSignatures
+                      , ISNULL(DefinedCheckLists.CheckLists,0) as DefinedCheckLists
+                      , ISNULL(DefinedSignatures.Signatures,0) as DefinedSignatures
                       , 0 as UsedByReports
                       , LastEdit
                       , LastEditUser
