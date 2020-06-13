@@ -21,6 +21,10 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
             if (!context.Database.IsInMemory())
                 context.Database.Migrate();
 
+            // TODO OJOOOOO: remove when ready for production
+            context.Database.EnsureDeleted();
+            context.Database.Migrate();
+
             var log = logger.CreateLogger<InspectionsSeed>();
             int retries = retriesNumber.Value;
             try
