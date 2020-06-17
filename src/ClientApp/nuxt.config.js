@@ -62,7 +62,7 @@ export default {
     redirect: {
       login: '/Login',
       logout: '/Login',
-      home: '/'
+      home: '/reports'
     },
     localStorage: false,
     cookie: {
