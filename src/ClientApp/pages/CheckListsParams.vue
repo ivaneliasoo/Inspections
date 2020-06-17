@@ -1,5 +1,7 @@
 <template>
-  
+  <div>
+    <h1>manage CHeckLists Parameters</h1>
+  </div>
 </template>
 
 <script lang="ts">

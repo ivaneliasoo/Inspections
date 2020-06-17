@@ -1,5 +1,7 @@
 <template>
-  
+  <div>
+    <h1>Manage Reports Configurations</h1>
+  </div>
 </template>
 
 <script lang="ts">
