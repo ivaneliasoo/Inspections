@@ -14,8 +14,6 @@
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
 name: NuxtJS Universal APP (UI)
 on:
-  push:
-    branches: [master]
   release:
     types: [created]
 
