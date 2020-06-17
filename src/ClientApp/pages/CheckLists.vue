@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>CheckLists</h1>
     <v-data-table :items="checks" item-key="id" dense :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
