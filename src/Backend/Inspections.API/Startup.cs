@@ -48,7 +48,7 @@ namespace Inspections.API
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
 
             services.AddControllers();
-
+            services.AddCors();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -177,6 +177,12 @@ namespace Inspections.API
 
 
             app.UseExceptionsMiddleware();
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+            });
+                
 
             app.UseAuthentication();
             app.UseAuthorization();
