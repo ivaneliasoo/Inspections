@@ -21,38 +21,46 @@
           </v-list-item-content>
         </v-list-item>
         <v-divider />
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-file-chart</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Reports</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-format-list-checks</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>CheckLists</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-draw</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Signatures</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-cog-outline</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Reports Settings</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <nuxt-link to="reports">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-file-chart</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Reports</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="checklists">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-format-list-checks</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>CheckLists</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="signatures">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-draw</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Signatures</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="reportsconfiguration">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-cog-outline</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Reports Settings</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
       </v-list>
     </v-navigation-drawer>
 
@@ -70,7 +78,6 @@
     </v-app-bar>
     <v-main>
       <v-container
-        class="fill-height"
         fluid
       >
         <v-row

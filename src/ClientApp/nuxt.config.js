@@ -64,9 +64,9 @@ export default {
       logout: '/Login',
       home: '/'
     },
-    localStorage: true,
+    localStorage: false,
     cookie: {
-      prefix: 'ui'
+      prefix: 'authUI'
     },
     strategies: {
       local: {
@@ -85,7 +85,7 @@ export default {
      ** https://github.com/nuxt-community/vuetify-module
      */
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    // customVariables: ['~/assets/variables.scss'],
     optionsPath: './vuetify.options.js'
   },
   /*
