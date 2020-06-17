@@ -46,9 +46,28 @@ namespace Inspections.API.Features.Users
             return new UserDTO(user);
         }
 
+        // GET: api/Users/username
+        [HttpGet("active")]
+        public async Task<ActionResult<UserDTO>> GetActiveUser()
+        {
+            var userName = HttpContext?.User?.Identity?.Name;
+
+            if (userName is null)
+                return BadRequest();
+
+            var user = await _context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync().ConfigureAwait(false);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return new UserDTO(user);
+        }
+
         // PUT: api/Users/5
         [HttpPut("{userName}")]
-        public async Task<IActionResult> PutUser(string userName, UserDTO user)
+        public async Task<IActionResult> PutUser(string userName, [FromBody]UserDTO user)
         {
             if (userName != user.UserName || string.IsNullOrWhiteSpace(userName))
             {
@@ -85,7 +104,7 @@ namespace Inspections.API.Features.Users
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(UserDTO user)
+        public async Task<ActionResult<User>> PostUser([FromBody] UserDTO user)
         {
             var newUser = new User()
             {
@@ -115,7 +134,7 @@ namespace Inspections.API.Features.Users
 
         // DELETE: api/Users/5
         [HttpDelete("{userName}")]
-        public async Task<ActionResult<User>> DeleteUser(string userName)
+        public async Task<ActionResult<User>> DeleteUser(string userName=null)
         {
             var user = _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
             if (user == null)

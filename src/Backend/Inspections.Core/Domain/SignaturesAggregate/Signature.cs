@@ -22,5 +22,16 @@ namespace Inspections.Core.Domain.SignaturesAggregate
         public int? ReportConfigurationId { get; set; }
         public ReportConfiguration  ReportConfiguration { get; set; }
 
+        public Signature PreparteForNewReport()
+        {
+            var newSignature = this.MemberwiseClone() as Signature;
+            newSignature.Id = 0;
+            newSignature.ReportId = 0;
+            newSignature.ReportConfigurationId = null;
+            newSignature.IsConfiguration = false;
+
+            return newSignature;
+        }
+
     }
 }

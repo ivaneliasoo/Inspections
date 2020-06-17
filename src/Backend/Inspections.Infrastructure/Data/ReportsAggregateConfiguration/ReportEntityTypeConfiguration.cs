@@ -12,11 +12,6 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
 
         public void Configure(EntityTypeBuilder<Report> builder)
         {
-            //builder.Ignore(p => p.CheckList);
-            //builder.Ignore(p => p.PhotoRecords);
-            //builder.Ignore(p => p.Notes);
-            //builder.Ignore(p => p.Signatures);
-
             builder.ToTable("Reports", InspectionsContext.DEFAULT_SCHEMA);
             builder.Ignore(p => p.DomainEvents);
             builder.HasKey(p => p.Id);
@@ -33,6 +28,11 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.Address).IsRequired();
             builder.Property(p => p.Date).IsRequired();
+
+            builder.Property(p => p.IsClosed).IsRequired();
+            builder.Property(p => p.Title).IsRequired();
+            builder.Property(p => p.FormName).IsRequired();
+            builder.Property(p => p.RemarksLabelText).IsRequired();
 
             var navigationChecks = builder.Metadata.FindNavigation(nameof(Report.CheckList));
             navigationChecks.SetField("checkList");

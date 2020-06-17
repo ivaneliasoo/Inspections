@@ -10,7 +10,7 @@ namespace Inspections.API.Features
 {
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly InspectionsContext _context;
@@ -29,9 +29,9 @@ namespace Inspections.API.Features
         /// <param name="password"></param>
         /// <returns></returns>
         [HttpPost("token")]
-        public IActionResult CreateToken(string username, string password)
+        public IActionResult CreateToken([FromBody]LoginModel model)
         {
-            var user = _context.Users.Where(u => u.UserName == username && u.Password == password).FirstOrDefault();
+            var user = _context.Users.Where(u => u.UserName == model.username && u.Password == model.password).FirstOrDefault();
 
             if (user == null)
             {
@@ -43,4 +43,11 @@ namespace Inspections.API.Features
             return Ok(token);
         }
     }
+
+    public class LoginModel
+    {
+        public string username { get; set; }
+        public string password { get; set; }
+    }
+    
 }

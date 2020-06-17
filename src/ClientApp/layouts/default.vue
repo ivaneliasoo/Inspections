@@ -1,86 +1,115 @@
 <template>
-  <v-app dark>
+  <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
+      color="indigo"
+      expand-on-hover
+      mini-variant
       app
+      dark
     >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
+      <v-list dense>
+        <v-list-item class="px-2">
+          <v-list-item-avatar>
+            <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+          </v-list-item-avatar>
+        </v-list-item>
+        <v-list-item link>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title class="title">Demo User</v-list-item-title>
+            <v-list-item-subtitle>user@gmail.com</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
+        <v-divider />
+        <nuxt-link to="reports">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-file-chart</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Reports</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="checklists">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-format-list-checks</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>CheckLists</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="signatures">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-draw</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Signatures</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="reportsconfiguration">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-cog-outline</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Reports Settings</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
+
+    <v-app-bar
+      app
+      color="indigo"
+      dark
+    >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-attach</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title>Inspections</v-toolbar-title>
       <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
+      <v-btn icon @click="logout">
+        <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-content>
-      <v-container>
-        <nuxt />
+    <v-main>
+      <v-container
+        fluid
+      >
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-col class="text-center">
+            <nuxt />
+          </v-col>
+        </v-row>
       </v-container>
-    </v-content>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>mdi-repeat</v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+    </v-main>
+    <v-footer
+      color="indigo"
+      app
+    >
+      <span class="white--text">&copy; 2020</span>
     </v-footer>
   </v-app>
 </template>
+<script lang="ts">
+import { Vue, Component } from 'nuxt-property-decorator'
 
-<script>
-export default {
-  data() {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-copy',
-          title: 'Reports',
-          to: '/'
-        }
-      ],
-      miniVariant: false,
-      right: false,
-      rightDrawer: false,
-      title: 'Inspections'
-    }
+@Component
+export default class Default extends Vue {
+  drawer: boolean | null = null
+  mini: boolean = false
+
+  async logout() {
+    await this.$auth.logout()
   }
 }
 </script>
+<style>
+</style>

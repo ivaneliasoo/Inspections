@@ -20,9 +20,14 @@ namespace Inspections.Infrastructure.Repositories
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public Task<Report> AddAsync(Report entity)
+        public async Task<Report> AddAsync(Report entity)
         {
-            throw new NotImplementedException();
+            
+
+            await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
+
+            return entity;
         }
 
         public Task DeleteAsync(Report entity)

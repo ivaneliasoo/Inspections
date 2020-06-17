@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
@@ -48,7 +48,7 @@ namespace Inspections.API
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
 
             services.AddControllers();
-
+            services.AddCors();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -148,8 +148,6 @@ namespace Inspections.API
             services.AddScoped<ISignaturesQueries, SignaturesQueries>();
             services.AddScoped<IReportConfigurationsQueries, ReportConfigurationsQueries>();
 
-
-
             //ConfigurarDbContextInMemoryDb(services);
             ConfigurarDbContextInSqlDb(services);
         }
@@ -179,6 +177,12 @@ namespace Inspections.API
 
 
             app.UseExceptionsMiddleware();
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+            });
+                
 
             app.UseAuthentication();
             app.UseAuthorization();

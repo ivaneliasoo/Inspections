@@ -1,22 +1,29 @@
 version: '3.4'
 
 services:
+  sql.data:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    volumes: ['sql1data:/var/opt/mssql']
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: 15560367o%
+      MSSQL_PID: express
+    
+
   inspections.api:
-#    depends_on: 
-#        - sql.data
+    depends_on: 
+        - sql.data
     ports:
         - "8088:80"
     image: ${DOCKER_REGISTRY-}inspectionsapi
     build:
       context: .
       dockerfile: Inspections.API/Dockerfile
+    environment:
+      ConnectionStrings__Inspections: Data Source = sql.data ; User=sa; Password=15560367o%; Initial Catalog = InspectionsDb
 
-#  sql.data:
-#    image: mcr.microsoft.com/mssql/server:2019-latest
-#    ports:
-#      - 1435:1435
-#    environment:
-#      ACCEPT_EULA: Y
-#      SA_PASSWORD: 15560367o%
-#      MSSQL_PID: express
-#      MSSQL_TCP_PORT: 1435
+volumes:
+  sql1data:
+    external: true

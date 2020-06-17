@@ -19,7 +19,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
         public string Text { get; private set; }
         public List<CheckListParam> TextParams { get; private set; } = new List<CheckListParam>();
         public string Annotation { get; private set; }
-        public bool IsConfiguration { get; private set; }
+        public bool IsConfiguration { get; set; }
         private readonly List<CheckListItem> _checks = new List<CheckListItem>();
 
         public CheckList(string text, List<CheckListParam> textParams, string annotation, bool isConfiguration)
@@ -33,7 +33,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
         private CheckList() { } //Required by EF
 
         public IReadOnlyList<CheckListItem> Checks => _checks.AsReadOnly();
-        public bool Completed => Checks.Any(c => c.Checked==CheckValue.False || c.Checked == CheckValue.NA);
+        public bool Completed => Checks.Any(c => c.Checked == CheckValue.False || c.Checked == CheckValue.NA);
 
 
         public void AddCheckItems(CheckListItem checkListItem)
@@ -72,6 +72,16 @@ namespace Inspections.Core.Domain.CheckListAggregate
             ValidateCanEdit();
 
             TextParams.AddRange(checkListParams);
+        }
+
+        public CheckList PreparteForNewReport()
+        {
+            var newCheckList = this.MemberwiseClone() as CheckList;
+            newCheckList.Id = 0;
+            newCheckList.ReportId = 0;
+            newCheckList.ReportConfigurationId = null;
+            newCheckList.IsConfiguration = false;
+            return newCheckList;
         }
     }
 }
