@@ -60,15 +60,14 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 
   @Component({
+    layout: 'guest'
   })
 export default class LoginPage extends Vue {
       userName: string = ''
       password: string = ''
 
       async login () {
-        await this.$auth.loginWith('local', { data: { userName: this.userName, password: this.password } }).then((result: any) => {
-          alert(result)
-        })
+        await this.$auth.loginWith('local', { data: { userName: this.userName, password: this.password } })
       }
 }
 </script>

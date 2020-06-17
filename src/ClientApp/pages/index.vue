@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div>
-      <logo />
       <h1 class="title">
         prueba3
       </h1>
@@ -29,18 +28,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Logo from '~/components/Logo.vue'
+import { Vue, Component } from 'nuxt-property-decorator'
 
-export default Vue.extend({
-  components: {
-    Logo
-  }
-})
+@Component
+export default class IndexPage extends Vue {
+}
 </script>
 
 <style>
-.container {
+/* .container {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
@@ -69,5 +65,5 @@ export default Vue.extend({
 
 .links {
   padding-top: 15px;
-}
+} */
 </style>

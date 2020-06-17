@@ -64,9 +64,9 @@ export default {
       logout: '/Login',
       home: '/'
     },
-    localStorage: false,
+    localStorage: true,
     cookie: {
-      prefix: 'inspectionsui'
+      prefix: 'ui'
     },
     strategies: {
       local: {
