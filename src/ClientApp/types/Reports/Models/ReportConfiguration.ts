@@ -1,6 +1,7 @@
-import { CheckList } from './CheckList'
+
 import { ReportType } from './ReportType'
-import { Signature } from './Signature'
+import { CheckList } from '~/types/CheckLists/Models/CheckList'
+import { Signature } from '~/types/Signatures/Models/Signature'
 
 export interface ReportConfiguration {
     id: number;

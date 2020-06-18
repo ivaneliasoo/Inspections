@@ -3,9 +3,9 @@ using MediatR;
 
 namespace Inspections.API.Features.Inspections.Commands
 {
-    public class Update : IRequest<bool>
+    public class UpdateReportCommand : IRequest<bool>
     {
-        public Update()
+        public UpdateReportCommand()
         {
         }
     }

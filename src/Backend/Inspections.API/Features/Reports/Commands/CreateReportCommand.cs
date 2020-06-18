@@ -9,12 +9,12 @@ using Ardalis.GuardClauses;
 
 namespace Inspections.API.Features.Inspections.Commands
 {
-    public class Create : IRequest<bool>
+    public class CreateReportCommand : IRequest<bool>
     {
         public int ConfigurationId { get; }
         public ReportType ReportType { get; }
 
-        public Create(int configurationId, ReportType reportType)
+        public CreateReportCommand(int configurationId, ReportType reportType)
         {
             Guard.Against.NegativeOrZero(configurationId, nameof(configurationId));
 

@@ -3,9 +3,9 @@ using MediatR;
 
 namespace Inspections.API.Features.Inspections.Commands
 {
-    public class Delete : IRequest<bool>
+    public class DeleteReportCommand : IRequest<bool>
     {
-        public Delete()
+        public DeleteReportCommand()
         {
         }
     }

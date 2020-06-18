@@ -24,7 +24,7 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Create createData)
+        public async Task<IActionResult> Post([FromBody] CreateReportCommand createData)
         {
             var result = await _mediator.Send(createData).ConfigureAwait(false);
             if (!result)
