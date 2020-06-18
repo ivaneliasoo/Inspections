@@ -26,7 +26,10 @@ namespace Inspections.API.Features.Inspections.Handlers
             var cfg = await _reportConfigurationsRepository.GetByIdAsync(1).ConfigureAwait(false);
 
             IReportsBuilder _reportsBuilder = new ReportsBuilder(cfg);
-            var newReport = _reportsBuilder.WithDefaultNotes(true).Build();
+            var newReport = _reportsBuilder
+                .WithDefaultNotes(true)
+                .WithName(request.Name)
+                .Build();
 
             await _reportsRepository.AddAsync(newReport).ConfigureAwait(false);
             return true;                              ;

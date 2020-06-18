@@ -1,9 +1,11 @@
 ﻿using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces;
 using Inspections.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +30,12 @@ namespace Inspections.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             return entity;
+        }
+
+        public async Task<IEnumerable<Report>> GetAll(string filter)
+        {
+            // TODO: Change
+            return await _context.Inspections.ToListAsync();
         }
 
         public Task DeleteAsync(Report entity)

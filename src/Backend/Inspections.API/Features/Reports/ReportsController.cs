@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Inspections.API.Features.Inspections.Commands;
+using Inspections.Core.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,12 @@ namespace Inspections.API.Features.Inspections
     public class ReportsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IReportsRepository _reportsRepository;
 
-        public ReportsController(IMediator mediator)
+        public ReportsController(IMediator mediator, IReportsRepository reportsRepository)
         {
             this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this._reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
         }
 
         [HttpPost]
@@ -31,6 +34,16 @@ namespace Inspections.API.Features.Inspections
                 return BadRequest();
 
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll(string filter)
+        {
+            var result = await _reportsRepository.GetAll(filter);
+            if (result is null)
+                return NoContent();
+
+            return Ok(result);
         }
     }
 }

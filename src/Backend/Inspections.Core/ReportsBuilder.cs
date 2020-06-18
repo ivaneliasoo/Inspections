@@ -42,6 +42,13 @@ namespace Inspections.Core
             return this;
         }
 
+        public ReportsBuilder WithName(string name)
+        {
+            _report.SetName(name);
+
+            return this;
+        }
+
         public ReportsBuilder WithDefaultNotes(bool addDefaultNOtes)
         {
             var note = new Note()

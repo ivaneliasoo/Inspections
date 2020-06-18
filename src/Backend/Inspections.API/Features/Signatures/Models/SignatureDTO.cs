@@ -9,6 +9,7 @@ namespace Inspections.API.Features.Signatures.Models
 {
     public class SignatureDTO
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Annotation { get; set; }
         public ResponsableType ResponsableType { get; set; }
@@ -22,13 +23,14 @@ namespace Inspections.API.Features.Signatures.Models
         {
             Guard.Against.Null(signature, nameof(signature));
 
+            Id = signature.Id;
             Title = signature.Title;
             Annotation = signature.Annotation;
             Designation = signature.Designation;
             Remarks = signature.Remarks;
             Date = signature.Date;
             Principal = signature.Principal;
-            if (!signature.IsConfiguration)
+            if (!signature.IsConfiguration && signature.Responsable != null)
             {
                 ResponsableType = signature.Responsable.Type;
                 ResponsableName = signature.Responsable.Name;

@@ -42,6 +42,12 @@ namespace Inspections.Core.Domain.ReportsAggregate
             Date = date;
         }
 
+        internal void SetName(string name)
+        {
+            CheckIfClosed();
+            Name = name;
+        }
+
         public Report(string title, string formName, string remarksLabelText)
             : this(string.Empty, string.Empty, null, DateTimeOffset.UtcNow)
         {
@@ -52,7 +58,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public void Edit(string name, string address, EMALicense license, DateTimeOffset date)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             Name = name;
             Address = address;
             License = license;
@@ -64,11 +70,11 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public void AddNote(Note note)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             notes.Add(note);
         }
 
-        private void CheckIsClosed()
+        private void CheckIfClosed()
         {
             if (IsClosed)
                 throw new InvalidOperationException("Report is Closed. You Can't edit Closed Reports");
@@ -76,37 +82,37 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public void AddNote(IEnumerable<Note> note)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             notes.AddRange(note);
         }
 
         public void RemoveNote(Note note)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             notes.Remove(note);
         }
 
         public void AddPhoto(PhotoRecord photo)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             photoRecords.Add(photo);
         }
 
         public void AddPhoto(IEnumerable<PhotoRecord> photo)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             photoRecords.AddRange(photo);
         }
 
         public void RemovePhoto(PhotoRecord photo)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             photoRecords.Remove(photo);
         }
 
         internal void AddCheckList(IEnumerable<CheckList> checkList)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             foreach (var check in checkList)
             {
                 this.checkList.Add(check.PreparteForNewReport());
@@ -116,13 +122,13 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         internal void RemoveCheckList(CheckList checkList)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             this.checkList.Remove(checkList);
         }
 
         internal void AddSignature(IEnumerable<Signature> signature)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             foreach (var sign in signature)
             {
                 signatures.Add(sign.PreparteForNewReport());
@@ -131,7 +137,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         internal void RemoveSignature(Signature signature)
         {
-            CheckIsClosed();
+            CheckIfClosed();
             signatures.Remove(signature);
         }
 
