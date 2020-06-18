@@ -11,18 +11,36 @@
       <template v-slot:title="{}">
         New CheckLists
       </template>
-      <v-row>
-      </v-row>
+      <v-row/>
     </message-dialog>
     <message-dialog v-model="dialogItems" :actions="[]">
       <template v-slot:title="{}">
         {{ selectedItem.text }} Items
       </template>
       <template v-slot:subtitle="{}">
-        Items &amp; Params
+        <v-list
+          subheader
+          two-line
+          flat
+        >
+          <v-subheader>Items &amp; Params</v-subheader>
+          <v-list-item v-for="item in checkItems" :key="item.id">
+            <template v-slot:default="{ active, toggle }">
+              <v-list-item-action>
+                <v-checkbox
+                  color="primary"
+                  @click="toggle"
+                />
+              </v-list-item-action>
+
+              <v-list-item-content>
+                <v-list-item-title>{{ item.text }}</v-list-item-title>
+                <v-list-item-subtitle>Required {{ item.required }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </template>
+          </v-list-item>
+        </v-list>
       </template>
-      <v-row>
-      </v-row>
     </message-dialog>
     <v-data-table :items="checks" item-key="id" dense :search="filter" :headers="headers">
       <template v-slot:top="{}">
@@ -34,7 +52,6 @@
           <v-btn color="primary" dark class="mb-2" @click="dialog=true">
             New CheckList
           </v-btn>
-          
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -69,7 +86,7 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { CheckListsState } from 'store/checklists'
-import { CheckList } from '../types'
+import { CheckList, CheckListItem } from '../types'
 import AlertDialog from '@/components/AlertDialog.vue'
 import MessageDialog from '@/components/MessageDialog.vue'
 import GridFilter from '@/components/GridFilter.vue'
@@ -138,12 +155,18 @@ export default class CheckListsPage extends Vue {
       .checkLists
   }
 
+  get checkItems (): CheckListItem[] {
+    return (this.$store.state.checklists as CheckListsState)
+      .checkListItems
+  }
+
   fetch ({ store }: any) {
     store.dispatch('checklists/getChecklists', '', { root: true })
   }
 
   selectItem (item: CheckList): void{
     this.selectedItem = item
+    this.$store.dispatch('checklists/getCheckListItemsById', this.selectedItem.id, { root: false })
   }
 }
 </script>
