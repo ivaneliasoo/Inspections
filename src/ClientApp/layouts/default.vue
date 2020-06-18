@@ -72,6 +72,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Inspections</v-toolbar-title>
       <v-spacer />
+      <img src="/Logo.jpeg" height="50px" width="130px">
       <v-btn icon @click="logout">
         <v-icon>mdi-logout</v-icon>
       </v-btn>
