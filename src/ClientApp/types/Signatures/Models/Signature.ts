@@ -1,5 +1,6 @@
-import { ReportConfiguration } from './ReportConfiguration'
+
 import { Responsable } from './Responsable'
+import { ReportConfiguration } from '~/types/Reports/Models/ReportConfiguration'
 
 export interface Signature {
     id: number;

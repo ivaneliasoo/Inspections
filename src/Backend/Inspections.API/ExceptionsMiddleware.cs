@@ -22,7 +22,9 @@ namespace ZadERP.Api.Middleware
         /// <summary>
         /// Crea una Nueva Instancia de <see cref="ExceptionsMiddleware"/> class.
         /// </summary>
+        /// <param name="logger"></param>
         /// <param name="next"></param>
+        /// <param name="serviceProvider"></param>
         public ExceptionsMiddleware(ILogger<ExceptionsMiddleware> logger, RequestDelegate next, IServiceProvider serviceProvider)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Inspections.API.Features
+namespace Inspections.API.Features.Users
 {
 
     [ApiController]
@@ -25,11 +25,10 @@ namespace Inspections.API.Features
         /// <summary>
         /// Generates a JWT token for use in api call
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("token")]
-        public IActionResult CreateToken([FromBody]LoginModel model)
+        public IActionResult CreateToken([FromBody] LoginModel model)
         {
             var user = _context.Users.Where(u => u.UserName == model.username && u.Password == model.password).FirstOrDefault();
 
@@ -49,5 +48,5 @@ namespace Inspections.API.Features
         public string username { get; set; }
         public string password { get; set; }
     }
-    
+
 }
