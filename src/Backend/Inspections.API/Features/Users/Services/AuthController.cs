@@ -25,8 +25,7 @@ namespace Inspections.API.Features
         /// <summary>
         /// Generates a JWT token for use in api call
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("token")]
         public IActionResult CreateToken([FromBody]LoginModel model)
