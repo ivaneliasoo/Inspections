@@ -52,6 +52,7 @@
           <v-btn color="primary" dark class="mb-2" @click="dialog=true">
             New CheckList
           </v-btn>
+
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
