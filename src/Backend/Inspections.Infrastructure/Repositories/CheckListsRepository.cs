@@ -4,6 +4,7 @@ using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -38,7 +39,8 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<CheckList> GetByIdAsync(int id)
         {
-            return await _context.Set<CheckList>().FindAsync(id);
+            return await _context.Set<CheckList>()
+                .Include("Checks").Where(c=>c.Id == id).SingleOrDefaultAsync();
         }
 
         public async Task<CheckListItem> GetItemByIdAsync(int id)
