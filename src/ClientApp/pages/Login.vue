@@ -48,13 +48,26 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer />
-                  <v-btn color="primary" @click="login">
+                  <v-btn color="primary" :loading="loading" @click="login">
                     Login
                   </v-btn>
                 </v-card-actions>
+                <v-row>
+                  <v-alert
+                    :value="hasError"
+                    color="pink"
+                    dark
+                    border="top"
+                    icon="mdi-home"
+                    transition="scale-transition"
+                  >
+                    Invalid Credentials. Try again
+                  </v-alert>
+                </v-row>
               </v-card>
             </v-col>
           </v-row>
+          
         </v-container>
       </v-parallax>
     </v-main>
@@ -70,9 +83,18 @@ import { Vue, Component } from 'nuxt-property-decorator'
 export default class LoginPage extends Vue {
       userName: string = ''
       password: string = ''
+      loading: Boolean = false
+      hasError: Boolean = false
 
       async login () {
+        this.loading = true;
         await this.$auth.loginWith('local', { data: { userName: this.userName, password: this.password } })
+          .catch(() => {
+            this.hasError = true
+
+            setTimeout(() => { this.hasError = false }, 3000)
+          })
+          .finally(() => { this.loading = false })
       }
 }
 </script>
