@@ -1,52 +1,66 @@
 <template>
   <div>
-    <v-data-table :items="checks" item-key="id" dense :headers="headers">
+    <alert-dialog
+      v-model="dialogRemove"
+      title="Remove CheckList"
+      message="This operation will remove this CheckList and all items and params (if not used)"
+      :code="selectedItem.id"
+      :description="selectedItem.text"
+    />
+    <message-dialog v-model="dialog" :actions="['yes','cancel']">
+      <template v-slot:title="{}">
+        New CheckLists
+      </template>
+      <v-row>
+      </v-row>
+    </message-dialog>
+    <message-dialog v-model="dialogItems" :actions="[]">
+      <template v-slot:title="{}">
+        {{ selectedItem.text }} Items
+      </template>
+      <template v-slot:subtitle="{}">
+        Items &amp; Params
+      </template>
+      <v-row>
+      </v-row>
+    </message-dialog>
+    <v-data-table :items="checks" item-key="id" dense :search="filter" :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>CheckLists</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
+          <grid-filter :filter.sync="filter" />
           <v-spacer />
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">New CheckList</v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">New CheckLists</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <!-- <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.name" label="Dessert name" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.calories" label="Calories" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.fat" label="Fat (g)" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.carbs" label="Carbs (g)" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.protein" label="Protein (g)" />
-                    </v-col>-->
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-                <!-- <v-btn color="blue darken-1" text @click="close">
-                  Cancel
-                </v-btn>
-                <v-btn color="blue darken-1" text @click="save">
-                  Save
-                </v-btn>-->
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+          <v-btn color="primary" dark class="mb-2" @click="dialog=true">
+            New CheckList
+          </v-btn>
+          
         </v-toolbar>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-icon
+          small
+          color="amber"
+          class="mr-2"
+          @click="selectItem(item); dialogItems = true"
+        >
+          mdi-format-list-checks
+        </v-icon>
+        <v-icon
+          small
+          color="primary"
+          class="mr-2"
+          @click="selectItem(item); dialog = true"
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          small
+          color="error"
+          @click="selectItem(item); dialogRemove = true"
+        >
+          mdi-delete
+        </v-icon>
       </template>
     </v-data-table>
   </div>
@@ -56,10 +70,24 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import { CheckListsState } from 'store/checklists'
 import { CheckList } from '../types'
+import AlertDialog from '@/components/AlertDialog.vue'
+import MessageDialog from '@/components/MessageDialog.vue'
+import GridFilter from '@/components/GridFilter.vue'
 
-@Component
+@Component({
+  components: {
+    AlertDialog,
+    MessageDialog,
+    GridFilter
+  }
+})
 export default class CheckListsPage extends Vue {
-  dialog: boolean = false;
+  dialog: Boolean = false
+  dialogRemove: boolean = false
+  dialogItems: Boolean = false
+  filter: String = ''
+  selectedItem: CheckList = {} as CheckList
+
   headers: any[] = [
     {
       text: 'Id',
@@ -95,6 +123,13 @@ export default class CheckListsPage extends Vue {
       sortable: true,
       align: 'center',
       class: 'secundary'
+    },
+    {
+      text: '',
+      value: 'actions',
+      sortable: false,
+      align: 'center',
+      class: 'secundary'
     }
   ];
 
@@ -105,6 +140,10 @@ export default class CheckListsPage extends Vue {
 
   fetch ({ store }: any) {
     store.dispatch('checklists/getChecklists', '', { root: true })
+  }
+
+  selectItem (item: CheckList): void{
+    this.selectedItem = item
   }
 }
 </script>
