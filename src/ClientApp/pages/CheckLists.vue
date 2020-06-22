@@ -11,7 +11,7 @@
       <template v-slot:title="{}">
         New CheckLists
       </template>
-      <v-row/>
+      <v-row />
     </message-dialog>
     <message-dialog v-model="dialogItems" :actions="[]">
       <template v-slot:title="{}">
@@ -42,17 +42,42 @@
         </v-list>
       </template>
     </message-dialog>
-    <v-data-table :items="checks" item-key="id" dense :search="filter" :headers="headers">
+    <v-data-table :items="checks" item-key="id" dense :search="filter.filterText" :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>CheckLists</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
-          <grid-filter :filter.sync="filter" />
+          <grid-filter :filter.sync="filter.filterText" />
           <v-spacer />
           <v-btn color="primary" dark class="mb-2" @click="dialog=true">
             New CheckList
           </v-btn>
         </v-toolbar>
+        <v-row justify="space-around" class="ml-2 mr-2">
+          <v-col cols="12" md="5">
+            <v-autocomplete
+              v-model="filter.reportId"
+              label="In Report"
+              :items="reports"
+              item-text="name"
+              item-value="id"
+              clearable
+            />
+          </v-col>
+          <v-col cols="12" :md="filter.inConfigurationOnly ? 2:7">
+            <v-switch v-model="filter.inConfigurationOnly" label="In Configuration" />
+          </v-col>
+          <v-col v-if="filter.inConfigurationOnly" cols="12" md="5">
+            <v-autocomplete
+              v-model="filter.reportConfigurationId"
+              label="In Report Configuration"
+              :items="configurations"
+              item-text="title"
+              item-value="id"
+              clearable
+            />
+          </v-col>
+        </v-row>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon
@@ -84,9 +109,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, Watch } from 'nuxt-property-decorator'
 import { CheckListsState } from 'store/checklists'
-import { CheckList, CheckListItem } from '../types'
+import { ReportConfigurationState } from '../store/configurations'
+import { ReportsState } from '../store/reportstrore'
+import { CheckList, CheckListItem, FilterType, ReportConfiguration, Report } from '../types'
 import AlertDialog from '@/components/AlertDialog.vue'
 import MessageDialog from '@/components/MessageDialog.vue'
 import GridFilter from '@/components/GridFilter.vue'
@@ -102,7 +129,13 @@ export default class CheckListsPage extends Vue {
   dialog: Boolean = false
   dialogRemove: boolean = false
   dialogItems: Boolean = false
-  filter: String = ''
+  filter: FilterType = {
+    filterText: '',
+    inConfigurationOnly: undefined,
+    repotId: undefined,
+    reportConfigurationId: undefined
+  }
+
   selectedItem: CheckList = {} as CheckList
 
   headers: any[] = [
@@ -155,18 +188,34 @@ export default class CheckListsPage extends Vue {
       .checkLists
   }
 
+  get reports (): Report[] {
+    return (this.$store.state.reportstrore as ReportsState)
+      .reportList
+  }
+
+  get configurations (): ReportConfiguration[] {
+    return (this.$store.state.configurations as ReportConfigurationState)
+      .configurations
+  }
+
   get checkItems (): CheckListItem[] {
     return (this.$store.state.checklists as CheckListsState)
       .checkListItems
   }
 
-  fetch ({ store }: any) {
-    store.dispatch('checklists/getChecklists', '', { root: true })
+  async fetch () {
+    await this.$store.dispatch('reportstrore/getReports', '', { root: true })
+    await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
   }
 
   selectItem (item: CheckList): void{
     this.selectedItem = item
     this.$store.dispatch('checklists/getCheckListItemsById', this.selectedItem.id, { root: false })
+  }
+
+  @Watch('filter', { deep: true })
+  onFilterChanged (value: FilterType, oldValue: FilterType) {
+    this.$store.dispatch('checklists/getChecklists', value, { root: true })
   }
 }
 </script>

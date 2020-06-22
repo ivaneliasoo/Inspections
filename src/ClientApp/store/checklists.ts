@@ -16,7 +16,7 @@ export const mutations: MutationTree<CheckListsState> = {
 
 export const actions: ActionTree<CheckListsState, RootState> = {
   async getChecklists ({ commit }, payload) {
-    const checks = await this.$axios.$get(`checklists?${payload ?? ''}`)
+    const checks = await this.$axios.$get('checklists', { params: payload })
     commit('SET_CHECKLISTS', checks)
   },
   async getCheckListItemsById ({ commit }, payload) {

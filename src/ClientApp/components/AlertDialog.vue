@@ -2,11 +2,12 @@
   <v-dialog
     v-model="dialog"
     persistent
+    scrollable
     :fullscreen="$vuetify.breakpoint.smAndDown"
     :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'"
   >
     <v-card>
-      <v-toolbar dark color="indigo">
+      <v-toolbar dark color="indigo" dense>
         <v-btn icon @click.native="$emit('input', false)">
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>

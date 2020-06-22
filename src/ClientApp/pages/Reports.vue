@@ -90,6 +90,9 @@
       <template v-slot:item.checkList="{ item }">
         {{ item.checkList.length }}
       </template>
+      <template v-slot:item.signatures="{ item }">
+        {{ item.signatures.length }}
+      </template>
     </v-data-table>
   </div>
 </template>
@@ -157,6 +160,13 @@ export default class ReportsPage extends Vue {
       {
         text: 'Checks',
         value: 'checkList',
+        sortable: true,
+        align: 'center',
+        class: 'secundary'
+      },
+      {
+        text: 'Signatures',
+        value: 'signatures',
         sortable: true,
         align: 'center',
         class: 'secundary'

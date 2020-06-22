@@ -39,7 +39,7 @@ namespace Inspections.API.Features.Inspections
         [HttpGet]
         public async Task<IActionResult> GetAll(string filter)
         {
-            var result = await _reportsRepository.GetAll(filter);
+            var result = await _reportsRepository.GetAll(filter).ConfigureAwait(false);
             if (result is null)
                 return NoContent();
 

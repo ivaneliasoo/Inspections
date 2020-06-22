@@ -24,8 +24,6 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<Report> AddAsync(Report entity)
         {
-            
-
             await _context.AddAsync(entity);
             await _context.SaveChangesAsync();
 
@@ -35,7 +33,12 @@ namespace Inspections.Infrastructure.Repositories
         public async Task<IEnumerable<Report>> GetAll(string filter)
         {
             // TODO: Change
-            return await _context.Inspections.ToListAsync();
+            return await _context.Reports
+                .Include(p => p.CheckList)
+                .Include(p=>p.Signatures)
+                .Include(p=>p.Notes)
+                .Include(p => p.PhotoRecords)
+                .ToListAsync();
         }
 
         public Task DeleteAsync(Report entity)

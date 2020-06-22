@@ -8,6 +8,6 @@ namespace Inspections.Core.Interfaces.Queries
 {
     public interface ICheckListsQueries
     {
-        IEnumerable<ResumenCheckList> GetByFilter(string filter);
+        IEnumerable<ResumenCheckList> GetByFilter(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId);
     }
 }

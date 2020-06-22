@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-data-table :items="signatures" item-key="id" :search="filter" dense :headers="headers">
+    <v-data-table :items="signatures" item-key="id" :search="filter.filterText" dense :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Signatures</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
-          <grid-filter :filter.sync="filter" />
+          <grid-filter :filter.sync="filter.filterText" />
           <v-spacer />
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
@@ -29,6 +29,31 @@
             </v-card>
           </v-dialog>
         </v-toolbar>
+        <v-row justify="space-around" class="ml-2 mr-2">
+          <v-col cols="12" md="5">
+            <v-autocomplete
+              v-model="filter.reportId"
+              label="In Report"
+              :items="reports"
+              item-text="name"
+              item-value="id"
+              clearable
+            />
+          </v-col>
+          <v-col cols="12" :md="filter.inConfigurationOnly ? 2:7">
+            <v-switch v-model="filter.inConfigurationOnly" label="In Configuration" />
+          </v-col>
+          <v-col v-if="filter.inConfigurationOnly" cols="12" md="5">
+            <v-autocomplete
+              v-model="filter.reportConfigurationId"
+              label="In Report Configuration"
+              :items="configurations"
+              item-text="title"
+              item-value="id"
+              clearable
+            />
+          </v-col>
+        </v-row>
       </template>
       <template v-slot:item.actions="{}">
         <v-icon
@@ -52,10 +77,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, Watch } from 'nuxt-property-decorator'
 import { SignatureState } from 'store/signatures'
 import { SignatureDTO } from '../types/Signatures/ViewModels/SignatureDTO'
 import GridFilter from '@/components/GridFilter.vue'
+import { Report, ReportConfiguration, FilterType } from '~/types'
+import { ReportConfigurationState } from '~/store/configurations'
+import { ReportsState } from '~/store/reportstrore'
 
 @Component({
   components: {
@@ -63,8 +91,14 @@ import GridFilter from '@/components/GridFilter.vue'
   }
 })
 export default class SignaturesPage extends Vue {
-  dialog: boolean = false;
-  filter: string = ''
+  dialog: boolean = false
+  filter: FilterType = {
+    filterText: '',
+    inConfigurationOnly: undefined,
+    repotId: undefined,
+    reportConfigurationId: undefined
+  }
+
   headers: any[] = [
     {
       text: 'Id',
@@ -103,13 +137,30 @@ export default class SignaturesPage extends Vue {
     }
   ];
 
+  get reports (): Report[] {
+    return (this.$store.state.reportstrore as ReportsState)
+      .reportList
+  }
+
+  get configurations (): ReportConfiguration[] {
+    return (this.$store.state.configurations as ReportConfigurationState)
+      .configurations
+  }
+
   get signatures (): SignatureDTO[] {
     return (this.$store.state.signatures as SignatureState)
       .signaturesList
   }
 
-  fetch ({ store }: any) {
-    store.dispatch('signatures/getSignatures', '', { root: true })
+  async fetch () {
+    await this.$store.dispatch('reportstrore/getReports', '', { root: true })
+    await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
+  }
+
+  @Watch('filter', { deep: true })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async onFilterChanged (value: FilterType, oldValue: FilterType) {
+    await this.$store.dispatch('signatures/getSignatures', value, { root: true })
   }
 }
 </script>

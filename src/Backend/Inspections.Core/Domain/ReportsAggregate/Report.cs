@@ -115,7 +115,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
             CheckIfClosed();
             foreach (var check in checkList)
             {
-                this.checkList.Add(check.PreparteForNewReport());
+                this.checkList.Add(check.CloneForReport());
             }
            
         }

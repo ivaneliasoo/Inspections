@@ -14,7 +14,7 @@ export const mutations: MutationTree<SignatureState> = {
 
 export const actions: ActionTree<SignatureState, RootState> = {
   async getSignatures ({ commit }, payload) {
-    const sign = await this.$axios.$get(`signatures?${payload ?? ''}`)
+    const sign = await this.$axios.$get('signatures', { params: payload })
     commit('SET_SIGNATURES_LIST', sign)
   }
 }

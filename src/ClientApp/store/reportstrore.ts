@@ -19,6 +19,6 @@ export const actions: ActionTree<ReportsState, RootState> = {
   },
   // eslint-disable-next-line no-empty-pattern
   async createReport ({}, payload: CreateReport) {
-    await this.$axios.$post(`reports`, payload)
+    await this.$axios.$post('reports', payload)
   }
 }
