@@ -206,6 +206,7 @@ export default class CheckListsPage extends Vue {
   async fetch () {
     await this.$store.dispatch('reportstrore/getReports', '', { root: true })
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
+    await this.$store.dispatch('checklists/getChecklists', {}, { root: true })
   }
 
   selectItem (item: CheckList): void{

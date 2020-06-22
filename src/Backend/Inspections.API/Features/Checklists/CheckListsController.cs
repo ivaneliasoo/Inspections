@@ -207,7 +207,7 @@ namespace Inspections.API.Features.Checklists
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public IActionResult GetCheckList(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
+        public IActionResult GetCheckList(string filter, int? reportConfigurationId, int? reportId, bool? inConfigurationOnly = null)
         {
             var checkList = _checkListsQueries.GetByFilter(filter, inConfigurationOnly, reportConfigurationId, reportId);
 

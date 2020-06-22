@@ -50,7 +50,7 @@ namespace Inspections.Infrastructure.Repositories
                 .Select(sm => sm.TextParams.Where(c => c.Key.Length > 0)))
                 .SingleOrDefaultAsync();
             
-            //EF limitations makes to do it this way
+            //EF limitations make me do it this way
             foreach (var check in result.ChecksDefinition)
             {
                 foreach (var checkItem in check.Checks)

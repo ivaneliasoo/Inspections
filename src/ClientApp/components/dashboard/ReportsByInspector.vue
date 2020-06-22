@@ -1,11 +1,12 @@
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
-import { Bar } from 'vue-chartjs'
+import { Vue, Component, mixins } from 'nuxt-property-decorator'
+import { Bar,mixins as m } from 'vue-chartjs'
 
 @Component({
-  extends: Bar
+  extends: Bar,
+  mixins: [m.reactiveProp]
 })
-export default class ReportsByInspector extends Vue {
+export default class ReportsByInspector extends mixins(Bar) {
   data = {
     labels: ['Peter', 'Alice', 'Jhon', 'Arya', 'Sansa', 'Khalessi'],
     datasets: [{

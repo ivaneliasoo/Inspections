@@ -155,6 +155,7 @@ export default class SignaturesPage extends Vue {
   async fetch () {
     await this.$store.dispatch('reportstrore/getReports', '', { root: true })
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
+    await this.$store.dispatch('signatures/getSignatures', {}, { root: true })
   }
 
   @Watch('filter', { deep: true })

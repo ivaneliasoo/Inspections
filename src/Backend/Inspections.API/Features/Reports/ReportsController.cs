@@ -45,5 +45,15 @@ namespace Inspections.API.Features.Inspections
 
             return Ok(result);
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteReport(int id)
+        {
+            var result = await _mediator.Send(new DeleteReportCommand(id)).ConfigureAwait(false);
+            if (!result)
+                return BadRequest();
+
+            return NoContent();
+        }
     }
 }

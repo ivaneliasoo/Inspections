@@ -90,7 +90,7 @@ namespace Inspections.API.Features.Signatures
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<IEnumerable<SignatureDTO>>> GetSignatures(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
+        public async Task<ActionResult<IEnumerable<SignatureDTO>>> GetSignatures(string filter, int? reportConfigurationId, int? reportId, bool? inConfigurationOnly = null)
         {
             var signatures = await _signaturesQueries.GetAllAsync(filter, inConfigurationOnly, reportConfigurationId, reportId).ConfigureAwait(false);
 

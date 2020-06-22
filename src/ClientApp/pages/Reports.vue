@@ -6,6 +6,7 @@
       message="This operation will remove this report and all data related"
       :code="selectedItem.id"
       :description="selectedItem.name"
+      @yes="deleteReport();"
     />
     <message-dialog v-model="dialog" :actions="['yes','cancel']" @yes="createReport">
       <template v-slot:title="{}">
@@ -227,6 +228,13 @@ export default class ReportsPage extends Vue {
       this.$store.dispatch('reportstrore/createReport', this.newReport, { root: true })
         .then(() => {
           this.$store.dispatch('reportstrore/getReports', '', { root: true })
+          this.dialog = false
+        })
+    }
+
+    deleteReport () {
+      this.$store.dispatch('reportstrore/deleteReport', this.selectedItem.id, { root: true })
+        .then(() => {
           this.dialog = false
         })
     }

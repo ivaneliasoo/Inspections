@@ -43,12 +43,22 @@ namespace Inspections.Infrastructure.Repositories
 
         public Task DeleteAsync(Report entity)
         {
-            throw new NotImplementedException();
+            _context.CheckLists.RemoveRange(entity.CheckList);
+            _context.Signatures.RemoveRange(entity.Signatures);
+            _context.Reports.Remove(entity);
+            _context.SaveChangesAsync();
+
+            return Task.CompletedTask;
         }
 
-        public Task<Report> GetByIdAsync(int id)
+        public async Task<Report> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Reports.Where(r=>r.Id == id)
+               .Include(p => p.CheckList)
+               .Include(p => p.Signatures)
+               .Include(p => p.Notes)
+               .Include(p => p.PhotoRecords)
+               .SingleOrDefaultAsync();
         }
 
         public Task UpdateAsync(Report entity)

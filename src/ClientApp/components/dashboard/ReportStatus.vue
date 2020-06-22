@@ -1,11 +1,12 @@
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
-import { Pie } from 'vue-chartjs'
+import { Vue, Component, mixins } from 'nuxt-property-decorator'
+import { Pie, mixins as m } from 'vue-chartjs'
 
 @Component({
-  extends: Pie
+  extends: Pie,
+  mixins:[m.reactiveProp]
 })
-export default class ReportStatus extends Vue {
+export default class ReportStatus extends mixins(Pie) {
   data = {
     labels: ['Pending', 'Completed', 'Closed', 'Green', 'Purple', 'Orange'],
     datasets: [{
