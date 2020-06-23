@@ -7,7 +7,7 @@ import { Pie, mixins as m } from 'vue-chartjs'
   mixins:[m.reactiveProp]
 })
 export default class ReportStatus extends mixins(Pie) {
-  data = {
+  chartData = {
     labels: ['Pending', 'Completed', 'Closed', 'Green', 'Purple', 'Orange'],
     datasets: [{
       label: '# of Reports',
@@ -43,7 +43,7 @@ export default class ReportStatus extends mixins(Pie) {
   }
 
   mounted () {
-    this.renderChart(this.data, this.options)
+    this.renderChart(this.chartData, this.options)
   }
 }
 </script>

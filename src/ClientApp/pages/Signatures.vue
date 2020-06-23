@@ -1,5 +1,13 @@
 <template>
   <div>
+    <alert-dialog
+      v-model="dialogRemove"
+      title="Remove Reports"
+      message="This operation will remove this signature and all data related"
+      :code="selectedItem.id"
+      :description="selectedItem.title"
+      @yes="deleteSignature();"
+    />
     <v-data-table :items="signatures" item-key="id" :search="filter.filterText" dense :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
@@ -55,19 +63,19 @@
           </v-col>
         </v-row>
       </template>
-      <template v-slot:item.actions="{}">
+      <template v-slot:item.actions="{ item }">
         <v-icon
           small
           color="primary"
           class="mr-2"
-          @click=""
+          @click="selectItem(item); dialog = true"
         >
           mdi-pencil
         </v-icon>
         <v-icon
           small
           color="error"
-          @click=""
+          @click="selectItem(item); dialogRemove = true"
         >
           mdi-delete
         </v-icon>
@@ -81,17 +89,20 @@ import { Vue, Component, Watch } from 'nuxt-property-decorator'
 import { SignatureState } from 'store/signatures'
 import { SignatureDTO } from '../types/Signatures/ViewModels/SignatureDTO'
 import GridFilter from '@/components/GridFilter.vue'
-import { Report, ReportConfiguration, FilterType } from '~/types'
+import AlertDialog from '@/components/AlertDialog.vue'
+import { Report, ReportConfiguration, FilterType, Signature } from '~/types'
 import { ReportConfigurationState } from '~/store/configurations'
 import { ReportsState } from '~/store/reportstrore'
 
 @Component({
   components: {
-    GridFilter
+    GridFilter,
+    AlertDialog
   }
 })
 export default class SignaturesPage extends Vue {
   dialog: boolean = false
+  dialogRemove: boolean = false
   filter: FilterType = {
     filterText: '',
     inConfigurationOnly: undefined,
@@ -136,6 +147,8 @@ export default class SignaturesPage extends Vue {
       class: 'secundary'
     }
   ];
+  selectedItem: Signature = {} as Signature
+
 
   get reports (): Report[] {
     return (this.$store.state.reportstrore as ReportsState)
@@ -152,6 +165,10 @@ export default class SignaturesPage extends Vue {
       .signaturesList
   }
 
+  selectItem (item: Signature): void{
+    this.selectedItem = item
+  }
+
   async fetch () {
     await this.$store.dispatch('reportstrore/getReports', '', { root: true })
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
@@ -163,6 +180,13 @@ export default class SignaturesPage extends Vue {
   async onFilterChanged (value: FilterType, oldValue: FilterType) {
     await this.$store.dispatch('signatures/getSignatures', value, { root: true })
   }
+
+  deleteSignature () {
+      this.$store.dispatch('signatures/deleteSignature', this.selectedItem.id, { root: true })
+        .then(() => {
+          this.dialog = false
+        })
+    }
 }
 </script>
 

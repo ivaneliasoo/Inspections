@@ -7,7 +7,7 @@ import { Bar,mixins as m } from 'vue-chartjs'
   mixins: [m.reactiveProp]
 })
 export default class ReportsByInspector extends mixins(Bar) {
-  data = {
+  chartData = {
     labels: ['Peter', 'Alice', 'Jhon', 'Arya', 'Sansa', 'Khalessi'],
     datasets: [{
       label: '# of Reports',
@@ -43,7 +43,7 @@ export default class ReportsByInspector extends mixins(Bar) {
   }
 
   mounted () {
-    this.renderChart(this.data, this.options)
+    this.renderChart(this.chartData, this.options)
   }
 }
 </script>
