@@ -89,7 +89,6 @@ export default class LoginPage extends Vue {
       async login () {
         this.loading = true;
         await this.$auth.login({ data: { userName: this.userName, password: this.password } })
-        .then(() => this.$router.push('/'))
           .catch(() => {
             this.hasError = true
 
