@@ -29,6 +29,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/vee-validate'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -96,6 +97,8 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
+    },
+    // Excepcion para vee-validate (no quitar)
+    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators'],
   }
 }
