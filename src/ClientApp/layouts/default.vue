@@ -61,7 +61,7 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="reportsconfiguration">
+        <nuxt-link to="configurations">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-cog-outline</v-icon>

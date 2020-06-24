@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
   /*
   ** Headers of the page
   */
@@ -54,7 +54,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: `${process.env.BASE_URL}`
+      baseURL: 'https://localhost:44388',
+      browserBaseURL: 'https://localhost:44388'
   },
   router: {
     middleware: ['auth']
@@ -63,17 +64,14 @@ export default {
     redirect: {
       login: '/Login',
       logout: '/Login',
-      home: '/reports'
+      home: false
     },
-    localStorage: false,
-    cookie: {
-      prefix: 'authUI'
-    },
+    cookie: true,
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'auth/token', method: 'post', propertyName: false },
-          user: { url: 'Users/active', method: 'get', propertyName: false }
+          login: { url: '/auth/token', method: 'post', propertyName: false },
+          user: { url: '/Users/active', method: 'get', propertyName: false }
         },
         tokenRequired: true,
         tokenType: 'bearer',
@@ -99,6 +97,6 @@ export default {
     extend (config, ctx) {
     },
     // Excepcion para vee-validate (no quitar)
-    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators'],
+    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth'],
   }
 }
