@@ -16,7 +16,9 @@ namespace Inspections.API.Features.Signatures.Commands
                                    string designation,
                                    string remarks,
                                    DateTimeOffset date,
-                                   bool principal)
+                                   bool principal,
+                                   int reportId,
+                                   int reportConfigurationId)
         {
             Title = title;
             Annotation = annotation;
@@ -26,6 +28,8 @@ namespace Inspections.API.Features.Signatures.Commands
             Remarks = remarks;
             Date = date;
             Principal = principal;
+            ReportId = reportId;
+            ReportConfigurationId = reportConfigurationId;
         }
 
         private AddSignatureCommand() { }
@@ -38,5 +42,8 @@ namespace Inspections.API.Features.Signatures.Commands
         public string Remarks { get; set; }
         public DateTimeOffset Date { get; set; }
         public bool Principal { get; set; }
+        public bool IsConfiguration { get; set; }
+        public int? ReportId{ get; set; }
+        public int? ReportConfigurationId { get; set; }
     }
 }

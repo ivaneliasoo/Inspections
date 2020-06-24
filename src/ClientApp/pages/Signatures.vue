@@ -8,33 +8,96 @@
       :description="selectedItem.title"
       @yes="deleteSignature();"
     />
-    <v-data-table :items="signatures" item-key="id" :search="filter.filterText" dense :headers="headers">
+    <v-data-table :items="signatures" item-key="id" :search="filter.filterText" dense :loading="loading" :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Signatures</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
           <grid-filter :filter.sync="filter.filterText" />
           <v-spacer />
-          <v-dialog v-model="dialog" max-width="500px">
+          <v-dialog v-model="dialog" persistent  scrollable
+    :fullscreen="$vuetify.breakpoint.smAndDown"
+    :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" @click="item = { principal: false }">
                 New Signature
               </v-btn>
             </template>
+                  <ValidationObserver tag="form" v-slot="{ valid, reset }">
             <v-card>
               <v-card-title>
-                <span class="headline">New Signature</span>
+                <span class="headline">Edit Signature</span>
               </v-card-title>
               <v-card-text>
                 <v-container>
-                  <v-row>
-                  </v-row>
+                    <v-row align="center" justify="space-between">
+                      <v-col cols="12" md="6">
+                        <ValidationProvider rules="required" v-slot="{ errors }">
+                          <v-text-field 
+                            v-model="item.title" 
+                            name="title"
+                            :error-messages="errors" 
+                            label="Title" 
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="6">
+                        <v-text-field 
+                          v-model="item.annotation" 
+                          name="annotation"
+                          label="Annotation" 
+                        />
+                      </v-col>
+                    </v-row>
+                    <v-row align="center" justify="space-between">
+                      <v-col cols="12" md="4">
+                        <ValidationProvider :rules="`${!item.reportConfigurationId ? 'required' : ''}`" v-slot="{ errors }">
+                          <v-autocomplete
+                            v-model="item.reportId" 
+                            :disabled="item.reportConfigurationId > 0 || item.id>0"
+                            :error-messages="errors" 
+                            clearable
+                            :items="reports"
+                            item-text="name"
+                            item-value="id"
+                            label="Use in Report" />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <ValidationProvider :rules="`${!item.reportId ? 'required' : ''}`" v-slot="{ errors }">
+                          <v-autocomplete
+                            v-model="item.reportConfigurationId" 
+                            :disabled="item.reportId > 0  || item.id>0"
+                            :error-messages="errors" 
+                            clearable
+                            :items="configurations"
+                            item-text="title"
+                            item-value="id"
+                            label="Use in Report Configuration" />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <v-checkbox 
+                          v-model="item.principal"
+                          name="principal"
+                          label="Principal" 
+                        />
+                      </v-col>
+                    </v-row>
                 </v-container>
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
+                <v-btn color="success" text :disabled="!valid" 
+                @click="upsertSignature()">
+                  Save
+                </v-btn>
+                <v-btn color="default" text @click="reset(); item = { principal: false }; dialog = false">
+                  Cancel
+                </v-btn>
               </v-card-actions>
             </v-card>
+                  </ValidationObserver>
           </v-dialog>
         </v-toolbar>
         <v-row justify="space-around" class="ml-2 mr-2">
@@ -86,6 +149,7 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'nuxt-property-decorator'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { SignatureState } from 'store/signatures'
 import { SignatureDTO } from '../types/Signatures/ViewModels/SignatureDTO'
 import GridFilter from '@/components/GridFilter.vue'
@@ -96,6 +160,8 @@ import { ReportsState } from '~/store/reportstrore'
 
 @Component({
   components: {
+    ValidationObserver,
+    ValidationProvider,
     GridFilter,
     AlertDialog
   }
@@ -103,6 +169,7 @@ import { ReportsState } from '~/store/reportstrore'
 export default class SignaturesPage extends Vue {
   dialog: boolean = false
   dialogRemove: boolean = false
+  loading: boolean = false
   filter: FilterType = {
     filterText: '',
     inConfigurationOnly: undefined,
@@ -148,7 +215,7 @@ export default class SignaturesPage extends Vue {
     }
   ];
   selectedItem: Signature = {} as Signature
-
+  item: any = { principal: false }
 
   get reports (): Report[] {
     return (this.$store.state.reportstrore as ReportsState)
@@ -167,6 +234,8 @@ export default class SignaturesPage extends Vue {
 
   selectItem (item: Signature): void{
     this.selectedItem = item
+    this.$store.dispatch('signatures/getSignatureById', this.selectedItem.id, { root: true })
+      .then(resp => this.item = resp)
   }
 
   async fetch () {
@@ -182,11 +251,21 @@ export default class SignaturesPage extends Vue {
   }
 
   deleteSignature () {
-      this.$store.dispatch('signatures/deleteSignature', this.selectedItem.id, { root: true })
-        .then(() => {
-          this.dialog = false
-        })
+    this.$store.dispatch('signatures/deleteSignature', this.selectedItem.id, { root: true })
+      .then(() => {
+        this.dialog = false
+      })
+  }
+
+  async upsertSignature () {
+    if(this.item.id>0)
+      await this.$store.dispatch('signatures/updateSignature', this.item, { root: true })
+    else{
+      await this.$store.dispatch('signatures/createSignature', this.item, { root: true })
+      await this.$store.dispatch('signatures/getSignatures', {}, { root: true })
     }
+    this.dialog = false
+  }
 }
 </script>
 
