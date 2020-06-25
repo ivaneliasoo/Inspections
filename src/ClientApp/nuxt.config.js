@@ -49,6 +49,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
   ],
+  components: true,
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

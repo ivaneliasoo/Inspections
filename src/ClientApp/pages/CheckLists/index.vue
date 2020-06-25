@@ -76,7 +76,7 @@
       <template v-slot:item.actions="{ item }">
         <v-icon
           small
-          color="amber"
+          color="primary"
           class="mr-2"
           @click="selectItem(item); dialogItems = true"
         >

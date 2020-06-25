@@ -23,6 +23,7 @@
     "nuxt": "^2.13.0",
     "nuxt-property-decorator": "2.7.2",
     "vee-validate": "^3.3.5",
+    "vue2-dropzone": "^3.6.0",
     "vue-chartjs": "^3.5.0"
   },
   "devDependencies": {

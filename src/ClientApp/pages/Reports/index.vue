@@ -68,19 +68,19 @@
       <template v-slot:item.actions="{ item }">
         <v-icon
           small
-          color="amber"
+          color="primary"
           class="mr-2"
-          @click="selectItem(item); dialogItems = true"
+          @click=""
         >
-          mdi-format-list-checks
+          mdi-printer
         </v-icon>
         <v-icon
           small
           color="primary"
           class="mr-2"
-          @click="selectItem(item); dialog = true"
+          @click="$router.push({ name: 'Reports-id', params: { id: item.id} })"
         >
-          mdi-pencil
+          mdi-file-chart
         </v-icon>
         <v-icon
           small
@@ -104,6 +104,12 @@
       </template>
       <template v-slot:item.signatures="{ item }">
         {{ item.signatures.length }}
+      </template>
+      <template v-slot:item.completed="{ item }">
+        <v-simple-checkbox v-model="item.completed" disabled />
+      </template>
+      <template v-slot:item.isClosed="{ item }">
+        <v-simple-checkbox v-model="item.isClosed" disabled />
       </template>
     </v-data-table>
   </div>
