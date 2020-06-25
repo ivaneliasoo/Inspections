@@ -73,8 +73,13 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import { ReportConfigurationState } from 'store/configurations'
 import { ReportConfiguration } from '~/types'
+import GridFilter from '@/components/GridFilter.vue'
 
-@Component
+@Component({
+  components: {
+    GridFilter
+  }
+})
 export default class ReportsConfigurationPage extends Vue {
   dialog: boolean =false
   filter: string = ''
