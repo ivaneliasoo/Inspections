@@ -11,15 +11,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
-Vue.use(vue2Dropzone)
-
-@Component({
-  layout: 'Default',
-  components: { vueDropzone: vue2Dropzone }
-})
 export default class zFileupload extends Vue {
   @Prop() rutaApi:string | undefined;
   @Prop() filtro:string | undefined;

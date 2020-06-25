@@ -253,7 +253,7 @@ export default class AddEditCheckList extends Vue {
       id: this.selectedItemData!.id,
       checkListId: this.selectedItemData!.checkListId,
       text: this.selectedItemData!.text,
-      checked: this.selectedItemData!.checked,
+      checked: this.selectedItemData!.checked ? 1:0,
       required: this.selectedItemData!.required,
       remarks: this.selectedItemData!.remarks
     };
@@ -266,7 +266,7 @@ export default class AddEditCheckList extends Vue {
     const command: AddCheckListItemCommand = {
       idCheckList: parseInt(this.$route.params.id),
       text: this.newItemData!.text,
-      checked: this.newItemData!.checked,
+      checked: this.newItemData!.checked ? 1:0,
       required: this.newItemData!.required,
       remarks: this.newItemData!.remarks,
       checklistParams: []

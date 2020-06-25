@@ -248,7 +248,7 @@ export default class EditReport extends Vue {
   dialogClose: boolean = false;
   currentReport: Report = {} as Report;
   emaTypes: any = Object.keys(EMALicenseType)
-    .map(key => {
+    .map((key: any) => {
       if (!isNaN(Number(key.toString()))) return;
 
       return { id: EMALicenseType[key], text: key };
@@ -256,7 +256,7 @@ export default class EditReport extends Vue {
     .filter(i => i !== undefined)
   
   responsableTypes: any = Object.keys(ResponsableType)
-    .map(key => {
+    .map((key: any) => {
       if (!isNaN(Number(key.toString()))) return;
 
       return { id: ResponsableType[key], text: key };

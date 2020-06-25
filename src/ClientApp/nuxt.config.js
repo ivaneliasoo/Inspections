@@ -29,7 +29,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/vee-validate'
+    '~/plugins/vee-validate',
+    '~plugins/dropzone.js'
   ],
   /*
   ** Nuxt.js dev-modules
