@@ -31,7 +31,7 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="reports">
+        <nuxt-link to="/reports">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-file-chart</v-icon>
@@ -41,7 +41,7 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="checklists">
+        <nuxt-link to="/checklists">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-format-list-checks</v-icon>
@@ -51,7 +51,7 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="signatures">
+        <nuxt-link to="/signatures">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-draw</v-icon>
@@ -61,7 +61,7 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="configurations">
+        <nuxt-link to="/configurations">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-cog-outline</v-icon>

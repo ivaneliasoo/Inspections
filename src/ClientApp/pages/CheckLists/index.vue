@@ -7,12 +7,6 @@
       :code="selectedItem.id"
       :description="selectedItem.text"
     />
-    <message-dialog v-model="dialog" :actions="['yes','cancel']">
-      <template v-slot:title="{}">
-        New CheckLists
-      </template>
-      <v-row />
-    </message-dialog>
     <message-dialog v-model="dialogItems" :actions="[]">
       <template v-slot:title="{}">
         {{ selectedItem.text }} Items
@@ -49,7 +43,7 @@
           <v-divider class="mx-4" inset vertical />
           <grid-filter :filter.sync="filter.filterText" />
           <v-spacer />
-          <v-btn color="primary" dark class="mb-2" @click="dialog=true">
+          <v-btn color="primary" dark class="mb-2" @click="$router.push({ name: 'CheckLists-id', params: { id: -1 }})">
             New CheckList
           </v-btn>
         </v-toolbar>
@@ -92,7 +86,7 @@
           small
           color="primary"
           class="mr-2"
-          @click="selectItem(item); dialog = true"
+          @click="selectItem(item); $router.push({ name: 'CheckLists-id', params: { id: selectedItem.id }}); dialog = true"
         >
           mdi-pencil
         </v-icon>
@@ -111,9 +105,9 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'nuxt-property-decorator'
 import { CheckListsState } from 'store/checklists'
-import { ReportConfigurationState } from '../store/configurations'
-import { ReportsState } from '../store/reportstrore'
-import { CheckList, CheckListItem, FilterType, ReportConfiguration, Report } from '../types'
+import { ReportConfigurationState } from '@/store/configurations'
+import { ReportsState } from '@/store/reportstrore'
+import { CheckList, CheckListItem, FilterType, ReportConfiguration, Report } from '@/types'
 import AlertDialog from '@/components/AlertDialog.vue'
 import MessageDialog from '@/components/MessageDialog.vue'
 import GridFilter from '@/components/GridFilter.vue'
@@ -200,7 +194,7 @@ export default class CheckListsPage extends Vue {
 
   get checkItems (): CheckListItem[] {
     return (this.$store.state.checklists as CheckListsState)
-      .checkListItems
+      .currentCheckList.checks
   }
 
   async fetch () {

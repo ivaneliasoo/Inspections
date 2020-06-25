@@ -12,35 +12,46 @@
       <template v-slot:title="{}">
         New Report
       </template>
-      <v-row>
-        <v-col cols="12" xs="12" md="6">
-          <v-select
-            id="selReportType"
-            v-model="newReport.reportType"
-            item-value="id"
-            item-text="text"
-            label="Report Type"
-            :items="[{ id:0, text: 'Inspection' }]"
-          />
-        </v-col>
-        <v-col cols="12" xs="12" md="6">
-          <v-select
-            id="selConfigurations"
-            v-model="newReport.configurationId"
-            label="Select a Saved Configuration"
-            item-value="id"
-            item-text="title"
-            :items="configurations"
-          />
-        </v-col>
-        <v-col cols="12">
-          <v-text-field
-            id="txtName"
-            v-model="newReport.name"
-            label="Report Name"
-          />
-        </v-col>
-      </v-row>
+      <ValidationObserver tag="form" ref="obs">
+        <v-row>
+          <v-col cols="12" xs="12" md="6">
+            <ValidationProvider rules="required" v-slot="{ errors }">
+              <v-select
+                id="selReportType"
+                v-model="newReport.reportType"
+                :error-messages="errors"
+                item-value="id"
+                item-text="text"
+                label="Report Type"
+                :items="[{ id:0, text: 'Inspection' }]"
+              />
+            </ValidationProvider>
+          </v-col>
+          <v-col cols="12" xs="12" md="6">
+            <ValidationProvider rules="required" v-slot="{ errors }">
+              <v-select
+                id="selConfigurations"
+                v-model="newReport.configurationId"
+                :error-messages="errors"
+                label="Select a Saved Configuration"
+                item-value="id"
+                item-text="title"
+                :items="configurations"
+              />
+            </ValidationProvider>
+          </v-col>
+          <v-col cols="12">
+            <ValidationProvider rules="required" v-slot="{ errors }">
+              <v-text-field
+                id="txtName"
+                v-model="newReport.name"
+                :error-messages="errors"
+                label="Report Name"
+              />
+            </ValidationProvider>
+          </v-col>
+        </v-row>
+      </ValidationObserver>
     </message-dialog>
     <v-data-table :items="reportList" item-key="id" :search="filter" dense :headers="headers">
       <template v-slot:top="{}">
@@ -103,7 +114,7 @@ import moment from 'moment'
 import { Vue, Component } from 'nuxt-property-decorator'
 import { ReportConfigurationState } from 'store/configurations'
 import { ReportsState } from 'store/reportstrore'
-
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import AlertDialog from '@/components/AlertDialog.vue'
 import MessageDialog from '@/components/MessageDialog.vue'
 import GridFilter from '@/components/GridFilter.vue'
@@ -111,12 +122,17 @@ import { Report, CreateReport, ReportConfiguration } from '~/types'
 
 @Component({
   components: {
+    ValidationObserver,
+    ValidationProvider,
     AlertDialog,
     MessageDialog,
     GridFilter
   }
 })
 export default class ReportsPage extends Vue {
+  $refs!: {
+    obs: InstanceType<typeof ValidationObserver>
+  }
   dialog: Boolean = false
   dialogRemove: Boolean = false
   selectedItem: Report = {} as Report
@@ -224,7 +240,13 @@ export default class ReportsPage extends Vue {
       return moment(date).format('YYYY-MM-DD HH:mm')
     }
 
-    createReport () {
+    // only if i've more time then expected
+    get idValid () {
+      return this.$refs.obs.flags.valid
+    }
+
+    async createReport () {
+      if(await this.$refs.obs.validate() === true)
       this.$store.dispatch('reportstrore/createReport', this.newReport, { root: true })
         .then(() => {
           this.$store.dispatch('reportstrore/getReports', '', { root: true })

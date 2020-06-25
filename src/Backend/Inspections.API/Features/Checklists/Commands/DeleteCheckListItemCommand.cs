@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Inspections.API.Features.Checklists.Commands
 {
-    public class DeleteCheckListItem : IRequest<bool>
+    public class DeleteCheckListItemCommand : IRequest<bool>
     {
         public int IdCheckList { get; set; }
         public int IdCheckListItem { get; set; }
-        public DeleteCheckListItem(int idCheckList, int idCheckListItem)
+        public DeleteCheckListItemCommand(int idCheckList, int idCheckListItem)
         {
             IdCheckList = idCheckList;
             IdCheckListItem = idCheckListItem;

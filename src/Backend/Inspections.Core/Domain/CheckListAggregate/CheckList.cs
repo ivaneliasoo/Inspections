@@ -34,8 +34,15 @@ namespace Inspections.Core.Domain.CheckListAggregate
         private CheckList() { } //Required by EF
 
         public IReadOnlyList<CheckListItem> Checks => _checks.AsReadOnly();
-        public bool Completed => Checks.Any(c => c.Checked == CheckValue.False || c.Checked == CheckValue.NA);
+        public bool Completed => !Checks.Any(c => c.Required && (c.Checked != CheckValue.False || c.Checked != CheckValue.NA));
 
+        public void Edit(string text, string annotation)
+        {
+            ValidateCanEdit();
+
+            Text = text;
+            Annotation = annotation;
+        }
 
         public void AddCheckItems(CheckListItem checkListItem)
         {
@@ -57,6 +64,14 @@ namespace Inspections.Core.Domain.CheckListAggregate
             ValidateCanEdit();
 
             _checks.AddRange(checkListItem);
+        }
+
+        public void RemoveCheckItems(CheckListItem checkListItem)
+        {
+            Guard.Against.Null(checkListItem, nameof(checkListItem));
+            ValidateCanEdit();
+
+            _checks.Remove(checkListItem);
         }
 
         public void AddCheckListParams(CheckListParam checkListParam)
