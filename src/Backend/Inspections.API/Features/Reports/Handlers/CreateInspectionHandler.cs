@@ -22,8 +22,7 @@ namespace Inspections.API.Features.Inspections.Handlers
 
         public async Task<bool> Handle(CreateReportCommand request, CancellationToken cancellationToken)
         {
-            // must be one configuratio per type
-            var cfg = await _reportConfigurationsRepository.GetByIdAsync(1).ConfigureAwait(false);
+            var cfg = await _reportConfigurationsRepository.GetByIdAsync(request.ConfigurationId).ConfigureAwait(false);
 
             IReportsBuilder _reportsBuilder = new ReportsBuilder(cfg);
             var newReport = _reportsBuilder

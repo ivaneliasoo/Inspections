@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
   /*
   ** Headers of the page
   */
@@ -29,6 +29,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/vee-validate'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -48,12 +49,14 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
   ],
+  components: true,
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: `${process.env.BASE_URL}`
+      baseURL: 'https://localhost:44388',
+      browserBaseURL: 'https://localhost:44388'
   },
   router: {
     middleware: ['auth']
@@ -64,15 +67,12 @@ export default {
       logout: '/Login',
       home: '/reports'
     },
-    localStorage: false,
-    cookie: {
-      prefix: 'authUI'
-    },
+    cookie: true,
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'auth/token', method: 'post', propertyName: false },
-          user: { url: 'Users/active', method: 'get', propertyName: false }
+          login: { url: '/auth/token', method: 'post', propertyName: false },
+          user: { url: '/Users/active', method: 'get', propertyName: false }
         },
         tokenRequired: true,
         tokenType: 'bearer',
@@ -96,6 +96,8 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
+    },
+    // Excepcion para vee-validate (no quitar)
+    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth'],
   }
 }

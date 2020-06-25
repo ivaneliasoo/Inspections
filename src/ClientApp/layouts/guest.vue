@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <nuxt />
-  </div>
+  <nuxt />
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'

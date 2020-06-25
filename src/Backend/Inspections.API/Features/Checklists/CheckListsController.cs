@@ -158,7 +158,7 @@ namespace Inspections.API.Features.Checklists
         [ProducesDefaultResponseType]
         public async Task<IActionResult> DeleteCheckListItem(int id, int idItem)
         {
-            if (await _mediator.Send(new DeleteCheckListItem(id, idItem)).ConfigureAwait(false))
+            if (await _mediator.Send(new DeleteCheckListItemCommand(id, idItem)).ConfigureAwait(false))
                 return Ok();
 
             return BadRequest();
@@ -207,9 +207,9 @@ namespace Inspections.API.Features.Checklists
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public IActionResult GetCheckList(string filter)
+        public IActionResult GetCheckList(string filter, int? reportConfigurationId, int? reportId, bool? inConfigurationOnly = null)
         {
-            var checkList = _checkListsQueries.GetByFilter(filter);
+            var checkList = _checkListsQueries.GetByFilter(filter, inConfigurationOnly, reportConfigurationId, reportId);
 
             if (checkList is null)
                 return NotFound();

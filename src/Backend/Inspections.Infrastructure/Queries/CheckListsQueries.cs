@@ -20,8 +20,11 @@ namespace Inspections.Infrastructure.Queries
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IEnumerable<ResumenCheckList> GetByFilter(string filter)
+        public IEnumerable<ResumenCheckList> GetByFilter(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
         {
+            if (inConfigurationOnly == false)
+                inConfigurationOnly = null;
+
             return _context.ResumenCheckLists.FromSqlRaw(@"
                 SELECT Id,
                         Text,
@@ -32,21 +35,24 @@ namespace Inspections.Infrastructure.Queries
                         LastEditUser
                     FROM Inspections.CheckLists cl
                         LEFT JOIN (
-                        SELECT CheckListId, COUNT([Key]) AS TotalParams
+                                            SELECT CheckListId, COUNT([Key]) AS TotalParams
                         FROM Inspections.CheckListParams
                         GROUP BY CheckListId
-                    ) Params
+                                        ) Params
                         ON cl.Id = Params.CheckListId
                         LEFT JOIN (
-                        SELECT CheckListId, COUNT(Id) AS TotalItems
+                                            SELECT CheckListId, COUNT(Id) AS TotalItems
                         FROM Inspections.CheckListItems
                         GROUP BY CheckListId
-                    ) Items
+                                        ) Items
                         ON cl.Id = Items.CheckListId
                     WHERE 1=1
                         AND ([Text] LIKE {0}
-                        OR Annotation LIKE {0}) 
-            ", $"%{filter ?? string.Empty}%");
+                        OR Annotation LIKE {0})
+                        AND (cl.ReportId = {1} OR {1} IS NULL)
+                        AND (cl.IsConfiguration = {2} OR {2} IS NULL)
+                        AND (cl.ReportConfigurationId = {3} OR {3} IS NULL)
+            ", $"%{filter ?? string.Empty}%", reportId, inConfigurationOnly, reportConfigurationId);
         }
     }
 }

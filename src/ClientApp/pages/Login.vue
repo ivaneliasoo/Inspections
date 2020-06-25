@@ -1,57 +1,75 @@
 <template>
   <v-app id="inspire">
     <v-main>
-      <v-container
-        class="fill-height"
-        fluid
+      <v-parallax
+        dark
+        height="900"
+        src="/LoginBackground.jpg"
       >
-        <v-row
-          align="center"
-          justify="center"
+        <v-container
+          class="fill-height"
+          fluid
         >
-          <v-col
-            cols="12"
-            sm="8"
-            md="4"
+          <v-row
+            align="center"
+            justify="center"
           >
-            <v-card class="elevation-12">
-              <v-toolbar
-                color="primary"
-                dark
-                flat
-              >
-                <v-toolbar-title>Inspection Reports Login</v-toolbar-title>
-              </v-toolbar>
-              <v-card-text>
-                <v-form>
-                  <v-text-field
-                    v-model="userName"
-                    label="UserName"
-                    name="userName"
-                    prepend-icon="mdi-account"
-                    type="text"
-                  />
+            <v-col
+              cols="12"
+              sm="8"
+              md="4"
+            >
+              <v-card class="elevation-12">
+                <v-row >
+                  <v-col cols="12" class="text-center" ><img src="/Logo.jpeg" height="70px" width="150px"></v-col>
+                  <v-col cols="12" class="text-center">
+                    <h1>Login</h1>
+                  </v-col>
+                </v-row>
+                <v-card-text>
+                  <v-form>
+                    <v-text-field
+                      v-model="userName"
+                      label="UserName"
+                      name="userName"
+                      prepend-icon="mdi-account"
+                      type="text"
+                    />
 
-                  <v-text-field
-                    id="password"
-                    v-model="password"
-                    label="Password"
-                    name="password"
-                    prepend-icon="mdi-lock"
-                    type="password"
-                  />
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-                <v-btn color="primary" @click="login">
-                  Login
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
+                    <v-text-field
+                      id="password"
+                      v-model="password"
+                      label="Password"
+                      name="password"
+                      prepend-icon="mdi-lock"
+                      type="password"
+                    />
+                  </v-form>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer />
+                  <v-btn color="primary" :loading="loading" @click="login">
+                    Login
+                  </v-btn>
+                </v-card-actions>
+                <v-row>
+                  <v-alert
+                    :value="hasError"
+                    color="pink"
+                    dark
+                    border="top"
+                    icon="mdi-home"
+                    transition="scale-transition"
+                  >
+                    Invalid Credentials. Try again
+                  </v-alert>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+          
+        </v-container>
+      </v-parallax>
     </v-main>
   </v-app>
 </template>
@@ -65,9 +83,18 @@ import { Vue, Component } from 'nuxt-property-decorator'
 export default class LoginPage extends Vue {
       userName: string = ''
       password: string = ''
+      loading: Boolean = false
+      hasError: Boolean = false
 
       async login () {
-        await this.$auth.loginWith('local', { data: { userName: this.userName, password: this.password } })
+        this.loading = true;
+        await this.$auth.login({ data: { userName: this.userName, password: this.password } })
+          .catch(() => {
+            this.hasError = true
+
+            setTimeout(() => { this.hasError = false }, 3000)
+          })
+          .finally(() => { this.loading = false })
       }
 }
 </script>

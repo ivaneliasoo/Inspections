@@ -1,4 +1,4 @@
-using Inspections.Core;
+﻿using Inspections.Core;
 using Inspections.Core.Domain;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
@@ -39,7 +39,7 @@ namespace Inspections.Infrastructure.Data
 
         }
 
-        public DbSet<Report> Inspections { get; set; }
+        public DbSet<Report> Reports { get; set; }
         public DbSet<CheckList> CheckLists { get; set; }
         public DbSet<CheckListItem> CheckListItems { get; set; }
         public DbSet<CheckListParam> CheckListParams { get; set; }

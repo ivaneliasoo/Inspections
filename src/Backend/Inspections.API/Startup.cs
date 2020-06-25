@@ -31,6 +31,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ZadERP.Api.Middleware;
+//using Microsoft.AspNetCore.Mvc.NewtonsoftJson
 
 namespace Inspections.API
 {
@@ -47,7 +48,7 @@ namespace Inspections.API
         {
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
             services.AddAuthentication(options =>
             {
@@ -182,7 +183,7 @@ namespace Inspections.API
             {
                 builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
             });
-                
+
 
             app.UseAuthentication();
             app.UseAuthorization();

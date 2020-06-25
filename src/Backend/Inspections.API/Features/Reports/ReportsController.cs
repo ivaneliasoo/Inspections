@@ -39,11 +39,31 @@ namespace Inspections.API.Features.Inspections
         [HttpGet]
         public async Task<IActionResult> GetAll(string filter)
         {
-            var result = await _reportsRepository.GetAll(filter);
+            var result = await _reportsRepository.GetAll(filter).ConfigureAwait(false);
             if (result is null)
                 return NoContent();
 
             return Ok(result);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetReport(int id)
+        {
+            var result = await _reportsRepository.GetByIdAsync(id).ConfigureAwait(false);
+            if (result is null)
+                return NoContent();
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteReport(int id)
+        {
+            var result = await _mediator.Send(new DeleteReportCommand(id)).ConfigureAwait(false);
+            if (!result)
+                return BadRequest();
+
+            return NoContent();
         }
     }
 }

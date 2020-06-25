@@ -28,13 +28,21 @@ namespace Inspections.Core.Domain.CheckListAggregate
             TextParams = textParams;
             Annotation = annotation;
             IsConfiguration = isConfiguration;
+            ReportId = null;
         }
 
         private CheckList() { } //Required by EF
 
         public IReadOnlyList<CheckListItem> Checks => _checks.AsReadOnly();
-        public bool Completed => Checks.Any(c => c.Checked == CheckValue.False || c.Checked == CheckValue.NA);
+        public bool Completed => !Checks.Any(c => c.Required && (c.Checked != CheckValue.False || c.Checked != CheckValue.NA));
 
+        public void Edit(string text, string annotation)
+        {
+            ValidateCanEdit();
+
+            Text = text;
+            Annotation = annotation;
+        }
 
         public void AddCheckItems(CheckListItem checkListItem)
         {
@@ -46,7 +54,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
 
         private void ValidateCanEdit()
         {
-            if (Completed && !IsConfiguration)
+            if (Completed && Id > 0 && !IsConfiguration)
                 throw new InvalidOperationException($"add items to {nameof(Completed)} {nameof(CheckList)} isn't allowed");
         }
 
@@ -56,6 +64,14 @@ namespace Inspections.Core.Domain.CheckListAggregate
             ValidateCanEdit();
 
             _checks.AddRange(checkListItem);
+        }
+
+        public void RemoveCheckItems(CheckListItem checkListItem)
+        {
+            Guard.Against.Null(checkListItem, nameof(checkListItem));
+            ValidateCanEdit();
+
+            _checks.Remove(checkListItem);
         }
 
         public void AddCheckListParams(CheckListParam checkListParam)
@@ -74,13 +90,20 @@ namespace Inspections.Core.Domain.CheckListAggregate
             TextParams.AddRange(checkListParams);
         }
 
-        public CheckList PreparteForNewReport()
+        public CheckList CloneForReport()
         {
-            var newCheckList = this.MemberwiseClone() as CheckList;
-            newCheckList.Id = 0;
-            newCheckList.ReportId = 0;
-            newCheckList.ReportConfigurationId = null;
-            newCheckList.IsConfiguration = false;
+            var newCheckList = new CheckList(this.Text, null, this.Annotation, false);
+            newCheckList.ReportConfigurationId = this.ReportConfigurationId;
+
+            foreach (var check in Checks)
+            {
+                var parameters = new List<CheckListParam>();
+                foreach (var param in check.TextParams)
+                {
+                    parameters.Add(new CheckListParam(null, 0, param.Key, param.Value, param.Type));
+                }
+                newCheckList.AddCheckItems(new CheckListItem(0, check.Text, check.Checked, check.Required, check.Remarks, parameters));
+            }
             return newCheckList;
         }
     }

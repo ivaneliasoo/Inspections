@@ -19,9 +19,17 @@ namespace Inspections.Infrastructure.Queries
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public Task<IEnumerable<Signature>> GetAllAsync(string filter)
+        public Task<IEnumerable<Signature>> GetAllAsync(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
         {
-            return Task.FromResult(_context.Set<Signature>().Where(s => EF.Functions.Like(s.Title, $"%{filter}%")).AsEnumerable());
+            if (inConfigurationOnly == false)
+                inConfigurationOnly = null;
+
+            return Task.FromResult(_context.Set<Signature>()
+                                            .Where(s => EF.Functions.Like(s.Title, $"%{filter}%") 
+                                            && (s.IsConfiguration == inConfigurationOnly || inConfigurationOnly == null)
+                                            && (s.ReportConfigurationId == reportConfigurationId || reportConfigurationId == null)
+                                            && (s.ReportId == reportId || reportId == null))
+                                            .AsEnumerable());
         }
     }
 }

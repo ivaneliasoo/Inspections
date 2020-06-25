@@ -17,6 +17,7 @@ services:
         - sql.data
     ports:
         - "8088:80"
+        - "44388:443"
     image: ${DOCKER_REGISTRY-}inspectionsapi
     build:
       context: .

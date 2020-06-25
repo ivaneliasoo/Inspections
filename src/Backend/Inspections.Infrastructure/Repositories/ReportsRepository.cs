@@ -24,8 +24,6 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<Report> AddAsync(Report entity)
         {
-            
-
             await _context.AddAsync(entity);
             await _context.SaveChangesAsync();
 
@@ -35,17 +33,33 @@ namespace Inspections.Infrastructure.Repositories
         public async Task<IEnumerable<Report>> GetAll(string filter)
         {
             // TODO: Change
-            return await _context.Inspections.ToListAsync();
+            return await _context.Reports
+                .Include(p => p.CheckList)
+                .Include(p=>p.Signatures)
+                .Include(p=>p.Notes)
+                .Include(p => p.PhotoRecords)
+                .ToListAsync();
         }
 
         public Task DeleteAsync(Report entity)
         {
-            throw new NotImplementedException();
+            _context.CheckLists.RemoveRange(entity.CheckList);
+            _context.Signatures.RemoveRange(entity.Signatures);
+            _context.Reports.Remove(entity);
+            _context.SaveChangesAsync();
+
+            return Task.CompletedTask;
         }
 
-        public Task<Report> GetByIdAsync(int id)
+        public async Task<Report> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Reports.Where(r=>r.Id == id)
+               .Include(p => p.CheckList)
+                .ThenInclude(p=>p.Checks)
+               .Include(p => p.Signatures)
+               .Include(p => p.Notes)
+               .Include(p => p.PhotoRecords)
+               .SingleOrDefaultAsync();
         }
 
         public Task UpdateAsync(Report entity)

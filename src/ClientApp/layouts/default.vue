@@ -11,7 +11,7 @@
       <v-list dense>
         <v-list-item class="px-2">
           <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+            <v-img src="https://randomuser.me/api/portraits/men/85.jpg" />
           </v-list-item-avatar>
         </v-list-item>
         <v-list-item link>
@@ -21,7 +21,17 @@
           </v-list-item-content>
         </v-list-item>
         <v-divider />
-        <nuxt-link to="reports">
+        <nuxt-link to="/">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="/reports">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-file-chart</v-icon>
@@ -31,7 +41,7 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="checklists">
+        <nuxt-link to="/checklists">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-format-list-checks</v-icon>
@@ -41,7 +51,7 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="signatures">
+        <nuxt-link to="/signatures">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-draw</v-icon>
@@ -51,7 +61,7 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="reportsconfiguration">
+        <nuxt-link to="/configurations">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-cog-outline</v-icon>
@@ -72,6 +82,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Inspections</v-toolbar-title>
       <v-spacer />
+      <img src="/Logo.jpeg" height="50px" width="130px">
       <v-btn icon @click="logout">
         <v-icon>mdi-logout</v-icon>
       </v-btn>

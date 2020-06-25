@@ -30,7 +30,7 @@ namespace Inspections.Infrastructure.Queries
                       , [RemarksLabelText]
                       , ISNULL(DefinedCheckLists.CheckLists,0) as DefinedCheckLists
                       , ISNULL(DefinedSignatures.Signatures,0) as DefinedSignatures
-                      , 0 as UsedByReports
+                      , Reports as UsedByReports
                       , LastEdit
                       , LastEditUser
                 FROM Inspections.ReportsConfiguration Config
@@ -46,13 +46,12 @@ namespace Inspections.Infrastructure.Queries
                     GROUP BY ReportConfigurationId
                 ) AS DefinedSignatures
                     ON DefinedSignatures.ReportConfigurationId = Config.Id
-                -- COMMENTED UNTIL Reports back is ready
-                --     LEFT OUTER JOIN (
-                --     SELECT ReportConfigurationId, COUNT(ReportConfigurationId) AS CheckLists
-                --     FROM Inspections.Reports
-                --     GROUP BY ReportConfigurationId
-                -- ) AS Reports
-                --     ON Reports.ReportConfigurationId = Config.Id
+                    LEFT OUTER JOIN (
+                    SELECT ReportConfigurationId, COUNT(DISTINCT ReportId) AS Reports
+                    FROM Inspections.CheckLists
+                    GROUP BY ReportConfigurationId
+                ) AS Reports
+                    ON Reports.ReportConfigurationId = Config.Id
                 WHERE 1=1
             ").Where(p=> EF.Functions.Like(p.Title, $"%{filter ?? string.Empty}%") || EF.Functions.Like(p.FormName, $"%{filter ?? string.Empty}%"));
         }

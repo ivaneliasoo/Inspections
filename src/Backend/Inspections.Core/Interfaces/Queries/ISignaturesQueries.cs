@@ -6,6 +6,6 @@ namespace Inspections.Core.Interfaces.Queries
 {
     public interface ISignaturesQueries
     {
-        Task<IEnumerable<Signature>> GetAllAsync(string filter);
+        Task<IEnumerable<Signature>> GetAllAsync(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId);
     }
 }

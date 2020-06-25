@@ -18,6 +18,8 @@ namespace Inspections.API.Features.Signatures.Models
         public string Remarks { get; set; }
         public DateTimeOffset Date { get; set; }
         public bool Principal { get; set; }
+        public int? ReportId { get; set; }
+        public int? ReportConfigurationId { get; set; }
 
         public SignatureDTO(Signature signature)
         {
@@ -35,6 +37,8 @@ namespace Inspections.API.Features.Signatures.Models
                 ResponsableType = signature.Responsable.Type;
                 ResponsableName = signature.Responsable.Name;
             }
+            ReportConfigurationId = signature.ReportConfigurationId;
+            ReportId = signature.ReportId;
         }
     }
 }
