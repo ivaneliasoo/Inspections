@@ -30,7 +30,7 @@ export default class zFileupload extends Vue {
     url: `${this.rutaApi}`,
     maxFilesize: 10, // MB
     dictRemoveFile: 'Remove',
-    dictDefaultMessage: '<i aria-hidden="true" class="v-icon notranslate accent--text material-icons theme--light" style="font-size: 40px;">post_add</i><p class="mt-4 font-weight-bold" style="font-size: 1.10em;">Drop your files here</p>',
+    dictDefaultMessage: '<i aria-hidden="true" class="v-icon notranslate accent--text material-design-icons theme--light" style="font-size: 40px;"></i><p class="mt-4 font-weight-bold" style="font-size: 1.10em;">Drop your files here</p>',
     dictResponseError: 'error uploading file',
     dictInvalidFileType: 'Invalid file type',
     dictMaxFilesExceeded: 'only one file at a time',
@@ -71,6 +71,5 @@ export default class zFileupload extends Vue {
     background-color: #f1f8fc;
     border-radius: 10px;
     border-color: rgba(21, 89, 192, 0.192) !important
-
 }
 </style>
