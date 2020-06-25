@@ -14,6 +14,8 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
+Vue.use(vue2Dropzone)
+
 @Component({
   layout: 'Default',
   components: { vueDropzone: vue2Dropzone }
@@ -47,14 +49,14 @@ export default class zFileupload extends Vue {
       setTimeout(() => {
         self.removeFile(file)
       }, 3000)
-    }
+    } 
   }
 
   get fileUploadOptionsCommputed() {
     return this.fileUploadOptions
   }
 
-  removeFile(file) {
+  removeFile(file: any) {
     const $refs:any = this.$refs
     const dropzone:any = $refs.dropzone
     dropzone.removeFile(file)

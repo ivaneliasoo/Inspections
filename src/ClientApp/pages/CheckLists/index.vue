@@ -108,17 +108,8 @@ import { CheckListsState } from 'store/checklists'
 import { ReportConfigurationState } from '@/store/configurations'
 import { ReportsState } from '@/store/reportstrore'
 import { CheckList, CheckListItem, FilterType, ReportConfiguration, Report } from '@/types'
-import AlertDialog from '@/components/AlertDialog.vue'
-import MessageDialog from '@/components/MessageDialog.vue'
-import GridFilter from '@/components/GridFilter.vue'
 
-@Component({
-  components: {
-    AlertDialog,
-    MessageDialog,
-    GridFilter
-  }
-})
+@Component
 export default class CheckListsPage extends Vue {
   dialog: Boolean = false
   dialogRemove: boolean = false

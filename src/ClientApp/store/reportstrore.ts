@@ -18,6 +18,10 @@ export const actions: ActionTree<ReportsState, RootState> = {
     const configs = await this.$axios.$get(`reports?${payload ?? ''}`)
     commit('SET_REPORT_LIST', configs)
   },
+  async getReportById ({ }, payload) {
+    const report = await this.$axios.$get(`reports/${payload}`)
+    return report
+  },
   // eslint-disable-next-line no-empty-pattern
   async createReport ({}, payload: CreateReport) {
     await this.$axios.$post('reports', payload)

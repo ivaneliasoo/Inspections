@@ -121,18 +121,12 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import { ReportConfigurationState } from 'store/configurations'
 import { ReportsState } from 'store/reportstrore'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import AlertDialog from '@/components/AlertDialog.vue'
-import MessageDialog from '@/components/MessageDialog.vue'
-import GridFilter from '@/components/GridFilter.vue'
 import { Report, CreateReport, ReportConfiguration } from '~/types'
 
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-    AlertDialog,
-    MessageDialog,
-    GridFilter
+    ValidationProvider
   }
 })
 export default class ReportsPage extends Vue {

@@ -55,6 +55,7 @@ namespace Inspections.Infrastructure.Repositories
         {
             return await _context.Reports.Where(r=>r.Id == id)
                .Include(p => p.CheckList)
+                .ThenInclude(p=>p.Checks)
                .Include(p => p.Signatures)
                .Include(p => p.Notes)
                .Include(p => p.PhotoRecords)

@@ -16,15 +16,8 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import ReportStatus from '~/components/dashboard/ReportStatus.vue'
-import ReportsByInspector from '~/components/dashboard/ReportsByInspector.vue'
 
-@Component({
-  components: {
-    ReportStatus,
-    ReportsByInspector
-  }
-})
+@Component
 export default class IndexPage extends Vue {
 
 }

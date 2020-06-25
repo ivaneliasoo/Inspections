@@ -5,7 +5,7 @@ export interface CheckListItem {
     id: number;
     checkListId: number;
     text: string;
-    checked: CheckValue;
+    checked: boolean;
     required: boolean;
     remarks: string;
     textParams: CheckListParam[];

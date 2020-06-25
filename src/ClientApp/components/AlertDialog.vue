@@ -13,9 +13,6 @@
         </v-btn>
         <v-toolbar-title>{{ title }}</v-toolbar-title>
       </v-toolbar>
-      <!-- <v-card-title class="indigo title elevation-2">
-        {{ title }}
-      </v-card-title> -->
       <v-card-text>
         <v-row align-center justify-center row fill-height>
           <v-col class="text-md-center" cols="2">

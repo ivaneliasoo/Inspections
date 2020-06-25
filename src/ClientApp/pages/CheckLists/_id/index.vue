@@ -189,16 +189,12 @@ import {
   AddCheckListItemCommand
 } from "~/types";
 import { CheckListsState } from "~/store/checklists";
-import AlertDialog from "@/components/AlertDialog.vue";
-import MessageDialog from "@/components/MessageDialog.vue";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-    AlertDialog,
-    MessageDialog
+    ValidationProvider
   }
 })
 export default class AddEditCheckList extends Vue {

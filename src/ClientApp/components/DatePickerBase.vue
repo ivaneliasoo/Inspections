@@ -69,15 +69,15 @@ export default class DatePickerBase extends Vue {
     (newValue !== null && newValue !== undefined) ? this.fechaPickerModel = '' : this.fechaPickerModel = this.fDateToDMY(this.fechaPickerModel)
   }
 
-  emitEvent(valor) {
+  emitEvent(valor: any) {
     this.$emit('input', valor)
   }
 
-  fDateToDMY (dateValue) {
+  fDateToDMY (dateValue: any) {
     return moment(dateValue).format('DD/MM/YYYY')
   }
 
-  fDateToYMD(dateValue) {
+  fDateToYMD(dateValue: any) {
     return moment(dateValue).format('YYYY-MM-DD')
   }
 }

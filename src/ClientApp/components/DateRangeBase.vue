@@ -18,11 +18,9 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import DatePickerBase from '@/components/DatePickerBase.vue'
+// import DatePickerBase from '@/components/DatePickerBase.vue'
 
-@Component({
-  components: { DatePickerBase }
-})
+@Component
 export default class DateRangeBase extends Vue {
     @Prop() value:any;
     @Prop({ default: false }) showIcon:Boolean | undefined;

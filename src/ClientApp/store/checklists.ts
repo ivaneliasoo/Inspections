@@ -1,6 +1,6 @@
 import { ActionTree, MutationTree } from 'vuex'
 import { RootState } from 'store'
-import { CheckList, UpdateCheckListCommand, DeleteCheckListItem, UpdateCheckListItemCommand, AddCheckListItemCommand } from '~/types'
+import { CheckList, UpdateCheckListCommand, DeleteCheckListItem, UpdateCheckListItemCommand, AddCheckListItemCommand, CheckValue } from '~/types'
 
 export const state = () => ({
   checkLists: [] as CheckList[],
@@ -26,7 +26,7 @@ export const mutations: MutationTree<CheckListsState> = {
   UPDATE_CHECKLIST_ITEM: (state, value: UpdateCheckListItemCommand) => {
     const index: number = state.currentCheckList.checks.findIndex(ci=>ci.id === value.id)
     let temp = state.currentCheckList.checks[index] 
-      temp.checked = value.checked
+      temp.checked = value.checked === CheckValue.False ? false:true
       temp.remarks = value.remarks
       temp.required = value.required
       temp.text = value.text

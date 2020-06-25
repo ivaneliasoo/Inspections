@@ -152,8 +152,6 @@ import { Vue, Component, Watch } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { SignatureState } from 'store/signatures'
 import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
-import GridFilter from '@/components/GridFilter.vue'
-import AlertDialog from '@/components/AlertDialog.vue'
 import { Report, ReportConfiguration, FilterType, Signature } from '~/types'
 import { ReportConfigurationState } from '~/store/configurations'
 import { ReportsState } from '~/store/reportstrore'
@@ -161,9 +159,7 @@ import { ReportsState } from '~/store/reportstrore'
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-    GridFilter,
-    AlertDialog
+    ValidationProvider
   }
 })
 export default class SignaturesPage extends Vue {

@@ -46,6 +46,16 @@ namespace Inspections.API.Features.Inspections
             return Ok(result);
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetReport(int id)
+        {
+            var result = await _reportsRepository.GetByIdAsync(id).ConfigureAwait(false);
+            if (result is null)
+                return NoContent();
+
+            return Ok(result);
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteReport(int id)
         {
