@@ -1,6 +1,6 @@
 export interface PhotoRecord {
     id: number;
     reportId: number;
-    filePath: string;
+    fileName: string;
     label: string;
 }

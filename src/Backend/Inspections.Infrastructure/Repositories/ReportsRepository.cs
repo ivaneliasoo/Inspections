@@ -62,9 +62,10 @@ namespace Inspections.Infrastructure.Repositories
                .SingleOrDefaultAsync();
         }
 
-        public Task UpdateAsync(Report entity)
+        public async Task UpdateAsync(Report entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

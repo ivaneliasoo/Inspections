@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Inspections.Commands;
+using Inspections.API.Features.Reports.Commands;
+using Inspections.API.Models.Configuration;
 using Inspections.Core.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -65,5 +70,23 @@ namespace Inspections.API.Features.Inspections
 
             return NoContent();
         }
+
+        [HttpPost("{id:int}/photorecord")]
+        public async Task<IActionResult> AddPhotoRecord(int id, [FromForm] string label)        {
+            var request = await Request.ReadFormAsync().ConfigureAwait(false);
+
+            if (!request.Files.Any())
+                return BadRequest("can't find a file in the request");
+
+            if (request != null)
+            {
+                var result = await _mediator.Send(new AddPhotoRecordCommand(id, request.Files, label)).ConfigureAwait(false);
+                if (result)
+                    return Ok();
+            }
+
+            return BadRequest();
+        }
+
     }
 }

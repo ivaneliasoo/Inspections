@@ -70,7 +70,6 @@ namespace Inspections.API.ApplicationServices
         }
         internal async Task DeleteAsync(string fileName)
         {
-
             await Task.Run(() => _storageHelper.DeleteFile(fileName)).ConfigureAwait(false);
         }
     }
