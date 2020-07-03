@@ -15,6 +15,8 @@ namespace Inspections.API.Features.ReportsConfiguration.Model
             Title = reportConfiguration.Title;
             FormName = reportConfiguration.FormName;
             RemarksLabelText = reportConfiguration.RemarksLabelText;
+            ChecksDefinition = reportConfiguration.ChecksDefinition.Select(cd => cd.Id);
+            SignatureDefinitions= reportConfiguration.SignatureDefinitions.Select(cd => cd.Id);
         }
 
         public int Id { get; set; }
@@ -22,5 +24,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Model
         public string Title { get; set; }
         public string FormName { get; set; }
         public string RemarksLabelText { get; set; }
+        public IEnumerable<int> ChecksDefinition { get; set; }
+        public IEnumerable<int> SignatureDefinitions { get; set; }
     }
 }

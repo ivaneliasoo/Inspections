@@ -6,4 +6,5 @@ export interface AddCheckListCommand {
     textParams: CheckListParamDTO[];
     items: CheckListItemDTO[];
     annotation: string;
+    isConfiguration: boolean;
 }

@@ -1,6 +1,6 @@
 import { ActionTree, MutationTree } from 'vuex'
 import { RootState } from 'store'
-import { CheckList, UpdateCheckListCommand, DeleteCheckListItem, UpdateCheckListItemCommand, AddCheckListItemCommand, CheckValue } from '~/types'
+import { CheckList, UpdateCheckListCommand, DeleteCheckListItem, UpdateCheckListItemCommand, AddCheckListItemCommand, CheckValue, AddCheckListCommand } from '~/types'
 
 export const state = () => ({
   checkLists: [] as CheckList[],
@@ -47,6 +47,9 @@ export const actions: ActionTree<CheckListsState, RootState> = {
   async updateCheckList({commit}, payload: UpdateCheckListCommand) {
     await this.$axios.$put(`checklists/${payload.idCheckList}`, payload)
     commit('UPDATE_CHECKLIST', payload)
+  },
+  async createCheckList({commit}, payload: AddCheckListCommand) {
+    return await this.$axios.$post(`checklists`, payload)
   },
   async deleteCheckList({commit}, payload) {
     await this.$axios.$delete(`checklists/${payload.idCheckList}`)

@@ -26,7 +26,7 @@ namespace Inspections.API.Features.Checklists.Handlers
             Guard.Against.Null(request, nameof(request));
 
             var checkList = await _checkListsRepository.GetByIdAsync(request.IdCheckList).ConfigureAwait(false);
-            checkList.Edit(request.Text, request.Annotation);
+            checkList.Edit(request.Text, request.Annotation, request.IsConfiguration);
             await _checkListsRepository.UpdateAsync(checkList).ConfigureAwait(false);
 
             return true;

@@ -36,57 +36,46 @@ namespace Inspections.Core.Domain.CheckListAggregate
         public IReadOnlyList<CheckListItem> Checks => _checks.AsReadOnly();
         public bool Completed => !Checks.Any(c => c.Required && (c.Checked != CheckValue.False || c.Checked != CheckValue.NA));
 
-        public void Edit(string text, string annotation)
+        public void Edit(string text, string annotation, bool isConfiguration)
         {
-            ValidateCanEdit();
-
+            
             Text = text;
             Annotation = annotation;
+            IsConfiguration = isConfiguration;
         }
 
         public void AddCheckItems(CheckListItem checkListItem)
         {
             Guard.Against.Null(checkListItem, nameof(checkListItem));
-            ValidateCanEdit();
-
+            
             _checks.Add(checkListItem);
-        }
-
-        private void ValidateCanEdit()
-        {
-            if (Completed && Id > 0 && !IsConfiguration)
-                throw new InvalidOperationException($"add items to {nameof(Completed)} {nameof(CheckList)} isn't allowed");
         }
 
         public void AddCheckItems(IEnumerable<CheckListItem> checkListItem)
         {
             Guard.Against.Null(checkListItem, nameof(checkListItem));
-            ValidateCanEdit();
-
+            
             _checks.AddRange(checkListItem);
         }
 
         public void RemoveCheckItems(CheckListItem checkListItem)
         {
             Guard.Against.Null(checkListItem, nameof(checkListItem));
-            ValidateCanEdit();
-
+            
             _checks.Remove(checkListItem);
         }
 
         public void AddCheckListParams(CheckListParam checkListParam)
         {
             Guard.Against.Null(checkListParam, nameof(checkListParam));
-            ValidateCanEdit();
-
+            
             TextParams.Add(checkListParam);
         }
 
         public void AddCheckListParams(IEnumerable<CheckListParam> checkListParams)
         {
             Guard.Against.Null(checkListParams, nameof(checkListParams));
-            ValidateCanEdit();
-
+            
             TextParams.AddRange(checkListParams);
         }
 
@@ -94,6 +83,24 @@ namespace Inspections.Core.Domain.CheckListAggregate
         {
             var newCheckList = new CheckList(this.Text, null, this.Annotation, false);
             newCheckList.ReportConfigurationId = this.ReportConfigurationId;
+
+            foreach (var check in Checks)
+            {
+                var parameters = new List<CheckListParam>();
+                foreach (var param in check.TextParams)
+                {
+                    parameters.Add(new CheckListParam(null, 0, param.Key, param.Value, param.Type));
+                }
+                newCheckList.AddCheckItems(new CheckListItem(0, check.Text, check.Checked, check.Required, check.Remarks, parameters));
+            }
+            return newCheckList;
+        }
+
+        public CheckList CloneForReportConfiguration()
+        {
+            var newCheckList = new CheckList(this.Text, null, this.Annotation, true);
+            newCheckList.ReportConfigurationId = 0;
+            newCheckList.ReportId = null;
 
             foreach (var check in Checks)
             {

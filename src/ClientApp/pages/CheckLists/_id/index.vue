@@ -63,10 +63,11 @@
             </v-text-field>
           </ValidationProvider>
         </v-col>
-        <v-col cols="12" md="5">
-          <ValidationProvider>
+        <v-col cols="12" md="4">
             <v-text-field v-model="currentCheckList.annotation" label="Annotation" />
-          </ValidationProvider>
+        </v-col>
+        <v-col cols="1">
+          <v-checkbox v-model="currentCheckList.isConfiguration" label="Use in Config" />
         </v-col>
         <v-col cols="1">
           <v-btn :disabled="!valid || !dirty" icon text color="success" @click="saveCheckList">
@@ -186,7 +187,8 @@ import {
   DeleteCheckListItem,
   UpdateCheckListItemCommand,
   CheckListParam,
-  AddCheckListItemCommand
+  AddCheckListItemCommand,
+  AddCheckListCommand
 } from "~/types";
 import { CheckListsState } from "~/store/checklists";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
@@ -240,12 +242,14 @@ export default class AddEditCheckList extends Vue {
   }
 
   async fetch() {
-    const result = await this.$store.dispatch(
-      "checklists/getCheckListItemsById",
-      this.$route.params.id,
-      { root: false }
-    );
-    this.currentCheckList = Object.assign({}, result);
+    if(parseInt(this.$route.params.id) > 0) {
+      const result = await this.$store.dispatch(
+        "checklists/getCheckListItemsById",
+        this.$route.params.id,
+        { root: false }
+      );
+      this.currentCheckList = Object.assign({}, result);
+    }
   }
 
   async saveItem() {
@@ -298,11 +302,28 @@ export default class AddEditCheckList extends Vue {
     const command: UpdateCheckListCommand = {
       idCheckList: parseInt(this.$route.params.id),
       text: this.currentCheckList.text,
-      annotation: this.currentCheckList.annotation
+      annotation: this.currentCheckList.annotation,
+      isConfiguration: this.currentCheckList.isConfiguration
     };
-    await this.$store.dispatch("checklists/updateCheckList", command, {
-      root: false
-    });
+
+    const addCommand: AddCheckListCommand = {
+      text: this.currentCheckList.text,
+      annotation: this.currentCheckList.annotation,
+      isConfiguration: this.currentCheckList.isConfiguration,
+      textParams: [],
+      items: []
+    };
+
+    if(command.idCheckList>0)
+      await this.$store.dispatch("checklists/updateCheckList", command, {
+        root: false
+      });
+    else
+      await this.$store.dispatch("checklists/createCheckList", addCommand, {
+        root: false
+      }).then(resp => { 
+        this.$router.push({ name: 'CheckLists-id', params: { id: 2 } })
+      });
   }
 }
 </script>

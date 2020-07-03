@@ -43,8 +43,10 @@
           <v-divider class="mx-4" inset vertical />
           <grid-filter :filter.sync="filter.filterText" />
           <v-spacer />
-          <v-btn color="primary" dark class="mb-2" @click="$router.push({ name: 'CheckLists-id', params: { id: -1 }})">
-            New CheckList
+          <v-btn class="mx-2" x-small 
+            fab dark color="primary"
+            @click="$router.push({ name: 'CheckLists-id', params: { id: -1 } })">
+              <v-icon dark>mdi-plus</v-icon>
           </v-btn>
         </v-toolbar>
         <v-row justify="space-around" class="ml-2 mr-2">

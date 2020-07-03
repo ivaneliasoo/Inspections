@@ -1,5 +1,14 @@
 <template>
   <div>
+    <alert-dialog
+      v-model="dialogRemove"
+      title="Remove Configuration"
+      message="This operation will remove this Configuration. You'll not be able to proceed if this configration has been used in any reports"
+      :code="selectedItem.id"
+      :description="selectedItem.title"
+      @yes="deleteConfig();"
+      @no="dialogRemove=false"
+    />
     <v-data-table
       :items="configs"
       item-key="id"
@@ -16,48 +25,26 @@
           />
           <grid-filter :filter.sync="filter" />
           <v-spacer />
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                color="primary"
-                dark
-                class="mb-2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                New Report Configuration
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">New Report Configuration</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+          <v-btn class="mx-2" x-small 
+            fab dark color="primary"
+            @click="$router.push({ name: 'Configurations-id', params: { id: -1 } })">
+              <v-icon dark>mdi-plus</v-icon>
+          </v-btn>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{}">
+      <template v-slot:item.actions="{ item }">
         <v-icon
           small
           color="primary"
           class="mr-2"
-          @click=""
+          @click="$router.push({ name: 'Configurations-id', params: { id: item.id } })"
         >
           mdi-pencil
         </v-icon>
         <v-icon
           small
           color="error"
-          @click=""
+          @click="selectedItem= item; dialogRemove = true"
         >
           mdi-delete
         </v-icon>
@@ -74,6 +61,7 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import { ReportConfigurationState } from 'store/configurations'
 import { ReportConfiguration } from '~/types'
 import GridFilter from '@/components/GridFilter.vue'
+import AlertDialog from '@/components/AlertDialog.vue'
 
 @Component({
   components: {
@@ -81,7 +69,8 @@ import GridFilter from '@/components/GridFilter.vue'
   }
 })
 export default class ReportsConfigurationPage extends Vue {
-  dialog: boolean =false
+  dialogRemove: boolean =false
+  selectedItem: ReportConfiguration = {} as ReportConfiguration
   filter: string = ''
   headers: any[] = [
     {
@@ -153,12 +142,12 @@ export default class ReportsConfigurationPage extends Vue {
     return (this.$store.state.configurations as ReportConfigurationState).configurations
   }
 
+  deleteConfig() {
+    this.$store.dispatch('configurations/deleteConfiguration', this.selectedItem.id, { root: false })
+  }
+
   fetch ({ store }: any) {
     store.dispatch('configurations/getConfigurations', '', { root: true })
   }
 }
 </script>
-
-<style>
-
-</style>
