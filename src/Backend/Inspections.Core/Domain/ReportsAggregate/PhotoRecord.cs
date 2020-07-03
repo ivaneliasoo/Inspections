@@ -11,7 +11,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
     {
         public int ReportId { get; private set; }
         public string FileName { get; private set; }
-        public string Label { get; private set; }
+        public string Label { get; set; }
         private PhotoRecord() { }
 
         public PhotoRecord(int reportId, string path, string label)

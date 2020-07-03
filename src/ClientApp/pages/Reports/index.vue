@@ -7,8 +7,9 @@
       :code="selectedItem.id"
       :description="selectedItem.name"
       @yes="deleteReport();"
+      @no="dialogRemove=false"
     />
-    <message-dialog v-model="dialog" :actions="['yes','cancel']" @yes="createReport">
+    <message-dialog v-model="dialog" :actions="['yes','cancel']" @yes="createReport" @cancel="dialog=false">
       <template v-slot:title="{}">
         New Report
       </template>

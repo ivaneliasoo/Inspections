@@ -56,9 +56,12 @@ namespace Inspections.Infrastructure.Repositories
             return await _context.Reports.Where(r=>r.Id == id)
                .Include(p => p.CheckList)
                 .ThenInclude(p=>p.Checks)
+                    .ThenInclude(p=>p.TextParams)
                .Include(p => p.Signatures)
+                .ThenInclude(p=>p.Responsable)
                .Include(p => p.Notes)
                .Include(p => p.PhotoRecords)
+               .Include(p=>p.License)
                .SingleOrDefaultAsync();
         }
 

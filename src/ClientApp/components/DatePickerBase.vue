@@ -44,7 +44,7 @@ export default class DatePickerBase extends Vue {
   menu1:Boolean = false
 
   get fechaPickerModel() {
-    if (this.value !== '' && this.value !== null && this.value !== undefined)
+    if (this.value !== '' && this.value !== null && this.value !== undefined && this.value !== '0001-01-01T00:00:00+00:00')
       return this.fDateToYMD(this.value)
     else
       return this.fechaHoy
