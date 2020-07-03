@@ -16,6 +16,7 @@
             <v-col cols="6">
               <ValidationProvider rules="required" v-slot="{ errors }">
                 <v-text-field
+                :readonly="currentReport.isClosed"
                 v-model="currentReport.name"
                 label="Report Name"
                 :error-messages="errors"
@@ -34,6 +35,7 @@
             <v-col>
               <ValidationProvider rules="required" v-slot="{ errors }">
               <v-textarea label="Address" rows="2 "
+                :readonly="currentReport.isClosed"
                 v-model="currentReport.address"
                 :error-messages="errors"
                />
@@ -44,6 +46,7 @@
             <v-col cols="12" md="2" v-if="currentReport.license">
               <ValidationProvider rules="required" v-slot="{ errors }">
               <v-select :items="emaTypes"
+                :readonly="currentReport.isClosed"
                 v-model="currentReport.license.licenseType"
                 :error-messages="errors"
                label="EMA License Type" />
@@ -52,6 +55,7 @@
             <v-col cols="12" md="3" v-if="currentReport.license">
               <ValidationProvider rules="required" v-slot="{ errors }">
               <v-text-field type="number"
+                :readonly="currentReport.isClosed"
                 v-model="currentReport.license.number"
                 :error-messages="errors"
                label="License" />
@@ -60,6 +64,7 @@
             <v-col cols="12" md="2">
               <ValidationProvider rules="required" v-slot="{ errors }">
               <DatePickerBase type="number" label="License"
+                :readonly="currentReport.isClosed"
                 v-model="currentReport.date"
                 :error-messages="errors"
                :max="new Date().toISOString()" />
@@ -80,7 +85,7 @@
            <v-fab-transition>
       <v-btn
         v-show="hasPendingChanges"
-        :disabled="!dirty || !valid"
+        :disabled="!dirty || !valid || currentReport.isClosed"
         color="success"
         fab
         fixed
@@ -156,6 +161,7 @@
                                           >{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1}} .- {{ checkItem.text }}</v-col>
                                           <v-col cols="2" md="1">
                                             <v-checkbox
+                                              :readonly="currentReport.isClosed"
                                               color="primary"
                                               v-model="checkItem.checked"
                                               :indeterminate="checkItem.checked===2"
@@ -164,6 +170,7 @@
                                           </v-col>
                                           <v-col cols="10" md="4">
                                             <v-text-field
+                                              :readonly="currentReport.isClosed"
                                               v-model="checkItem.remarks"
                                               :label="currentReport.remarksLabelText"
                                               @blur="saveCheckItem(checkItem)"
@@ -212,7 +219,7 @@
                             title="delete this note"
                             icon
                             text
-                            :disabled="note.needsCheck"
+                            :disabled="note.needsCheck || currentReport.isClosed"
                             color="error"
                             @click="removeNote(note.id)"
                             >
@@ -220,10 +227,10 @@
                             </v-btn>
                       </v-col>
                     <v-col cols="8">
-                      <v-text-field v-model="note.text" label="Note" @blur="saveNote(note)" />
+                      <v-text-field v-model="note.text" :readonly="currentReport.isClosed" label="Note" @blur="saveNote(note)" />
                     </v-col>
                     <v-col cols="2">
-                        <v-checkbox v-model="note.checked" @change="saveNote(note)" :label="note.needsCheck ? '(Check Required)':''" />
+                        <v-checkbox v-model="note.checked" :readonly="currentReport.isClosed" @change="saveNote(note)" :label="note.needsCheck ? '(Check Required)':''" />
                     </v-col>
                   </v-row>
                 </div>
@@ -237,6 +244,7 @@
                 <v-col :cols="files.length>0 ? 10:12" v-if="!hasPendingChanges">
                   <v-file-input
                     v-model="files"
+                    :disabled="currentReport.isClosed"
                     color="primary accent-4"
                     counter
                     label="Upload File"
@@ -269,7 +277,7 @@
                 <v-col v-if="files.length>0 && !hasPendingChanges" cols="2">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                    <v-btn color="indigo" v-on="on" dark fab elevation="2" :disabled="!files.length>0" @click="uploadFiles">
+                    <v-btn color="indigo" v-on="on" dark fab elevation="2" :disabled="!files.length>0 || currentReport.isClosed" @click="uploadFiles">
                         <v-icon >
                           mdi-upload
                         </v-icon>
@@ -347,18 +355,18 @@
                         label="Responsable Type" />
                     </v-col>
                     <v-col cols="6" md="3">
-                      <v-text-field v-model="signature.responsable.name" label="Responsable" />
+                      <v-text-field v-model="signature.responsable.name" :readonly="currentReport.isClosed" label="Responsable" />
                     </v-col>
                     <v-col cols="12" md="4">
-                      <v-text-field v-model="signature.designation" label="Designation" />
+                      <v-text-field v-model="signature.designation" :readonly="currentReport.isClosed" label="Designation" />
                     </v-col>
                     <v-col cols="12" md="2">
-                      <DatePickerBase v-model="signature.date" label="Date" max="" />
+                      <DatePickerBase v-model="signature.date" :readonly="currentReport.isClosed" label="Date" max="" />
                     </v-col>
                   </v-row>
                   <v-row>
                       <v-col>
-                          <v-text-field v-model="signature.remarks" :label="signature.remarksLabelText" />
+                          <v-text-field v-model="signature.remarks" :readonly="currentReport.isClosed" :label="signature.remarksLabelText" />
                       </v-col>
                   </v-row>
                 </div>
