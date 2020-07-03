@@ -64,7 +64,7 @@
             <v-col cols="12" md="2">
               <ValidationProvider rules="required" v-slot="{ errors }">
               <DatePickerBase type="number" label="License"
-                :readonly="currentReport.isClosed"
+                :disabled="currentReport.isClosed"
                 v-model="currentReport.date"
                 :error-messages="errors"
                :max="new Date().toISOString()" />
@@ -161,7 +161,7 @@
                                           >{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1}} .- {{ checkItem.text }}</v-col>
                                           <v-col cols="2" md="1">
                                             <v-checkbox
-                                              :readonly="currentReport.isClosed"
+                                              :disabled="currentReport.isClosed"
                                               color="primary"
                                               v-model="checkItem.checked"
                                               :indeterminate="checkItem.checked===2"
@@ -230,7 +230,7 @@
                       <v-text-field v-model="note.text" :readonly="currentReport.isClosed" label="Note" @blur="saveNote(note)" />
                     </v-col>
                     <v-col cols="2">
-                        <v-checkbox v-model="note.checked" :readonly="currentReport.isClosed" @change="saveNote(note)" :label="note.needsCheck ? '(Check Required)':''" />
+                        <v-checkbox v-model="note.checked" :disabled="currentReport.isClosed" @change="saveNote(note)" :label="note.needsCheck ? '(Check Required)':''" />
                     </v-col>
                   </v-row>
                 </div>
@@ -351,6 +351,7 @@
                     <v-col cols="6" md="3">
                         <v-select 
                         v-model="signature.responsable.type" 
+                        :readonly="currentReport.isClosed"
                         :items="responsableTypes" 
                         label="Responsable Type" />
                     </v-col>
@@ -361,7 +362,7 @@
                       <v-text-field v-model="signature.designation" :readonly="currentReport.isClosed" label="Designation" />
                     </v-col>
                     <v-col cols="12" md="2">
-                      <DatePickerBase v-model="signature.date" :readonly="currentReport.isClosed" label="Date" max="" />
+                      <DatePickerBase v-model="signature.date" :disabled="currentReport.isClosed" label="Date" max="" />
                     </v-col>
                   </v-row>
                   <v-row>

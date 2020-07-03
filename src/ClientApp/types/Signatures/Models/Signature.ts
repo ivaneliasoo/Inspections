@@ -1,6 +1,7 @@
 
 import { Responsable } from './Responsable'
 import { ReportConfiguration } from '~/types/Reports/Models/ReportConfiguration'
+import { Report } from '~/types'
 
 export interface Signature {
     id: number;
@@ -13,7 +14,7 @@ export interface Signature {
     principal: boolean;
     isConfiguration: boolean;
     reportId: number | null;
-    // report: Report;
+    report: Report;
     reportConfigurationId: number | null;
     reportConfiguration: ReportConfiguration;
 }

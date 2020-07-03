@@ -25,6 +25,7 @@ namespace Inspections.Infrastructure.Queries
                 inConfigurationOnly = null;
 
             return Task.FromResult(_context.Set<Signature>()
+                                            .Include(p=>p.Report)
                                             .Where(s => EF.Functions.Like(s.Title, $"%{filter}%") 
                                             && (s.IsConfiguration == inConfigurationOnly || inConfigurationOnly == null)
                                             && (s.ReportConfigurationId == reportConfigurationId || reportConfigurationId == null)

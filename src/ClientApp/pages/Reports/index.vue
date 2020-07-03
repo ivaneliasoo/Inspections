@@ -85,6 +85,7 @@
         </v-icon>
         <v-icon
           small
+          :disabled="item.isClosed"
           color="error"
           @click="selectItem(item); dialogRemove = true"
         >

@@ -16,8 +16,8 @@
           <grid-filter :filter.sync="filter.filterText" />
           <v-spacer />
           <v-dialog v-model="dialog" persistent  scrollable
-    :fullscreen="$vuetify.breakpoint.smAndDown"
-    :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'">
+            :fullscreen="$vuetify.breakpoint.smAndDown"
+            :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" @click="item = { principal: false }">
                 New Signature
@@ -36,6 +36,7 @@
                           <v-text-field 
                             v-model="item.title" 
                             name="title"
+                            :readonly="item.report ? item.report.isClosed:false"
                             :error-messages="errors" 
                             label="Title" 
                           />
@@ -44,6 +45,7 @@
                       <v-col cols="12" md="6">
                         <v-text-field 
                           v-model="item.annotation" 
+                          :readonly="item.report ? item.report.isClosed:false"
                           name="annotation"
                           label="Annotation" 
                         />
@@ -59,6 +61,7 @@
                             clearable
                             :items="reports"
                             item-text="name"
+                            :readonly="item.report ? item.report.isClosed:false"
                             item-value="id"
                             label="Use in Report" />
                         </ValidationProvider>
@@ -69,6 +72,7 @@
                             v-model="item.reportConfigurationId" 
                             :disabled="item.reportId > 0  || item.id>0"
                             :error-messages="errors" 
+                            :readonly="item.report ? item.report.isClosed:false"
                             clearable
                             :items="configurations"
                             item-text="title"
@@ -79,6 +83,7 @@
                       <v-col cols="12" md="4">
                         <v-checkbox 
                           v-model="item.principal"
+                          :disabled="item.report ? item.report.isClosed:false"
                           name="principal"
                           label="Principal" 
                         />
@@ -88,7 +93,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="success" text :disabled="!valid" 
+                <v-btn color="success" text :disabled="item.report ? item.report.isClosed ? true:false : false && !valid" 
                 @click="upsertSignature()">
                   Save
                 </v-btn>
@@ -137,6 +142,7 @@
         </v-icon>
         <v-icon
           small
+          :disabled="item.report ? item.report.isClosed:false"
           color="error"
           @click="selectItem(item); dialogRemove = true"
         >
@@ -228,7 +234,7 @@ export default class SignaturesPage extends Vue {
       .signaturesList
   }
 
-  selectItem (item: Signature): void{
+   selectItem (item: Signature): void{
     this.selectedItem = item
     this.$store.dispatch('signatures/getSignatureById', this.selectedItem.id, { root: true })
       .then(resp => this.item = resp)
