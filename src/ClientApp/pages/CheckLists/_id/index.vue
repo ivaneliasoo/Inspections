@@ -322,7 +322,7 @@ export default class AddEditCheckList extends Vue {
       await this.$store.dispatch("checklists/createCheckList", addCommand, {
         root: false
       }).then(resp => { 
-        this.$router.push({ name: 'CheckLists-id', params: { id: 2 } })
+        this.$router.push({ name: 'CheckLists' })
       });
   }
 }

@@ -517,7 +517,7 @@ export default class EditReport extends Vue {
       checkListId: checkItem.checkListId,
       text: checkItem.text,
       required: checkItem.required,
-      checked: parseInt(checkItem.checked),
+      checked: parseInt(checkItem.checked as any),
       remarks: checkItem.remarks
     }
     this.$axios.put(`checklists/${command.checkListId}/items/${checkItem.id}`,  command)
@@ -588,7 +588,7 @@ export default class EditReport extends Vue {
 
   get IsCompleted() {
     if(this.currentReport.checkList){
-      return this.currentReport.checkList.filter(cl => cl.checks.findIndex(c => c.required && c.checked === 0)>=0).length === 0
+      return this.currentReport.checkList.filter(cl => cl.checks.findIndex(c => c.required && (c.checked as any) === 0)>=0).length === 0
     }
 
     return false
