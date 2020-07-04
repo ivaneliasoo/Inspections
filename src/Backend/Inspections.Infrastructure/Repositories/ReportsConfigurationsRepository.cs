@@ -50,16 +50,18 @@ namespace Inspections.Infrastructure.Repositories
                 .Select(sm => sm.TextParams.Where(c => c.Key.Length > 0)))
                 .SingleOrDefaultAsync();
             
-            //EF limitations make me do it this way
-            foreach (var check in result.ChecksDefinition)
+            if(result != null)
             {
-                foreach (var checkItem in check.Checks)
+                //EF limitations make me do it this way
+                foreach (var check in result.ChecksDefinition)
                 {
-                    var checksParams = _context.CheckListParams.Where(clp => clp.CheckListItemId == checkItem.Id).AsEnumerable();
-                    checkItem.TextParams.AddRange(checksParams);
+                    foreach (var checkItem in check.Checks)
+                    {
+                        var checksParams = _context.CheckListParams.Where(clp => clp.CheckListItemId == checkItem.Id).AsEnumerable();
+                        checkItem.TextParams.AddRange(checksParams);
+                    }
                 }
             }
-
 
             return result;
         }

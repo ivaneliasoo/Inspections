@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MediaUploadimgReports\**" />
+    <Content Remove="MediaUploadimgReports\**" />
+    <EmbeddedResource Remove="MediaUploadimgReports\**" />
+    <None Remove="MediaUploadimgReports\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.6.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">

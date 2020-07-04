@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Users.Services;
 using Inspections.API.Models.Configuration;
 using Inspections.Core;
@@ -138,6 +139,7 @@ namespace Inspections.API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserNameResolver, UserNameResolver>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped(typeof(FileUploadService));
             services.AddSingleton<IStorageHelper>(sh => new StorageHelper(Configuration.GetSection("ClientSettings:TempFolder").Value));
 
             services.AddScoped<ICheckListsRepository, CheckListsRepository>();
@@ -161,6 +163,12 @@ namespace Inspections.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), Configuration.GetValue<string>("ClientSettings:ReportsImagesFolder"))),
+                RequestPath = "/ReportsImages"
+            });
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

@@ -5,11 +5,11 @@
         <ReportStatus style="height: 150px" />
       </v-col>
       <v-col cols="6">
-        <ReportsByInspector />
+        <ReportsByInspector id="prueba" />
       </v-col>
     </v-row>
     <v-row>
-      <v-col></v-col>
+      <v-col><v-btn @click="print">Print</v-btn></v-col>
       <v-col></v-col>
     </v-row>
   </div>
@@ -19,7 +19,7 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
 export default class IndexPage extends Vue {
-
+  
 }
 </script>
 

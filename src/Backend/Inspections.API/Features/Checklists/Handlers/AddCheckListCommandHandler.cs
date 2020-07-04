@@ -28,7 +28,7 @@ namespace Inspections.API.Features.Checklists.Handlers
             var checkList = new CheckList(request.Text,
                                           CheckListMappingHelper.MapParams(request.TextParams),
                                           request.Annotation,
-                                          false);
+                                          request.IsConfiguration);
             checkList.AddCheckItems(CheckListMappingHelper.MapItems(request.Items));
 
             var result = await _checkListsRepository.AddAsync(checkList).ConfigureAwait(false);

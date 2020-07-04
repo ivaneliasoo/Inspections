@@ -87,6 +87,22 @@
         <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
+    <v-fab-transition>
+      <v-btn
+        v-show="showScrollUpFab"
+        color="primary"
+        fab
+        fixed
+        dark
+        bottom
+        right
+        small
+        class="v-btn--example"
+        @click="$vuetify.goTo(0)"
+      >
+        <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </v-fab-transition>
     <v-main>
       <v-container
         fluid
@@ -96,7 +112,7 @@
           justify="center"
         >
           <v-col class="text-center">
-            <nuxt />
+            <nuxt v-scroll="onScroll"/>
           </v-col>
         </v-row>
       </v-container>
@@ -116,11 +132,23 @@ import { Vue, Component } from 'nuxt-property-decorator'
 export default class Default extends Vue {
   drawer: boolean | null = null
   mini: boolean = false
+  showScrollUpFab: boolean = false
+
+  onScroll(e: any) {
+    if (typeof window === 'undefined') return
+      const top = window.pageYOffset ||   e.target.scrollTop || 0
+      this.showScrollUpFab = top > 20
+  }
 
   async logout() {
     await this.$auth.logout()
   }
 }
 </script>
-<style>
+<style scoped>
+.v-btn--example {
+    bottom: 0;
+    margin: 0 0 16px 16px;
+  }
+
 </style>

@@ -33,5 +33,16 @@ namespace Inspections.Core.Domain.SignaturesAggregate
             return newSignature;
         }
 
+        public Signature PreparteForNewReportConfiguration()
+        {
+            var newSignature = this.MemberwiseClone() as Signature;
+            newSignature.Id = 0;
+            newSignature.ReportId = null;
+            newSignature.ReportConfigurationId = 0;
+            newSignature.IsConfiguration = true;
+
+            return newSignature;
+        }
+
     }
 }

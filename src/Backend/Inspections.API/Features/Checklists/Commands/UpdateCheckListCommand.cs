@@ -16,12 +16,16 @@ namespace Inspections.API.Features.Checklists.Commands
         public string Text { get; set; }
         [DataMember]
         public string Annotation { get; set; }
+        [DataMember]
+        public bool IsConfiguration { get; set; }
+
         private UpdateCheckListCommand() { }
 
-        public UpdateCheckListCommand(string text, string annotation)
+        public UpdateCheckListCommand(string text, string annotation, bool isConfiguration)
         {
             Text = text;
             Annotation = annotation;
+            IsConfiguration = isConfiguration;
         }
     }
 }

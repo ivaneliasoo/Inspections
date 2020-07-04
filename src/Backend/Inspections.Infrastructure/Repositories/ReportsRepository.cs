@@ -56,15 +56,19 @@ namespace Inspections.Infrastructure.Repositories
             return await _context.Reports.Where(r=>r.Id == id)
                .Include(p => p.CheckList)
                 .ThenInclude(p=>p.Checks)
+                    .ThenInclude(p=>p.TextParams)
                .Include(p => p.Signatures)
+                .ThenInclude(p=>p.Responsable)
                .Include(p => p.Notes)
                .Include(p => p.PhotoRecords)
+               .Include(p=>p.License)
                .SingleOrDefaultAsync();
         }
 
-        public Task UpdateAsync(Report entity)
+        public async Task UpdateAsync(Report entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

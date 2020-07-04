@@ -40,9 +40,9 @@ namespace Inspections.Infrastructure.Repositories
         public async Task<CheckList> GetByIdAsync(int id)
         {
             return await _context.Set<CheckList>()
-                .Include("Checks")
-                .Include("Checks.TextParams")
-                .Include("TextParams")
+                .Include(p=>p.Checks)
+                    .ThenInclude(p=>p.TextParams)
+                .Include(p=>p.TextParams)
                 .Where(c=>c.Id == id).SingleOrDefaultAsync();
         }
 

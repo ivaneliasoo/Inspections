@@ -72,6 +72,9 @@ namespace Inspections.Infrastructure.Data
                 if (entityType is ResumenReportConfiguration)
                     continue;
 
+                if (entityType is EMALicense)
+                    continue;
+
                 modelBuilder.Entity(entityType.Name).Property<DateTimeOffset>("LastEdit").IsRequired();
                 modelBuilder.Entity(entityType.Name).Property<string>("LastEditUser").IsRequired().HasMaxLength(20);
             }
@@ -102,7 +105,13 @@ namespace Inspections.Infrastructure.Data
             {
                 if (entity.CurrentValues.EntityType.DisplayName() == "Responsable")
                     continue;
-                
+
+                if (entity.CurrentValues.EntityType.DisplayName() == "EMALicense")
+                    continue;
+
+                if (entity.CurrentValues.EntityType.DisplayName() == "DateTimeRange")
+                    continue;
+
 
                 entity.Property("LastEdit").CurrentValue = DateTimeOffset.UtcNow;
                 entity.Property("LastEditUser").CurrentValue = _userNameResolver.UserName ?? "Seed";

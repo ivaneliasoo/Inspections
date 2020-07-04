@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Inspections.API.Features.Signatures.Models
         public DateTimeOffset Date { get; set; }
         public bool Principal { get; set; }
         public int? ReportId { get; set; }
+        public Report Report { get; set; }
         public int? ReportConfigurationId { get; set; }
 
         public SignatureDTO(Signature signature)
@@ -39,6 +41,7 @@ namespace Inspections.API.Features.Signatures.Models
             }
             ReportConfigurationId = signature.ReportConfigurationId;
             ReportId = signature.ReportId;
+            Report = signature.Report;
         }
     }
 }

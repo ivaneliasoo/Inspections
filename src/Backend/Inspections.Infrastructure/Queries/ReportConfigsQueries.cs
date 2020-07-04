@@ -30,7 +30,7 @@ namespace Inspections.Infrastructure.Queries
                       , [RemarksLabelText]
                       , ISNULL(DefinedCheckLists.CheckLists,0) as DefinedCheckLists
                       , ISNULL(DefinedSignatures.Signatures,0) as DefinedSignatures
-                      , Reports as UsedByReports
+                      , ISNULL(Reports, 0) as UsedByReports
                       , LastEdit
                       , LastEditUser
                 FROM Inspections.ReportsConfiguration Config

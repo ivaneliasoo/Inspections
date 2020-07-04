@@ -40,7 +40,10 @@ namespace Inspections.Infrastructure.Repositories
         public async Task<Signature> GetByIdAsync(int id)
         {
             return await _context.Set<Signature>()
-                .FindAsync(id);
+                .Where(s => s.Id == id)
+                .Include(p => p.Report)
+                .Include(p=>p.Responsable)
+                .FirstOrDefaultAsync();
         }
 
         public async Task UpdateAsync(Signature entity)

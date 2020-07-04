@@ -21,15 +21,17 @@ namespace Inspections.API.Features.Checklists.Commands
         public List<CheckListItemDTO> Items { get; set; }
         [DataMember]
         public string Annotation { get; set; }
+        public bool IsConfiguration { get; set; }
 
         private AddCheckListCommand() { }
 
-        public AddCheckListCommand(string text, string annotation, List<CheckListItemDTO> items, List<CheckListParamDTO> textParams)
+        public AddCheckListCommand(string text, string annotation, List<CheckListItemDTO> items, List<CheckListParamDTO> textParams, bool isConfiguration)
         {
             Text = text;
             TextParams = textParams;
             Items = items;
             Annotation = annotation;
+            IsConfiguration = isConfiguration;
         }
     }
 }
