@@ -167,7 +167,11 @@ namespace Inspections.API
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), Configuration.GetValue<string>("ClientSettings:ReportsImagesFolder"))),
-                RequestPath = "/ReportsImages"
+                RequestPath = "/ReportsImages",
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+                }
             });
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
