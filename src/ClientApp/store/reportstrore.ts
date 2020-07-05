@@ -22,6 +22,10 @@ export const actions: ActionTree<ReportsState, RootState> = {
     const report = await this.$axios.$get(`reports/${payload}`)
     return report
   },
+  async getReportPhotos ({ }, payload) {
+    const photos = await this.$axios.$get(`reports/${payload}/photorecord`)
+    return photos
+  },
   // eslint-disable-next-line no-empty-pattern
   async createReport ({}, payload: CreateReport) {
     await this.$axios.$post('reports', payload)
