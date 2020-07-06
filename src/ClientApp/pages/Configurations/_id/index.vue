@@ -149,7 +149,6 @@ export default class AddEditReportConiguration extends Vue{
             else
               this.$router.push({ name: 'Configurations-id', params: { id: resp } })
           })
-        
     }
 
     async asyncData({ store, params }: any) {
