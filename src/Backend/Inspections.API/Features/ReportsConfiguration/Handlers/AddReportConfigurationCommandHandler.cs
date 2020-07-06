@@ -76,25 +76,5 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             }
             return result;
         }
-
-        private List<CheckList> PrepareForConfiguration(List<CheckList> checks)
-        {
-            var result = new List<CheckList>();
-            foreach (CheckList check in checks)
-            {
-                result.Add(check.CloneForReportConfiguration());
-            }
-            return result;
-        }
-
-        private List<Signature> PrepareForConfiguration(List<Signature> signatures)
-        {
-            var result = new List<Signature>();
-            foreach (Signature signature in signatures)
-            {
-                result.Add(signature.PreparteForNewReportConfiguration());
-            }
-            return result;
-        }
     }
 }
