@@ -65,13 +65,14 @@ export default {
     redirect: {
       login: '/Login',
       logout: '/Login',
-      home: '/reports'
+      home: '/Reports'
     },
     cookie: true,
     strategies: {
       local: {
         endpoints: {
           login: { url: '/auth/token', method: 'post', propertyName: false },
+          logout: false,
           user: { url: '/Users/active', method: 'get', propertyName: false }
         },
         tokenRequired: true,

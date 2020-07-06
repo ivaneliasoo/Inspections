@@ -70,6 +70,7 @@
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon
+          :disabled="!item.isClosed || !item.photoRecords.length>0"
           small
           color="primary"
           class="mr-2"
@@ -78,6 +79,7 @@
           mdi-camera
         </v-icon>
         <v-icon
+          :disabled="!item.isClosed"
           small
           color="primary"
           class="mr-2"

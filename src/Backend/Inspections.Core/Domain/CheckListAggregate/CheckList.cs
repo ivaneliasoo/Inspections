@@ -20,6 +20,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
         public List<CheckListParam> TextParams { get; private set; } = new List<CheckListParam>();
         public string Annotation { get; private set; }
         public bool IsConfiguration { get; set; }
+        public bool Completed => !_checks.Any(c => c.Required && (c.Checked == CheckValue.False));
         private readonly List<CheckListItem> _checks = new List<CheckListItem>();
 
         public CheckList(string text, List<CheckListParam> textParams, string annotation, bool isConfiguration)
@@ -34,7 +35,6 @@ namespace Inspections.Core.Domain.CheckListAggregate
         private CheckList() { } //Required by EF
 
         public IReadOnlyList<CheckListItem> Checks => _checks.AsReadOnly();
-        public bool Completed => !Checks.Any(c => c.Required && (c.Checked != CheckValue.False || c.Checked != CheckValue.NA));
 
         public void Edit(string text, string annotation, bool isConfiguration)
         {

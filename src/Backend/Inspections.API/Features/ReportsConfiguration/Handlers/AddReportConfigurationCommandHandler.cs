@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Inspections.API.Features.ReportsConfiguration.Handlers
 {
-    public class AddReportConfigurationCommandHandler : IRequestHandler<AddReportConfigurationCommand, bool>
+    public class AddReportConfigurationCommandHandler : IRequestHandler<AddReportConfigurationCommand, int>
     {
         private readonly IReportConfigurationsRepository _reportConfigurationsRepository;
         private readonly InspectionsContext _context;
@@ -26,7 +26,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<bool> Handle(AddReportConfigurationCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(AddReportConfigurationCommand request, CancellationToken cancellationToken)
         {
             Guard.Against.Null(request, nameof(request));
 
@@ -54,7 +54,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
 
             var result = await _reportConfigurationsRepository.AddAsync(repoConfig).ConfigureAwait(false);
 
-            return result.Id > 0;
+            return result.Id;
         }
 
         private List<CheckList> PrepareForConfiguration(List<CheckList> checks)

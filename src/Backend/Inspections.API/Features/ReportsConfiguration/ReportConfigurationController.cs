@@ -35,10 +35,10 @@ namespace Inspections.API.Features.ReportsConfiguration
         public async Task<IActionResult> CreateReportConfig([FromBody] AddReportConfigurationCommand report)
         {
             var result = await _mediator.Send(report).ConfigureAwait(false);
-            if (!result)
+            if (result <= 0)
                 return Conflict();
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpPut("{id:int}")]

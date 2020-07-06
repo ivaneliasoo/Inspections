@@ -380,7 +380,7 @@ export class PrintHelper {
           table: {
             headerRows: 0,
             dontBreakRows: true,
-            body:photos
+            body: photos || undefined
           },
           margin: [30,0,0,0],
           alignment: "center"
@@ -406,6 +406,10 @@ export class PrintHelper {
 
   private async splitPhotosBy2(reportId: number): Promise<any> {
     const photos = await this.getReportPhotos(reportId)
+    debugger
+    
+    if (!!photos) return
+
     const result: any[] = []
     let tempArray: any[] = []
     for (let index = 0; index < photos.length; index++) {
