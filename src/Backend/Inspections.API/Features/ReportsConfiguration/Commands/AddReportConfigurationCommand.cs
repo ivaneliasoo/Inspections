@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Inspections.API.Features.ReportsConfiguration.Commands
 {
-    public class AddReportConfigurationCommand : IRequest<bool>
+    public class AddReportConfigurationCommand : IRequest<int>
     {
         public AddReportConfigurationCommand(ReportType type,
                                              string title,

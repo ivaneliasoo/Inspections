@@ -19,7 +19,7 @@ namespace Inspections.API.Features.Reports.Handlers
         }
         public async Task<bool> Handle(DeletePhotoRecordCommand request, CancellationToken cancellationToken)
         {
-            var report = await _reportsRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
+            var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
 
             var photo = report.PhotoRecords.Where(n => n.Id == request.Id).FirstOrDefault();
             report.RemovePhoto(photo);

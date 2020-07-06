@@ -1,298 +1,41 @@
-<template>
-  <div>
-    <alert-dialog
-      v-model="dialogRemove"
-      title="Remove Reports"
-      message="This operation will remove this report and all data related"
-      :code="selectedItem.id"
-      :description="selectedItem.name"
-      @yes="deleteReport();"
-      @no="dialogRemove=false"
-    />
-    <message-dialog v-model="dialog" :actions="['yes','cancel']" @yes="createReport" @cancel="dialog=false">
-      <template v-slot:title="{}">
-        New Report
-      </template>
-      <ValidationObserver tag="form" ref="obs">
-        <v-row>
-          <v-col cols="12" xs="12" md="6">
-            <ValidationProvider rules="required" v-slot="{ errors }">
-              <v-select
-                id="selReportType"
-                v-model="newReport.reportType"
-                :error-messages="errors"
-                item-value="id"
-                item-text="text"
-                label="Report Type"
-                :items="[{ id:0, text: 'Inspection' }]"
-              />
-            </ValidationProvider>
-          </v-col>
-          <v-col cols="12" xs="12" md="6">
-            <ValidationProvider rules="required" v-slot="{ errors }">
-              <v-select
-                id="selConfigurations"
-                v-model="newReport.configurationId"
-                :error-messages="errors"
-                label="Select a Saved Configuration"
-                item-value="id"
-                item-text="title"
-                :items="configurations"
-              />
-            </ValidationProvider>
-          </v-col>
-          <v-col cols="12">
-            <ValidationProvider rules="required" v-slot="{ errors }">
-              <v-text-field
-                id="txtName"
-                v-model="newReport.name"
-                :error-messages="errors"
-                label="Report Name"
-              />
-            </ValidationProvider>
-          </v-col>
-        </v-row>
-      </ValidationObserver>
-    </message-dialog>
-    <v-data-table :items="reportList" item-key="id" :search="filter" dense :headers="headers">
-      <template v-slot:top="{}">
-        <v-toolbar flat color="white">
-          <v-toolbar-title>Inspection Reports</v-toolbar-title>
-          <v-divider class="mx-4" inset vertical />
-          <grid-filter :filter.sync="filter" />
-          <v-spacer />
-          <v-btn class="mx-2" x-small 
-            fab dark color="primary"
-            @click="dialog = true">
-              <v-icon dark>mdi-plus</v-icon>
-          </v-btn>
-        </v-toolbar>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon
-          :disabled="!item.isClosed || !item.photoRecords.length>0"
-          small
-          color="primary"
-          class="mr-2"
-          @click="printHelper.printCompoundedPhotoRecord(item.id)"
-        >
-          mdi-camera
-        </v-icon>
-        <v-icon
-          :disabled="!item.isClosed"
-          small
-          color="primary"
-          class="mr-2"
-          @click="printHelper.print(item.id)"
-        >
-          mdi-printer
-        </v-icon>
-        <v-icon
-          small
-          color="primary"
-          class="mr-2"
-          @click="$router.push({ name: 'Reports-id', params: { id: item.id} })"
-        >
-          mdi-file-chart
-        </v-icon>
-        <v-icon
-          small
-          :disabled="item.isClosed"
-          color="error"
-          @click="selectItem(item); dialogRemove = true"
-        >
-          mdi-delete
-        </v-icon>
-      </template>
-      <template v-slot:item.date="{ item }">
-        {{ formatDate(item.date) }}
-      </template>
-      <template v-slot:item.photoRecords="{ item }">
-        {{ item.photoRecords.length }}
-      </template>
-      <template v-slot:item.notes="{ item }">
-        {{ item.notes.length }}
-      </template>
-      <template v-slot:item.checkList="{ item }">
-        {{ item.checkList.length }}
-      </template>
-      <template v-slot:item.signatures="{ item }">
-        {{ item.signatures.length }}
-      </template>
-      <template v-slot:item.completed="{ item }">
-        <v-simple-checkbox v-model="item.completed" disabled />
-      </template>
-      <template v-slot:item.isClosed="{ item }">
-        <v-simple-checkbox v-model="item.isClosed" disabled />
-      </template>
-    </v-data-table>
-  </div>
-</template>
-
-<script lang="ts">
 import moment from 'moment'
-import { Vue, Component } from 'nuxt-property-decorator'
-import { ReportConfigurationState } from 'store/configurations'
-import { ReportsState } from 'store/reportstrore'
-import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { Report, CreateReport, ReportConfiguration, EMALicenseType, CheckList, Signature, ResponsableType, CheckValue } from '~/types'
-import { PrintHelper } from '@/Helpers'
+import { Report, EMALicenseType, Signature, ResponsableType, CheckList, CheckValue, PhotoRecord } from "~/types";
+import pdfMake from 'pdfmake/build/pdfmake'
+import pdfFonts from 'pdfmake/build/vfs_fonts'
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
-@Component({
-  components: {
-    ValidationObserver,
-    ValidationProvider
+export class PrintHelper {
+  private readonly store: any
+  constructor(store: any) {
+    this.store = store
   }
-})
-export default class ReportsPage extends Vue {
-  printHelper!: PrintHelper
-  $refs!: {
-    obs: InstanceType<typeof ValidationObserver>
-  }
-  dialog: Boolean = false
-  dialogRemove: Boolean = false
-  selectedItem: Report = {} as Report
-  newReport:CreateReport = {} as CreateReport
-  filter: String = ''
-  hostName: string= this.$axios!.defaults!.baseURL!.replace('/api','')
-    headers: any[] = [
-      {
-        text: 'Id',
-        value: 'id',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Report Name',
-        value: 'name',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Date',
-        value: 'date',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Title',
-        value: 'title',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Notes',
-        value: 'notes',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Checks',
-        value: 'checkList',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Signatures',
-        value: 'signatures',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Photos',
-        value: 'photoRecords',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Completed',
-        value: 'completed',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Closed',
-        value: 'isClosed',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: '',
-        value: 'actions',
-        sortable: false,
-        align: 'center',
-        class: 'secundary'
-      }
-    ];
 
-    get reportList (): Report[] {
-      return (this.$store.state.reportstrore as ReportsState)
-        .reportList
-    }
-
-    fetch ({ store }: any) {
-      store.dispatch('configurations/getConfigurations', '', { root: true })
-      store.dispatch('reportstrore/getReports', '', { root: true })
-    }
-
-    mounted() {
-      this.printHelper = new PrintHelper(this.$store)
-    }
-
-    get configurations (): ReportConfiguration[] {
-      return (this.$store.state.configurations as ReportConfigurationState).configurations
-    }
-
-    selectItem (item: Report): void{
-      this.selectedItem = item
-    }
-
-    formatDate (date:string): string {
-      return moment(date).format('YYYY-MM-DD HH:mm')
-    }
-
-    // only if i've more time then expected
-    get idValid () {
-      return this.$refs.obs.flags.valid
-    }
-
-    async createReport () {
-      if(await this.$refs.obs.validate() === true)
-      this.$store.dispatch('reportstrore/createReport', this.newReport, { root: true })
-        .then(() => {
-          this.$store.dispatch('reportstrore/getReports', '', { root: true })
-          this.dialog = false
-        })
-    }
-
-    deleteReport () {
-      this.$store.dispatch('reportstrore/deleteReport', this.selectedItem.id, { root: true })
-        .then(() => {
-          this.dialog = false
-        })
-    }
-
-    async print(item: Report) {
-      
-    const report: Report = await this.$store.dispatch(
+  async getReport(id: number): Promise<Report> {
+    const report: Report = await this.store.dispatch(
       'reportstrore/getReportById',
-      item.id,
+      id,
       { root: true }
     );
+    return report
+  }
+
+  async getReportPhotos(id: number): Promise<any> {
+    const photos: Report = await this.store.dispatch(
+      'reportstrore/getReportPhotos',
+      id,
+      { root: true }
+    );
+    return photos
+  }
+
+  public async print(reportId: number) {
+      
+    const report = await this.getReport(reportId);
+
     (window as any).pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
+  
     
-
+  
     const docDef: TDocumentDefinitions  = {
        header: [{ 
           text: 'Inspection Report',
@@ -327,7 +70,7 @@ export default class ReportsPage extends Vue {
           fontSize: 16,
           bold: true,
           alignment: "right"
-
+  
         },
         subtitle: {
           fontSize: 12,
@@ -365,16 +108,16 @@ export default class ReportsPage extends Vue {
       pageOrientation: 'portrait',
       pageMargins: [40,80,40,40]
     }
-
+  
     const checksdata:any = []
     report.checkList.forEach((checklist: CheckList, index: number) => {
       checksdata.push(this.mapChackLists(checklist, index))
     });
     (docDef.content as any).push(checksdata)
-
-
+  
+  
     const principalSignature: Signature | undefined = report.signatures.find((sign:Signature) => sign.principal);
-
+  
     (docDef.content as any).push([
       { 
         text: `Name of ${ResponsableType[principalSignature!.responsable.type]}: ${principalSignature!.responsable.name}   Designation: ${principalSignature!.designation}` ,
@@ -405,7 +148,7 @@ export default class ReportsPage extends Vue {
       y: -30
     }
    }
- ]} ]}])
+  ]} ]}])
       else  
         (docDef.content as any).push([ { columns: [{ text: `${note.text}`, margin: [0,0,0,10], width: '90%' } ]}])
     });
@@ -436,10 +179,10 @@ export default class ReportsPage extends Vue {
       },
       ])
     });
-    pdfMake.createPdf(docDef).open()
+    pdfMake.createPdf(docDef).download(`report_S${report.name}`)
   }
-
-  mapChackLists(checklist: CheckList, index: number) {
+  
+  private mapChackLists(checklist: CheckList, index: number) {
     const mappedChecks = checklist.checks.map((check, index) => { return { columns: [{ text: `    ${index+1}.${index+1} ${check.text}`, style: 'checklistItem', width:'65%' },
     // { canvas: [ { type: 'rect', x: 15, y: 0, w: 30, h: 15, color: 'white',lineColor: 'black' } ], width: '10%' } 
     { stack: [
@@ -460,14 +203,223 @@ export default class ReportsPage extends Vue {
       y: -25
     }
    }
- ]},
+  ]},
     ,{ text: '__________________', width: '25%' }] } })
     const checksContent =  [{ text: `${index+1}    ${checklist.text} ${checklist.annotation}        ${index===0 ? 'Remarks': ''}`, style: 'checklistName', margin: [0, 10, 0, 10] }, mappedChecks]
     return checksContent
   }
+
+  
+
+  public async printCompoundedPhotoRecord(reportId: number) {
+    
+    (window as any).pdfMake.vfs = pdfFonts.pdfMake.vfs;
+  
+    const report = await this.getReport(reportId);
+
+    const photos = await this.splitPhotosBy2(report.id)
+    debugger
+    const docDef: TDocumentDefinitions  = {
+      content: [
+        { 
+          columns: 
+            [{ 
+              text: `Name of Installation`,
+              style: 'fieldName',
+              width: '30%',
+              alignment: "left"
+            },
+            {
+              text: ':',
+              style: 'fieldName',
+              width: '10%'
+            },
+            { 
+              text: `${report.name.toUpperCase()}`,
+              style: 'fieldName',
+              width: '60%',
+              alignment: "left"
+              
+            }],
+            margin: [40,150,20,0],
+            lineHeight: 2,
+            alignment: "center"
+        },
+        {
+          columns: [
+            { 
+              text: `Address of Installation`,
+              style: 'fieldName',
+              width: '30%',
+              alignment: "left"
+            },
+            {
+              text: ':',
+              style: 'fieldName',
+              width: '10%'
+            },
+            { 
+              text: `${report.address ? report.address.toUpperCase() : ''}`,
+              style: 'fieldName',
+              width: '60%',
+              alignment: "left"
+            },
+          ],
+          margin: [40,0,20,0],
+          lineHeight: 2,
+          alignment: "center"
+        },
+        {
+          columns: [
+            { 
+              text: `Electrical Installation License No`,
+              style: 'fieldName',
+              width: '30%',
+              alignment: "left"
+            },
+            {
+              text: ':',
+              style: 'fieldName',
+              width: '10%'
+            },
+            { 
+              text: `${EMALicenseType[report.license?.licenseType]}/ ${report.license?.number}`,
+              style: 'fieldName',
+              width: '60%',
+              alignment: "left"
+            },
+          ],
+          margin: [40,0,20,0],
+          lineHeight: 2,
+          alignment: "center"
+        },
+        {
+          columns: [
+            { 
+              text: `Date & Time of Inspection`,
+              style: 'fieldName',
+              width: '30%',
+              alignment: "left"
+            },
+            {
+              text: ':',
+              style: 'fieldName',
+              width: '10%'
+            },
+            {
+              text: `${moment(report.date).format('DD-MMM-YYYY')}`,
+              width: '60%',
+              style: 'fieldName',
+              alignment: "left"
+            }
+          ],
+          margin: [40,0,20,0],
+          lineHeight: 2,
+          alignment: "center"
+        },
+        {
+          columns: [
+            { 
+              text: `License Validity`,
+              style: 'fieldName',
+              width: '30%',
+              alignment: "left"
+            },
+            {
+              text: ':',
+              style: 'fieldName',
+              width: '10%'
+            },
+            {
+              text: `${moment(report.date).format('DD-MMM-YYYY')} to ${moment(report.date).format('DD-MMM-YYYY')}`,
+              width: '60%',
+              style: 'fieldName',
+              alignment: "left"
+            }
+          ],
+          margin: [40,0,20,0],
+          lineHeight: 2,
+          alignment: "center"
+        },
+        {
+          columns: [
+            { 
+              text: `Subject`,
+              style: 'fieldName',
+              width: '30%',
+              alignment: "left",
+            },
+            {
+              text: ':',
+              style: 'fieldName',
+              width: '10%'
+            },
+            {
+              text: `Photo Record of Inspection`,
+              width: '60%',
+              style: 'fieldName',
+              alignment: "left"
+            }
+          ],
+          margin: [40,0,20,0],
+          lineHeight: 2,
+          alignment: "center"
+        },
+        {
+          layout: {
+            hLineColor: '#32a6e4',
+            vLineColor: '#32a6e4',
+            hLineWidth: function() {
+              return 2
+            },
+            vLineWidth:  function() {
+              return 2
+            }
+          },
+          pageBreak: 'before',
+          table: {
+            headerRows: 0,
+            dontBreakRows: true,
+            body: photos || undefined
+          },
+          margin: [30,0,0,0],
+          alignment: "center"
+        }
+      ],
+      styles: {
+        fieldName: {
+          fontSize: 9,
+          lineHeight: 3,
+        },
+        photoTag: {
+          fontSize: 9,
+          bold: true
+        }
+      },
+      pageSize: 'A4',
+      pageOrientation: 'portrait',
+      pageMargins: [40,80,40,40]
+    }
+
+    pdfMake.createPdf(docDef).download(`compunded_photo_record_${report.name}`)
+  }
+
+  private async splitPhotosBy2(reportId: number): Promise<any> {
+    const photos = await this.getReportPhotos(reportId)
+    debugger
+    
+    if (!!photos) return
+
+    const result: any[] = []
+    let tempArray: any[] = []
+    for (let index = 0; index < photos.length; index++) {
+      const photo = photos[index];
+      tempArray.push({ stack:[{image: `${photo.base64String}` , width: 220, height: 150, margin: [0,20,0,20] }, { text: `${photo.label}`, alignment: 'left', style: 'photoTag' }]})
+      if(index % 2 !== 0) {
+        result.push([...tempArray])
+        tempArray.length = 0
+      }
+    }
+    return result
+  }
 }
-</script>
-
-<style>
-
-</style>

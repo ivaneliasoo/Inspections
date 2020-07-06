@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Inspections.Commands;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Models.Configuration;
+using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces;
+using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,18 +19,22 @@ using Microsoft.Extensions.Options;
 
 namespace Inspections.API.Features.Inspections
 {
-    [Authorize]
+  [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ReportsController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly IReportsRepository _reportsRepository;
+        private readonly InspectionsContext _context;
+        private readonly IOptions<ClientSettings> storageOptions;
 
-        public ReportsController(IMediator mediator, IReportsRepository reportsRepository)
+        public ReportsController(IMediator mediator, IReportsRepository reportsRepository, InspectionsContext context, IOptions<ClientSettings> storageOptions)
         {
-            this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this._reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            this.storageOptions = storageOptions ?? throw new ArgumentNullException(nameof(storageOptions));
         }
 
         [HttpPost]
@@ -81,6 +87,23 @@ namespace Inspections.API.Features.Inspections
             return NoContent();
         }
 
+        [HttpGet("{id:int}/photorecord")]
+        public IActionResult GetPhotoRecords(int id)
+        {
+            var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id)
+                            .Select(p => new { p.Label, p.FileName, Base64String = ToBase64String($"{Directory.GetCurrentDirectory()}{p.FileName.Replace("ReportsImages",storageOptions.Value.ReportsImagesFolder)}") });
+            if (photos!=null)
+                return Ok(photos);
+
+            return BadRequest();
+        }
+
+        private static string ToBase64String(string fileName)
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(fileName);
+            return "data:image/png;base64," + Convert.ToBase64String(fileBytes);
+        }
+
         [HttpPost("{id:int}/photorecord")]
         public async Task<IActionResult> AddPhotoRecord(int id, [FromForm] string label)
         {
@@ -104,7 +127,7 @@ namespace Inspections.API.Features.Inspections
         {
 
             var result = await _mediator.Send(note).ConfigureAwait(false);
-            if (result>0)
+            if (result > 0)
                 return Ok(result);
 
             return BadRequest();
@@ -129,7 +152,7 @@ namespace Inspections.API.Features.Inspections
             if (photo.Id != idPhoto || photo.ReportId != id)
                 return BadRequest();
 
-            var result = await _mediator.Send(new EditPhotoRecordCommand(photo.ReportId,photo.Label,photo.Id)).ConfigureAwait(false);
+            var result = await _mediator.Send(new EditPhotoRecordCommand(photo.ReportId, photo.Label, photo.Id)).ConfigureAwait(false);
             if (result)
                 return Ok();
 
@@ -139,7 +162,7 @@ namespace Inspections.API.Features.Inspections
         [HttpDelete("{id:int}/photorecord/{idPhoto:int}")]
         public async Task<IActionResult> DeletePhotoRecord(int id, int idPhoto)
         {
-            var result = await _mediator.Send(new DeletePhotoRecordCommand(idPhoto,id)).ConfigureAwait(false);
+            var result = await _mediator.Send(new DeletePhotoRecordCommand(idPhoto, id)).ConfigureAwait(false);
             if (result)
                 return Ok();
 
@@ -149,7 +172,7 @@ namespace Inspections.API.Features.Inspections
         [HttpDelete("{id:int}/note/{idNote:int}")]
         public async Task<IActionResult> DeleteNote(int id, int idNote)
         {
-            var result = await _mediator.Send(new DeleteNoteCommand(idNote,id)).ConfigureAwait(false);
+            var result = await _mediator.Send(new DeleteNoteCommand(idNote, id)).ConfigureAwait(false);
             if (result)
                 return Ok();
 

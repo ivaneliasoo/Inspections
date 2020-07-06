@@ -84,7 +84,6 @@
           </v-row>
            <v-fab-transition>
       <v-btn
-        v-show="hasPendingChanges"
         :disabled="!dirty || !valid || currentReport.isClosed"
         color="success"
         fab
@@ -322,11 +321,14 @@
                               <v-icon>mdi-check</v-icon>
                             </v-btn>
                           <v-spacer></v-spacer>
-                          <v-btn v-if="showLabelEdit.findIndex(l => l===index)===-1" icon @click="editPhotoLabel(index)">
+                          <v-btn v-if="showLabelEdit.findIndex(l => l===index)===-1" icon @click="editPhotoLabel(index) || !currentReport.isClosed">
                               <v-icon>mdi-pencil</v-icon>
                           </v-btn>
                           <v-btn icon @click="currentPhoto=index; showCarousel=true">
                               <v-icon>mdi-eye</v-icon>
+                          </v-btn>
+                          <v-btn v-if="!currentReport.isClosed" icon @click="removePhoto(photo.id)">
+                              <v-icon>mdi-delete</v-icon>
                           </v-btn>
                           </v-card-actions>
                       </v-card>
@@ -367,7 +369,7 @@
                   </v-row>
                   <v-row>
                       <v-col>
-                          <v-text-field v-model="signature.remarks" :readonly="currentReport.isClosed" :label="signature.remarksLabelText" />
+                          <v-text-field v-model="signature.remarks" :readonly="currentReport.isClosed" label="Remarks (if any)" />
                       </v-col>
                   </v-row>
                 </div>
@@ -390,7 +392,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from "nuxt-property-decorator";
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { Report, EMALicenseType, Note, Signature, ResponsableType, PhotoRecord, EMALicense, DeleteNoteCommand, AddNoteCommand, UpdateReportCommand, EditNoteCommand, EditPhotoRecordCommand, EditSignatureCommand, CheckList, CheckListItem, UpdateCheckListItemCommand } from "../../../types";
+import { Report, EMALicenseType, Note, Signature, ResponsableType, PhotoRecord, EMALicense, DeleteNoteCommand, AddNoteCommand, UpdateReportCommand, EditNoteCommand, EditPhotoRecordCommand, EditSignatureCommand, CheckList, CheckListItem, UpdateCheckListItemCommand, DeletePhotoRecordCommand } from "../../../types";
 
 @Component({
   components: {
@@ -458,6 +460,17 @@ export default class EditReport extends Vue {
 
   }
 
+ async removePhoto(id: number) {
+      const delPhoto:DeletePhotoRecordCommand = {
+        reportId: this.currentReport.id,
+        id
+      }
+      this.$axios.delete(`reports/${delPhoto.reportId}/photorecord/${delPhoto.id}`).then(() =>{
+      this.currentReport.photoRecords =  this.currentReport.photoRecords.filter(p=>p.id !== id)
+    })
+
+  }
+
   uploadFiles() {
     let formData = new FormData
 
@@ -467,9 +480,14 @@ export default class EditReport extends Vue {
 
     formData.append('label', 'archivos de Prueba')
 
+    const self = this
+
     this.$axios.post(`reports/${this.$route.params.id}/photorecord`, formData).then(() =>{
        this.files = []
-       
+      //  this.$store.dispatch('reportstrore/getReportById',
+      // this.$route.params.id,
+      // { root: true })
+      self.$fetch()
     })
   }
 
@@ -570,7 +588,7 @@ export default class EditReport extends Vue {
         signature.responsable = { type: 0, name: ''}
       else
         signature.responsable = { 
-          type: this.responsableTypes.find((et: any) => et.text == signature.responsable.type)?.id, 
+          type:  ResponsableType[signature.responsable.type]  as unknown as ResponsableType,// this.responsableTypes.find((et: any) => et.text == signature.responsable.type)?.id, 
           name: signature.responsable.name
         }
     });
@@ -579,7 +597,7 @@ export default class EditReport extends Vue {
     if(!this.currentReport.license)
       this.currentReport.license = { } as EMALicense
     else  
-      this.currentReport.license.licenseType = this.emaTypes.find((et: any) => et.text == this.currentReport.license.licenseType)?.id
+      this.currentReport.license.licenseType = EMALicenseType[this.currentReport.license.licenseType] as unknown as EMALicenseType //this.emaTypes.find((et: any) => et.text == this.currentReport.license.licenseType)?.id
   }
 
   get IsValidForm() {

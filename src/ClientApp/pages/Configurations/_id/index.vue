@@ -143,8 +143,12 @@ export default class AddEditReportConiguration extends Vue{
             signatureDefinitions: this.newConfig.signatureDefinitions.flatMap(sign => sign.id)
         }
         await this.$store.dispatch('configurations/createConfiguration', this.newConfig, { root: true })
-        await this.$store.dispatch('configurations/getConfigurationById', this.$route.params.id, { root: true })
-        this.$router.push({ name: 'Configurations' })
+          .then((resp) => {
+            if(parseInt(this.$route.params.id) > 0)
+              this.$store.dispatch('configurations/getConfigurationById', this.$route.params.id, { root: true })
+            else
+              this.$router.push({ name: 'Configurations-id', params: { id: resp } })
+          })
     }
 
     async asyncData({ store, params }: any) {

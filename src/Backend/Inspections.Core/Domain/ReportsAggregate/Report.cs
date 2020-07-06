@@ -66,7 +66,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
         }
 
         public IReadOnlyCollection<PhotoRecord> PhotoRecords => photoRecords;
-        public bool Completed => !checkList.Any(c => c.Completed);
+        public bool Completed => !checkList.Any(c => !c.Completed);
 
         public void AddNote(Note note)
         {
