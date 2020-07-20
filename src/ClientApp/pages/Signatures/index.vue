@@ -154,8 +154,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'nuxt-property-decorator'
+import { Vue, Component, Watch, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import InnerPageMixin from '@/mixins/innerpage'
 import { SignatureState } from 'store/signatures'
 import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
 import { Report, ReportConfiguration, FilterType, Signature } from '~/types'
@@ -168,7 +169,7 @@ import { ReportsState } from '~/store/reportstrore'
     ValidationProvider
   }
 })
-export default class SignaturesPage extends Vue {
+export default class SignaturesPage extends mixins(InnerPageMixin) {
   dialog: boolean = false
   dialogRemove: boolean = false
   loading: boolean = false

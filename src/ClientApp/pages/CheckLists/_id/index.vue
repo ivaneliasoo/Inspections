@@ -179,7 +179,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Watch } from "nuxt-property-decorator";
+import { Vue, Component, Watch, mixins } from "nuxt-property-decorator";
 import {
   CheckListItem,
   CheckList,
@@ -192,6 +192,7 @@ import {
 } from "~/types";
 import { CheckListsState } from "~/store/checklists";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import InnerPageMixin from "@/mixins/innerpage";
 
 @Component({
   components: {
@@ -199,7 +200,7 @@ import { ValidationProvider, ValidationObserver } from "vee-validate";
     ValidationProvider
   }
 })
-export default class AddEditCheckList extends Vue {
+export default class AddEditCheckList extends mixins(InnerPageMixin) {
   $refs!: {
       obsNew: InstanceType<typeof ValidationObserver>
   }

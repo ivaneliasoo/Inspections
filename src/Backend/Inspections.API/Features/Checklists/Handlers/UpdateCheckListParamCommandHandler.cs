@@ -19,9 +19,9 @@ namespace Inspections.API.Features.Checklists.Handlers
             _checkListsRepository = checkListsRepository ?? throw new ArgumentNullException(nameof(checkListsRepository));
         }
 
-        public async Task<bool> Handle(UpdateCheckListParamCommand request, CancellationToken cancellationToken)
+        public Task<bool> Handle(UpdateCheckListParamCommand request, CancellationToken cancellationToken)
         {
-            return true;
+            return Task.FromResult(true);
         }
     }
 }

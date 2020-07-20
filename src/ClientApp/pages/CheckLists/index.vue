@@ -105,14 +105,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'nuxt-property-decorator'
+import { Vue, Component, Watch, mixins } from 'nuxt-property-decorator'
 import { CheckListsState } from 'store/checklists'
 import { ReportConfigurationState } from '@/store/configurations'
 import { ReportsState } from '@/store/reportstrore'
 import { CheckList, CheckListItem, FilterType, ReportConfiguration, Report } from '@/types'
+import InnerPageMixin from '@/mixins/innerpage'
 
 @Component
-export default class CheckListsPage extends Vue {
+export default class CheckListsPage extends mixins(InnerPageMixin) {
   dialog: Boolean = false
   dialogRemove: boolean = false
   dialogItems: Boolean = false

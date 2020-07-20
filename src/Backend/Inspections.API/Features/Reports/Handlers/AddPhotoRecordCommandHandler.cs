@@ -47,7 +47,7 @@ namespace Inspections.API.Features.Reports.Handlers
                 await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 foreach (var filePath in savedFilesPaths)
                 {

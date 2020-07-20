@@ -41,10 +41,10 @@ namespace Inspections.API.Features.Inspections
         public async Task<IActionResult> Post([FromBody] CreateReportCommand createData)
         {
             var result = await _mediator.Send(createData).ConfigureAwait(false);
-            if (!result)
+            if (result<=0)
                 return BadRequest();
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpPut("{id:int}")]
@@ -58,9 +58,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string filter)
+        public async Task<IActionResult> GetAll(string filter, bool? closed)
         {
-            var result = await _reportsRepository.GetAll(filter).ConfigureAwait(false);
+            var result = await _reportsRepository.GetAll(filter, closed).ConfigureAwait(false);
             if (result is null)
                 return NoContent();
 

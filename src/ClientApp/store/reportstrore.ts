@@ -15,7 +15,7 @@ export const mutations: MutationTree<ReportsState> = {
 
 export const actions: ActionTree<ReportsState, RootState> = {
   async getReports ({ commit }, payload) {
-    const configs = await this.$axios.$get(`reports?${payload ?? ''}`)
+    const configs = await this.$axios.$get(`reports`, { params: payload })
     commit('SET_REPORT_LIST', configs)
   },
   async getReportById ({ }, payload) {
@@ -28,7 +28,8 @@ export const actions: ActionTree<ReportsState, RootState> = {
   },
   // eslint-disable-next-line no-empty-pattern
   async createReport ({}, payload: CreateReport) {
-    await this.$axios.$post('reports', payload)
+    const reportId = await this.$axios.$post('reports', payload)
+    return reportId
   },
   async deleteReport ({ commit }, payload: number) {
     await this.$axios.$delete(`reports/${payload}`)

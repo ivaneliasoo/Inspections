@@ -31,17 +31,17 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="/reports">
+        <nuxt-link to="/users">
           <v-list-item link>
             <v-list-item-action>
-              <v-icon>mdi-file-chart</v-icon>
+              <v-icon>mdi-account-multiple</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>Reports</v-list-item-title>
+              <v-list-item-title>Users</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="/checklists">
+        <!-- <nuxt-link to="/checklists">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-format-list-checks</v-icon>
@@ -70,7 +70,7 @@
               <v-list-item-title>Reports Settings</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </nuxt-link>
+        </nuxt-link> -->
       </v-list>
     </v-navigation-drawer>
 
@@ -80,6 +80,9 @@
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-btn v-if="canGoBack" icon @click.stop="$router.go(-1)">
+          <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
       <v-toolbar-title>Inspections</v-toolbar-title>
       <v-spacer />
       <img src="/Logo.jpeg" height="50px" width="130px">
@@ -118,6 +121,7 @@
       </v-container>
     </v-main>
     <v-footer
+      v-show="false"
       color="indigo"
       app
     >
@@ -127,6 +131,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+import { RootState } from '@/store'
 
 @Component
 export default class Default extends Vue {
@@ -142,6 +147,10 @@ export default class Default extends Vue {
 
   async logout() {
     await this.$auth.logout()
+  }
+
+  get canGoBack() {
+    return (this.$store.state as RootState).canGoBack
   }
 }
 </script>

@@ -1,4 +1,5 @@
-﻿using Inspections.Core.Domain.ReportsAggregate;
+﻿using Inspections.Core;
+using Inspections.Core.Domain.ReportsAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,9 +10,16 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
 {
     public class ReportEntityTypeConfiguration : IEntityTypeConfiguration<Report>
     {
+        private readonly IUserNameResolver _userNameResolver;
+
+        public ReportEntityTypeConfiguration(IUserNameResolver userNameResolver)
+        {
+            this._userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
+        }
 
         public void Configure(EntityTypeBuilder<Report> builder)
         {
+
             builder.ToTable("Reports", InspectionsContext.DEFAULT_SCHEMA);
             builder.Ignore(p => p.DomainEvents);
             builder.HasKey(p => p.Id);
@@ -50,6 +58,8 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             navigationSignatures.SetField("signatures");
             navigationSignatures.SetPropertyAccessMode(PropertyAccessMode.Field);
 
+
+            builder.HasQueryFilter(f => EF.Property<string>(f, "LastEditUser") == _userNameResolver.UserName);
         }
     }
 }

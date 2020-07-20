@@ -6,11 +6,11 @@ import { CheckListItem } from './CheckListItem'
 export interface CheckList {
     id: number;
     reportId: number | null;
-    // report: Report;
     reportConfigurationId: number | null;
     reportConfiguration: ReportConfiguration;
     text: string;
     checks: CheckListItem[];
+    checked: boolean;
     textParams: CheckListParam[];
     annotation: string;
     isConfiguration: boolean;

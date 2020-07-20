@@ -101,7 +101,8 @@
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, mixins } from 'nuxt-property-decorator'
+import InnerPageMixin from '@/mixins/innerpage'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { ReportConfiguration, ReportType, CheckList, FilterType, Signature, AddReportConfigurationCommand } from '@/types'
 import { CheckListsState } from '@/store/checklists'
@@ -115,7 +116,7 @@ import { SignatureDTO } from '../../../types/Signatures/ViewModels/SignatureDTO'
         ValidationProvider
     }
 })
-export default class AddEditReportConiguration extends Vue{
+export default class AddEditReportConiguration extends mixins(InnerPageMixin){
     defaultType: ReportType = ReportType.Inspection
     newConfig!: ReportConfiguration
     
