@@ -27,6 +27,7 @@
     </v-col>
   </v-row>
 </template>
+
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import NewReportDialog from '@/components/NewReportDialog.vue'
