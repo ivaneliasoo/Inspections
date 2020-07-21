@@ -18,6 +18,8 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
             , int? retriesNumber = 0)
         {
 
+            //await context.Database.EnsureCreatedAsync();
+
             if (!context.Database.IsInMemory())
                 context.Database.Migrate();
 
@@ -26,11 +28,10 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
             try
             {
                 log.LogInformation($"Initializing data {nameof(InspectionsContext)}");
-                //TODO: Load Default Data
 
                 if (!context.Users.Any())
                 {
-                    context.Users.Add(new User() { UserName = "demo", Password = "demo", Name = "demo", LastName = "user" });
+                    context.Users.Add(new User() { UserName = "demo", Password = "demo", Name = "demo", LastName = "user", IsAdmin= false });
                 }
 
                 if (!context.ReportConfigurations.Any())

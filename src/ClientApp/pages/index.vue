@@ -47,18 +47,25 @@ export default class IndexPage extends Vue{
       icon: 'mdi-plus',
       color: 'accent',
       path: '',
-      action(self: any) { self.dialog=false; console.log(self); self.dialog = true; console.log(self) } 
+      action(self: any) { self.dialog=false; self.dialog = true } 
     },
     {
       text: 'Edit Report',
       helpText: 'Edit or remove a previously created report from a list and optionally allows to go directly to the last created or edited report by current user',
       icon: 'mdi-pencil',
       color: 'accent',
-      path: `/reports`
+      path: () => { 
+        if (this.$auth.user.lastEditedReport)
+          if(confirm('Do you wanna edit the last edited report?'))
+            return `/reports/${this.$auth.user.lastEditedReport}` 
+          else return `/reports`
+        else
+          return `/reports`
+      }
     },
     {
       text: 'View or Export Report',
-      helpText: 'Allows to View CLOSED Reports and Photo Records or Export in PDF formats',
+      helpText: 'Allows to View CLOSED Reports and Photo Records and Export in PDF formats',
       icon: 'mdi-file-chart',
       color: 'accent',
       path: `/reports?closed=true`
@@ -73,13 +80,13 @@ export default class IndexPage extends Vue{
   ]
 
   onCardClick(option: any) {
-    if(option.path)
-      this.$router.push(option.path)
+    let path = typeof option.path === 'function' ? option.path(): option.path
+    if(path)
+      this.$router.push(path)
     else
       option.action(this)
   }
    goToNewReport(event: any){
-     console.log(event)
      this.$router.push(`/reports/${event}`)
    }
 }

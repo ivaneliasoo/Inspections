@@ -248,7 +248,7 @@
           <v-tab-item key="photos" value="photos">
             <v-card flat>
               <v-row justify="space-around" align="center">
-                <v-col :cols="files.length>0 ? 10:12" v-if="!hasPendingChanges">
+                <v-col :cols="files.length>0 ? 10:12" >
                   <v-file-input
                     v-model="files"
                     :disabled="currentReport.isClosed"
@@ -281,7 +281,7 @@
                     </template>
                   </v-file-input>
                 </v-col>
-                <v-col v-if="files.length>0 && !hasPendingChanges" cols="2">
+                <v-col v-if="files.length>0" cols="2">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                     <v-btn color="indigo" v-on="on" dark fab elevation="2" :disabled="!files.length>0 || currentReport.isClosed" @click="uploadFiles">
@@ -293,11 +293,11 @@
                     <span>Upload Selected Files </span>
                   </v-tooltip>
                 </v-col>
-                <v-col v-else>
+                <!-- <v-col v-else>
                   <span class="error--text">
                     {{ hasPendingChanges ? 'You cant Upload Photos becouse You Have Pending Changes. To Continue please save your pending changes':''}}
                   </span>
-                </v-col>
+                </v-col> -->
               </v-row>
               <v-divider />
               <v-row>
@@ -594,7 +594,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
         signature.responsable = { type: 0, name: ''}
       else
         signature.responsable = { 
-          type:  ResponsableType[signature.responsable.type]  as unknown as ResponsableType,// this.responsableTypes.find((et: any) => et.text == signature.responsable.type)?.id, 
+          type:  ResponsableType[signature.responsable.type]  as unknown as ResponsableType,
           name: signature.responsable.name
         }
     });
@@ -603,7 +603,11 @@ export default class EditReport extends mixins(InnerPageMixin) {
     if(!this.currentReport.license)
       this.currentReport.license = { } as EMALicense
     else  
-      this.currentReport.license.licenseType = EMALicenseType[this.currentReport.license.licenseType] as unknown as EMALicenseType //this.emaTypes.find((et: any) => et.text == this.currentReport.license.licenseType)?.id
+      this.currentReport.license.licenseType = EMALicenseType[this.currentReport.license.licenseType] as unknown as EMALicenseType
+
+    
+    await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: this.$route.params.id }, { root: true })
+    
   }
 
   get IsValidForm() {

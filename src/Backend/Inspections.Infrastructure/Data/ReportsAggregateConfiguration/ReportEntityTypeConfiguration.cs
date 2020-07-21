@@ -58,8 +58,6 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             navigationSignatures.SetField("signatures");
             navigationSignatures.SetPropertyAccessMode(PropertyAccessMode.Field);
 
-
-            builder.HasQueryFilter(f => EF.Property<string>(f, "LastEditUser") == _userNameResolver.UserName);
         }
     }
 }

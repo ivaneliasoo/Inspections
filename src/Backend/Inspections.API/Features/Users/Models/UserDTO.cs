@@ -12,6 +12,8 @@ namespace Inspections.API.Features.Users.Models
         public string UserName { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
+        public int? LastEditedReport { get; set; }
+        public bool IsAdmin { get; set; }
         public UserDTO()
         {
 
@@ -23,6 +25,8 @@ namespace Inspections.API.Features.Users.Models
             UserName = user.UserName;
             Name = user.Name;
             LastName = user.LastName;
+            LastEditedReport = user.LastEditedReport;
+            IsAdmin = user.IsAdmin;
         }
     }
 }

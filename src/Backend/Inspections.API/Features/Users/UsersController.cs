@@ -29,7 +29,7 @@ namespace Inspections.API.Features.Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
-            return await _context.Users.Select(x=> new UserDTO(x)).ToListAsync().ConfigureAwait(false);
+            return await _context.Users.Select(x => new UserDTO(x)).ToListAsync().ConfigureAwait(false);
         }
 
         // GET: api/Users/username
@@ -65,26 +65,29 @@ namespace Inspections.API.Features.Users
             return new UserDTO(user);
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Users/demo
         [HttpPut("{userName}")]
-        public async Task<IActionResult> PutUser(string userName, [FromBody]UserDTO user)
+        public async Task<IActionResult> PutUser(string userName, [FromBody] UserDTO user)
         {
             if (userName != user.UserName || string.IsNullOrWhiteSpace(userName))
             {
                 return BadRequest();
             }
 
-            var editedUser = new User()
-            {
-                UserName = user.UserName,
-                Name = user.Name,
-                LastName = user.LastName
-            };
-
-            _context.Entry(editedUser).State = EntityState.Modified;
-
             try
             {
+                var editedUser = await _context.Set<User>().Where(u => u.UserName == userName).SingleOrDefaultAsync().ConfigureAwait(false);
+
+                if (editedUser != null)
+                {
+                    //editedUser.UserName = user.UserName;
+                    editedUser.Name = user.Name;
+                    editedUser.LastName = user.LastName;
+                    editedUser.IsAdmin = user.IsAdmin;
+                    editedUser.LastEditedReport = user.LastEditedReport;
+                }
+
+                _context.Entry(editedUser).State = EntityState.Modified;
                 await _context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
@@ -110,7 +113,10 @@ namespace Inspections.API.Features.Users
             {
                 UserName = user.UserName,
                 Name = user.Name,
-                LastName = user.LastName
+                LastName = user.LastName,
+                IsAdmin = user.IsAdmin,
+                LastEditedReport = user.LastEditedReport,
+                Password = string.Empty
             };
             _context.Users.Add(newUser);
             try
@@ -134,7 +140,7 @@ namespace Inspections.API.Features.Users
 
         // DELETE: api/Users/5
         [HttpDelete("{userName}")]
-        public async Task<ActionResult<User>> DeleteUser(string userName=null)
+        public async Task<ActionResult<User>> DeleteUser(string userName = null)
         {
             var user = _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
             if (user == null)

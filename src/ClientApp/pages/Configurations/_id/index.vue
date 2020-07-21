@@ -60,6 +60,8 @@
                 deletable-chips
                 label="Include CheckLists"
                 :items="checks"
+                append-outer-icon="mdi-format-list-checks"
+                @click:append-outer="$router.push(`/checklists?${newConfig.id}`)"
               />
             </ValidationProvider>
           </v-col>
@@ -76,6 +78,8 @@
                 deletable-chips
                 label="Include Signatures"
                 :items="signatures"
+                append-outer-icon="mdi-draw"
+                @click:append-outer="$router.push(`/signatures?${newConfig.id}`)"
               />
             </ValidationProvider>
           </v-col>

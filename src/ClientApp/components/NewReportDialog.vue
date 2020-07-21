@@ -11,6 +11,7 @@
                 id="selReportType"
                 v-model="newReport.reportType"
                 :error-messages="errors"
+                disabled
                 item-value="id"
                 item-text="text"
                 label="Report Type"
@@ -34,7 +35,7 @@
           <v-col cols="12">
             <ValidationProvider rules="required" v-slot="{ errors }">
               <v-text-field
-                id="txtName"
+                ref="txtName"
                 v-model="newReport.name"
                 :error-messages="errors"
                 label="Report Name"
@@ -64,21 +65,22 @@ export default class NewReportDialog extends Vue {
   $refs!: {
     obs: InstanceType<typeof ValidationObserver>
   }
-  newReport:CreateReport = {} as CreateReport
+  newReport:CreateReport = { reportType: 0, configurationId: 1 } as CreateReport
 
   async fetch() {
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
   }
   
   async createReport () {
-      if(await this.$refs.obs.validate() === true)
-      this.$store.dispatch('reportstrore/createReport', this.newReport, { root: true })
-        .then((resp) => {
-          this.$store.dispatch('reportstrore/getReports', '', { root: true })
-          this.$emit('input', false)
-          console.log(resp)
-          this.$emit('report-created', resp)
-        })
+      if(await this.$refs.obs.validate() === true){
+        const reportId = await this.$store.dispatch('reportstrore/createReport', this.newReport, { root: true })
+          .then((resp) => {
+            this.$store.dispatch('reportstrore/getReports', '', { root: true })
+            this.$emit('input', false)
+            this.$emit('report-created', resp)
+          })
+        await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: reportId }, { root: true })
+      }
     }
   
   get configurations (): ReportConfiguration[] {

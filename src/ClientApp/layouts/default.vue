@@ -16,8 +16,8 @@
         </v-list-item>
         <v-list-item link>
           <v-list-item-content>
-            <v-list-item-title class="title">Demo User</v-list-item-title>
-            <v-list-item-subtitle>user@gmail.com</v-list-item-subtitle>
+            <v-list-item-title class="title">{{$auth.user.userName}}</v-list-item-title>
+            <v-list-item-subtitle>{{ $auth.user.name }} {{ $auth.user.lastName }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         <v-divider />
@@ -31,7 +31,7 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="/users">
+        <nuxt-link v-if="$auth.user.isAdmin" to="/users">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-account-multiple</v-icon>
