@@ -6,6 +6,7 @@
       message="This operation will remove this CheckList and all items and params (if not used)"
       :code="selectedItem.id"
       :description="selectedItem.text"
+      @yes="removeCheckList(selectedItem)"
     />
     <message-dialog v-model="dialogItems" :actions="[]">
       <template v-slot:title="{}">
@@ -76,14 +77,14 @@
         </v-row>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon
+        <!-- <v-icon
           small
           color="primary"
           class="mr-2"
           @click="selectItem(item); dialogItems = true"
         >
           mdi-format-list-checks
-        </v-icon>
+        </v-icon> -->
         <v-icon
           small
           color="primary"
@@ -105,14 +106,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'nuxt-property-decorator'
+import { Vue, Component, Watch, mixins } from 'nuxt-property-decorator'
 import { CheckListsState } from 'store/checklists'
 import { ReportConfigurationState } from '@/store/configurations'
 import { ReportsState } from '@/store/reportstrore'
 import { CheckList, CheckListItem, FilterType, ReportConfiguration, Report } from '@/types'
+import InnerPageMixin from '@/mixins/innerpage'
 
 @Component
-export default class CheckListsPage extends Vue {
+export default class CheckListsPage extends mixins(InnerPageMixin) {
   dialog: Boolean = false
   dialogRemove: boolean = false
   dialogItems: Boolean = false
@@ -204,6 +206,10 @@ export default class CheckListsPage extends Vue {
   @Watch('filter', { deep: true })
   onFilterChanged (value: FilterType, oldValue: FilterType) {
     this.$store.dispatch('checklists/getChecklists', value, { root: true })
+  }
+
+  async removeCheckList(item: CheckList) {
+    await this.$store.dispatch('checklists/deleteCheckList', { idCheckList: item.id }, { root: true })
   }
 }
 </script>

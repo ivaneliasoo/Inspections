@@ -60,6 +60,8 @@
                 deletable-chips
                 label="Include CheckLists"
                 :items="checks"
+                append-outer-icon="mdi-format-list-checks"
+                @click:append-outer="$router.push(`/checklists?${newConfig.id}`)"
               />
             </ValidationProvider>
           </v-col>
@@ -76,6 +78,8 @@
                 deletable-chips
                 label="Include Signatures"
                 :items="signatures"
+                append-outer-icon="mdi-draw"
+                @click:append-outer="$router.push(`/signatures?${newConfig.id}`)"
               />
             </ValidationProvider>
           </v-col>
@@ -101,7 +105,8 @@
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, mixins } from 'nuxt-property-decorator'
+import InnerPageMixin from '@/mixins/innerpage'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { ReportConfiguration, ReportType, CheckList, FilterType, Signature, AddReportConfigurationCommand } from '@/types'
 import { CheckListsState } from '@/store/checklists'
@@ -115,7 +120,7 @@ import { SignatureDTO } from '../../../types/Signatures/ViewModels/SignatureDTO'
         ValidationProvider
     }
 })
-export default class AddEditReportConiguration extends Vue{
+export default class AddEditReportConiguration extends mixins(InnerPageMixin){
     defaultType: ReportType = ReportType.Inspection
     newConfig!: ReportConfiguration
     

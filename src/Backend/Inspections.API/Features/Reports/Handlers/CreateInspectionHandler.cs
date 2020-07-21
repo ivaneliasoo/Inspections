@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Inspections.API.Features.Inspections.Handlers
 {
-    public class CreateInspectionHandler : IRequestHandler<CreateReportCommand, bool>
+    public class CreateInspectionHandler : IRequestHandler<CreateReportCommand, int>
     {
         private readonly IReportsRepository _reportsRepository;
         private readonly IReportConfigurationsRepository _reportConfigurationsRepository;
@@ -20,7 +20,7 @@ namespace Inspections.API.Features.Inspections.Handlers
             this._reportConfigurationsRepository = reportConfigurationsRepository ?? throw new ArgumentNullException(nameof(reportConfigurationsRepository));
         }
 
-        public async Task<bool> Handle(CreateReportCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateReportCommand request, CancellationToken cancellationToken)
         {
             var cfg = await _reportConfigurationsRepository.GetByIdAsync(request.ConfigurationId).ConfigureAwait(false);
 
@@ -30,8 +30,8 @@ namespace Inspections.API.Features.Inspections.Handlers
                 .WithName(request.Name)
                 .Build();
 
-            await _reportsRepository.AddAsync(newReport).ConfigureAwait(false);
-            return true;                              ;
+            var result = await _reportsRepository.AddAsync(newReport).ConfigureAwait(false);
+            return result.Id;                              ;
         }
     }
 }

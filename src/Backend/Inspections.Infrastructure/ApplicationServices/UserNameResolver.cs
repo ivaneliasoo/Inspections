@@ -12,5 +12,6 @@ namespace Inspections.Core
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
         public string UserName => _httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "pruebas";
+        public bool IsAdmin => _httpContextAccessor.HttpContext?.User?.HasClaim("IsAdmin", "true") ?? false;
     }
 }

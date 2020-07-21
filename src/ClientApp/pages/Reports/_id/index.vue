@@ -133,13 +133,21 @@
                     <template v-slot:default>
                       <v-list-item-content class="text-left">
                         <v-list-item-title>
-                          <v-row>
-
-                            <v-col cols="9">{{ checkListIndex + 1 }} .- {{ item.text }}</v-col>
-                            <v-col cols="3">
+                          <v-row justify="start" align="center">
+                            <v-col cols="10" md="5" class="font-weight-black">
+                              {{ checkListIndex + 1 }} .- {{ item.text }}
                               <span v-if="item.checks.filter(c => c.required && c.checked===0).length == 0">
                                 <v-chip x-small color="success">Completed</v-chip>
                               </span>
+                            </v-col>
+                            <v-col cols="2" md="1">
+                              <v-checkbox
+                                :disabled="currentReport.isClosed"
+                                color="primary"
+                                :value="item.checks.length === item.checks.filter(c => c.checked).length"
+                                :indeterminate="item.checks.length !== item.checks.filter(c => c.checked).length && item.checks.filter(c => c.checked).length > 0"
+                                @click.stop="checkItemChecks(item.id, item.checked); item.checked = item.checked ? false:true"
+                              />
                             </v-col>
                           </v-row>
                           <v-row>
@@ -148,11 +156,11 @@
                                 v-for="(checkItem, checkListItemIndex) in item.checks"
                                 :key="checkItem.id"
                               >
-                                <template v-slot:default="{ active, toggle }">
+                                <template v-slot:default="{ }">
                                   <v-list-item-title :title="checkItem.text">
                                     <v-row dense align="center" justify="space-between">
                                       <v-col cols="10">
-                                        <v-row dense align="center" justify="space-between">
+                                        <v-row dense align="center" justify="space-between" :class="{ ml_5: true }">
                                           <v-col
                                             cols="12"
                                             md="7"
@@ -240,7 +248,7 @@
           <v-tab-item key="photos" value="photos">
             <v-card flat>
               <v-row justify="space-around" align="center">
-                <v-col :cols="files.length>0 ? 10:12" v-if="!hasPendingChanges">
+                <v-col :cols="files.length>0 ? 10:12" >
                   <v-file-input
                     v-model="files"
                     :disabled="currentReport.isClosed"
@@ -273,7 +281,7 @@
                     </template>
                   </v-file-input>
                 </v-col>
-                <v-col v-if="files.length>0 && !hasPendingChanges" cols="2">
+                <v-col v-if="files.length>0" cols="2">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                     <v-btn color="indigo" v-on="on" dark fab elevation="2" :disabled="!files.length>0 || currentReport.isClosed" @click="uploadFiles">
@@ -285,11 +293,11 @@
                     <span>Upload Selected Files </span>
                   </v-tooltip>
                 </v-col>
-                <v-col v-else>
+                <!-- <v-col v-else>
                   <span class="error--text">
                     {{ hasPendingChanges ? 'You cant Upload Photos becouse You Have Pending Changes. To Continue please save your pending changes':''}}
                   </span>
-                </v-col>
+                </v-col> -->
               </v-row>
               <v-divider />
               <v-row>
@@ -390,9 +398,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from "nuxt-property-decorator";
+import { Vue, Component, Watch, mixins } from "nuxt-property-decorator";
+import InnerPageMixin from '@/mixins/innerpage'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { Report, EMALicenseType, Note, Signature, ResponsableType, PhotoRecord, EMALicense, DeleteNoteCommand, AddNoteCommand, UpdateReportCommand, EditNoteCommand, EditPhotoRecordCommand, EditSignatureCommand, CheckList, CheckListItem, UpdateCheckListItemCommand, DeletePhotoRecordCommand } from "../../../types";
+import { Report, EMALicenseType, Note, Signature, ResponsableType, PhotoRecord, EMALicense, DeleteNoteCommand, AddNoteCommand, UpdateReportCommand, EditNoteCommand, EditPhotoRecordCommand, EditSignatureCommand, CheckList, CheckListItem, UpdateCheckListItemCommand, DeletePhotoRecordCommand, CheckValue } from "@/types";
 
 @Component({
   components: {
@@ -400,7 +409,7 @@ import { Report, EMALicenseType, Note, Signature, ResponsableType, PhotoRecord, 
     ValidationProvider
   }
 })
-export default class EditReport extends Vue {
+export default class EditReport extends mixins(InnerPageMixin) {
   $refs!: {
     obs: InstanceType<typeof ValidationObserver>
   }
@@ -484,9 +493,6 @@ export default class EditReport extends Vue {
 
     this.$axios.post(`reports/${this.$route.params.id}/photorecord`, formData).then(() =>{
        this.files = []
-      //  this.$store.dispatch('reportstrore/getReportById',
-      // this.$route.params.id,
-      // { root: true })
       self.$fetch()
     })
   }
@@ -588,7 +594,7 @@ export default class EditReport extends Vue {
         signature.responsable = { type: 0, name: ''}
       else
         signature.responsable = { 
-          type:  ResponsableType[signature.responsable.type]  as unknown as ResponsableType,// this.responsableTypes.find((et: any) => et.text == signature.responsable.type)?.id, 
+          type:  ResponsableType[signature.responsable.type]  as unknown as ResponsableType,
           name: signature.responsable.name
         }
     });
@@ -597,7 +603,11 @@ export default class EditReport extends Vue {
     if(!this.currentReport.license)
       this.currentReport.license = { } as EMALicense
     else  
-      this.currentReport.license.licenseType = EMALicenseType[this.currentReport.license.licenseType] as unknown as EMALicenseType //this.emaTypes.find((et: any) => et.text == this.currentReport.license.licenseType)?.id
+      this.currentReport.license.licenseType = EMALicenseType[this.currentReport.license.licenseType] as unknown as EMALicenseType
+
+    
+    await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: this.$route.params.id }, { root: true })
+    
   }
 
   get IsValidForm() {
@@ -623,6 +633,19 @@ export default class EditReport extends Vue {
   get CanCloseReport() {
      return this.IsCompleted && !this.HasNotesWithPendingChecks && this.PrincipalSignatureHasAResponsable && this.IsValidForm
   }
+
+  checkItemChecks(checkListId: number, value: boolean): void {
+    console.log(checkListId)
+    console.log(value)
+    const checkList = this.currentReport.checkList.find(c => c.id === checkListId)
+    console.log(checkList)
+    checkList?.checks.forEach(check => {
+      if(value) check.checked = CheckValue.True
+      else check.checked = CheckValue.False; 
+      this.saveCheckItem(check)
+    })
+  }
+
 }
 </script>
 

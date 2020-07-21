@@ -57,7 +57,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, mixins } from 'nuxt-property-decorator'
+import InnerPageMixin from '@/mixins/innerpage'
 import { ReportConfigurationState } from 'store/configurations'
 import { ReportConfiguration } from '~/types'
 import GridFilter from '@/components/GridFilter.vue'
@@ -68,7 +69,7 @@ import AlertDialog from '@/components/AlertDialog.vue'
     GridFilter
   }
 })
-export default class ReportsConfigurationPage extends Vue {
+export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
   dialogRemove: boolean =false
   selectedItem: ReportConfiguration = {} as ReportConfiguration
   filter: string = ''

@@ -65,7 +65,7 @@ namespace Inspections.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new CheckListEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new NotesEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfigurationEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ReportEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ReportEntityTypeConfiguration(_userNameResolver));
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(e => !e.IsOwned()))
             {

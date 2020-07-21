@@ -9,7 +9,7 @@ using Ardalis.GuardClauses;
 
 namespace Inspections.API.Features.Inspections.Commands
 {
-    public class CreateReportCommand : IRequest<bool>
+    public class CreateReportCommand : IRequest<int>
     {
         public int ConfigurationId { get; set; }
         public ReportType ReportType { get; set; }
