@@ -217,17 +217,19 @@
           </v-expansion-panel>
           <v-expansion-panel>
             <v-expansion-panel-header>
-              Report Notes
+              Notes
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <v-row>
-                      <v-btn class="mx-2" x-small
-                        fab dark color="primary"
-                        title="Add note"
-                        @click="addNote">
-                        <v-icon dark>mdi-plus</v-icon>
-                        </v-btn>
-                  </v-row>
+              <v-row justify="end" align="end" class="text-right">
+                <v-col cols="12">
+                  <v-btn class="mx-2" x-small
+                            fab dark color="primary"
+                            title="Add note"
+                            @click="addNote">
+                            <v-icon dark>mdi-plus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
                 <div v-for="(note, index) in currentReport.notes" :key="index">
                   <v-row dense align="center" justify="space-around">
                       <v-col cols="1">
@@ -249,8 +251,14 @@
                     <v-col cols="2">
                         <v-checkbox v-model="note.checked" :disabled="currentReport.isClosed" @change="saveNote(note)" :label="note.needsCheck ? '(Check Required)':''" />
                     </v-col>
+                    <v-col>
+                      
+                    </v-col>
                   </v-row>
                 </div>
+                <v-row class="mt-10">
+                    
+                </v-row>
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel>
@@ -294,14 +302,6 @@
           </v-expansion-panel>
         </v-expansion-panels>
           </v-tab-item>
-          <!-- <v-tab-item key="notes" value="notes">
-            <v-card flat>
-              <v-card-text>
-                  
-
-              </v-card-text>
-            </v-card>
-          </v-tab-item> -->
           <v-tab-item key="photos" value="photos">
             <v-card flat>
               <v-row justify="space-around" align="center">
@@ -401,13 +401,6 @@
                   </v-row>
                   </v-container>
                 </v-row>
-            </v-card>
-          </v-tab-item>
-          <v-tab-item key="signatures" value="signatures">
-            <v-card flat>
-              <v-card-text>
-                  
-              </v-card-text>
             </v-card>
           </v-tab-item>
         </v-tabs-items>

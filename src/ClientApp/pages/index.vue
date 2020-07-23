@@ -3,8 +3,8 @@
   <v-row>
     <new-report-dialog v-model="dialog" @report-created="goToNewReport($event)" />
     <v-col cols="12" lg="3" md="3" v-for="(option, index) in cardOptions" :key="index">
-      <v-card min-height="250" min-width="200" max-height="250" class="pt-10" @click="onCardClick(option)">
-        <v-btn fab :class="option.color" dark>
+      <v-card min-height="250" min-width="200" class="pt-10" :ripple="option.innerActions ? false:true" @click="option.innerActions ? 0:onCardClick(option)">
+        <v-btn v-if="!option.innerActions" fab :class="option.color" dark>
           <v-icon>
             {{ option.icon }}
           </v-icon>
@@ -23,6 +23,18 @@
             </v-col>
           </v-row>
         </v-card-subtitle>
+        <v-card-actions>
+          <v-row>
+            <v-col cols="6" v-for="(action, index) in option.innerActions" :key="index">
+              <v-btn :color="action.color" tile :block="$vuetify.breakpoint.smAndDown" @click.stop="action.action()">
+                <v-icon>
+                  {{ action.icon }}
+                </v-icon>
+                {{ action.text }}
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card-actions>
       </v-card>
     </v-col>
   </v-row>
@@ -52,17 +64,34 @@ export default class IndexPage extends Vue{
     },
     {
       text: 'Edit Report',
-      helpText: 'Edit or remove a previously created report from a list and optionally allows to go directly to the last created or edited report by current user',
+      helpText: 'Click one of the Options bellow',
       icon: 'mdi-pencil',
       color: 'accent',
       path: () => { 
         if (this.$auth.user.lastEditedReport)
-          if(confirm('Do you wanna edit the last edited report?'))
+          if(confirm('Click one of the Options bellow'))
             return `/reports/${this.$auth.user.lastEditedReport}` 
           else return `/reports`
         else
           return `/reports`
-      }
+      },
+      innerActions: [
+        {
+          text: 'Edit Last',
+          color: 'primary',
+          action: () => {
+            if (this.$auth.user.lastEditedReport)
+              window.$nuxt.$router.push(`/reports/${this.$auth.user.lastEditedReport}`) 
+          }
+        },
+        {
+          text: 'List All',
+          color: 'primary',
+          action: () => {
+            window.$nuxt.$router.push(`/reports`) 
+          }
+        }
+      ]
     },
     {
       text: 'View or Export Report',
@@ -76,7 +105,7 @@ export default class IndexPage extends Vue{
       helpText: 'Allows to Configure reports check lists, signatures, titles and names',
       icon: 'mdi-cog-outline',
       color: 'accent',
-      path: '/configurations'
+      path: '/configurations?configurationonly=true'
     }
   ]
 
