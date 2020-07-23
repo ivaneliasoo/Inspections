@@ -103,29 +103,38 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-tabs v-model="tabs" fixed-tabs>
+        <v-tabs v-model="tabs" fixed-tabs icons-and-text>
           <v-tabs-slider></v-tabs-slider>
           <v-tab href="#checklists" class="primary--text">
-            <v-icon>mdi-check</v-icon>
+            Report Details
+            <v-icon>mdi-message-bulleted</v-icon>
           </v-tab>
 
-          <v-tab href="#notes" class="primary--text">
+          <v-tab v-if="false" href="#notes" class="primary--text">
             <v-icon>mdi-message-bulleted</v-icon>
           </v-tab>
 
           <v-tab href="#photos" class="primary--text">
+            Photo Record
             <v-icon>mdi-folder-multiple-image</v-icon>
           </v-tab>
-          <v-tab href="#signatures" class="primary--text">
+          <v-tab v-if="false" href="#signatures" class="primary--text">
             <v-icon>mdi-signature-freehand</v-icon>
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="tabs">
           <v-tab-item key="checklists" value="checklists">
-            <v-card flat>
-              <v-card-text>
-                <v-list subheader two-line flat dense>
-                  <v-subheader>Items &amp; Params</v-subheader>
+            <v-expansion-panels
+          multiple
+          focusable
+          :value="[0,1,2]"
+        >
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              <span>Check List</span>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-list subheader two-line flat dense>
                   <v-list-item
                     v-for="(item, checkListIndex) in currentReport.checkList"
                     :key="item.id"
@@ -204,20 +213,23 @@
                     </template>
                   </v-list-item>
                 </v-list>
-              </v-card-text>
-            </v-card>
-          </v-tab-item>
-          <v-tab-item key="notes" value="notes">
-            <v-card flat>
-              <v-card-text>
-                  <v-row>
-                      <v-btn class="mx-2" x-small
-                        fab dark color="primary"
-                        title="Add note"
-                        @click="addNote">
-                        <v-icon dark>mdi-plus</v-icon>
-                        </v-btn>
-                  </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              Notes
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row justify="end" align="end" class="text-right">
+                <v-col cols="12">
+                  <v-btn class="mx-2" x-small
+                            fab dark color="primary"
+                            title="Add note"
+                            @click="addNote">
+                            <v-icon dark>mdi-plus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
                 <div v-for="(note, index) in currentReport.notes" :key="index">
                   <v-row dense align="center" justify="space-around">
                       <v-col cols="1">
@@ -239,11 +251,56 @@
                     <v-col cols="2">
                         <v-checkbox v-model="note.checked" :disabled="currentReport.isClosed" @change="saveNote(note)" :label="note.needsCheck ? '(Check Required)':''" />
                     </v-col>
+                    <v-col>
+                      
+                    </v-col>
                   </v-row>
                 </div>
-
-              </v-card-text>
-            </v-card>
+                <v-row class="mt-10">
+                    
+                </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              Signatures
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <div v-for="(signature, index) in currentReport.signatures" :key="index">
+                  <v-row>
+                      <v-col class="text-left">
+                          <h3>{{ signature.title }}</h3>
+                          <h5>{{ signature.annotation }}</h5>
+                          <v-chip v-if="signature.principal">Principal Sign</v-chip>
+                      </v-col>
+                  </v-row>
+                  <v-row align="center" justify="space-around">
+                    <v-col cols="6" md="3">
+                        <v-select 
+                        v-model="signature.responsable.type" 
+                        :readonly="currentReport.isClosed"
+                        :items="responsableTypes" 
+                        label="Responsable Type" />
+                    </v-col>
+                    <v-col cols="6" md="3">
+                      <v-text-field v-model="signature.responsable.name" :readonly="currentReport.isClosed" label="Responsable" />
+                    </v-col>
+                    <v-col cols="12" md="4">
+                      <v-text-field v-model="signature.designation" :readonly="currentReport.isClosed" label="Designation" />
+                    </v-col>
+                    <v-col cols="12" md="2">
+                      <DatePickerBase v-model="signature.date" :disabled="currentReport.isClosed" label="Date" max="" />
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                      <v-col>
+                          <v-text-field v-model="signature.remarks" :readonly="currentReport.isClosed" label="Remarks (if any)" />
+                      </v-col>
+                  </v-row>
+                </div>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
           </v-tab-item>
           <v-tab-item key="photos" value="photos">
             <v-card flat>
@@ -346,45 +403,12 @@
                 </v-row>
             </v-card>
           </v-tab-item>
-          <v-tab-item key="signatures" value="signatures">
-            <v-card flat>
-              <v-card-text>
-                  <div v-for="(signature, index) in currentReport.signatures" :key="index">
-                  <v-row>
-                      <v-col class="text-left">
-                          <h3>{{ signature.title }}</h3>
-                          <h5>{{ signature.annotation }}</h5>
-                          <v-chip v-if="signature.principal">Principal Sign</v-chip>
-                      </v-col>
-                  </v-row>
-                  <v-row align="center" justify="space-around">
-                    <v-col cols="6" md="3">
-                        <v-select 
-                        v-model="signature.responsable.type" 
-                        :readonly="currentReport.isClosed"
-                        :items="responsableTypes" 
-                        label="Responsable Type" />
-                    </v-col>
-                    <v-col cols="6" md="3">
-                      <v-text-field v-model="signature.responsable.name" :readonly="currentReport.isClosed" label="Responsable" />
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-text-field v-model="signature.designation" :readonly="currentReport.isClosed" label="Designation" />
-                    </v-col>
-                    <v-col cols="12" md="2">
-                      <DatePickerBase v-model="signature.date" :disabled="currentReport.isClosed" label="Date" max="" />
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                      <v-col>
-                          <v-text-field v-model="signature.remarks" :readonly="currentReport.isClosed" label="Remarks (if any)" />
-                      </v-col>
-                  </v-row>
-                </div>
-              </v-card-text>
-            </v-card>
-          </v-tab-item>
         </v-tabs-items>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        
       </v-col>
     </v-row>
     <v-dialog v-if="currentPhoto" v-model="showCarousel">

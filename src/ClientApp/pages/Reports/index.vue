@@ -49,7 +49,7 @@
           class="mr-2"
           @click="$router.push({ name: 'Reports-id', params: { id: item.id} })"
         >
-          mdi-file-chart
+          mdi-pencil
         </v-icon>
         <v-icon
           small
