@@ -15,15 +15,15 @@
           <v-divider class="mx-4" inset vertical />
           <grid-filter :filter.sync="filter.filterText" />
           <v-spacer />
+          <v-btn class="mx-2" x-small 
+            fab dark color="primary"
+            @click="item = { principal: false }; dialog = true">
+              <v-icon dark>mdi-plus</v-icon>
+          </v-btn>
           <v-dialog v-model="dialog" persistent  scrollable
             :fullscreen="$vuetify.breakpoint.smAndDown"
             :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" @click="item = { principal: false }">
-                New Signature
-              </v-btn>
-            </template>
-                  <ValidationObserver tag="form" v-slot="{ valid, reset }">
+          <ValidationObserver tag="form" v-slot="{ valid, reset }">
             <v-card>
               <v-card-title>
                 <span class="headline">Edit Signature</span>
@@ -241,10 +241,23 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
       .then(resp => this.item = resp)
   }
 
+  asyncData({ query }:any) {
+    console.log(query)
+    let filter: FilterType = {
+                                filterText: '',
+                                inConfigurationOnly: query.configurationonly ?? true,
+                                repotId: query.reportid ?? undefined,
+                                reportConfigurationId: parseInt(query.configurationid) ?? undefined
+                              }
+    return {
+      filter
+    }
+  }
+
   async fetch () {
     await this.$store.dispatch('reportstrore/getReports', '', { root: true })
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
-    await this.$store.dispatch('signatures/getSignatures', {}, { root: true })
+    await this.$store.dispatch('signatures/getSignatures', this.filter, { root: true })
   }
 
   @Watch('filter', { deep: true })

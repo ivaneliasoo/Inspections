@@ -27,7 +27,7 @@ namespace Inspections.API.Features.Checklists.Handlers
 
             var mappedCheckItems = CheckListMappingHelper.MapParams(request.ChecklistParams);
 
-            var newItem = new CheckListItem(request.IdCheckList, request.Text, request.Checked, request.Required, request.Remarks, mappedCheckItems);
+            var newItem = new CheckListItem(request.IdCheckList, request.Text, request.Checked, request.Editable, request.Required, request.Remarks, mappedCheckItems);
 
             checkList.AddCheckItems(newItem);
 

@@ -170,7 +170,8 @@ namespace Inspections.API.Features.Users
                 return BadRequest();
             }
 
-            var user = _context.Users.Where(u => u.UserName == userName && u.Password == passwordDTO.CurrentPassword).FirstOrDefault();
+            // TODO: && u.Password == passwordDTO.CurrentPassword
+            var user = _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
 
             if (user == null || passwordDTO.NewPassword != passwordDTO.NewPasswordConfirmation)
             {

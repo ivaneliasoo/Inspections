@@ -8,17 +8,19 @@ namespace Inspections.Core.Domain.CheckListAggregate
         public int CheckListId { get; set; }
         public string Text { get; set; }
         public CheckValue Checked { get; set; }
+        public bool Editable { get; set; }
         public bool Required { get; set; }
         public string Remarks { get; set; }
         public List<CheckListParam> TextParams { get; set; } = new List<CheckListParam>();
 
         private CheckListItem() { } //Required by EF
 
-        public CheckListItem(int checkListId, string text, CheckValue @checked, bool required, string remarks, List<CheckListParam> textParams)
+        public CheckListItem(int checkListId, string text, CheckValue @checked, bool editable, bool required, string remarks, List<CheckListParam> textParams)
         {
             CheckListId = checkListId;
             Text = text;
             Checked = @checked;
+            Editable = editable;
             Required = required;
             Remarks = remarks;
             TextParams = textParams;

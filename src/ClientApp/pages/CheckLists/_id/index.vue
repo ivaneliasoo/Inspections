@@ -21,14 +21,7 @@
           <v-row>
             <v-col>
               <ValidationProvider rules="required" v-slot="{errors}">
-                <v-text-field v-model="newItemData.text" label="Text" :error-messages="errors">
-                  <template v-slot:append>
-                    <v-chip
-                      small
-                      v-if="newItemData !== null "
-                    >{{ newItemData.textParams.length }} params detected</v-chip>
-                  </template>
-                </v-text-field>
+                <v-text-field v-model="newItemData.text" label="Text" :error-messages="errors" />
               </ValidationProvider>
             </v-col>
           </v-row>
@@ -39,8 +32,11 @@
             <v-col>
               <v-switch v-model="newItemData.required" label="Is Required" />
             </v-col>
+            <v-col>
+              <v-switch v-model="newItemData.editable" label="Editable in the Report" />
+            </v-col>
           </v-row>
-          <v-row>
+          <v-row v-if="false">
             <v-col cols="12">
               <span class="font-weight-black">Text Params</span>
               <v-data-table dense :headers="headers" :items="newItemData.textParams"></v-data-table>
@@ -56,11 +52,7 @@
               v-model="currentCheckList.text"
               label="Checklist Name"
               :error-messages="errors"
-            >
-              <template v-slot:append>
-                <v-chip small>2 params detected</v-chip>
-              </template>
-            </v-text-field>
+            />
           </ValidationProvider>
         </v-col>
         <v-col cols="12" md="4">
@@ -141,14 +133,7 @@
                       v-model="selectedItemData.text"
                       label="Text"
                       :error-messages="errors"
-                    >
-                      <template v-slot:append>
-                        <v-chip
-                          small
-                          v-if="selectedItemData !== null "
-                        >{{ selectedItemData.textParams.length }} params detected</v-chip>
-                      </template>
-                    </v-text-field>
+                    />
                   </ValidationProvider>
                 </v-col>
               </v-row>
@@ -159,8 +144,11 @@
                 <v-col>
                   <v-switch v-model="selectedItemData.required" label="Is Required" />
                 </v-col>
+                <v-col>
+                  <v-switch v-model="newItemData.editable" label="Editable in the Report" />
+                </v-col>
               </v-row>
-              <v-row>
+              <v-row v-if="false">
                 <v-col cols="12">
                   <span class="font-weight-black">Text Params</span>
                   <v-data-table dense :headers="headers" :items="selectedItemData.textParams"></v-data-table>
@@ -259,6 +247,7 @@ export default class AddEditCheckList extends mixins(InnerPageMixin) {
       checkListId: this.selectedItemData!.checkListId,
       text: this.selectedItemData!.text,
       checked: this.selectedItemData!.checked ? 1:0,
+      editable: this.selectedItemData!.editable,
       required: this.selectedItemData!.required,
       remarks: this.selectedItemData!.remarks
     };
@@ -272,6 +261,7 @@ export default class AddEditCheckList extends mixins(InnerPageMixin) {
       idCheckList: parseInt(this.$route.params.id),
       text: this.newItemData!.text,
       checked: this.newItemData!.checked ? 1:0,
+      editable: this.newItemData!.editable,
       required: this.newItemData!.required,
       remarks: this.newItemData!.remarks,
       checklistParams: []

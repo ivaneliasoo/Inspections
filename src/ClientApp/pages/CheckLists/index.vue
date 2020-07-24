@@ -120,9 +120,9 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
   dialogItems: Boolean = false
   filter: FilterType = {
     filterText: '',
-    inConfigurationOnly: undefined,
+    inConfigurationOnly: true,
     repotId: undefined,
-    reportConfigurationId: undefined
+    reportConfigurationId: 1
   }
 
   selectedItem: CheckList = {} as CheckList
@@ -192,10 +192,23 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
       .currentCheckList.checks
   }
 
+  asyncData({ query }:any) {
+    console.log(query)
+    let filter: FilterType = {
+                                filterText: '',
+                                inConfigurationOnly: query.configurationonly ?? true,
+                                repotId: query.reportid ?? undefined,
+                                reportConfigurationId: parseInt(query.configurationid) ?? undefined
+                              }
+    return {
+      filter
+    }
+  }
+
   async fetch () {
     await this.$store.dispatch('reportstrore/getReports', '', { root: true })
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
-    await this.$store.dispatch('checklists/getChecklists', {}, { root: true })
+    await this.$store.dispatch('checklists/getChecklists', this.filter, { root: true })
   }
 
   selectItem (item: CheckList): void{

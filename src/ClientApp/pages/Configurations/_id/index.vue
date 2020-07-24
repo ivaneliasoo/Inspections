@@ -6,8 +6,9 @@
             <ValidationProvider rules="required" v-slot="{ errors }">
               <v-select
                 id="selReportType"
-                v-model="newConfig.reportType"
+                v-model="newConfig.type"
                 :error-messages="errors"
+                disabled
                 item-value="id"
                 item-text="text"
                 label="Report Type"
@@ -61,7 +62,7 @@
                 label="Include CheckLists"
                 :items="checks"
                 append-outer-icon="mdi-format-list-checks"
-                @click:append-outer="$router.push(`/checklists?${newConfig.id}`)"
+                @click:append-outer="$router.push(`/checklists?configurationid=${newConfig.id}&configurationonly=true`)"
               />
             </ValidationProvider>
           </v-col>
@@ -79,7 +80,7 @@
                 label="Include Signatures"
                 :items="signatures"
                 append-outer-icon="mdi-draw"
-                @click:append-outer="$router.push(`/signatures?${newConfig.id}`)"
+                @click:append-outer="$router.push(`/signatures?configurationid=${newConfig.id}&configurationonly=true`)"
               />
             </ValidationProvider>
           </v-col>

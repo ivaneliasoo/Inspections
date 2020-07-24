@@ -5,6 +5,7 @@ export interface AddCheckListItemCommand {
     idCheckList: number;
     text: string;
     checked: CheckValue;
+    editable: boolean;
     required: boolean;
     remarks: string;
     checklistParams: CheckListParamDTO[];

@@ -15,6 +15,7 @@ namespace Inspections.API.Features.Checklists.Commands
             int checkListId,
             string text,
             CheckValue @checked,
+            bool editable,
             bool required,
             string remarks)
         {
@@ -22,6 +23,7 @@ namespace Inspections.API.Features.Checklists.Commands
             CheckListId = checkListId;
             Text = text;
             Checked = @checked;
+            Editable = editable;
             Required = required;
             Remarks = remarks;
         }
@@ -32,6 +34,7 @@ namespace Inspections.API.Features.Checklists.Commands
         public int CheckListId { get; set; }
         public string Text { get; set; }
         public CheckValue Checked { get; set; }
+        public bool Editable { get; set; }
         public bool Required { get; set; }
         public string Remarks { get; set; }
     }

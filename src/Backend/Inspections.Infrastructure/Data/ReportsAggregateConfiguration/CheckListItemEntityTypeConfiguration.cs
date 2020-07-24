@@ -13,6 +13,7 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.Id).UseIdentityColumn();
             builder.Property(p => p.Text).IsRequired();
             builder.Property(p => p.Checked).IsRequired();
+            builder.Property(p => p.Editable).IsRequired();
             builder.Property(p => p.Required).IsRequired();
             builder.Property(p => p.Remarks).IsRequired(false);
 

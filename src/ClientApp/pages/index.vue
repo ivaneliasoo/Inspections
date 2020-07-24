@@ -67,14 +67,7 @@ export default class IndexPage extends Vue{
       helpText: 'Click one of the Options bellow',
       icon: 'mdi-pencil',
       color: 'accent',
-      path: () => { 
-        if (this.$auth.user.lastEditedReport)
-          if(confirm('Click one of the Options bellow'))
-            return `/reports/${this.$auth.user.lastEditedReport}` 
-          else return `/reports`
-        else
-          return `/reports`
-      },
+      path: false,
       innerActions: [
         {
           text: 'Edit Last',

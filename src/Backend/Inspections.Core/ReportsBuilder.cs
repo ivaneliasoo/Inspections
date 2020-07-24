@@ -36,7 +36,8 @@ namespace Inspections.Core
 
         public ReportsBuilder AddSignatures(int[] signaturesIds)
         {
-            var signatureToAdd = Configuration.SignatureDefinitions.Where(s => signaturesIds.Contains(s.Id));
+            var signatureToAdd = Configuration.SignatureDefinitions.Where(s => signaturesIds.Contains(s.Id))
+                                    .OrderByDescending(s => s.Principal);
             _report.AddSignature(signatureToAdd.AsEnumerable());
 
             return this;

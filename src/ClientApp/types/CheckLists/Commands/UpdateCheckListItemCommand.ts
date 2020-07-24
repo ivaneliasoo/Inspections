@@ -5,6 +5,7 @@ export interface UpdateCheckListItemCommand {
     checkListId: number;
     text: string;
     checked: CheckValue    
+    editable: boolean;
     required: boolean;
     remarks: string;
 }
