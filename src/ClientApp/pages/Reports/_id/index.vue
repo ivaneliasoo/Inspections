@@ -174,7 +174,16 @@
                                             cols="12"
                                             md="7"
                                             class="text-wrap"
-                                          >{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1}} .- {{ checkItem.text }}</v-col>
+                                          >
+                                            <v-row justify="space-around" align="center" dense>
+                                              <v-col cols="1"><span>{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1}} .- </span></v-col>
+                                              <v-col cols="10">
+                                                
+                                                <span v-if="!checkItem.editable">{{ checkItem.text }}</span>
+                                                <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)"/>
+                                              </v-col>
+                                            </v-row>
+                                          </v-col>
                                           <v-col cols="2" md="1">
                                             <v-checkbox
                                               :disabled="currentReport.isClosed"
@@ -566,6 +575,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       text: checkItem.text,
       required: checkItem.required,
       checked: parseInt(checkItem.checked as any),
+      editable: checkItem.editable,
       remarks: checkItem.remarks
     }
     this.$axios.put(`checklists/${command.checkListId}/items/${checkItem.id}`,  command)

@@ -30,6 +30,7 @@ namespace Inspections.API.Features.Checklists.Handlers
             item.Checked = request.Checked;
             item.Remarks = request.Remarks;
             item.Required = request.Required;
+            item.Editable = request.Editable;
             item.Text = request.Text;
             checkList.AddCheckItems(item);
 

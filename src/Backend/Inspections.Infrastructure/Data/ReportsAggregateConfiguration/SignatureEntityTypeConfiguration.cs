@@ -27,6 +27,7 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             });
 
             builder.Ignore(p => p.DomainEvents);
+
         }
     }
 

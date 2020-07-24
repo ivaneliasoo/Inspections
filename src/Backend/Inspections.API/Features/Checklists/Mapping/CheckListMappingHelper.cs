@@ -37,6 +37,7 @@ namespace Inspections.API.Features.Checklists.Mapping
                    item.CheckListId,
                    item.Text,
                    item.Checked,
+                   item.Editable,
                    item.Required,
                    item.Remarks,
                    MapParams(item.TextParams)

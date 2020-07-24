@@ -19,6 +19,8 @@ namespace Inspections.API.Features.Checklists.Commands
         [DataMember]
         public CheckValue Checked { get; set; }
         [DataMember]
+        public bool Editable { get; set; }
+        [DataMember]
         public bool Required { get; set; }
         [DataMember]
         public string Remarks { get; set; }
@@ -26,10 +28,11 @@ namespace Inspections.API.Features.Checklists.Commands
         public List<CheckListParamDTO> ChecklistParams { get; set; }
         private AddCheckListItemCommand() { }
 
-        public AddCheckListItemCommand(string text, CheckValue @checked, bool required, string remarks, List<CheckListParamDTO> checklistParams)
+        public AddCheckListItemCommand(string text, CheckValue @checked, bool editable, bool required, string remarks, List<CheckListParamDTO> checklistParams)
         {
             Text = text;
             Checked = @checked;
+            Editable = editable;
             Required = required;
             Remarks = remarks;
             ChecklistParams = checklistParams;

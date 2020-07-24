@@ -12,6 +12,7 @@ namespace Inspections.API.Features.Checklists.Models
         public int CheckListId { get; set; }
         public string Text { get; set; }
         public CheckValue Checked { get; set; }
+        public bool Editable { get; set; }
         public bool Required { get; set; }
         public string Remarks { get; set; }
         public List<CheckListParamDTO> TextParams { get; set; } = new List<CheckListParamDTO>();

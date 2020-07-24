@@ -59,6 +59,34 @@
         >
           mdi-delete
         </v-icon>
+        <v-tooltip v-if="$auth.user.isAdmin" top>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              small
+              v-on="on"
+              :disabled="item.isClosed"
+              color="primary"
+              @click="$router.push(`/checklists?configurationid=undefined&configurationonly=false&reportid=${item.id}`)"
+            >
+              mdi-format-list-checks
+            </v-icon>
+          </template>
+          <span>Edit Checklist Configuration for this report</span>
+        </v-tooltip>
+        <v-tooltip v-if="$auth.user.isAdmin" top>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              small
+              v-on="on"
+              :disabled="item.isClosed"
+              color="primary"
+              @click="$router.push(`/signatures?configurationid=undefined&configurationonly=false&reportid=${item.id}`)"
+            >
+              mdi-draw
+            </v-icon>
+          </template>
+          <span>Edit Signatures Configuration for this report</span>
+        </v-tooltip>
       </template>
       <template v-slot:item.date="{ item }">
         {{ formatDate(item.date) }}
