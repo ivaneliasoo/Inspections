@@ -144,7 +144,7 @@
                         <v-list-item-title>
                           <v-row justify="start" align="center">
                             <v-col cols="10" md="6" class="font-weight-black">
-                              {{ checkListIndex + 1 }} .- {{ item.text }}
+                              {{ checkListIndex + 1 }} .- {{ item.text }} {{ item.annotation }}
                               <span v-if="item.checks.filter(c => c.required && c.checked===0).length == 0">
                                 <v-chip x-small color="success">Completed</v-chip>
                               </span>

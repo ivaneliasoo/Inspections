@@ -88,7 +88,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
             var item1 = new CheckList(
                    "SITE CONDITIONS",
                    null,
-                   "[√: acceptable / X: not acceptable / NA: not applicable ]",
+                   "[√: acceptable / bkank(false): not acceptable / Dash(-): not applicable ]",
                    true
                 );
             item1.AddCheckItems(new CheckListItem(0, "Access to MSB / Sub-Board / Distribution-Board",

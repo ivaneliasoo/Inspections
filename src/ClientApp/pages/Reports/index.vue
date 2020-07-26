@@ -66,7 +66,7 @@
               v-on="on"
               :disabled="item.isClosed"
               color="primary"
-              @click="$router.push(`/checklists?configurationid=undefined&configurationonly=false&reportid=${item.id}`)"
+              @click="$router.push(`/checklists?&configurationonly=false&reportid=${item.id}`)"
             >
               mdi-format-list-checks
             </v-icon>
@@ -80,7 +80,7 @@
               v-on="on"
               :disabled="item.isClosed"
               color="primary"
-              @click="$router.push(`/signatures?configurationid=undefined&configurationonly=false&reportid=${item.id}`)"
+              @click="$router.push(`/signatures?&configurationonly=false&reportid=${item.id}`)"
             >
               mdi-draw
             </v-icon>

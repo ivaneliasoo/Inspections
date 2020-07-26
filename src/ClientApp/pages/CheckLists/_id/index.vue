@@ -44,7 +44,7 @@
           </v-row>
       </ValidationObserver>
     </message-dialog>
-    <ValidationObserver tag="form" v-slot="{ valid, dirty }">
+    <ValidationObserver tag="form" v-slot="{ valid }">
       <v-row align="center" justify="space-between">
         <v-col cols="12" md="6">
           <ValidationProvider rules="required" v-slot="{errors}">
@@ -62,7 +62,7 @@
           <v-checkbox v-model="currentCheckList.isConfiguration" label="Use in Config" />
         </v-col>
         <v-col cols="1">
-          <v-btn :disabled="!valid || !dirty" icon text color="success" @click="saveCheckList">
+          <v-btn :disabled="!valid" icon text color="success" @click="saveCheckList">
             <v-icon>mdi-check</v-icon>
           </v-btn>
         </v-col>
