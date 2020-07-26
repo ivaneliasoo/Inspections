@@ -149,13 +149,13 @@
                                 <v-chip x-small color="success">Completed</v-chip>
                               </span>
                             </v-col>
-                            <v-col cols="2" md="6" class="ml-n5">
+                            <v-col cols="2" md="6" :class="$vuetify.breakpoint.mdAndDown ? 'ml-n5':'ml-n8'">
                               <v-checkbox
                                 :disabled="currentReport.isClosed"
                                 color="primary"
                                 :value="item.checks.length === item.checks.filter(c => c.checked).length"
                                 :indeterminate="item.checks.length !== item.checks.filter(c => c.checked).length && item.checks.filter(c => c.checked).length > 0"
-                                @click.stop="checkItemChecks(item.id, item.checked); item.checked = item.checked ? false:true"
+                                @click.stop="checkItemChecks(item.id, item.checked); item.checked = !item.checked"
                               />
                             </v-col>
                           </v-row>
