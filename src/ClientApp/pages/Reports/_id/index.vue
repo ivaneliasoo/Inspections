@@ -11,7 +11,7 @@
     />
     <v-row>
       <v-col>
-        <ValidationObserver ref="obs" tag="form" v-slot="{ valid, dirty }">
+        <ValidationObserver ref="obs" tag="form" v-slot="{ valid }">
           <v-row align="center" justify="space-between">
             <v-col cols="6">
               <ValidationProvider rules="required" v-slot="{ errors }">
