@@ -147,7 +147,6 @@ namespace Inspections.API
             services.AddScoped<ISignaturesQueries, SignaturesQueries>();
             services.AddScoped<IReportConfigurationsQueries, ReportConfigurationsQueries>();
 
-            //ConfigurarDbContextInMemoryDb(services);
             ConfigurarDbContextInSqlDb(services);
         }
 
@@ -200,12 +199,6 @@ namespace Inspections.API
             {
                 endpoints.MapControllers();
             });
-        }
-
-        private static void ConfigurarDbContextInMemoryDb(IServiceCollection services)
-        {
-            services.AddDbContext<InspectionsContext>(c =>
-           c.UseInMemoryDatabase("InspectionDb"));
         }
 
         private void ConfigurarDbContextInSqlDb(IServiceCollection services)

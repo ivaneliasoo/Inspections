@@ -15,22 +15,19 @@ namespace ZadERP.Api.Middleware
     /// </summary>
     public class ExceptionsMiddleware
     {
-        private const string _contentType = "application/json";
+        private const string ContentType = "application/json";
         private readonly ILogger<ExceptionsMiddleware> _logger;
         private readonly RequestDelegate _next;
-        private readonly IServiceProvider _serviceProvider;
 
         /// <summary>
         /// Crea una Nueva Instancia de <see cref="ExceptionsMiddleware"/> class.
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="next"></param>
-        /// <param name="serviceProvider"></param>
-        public ExceptionsMiddleware(ILogger<ExceptionsMiddleware> logger, RequestDelegate next, IServiceProvider serviceProvider)
+        public ExceptionsMiddleware(ILogger<ExceptionsMiddleware> logger, RequestDelegate next)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _next = next;
-            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
         /// <summary>
@@ -59,7 +56,7 @@ namespace ZadERP.Api.Middleware
                 var statusCode = ConfigureExceptionTypes(ex);
 
                 httpContext.Response.StatusCode = statusCode;
-                httpContext.Response.ContentType = _contentType;
+                httpContext.Response.ContentType = ContentType;
 
                 var error = JsonConvert.SerializeObject(new
                 {
@@ -75,21 +72,12 @@ namespace ZadERP.Api.Middleware
 
         private static int ConfigureExceptionTypes(Exception ex)
         {
-            int statusCode;
-
-            switch (ex)
+            var statusCode = ex switch
             {
-                case var _ when ex is ArgumentNullException:
-                    statusCode = (int)HttpStatusCode.BadRequest;
-                    break;
-                case var _ when ex is NotImplementedException:
-                    statusCode = (int)HttpStatusCode.NotFound;
-                    break;
-                default:
-                    statusCode = (int)HttpStatusCode.InternalServerError;
-                    break;
-            }
-
+                var _ when ex is ArgumentNullException => (int)HttpStatusCode.BadRequest,
+                var _ when ex is NotImplementedException => (int)HttpStatusCode.NotFound,
+                _ => (int)HttpStatusCode.InternalServerError,
+            };
             return statusCode;
         }
     }

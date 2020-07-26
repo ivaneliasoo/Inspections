@@ -36,8 +36,8 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                 {
                     context.Add(new ReportConfiguration()
                     {
-                        ChecksDefinition = AddCheckLists(context).ToList(),
-                        SignatureDefinitions = AddSignatures(context).ToList(),
+                        ChecksDefinition = AddCheckLists().ToList(),
+                        SignatureDefinitions = AddSignatures().ToList(),
                         FormName = "Inspection Report",
                         Title = "Inspection Report",
                         Type = ReportType.Inspection
@@ -59,7 +59,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
             }
         }
 
-        private static IEnumerable<Signature> AddSignatures(InspectionsContext context)
+        private static IEnumerable<Signature> AddSignatures()
         {
             return new Signature[] {
                 new Signature
@@ -83,7 +83,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                 }};
         }
 
-        private static IEnumerable<CheckList> AddCheckLists(InspectionsContext context)
+        private static IEnumerable<CheckList> AddCheckLists()
         {
             var item1 = new CheckList(
                    "SITE CONDITIONS",
