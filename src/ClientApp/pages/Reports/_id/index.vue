@@ -143,13 +143,13 @@
                       <v-list-item-content class="text-left">
                         <v-list-item-title>
                           <v-row justify="start" align="center">
-                            <v-col cols="10" md="5" class="font-weight-black">
+                            <v-col cols="10" md="6" class="font-weight-black">
                               {{ checkListIndex + 1 }} .- {{ item.text }}
                               <span v-if="item.checks.filter(c => c.required && c.checked===0).length == 0">
                                 <v-chip x-small color="success">Completed</v-chip>
                               </span>
                             </v-col>
-                            <v-col cols="2" md="1">
+                            <v-col cols="2" md="6" class="ml-n5">
                               <v-checkbox
                                 :disabled="currentReport.isClosed"
                                 color="primary"
