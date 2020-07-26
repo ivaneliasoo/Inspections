@@ -702,7 +702,6 @@ export default class EditReport extends mixins(InnerPageMixin) {
   mounted() {
     return this.$refs.obs.validate()
   }
-
 }
 </script>
 
