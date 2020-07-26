@@ -153,9 +153,9 @@
                               <v-checkbox
                                 :disabled="currentReport.isClosed"
                                 color="primary"
-                                :value="item.checks.length === item.checks.filter(c => c.checked).length"
+                                :value="item.checks.length === item.checks.filter(c => c.checked).length || !item.checks.filter(c => c.checked)"
                                 :indeterminate="item.checks.length !== item.checks.filter(c => c.checked).length && item.checks.filter(c => c.checked).length > 0"
-                                @click.stop="checkItemChecks(item.id, item.checked); item.checked = !item.checked"
+                                @click.stop="item.checked = !item.checked; checkItemChecks(item.id, item.checked);"
                               />
                             </v-col>
                           </v-row>
