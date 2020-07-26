@@ -11,7 +11,7 @@
     />
     <v-row>
       <v-col>
-        <ValidationObserver ref="obs" tag="form" v-slot="{ valid, dirty }">
+        <ValidationObserver ref="obs" tag="form" v-slot="{ valid }">
           <v-row align="center" justify="space-between">
             <v-col cols="6">
               <ValidationProvider rules="required" v-slot="{ errors }">
@@ -84,7 +84,7 @@
           </v-row>
            <v-fab-transition>
       <v-btn
-        :disabled="!dirty || !valid || currentReport.isClosed"
+        :disabled="!valid || currentReport.isClosed"
         color="success"
         fab
         fixed
@@ -143,19 +143,19 @@
                       <v-list-item-content class="text-left">
                         <v-list-item-title>
                           <v-row justify="start" align="center">
-                            <v-col cols="10" md="5" class="font-weight-black">
+                            <v-col cols="10" md="6" class="font-weight-black">
                               {{ checkListIndex + 1 }} .- {{ item.text }}
                               <span v-if="item.checks.filter(c => c.required && c.checked===0).length == 0">
                                 <v-chip x-small color="success">Completed</v-chip>
                               </span>
                             </v-col>
-                            <v-col cols="2" md="1">
+                            <v-col cols="2" md="6" :class="$vuetify.breakpoint.mdAndDown ? 'ml-n5':'ml-n8'">
                               <v-checkbox
                                 :disabled="currentReport.isClosed"
                                 color="primary"
-                                :value="item.checks.length === item.checks.filter(c => c.checked).length"
+                                v-model="item.checked"
                                 :indeterminate="item.checks.length !== item.checks.filter(c => c.checked).length && item.checks.filter(c => c.checked).length > 0"
-                                @click.stop="checkItemChecks(item.id, item.checked); item.checked = item.checked ? false:true"
+                                @click.stop=" item.checked=!item.checked; checkItemChecks(item.id, item.checked)"
                               />
                             </v-col>
                           </v-row>
@@ -678,6 +678,10 @@ export default class EditReport extends mixins(InnerPageMixin) {
       else check.checked = CheckValue.False; 
       this.saveCheckItem(check)
     })
+  }
+
+  checkListCheckedValue(item: any) {
+    return item.checks.length === item.checks.filter((c:any) => c.checked).length
   }
 
 }
