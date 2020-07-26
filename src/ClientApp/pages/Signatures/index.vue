@@ -176,7 +176,7 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
   filter: FilterType = {
     filterText: '',
     inConfigurationOnly: undefined,
-    repotId: undefined,
+    reportId: undefined,
     reportConfigurationId: undefined
   }
 
@@ -245,9 +245,9 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
     console.log(query)
     let filter: FilterType = {
                                 filterText: '',
-                                inConfigurationOnly: query.configurationonly ?? true,
-                                repotId: query.reportid ?? undefined,
-                                reportConfigurationId: parseInt(query.configurationid) ?? undefined
+                                inConfigurationOnly: query.configurationonly === 'true' ? true:false ?? true,
+                                reportId: query.reportid ? parseInt(query.reportid) : undefined,
+                                reportConfigurationId: query.configurationid ? parseInt(query.configurationid) : undefined
                               }
     return {
       filter

@@ -28,6 +28,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
             newSignature.Id = 0;
             newSignature.ReportId = 0;
             newSignature.ReportConfigurationId = null;
+            newSignature.Date = DateTime.Now;
             newSignature.IsConfiguration = false;
 
             return newSignature;

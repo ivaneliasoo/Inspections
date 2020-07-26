@@ -6,6 +6,7 @@
       message="your are about to close this report."
       :code="currentReport.id"
       :description="currentReport.name"
+      :loading="savingNewReport"
       @yes="currentReport.isClosed = true; saveReportChanges(); dialogClose = false; currentReport.isClosed = true;"
       @no="currentReport.isClosed = true"
     />
@@ -14,7 +15,7 @@
         <ValidationObserver ref="obs" tag="form" v-slot="{ valid }">
           <v-row align="center" justify="space-between">
             <v-col cols="6">
-              <ValidationProvider rules="required" v-slot="{ errors }">
+              <ValidationProvider rules="required" immediate  v-slot="{ errors }">
                 <v-text-field
                 :readonly="currentReport.isClosed"
                 v-model="currentReport.name"
@@ -33,7 +34,7 @@
           </v-row>
           <v-row>
             <v-col>
-              <ValidationProvider rules="required" v-slot="{ errors }">
+              <ValidationProvider rules="required" immediate  v-slot="{ errors }">
               <v-textarea label="Address" rows="2 "
                 :readonly="currentReport.isClosed"
                 v-model="currentReport.address"
@@ -42,9 +43,9 @@
               </ValidationProvider>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row align="end">
             <v-col cols="12" md="2" v-if="currentReport.license">
-              <ValidationProvider rules="required" v-slot="{ errors }">
+              <ValidationProvider rules="required" immediate  v-slot="{ errors }">
               <v-select :items="emaTypes"
                 :readonly="currentReport.isClosed"
                 v-model="currentReport.license.licenseType"
@@ -53,7 +54,7 @@
               </ValidationProvider>
             </v-col>
             <v-col cols="12" md="3" v-if="currentReport.license">
-              <ValidationProvider rules="required" v-slot="{ errors }">
+              <ValidationProvider rules="required" immediate  v-slot="{ errors }">
               <v-text-field type="number"
                 :readonly="currentReport.isClosed"
                 v-model="currentReport.license.number"
@@ -62,7 +63,7 @@
               </ValidationProvider>
             </v-col>
             <v-col cols="12" md="2">
-              <ValidationProvider rules="required" v-slot="{ errors }">
+              <ValidationProvider rules="required" immediate  v-slot="{ errors }">
               <DatePickerBase type="number" label="License"
                 :disabled="currentReport.isClosed"
                 v-model="currentReport.date"
@@ -73,13 +74,24 @@
             <v-col cols="6" md="2">
               <v-checkbox v-model="IsCompleted" label="Completed" disabled />
             </v-col>
-            <v-col cols="6" md="2">
+            <v-col cols="6" md="2" class="text-right">
               <v-checkbox
+                v-if="currentReport.isClosed"
                 v-model="currentReport.isClosed"
-                label="Close Report"
+                label="Closed"
                 :disabled="currentReport.isClosed || !CanCloseReport"
                 @click="dialogClose = true"
               />
+              <v-btn
+                v-else
+                :disabled="!valid || currentReport.isClosed || !CanCloseReport"
+                color="success"
+                class="v-btn--example2"
+                @click="currentReport.isClosed=true; saveReportChanges"
+              >
+                <v-icon>mdi-lock</v-icon>
+                Close Report
+              </v-btn>
             </v-col>
           </v-row>
            <v-fab-transition>
@@ -144,7 +156,7 @@
                         <v-list-item-title>
                           <v-row justify="start" align="center">
                             <v-col cols="10" md="6" class="font-weight-black">
-                              {{ checkListIndex + 1 }} .- {{ item.text }}
+                              {{ checkListIndex + 1 }} .- {{ item.text }} {{ item.annotation }}
                               <span v-if="item.checks.filter(c => c.required && c.checked===0).length == 0">
                                 <v-chip x-small color="success">Completed</v-chip>
                               </span>
@@ -298,7 +310,7 @@
                       <v-text-field v-model="signature.designation" :readonly="currentReport.isClosed" label="Designation" />
                     </v-col>
                     <v-col cols="12" md="2">
-                      <DatePickerBase v-model="signature.date" :disabled="currentReport.isClosed" label="Date" max="" />
+                      <DatePickerBase v-model="signature.date" :disabled="currentReport.isClosed" label="Date" max="" min="" />
                     </v-col>
                   </v-row>
                   <v-row>
@@ -447,6 +459,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     obs: InstanceType<typeof ValidationObserver>
   }
   showCarousel: boolean = false
+  savingNewReport: boolean = false
   currentPhoto: number = 0
   showLabelEdit:number[] = []
   showUpdateCheck: { parentIndex:number, currentIndex:number }[] =[]
@@ -582,6 +595,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   async saveReportChanges() {
+    this.savingNewReport = true
     const update: UpdateReportCommand = {
       id:this.currentReport.id,
       name:this.currentReport.name,
@@ -608,6 +622,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
           this.$axios.$put(`signatures/${signature.id}`, command)
       })
     })
+    this.savingNewReport=false
   }
 
   @Watch('currentReport', { deep: false })
@@ -684,6 +699,9 @@ export default class EditReport extends mixins(InnerPageMixin) {
     return item.checks.length === item.checks.filter((c:any) => c.checked).length
   }
 
+  mounted() {
+    return this.$refs.obs.validate()
+  }
 }
 </script>
 

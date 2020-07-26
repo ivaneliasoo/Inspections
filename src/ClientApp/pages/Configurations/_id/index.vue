@@ -163,7 +163,7 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin){
         const filter: FilterType = {
             filterText: '',
             inConfigurationOnly: true,
-            repotId: undefined,
+            reportId: undefined,
             reportConfigurationId: undefined
         }
         await store.dispatch('checklists/getChecklists', filter, { root: true })

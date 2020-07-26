@@ -23,7 +23,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn v-show="showYes" color="success" text @click="$emit('yes')">
+        <v-btn v-show="showYes" color="success" :loading="loading" text @click="$emit('yes')">
           {{ yesText }}
         </v-btn>
         <v-btn v-show="showNo" color="error" text @click="$emit('no')">
@@ -44,6 +44,8 @@ export default class MessageDialog extends Vue {
   @Model('input', { type: Boolean, required: true }) visible: Boolean = false
   @Prop({ default: () => { return ['yes', 'no', 'cancel'] } }) actions!: Array<string>
   @Prop({ default: 'Ok' }) yesText!: string
+  
+  @Prop({ required: false }) loading!: boolean 
 
   get dialog (): Boolean {
     return this.visible
