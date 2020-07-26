@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.API.Features.Signatures.Commands;
 using Inspections.API.Features.Signatures.Models;
 using Inspections.Core.Interfaces;
@@ -50,6 +51,7 @@ namespace Inspections.API.Features.Signatures
         [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateSignature(int id, [FromBody] EditSignatureCommand signature)
         {
+            Guard.Against.Null(signature, nameof(signature));
             if (id != signature.Id)
                 return BadRequest();
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.API.Features.Checklists.Commands;
 using Inspections.Core.Interfaces;
 using Inspections.Core.Interfaces.Queries;
@@ -46,6 +47,7 @@ namespace Inspections.API.Features.Checklists
         [ProducesDefaultResponseType]
         public async Task<IActionResult> AddCheckListItem(int id, [FromBody] AddCheckListItemCommand item)
         {
+            Guard.Against.Null(item, nameof(item));
             if (id != item.IdCheckList)
                 return BadRequest();
 
@@ -86,6 +88,7 @@ namespace Inspections.API.Features.Checklists
         [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateCheckList(int id, [FromBody] UpdateCheckListCommand checkList)
         {
+            Guard.Against.Null(checkList, nameof(checkList));
             if (id != checkList.IdCheckList)
                 return BadRequest();
 
@@ -101,6 +104,7 @@ namespace Inspections.API.Features.Checklists
         [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateCheckListItem(int id, int idItem, [FromBody] UpdateCheckListItemCommand item)
         {
+            Guard.Against.Null(item, nameof(item));
             if (id != item.CheckListId || idItem != item.Id)
                 return BadRequest();
 
@@ -116,6 +120,7 @@ namespace Inspections.API.Features.Checklists
         [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateCheckListParam(int id, int idParam, [FromBody] UpdateCheckListParamCommand param)
         {
+            Guard.Against.Null(param, nameof(param));
             if (id != param.IdCheckList || idParam != param.Id)
                 return BadRequest();
 
@@ -131,6 +136,7 @@ namespace Inspections.API.Features.Checklists
         [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateCheckListItemParam(int id, int idItem, int idParam, [FromBody] UpdateCheckListParamCommand param)
         {
+            Guard.Against.Null(param, nameof(param));
             if (idParam != param.Id || idItem != param.IdCheckListItem || param.IdCheckList != id)
                 return BadRequest();
 

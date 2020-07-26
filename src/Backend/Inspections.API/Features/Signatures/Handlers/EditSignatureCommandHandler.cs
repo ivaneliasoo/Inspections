@@ -1,4 +1,5 @@
-﻿using Inspections.API.Features.Signatures.Commands;
+﻿using Ardalis.GuardClauses;
+using Inspections.API.Features.Signatures.Commands;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Core.Interfaces;
 using MediatR;
@@ -21,6 +22,7 @@ namespace Inspections.API.Features.Signatures.Handlers
 
         public async Task<bool> Handle(EditSignatureCommand request, CancellationToken cancellationToken)
         {
+            Guard.Against.Null(request, nameof(request));
             var newSignature = await _signaturesRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
             newSignature.Title = request.Title;
             newSignature.Annotation = request.Annotation;

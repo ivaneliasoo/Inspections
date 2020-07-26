@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.API.Features.Inspections.Commands;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
@@ -23,6 +24,7 @@ namespace Inspections.API.Features.Reports.Handlers
 
         public async Task<bool> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
         {
+            Guard.Against.Null(request, nameof(request));
             var report = await _reportsRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
 
             report.Edit(request.Name, request.Address, new EMALicense

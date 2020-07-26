@@ -1,4 +1,5 @@
-﻿using Inspections.API.Features.Inspections.Commands;
+﻿using Ardalis.GuardClauses;
+using Inspections.API.Features.Inspections.Commands;
 using Inspections.Core;
 using Inspections.Core.Interfaces;
 using MediatR;
@@ -22,6 +23,7 @@ namespace Inspections.API.Features.Inspections.Handlers
 
         public async Task<int> Handle(CreateReportCommand request, CancellationToken cancellationToken)
         {
+            Guard.Against.Null(request, nameof(request));
             var cfg = await _reportConfigurationsRepository.GetByIdAsync(request.ConfigurationId).ConfigureAwait(false);
 
             IReportsBuilder _reportsBuilder = new ReportsBuilder(cfg);

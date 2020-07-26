@@ -1,4 +1,6 @@
-﻿using Inspections.Core.Domain.ReportConfigurationAggregate;
+﻿using Ardalis.GuardClauses;
+using Inspections.Core.Domain.ReportConfigurationAggregate;
+using Inspections.Core.Domain.ReportsAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Model
     {
         public ReportConfigurationDTO(ReportConfiguration reportConfiguration)
         {
+            Guard.Against.Null(reportConfiguration, nameof(Report));
             Id = reportConfiguration.Id;
             Type = reportConfiguration.Type;
             Title = reportConfiguration.Title;

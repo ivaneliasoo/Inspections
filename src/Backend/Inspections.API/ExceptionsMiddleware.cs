@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,7 +38,11 @@ namespace ZadERP.Api.Middleware
         /// </summary>
         /// <param name="httpContext"></param>
         /// <returns></returns>
-        public Task Invoke(HttpContext httpContext) => InvokeAsync(httpContext);
+        public Task Invoke(HttpContext httpContext)
+        {
+            Guard.Against.Null(httpContext, nameof(httpContext));
+            return InvokeAsync(httpContext);
+        }
 
         async Task InvokeAsync(HttpContext httpContext)
         {
@@ -47,7 +52,9 @@ namespace ZadERP.Api.Middleware
                 await _next(httpContext).ConfigureAwait(false);
                 _logger.LogInformation($"Se ha invocando {httpContext.Request.Path.Value} Metodo: {httpContext.Request.Method} - {DateTime.Now}");
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 var statusCode = ConfigureExceptionTypes(ex);
 
