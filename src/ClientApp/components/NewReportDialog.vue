@@ -1,5 +1,5 @@
 <template>
-  <message-dialog v-model="value" :actions="['yes','cancel']" @yes="createReport" @cancel="$emit('input',false)">
+  <message-dialog v-model="value" :actions="['yes','cancel']" :loading="creatingReport" @yes="createReport" @cancel="$emit('input',false)">
       <template v-slot:title="{}">
         New Report
       </template>
@@ -62,6 +62,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 })
 export default class NewReportDialog extends Vue {
   @Prop() value!: boolean
+  creatingReport: boolean = false
   $refs!: {
     obs: InstanceType<typeof ValidationObserver>
   }
@@ -73,6 +74,7 @@ export default class NewReportDialog extends Vue {
   
   async createReport () {
       if(await this.$refs.obs.validate() === true){
+        this.creatingReport =true
         const reportId = await this.$store.dispatch('reportstrore/createReport', this.newReport, { root: true })
           .then((resp) => {
             this.$store.dispatch('reportstrore/getReports', '', { root: true })
@@ -80,6 +82,7 @@ export default class NewReportDialog extends Vue {
             this.$emit('report-created', resp)
           })
         await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: reportId }, { root: true })
+        this.creatingReport = false
       }
     }
   

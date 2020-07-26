@@ -10,6 +10,7 @@
           :prepend-icon="showIcon ? 'event' : ''"
           v-on="on"
           @input="emitEvent(fechaPickerModel)"
+          @click:clear="limpiar()"
         >
           <template v-slot:append-outer="">
             <slot name="append-outer" />
@@ -34,8 +35,8 @@ import moment from 'moment'
 
 @Component
 export default class DatePickerBase extends Vue {
-  @Prop() value:any;
-  @Prop({ default: 'Date' }) titulo:any;
+  @Prop({ required: true }) value:any;
+  @Prop({ default: 'Fecha' }) titulo:any;
   @Prop() min:any;
   @Prop() max:any;
   @Prop({ default: false }) showIcon:Boolean | undefined;
@@ -44,10 +45,10 @@ export default class DatePickerBase extends Vue {
   menu1:Boolean = false
 
   get fechaPickerModel() {
-    if (this.value !== '' && this.value !== null && this.value !== undefined && this.value !== '0001-01-01T00:00:00+00:00')
+    if (this.value)
       return this.fDateToYMD(this.value)
     else
-      return this.fechaHoy
+      return this.value === '' ? null : this.$emit('input', this.fechaHoy)
   }
 
   set fechaPickerModel(valor) {
@@ -65,20 +66,20 @@ export default class DatePickerBase extends Vue {
     return (this.fechaPickerModel !== null && this.fechaPickerModel !== undefined) ? this.fDateToDMY(this.fechaPickerModel) : ''
   }
 
-  set fechaComputed(newValue) {
-    (newValue !== null && newValue !== undefined) ? this.fechaPickerModel = '' : this.fechaPickerModel = this.fDateToDMY(this.fechaPickerModel)
+  emitEvent(valor:any) {
+    this.$emit('input', valor ?? '')
   }
 
-  emitEvent(valor: any) {
-    this.$emit('input', valor)
-  }
-
-  fDateToDMY (dateValue: any) {
+  fDateToDMY (dateValue:any) {
     return moment(dateValue).format('DD/MM/YYYY')
   }
 
-  fDateToYMD(dateValue: any) {
+  fDateToYMD(dateValue:any) {
     return moment(dateValue).format('YYYY-MM-DD')
+  }
+
+  limpiar() {
+    this.$emit('input', '')
   }
 }
 </script>
