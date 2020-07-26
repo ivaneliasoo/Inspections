@@ -84,7 +84,7 @@
           </v-row>
            <v-fab-transition>
       <v-btn
-        :disabled="!dirty || !valid || currentReport.isClosed"
+        :disabled="!valid || currentReport.isClosed"
         color="success"
         fab
         fixed
