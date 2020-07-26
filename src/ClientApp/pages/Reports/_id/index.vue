@@ -153,9 +153,9 @@
                               <v-checkbox
                                 :disabled="currentReport.isClosed"
                                 color="primary"
-                                :value="item.checks.length === item.checks.filter(c => c.checked).length || !item.checks.filter(c => c.checked)"
+                                v-model="item.checked"
                                 :indeterminate="item.checks.length !== item.checks.filter(c => c.checked).length && item.checks.filter(c => c.checked).length > 0"
-                                @click.stop="item.checked = !item.checked; checkItemChecks(item.id, item.checked);"
+                                @click.stop=" item.checked=!item.checked; checkItemChecks(item.id, item.checked)"
                               />
                             </v-col>
                           </v-row>
@@ -678,6 +678,10 @@ export default class EditReport extends mixins(InnerPageMixin) {
       else check.checked = CheckValue.False; 
       this.saveCheckItem(check)
     })
+  }
+
+  checkListCheckedValue(item: any) {
+    return item.checks.length === item.checks.filter((c:any) => c.checked).length
   }
 
 }

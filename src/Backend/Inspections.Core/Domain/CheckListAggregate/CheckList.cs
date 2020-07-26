@@ -21,6 +21,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
         public string Annotation { get; private set; }
         public bool IsConfiguration { get; set; }
         public bool Completed => !_checks.Any(c => c.Required && (c.Checked == CheckValue.False));
+        public bool @Checked => _checks.Any(c => c.Required && (c.Checked == CheckValue.True));
         private readonly List<CheckListItem> _checks = new List<CheckListItem>();
 
         public CheckList(string text, List<CheckListParam> textParams, string annotation, bool isConfiguration)
