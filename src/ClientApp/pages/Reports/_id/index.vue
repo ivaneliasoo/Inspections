@@ -87,7 +87,7 @@
                 :disabled="!valid || currentReport.isClosed || !CanCloseReport"
                 color="success"
                 class="v-btn--example2"
-                @click="currentReport.isClosed=true; saveReportChanges"
+                @click="dialogClose = true; currentReport.isClosed=true;"
               >
                 <v-icon>mdi-lock</v-icon>
                 Close Report
@@ -656,6 +656,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
     
     await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: this.$route.params.id }, { root: true })
+    await this.$auth.fetchUser()
     
   }
 

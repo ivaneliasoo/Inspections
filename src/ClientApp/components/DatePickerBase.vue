@@ -36,7 +36,7 @@ import moment from 'moment'
 @Component
 export default class DatePickerBase extends Vue {
   @Prop({ required: true }) value:any;
-  @Prop({ default: 'Fecha' }) titulo:any;
+  @Prop({ default: 'Date' }) titulo:any;
   @Prop() min:any;
   @Prop() max:any;
   @Prop({ default: false }) showIcon:Boolean | undefined;

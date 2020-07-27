@@ -26,7 +26,7 @@
         <v-card-actions>
           <v-row>
             <v-col cols="6" v-for="(action, index) in option.innerActions" :key="index">
-              <v-btn :color="action.color" tile :block="$vuetify.breakpoint.smAndDown" @click.stop="action.action()">
+              <v-btn :color="action.color" tile :block="$vuetify.breakpoint.smAndDown" :disabled="!$auth.user.lastEditedReport && action.text === 'Edit Last' " @click.stop="action.action()">
                 <v-icon>
                   {{ action.icon }}
                 </v-icon>
