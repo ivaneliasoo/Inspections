@@ -101,7 +101,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="success" text :disabled="item.report ? item.report.isClosed ? true:false : false && !valid" 
+                <v-btn color="success" text :loading="loading" :disabled="item.report ? item.report.isClosed ? true:false : false && !valid" 
                 @click="upsertUser()">
                   Save
                 </v-btn>
@@ -235,6 +235,7 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
   }
 
   async upsertUser () {
+    this.loading = true
     if(!this.isNew)
       await this.$store.dispatch('users/updateUser', this.item, { root: true })
     else{
@@ -253,6 +254,7 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
 
     this.dialog = false
     this.isNew = true
+    this.loading = false
   }
 }
 </script>
