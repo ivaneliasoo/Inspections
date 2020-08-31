@@ -87,7 +87,7 @@
               bottom
               right
               class="v-btn--example2"
-              @click="saveReportChanges"
+              @click="saveReportChanges; CanCloseReport ? dialogClose = true: undefined"
             >
               <v-icon>mdi-content-save</v-icon>
             </v-btn>
