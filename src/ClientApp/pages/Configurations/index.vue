@@ -147,7 +147,9 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
     this.$store.dispatch('configurations/deleteConfiguration', this.selectedItem.id, { root: false })
   }
 
-  fetch ({ store }: any) {
+  fetch ({ store, error, $auth }: any) {
+    if(!$auth.user.isAdmin)
+      error({ statusCode: 403, message: 'Forbbiden' })
     store.dispatch('configurations/getConfigurations', '', { root: true })
   }
 }

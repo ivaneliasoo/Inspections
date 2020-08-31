@@ -1,5 +1,5 @@
 {
-  "name": "inspections",
+  "name": "reporting",
   "version": "1.0.0",
   "description": "My dandy Nuxt.js project",
   "author": "SmartCode Builders",
@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",
-    "export": "nuxt-ts export",
+    "generate": "nuxt-ts generate",
     "start": "nuxt-ts start",
     "serve": "nuxt-ts serve",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
@@ -15,19 +15,23 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^0.4.0",
     "@nuxtjs/auth": "^4.9.1",
-    "@nuxtjs/axios": "^5.11.0",
+    "@nuxtjs/axios": "^5.12.1",
+    "@nuxtjs/device": "^1.2.7",
     "@nuxtjs/dotenv": "^1.4.0",
-    "@nuxtjs/pwa": "^3.0.0-0",
-    "@types/chart.js": "^2.9.22",
+    "@nuxtjs/pwa": "^3.0.1",
+    "@types/chart.js": "^2.9.24",
     "@types/dropzone": "^5.7.0",
     "@types/pdfmake": "^0.1.14",
     "chart.js": "^2.9.3",
-    "moment": "^2.26.0",
-    "nuxt": "^2.13.0",
+    "moment": "^2.27.0",
+    "nuxt": "^2.14.3",
+    "nuxt-compress": "^3.0.0",
     "nuxt-property-decorator": "2.7.2",
     "pdfmake": "0.1.65",
-    "vee-validate": "^3.3.5",
-    "vue-chartjs": "^3.5.0"
+    "vee-validate": "^3.3.9",
+    "vue-chartjs": "^3.5.1",
+    "vue-signature-pad": "^2.0.2",
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",

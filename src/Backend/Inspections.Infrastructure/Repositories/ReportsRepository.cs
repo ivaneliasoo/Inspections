@@ -45,9 +45,9 @@ namespace Inspections.Infrastructure.Repositories
                 .Include(p => p.PhotoRecords);
 
             if(closed.HasValue)
-                return await query.AsNoTracking().Where(r => (r.IsClosed)).ToListAsync();
+                return await query.AsNoTracking().Where(r => (r.IsClosed)).OrderByDescending(r=>r.Date).ToListAsync();
 
-            return await query.AsNoTracking().ToListAsync();
+            return await query.AsNoTracking().OrderByDescending(r => r.Date).ToListAsync();
         }
 
         public Task DeleteAsync(Report entity)

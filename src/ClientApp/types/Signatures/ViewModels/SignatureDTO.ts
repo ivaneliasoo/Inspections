@@ -10,4 +10,6 @@ export interface SignatureDTO {
     remarks: string;
     date: string;
     principal: boolean;
+    drawedSign: string;
+    viewSign?: boolean;
 }

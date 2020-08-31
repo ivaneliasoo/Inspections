@@ -32,6 +32,7 @@ namespace Inspections.API.Features.Signatures.Handlers
             newSignature.Principal = request.Principal;
             newSignature.Responsable = new Responsable() { Name = request.ResponsableName, Type = request.ResponsableType };
             newSignature.IsConfiguration = false;
+            newSignature.DrawedSign = request.DrawedSign;
 
             await _signaturesRepository.UpdateAsync(newSignature).ConfigureAwait(false);
 

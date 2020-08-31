@@ -2,15 +2,15 @@
   <div>
     <alert-dialog
       v-model="dialogRemove"
-      title="Remove Users"
-      message="This operation will remove this User and all data related"
+      title="Remove Addresses"
+      message="This operation will remove this Address. If Proceed, you no longer get it suggested again"
       :code="selectedItem.id"
       :description="selectedItem.title"
-      @yes="deleteUser();"
+      @yes="deleteAddress();"
     />
     <v-data-table
-      :items="users"
-      item-key="userName"
+      :items="addresses"
+      item-key="id"
       :search="filter.filterText"
       dense
       :loading="loading"
@@ -18,7 +18,7 @@
     >
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
-          <v-toolbar-title>Users</v-toolbar-title>
+          <v-toolbar-title>Addresss</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
           <grid-filter :filter.sync="filter.filterText" />
           <v-spacer />
@@ -28,7 +28,7 @@
             fab
             dark
             color="primary"
-            @click="dialog = true; isNew = true; item = { isAdmin: false }"
+            @click="dialog = true; isNew = true; item = { id: 0, addressLine2: '' }"
           >
             <v-icon dark>mdi-plus</v-icon>
           </v-btn>
@@ -42,78 +42,55 @@
             <ValidationObserver tag="form" v-slot="{ valid, reset }">
               <v-card>
                 <v-card-title>
-                  <span class="headline">Edit User</span>
+                  <span class="headline">Edit Address</span>
                 </v-card-title>
                 <v-card-text>
                   <v-container>
                     <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="6">
+                      <v-col cols="12" md="12">
                         <ValidationProvider rules="required" v-slot="{ errors }">
-                          <v-text-field
-                            v-model="item.userName"
-                            name="title"
+                          <v-textarea
+                            v-model="item.addressLine"
+                            autocomplete="nope"
+                            name="addressLine"
+                            rows="2"
                             :disabled="!isNew"
                             :error-messages="errors"
-                            label="User Name"
-                          />
-                        </ValidationProvider>
-                      </v-col>
-                      <v-col cols="12" md="6">
-                        <v-checkbox v-model="item.isAdmin" name="isAdmin" label="Administrator" />
-                      </v-col>
-                    </v-row>
-                    <v-row align="center" justify="space-between">
-                      <v-col>
-                        <ValidationProvider
-                          name="pass"
-                          rules="required|password:@confirm"
-                          v-slot="{ errors }"
-                        >
-                          <v-text-field
-                            v-model="item.password"
-                            :error-messages="errors"
-                            type="password"
-                            name="password"
-                            label="Password"
-                          />
-                        </ValidationProvider>
-                      </v-col>
-                      <v-col>
-                        <ValidationProvider
-                          name="confirm"
-                          rules="required|password:@pass"
-                          v-slot="{ errors }"
-                        >
-                          <v-text-field
-                            v-model="confirmPassword"
-                            :error-messages="errors"
-                            type="password"
-                            name="confirmPassword"
-                            label="Confirm Password"
+                            label="Address"
                           />
                         </ValidationProvider>
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="6">
-                        <ValidationProvider rules="required" v-slot="{ errors }">
-                          <v-text-field
-                            v-model="item.name"
+                      <v-col>
+                          <v-textarea
+                            v-model="item.addressLine2"
+                            autocomplete="nope"
+                            rows="2"
                             :error-messages="errors"
-                            name="Name"
-                            label="Name"
+                            name="addressLine2"
+                            label="Address Additional"
                           />
-                        </ValidationProvider>
                       </v-col>
-                      <v-col cols="12" md="6">
-                        <ValidationProvider rules="required" v-slot="{ errors }">
+                      <v-col>
                           <v-text-field
-                            v-model="item.lastName"
+                            v-model="item.city"
+                            autocomplete="nope"
                             :error-messages="errors"
-                            name="lastName"
-                            label="Last Name"
+                            name="city"
+                            label="City"
                           />
-                        </ValidationProvider>
+                      </v-col>
+                    </v-row>
+                    <v-row align="center" justify="space-between">
+                      <v-col cols="12" md="12">
+                          <v-text-field
+                            v-model="item.province"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="province"
+                            label="Province"
+                          />
                       </v-col>
                     </v-row>
                   </v-container>
@@ -124,13 +101,13 @@
                     color="success"
                     text
                     :loading="loading"
-                    :disabled="item.report ? item.report.isClosed ? true:false : false && !valid"
-                    @click="upsertUser()"
+                    :disabled="!valid"
+                    @click="upsertAddress()"
                   >Save</v-btn>
                   <v-btn
                     color="default"
                     text
-                    @click="reset(); item = { principal: false }; dialog = false"
+                    @click="reset(); item = { id: 0, addressLine2: '' }; dialog = false"
                   >Cancel</v-btn>
                 </v-card-actions>
               </v-card>
@@ -148,22 +125,18 @@
               @click="selectItem(item); isNew = false; dialog = true"
             >mdi-pencil</v-icon>
           </template>
-          <span>Edit / Change Password</span>
+          <span>Edit</span>
         </v-tooltip>
         <v-tooltip v-if="$auth.user.isAdmin" top>
           <template v-slot:activator="{ on }">
             <v-icon
               v-on="on"
-              :disabled="item.userName === $auth.user.userName"
               color="error"
               @click="selectItem(item); dialogRemove = true"
             >mdi-delete</v-icon>
           </template>
           <span>Delete</span>
         </v-tooltip>
-      </template>
-      <template v-slot:item.isAdmin="{ item }">
-        <v-simple-checkbox v-model="item.isAdmin" disabled />
       </template>
     </v-data-table>
   </div>
@@ -172,18 +145,8 @@
 import { Vue, Component, mixins } from "nuxt-property-decorator";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import InnerPageMixin from "@/mixins/innerpage";
-import { UserState } from "store/users";
-import { User, ChangePasswordDTO } from "../../types/Users";
-
-import { extend } from "vee-validate";
-
-extend("password", {
-  params: ["target"],
-  validate(value, { target }: any) {
-    return value === target;
-  },
-  message: "Password confirmation does not match",
-});
+import { AddressesState } from "store/addresses";
+import { AddressDTO } from "@/types/Addresses";
 
 @Component({
   components: {
@@ -191,36 +154,42 @@ extend("password", {
     ValidationProvider,
   },
 })
-export default class UserAdmin extends mixins(InnerPageMixin) {
+export default class AddressesAdmin extends mixins(InnerPageMixin) {
   dialog: boolean = false;
   dialogRemove: boolean = false;
   loading: boolean = false;
-  confirmPassword: string = "";
+  
   filter: any = {
     filterText: "",
   };
   headers: any[] = [
     {
-      text: "UserName",
-      value: "userName",
+      text: "ID",
+      value: "id",
       sortable: true,
       align: "left",
     },
     {
-      text: "Name",
-      value: "name",
+      text: "Address",
+      value: "addressLine",
       sortable: true,
       align: "left",
     },
     {
-      text: "Last Name",
-      value: "lastName",
+      text: "Address 2",
+      value: "addressLine2",
       sortable: true,
       align: "left",
     },
     {
-      text: "Admin",
-      value: "isAdmin",
+      text: "City",
+      value: "city",
+      sortable: true,
+      align: "center",
+    },
+    {
+      text: "Province",
+      value: "province",
       sortable: true,
       align: "center",
     },
@@ -231,18 +200,18 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
       align: "left",
     },
   ];
-  selectedItem: User = {} as User;
+  selectedItem: AddressDTO = {} as AddressDTO;
   item: any = { principal: false };
   isNew: boolean = false;
 
-  get users(): User[] {
-    return (this.$store.state.users as UserState).users;
+  get addresses(): AddressDTO[] {
+    return (this.$store.state.addresses as AddressesState).addressList;
   }
 
-  selectItem(item: User): void {
+  selectItem(item: AddressDTO): void {
     this.selectedItem = item;
     this.$store
-      .dispatch("users/getUserByName", this.selectedItem.userName, {
+      .dispatch("addresses/getAddressById", this.selectedItem.id, {
         root: true,
       })
       .then((resp) => (this.item = resp));
@@ -251,38 +220,25 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
   async fetch() {
     if (!this.$auth.user.isAdmin)
       this.$nuxt.error({ statusCode: 403, message: "Forbbiden" });
-    await this.$store.dispatch("users/getUsers", {}, { root: true });
+    await this.$store.dispatch("addresses/getAddresses", {}, { root: true });
   }
 
-  deleteUser() {
+  deleteAddress() {
     this.$store
-      .dispatch("users/deleteUser", this.selectedItem.userName, { root: true })
+      .dispatch("addresses/deleteAddress", this.selectedItem.id, { root: true })
       .then(() => {
         this.dialog = false;
       });
   }
 
-  async upsertUser() {
+  async upsertAddress() {
     this.loading = true;
     if (!this.isNew)
-      await this.$store.dispatch("users/updateUser", this.item, { root: true });
+      await this.$store.dispatch("addresses/updateAddress", this.item, { root: true });
     else {
-      await this.$store.dispatch("users/createUser", this.item, { root: true });
-      await this.$store.dispatch("users/getUsers", {}, { root: true });
+      await this.$store.dispatch("addresses/createAddress", this.item, { root: true });
+      await this.$store.dispatch("addresses/getAddresses", {}, { root: true });
     }
-
-    if (this.item.password === this.confirmPassword)
-      await this.$store.dispatch(
-        "users/changePassword",
-        {
-          userName: this.item.userName,
-          currentPassword: "",
-          newPassword: this.item.password,
-          newPasswordConfirmation: this.confirmPassword,
-        } as ChangePasswordDTO,
-        { root: true }
-      );
-
     this.dialog = false;
     this.isNew = true;
     this.loading = false;

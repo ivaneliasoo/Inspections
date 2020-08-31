@@ -16,11 +16,20 @@
           <v-row align="center" justify="space-between">
             <v-col cols="6">
               <ValidationProvider rules="required" immediate  v-slot="{ errors }">
-                <v-text-field
-                :readonly="currentReport.isClosed"
-                v-model="currentReport.name"
-                label="Report Name"
-                :error-messages="errors"
+                <v-autocomplete
+                  :readonly="currentReport.isClosed"
+                  v-model="currentReport.address"
+                  :error-messages="errors"
+                  :items="addresses"
+                  :loading="searchingAddresses"
+                  :search-input.sync="search"
+                  @keypress="isDirty = true"
+                  hide-selected
+                  item-text="formatedAddress"
+                  item-value="formatedAddress"
+                  label="Inspection Address"
+                  placeholder="Start typing to Search"
+                  prepend-icon="mdi-crosshairs-gps"
                 />
               </ValidationProvider>
             </v-col>
@@ -29,33 +38,10 @@
               <h6>{{ currentReport.formName }}</h6>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col></v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <ValidationProvider rules="required" immediate  v-slot="{ errors }">
-              <v-textarea label="Address" rows="2 "
-                :readonly="currentReport.isClosed"
-                v-model="currentReport.address"
-                :error-messages="errors"
-               />
-              </ValidationProvider>
-            </v-col>
-          </v-row>
-          <v-row align="end">
-            <v-col cols="12" md="2" v-if="currentReport.license">
-              <ValidationProvider rules="required" immediate  v-slot="{ errors }">
-              <v-select :items="emaTypes"
-                :readonly="currentReport.isClosed"
-                v-model="currentReport.license.licenseType"
-                :error-messages="errors"
-               label="EMA License Type" />
-              </ValidationProvider>
-            </v-col>
+          <v-row align="center" justify="space-between">
             <v-col cols="12" md="3" v-if="currentReport.license">
               <ValidationProvider rules="required" immediate  v-slot="{ errors }">
-              <v-text-field type="number"
+              <v-text-field 
                 :readonly="currentReport.isClosed"
                 v-model="currentReport.license.number"
                 :error-messages="errors"
@@ -71,14 +57,11 @@
                :max="new Date().toISOString()" />
               </ValidationProvider>
             </v-col>
-            <v-col cols="6" md="2">
-              <v-checkbox v-model="IsCompleted" label="Completed" disabled />
-            </v-col>
             <v-col cols="6" md="2" class="text-right">
               <v-checkbox
                 v-if="currentReport.isClosed"
                 v-model="currentReport.isClosed"
-                label="Closed"
+                label="Completed With Signatures"
                 :disabled="currentReport.isClosed || !CanCloseReport"
                 @click="dialogClose = true"
               />
@@ -90,26 +73,25 @@
                 @click="dialogClose = true; currentReport.isClosed=true;"
               >
                 <v-icon>mdi-lock</v-icon>
-                Close Report
+                Complete Report
               </v-btn>
             </v-col>
           </v-row>
-           <v-fab-transition>
-      <v-btn
-        :disabled="!valid || currentReport.isClosed"
-        color="success"
-        fab
-        fixed
-        dark
-        small
-        bottom
-        right
-        class="v-btn--example2"
-        @click="saveReportChanges"
-      >
-        <v-icon>mdi-content-save</v-icon>
-      </v-btn>
-    </v-fab-transition>
+          <v-fab-transition>
+            <v-btn
+              v-if="valid && !currentReport.isClosed"
+              color="success"
+              fab
+              fixed
+              dark
+              bottom
+              right
+              class="v-btn--example2"
+              @click="saveReportChanges"
+            >
+              <v-icon>mdi-content-save</v-icon>
+            </v-btn>
+          </v-fab-transition>
         </ValidationObserver>
       </v-col>
     </v-row>
@@ -139,7 +121,7 @@
             <v-expansion-panels
           multiple
           focusable
-          :value="[0,1,2]"
+          :value="openedPanels"
         >
           <v-expansion-panel>
             <v-expansion-panel-header>
@@ -282,46 +264,13 @@
                 </v-row>
             </v-expansion-panel-content>
           </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header>
-              Signatures
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <div v-for="(signature, index) in currentReport.signatures" :key="index">
-                  <v-row>
-                      <v-col class="text-left">
-                          <h3>{{ signature.title }}</h3>
-                          <h5>{{ signature.annotation }}</h5>
-                          <v-chip v-if="signature.principal">Principal Sign</v-chip>
-                      </v-col>
-                  </v-row>
-                  <v-row align="center" justify="space-around">
-                    <v-col cols="6" md="3">
-                        <v-select 
-                        v-model="signature.responsable.type" 
-                        :readonly="currentReport.isClosed"
-                        :items="responsableTypes" 
-                        label="Responsable Type" />
-                    </v-col>
-                    <v-col cols="6" md="3">
-                      <v-text-field v-model="signature.responsable.name" :readonly="currentReport.isClosed" label="Responsable" />
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-text-field v-model="signature.designation" :readonly="currentReport.isClosed" label="Designation" />
-                    </v-col>
-                    <v-col cols="12" md="2">
-                      <DatePickerBase v-model="signature.date" :disabled="currentReport.isClosed" label="Date" max="" min="" />
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                      <v-col>
-                          <v-text-field v-model="signature.remarks" :readonly="currentReport.isClosed" label="Remarks (if any)" />
-                      </v-col>
-                  </v-row>
-                </div>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
         </v-expansion-panels>
+            <v-row>
+              <v-col>
+                <h2 class="text-left">Signatures</h2>
+                <SignaturesForm v-model="currentReport.signatures" :is-closed="currentReport.isClosed"/>
+              </v-col>
+            </v-row>
           </v-tab-item>
           <v-tab-item key="photos" value="photos">
             <v-card flat>
@@ -371,11 +320,6 @@
                     <span>Upload Selected Files </span>
                   </v-tooltip>
                 </v-col>
-                <!-- <v-col v-else>
-                  <span class="error--text">
-                    {{ hasPendingChanges ? 'You cant Upload Photos becouse You Have Pending Changes. To Continue please save your pending changes':''}}
-                  </span>
-                </v-col> -->
               </v-row>
               <v-divider />
               <v-row>
@@ -438,7 +382,6 @@
         </v-carousel-item>
       </v-carousel>
     </v-dialog>
-
   </div>
 </template>
 
@@ -446,7 +389,23 @@
 import { Vue, Component, Watch, mixins } from "nuxt-property-decorator";
 import InnerPageMixin from '@/mixins/innerpage'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { Report, EMALicenseType, Note, Signature, ResponsableType, PhotoRecord, EMALicense, DeleteNoteCommand, AddNoteCommand, UpdateReportCommand, EditNoteCommand, EditPhotoRecordCommand, EditSignatureCommand, CheckList, CheckListItem, UpdateCheckListItemCommand, DeletePhotoRecordCommand, CheckValue } from "@/types";
+import { AddressesState } from '@/store/addresses'
+import { Report, 
+EMALicenseType, 
+Note, 
+Signature, 
+ResponsableType, 
+PhotoRecord, 
+EMALicense, 
+DeleteNoteCommand, 
+AddNoteCommand, 
+UpdateReportCommand, 
+EditNoteCommand, 
+EditPhotoRecordCommand, 
+EditSignatureCommand, CheckList, CheckListItem, UpdateCheckListItemCommand, DeletePhotoRecordCommand, CheckValue,
+AddressDTO } from "@/types";
+
+import { debounce } from '@/Helpers/index'
 
 @Component({
   components: {
@@ -458,6 +417,11 @@ export default class EditReport extends mixins(InnerPageMixin) {
   $refs!: {
     obs: InstanceType<typeof ValidationObserver>
   }
+
+  search: string = ''
+  isDirty: boolean = false
+  searchingAddresses: boolean = false
+  openedPanels: number[] = [0,1]
   showCarousel: boolean = false
   savingNewReport: boolean = false
   currentPhoto: number = 0
@@ -474,13 +438,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     })
     .filter(i => i !== undefined)
 
-  responsableTypes: any = Object.keys(ResponsableType)
-    .map((key: any) => {
-      if (!isNaN(Number(key.toString()))) return;
 
-      return { id: ResponsableType[key], text: key };
-    })
-    .filter(i => i !== undefined)
 
   files: File[] = []
   hostName: string= this.$axios!.defaults!.baseURL!.replace('/api','')
@@ -489,6 +447,17 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   get hasPendingChanges() {
     return this.$store.state.showFabSaveButton
+  }
+  get localAddress(): AddressDTO[] {
+    return [{ formatedAddress: this.currentReport.address }]
+  }
+  get addresses(): AddressDTO[] {
+    const dbAddressses = (this.$store.state.addresses as AddressesState).addressList;
+    
+    if(dbAddressses.length >0)
+      return dbAddressses
+    
+    return this.localAddress
   }
 
   async addNote() {
@@ -599,7 +568,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     const update: UpdateReportCommand = {
       id:this.currentReport.id,
       name:this.currentReport.name,
-      address:this.currentReport.address,
+      address:this.currentReport.address ?? this.search,
       date:this.currentReport.date,
       licenseType:this.currentReport.license.licenseType,
       licenseNumber:this.currentReport.license.number,
@@ -617,7 +586,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
             designation: signature.designation,
             remarks: signature.remarks,
             date: signature.date,
-            principal: signature.principal
+            principal: signature.principal,
+            drawedSign: signature.drawedSign
           }
           this.$axios.$put(`signatures/${signature.id}`, command)
       })
@@ -654,6 +624,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     else  
       this.currentReport.license.licenseType = EMALicenseType[this.currentReport.license.licenseType] as unknown as EMALicenseType
 
+    this.search = this.currentReport.address
     
     await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: this.$route.params.id }, { root: true })
     await this.$auth.fetchUser()
@@ -685,10 +656,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   checkItemChecks(checkListId: number, value: boolean): void {
-    console.log(checkListId)
-    console.log(value)
     const checkList = this.currentReport.checkList.find(c => c.id === checkListId)
-    console.log(checkList)
     checkList?.checks.forEach(check => {
       if(value) check.checked = CheckValue.True
       else check.checked = CheckValue.False; 
@@ -703,6 +671,25 @@ export default class EditReport extends mixins(InnerPageMixin) {
   mounted() {
     return this.$refs.obs.validate()
   }
+
+  getSuggestedAddresses(filter: string) {
+    this.$store.dispatch("addresses/getAddresses", { filter }, { root: true });
+    this.searchingAddresses = false
+    this.isDirty=false
+  }
+
+  @Watch('search')
+  onSearchChanged(value: string) {
+    if(!value || !this.isDirty) return
+
+    if(this.searchingAddresses) return 
+
+    if(value.length > 3){
+      this.searchingAddresses = true
+      const self = this
+      self.getSuggestedAddresses(value)
+    }
+  }
 }
 </script>
 
@@ -710,6 +697,6 @@ export default class EditReport extends mixins(InnerPageMixin) {
 .v-btn--example2 {
     bottom: 0;
     /* position: absolute; */
-    margin: 0 46px 16px 16px;
+    margin: 0 62px 16px 16px;
   }
 </style>

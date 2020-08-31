@@ -29,7 +29,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/vee-validate'
+    '~/plugins/vee-validate',
+    '~/plugins/vue-signature-pad'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -48,15 +49,30 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
+    '@nuxtjs/device',
+    ['nuxt-compress',
+    {
+      gzip: {
+        cache: true
+      },
+      brotli: {
+        threshold: 10240
+      }
+    }]
   ],
+  pwa: {
+    icon: {
+      /* icon options */
+    }
+  },
   components: true,
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'https://inspectionsscb.azurewebsites.net',
-    browserBaseURL: 'https://inspectionsscb.azurewebsites.net'
+    baseURL: 'https://localhost:44388',
+    browserBaseURL: 'https://localhost:44388'
   },
   router: {
     middleware: ['auth']

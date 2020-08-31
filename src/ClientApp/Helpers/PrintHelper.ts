@@ -125,8 +125,17 @@ export class PrintHelper {
         margin: [0,10,0,0]
       },
       { 
-        text: `Signature: ______________________________________________________________ Date: ${moment(principalSignature!.date).format('DD/MM/YYYY')}` ,
+        text: `Date: ${moment(principalSignature!.date).format('DD/MM/YYYY')}` ,
         style: 'filedName' 
+      },
+      { 
+        text: `Signature: ` ,
+        style: 'filedName' 
+      },
+      {
+        image: `${principalSignature!.drawedSign ?? ''}`,
+        width: 200,
+        alignment: 'center'
       },
       { text: 'Notes: ', margin: [0,10,0,0] }
       ])
@@ -168,6 +177,16 @@ export class PrintHelper {
         margin: [0,5,0,0]
       },
       { 
+        text: `Signature: ` ,
+        style: 'filedName',
+        margin: [0,5,0,0] 
+      },
+      {
+        image: `${sign.drawedSign ?? ''}`,
+        width: 200,
+        alignment: 'center'
+      },
+      { 
         text: `Signature: ______________________________________________________________ Date: ${moment(sign!.date).format('DD/MM/YYYY')}` ,
         style: 'filedName',
         margin: [0,5,0,0] 
@@ -176,7 +195,7 @@ export class PrintHelper {
         text: `Remarks (if any): ${sign.remarks ?? ''}______________________________________________________________________________________________________________________________________________________________________________________________`,
         style: 'filedName',
         margin: [0,5,0,0]
-      },
+      }
       ])
     });
     pdfMake.createPdf(docDef).download(`report_S${report.name}`)

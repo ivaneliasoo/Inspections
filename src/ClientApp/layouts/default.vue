@@ -14,15 +14,15 @@
             <v-img src="https://randomuser.me/api/portraits/men/85.jpg" />
           </v-list-item-avatar>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item>
           <v-list-item-content>
             <v-list-item-title class="title">{{$auth.user.userName}}</v-list-item-title>
-            <v-list-item-subtitle>{{ $auth.user.name }} {{ $auth.user.lastName }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ $auth.user.name }} {{ $auth.user.lastName }} {{ $auth.user.isAdmin ? '(admin)':'' }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         <v-divider />
         <nuxt-link to="/">
-          <v-list-item link>
+          <v-list-item>
             <v-list-item-action>
               <v-icon>mdi-home</v-icon>
             </v-list-item-action>
@@ -31,46 +31,46 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link v-if="$auth.user.isAdmin" to="/users">
-          <v-list-item link>
-            <v-list-item-action>
-              <v-icon>mdi-account-multiple</v-icon>
-            </v-list-item-action>
+        <nuxt-link to="/">
+          <v-list-item>
+            <!-- <v-list-item-action>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-action> -->
             <v-list-item-content>
-              <v-list-item-title>Users</v-list-item-title>
+              <v-list-item-title>LEW Licensing</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <!-- <nuxt-link to="/checklists">
-          <v-list-item link>
+         <nuxt-link to="/">
+          <v-list-item>
             <v-list-item-action>
-              <v-icon>mdi-format-list-checks</v-icon>
+              <v-icon small>mdi-file</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>CheckLists</v-list-item-title>
+              <v-list-item-title>Reporting</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="/signatures">
-          <v-list-item link>
-            <v-list-item-action>
-              <v-icon>mdi-draw</v-icon>
-            </v-list-item-action>
+          <v-list-item>
             <v-list-item-content>
-              <v-list-item-title>Signatures</v-list-item-title>
+              <v-list-item-title>Risk Assessment</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </nuxt-link>
-        <nuxt-link to="/configurations">
-          <v-list-item link>
-            <v-list-item-action>
-              <v-icon>mdi-cog-outline</v-icon>
-            </v-list-item-action>
+          <v-list-item>
             <v-list-item-content>
-              <v-list-item-title>Reports Settings</v-list-item-title>
+              <v-list-item-title>Method of Statement</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </nuxt-link> -->
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Manpower Scheduling</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="$auth.user.isAdmin">
+            <v-list-item-content @click="$router.push('master')">
+              <v-list-item-title>Master Setup</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -83,7 +83,7 @@
       <v-btn v-if="canGoBack" icon @click.stop="$router.go(-1)">
           <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
-      <v-toolbar-title>Inspections</v-toolbar-title>
+      <v-toolbar-title>Reporting</v-toolbar-title>
       <v-spacer />
       <img src="/Logo.jpeg" height="50px" width="130px">
       <v-btn icon @click="logout">
@@ -99,13 +99,49 @@
         dark
         bottom
         right
-        small
         class="v-btn--example"
         @click="$vuetify.goTo(0)"
       >
         <v-icon>mdi-chevron-up</v-icon>
       </v-btn>
     </v-fab-transition>
+            <!-- <v-speed-dial
+              v-model="fab"
+              bottom
+              right
+              direction="top"
+              open-on-hover
+              transition="slide-y-reverse-transition"
+            >
+              <template v-slot:activator>
+                <v-btn
+                  v-model="fab"
+                  color="success"
+                  dark
+                  fixed
+                  fab
+                >
+                  <v-icon v-if="fab">mdi-close</v-icon>
+                  <v-icon v-else>mdi-content-save</v-icon>
+                </v-btn>
+              </template>
+             <v-btn
+                fab
+                dark
+                small
+                color="indigo"
+              >
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+              <v-btn
+                fab
+                dark
+                small
+                color="red"
+              >
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </v-speed-dial> -->
     <v-main>
       <v-container
         fluid
@@ -138,6 +174,7 @@ export default class Default extends Vue {
   drawer: boolean | null = null
   mini: boolean = false
   showScrollUpFab: boolean = false
+  fab: boolean = false
 
   onScroll(e: any) {
     if (typeof window === 'undefined') return

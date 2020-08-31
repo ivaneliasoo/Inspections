@@ -193,7 +193,6 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
   }
 
   asyncData({ query }:any) {
-    console.log(query)
     let filter: FilterType = {
                                 filterText: '',
                                 inConfigurationOnly: query.configurationonly === 'true' ? true:false ?? true,

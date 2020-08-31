@@ -14,7 +14,8 @@ namespace Inspections.API.Features.Signatures.Commands
                                    string designation,
                                    string remarks,
                                    DateTimeOffset date,
-                                   bool principal)
+                                   bool principal,
+                                   string drawedSign)
         {
             Id = id;
             Title = title;
@@ -25,6 +26,7 @@ namespace Inspections.API.Features.Signatures.Commands
             Remarks = remarks;
             Date = date;
             Principal = principal;
+            DrawedSign = drawedSign;
         }
 
         private EditSignatureCommand() { }
@@ -38,5 +40,7 @@ namespace Inspections.API.Features.Signatures.Commands
         public string Remarks { get; set; }
         public DateTimeOffset Date { get; set; }
         public bool Principal { get; set; }
+        public string DrawedSign { get; set; }
+
     }
 }

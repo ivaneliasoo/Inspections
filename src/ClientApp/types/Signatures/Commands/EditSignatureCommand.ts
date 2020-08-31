@@ -10,4 +10,5 @@ export interface EditSignatureCommand {
     remarks: string;
     date: string;
     principal: boolean;
+    drawedSign?: string;
 }
