@@ -10,7 +10,7 @@
       @no="dialogRemove=false"
     />
     <new-report-dialog v-model="dialog" />
-    <v-data-table :items="reportList" item-key="id" :search="filter" dense :headers="headers">
+    <v-data-table :class="$device.isTablet ? 'tablet-text':''" :items="reportList" item-key="id" :search="filter" dense :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Inspection Reports</v-toolbar-title>
@@ -25,44 +25,64 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon
-          :disabled="!item.isClosed || !item.photoRecords.length>0"
-          small
-          color="primary"
-          class="mr-2"
-          @click="printHelper.printCompoundedPhotoRecord(item.id)"
-        >
-          mdi-camera
-        </v-icon>
-        <v-icon
-          :disabled="!item.isClosed"
-          small
-          color="primary"
-          class="mr-2"
-          @click="printHelper.print(item.id)"
-        >
-          mdi-printer
-        </v-icon>
-        <v-icon
-          small
-          color="primary"
-          class="mr-2"
-          @click="$router.push({ name: 'Reports-id', params: { id: item.id} })"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-          small
-          :disabled="item.isClosed"
-          color="error"
-          @click="selectItem(item); dialogRemove = true"
-        >
-          mdi-delete
-        </v-icon>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              v-on="on"
+              :disabled="!item.isClosed || !item.photoRecords.length>0"
+              color="primary"
+              class="mr-2"
+              @click="printHelper.printCompoundedPhotoRecord(item.id)"
+            >
+              mdi-camera
+            </v-icon>
+            </template>
+          <span>Print Report With Photos</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              v-on="on"
+              :disabled="!item.isClosed"
+              color="primary"
+              class="mr-2"
+              @click="printHelper.print(item.id)"
+            >
+              mdi-printer
+            </v-icon>
+        </template>
+          <span>Print Report</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              v-on="on"
+              color="primary"
+              class="mr-2"
+              @click="$router.push({ name: 'Reports-id', params: { id: item.id} })"
+            >
+              mdi-pencil
+            </v-icon>
+        </template>
+          <span>Edit</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <v-icon
+              v-on="on"
+              :disabled="item.isClosed"
+              color="error"
+              @click="selectItem(item); dialogRemove = true"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          <span>Delete</span>
+        </v-tooltip>
         <v-tooltip v-if="$auth.user.isAdmin" top>
           <template v-slot:activator="{ on }">
             <v-icon
-              small
+              v-if="$auth.user.isAdmin"
               v-on="on"
               :disabled="item.isClosed"
               color="primary"
@@ -76,7 +96,7 @@
         <v-tooltip v-if="$auth.user.isAdmin" top>
           <template v-slot:activator="{ on }">
             <v-icon
-              small
+              v-if="$auth.user.isAdmin"
               v-on="on"
               :disabled="item.isClosed"
               color="primary"
@@ -129,6 +149,9 @@ import CreateReportDialog from '@/components/NewReportDialog.vue'
     ValidationObserver,
     ValidationProvider,
     CreateReportDialog
+  },
+  head: {
+    title: 'Reports List'
   }
 })
 export default class ReportsPage extends mixins(InnerPageMixin) {
@@ -147,13 +170,6 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
         class: 'secundary'
       },
       {
-        text: 'Report Name',
-        value: 'name',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
         text: 'Date',
         value: 'date',
         sortable: true,
@@ -161,49 +177,14 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
         class: 'secundary'
       },
       {
-        text: 'Title',
-        value: 'title',
+        text: 'Report Name',
+        value: 'name',
         sortable: true,
-        align: 'center',
+        align: 'left',
         class: 'secundary'
       },
       {
-        text: 'Notes',
-        value: 'notes',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Checks',
-        value: 'checkList',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Signatures',
-        value: 'signatures',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Photos',
-        value: 'photoRecords',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Completed',
-        value: 'completed',
-        sortable: true,
-        align: 'center',
-        class: 'secundary'
-      },
-      {
-        text: 'Closed',
+        text: 'Completed With Signatures',
         value: 'isClosed',
         sortable: true,
         align: 'center',

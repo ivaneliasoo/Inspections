@@ -17,6 +17,7 @@ namespace Inspections.API.Features.Users.Services
 {
     public class TokenService : ITokenService
     {
+        private const string TOKEN_GENERATED_MESSAGE = "User Token Generated.";
         private readonly ILogger<TokenService> _logger;
         private readonly IOptions<JwtSettings> _options;
 
@@ -41,12 +42,12 @@ namespace Inspections.API.Features.Users.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            _logger.LogInformation("User Token Generated.");
+            _logger.LogInformation(TOKEN_GENERATED_MESSAGE);
 
             return tokenHandler.WriteToken(token);
         }
 
-        private ClaimsIdentity GenerateClaims(User user)
+        private static ClaimsIdentity GenerateClaims(User user)
         {
             Guard.Against.Null(user, nameof(user));
 

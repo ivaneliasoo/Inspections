@@ -57,7 +57,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             return result.Id;
         }
 
-        private List<CheckList> PrepareForConfiguration(List<CheckList> checks)
+        private static List<CheckList> PrepareForConfiguration(List<CheckList> checks)
         {
             var result = new List<CheckList>();
             foreach (CheckList check in checks)
@@ -67,7 +67,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             return result;
         }
 
-        private List<Signature> PrepareForConfiguration(List<Signature> signatures)
+        private static List<Signature> PrepareForConfiguration(List<Signature> signatures)
         {
             var result = new List<Signature>();
             foreach (Signature signature in signatures)

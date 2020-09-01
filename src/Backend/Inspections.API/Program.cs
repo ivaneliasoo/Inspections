@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Inspections.Infrastructure.Data;
@@ -14,6 +15,8 @@ namespace Inspections.API
 {
     public class Program
     {
+        private const string DATABASE_ERROR_MESSAGE = "ocurrio un error cargando datos a la base de datos";
+
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
@@ -28,10 +31,10 @@ namespace Inspections.API
                     var inspectionsContext = services.GetRequiredService<InspectionsContext>();
                     InspectionsSeed.SeedAsync(inspectionsContext, loggerFactory).Wait();
                 }
-                catch (Exception ex)
+                catch (DbException ex)
                 {
                     var logger = loggerFactory.CreateLogger<Program>();
-                    logger.LogError(ex, "ocurrio un error cargando datos a la base de datos");
+                    logger.LogError(ex, DATABASE_ERROR_MESSAGE);
                 }
 
             }

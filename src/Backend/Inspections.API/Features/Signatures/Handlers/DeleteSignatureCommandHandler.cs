@@ -1,4 +1,5 @@
-﻿using Inspections.API.Features.Signatures.Commands;
+﻿using Ardalis.GuardClauses;
+using Inspections.API.Features.Signatures.Commands;
 using Inspections.Core.Interfaces;
 using MediatR;
 using System;
@@ -20,6 +21,7 @@ namespace Inspections.API.Features.Signatures.Handlers
 
         public async Task<bool> Handle(DeleteSignatureCommand request, CancellationToken cancellationToken)
         {
+            Guard.Against.Null(request, nameof(request));
             var signature = await _signaturesRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
 
             await _signaturesRepository.DeleteAsync(signature).ConfigureAwait(false);

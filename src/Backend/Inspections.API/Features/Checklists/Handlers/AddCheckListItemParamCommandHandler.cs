@@ -13,6 +13,7 @@ namespace Inspections.API.Features.Checklists.Handlers
 {
     public class AddCheckListItemParamCommandHandler : IRequestHandler<AddCheckListItemParamCommand, bool>
     {
+        private const string DUPLCATED_PARAMS_MESSAGE = "Cant add duplicated params";
         private readonly ICheckListsRepository _checkListsRepository;
 
         public AddCheckListItemParamCommandHandler(ICheckListsRepository checkListsRepository)
@@ -33,7 +34,7 @@ namespace Inspections.API.Features.Checklists.Handlers
                 if (checklistItem.TextParams.Count > 0)
                 {
                     if (checklistItem.TextParams.Any(p => p.Key == param.Key))
-                        throw new InvalidOperationException("Cant add duplicated params");
+                        throw new InvalidOperationException(DUPLCATED_PARAMS_MESSAGE);
                 }
 
                 var newParam = new CheckListParam

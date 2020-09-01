@@ -41,10 +41,10 @@ namespace Inspections.API.ApplicationServices
             return uploadedFilesPaths.AsEnumerable();
         }
 
-        internal async Task<string> UploadAttachments(IFormFile file, string requestFolder = "")
+        internal async Task<string> UploadAttachments(IFormFile file, string requestFolder = "", string fileName = "")
         {
             string folder = Path.Combine(Directory.GetCurrentDirectory(), _storageOptions.Value.ReportsImagesFolder, requestFolder);
-            return await _storageHelper.SaveAsync(file.OpenReadStream(), folder, file.FileName, true).ConfigureAwait(false);
+            return await _storageHelper.SaveAsync(file.OpenReadStream(), folder, fileName.Length>0 ? fileName : file.FileName, true).ConfigureAwait(false);
         }
 
         internal async Task<byte[][]> GetAttachments(string requestFolder)

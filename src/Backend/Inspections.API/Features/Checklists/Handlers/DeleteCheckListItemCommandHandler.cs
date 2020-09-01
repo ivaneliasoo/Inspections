@@ -1,4 +1,5 @@
-﻿using Inspections.API.Features.Checklists.Commands;
+﻿using Ardalis.GuardClauses;
+using Inspections.API.Features.Checklists.Commands;
 using Inspections.API.Features.Checklists.Mapping;
 using Inspections.API.Features.Checklists.Models;
 using Inspections.Core.Domain.CheckListAggregate;
@@ -23,6 +24,7 @@ namespace Inspections.API.Features.Checklists.Handlers
 
         public async Task<bool> Handle(DeleteCheckListItemCommand request, CancellationToken cancellationToken)
         {
+            Guard.Against.Null(request, nameof(request));
             var item = await _checkListsRepository.GetItemByIdAsync(request!.IdCheckListItem).ConfigureAwait(false);
             if (item is null)
                 return false;

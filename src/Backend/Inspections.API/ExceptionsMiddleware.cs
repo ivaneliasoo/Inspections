@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,22 +15,19 @@ namespace ZadERP.Api.Middleware
     /// </summary>
     public class ExceptionsMiddleware
     {
-        private const string _contentType = "application/json";
+        private const string ContentType = "application/json";
         private readonly ILogger<ExceptionsMiddleware> _logger;
         private readonly RequestDelegate _next;
-        private readonly IServiceProvider _serviceProvider;
 
         /// <summary>
         /// Crea una Nueva Instancia de <see cref="ExceptionsMiddleware"/> class.
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="next"></param>
-        /// <param name="serviceProvider"></param>
-        public ExceptionsMiddleware(ILogger<ExceptionsMiddleware> logger, RequestDelegate next, IServiceProvider serviceProvider)
+        public ExceptionsMiddleware(ILogger<ExceptionsMiddleware> logger, RequestDelegate next)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _next = next;
-            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
         /// <summary>
@@ -37,7 +35,11 @@ namespace ZadERP.Api.Middleware
         /// </summary>
         /// <param name="httpContext"></param>
         /// <returns></returns>
-        public Task Invoke(HttpContext httpContext) => InvokeAsync(httpContext);
+        public Task Invoke(HttpContext httpContext)
+        {
+            Guard.Against.Null(httpContext, nameof(httpContext));
+            return InvokeAsync(httpContext);
+        }
 
         async Task InvokeAsync(HttpContext httpContext)
         {
@@ -47,12 +49,14 @@ namespace ZadERP.Api.Middleware
                 await _next(httpContext).ConfigureAwait(false);
                 _logger.LogInformation($"Se ha invocando {httpContext.Request.Path.Value} Metodo: {httpContext.Request.Method} - {DateTime.Now}");
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 var statusCode = ConfigureExceptionTypes(ex);
 
                 httpContext.Response.StatusCode = statusCode;
-                httpContext.Response.ContentType = _contentType;
+                httpContext.Response.ContentType = ContentType;
 
                 var error = JsonConvert.SerializeObject(new
                 {
@@ -68,21 +72,12 @@ namespace ZadERP.Api.Middleware
 
         private static int ConfigureExceptionTypes(Exception ex)
         {
-            int statusCode;
-
-            switch (ex)
+            var statusCode = ex switch
             {
-                case var _ when ex is ArgumentNullException:
-                    statusCode = (int)HttpStatusCode.BadRequest;
-                    break;
-                case var _ when ex is NotImplementedException:
-                    statusCode = (int)HttpStatusCode.NotFound;
-                    break;
-                default:
-                    statusCode = (int)HttpStatusCode.InternalServerError;
-                    break;
-            }
-
+                var _ when ex is ArgumentNullException => (int)HttpStatusCode.BadRequest,
+                var _ when ex is NotImplementedException => (int)HttpStatusCode.NotFound,
+                _ => (int)HttpStatusCode.InternalServerError,
+            };
             return statusCode;
         }
     }

@@ -1,4 +1,5 @@
-﻿using Inspections.API.Features.Checklists.Commands;
+﻿using Ardalis.GuardClauses;
+using Inspections.API.Features.Checklists.Commands;
 using Inspections.API.Features.Checklists.Mapping;
 using Inspections.API.Features.Checklists.Models;
 using Inspections.Core.Domain.CheckListAggregate;
@@ -23,6 +24,7 @@ namespace Inspections.API.Features.Checklists.Handlers
 
         public async Task<bool> Handle(AddCheckListItemCommand request, CancellationToken cancellationToken)
         {
+            Guard.Against.Null(request, nameof(request));
             var checkList = await _checkListsRepository.GetByIdAsync(request.IdCheckList).ConfigureAwait(false);
 
             var mappedCheckItems = CheckListMappingHelper.MapParams(request.ChecklistParams);

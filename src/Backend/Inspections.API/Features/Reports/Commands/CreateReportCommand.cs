@@ -13,17 +13,14 @@ namespace Inspections.API.Features.Inspections.Commands
     {
         public int ConfigurationId { get; set; }
         public ReportType ReportType { get; set; }
-        public string Name { get; set; }
 
         private CreateReportCommand()
         {
 
         }
-        public CreateReportCommand(string name, int configurationId, ReportType reportType)
+        public CreateReportCommand(int configurationId, ReportType reportType)
         {
             Guard.Against.NegativeOrZero(configurationId, nameof(configurationId));
-            Guard.Against.NullOrWhiteSpace(name, nameof(name));
-            Name = name;
             ConfigurationId = configurationId;
             ReportType = reportType;
         }

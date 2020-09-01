@@ -69,6 +69,7 @@ namespace Inspections.API.Features.Users
         [HttpPut("{userName}")]
         public async Task<IActionResult> PutUser(string userName, [FromBody] UserDTO user)
         {
+            Guard.Against.Null(user, nameof(user));
             if (userName != user.UserName || string.IsNullOrWhiteSpace(userName))
             {
                 return BadRequest();
@@ -109,6 +110,7 @@ namespace Inspections.API.Features.Users
         [HttpPost]
         public async Task<ActionResult<User>> PostUser([FromBody] UserDTO user)
         {
+            Guard.Against.Null(user, nameof(user));
             var newUser = new User()
             {
                 UserName = user.UserName,

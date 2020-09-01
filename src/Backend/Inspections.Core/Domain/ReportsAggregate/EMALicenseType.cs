@@ -7,5 +7,6 @@ namespace Inspections.Core.Domain.ReportsAggregate
         E,
         ET,
         EE,
+        NA
     }
 }

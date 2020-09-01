@@ -17,4 +17,5 @@ export interface Signature {
     report: Report;
     reportConfigurationId: number | null;
     reportConfiguration: ReportConfiguration;
+    drawedSign?: string
 }

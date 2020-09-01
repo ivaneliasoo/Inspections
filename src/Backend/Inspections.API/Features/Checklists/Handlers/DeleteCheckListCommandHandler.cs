@@ -23,6 +23,7 @@ namespace Inspections.API.Features.Checklists.Handlers
 
         public async Task<bool> Handle(DeleteCheckListCommand request, CancellationToken cancellationToken)
         {
+            Guard.Against.Null(request, nameof(request));
             var checklist = await _checkListsRepository.GetByIdAsync(request.IdCheckList).ConfigureAwait(false);
             await _checkListsRepository.DeleteAsync(checklist).ConfigureAwait(false);
             return true;

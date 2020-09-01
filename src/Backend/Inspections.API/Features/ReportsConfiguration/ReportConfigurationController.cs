@@ -1,4 +1,5 @@
-﻿using Inspections.API.Features.ReportsConfiguration.Commands;
+﻿using Ardalis.GuardClauses;
+using Inspections.API.Features.ReportsConfiguration.Commands;
 using Inspections.API.Features.ReportsConfiguration.Model;
 using Inspections.Core.Interfaces;
 using Inspections.Core.QueryModels;
@@ -44,6 +45,7 @@ namespace Inspections.API.Features.ReportsConfiguration
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateReportConfig(int id, [FromBody] UpdateReportConfigurationCommand report)
         {
+            Guard.Against.Null(report, nameof(report));
             if (id != report.Id)
                 return BadRequest();
 
@@ -57,6 +59,7 @@ namespace Inspections.API.Features.ReportsConfiguration
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteReportConfig(int id, [FromBody] DeleteReportConfigurationCommand report)
         {
+            Guard.Against.Null(report, nameof(report));
             if (id != report.Id)
                 return BadRequest();
 

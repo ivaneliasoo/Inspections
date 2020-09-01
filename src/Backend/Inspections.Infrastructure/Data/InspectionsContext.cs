@@ -6,6 +6,7 @@ using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Core.QueryModels;
 using Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguration;
+using Inspections.Infrastructure.Data.ReportsAggregateConfiguration;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -49,6 +50,7 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Signature> Signatures { get; set; }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
 
         //Queries
@@ -64,6 +66,7 @@ namespace Inspections.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new CheckListItemEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CheckListEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new NotesEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new AddressEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfigurationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ReportEntityTypeConfiguration(_userNameResolver));
 

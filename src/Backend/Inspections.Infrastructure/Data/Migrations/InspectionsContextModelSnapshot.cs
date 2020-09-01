@@ -15,9 +15,46 @@ namespace Inspections.Infrastructure.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4")
+                .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Inspections.Core.Domain.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AddressLine")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressLine2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses","Inspections");
+                });
 
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckList", b =>
                 {
@@ -317,6 +354,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Designation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DrawedSign")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsConfiguration")

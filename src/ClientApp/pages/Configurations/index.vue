@@ -13,6 +13,7 @@
       :items="configs"
       item-key="id"
       :headers="headers"
+      :class="$device.isTablet ? 'tablet-text':''"
       dense
     >
       <template v-slot:top="{}">
@@ -34,7 +35,6 @@
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon
-          small
           color="primary"
           class="mr-2"
           @click="$router.push({ name: 'Configurations-id', params: { id: item.id } })"
@@ -42,7 +42,6 @@
           mdi-pencil
         </v-icon>
         <v-icon
-          small
           color="error"
           @click="selectedItem= item; dialogRemove = true"
         >
@@ -85,28 +84,28 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
       text: 'Type',
       value: 'type',
       sortable: true,
-      align: 'center',
+      align: 'left',
       class: 'secundary'
     },
     {
       text: 'Title',
       value: 'title',
       sortable: true,
-      align: 'center',
+      align: 'left',
       class: 'secundary'
     },
     {
       text: 'Form Name',
       value: 'formName',
       sortable: true,
-      align: 'center',
+      align: 'left',
       class: 'secundary'
     },
     {
       text: 'Remarks Label Text',
       value: 'remarksLabelText',
       sortable: true,
-      align: 'center',
+      align: 'left',
       class: 'secundary'
     },
     {
@@ -147,7 +146,9 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
     this.$store.dispatch('configurations/deleteConfiguration', this.selectedItem.id, { root: false })
   }
 
-  fetch ({ store }: any) {
+  fetch ({ store, error, $auth }: any) {
+    if(!$auth.user.isAdmin)
+      error({ statusCode: 403, message: 'Forbbiden' })
     store.dispatch('configurations/getConfigurations', '', { root: true })
   }
 }

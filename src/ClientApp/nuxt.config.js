@@ -24,12 +24,14 @@ export default {
   ** Global CSS
   */
   css: [
+    '@/assets/main.css'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/vee-validate'
+    '~/plugins/vee-validate',
+    '~/plugins/vue-signature-pad'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -48,7 +50,22 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
+    '@nuxtjs/device',
+    ['nuxt-compress',
+    {
+      gzip: {
+        cache: true
+      },
+      brotli: {
+        threshold: 10240
+      }
+    }]
   ],
+  pwa: {
+    icon: {
+      /* icon options */
+    }
+  },
   components: true,
   /*
   ** Axios module configuration

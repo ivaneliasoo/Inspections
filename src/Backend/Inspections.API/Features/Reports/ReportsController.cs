@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Inspections.Commands;
 using Inspections.API.Features.Reports.Commands;
@@ -91,7 +92,7 @@ namespace Inspections.API.Features.Inspections
         public IActionResult GetPhotoRecords(int id)
         {
             var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id)
-                            .Select(p => new { p.Label, p.FileName, Base64String = ToBase64String($"{Directory.GetCurrentDirectory()}{p.FileName.Replace("ReportsImages",storageOptions.Value.ReportsImagesFolder)}") });
+                            .Select(p => new { p.Label, p.FileName, Base64String = ToBase64String($"{Directory.GetCurrentDirectory()}{p.FileName.Replace("ReportsImages", storageOptions.Value.ReportsImagesFolder, StringComparison.InvariantCultureIgnoreCase)}") });
             if (photos!=null)
                 return Ok(photos);
 
@@ -125,6 +126,9 @@ namespace Inspections.API.Features.Inspections
         [HttpPost("{id:int}/note")]
         public async Task<IActionResult> AddNote(int id, [FromBody] AddNoteCommand note)
         {
+            Guard.Against.Null(note, nameof(note));
+            if (id != note.ReportId)
+                return BadRequest();
 
             var result = await _mediator.Send(note).ConfigureAwait(false);
             if (result > 0)
@@ -136,6 +140,7 @@ namespace Inspections.API.Features.Inspections
         [HttpPut("{id:int}/note/{idNote:int}")]
         public async Task<IActionResult> EditNote(int id, int idNote, [FromBody] EditNoteCommand note)
         {
+            Guard.Against.Null(note, nameof(note));
             if (id != note.ReportId || idNote != note.Id)
                 return BadRequest();
 
@@ -149,6 +154,8 @@ namespace Inspections.API.Features.Inspections
         [HttpPut("{id:int}/photorecord/{idPhoto:int}")]
         public async Task<IActionResult> EditPhotoRecord(int id, int idPhoto, [FromBody] EditPhotoRecordCommand photo)
         {
+            Guard.Against.Null(photo, nameof(photo));
+
             if (photo.Id != idPhoto || photo.ReportId != id)
                 return BadRequest();
 
