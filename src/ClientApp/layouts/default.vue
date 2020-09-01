@@ -2,81 +2,20 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
-      color="indigo"
       expand-on-hover
-      mini-variant
+      :mini-variant="!$device.isMobile"
+      clipped
       app
-      dark
+      overflow
     >
-      <v-list dense>
-        <v-list-item class="px-2">
-          <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/men/85.jpg" />
-          </v-list-item-avatar>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="title">{{$auth.user.userName}}</v-list-item-title>
-            <v-list-item-subtitle>{{ $auth.user.name }} {{ $auth.user.lastName }} {{ $auth.user.isAdmin ? '(admin)':'' }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-        <v-divider />
-        <nuxt-link to="/">
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Home</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </nuxt-link>
-        <nuxt-link to="/">
-          <v-list-item>
-            <!-- <v-list-item-action>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-action> -->
-            <v-list-item-content>
-              <v-list-item-title>LEW Licensing</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </nuxt-link>
-         <nuxt-link to="/">
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon small>mdi-file</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Reporting</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </nuxt-link>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Risk Assessment</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Method of Statement</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Manpower Scheduling</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item v-if="$auth.user.isAdmin">
-            <v-list-item-content @click="$router.push('/master')">
-              <v-list-item-title>Master Setup</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-      </v-list>
+      <Menu />
     </v-navigation-drawer>
 
     <v-app-bar
       app
       color="indigo"
+      clipped-left
+      dense
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />

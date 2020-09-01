@@ -37,7 +37,7 @@
         </v-list>
       </template>
     </message-dialog>
-    <v-data-table :class="$device.isTablet ? 'tablet-text':''" :items="checks" item-key="id" dense :search="filter.filterText" :headers="headers">
+    <v-data-table :class="$device.isTablet ? 'tablet-text':''" :items="checks" item-key="id" dense :search="filter.filterText" :loading="loading" :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>CheckLists</v-toolbar-title>
@@ -108,6 +108,7 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
   dialog: Boolean = false
   dialogRemove: boolean = false
   dialogItems: Boolean = false
+  loading: boolean = false
   filter: FilterType = {
     filterText: '',
     inConfigurationOnly: true,
@@ -188,23 +189,33 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
   }
 
   async fetch () {
-    await this.$store.dispatch('reportstrore/getReports', '', { root: true })
-    await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
-    await this.$store.dispatch('checklists/getChecklists', this.filter, { root: true })
+    this.loading = true
+
+    Promise.all([await this.$store.dispatch('reportstrore/getReports', '', { root: true }),
+    await this.$store.dispatch('configurations/getConfigurations', '', { root: true }),
+    await this.$store.dispatch('checklists/getChecklists', this.filter, { root: true })])
+    
+    this.loading = false
   }
 
   selectItem (item: CheckList): void{
     this.selectedItem = item
+    this.loading = true
     this.$store.dispatch('checklists/getCheckListItemsById', this.selectedItem.id, { root: false })
+    .finally(() => this.loading = false)
   }
 
   @Watch('filter', { deep: true })
   onFilterChanged (value: FilterType, oldValue: FilterType) {
+    this.loading = true
     this.$store.dispatch('checklists/getChecklists', value, { root: true })
+    .finally(() => this.loading = false)
   }
 
   async removeCheckList(item: CheckList) {
+    this.loading = true
     await this.$store.dispatch('checklists/deleteCheckList', { idCheckList: item.id }, { root: true })
+    this.loading = false
   }
 }
 </script>

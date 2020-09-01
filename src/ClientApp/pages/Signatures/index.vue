@@ -254,9 +254,11 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
   }
 
   async fetch () {
-    await this.$store.dispatch('reportstrore/getReports', '', { root: true })
-    await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
-    await this.$store.dispatch('signatures/getSignatures', this.filter, { root: true })
+    this.loading = true
+    await Promise.all([this.$store.dispatch('reportstrore/getReports', '', { root: true }),
+    this.$store.dispatch('configurations/getConfigurations', '', { root: true }),
+    this.$store.dispatch('signatures/getSignatures', this.filter, { root: true })])
+    this.loading = false
   }
 
   @Watch('filter', { deep: true })

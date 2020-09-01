@@ -14,6 +14,7 @@
       item-key="id"
       :headers="headers"
       :class="$device.isTablet ? 'tablet-text':''"
+      :loading="loading"
       dense
     >
       <template v-slot:top="{}">
@@ -72,6 +73,7 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
   dialogRemove: boolean =false
   selectedItem: ReportConfiguration = {} as ReportConfiguration
   filter: string = ''
+  loading: boolean = false
   headers: any[] = [
     {
       text: 'Id',
@@ -146,10 +148,12 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
     this.$store.dispatch('configurations/deleteConfiguration', this.selectedItem.id, { root: false })
   }
 
-  fetch ({ store, error, $auth }: any) {
-    if(!$auth.user.isAdmin)
-      error({ statusCode: 403, message: 'Forbbiden' })
-    store.dispatch('configurations/getConfigurations', '', { root: true })
+  async fetch () {
+    if(!this.$auth.user.isAdmin)
+      this.$nuxt.error({ statusCode: 403, message: 'Forbbiden' })
+    this.loading = true
+    await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
+    this.loading = false
   }
 }
 </script>
