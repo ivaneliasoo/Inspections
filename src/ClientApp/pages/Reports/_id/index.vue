@@ -14,7 +14,22 @@
       <v-col>
         <ValidationObserver ref="obs" tag="form" v-slot="{ valid }">
           <v-row align="center" justify="space-between">
-            <v-col cols="6">
+            <v-col cols="8" >
+              <ValidationProvider rules="required" immediate  v-slot="{ errors }">
+              <DatePickerBase type="number" label="License"
+                :disabled="currentReport.isClosed"
+                v-model="currentReport.date"
+                :error-messages="errors"
+               :max="new Date().toISOString()" />
+              </ValidationProvider>
+            </v-col>
+            <v-col cols="4" class="text-right">
+              <h4>{{ currentReport.title }}</h4>
+              <h6>{{ currentReport.formName }}</h6>
+            </v-col>
+          </v-row>
+          <v-row align="center" justify="space-between">
+            <v-col cols="12" md="9">
               <ValidationProvider rules="required" immediate  v-slot="{ errors }">
                 <v-autocomplete
                   :readonly="currentReport.isClosed"
@@ -33,12 +48,6 @@
                 />
               </ValidationProvider>
             </v-col>
-            <v-col cols="6" class="text-right">
-              <h4>{{ currentReport.title }}</h4>
-              <h6>{{ currentReport.formName }}</h6>
-            </v-col>
-          </v-row>
-          <v-row align="center" justify="space-between">
             <v-col cols="12" md="3" v-if="currentReport.license">
               <ValidationProvider rules="required" immediate  v-slot="{ errors }">
               <v-text-field 
@@ -48,15 +57,8 @@
                label="License" />
               </ValidationProvider>
             </v-col>
-            <v-col cols="12" md="2">
-              <ValidationProvider rules="required" immediate  v-slot="{ errors }">
-              <DatePickerBase type="number" label="License"
-                :disabled="currentReport.isClosed"
-                v-model="currentReport.date"
-                :error-messages="errors"
-               :max="new Date().toISOString()" />
-              </ValidationProvider>
-            </v-col>
+          </v-row>
+          <v-row align="center" justify="space-between">
             <v-col cols="6" md="2" class="text-right">
               <v-checkbox
                 v-if="currentReport.isClosed"
@@ -86,8 +88,9 @@
               dark
               bottom
               right
+              :loading="savingNewReport"
               class="v-btn--example2"
-              @click="saveReportChanges; CanCloseReport ? dialogClose = true: undefined"
+              @click="saveReportChanges().then(CanCloseReport ? dialogClose = true: undefined)"
             >
               <v-icon>mdi-content-save</v-icon>
             </v-btn>
@@ -672,8 +675,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
     return this.$refs.obs.validate()
   }
 
-  getSuggestedAddresses(filter: string) {
-    this.$store.dispatch("addresses/getAddresses", { filter }, { root: true });
+  async getSuggestedAddresses(filter: string) {
+    await this.$store.dispatch("addresses/getAddresses", { filter }, { root: true });
     this.searchingAddresses = false
     this.isDirty=false
   }
@@ -684,7 +687,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
     if(this.searchingAddresses) return 
 
-    if(value.length > 3){
+    if(value.length >= 3){
       this.searchingAddresses = true
       const self = this
       self.getSuggestedAddresses(value)
