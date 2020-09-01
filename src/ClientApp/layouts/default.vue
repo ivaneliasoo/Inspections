@@ -67,7 +67,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-list-item v-if="$auth.user.isAdmin">
-            <v-list-item-content @click="$router.push('master')">
+            <v-list-item-content @click="$router.push('/master')">
               <v-list-item-title>Master Setup</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -105,43 +105,6 @@
         <v-icon>mdi-chevron-up</v-icon>
       </v-btn>
     </v-fab-transition>
-            <!-- <v-speed-dial
-              v-model="fab"
-              bottom
-              right
-              direction="top"
-              open-on-hover
-              transition="slide-y-reverse-transition"
-            >
-              <template v-slot:activator>
-                <v-btn
-                  v-model="fab"
-                  color="success"
-                  dark
-                  fixed
-                  fab
-                >
-                  <v-icon v-if="fab">mdi-close</v-icon>
-                  <v-icon v-else>mdi-content-save</v-icon>
-                </v-btn>
-              </template>
-             <v-btn
-                fab
-                dark
-                small
-                color="indigo"
-              >
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-              <v-btn
-                fab
-                dark
-                small
-                color="red"
-              >
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-speed-dial> -->
     <v-main>
       <v-container
         fluid

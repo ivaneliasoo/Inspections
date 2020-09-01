@@ -49,13 +49,12 @@
                   <v-container>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="12">
-                        <ValidationProvider rules="required" v-slot="{ errors }">
+                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
                           <v-textarea
                             v-model="item.addressLine"
                             autocomplete="nope"
                             name="addressLine"
                             rows="2"
-                            :disabled="!isNew"
                             :error-messages="errors"
                             label="Address"
                           />
@@ -68,12 +67,12 @@
                             v-model="item.addressLine2"
                             autocomplete="nope"
                             rows="2"
-                            :error-messages="errors"
                             name="addressLine2"
                             label="Address Additional"
                           />
                       </v-col>
                       <v-col>
+                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
                           <v-text-field
                             v-model="item.city"
                             autocomplete="nope"
@@ -81,10 +80,12 @@
                             name="city"
                             label="City"
                           />
+                        </ValidationProvider>
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="12">
+                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
                           <v-text-field
                             v-model="item.province"
                             autocomplete="nope"
@@ -92,6 +93,7 @@
                             name="province"
                             label="Province"
                           />
+                        </ValidationProvider>
                       </v-col>
                     </v-row>
                   </v-container>

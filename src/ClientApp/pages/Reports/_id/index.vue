@@ -100,7 +100,7 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-tabs v-model="tabs" fixed-tabs icons-and-text>
+        <v-tabs v-model="tabs" centered fixed-tabs icons-and-text>
           <v-tabs-slider></v-tabs-slider>
           <v-tab href="#checklists" class="primary--text">
             Report Details
@@ -276,100 +276,7 @@
             </v-row>
           </v-tab-item>
           <v-tab-item key="photos" value="photos">
-            <v-card flat>
-              <v-row justify="space-around" align="center">
-                <v-col :cols="files.length>0 ? 10:12" >
-                  <v-file-input
-                    v-model="files"
-                    :disabled="currentReport.isClosed"
-                    color="primary accent-4"
-                    counter
-                    label="Upload File"
-                    multiple
-                    placeholder="Select your files"
-                    prepend-icon="mdi-paperclip"
-                    outlined
-                    :show-size="1000"
-                  >
-                    <template v-slot:selection="{ index, text }">
-                      <v-chip
-                        v-if="index < 2"
-                        color="primary accent-4"
-                        dark
-                        label
-                        small
-                      >
-                        {{ text }}
-                      </v-chip>
-
-                      <span
-                        v-else-if="index === 2"
-                        class="overline grey--text text--darken-3 mx-2"
-                      >
-                        +{{ files.length - 2 }} File(s)
-                      </span>
-                    </template>
-                  </v-file-input>
-                </v-col>
-                <v-col v-if="files.length>0" cols="2">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                    <v-btn color="indigo" v-on="on" dark fab elevation="2" :disabled="!files.length>0 || currentReport.isClosed" @click="uploadFiles">
-                        <v-icon >
-                          mdi-upload
-                        </v-icon>
-                    </v-btn>
-                    </template>
-                    <span>Upload Selected Files </span>
-                  </v-tooltip>
-                </v-col>
-              </v-row>
-              <v-divider />
-              <v-row>
-                <v-container fluid>
-                  <v-row dense>
-                      <v-col
-                      v-for="(photo, index) in currentReport.photoRecords"
-                      :key="index"
-                      :cols="index===0 ? 12: $vuetify.breakpoint.smAndDown ? 6:3"
-                      >
-                      <v-card>
-                          <v-img
-                          :src="`${hostName}${photo.fileName}`"
-                          class="white--text align-end"
-                          gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                          height="200px"
-                          >
-                          <v-card-title>
-                            {{ photo.label }}
-                          </v-card-title>
-                          </v-img>
-                          <v-card-actions>
-                            <v-text-field
-                                v-if="showLabelEdit.findIndex(l => l===index)>=0"
-                                v-model="photo.label"
-                                label="Photo Label"
-                              />
-                            <v-btn v-if="showLabelEdit.findIndex(l => l===index)>=0" icon @click="savePhoto(photo); showLabelEdit.splice(showLabelEdit.findIndex(l => l===index),1)">
-                              <v-icon>mdi-check</v-icon>
-                            </v-btn>
-                          <v-spacer></v-spacer>
-                          <v-btn v-if="showLabelEdit.findIndex(l => l===index)===-1" icon @click="editPhotoLabel(index) || !currentReport.isClosed">
-                              <v-icon>mdi-pencil</v-icon>
-                          </v-btn>
-                          <v-btn icon @click="currentPhoto=index; showCarousel=true">
-                              <v-icon>mdi-eye</v-icon>
-                          </v-btn>
-                          <v-btn v-if="!currentReport.isClosed" icon @click="removePhoto(photo.id)">
-                              <v-icon>mdi-delete</v-icon>
-                          </v-btn>
-                          </v-card-actions>
-                      </v-card>
-                      </v-col>
-                  </v-row>
-                  </v-container>
-                </v-row>
-            </v-card>
+            <PhotoRecords v-model="currentReport" @uploaded="loadReport" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -379,12 +286,7 @@
         
       </v-col>
     </v-row>
-    <v-dialog v-if="currentPhoto" v-model="showCarousel">
-      <v-carousel v-model="currentPhoto" height="80%">
-        <v-carousel-item v-for="(photo, index) in currentReport.photoRecords" :key="index" :src="`${hostName}${photo.fileName}`">
-        </v-carousel-item>
-      </v-carousel>
-    </v-dialog>
+    
   </div>
 </template>
 
@@ -425,7 +327,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
   isDirty: boolean = false
   searchingAddresses: boolean = false
   openedPanels: number[] = [0,1]
-  showCarousel: boolean = false
+  
   savingNewReport: boolean = false
   currentPhoto: number = 0
   showLabelEdit:number[] = []
@@ -441,12 +343,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
     })
     .filter(i => i !== undefined)
 
-
-
-  files: File[] = []
   hostName: string= this.$axios!.defaults!.baseURL!.replace('/api','')
   signaturesChanges: boolean = false
-
 
   get hasPendingChanges() {
     return this.$store.state.showFabSaveButton
@@ -487,43 +385,6 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   }
 
- async removePhoto(id: number) {
-      const delPhoto:DeletePhotoRecordCommand = {
-        reportId: this.currentReport.id,
-        id
-      }
-      this.$axios.delete(`reports/${delPhoto.reportId}/photorecord/${delPhoto.id}`).then(() =>{
-      this.currentReport.photoRecords =  this.currentReport.photoRecords.filter(p=>p.id !== id)
-    })
-
-  }
-
-  uploadFiles() {
-    let formData = new FormData
-
-    this.files.forEach((file: File) => {
-      formData.append("files", file, file.name)
-    });
-
-    formData.append('label', 'archivos de Prueba')
-
-    const self = this
-
-    this.$axios.post(`reports/${this.$route.params.id}/photorecord`, formData).then(() =>{
-       this.files = []
-      self.$fetch()
-    })
-  }
-
-  editPhotoLabel(currentIndex:number) {
-    const index = this.showLabelEdit.findIndex(l => l===index)
-    if(index>=0) {
-      this.showLabelEdit.splice(index, 1)
-      return
-    }
-    this.showLabelEdit.push(currentIndex)
-  }
-
   editCheck(parentIndex: number, currentIndex:number) {
     const index = this.showUpdateCheck.findIndex(l => l.parentIndex === parentIndex
                                                   && l.currentIndex === currentIndex )
@@ -532,15 +393,6 @@ export default class EditReport extends mixins(InnerPageMixin) {
       return
     }
     this.showUpdateCheck.push({parentIndex, currentIndex})
-  }
-
-  savePhoto(photo: PhotoRecord) {
-    const data:EditPhotoRecordCommand = {
-      reportId: parseInt(this.$route.params.id),
-      label: photo.label,
-      id: photo.id
-    }
-    this.$axios.put(`reports/${data.reportId}/photorecord/${data.id}`, data )
   }
 
   saveNote(note: Note) {
@@ -605,7 +457,11 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   async fetch() {
-    const result = await this.$store.dispatch(
+    await this.loadReport()
+  }
+
+  async loadReport() {
+     const result = await this.$store.dispatch(
       "reportstrore/getReportById",
       this.$route.params.id,
       { root: true }
@@ -631,7 +487,6 @@ export default class EditReport extends mixins(InnerPageMixin) {
     
     await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: this.$route.params.id }, { root: true })
     await this.$auth.fetchUser()
-    
   }
 
   get IsValidForm() {
