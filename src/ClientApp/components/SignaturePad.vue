@@ -18,7 +18,7 @@
     </v-row>
     <v-row align="center" dense class="mb-10">
        <v-col cols="6" class="text-left">
-        <VueSignaturePad class="elevation-5" id="pad" :width="$device.isMobile ? '300px':'500px'" height="250px" ref="signaturePad" :custom-style="{ border: 'black 3px solid' }" :options="{ backgroundColor: 'rgb(255,254,242)' }" />
+        <VueSignaturePad class="elevation-5" id="pad" :width="$device.isMobile ? '300px':'500px'" height="250px" ref="signaturePad" :custom-style="{ border: 'black 3px solid' }" />
       </v-col>
     </v-row>
   </div>

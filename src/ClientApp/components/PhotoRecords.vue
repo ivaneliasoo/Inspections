@@ -35,6 +35,7 @@
               v-on="on"
               dark
               fab
+              :small="$device.isMobile"
               elevation="2"
               :disabled="!files.length>0 || currentReport.isClosed"
               @click="uploadFiles"

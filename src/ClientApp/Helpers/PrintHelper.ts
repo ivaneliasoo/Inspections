@@ -125,17 +125,17 @@ export class PrintHelper {
         margin: [0,10,0,0]
       },
       { 
-        text: `Date: ${moment(principalSignature!.date).format('DD/MM/YYYY')}` ,
-        style: 'filedName' 
-      },
-      { 
         text: `Signature: ` ,
         style: 'filedName' 
       },
       {
         image: `${principalSignature!.drawedSign ?? ''}`,
-        width: 200,
+        width: 100,
         alignment: 'center'
+      },
+      { 
+        text: `Date: ${moment(principalSignature!.date).format('DD/MM/YYYY hh:mm')}` ,
+        style: 'filedName' 
       },
       { text: 'Notes: ', margin: [0,10,0,0] }
       ])
@@ -166,7 +166,7 @@ export class PrintHelper {
     otherSigns!.forEach(sign => {
       let imagen: any = {
         image: sign.drawedSign,
-        width: 200,
+        width: 100,
         alignment: 'center'
       };
 
@@ -190,7 +190,7 @@ export class PrintHelper {
       sign.drawedSign ? imagen : {}
       ,
       { 
-        text: `Signature: ______________________________________________________________ Date: ${moment(sign!.date).format('DD/MM/YYYY')}` ,
+        text: `Date: ${moment(sign!.date).format('DD/MM/YYYY hh:mm')}` ,
         style: 'filedName',
         margin: [0,5,0,0] 
       },
