@@ -26,10 +26,12 @@ namespace Inspections.API.Features.Inspections.Handlers
             Guard.Against.Null(request, nameof(request));
             var cfg = await _reportConfigurationsRepository.GetByIdAsync(request.ConfigurationId).ConfigureAwait(false);
 
+            var reportName = $"{DateTime.Now:yyyyMMdd}-{cfg.Title}";
+
             IReportsBuilder _reportsBuilder = new ReportsBuilder(cfg);
             var newReport = _reportsBuilder
                 .WithDefaultNotes(true)
-                .WithName(request.Name)
+                .WithName(reportName)
                 .Build();
 
             var result = await _reportsRepository.AddAsync(newReport).ConfigureAwait(false);

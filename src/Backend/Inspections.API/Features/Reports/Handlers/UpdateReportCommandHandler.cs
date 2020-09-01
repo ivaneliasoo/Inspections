@@ -26,10 +26,10 @@ namespace Inspections.API.Features.Reports.Handlers
         {
             Guard.Against.Null(request, nameof(request));
             var report = await _reportsRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
-
-            report.Edit(request.Name, request.Address, new EMALicense
+            var reportName = $"{request.Date:yyyyMMdd}-{report.Title}-{request.LicenseNumber}-{request.Address}";
+            report.Edit(reportName, request.Address, new EMALicense
             {
-                LicenseType = request.LicenseType,
+                LicenseType = EMALicenseType.NA, //No Apply
                 Number = request.LicenseNumber,
                 Validity = new DateTimeRange(DateTime.Now, DateTime.Now.AddYears(1))
             }, request.Date);

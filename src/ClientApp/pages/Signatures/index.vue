@@ -8,7 +8,7 @@
       :description="selectedItem.title"
       @yes="deleteSignature();"
     />
-    <v-data-table :items="signatures" item-key="id" :search="filter.filterText" dense :loading="loading" :headers="headers">
+    <v-data-table :class="$device.isTablet ? 'tablet-text':''" :items="signatures" item-key="id" :search="filter.filterText" dense :loading="loading" :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Signatures</v-toolbar-title>
@@ -192,14 +192,14 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
       text: 'Title',
       value: 'title',
       sortable: true,
-      align: 'center',
+      align: 'left',
       class: 'secundary'
     },
     {
       text: 'Annotation',
       value: 'annotation',
       sortable: true,
-      align: 'center',
+      align: 'left',
       class: 'secundary'
     },
     {
@@ -242,7 +242,6 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
   }
 
   asyncData({ query }:any) {
-    console.log(query)
     let filter: FilterType = {
                                 filterText: '',
                                 inConfigurationOnly: query.configurationonly === 'true' ? true:false ?? true,

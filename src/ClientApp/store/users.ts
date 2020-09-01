@@ -33,7 +33,6 @@ export const actions: ActionTree<UserState, RootState> = {
   async setUserLastEditedReport ({ commit }, payload: { userName: string, lastEditedReport: number}) {
     const userData: User = await this.$axios.$get(`users/${payload.userName}`)
     userData.lastEditedReport = payload.lastEditedReport
-    console.log(userData)
     return await this.$axios.$put(`users/${userData.userName}`, userData )
   },
   async changePassword ({ commit }, payload: ChangePasswordDTO) {
