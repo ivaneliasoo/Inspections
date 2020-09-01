@@ -37,7 +37,7 @@
         </v-list>
       </template>
     </message-dialog>
-    <v-data-table :items="checks" item-key="id" dense :search="filter.filterText" :headers="headers">
+    <v-data-table :class="$device.isTablet ? 'tablet-text':''" :items="checks" item-key="id" dense :search="filter.filterText" :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>CheckLists</v-toolbar-title>
@@ -77,16 +77,7 @@
         </v-row>
       </template>
       <template v-slot:item.actions="{ item }">
-        <!-- <v-icon
-          small
-          color="primary"
-          class="mr-2"
-          @click="selectItem(item); dialogItems = true"
-        >
-          mdi-format-list-checks
-        </v-icon> -->
         <v-icon
-          small
           color="primary"
           class="mr-2"
           @click="selectItem(item); $router.push({ name: 'CheckLists-id', params: { id: selectedItem.id }}); dialog = true"
@@ -94,7 +85,6 @@
           mdi-pencil
         </v-icon>
         <v-icon
-          small
           color="error"
           @click="selectItem(item); dialogRemove = true"
         >
@@ -139,26 +129,19 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
       text: 'Text',
       value: 'text',
       sortable: true,
-      align: 'center',
+      align: 'left',
       class: 'secundary'
     },
     {
       text: 'Annotation',
       value: 'annotation',
       sortable: true,
-      align: 'center',
+      align: 'left',
       class: 'secundary'
     },
     {
       text: 'Child Items',
       value: 'totalItems',
-      sortable: true,
-      align: 'center',
-      class: 'secundary'
-    },
-    {
-      text: 'Parameters',
-      value: 'totalParams',
       sortable: true,
       align: 'center',
       class: 'secundary'

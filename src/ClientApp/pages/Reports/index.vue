@@ -10,7 +10,7 @@
       @no="dialogRemove=false"
     />
     <new-report-dialog v-model="dialog" />
-    <v-data-table :items="reportList" item-key="id" :search="filter" dense :headers="headers">
+    <v-data-table :class="$device.isTablet ? 'tablet-text':''" :items="reportList" item-key="id" :search="filter" dense :headers="headers">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Inspection Reports</v-toolbar-title>
@@ -180,7 +180,7 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
         text: 'Report Name',
         value: 'name',
         sortable: true,
-        align: 'center',
+        align: 'left',
         class: 'secundary'
       },
       {

@@ -9,6 +9,7 @@
       @yes="deleteUser();"
     />
     <v-data-table
+      :class="$device.isTablet ? 'tablet-text':''"
       :items="users"
       item-key="userName"
       :search="filter.filterText"

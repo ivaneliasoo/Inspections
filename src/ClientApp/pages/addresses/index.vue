@@ -15,6 +15,7 @@
       dense
       :loading="loading"
       :headers="headers"
+      :class="$device.isTablet ? 'tablet-text':''"
     >
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
@@ -185,13 +186,13 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
       text: "City",
       value: "city",
       sortable: true,
-      align: "center",
+      align: "left",
     },
     {
       text: "Province",
       value: "province",
       sortable: true,
-      align: "center",
+      align: "left",
     },
     {
       text: "",
