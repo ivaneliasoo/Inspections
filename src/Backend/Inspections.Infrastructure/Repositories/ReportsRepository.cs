@@ -37,7 +37,8 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<IEnumerable<Report>> GetAll(string filter, bool? closed)
         {
-            var query = _context.Reports;
+            var query = _context.Reports
+                .Include(p => p.PhotoRecords);
 
             if(closed.HasValue)
                 return await query.AsNoTracking().Where(r => (r.IsClosed)).OrderByDescending(r=>r.Date).ToListAsync();
