@@ -177,7 +177,12 @@
                                               <v-col cols="10">
                                                 
                                                 <span v-if="!checkItem.editable">{{ checkItem.text }}</span>
-                                                <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)"/>
+                                                <v-chip v-if="!checkItem.editable && checkItem.required" x-small>required</v-chip>
+                                                <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)">
+                                                  <template v-slot:append="">
+                                                    <v-chip x-small v-if="checkItem.required">required</v-chip>
+                                                  </template>
+                                                </v-text-field>
                                               </v-col>
                                             </v-row>
                                           </v-col>
