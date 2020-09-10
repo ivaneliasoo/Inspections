@@ -38,12 +38,12 @@ export class PrintHelper {
 
     const docDef: TDocumentDefinitions = {
       header: [{
-        text: 'Inspection Report',
+        text: report.title,
         margin: [0, 15, 30, 0],
         style: 'name'
       },
       {
-        text: 'CSE EI(R1) FORM (Rev #4)',
+        text: report.formName,
         margin: [0, 0, 30, 0],
         style: 'subtitle'
       }],

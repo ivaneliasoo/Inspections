@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row dense>
+    <!-- <v-row dense>
       <v-col
         v-for="(photo, index) in currentReport.photoRecords"
         :key="index"
@@ -45,7 +45,67 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-row>
+    </v-row> -->
+    <v-data-iterator
+      :items="currentReport.photoRecords"
+      key="id"
+      :footer-props="{ itemsPerPageAllText: 'todos',
+      showFirstLastPage: true,
+      itemsPerPageText: 'Photos by page' ,
+      pagination: {  itemsPerPage: 8 }}"
+    >
+      <template v-slot:default="props">
+        <v-row>
+          <v-col
+            v-for="photo, index in props.items"
+            :key="index"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="3"
+          >
+        <v-card >
+          <v-img
+            :src="`${hostName}${photo.fileName}`"
+            class="white--text align-end"
+            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+            height="200px"
+          >
+            <v-card-title>{{ photo.label }}</v-card-title>
+          </v-img>
+          <v-card-actions>
+            <v-text-field
+              v-if="showLabelEdit.findIndex(l => l===index)>=0"
+              v-model="photo.label"
+              label="Photo Label"
+            />
+            <v-btn
+              v-if="showLabelEdit.findIndex(l => l===index)>=0"
+              icon
+              @click="savePhoto(photo); showLabelEdit.splice(showLabelEdit.findIndex(l => l===index),1)"
+            >
+              <v-icon>mdi-check</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
+              v-if="showLabelEdit.findIndex(l => l===index)===-1"
+              icon
+              @click="editPhotoLabel(index) || !currentReport.isClosed"
+            >
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn icon @click="currentPhoto=index; showCarousel=true">
+              <v-icon>mdi-eye</v-icon>
+            </v-btn>
+            <v-btn v-if="!currentReport.isClosed" icon @click="removePhoto(photo.id)">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+          </v-col>
+        </v-row>
+      </template>
+    </v-data-iterator>
     <v-dialog v-if="currentPhoto" v-model="showCarousel">
       <v-carousel v-model="currentPhoto" height="80%">
         <v-carousel-item v-for="(photo, index) in currentReport.photoRecords" :key="index" :src="`${hostName}${photo.fileName}`">

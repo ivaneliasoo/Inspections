@@ -74,24 +74,35 @@
                       <v-col>
                         <ValidationProvider rules="required" immediate v-slot="{ errors }">
                           <v-text-field
-                            v-model="item.city"
+                            v-model="item.unit"
                             autocomplete="nope"
                             :error-messages="errors"
-                            name="city"
-                            label="City"
+                            name="unit"
+                            label="Unit"
                           />
                         </ValidationProvider>
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="12">
+                      <v-col cols="12" md="6">
                         <ValidationProvider rules="required" immediate v-slot="{ errors }">
                           <v-text-field
-                            v-model="item.province"
+                            v-model="item.country"
                             autocomplete="nope"
                             :error-messages="errors"
-                            name="province"
-                            label="Province"
+                            name="country"
+                            label="Country"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="6">
+                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+                          <v-text-field
+                            v-model="item.postalCode"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="postalCode"
+                            label="PostalCode"
                           />
                         </ValidationProvider>
                       </v-col>
@@ -179,20 +190,20 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
       align: "left",
     },
     {
-      text: "Address 2",
-      value: "addressLine2",
+      text: "Unit",
+      value: "unit",
       sortable: true,
       align: "left",
     },
     {
-      text: "City",
-      value: "city",
+      text: "Country",
+      value: "country",
       sortable: true,
       align: "left",
     },
     {
-      text: "Province",
-      value: "province",
+      text: "Postal Code",
+      value: "postalCode",
       sortable: true,
       align: "left",
     },

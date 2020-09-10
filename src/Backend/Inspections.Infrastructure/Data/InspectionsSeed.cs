@@ -38,7 +38,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                     {
                         ChecksDefinition = AddCheckLists().ToList(),
                         SignatureDefinitions = AddSignatures().ToList(),
-                        FormName = "Inspection Report",
+                        FormName = "CSE EI(R1) FORM",
                         Title = "Inspection Report",
                         Type = ReportType.Inspection
                     });

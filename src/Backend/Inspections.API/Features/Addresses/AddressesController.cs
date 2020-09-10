@@ -28,8 +28,9 @@ namespace Inspections.API.Features.Addresses
         {
             var result = await _context.Addresses
                 .Where(ad => EF.Functions.Like(ad.AddressLine, $"%{filter}%") ||
-                EF.Functions.Like(ad.City, $"%{filter}%") ||
-                EF.Functions.Like(ad.Province, $"%{filter}%"))
+                EF.Functions.Like(ad.Unit, $"%{filter}%") ||
+                EF.Functions.Like(ad.Country, $"%{filter}%") ||
+                EF.Functions.Like(ad.PostalCode, $"%{filter}%"))
                 .ToListAsync()
                 .ConfigureAwait(false);
             var mappedResult = result.Select(a => new AddressDTO(a));
@@ -62,8 +63,9 @@ namespace Inspections.API.Features.Addresses
             var savedAddress = await _context.Set<Address>().FindAsync(id).ConfigureAwait(false);
             savedAddress.AddressLine = address.AddressLine;
             savedAddress.AddressLine2 = address.AddressLine2;
-            savedAddress.City = address.City;
-            savedAddress.Province = address.Province;
+            savedAddress.Unit = address.Unit;
+            savedAddress.Country= address.Country;
+            savedAddress.PostalCode= address.PostalCode;
 
             _context.Entry(savedAddress).State = EntityState.Modified;
 
@@ -94,8 +96,9 @@ namespace Inspections.API.Features.Addresses
             {
                 AddressLine = address.AddressLine,
                 AddressLine2 = address.AddressLine2,
-                City = address.City,
-                Province = address.Province
+                Unit = address.Unit,
+                Country= address.Country,
+                PostalCode = address.PostalCode
             };
 
             if (AddressDuplicated(newAddress))
@@ -132,8 +135,9 @@ namespace Inspections.API.Features.Addresses
         {
             return _context.Addresses.Any(e => e.AddressLine == address.AddressLine &&
             e.AddressLine2 == address.AddressLine2 &&
-            e.City == address.City &&
-            e.Province == address.Province);
+            e.Unit == address.Unit &&
+            e.Country== address.Country &&
+            e.PostalCode == address.PostalCode);
         }
     }
 }

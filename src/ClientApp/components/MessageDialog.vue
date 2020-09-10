@@ -6,7 +6,7 @@
     :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'"
   >
     <v-card>
-      <v-toolbar dark color="indigo">
+      <v-toolbar dark color="indigo" dense>
         <v-btn icon @click.native="$emit('input', false)">
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
@@ -26,7 +26,7 @@
           {{ yesText }}
         </v-btn>
         <v-btn v-show="showNo" color="error" text @click="$emit('no')">
-          No
+          {{ noText }}
         </v-btn>
         <v-btn v-show="showCancel" color="default" text @click="$emit('cancel')">
           Cancel
@@ -43,6 +43,7 @@ export default class MessageDialog extends Vue {
   @Model('input', { type: Boolean, required: true }) visible: Boolean = false
   @Prop({ default: () => { return ['yes', 'no', 'cancel'] } }) actions!: Array<string>
   @Prop({ default: 'Ok' }) yesText!: string
+  @Prop({ default: 'No' }) noText!: string
   
   @Prop({ required: false }) loading!: boolean 
 

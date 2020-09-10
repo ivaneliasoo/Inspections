@@ -13,8 +13,9 @@ namespace Inspections.API.Features.Addresses.Models
             Id = address.Id;
             AddressLine = address.AddressLine;
             AddressLine2 = address.AddressLine2;
-            City = address.City;
-            Province = address.Province;
+            Unit = address.Unit;
+            Country = address.Country;
+            PostalCode = address.PostalCode;
             FormatedAddress = address.ToString();
         }
 
@@ -26,8 +27,10 @@ namespace Inspections.API.Features.Addresses.Models
         public int Id { get; set; }
         public string AddressLine { get; set; }
         public string AddressLine2 { get; set; }
-        public string City { get; set; }
-        public string Province { get; set; }
+        public string Unit { get; set; }
+        public string Country { get; set; }
+        public string PostalCode { get; set; }
+
         public string FormatedAddress { get; set; }
     }
 }

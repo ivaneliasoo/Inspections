@@ -3,11 +3,11 @@
     <alert-dialog
       v-model="dialogClose"
       title="Close Report"
-      message="your are about to close this report."
+      message="you are about to close this report."
       :code="currentReport.id"
       :description="currentReport.name"
       :loading="savingNewReport"
-      @yes="currentReport.isClosed = true; saveReportChanges(); dialogClose = false; currentReport.isClosed = true;"
+      @yes="currentReport.isClosed = true; saveReportChanges(); dialogClose = false; currentReport.isClosed = true; printHelper.print(currentReport.id)"
       @no="currentReport.isClosed = true"
     />
     <v-row>
@@ -90,7 +90,7 @@
               right
               :loading="savingNewReport"
               class="v-btn--example2"
-              @click="saveReportChanges().then(CanCloseReport ? dialogClose = true: undefined)"
+              @click="saveReportChanges().then(CanCloseReport ? dialogClose = true: errorsDialog = true)"
             >
               <v-icon>mdi-content-save</v-icon>
             </v-btn>
@@ -102,21 +102,25 @@
       <v-col cols="12">
         <v-tabs v-model="tabs" centered fixed-tabs icons-and-text>
           <v-tabs-slider></v-tabs-slider>
-          <v-tab href="#checklists" class="primary--text">
+          <v-tab href="#checklists" :class="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable > 0 ? 'error--text':'primary--text'">
             Report Details
-            <v-icon>mdi-message-bulleted</v-icon>
+             <v-tooltip v-if="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable" top>
+            <template v-slot:activator="{ on }">
+              <v-icon :color="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable ? 'error':''" v-on="on">
+                mdi-message-bulleted
+              </v-icon>
+            </template>
+            <span>You must complete all the required checks, notes and signatures in tab Report Details to proceeded uploading photos</span>
+          </v-tooltip>
+          <v-icon v-else>
+            mdi-message-bulleted
+          </v-icon>
           </v-tab>
-
-          <v-tab v-if="false" href="#notes" class="primary--text">
-            <v-icon>mdi-message-bulleted</v-icon>
-          </v-tab>
-
-          <v-tab href="#photos" class="primary--text">
+          <v-tab href="#photos" :disabled="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable">
             Photo Record
-            <v-icon>mdi-folder-multiple-image</v-icon>
-          </v-tab>
-          <v-tab v-if="false" href="#signatures" class="primary--text">
-            <v-icon>mdi-signature-freehand</v-icon>
+            <v-icon>
+              mdi-folder-multiple-image
+            </v-icon>
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="tabs">
@@ -127,8 +131,18 @@
           :value="openedPanels"
         >
           <v-expansion-panel>
-            <v-expansion-panel-header>
-              <span>Check List</span>
+            <v-expansion-panel-header :style="!IsCompleted ? 'color: white;':''" :color="!IsCompleted ? 'red':''">
+              <span class="font-weight-black">Check List</span>
+              <v-row v-if="!IsCompleted" dense>
+                <v-col>
+                  <v-icon dark>
+                    mdi-alert-circle
+                  </v-icon>
+                  <span style="color: white;" class="font-weight-accent">
+                    there are items that need to be completed or checked
+                  </span>
+                </v-col>
+              </v-row>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-list subheader two-line flat dense>
@@ -139,14 +153,16 @@
                     <template v-slot:default>
                       <v-list-item-content class="text-left">
                         <v-list-item-title>
-                          <v-row justify="start" align="center">
-                            <v-col cols="10" md="6" class="font-weight-black">
-                              {{ checkListIndex + 1 }} .- {{ item.text }} {{ item.annotation }}
+                          <v-row justify="start" align="center" dense>
+                            <v-col cols="10" md="6" class="font-weight-black text-wrap">
+                              <h3>
+                              	{{ checkListIndex + 1 }} .- {{ item.text }} {{ item.annotation }}
+                              </h3>
                               <span v-if="item.checks.filter(c => c.required && c.checked===0).length == 0">
                                 <v-chip x-small color="success">Completed</v-chip>
                               </span>
                             </v-col>
-                            <v-col cols="2" md="6" :class="$vuetify.breakpoint.mdAndDown ? 'ml-n5':'ml-n8'">
+                            <v-col cols="2" md="6" :class="$vuetify.breakpoint.mdAndDown ? 'ml-n5':'ml-n6'">
                               <v-checkbox
                                 :disabled="currentReport.isClosed"
                                 color="primary"
@@ -156,7 +172,7 @@
                               />
                             </v-col>
                           </v-row>
-                          <v-row>
+                          <v-row dense>
                             <v-col cols="12">
                               <v-list-item
                                 v-for="(checkItem, checkListItemIndex) in item.checks"
@@ -173,14 +189,12 @@
                                             class="text-wrap"
                                           >
                                             <v-row justify="space-around" align="center" dense>
-                                              <v-col cols="1"><span>{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1}} .- </span></v-col>
-                                              <v-col cols="10">
-                                                
-                                                <span v-if="!checkItem.editable">{{ checkItem.text }}</span>
-                                                <v-chip v-if="!checkItem.editable && checkItem.required" x-small>required</v-chip>
+                                              <v-col cols="1" :class="['text-right', checkItem.required && !checkItem.checked ? 'error--text' : '']"><h3>{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1}} </h3></v-col>
+                                              <v-col cols="10" :class="['text-left', checkItem.required && !checkItem.checked ? 'error--text' : '']">
+                                                <h3 v-if="!checkItem.editable">.-{{ checkItem.text }} <v-chip v-if="!checkItem.editable && checkItem.required" class="text-uppercase" color="error" x-small>required</v-chip></h3>
                                                 <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)">
                                                   <template v-slot:append="">
-                                                    <v-chip x-small v-if="checkItem.required">required</v-chip>
+                                                    <v-chip x-small class="text-uppercase" color="error" v-if="checkItem.required">required</v-chip>
                                                   </template>
                                                 </v-text-field>
                                               </v-col>
@@ -227,8 +241,18 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel>
-            <v-expansion-panel-header>
-              Notes
+            <v-expansion-panel-header :style="HasNotesWithPendingChecks ? 'color: white;':''" :color="HasNotesWithPendingChecks ? 'red':''">
+              <span class="font-weight-black">Notes</span>
+              <v-row v-if="HasNotesWithPendingChecks" dense>
+                <v-col>
+                  <v-icon dark>
+                    mdi-alert-circle
+                  </v-icon>
+                  <span style="color: white;" class="font-weight-accent">
+                    there are items that need to be completed or checked
+                  </span>
+                </v-col>
+              </v-row>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-row justify="end" align="end" class="text-right">
@@ -286,18 +310,22 @@
         </v-tabs-items>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
-        
-      </v-col>
-    </v-row>
-    
+    <message-dialog v-model="errorsDialog" :actions="['no']" no-text="close" @no="errorsDialog = false">
+      <template v-slot:title="{}">
+        Report Errors
+      </template>
+      <h2>Please Check the fallowing errors in the report</h2><br>
+      <span class="subtitle-1 error--text font-weight-black" v-if="!IsCompleted">- Please, Complete and check all the required item in the checklist</span><br>
+      <span class="subtitle-1 error--text font-weight-black" v-if="HasNotesWithPendingChecks">- There are notes that you need to check. verify if it needs to be checked and filled</span><br>
+      <span class="subtitle-1 error--text font-weight-black" v-if="!PrincipalSignatureHasAResponsable">- The Principal Signature must have an responsable name and type</span>
+    </message-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Watch, mixins } from "nuxt-property-decorator";
 import InnerPageMixin from '@/mixins/innerpage'
+import { PrintHelper } from '@/Helpers'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { AddressesState } from '@/store/addresses'
 import { Report, 
@@ -328,11 +356,13 @@ export default class EditReport extends mixins(InnerPageMixin) {
     obs: InstanceType<typeof ValidationObserver>
   }
 
+  errorsDialog: boolean = false
+
   search: string = ''
   isDirty: boolean = false
   searchingAddresses: boolean = false
   openedPanels: number[] = [0,1]
-  
+  printHelper!: PrintHelper
   savingNewReport: boolean = false
   currentPhoto: number = 0
   showLabelEdit:number[] = []
@@ -507,10 +537,14 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   get PrincipalSignatureHasAResponsable() {
+    if(!this.currentReport) return true
+    if(!this.currentReport!.signatures) return true
     return this.currentReport.signatures.findIndex(s=>s.responsable.type !== undefined && s.responsable.name !== '' && s.principal) >= 0
   }
 
   get HasNotesWithPendingChecks() {
+    if(!this.currentReport) return false
+    if(!this.currentReport!.notes) return false
     return this.currentReport.notes.findIndex(n => n.needsCheck && !n.checked) >= 0
   }
 
@@ -532,6 +566,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   mounted() {
+    this.printHelper = new PrintHelper(this.$store)
     return this.$refs.obs.validate()
   }
 
