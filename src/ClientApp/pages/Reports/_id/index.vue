@@ -101,7 +101,7 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-tabs v-model="tabs" centered fixed-tabs icons-and-text>
+        <v-tabs v-model="tabs"  centered fixed-tabs icons-and-text>
           <v-tabs-slider></v-tabs-slider>
           <v-tab href="#checklists" :class="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable > 0 ? 'error--text':'primary--text'">
             Report Details
@@ -124,7 +124,7 @@
             </v-icon>
           </v-tab>
         </v-tabs>
-        <v-tabs-items v-model="tabs">
+        <v-tabs-items v-model="tabs" touchless>
           <v-tab-item key="checklists" value="checklists">
             <v-expansion-panels
           multiple
