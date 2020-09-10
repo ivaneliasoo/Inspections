@@ -1,58 +1,14 @@
 <template>
   <v-container fluid>
-    <!-- <v-row dense>
-      <v-col
-        v-for="(photo, index) in currentReport.photoRecords"
-        :key="index"
-        :cols="index===0 ? 12: $vuetify.breakpoint.smAndDown ? 6:3"
-      >
-        <v-card>
-          <v-img
-            :src="`${hostName}${photo.fileName}`"
-            class="white--text align-end"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="200px"
-          >
-            <v-card-title>{{ photo.label }}</v-card-title>
-          </v-img>
-          <v-card-actions>
-            <v-text-field
-              v-if="showLabelEdit.findIndex(l => l===index)>=0"
-              v-model="photo.label"
-              label="Photo Label"
-            />
-            <v-btn
-              v-if="showLabelEdit.findIndex(l => l===index)>=0"
-              icon
-              @click="savePhoto(photo); showLabelEdit.splice(showLabelEdit.findIndex(l => l===index),1)"
-            >
-              <v-icon>mdi-check</v-icon>
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn
-              v-if="showLabelEdit.findIndex(l => l===index)===-1"
-              icon
-              @click="editPhotoLabel(index) || !currentReport.isClosed"
-            >
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-            <v-btn icon @click="currentPhoto=index; showCarousel=true">
-              <v-icon>mdi-eye</v-icon>
-            </v-btn>
-            <v-btn v-if="!currentReport.isClosed" icon @click="removePhoto(photo.id)">
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row> -->
     <v-data-iterator
       :items="currentReport.photoRecords"
       key="id"
       :footer-props="{ itemsPerPageAllText: 'todos',
       showFirstLastPage: true,
-      itemsPerPageText: 'Photos by page' ,
-      pagination: {  itemsPerPage: 8 }}"
+      itemsPerPageText: 'Photos by page',
+      itemsPerPageOptions: [8, 16]}"
+      :items-per-page.sync="itemsPerPage"
+      no-results-text="No photos"
     >
       <template v-slot:default="props">
         <v-row>
@@ -126,6 +82,8 @@ export default class PhotoRecordManager extends Vue {
   currentPhoto: number = 0;
   showLabelEdit: number[] = [];
   hostName: string= this.$axios!.defaults!.baseURL!.replace('/api','')
+
+  itemsPerPage: number = 8
 
   async removePhoto(id: number) {
     const delPhoto: DeletePhotoRecordCommand = {

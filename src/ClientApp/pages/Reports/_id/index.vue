@@ -1,4 +1,5 @@
 <template>
+
   <div id="report">
     <alert-dialog
       v-model="dialogClose"
@@ -7,7 +8,7 @@
       :code="currentReport.id"
       :description="currentReport.name"
       :loading="savingNewReport"
-      @yes="currentReport.isClosed = true; saveReportChanges(); dialogClose = false; currentReport.isClosed = true; printHelper.print(currentReport.id)"
+      @yes="closeReport"
       @no="currentReport.isClosed = true"
     />
     <v-row>
@@ -314,11 +315,51 @@
       <template v-slot:title="{}">
         Report Errors
       </template>
-      <h2>Please Check the fallowing errors in the report</h2><br>
+      <h2>The Report has been saved! but we've found some errors: </h2><br>
       <span class="subtitle-1 error--text font-weight-black" v-if="!IsCompleted">- Please, Complete and check all the required item in the checklist</span><br>
       <span class="subtitle-1 error--text font-weight-black" v-if="HasNotesWithPendingChecks">- There are notes that you need to check. verify if it needs to be checked and filled</span><br>
       <span class="subtitle-1 error--text font-weight-black" v-if="!PrincipalSignatureHasAResponsable">- The Principal Signature must have an responsable name and type</span>
     </message-dialog>
+    <v-dialog
+      v-model="dialogPrinting"
+      hide-overlay
+      persistent
+      width="300"
+    >
+      <v-card
+        color="primary"
+        dark
+      >
+        <v-card-text>
+          Processing and Downloading pdf report
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+    <v-snackbar
+      v-model="savedNotification"
+      top
+      centered
+      color="success"
+      :timeout="3000"
+    >
+      Changes has been saved
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          dark
+          text
+          v-bind="attrs"
+          @click="savedNotification = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -357,6 +398,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   errorsDialog: boolean = false
+  dialogPrinting: boolean = false
+  savedNotification: boolean = false
 
   search: string = ''
   isDirty: boolean = false
@@ -481,6 +524,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
           }
           this.$axios.$put(`signatures/${signature.id}`, command)
       })
+      this.savedNotification=true
     })
     this.savingNewReport=false
   }
@@ -574,6 +618,16 @@ export default class EditReport extends mixins(InnerPageMixin) {
     await this.$store.dispatch("addresses/getAddresses", { filter }, { root: true });
     this.searchingAddresses = false
     this.isDirty=false
+  }
+
+  async closeReport() {
+    this.currentReport.isClosed = true; 
+    await this.saveReportChanges(); 
+    this.dialogClose = false; 
+    this.currentReport.isClosed = true; 
+    this.dialogPrinting = true; 
+    await this.printHelper.print(this.currentReport.id)
+    this.dialogPrinting = false; 
   }
 
   @Watch('search')

@@ -57,13 +57,9 @@ namespace Inspections.API.Features.ReportsConfiguration
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteReportConfig(int id, [FromBody] DeleteReportConfigurationCommand report)
+        public async Task<IActionResult> DeleteReportConfig(int id)
         {
-            Guard.Against.Null(report, nameof(report));
-            if (id != report.Id)
-                return BadRequest();
-
-            var result = await _mediator.Send(report).ConfigureAwait(false);
+            var result = await _mediator.Send(new DeleteReportConfigurationCommand(id)).ConfigureAwait(false);
             if (!result)
                 return Conflict();
 
