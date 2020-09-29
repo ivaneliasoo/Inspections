@@ -1,20 +1,27 @@
 version: '3.4'
 
 services:
-  sql.data:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    volumes: ['sql1data:/var/opt/mssql']
-    ports:
-      - 1433:1433
-    environment:
-      ACCEPT_EULA: Y
-      SA_PASSWORD: 15560367o%
-      MSSQL_PID: express
-    
+  data:
+    # Use the Docker Image postgres. This will pull the newest release.
+     image: "postgres"
+    # Give the container the name my_postgres. You can changes to something else.
+     container_name: "demo_uno_postgres"
+    # Setup the username, password, and database name. You can changes these values.
+     environment:
+     - POSTGRES_USER=appuser
+     - POSTGRES_PASSWORD=pwd0123456789
+     - POSTGRES_DB=InspectionsDb
+    # Maps port 54320 (localhost) to port 5432 on the container. You can change the ports to fix your needs.
+     ports:
+     - "5432:5432"
+    # Set a volume some that database is not lost after shutting down the container.
+    # I used the name postgres-data but you can changed it to something else.
+     volumes:
+     - ./postgres-data:/var/lib/postgresql/data    
 
   inspections.api:
     depends_on: 
-        - sql.data
+        - data
     ports:
         - "8088:80"
         - "44388:443"
@@ -23,8 +30,4 @@ services:
       context: .
       dockerfile: Inspections.API/Dockerfile
     environment:
-      ConnectionStrings__Inspections: Data Source = sql.data ; User=sa; Password=15560367o%; Initial Catalog = InspectionsDb
-
-volumes:
-  sql1data:
-    external: true
+      ConnectionStrings__Inspections: Host=data;Database=InspectionsDb;Username=appuser;Password=pwd0123456789

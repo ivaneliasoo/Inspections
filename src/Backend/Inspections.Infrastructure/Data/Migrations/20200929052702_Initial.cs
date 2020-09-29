@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Inspections.Infrastructure.Data.Migrations
 {
-    public partial class Initia1l : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,6 +19,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
                     Password = table.Column<string>(nullable: true),
+                    LastEditedReport = table.Column<int>(nullable: true),
+                    IsAdmin = table.Column<bool>(nullable: false),
                     LastEdit = table.Column<DateTimeOffset>(nullable: false),
                     LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
@@ -27,12 +30,32 @@ namespace Inspections.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Addresses",
+                schema: "Inspections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AddressLine = table.Column<string>(nullable: false),
+                    AddressLine2 = table.Column<string>(nullable: true),
+                    Unit = table.Column<string>(nullable: false),
+                    Country = table.Column<string>(nullable: false),
+                    PostalCode = table.Column<string>(nullable: false),
+                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Reports",
                 schema: "Inspections",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: false),
                     License_LicenseType = table.Column<int>(nullable: true),
@@ -40,6 +63,10 @@ namespace Inspections.Infrastructure.Data.Migrations
                     License_Validity_Start = table.Column<DateTime>(nullable: true),
                     License_Validity_End = table.Column<DateTime>(nullable: true),
                     Date = table.Column<DateTimeOffset>(nullable: false),
+                    IsClosed = table.Column<bool>(nullable: false),
+                    Title = table.Column<string>(nullable: false),
+                    FormName = table.Column<string>(nullable: false),
+                    RemarksLabelText = table.Column<string>(nullable: false),
                     LastEdit = table.Column<DateTimeOffset>(nullable: false),
                     LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
@@ -54,7 +81,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Type = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     FormName = table.Column<string>(nullable: false),
@@ -73,10 +100,11 @@ namespace Inspections.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ReportId = table.Column<int>(nullable: false),
                     Text = table.Column<string>(nullable: false),
                     Checked = table.Column<bool>(nullable: false),
+                    NeedsCheck = table.Column<bool>(nullable: false),
                     LastEdit = table.Column<DateTimeOffset>(nullable: false),
                     LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
@@ -98,9 +126,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ReportId = table.Column<int>(nullable: false),
-                    FilePath = table.Column<string>(nullable: false),
+                    FileName = table.Column<string>(nullable: false),
                     Label = table.Column<string>(nullable: false),
                     LastEdit = table.Column<DateTimeOffset>(nullable: false),
                     LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
@@ -123,7 +151,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ReportId = table.Column<int>(nullable: true),
                     ReportConfigurationId = table.Column<int>(nullable: true),
                     Text = table.Column<string>(nullable: false),
@@ -157,7 +185,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(nullable: false),
                     Annotation = table.Column<string>(nullable: true),
                     Responsable_Type = table.Column<int>(nullable: true),
@@ -169,6 +197,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                     IsConfiguration = table.Column<bool>(nullable: false),
                     ReportId = table.Column<int>(nullable: true),
                     ReportConfigurationId = table.Column<int>(nullable: true),
+                    DrawedSign = table.Column<string>(nullable: true),
                     LastEdit = table.Column<DateTimeOffset>(nullable: false),
                     LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
@@ -197,10 +226,11 @@ namespace Inspections.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CheckListId = table.Column<int>(nullable: false),
                     Text = table.Column<string>(nullable: false),
                     Checked = table.Column<int>(nullable: false),
+                    Editable = table.Column<bool>(nullable: false),
                     Required = table.Column<bool>(nullable: false),
                     Remarks = table.Column<string>(nullable: true),
                     LastEdit = table.Column<DateTimeOffset>(nullable: false),
@@ -223,10 +253,10 @@ namespace Inspections.Infrastructure.Data.Migrations
                 schema: "Inspections",
                 columns: table => new
                 {
-                    CheckListId = table.Column<int>(nullable: false),
-                    CheckListItemId = table.Column<int>(nullable: false),
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CheckListId = table.Column<int>(nullable: true),
+                    CheckListItemId = table.Column<int>(nullable: true),
                     Key = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: false),
                     Type = table.Column<int>(nullable: false),
@@ -235,7 +265,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CheckListParams", x => new { x.CheckListId, x.CheckListItemId });
+                    table.PrimaryKey("PK_CheckListParams", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CheckListParams_CheckLists_CheckListId",
                         column: x => x.CheckListId,
@@ -254,6 +284,12 @@ namespace Inspections.Infrastructure.Data.Migrations
                 name: "IX_CheckListItems_CheckListId",
                 schema: "Inspections",
                 table: "CheckListItems",
+                column: "CheckListId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CheckListParams_CheckListId",
+                schema: "Inspections",
+                table: "CheckListParams",
                 column: "CheckListId");
 
             migrationBuilder.CreateIndex(
@@ -303,6 +339,10 @@ namespace Inspections.Infrastructure.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Addresses",
+                schema: "Inspections");
 
             migrationBuilder.DropTable(
                 name: "CheckListParams",

@@ -206,7 +206,7 @@ namespace Inspections.API
             ILoggerFactory logger = LoggerFactory.Create((c) => { c.AddConsole(); });
             string cn = Configuration.GetConnectionString("Inspections");
             services.AddDbContext<InspectionsContext>(c =>
-            c.UseLoggerFactory(logger).UseSqlServer(cn).EnableSensitiveDataLogging());
+            c.UseLoggerFactory(logger).UseNpgsql(cn).EnableSensitiveDataLogging());
         }
 
         private static bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)

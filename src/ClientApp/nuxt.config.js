@@ -73,8 +73,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'https://inspectionsscb.azurewebsites.net',
-    browserBaseURL: 'https://inspectionsscb.azurewebsites.net'
+    baseURL: 'http://inspectionsapi-dev.eba-r84ntzqp.us-east-2.elasticbeanstalk.com',
+    browserBaseURL: 'http://inspectionsapi-dev.eba-r84ntzqp.us-east-2.elasticbeanstalk.com'
   },
   router: {
     middleware: ['auth']
