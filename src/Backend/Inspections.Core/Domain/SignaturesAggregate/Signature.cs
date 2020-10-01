@@ -11,7 +11,8 @@ namespace Inspections.Core.Domain.SignaturesAggregate
     {
         public string Title { get; set; }
         public string Annotation { get; set; }
-        public Responsable Responsable { get; set; }
+        public Responsable Responsable { get; set; } = new Responsable();
+        public string ResponsableName => Responsable.Name;
         public string Designation { get; set; }
         public string Remarks { get; set; }
         public DateTimeOffset Date { get; set; }

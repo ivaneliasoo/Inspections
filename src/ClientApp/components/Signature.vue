@@ -39,7 +39,7 @@
         </v-row>
         <v-row>  
           <v-col class="text-right">
-            <v-btn v-if="!signature.viewSign || isClosed" class="mx-2" dark color="primary" @click="viewSign(index, signature);">
+            <v-btn v-if="!signature.viewSign || isReportClosed" class="mx-2" dark color="primary" @click="viewSign(index, signature);">
               <v-icon dark>{{ signature.viewSign ? 'mdi-close' : 'mdi-draw' }}</v-icon>
               Sign
             </v-btn>
