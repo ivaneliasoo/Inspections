@@ -82,7 +82,7 @@
           </v-row>
           <v-fab-transition>
             <v-btn
-              v-if="valid && !currentReport.isClosed"
+              v-if="!currentReport.isClosed"
               color="success"
               fab
               fixed
@@ -117,7 +117,7 @@
             mdi-message-bulleted
           </v-icon>
           </v-tab>
-          <v-tab href="#photos" :disabled="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable">
+          <v-tab href="#photos">
             Photo Record
             <v-icon>
               mdi-folder-multiple-image
@@ -537,6 +537,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   async fetch() {
     await this.loadReport()
+    await this.getSuggestedAddresses('')
   }
 
   async loadReport() {

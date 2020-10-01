@@ -32,9 +32,10 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-dialog v-if="currentPhoto" v-model="showCarousel">
+    <v-dialog v-model="showCarousel">
       <v-carousel v-model="currentPhoto" height="80%">
         <v-carousel-item v-for="(photo, index) in urls" :key="index" :src="photo.url">
+          <span>{{ photo }} {{ index }}</span>
         </v-carousel-item>
       </v-carousel>
     </v-dialog>

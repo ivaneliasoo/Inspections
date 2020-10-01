@@ -62,7 +62,7 @@
         </v-row>
       </template>
     </v-data-iterator>
-    <v-dialog v-if="currentPhoto" v-model="showCarousel">
+    <v-dialog v-model="showCarousel">
       <v-carousel v-model="currentPhoto" height="80%">
         <v-carousel-item v-for="(photo, index) in currentReport.photoRecords" :key="index" :src="`${hostName}${photo.fileName}`">
         </v-carousel-item>

@@ -10,7 +10,7 @@
           label="Upload File"
           multiple
           placeholder="Select your files"
-          prepend-icon="mdi-paperclip"
+          prepend-icon="mdi-camera-plus"
           outlined
           accept="image/*"
           :show-size="1000"
@@ -37,7 +37,7 @@
               fab
               :small="$device.isMobile"
               elevation="2"
-              :disabled="!files.length>0 || currentReport.isClosed"
+              :disabled="!files.length>0 || currentReport.isClosed || dialogUploading"
               @click="uploadFiles"
             >
               <v-icon>mdi-upload</v-icon>
@@ -51,6 +51,26 @@
     <v-row>
       <PhotoRecordManager v-if="files.length===0" v-model="currentReport" />
       <PhotoRecordPreviewer v-else v-model="filesUrls" :files="files" />
+      <v-dialog
+      v-model="dialogUploading"
+      hide-overlay
+      persistent
+      width="300"
+    >
+      <v-card
+        color="primary"
+        dark
+      >
+        <v-card-text>
+          Processing and Procesing Photos
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
     </v-row>
   </v-card>
 </template>
@@ -73,9 +93,11 @@ export default class PhotoRecords extends Vue {
   filesUrls: { url: string, id: number, label: string }[] = [];
 
   selectedPhotoComponent: string = 'PhotoRecordManager'
+  dialogUploading: boolean = false
 
-  uploadFiles() {
+  async uploadFiles() {
     let formData = new FormData();
+    this.dialogUploading=true
 
     this.files.forEach((file: File, index) => {
       formData.append("files", file, `${file.name}|${this.filesUrls[index].label}`);
@@ -85,7 +107,7 @@ export default class PhotoRecords extends Vue {
 
     const self = this;
 
-    this.$axios
+    await this.$axios
       .post(`reports/${this.$route.params.id}/photorecord`, formData)
       .then(() => {
         this.files = [];
@@ -93,6 +115,8 @@ export default class PhotoRecords extends Vue {
         this.$emit('uploaded')
         this.selectedPhotoComponent = "PhotoRecordManager"
       });
+
+    this.dialogUploading=false
   }
 
   showPreview() {
