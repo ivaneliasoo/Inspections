@@ -62,7 +62,8 @@
         dark
       >
         <v-card-text>
-          Processing and Procesing Photos
+          <h3>Uploading Photos to server</h3>
+          <h4>Please Wait...</h4>
           <v-progress-linear
             indeterminate
             color="white"

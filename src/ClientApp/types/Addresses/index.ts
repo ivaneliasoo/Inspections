@@ -5,5 +5,6 @@ export interface AddressDTO {
   unit?: string;
   country?: string;
   postalCode?: string;
+  licenseNumber?: string;
   formatedAddress: string;
 }

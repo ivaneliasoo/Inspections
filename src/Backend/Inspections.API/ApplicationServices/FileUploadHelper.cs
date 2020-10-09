@@ -2,6 +2,8 @@
 using Inspections.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,7 +46,9 @@ namespace Inspections.API.ApplicationServices
         internal async Task<string> UploadAttachments(IFormFile file, string requestFolder = "", string fileName = "")
         {
             string folder = Path.Combine(Directory.GetCurrentDirectory(), _storageOptions.Value.ReportsImagesFolder, requestFolder);
-            return await _storageHelper.SaveAsync(file.OpenReadStream(), folder, fileName.Length>0 ? fileName : file.FileName, true).ConfigureAwait(false);
+            var result = await _storageHelper.SaveAsync(file.OpenReadStream(), folder, fileName.Length>0 ? fileName : file.FileName, true).ConfigureAwait(false);
+            await SaveResizedImage(file, folder, result);
+            return result;
         }
 
         internal async Task<byte[][]> GetAttachments(string requestFolder)
@@ -71,6 +75,14 @@ namespace Inspections.API.ApplicationServices
         internal async Task DeleteAsync(string fileName)
         {
             await Task.Run(() => _storageHelper.DeleteFile(fileName)).ConfigureAwait(false);
+        }
+
+
+        internal async Task SaveResizedImage(IFormFile file, string filePath, string fileName)
+        {
+            using Image img = await Image.LoadAsync(file.OpenReadStream());
+            img.Mutate(i => i.Resize(img.Width / 3, img.Height / 3));
+            img.Save(Path.Combine(filePath, Path.GetFileNameWithoutExtension(fileName)+"small"+Path.GetExtension(fileName)));
         }
     }
 }

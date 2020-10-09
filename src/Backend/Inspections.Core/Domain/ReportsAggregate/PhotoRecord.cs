@@ -11,14 +11,16 @@ namespace Inspections.Core.Domain.ReportsAggregate
     {
         public int ReportId { get; private set; }
         public string FileName { get; private set; }
+        public string FileNameResized { get; private set; }
         public string Label { get; set; }
         private PhotoRecord() { }
 
-        public PhotoRecord(int reportId, string path, string label)
+        public PhotoRecord(int reportId, string path, string pathResized, string label)
         {
             ReportId = reportId;
             Label = label;
             FileName = Path.Combine(AppContext.BaseDirectory, reportId.ToString(), path);
+            FileNameResized = Path.Combine(AppContext.BaseDirectory, reportId.ToString(), pathResized);
         }
 
         public override string ToString()

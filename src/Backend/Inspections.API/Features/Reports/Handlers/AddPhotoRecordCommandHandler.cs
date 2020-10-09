@@ -13,7 +13,11 @@ using Inspections.API.Models.Configuration;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.Processing;
 
 namespace Inspections.API.Features.Reports.Handlers
 {
@@ -46,7 +50,7 @@ namespace Inspections.API.Features.Reports.Handlers
                     var splitedName = file.FileName.Split("|");
                     var label = splitedName[1];
                     var filePath = await _fileUploadService.UploadAttachments(file, request!.ReportId.ToString(CultureInfo.InvariantCulture),fileName: splitedName[0]).ConfigureAwait(false);
-                    report.AddPhoto(new PhotoRecord(request.ReportId, $"/ReportsImages/{report.Id}/{Path.GetFileName(filePath)}" , label));
+                    report.AddPhoto(new PhotoRecord(request.ReportId, $"/ReportsImages/{report.Id}/{Path.GetFileName(filePath)}", $"/ReportsImages/{report.Id}/{Path.GetFileNameWithoutExtension(filePath)}small{Path.GetExtension(filePath)}", label));
                     savedFilesPaths[createdFilesCount] = filePath;
                     createdFilesCount++;
                 }
@@ -63,5 +67,7 @@ namespace Inspections.API.Features.Reports.Handlers
                 return false;
             }
         }
+
+        
     }
 }

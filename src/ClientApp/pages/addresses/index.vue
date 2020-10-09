@@ -62,14 +62,16 @@
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
-                      <v-col>
-                          <v-textarea
-                            v-model="item.addressLine2"
+                     <v-col cols="12" md="6">
+                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+                          <v-text-field
+                            v-model="item.country"
                             autocomplete="nope"
-                            rows="2"
-                            name="addressLine2"
-                            label="Address Additional"
+                            :error-messages="errors"
+                            name="country"
+                            label="Country"
                           />
+                        </ValidationProvider>
                       </v-col>
                       <v-col>
                         <ValidationProvider rules="required" immediate v-slot="{ errors }">
@@ -82,20 +84,7 @@
                           />
                         </ValidationProvider>
                       </v-col>
-                    </v-row>
-                    <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="6">
-                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
-                          <v-text-field
-                            v-model="item.country"
-                            autocomplete="nope"
-                            :error-messages="errors"
-                            name="country"
-                            label="Country"
-                          />
-                        </ValidationProvider>
-                      </v-col>
-                      <v-col cols="12" md="6">
+                       <v-col cols="12" md="6">
                         <ValidationProvider rules="required" immediate v-slot="{ errors }">
                           <v-text-field
                             v-model="item.postalCode"
@@ -105,6 +94,30 @@
                             label="PostalCode"
                           />
                         </ValidationProvider>
+                      </v-col>
+                      <v-col>
+                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+                          <v-text-field
+                            v-model="item.licenseNumber"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="license"
+                            label="License Number"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                    </v-row>
+                    <v-row align="center" justify="space-between">
+                      
+                     
+                       <v-col>
+                          <v-textarea
+                            v-model="item.addressLine2"
+                            autocomplete="nope"
+                            rows="2"
+                            name="addressLine2"
+                            label="Address Additional"
+                          />
                       </v-col>
                     </v-row>
                   </v-container>

@@ -16,6 +16,7 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.Id).UseIdentityColumn();
             builder.Property(p => p.Label).IsRequired();
             builder.Property(p => p.FileName).IsRequired();
+            builder.Property(p => p.FileNameResized).IsRequired();
             builder.Ignore(p => p.DomainEvents);
         }
     }

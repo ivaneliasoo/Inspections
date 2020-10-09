@@ -40,19 +40,21 @@
                   :loading="searchingAddresses"
                   :search-input.sync="search"
                   @keypress="isDirty = true"
+                  @change="setLicenseFromAddress"
                   hide-selected
                   item-text="formatedAddress"
                   item-value="formatedAddress"
                   label="Inspection Address"
                   placeholder="Start typing to Search"
                   prepend-icon="mdi-crosshairs-gps"
+                  clearable
                 />
               </ValidationProvider>
             </v-col>
             <v-col cols="12" md="3" v-if="currentReport.license">
               <ValidationProvider rules="required" immediate  v-slot="{ errors }">
               <v-text-field 
-                :readonly="currentReport.isClosed"
+                readonly
                 v-model="currentReport.license.number"
                 :error-messages="errors"
                label="License" />
@@ -82,7 +84,7 @@
           </v-row>
           <v-fab-transition>
             <v-btn
-              v-if="!currentReport.isClosed"
+              v-if="!currentReport.isClosed && tabs!=='photos'"
               color="success"
               fab
               fixed
@@ -306,7 +308,7 @@
             </v-row>
           </v-tab-item>
           <v-tab-item key="photos" value="photos">
-            <PhotoRecords v-model="currentReport" @uploaded="loadReport" />
+            <PhotoRecords v-model="currentReport" @uploaded="saveReportChanges(); loadReport()" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -610,6 +612,16 @@ export default class EditReport extends mixins(InnerPageMixin) {
     return item.checks.length === item.checks.filter((c:any) => c.checked).length
   }
 
+  setLicenseFromAddress() {
+    if(!this.currentReport.address) {
+      this.currentReport!.license.number = ''
+      return
+    }
+    const addressData = this.addresses.filter(a=>a.formatedAddress === this.currentReport.address)
+    if(addressData)
+      this.currentReport!.license.number = addressData[0].licenseNumber ?? ''
+  }
+
   mounted() {
     this.printHelper = new PrintHelper(this.$store)
     return this.$refs.obs.validate()
@@ -629,6 +641,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     this.dialogPrinting = true; 
     await this.printHelper.print(this.currentReport.id)
     this.dialogPrinting = false; 
+    this.$router.push('/reports')
   }
 
   @Watch('search')

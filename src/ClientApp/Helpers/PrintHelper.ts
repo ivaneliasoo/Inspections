@@ -445,6 +445,7 @@ export class PrintHelper {
     let tempArray: any[] = []
     for (let index = 0; index < photos.length; index++) {
       const photo = photos[index];
+      console.log(photo)
       tempArray.push({ stack: [{ image: `${photo.base64String}`, width: 220, height: 150, margin: [0, 20, 0, 20] }, { text: `${photo.label}`, alignment: 'left', style: 'photoTag' }] })
       if (index % 2 !== 0) {
         result.push([...tempArray])

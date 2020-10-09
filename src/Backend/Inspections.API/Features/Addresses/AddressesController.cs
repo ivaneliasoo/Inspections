@@ -30,7 +30,8 @@ namespace Inspections.API.Features.Addresses
                 .Where(ad => EF.Functions.Like(ad.AddressLine, $"%{filter}%") ||
                 EF.Functions.Like(ad.Unit, $"%{filter}%") ||
                 EF.Functions.Like(ad.Country, $"%{filter}%") ||
-                EF.Functions.Like(ad.PostalCode, $"%{filter}%"))
+                EF.Functions.Like(ad.PostalCode, $"%{filter}%") ||
+                EF.Functions.Like(ad.LicenseNumber, $"%{filter}%"))
                 .ToListAsync()
                 .ConfigureAwait(false);
             var mappedResult = result.Select(a => new AddressDTO(a));
@@ -66,6 +67,7 @@ namespace Inspections.API.Features.Addresses
             savedAddress.Unit = address.Unit;
             savedAddress.Country= address.Country;
             savedAddress.PostalCode= address.PostalCode;
+            savedAddress.LicenseNumber = address.LicenseNumber;
 
             _context.Entry(savedAddress).State = EntityState.Modified;
 
@@ -98,7 +100,8 @@ namespace Inspections.API.Features.Addresses
                 AddressLine2 = address.AddressLine2,
                 Unit = address.Unit,
                 Country= address.Country,
-                PostalCode = address.PostalCode
+                PostalCode = address.PostalCode,
+                LicenseNumber = address.LicenseNumber
             };
 
             if (AddressDuplicated(newAddress))

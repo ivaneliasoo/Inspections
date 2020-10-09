@@ -28,32 +28,32 @@ namespace Inspections.Infrastructure.Queries
                       , ""Title""
                       , ""FormName""
                       , ""RemarksLabelText""
-                      , COALESCE(""DefinedCheckLists"".""CheckLists"", 0) as ""DefinedCheckLists""
-                      , COALESCE(""DefinedSignatures"".""Signatures"", 0) as ""DefinedSignatures""
-                      , COALESCE(""Reports"", 0) as ""UsedByReports""
+                      , COALESCE(""DefinedCheckLists"".CheckLists, 0) as ""DefinedCheckLists""
+                      , COALESCE(""DefinedSignatures"".Signatures, 0) as ""DefinedSignatures""
+                      , COALESCE(Reports, 0) as ""UsedByReports""
                       , ""LastEdit""
                       , ""LastEditUser""
-                FROM ""Inspections"".""ReportsConfiguration"" AS ""Config""
+                FROM ""Inspections"".""ReportsConfiguration"" Config
                     LEFT OUTER JOIN(
-                    SELECT ""ReportConfigurationId"", COUNT(""ReportConfigurationId"") AS ""CheckLists""
+                    SELECT ""ReportConfigurationId"", COUNT(""ReportConfigurationId"") AS CheckLists
                     FROM ""Inspections"".""CheckLists""
                     GROUP BY ""ReportConfigurationId""
                 ) AS ""DefinedCheckLists""
-                    ON ""DefinedCheckLists"".""ReportConfigurationId"" = ""Config"".""Id""
+                    ON ""DefinedCheckLists"".""ReportConfigurationId"" = Config.""Id""
                     LEFT OUTER JOIN(
-                    SELECT ""ReportConfigurationId"", COUNT(""ReportConfigurationId"") AS ""Signatures""
+                    SELECT ""ReportConfigurationId"", COUNT(""ReportConfigurationId"") AS Signatures
                     FROM ""Inspections"".""Signatures""
                     GROUP BY ""ReportConfigurationId""
                 ) AS ""DefinedSignatures""
-                    ON ""DefinedSignatures"".""ReportConfigurationId"" = ""Config"".""Id""
+                    ON ""DefinedSignatures"".""ReportConfigurationId"" = Config.""Id""
                     LEFT OUTER JOIN(
-                    SELECT ""ReportConfigurationId"", COUNT(DISTINCT ""ReportId"") AS ""Reports""
+                    SELECT ""ReportConfigurationId"", COUNT(DISTINCT ""ReportId"") AS Reports
                     FROM ""Inspections"".""CheckLists""
                     GROUP BY ""ReportConfigurationId""
                 ) AS ""Reports""
-                    ON ""Reports"".""ReportConfigurationId"" = ""Config"".""Id""
-                WHERE 1 = 1
-                ").Where(p=> EF.Functions.Like(p.Title, $" %{filter ?? string.Empty}%") || EF.Functions.Like(p.FormName, $"%{filter ?? string.Empty}%"));
+                    ON ""Reports"".""ReportConfigurationId"" = Config.""Id""
+                    WHERE 1=1
+            ").Where(p => EF.Functions.Like(p.Title, $" %{filter ?? string.Empty}%") || EF.Functions.Like(p.FormName, $"%{filter ?? string.Empty}%"));
         }
     }
 }
