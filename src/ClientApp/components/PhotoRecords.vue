@@ -1,14 +1,19 @@
 <template>
   <v-card flat>
-    <v-row justify="space-around" align="center">
-      <v-col :cols="files.length>0 ? 10:12">
+    <v-row justify="space-around" align="end">
+      <v-col cols="6" class="text-right">
+        Tap Camera Icon To Add Photos to report
+      </v-col>
+      <v-col :cols="2">
         <v-file-input
-          v-model="files"
           :disabled="currentReport.isClosed"
           color="primary accent-4"
           counter
+          ref="fileInputElement"
           label="Upload File"
           multiple
+          hide-input
+          messages="Add Photos to Report"
           placeholder="Select your files"
           prepend-icon="mdi-camera-plus"
           outlined
@@ -16,18 +21,10 @@
           :show-size="1000"
           @change="showPreview($event)"
           @click:clear="filesUrls = []"
-        >
-          <template v-slot:selection="{ index, text }">
-            <v-chip v-if="index < 2" color="primary accent-4" dark label small>{{ text }}</v-chip>
-
-            <span
-              v-else-if="index === 2"
-              class="overline grey--text text--darken-3 mx-2"
-            >+{{ files.length - 2 }} File(s)</span>
-          </template>
-        </v-file-input>
+        />
       </v-col>
-      <v-col v-if="files.length>0" cols="2">
+      <v-col cols="4"></v-col>
+      <!-- <v-col v-if="files.length>0" cols="2">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-btn
@@ -45,33 +42,26 @@
           </template>
           <span>Upload Selected Files</span>
         </v-tooltip>
-      </v-col>
+      </v-col> -->
     </v-row>
     <v-divider />
     <v-row>
+            <v-btn
+              color="indigo"
+              dark
+              block
+              x-large
+              :small="$device.isMobile"
+              elevation="2"
+              :disabled="!files.length>0 || currentReport.isClosed || dialogUploading"
+              @click="uploadFiles"
+            >
+              Save Photos
+              <v-icon>mdi-upload</v-icon>
+            </v-btn>
       <PhotoRecordManager v-if="files.length===0" v-model="currentReport" />
-      <PhotoRecordPreviewer v-else v-model="filesUrls" :files="files" />
-      <v-dialog
-      v-model="dialogUploading"
-      hide-overlay
-      persistent
-      width="300"
-    >
-      <v-card
-        color="primary"
-        dark
-      >
-        <v-card-text>
-          <h3>Uploading Photos to server</h3>
-          <h4>Please Wait...</h4>
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+      <PhotoRecordPreviewer v-else v-model="filesUrls" :files="files" :progress="percentCompleted"/>
+
     </v-row>
   </v-card>
 </template>
@@ -95,10 +85,18 @@ export default class PhotoRecords extends Vue {
 
   selectedPhotoComponent: string = 'PhotoRecordManager'
   dialogUploading: boolean = false
+  percentCompleted: number= 0
 
   async uploadFiles() {
+    const Pthis =  this
     let formData = new FormData();
     this.dialogUploading=true
+    var config = {
+            onUploadProgress: function(progressEvent: any) {
+              console.log(progressEvent)
+              Pthis.percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
+            }
+          };
 
     this.files.forEach((file: File, index) => {
       formData.append("files", file, `${file.name}|${this.filesUrls[index].label}`);
@@ -109,19 +107,22 @@ export default class PhotoRecords extends Vue {
     const self = this;
 
     await this.$axios
-      .post(`reports/${this.$route.params.id}/photorecord`, formData)
+      .post(`reports/${this.$route.params.id}/photorecord`, formData, config)
       .then(() => {
         this.files = [];
         this.filesUrls = [];
         this.$emit('uploaded')
         this.selectedPhotoComponent = "PhotoRecordManager"
+        this.percentCompleted = 0
+        this.files = []
       });
 
     this.dialogUploading=false
   }
 
-  showPreview() {
-    this.files.forEach((file, index)=> {
+  showPreview(filesAdded: File[]) {
+    filesAdded.forEach((file, index)=> {
+      this.files.push(file)
       var url = URL.createObjectURL(file)
       this.filesUrls.push({ url, id: index, label: ''})
     })

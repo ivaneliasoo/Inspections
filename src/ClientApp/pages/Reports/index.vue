@@ -37,7 +37,7 @@
               mdi-camera
             </v-icon>
             </template>
-          <span>Print Report With Photos</span>
+          <span>Print Inspection Report With Photos</span>
         </v-tooltip>
         <v-tooltip top>
           <template v-slot:activator="{ on }">
@@ -51,7 +51,7 @@
               mdi-printer
             </v-icon>
         </template>
-          <span>Print Report</span>
+          <span>Print Inspections Report without Photos</span>
         </v-tooltip>
         <v-tooltip top>
           <template v-slot:activator="{ on }">
