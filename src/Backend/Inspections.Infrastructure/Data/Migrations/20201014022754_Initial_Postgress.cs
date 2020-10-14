@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Inspections.Infrastructure.Data.Migrations
 {
-    public partial class Initial_Postgres : Migration
+    public partial class Initial_Postgress : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,6 +41,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                     Unit = table.Column<string>(nullable: false),
                     Country = table.Column<string>(nullable: false),
                     PostalCode = table.Column<string>(nullable: false),
+                    LicenseNumber = table.Column<string>(nullable: false),
                     LastEdit = table.Column<DateTimeOffset>(nullable: false),
                     LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
                 },
@@ -129,6 +130,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ReportId = table.Column<int>(nullable: false),
                     FileName = table.Column<string>(nullable: false),
+                    FileNameResized = table.Column<string>(nullable: false),
                     Label = table.Column<string>(nullable: false),
                     LastEdit = table.Column<DateTimeOffset>(nullable: false),
                     LastEditUser = table.Column<string>(maxLength: 20, nullable: false)

@@ -17,7 +17,7 @@ namespace Inspections.Core.Domain
 
         public override string ToString()
         {
-            return $"{AddressLine} {AddressLine2}, {Unit}, {Country}, {PostalCode}";
+            return $"{AddressLine} {AddressLine2} {Unit} {Country} {PostalCode}";
         }
 
     }

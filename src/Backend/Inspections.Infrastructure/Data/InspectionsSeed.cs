@@ -20,7 +20,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
 
             if (!context.Database.IsInMemory())
             {
-                context.Database.EnsureDeleted();
+                //context.Database.EnsureDeleted();
                 context.Database.Migrate();
             }
 

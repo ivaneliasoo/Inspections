@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    [Migration("20201008225041_Initial_Postgres")]
-    partial class Initial_Postgres
+    [Migration("20201014022754_Initial_Postgress")]
+    partial class Initial_Postgress
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,10 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("character varying(20)")
                         .HasMaxLength(20);
+
+                    b.Property<string>("LicenseNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
@@ -259,6 +263,10 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FileNameResized")
                         .IsRequired()
                         .HasColumnType("text");
 

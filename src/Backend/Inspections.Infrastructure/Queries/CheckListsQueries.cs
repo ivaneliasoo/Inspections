@@ -47,11 +47,11 @@ namespace Inspections.Infrastructure.Queries
                                         ) ""Items""
                         ON ""cl"".""Id"" = ""Items"".""CheckListId""
                     WHERE 1=1
-                        AND (Text LIKE {0}
-                        OR Annotation LIKE {0})
-                        AND (cl.ReportId = {1} OR {1} IS NULL)
-                        AND (cl.IsConfiguration = {2} OR {2} IS NULL)
-                        AND (cl.ReportConfigurationId = {3} OR {3} IS NULL)
+                        AND (""Text"" LIKE {0}
+                        OR ""Annotation"" LIKE {0})
+                        AND (""cl"".""ReportId"" = {1} OR {1} IS NULL)
+                        AND (""cl"".""IsConfiguration"" = {2} OR {2} IS NULL)
+                        AND (""cl"".""ReportConfigurationId"" = {3} OR {3} IS NULL)
             ", $"%{filter ?? string.Empty}%", reportId, inConfigurationOnly, reportConfigurationId);
         }
     }
