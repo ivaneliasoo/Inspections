@@ -62,43 +62,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.ToTable("Addresses","Inspections");
                 });
 
-            modelBuilder.Entity("Inspections.Core.Domain.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AddressLine")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AddressLine2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("LastEditUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Addresses","Inspections");
-                });
-
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckList", b =>
                 {
                     b.Property<int>("Id")
