@@ -19,7 +19,10 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
         {
 
             if (!context.Database.IsInMemory())
+            {
+                //context.Database.EnsureDeleted();
                 context.Database.Migrate();
+            }
 
             var log = logger.CreateLogger<InspectionsSeed>();
             int retries = retriesNumber.Value;
@@ -38,7 +41,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                     {
                         ChecksDefinition = AddCheckLists().ToList(),
                         SignatureDefinitions = AddSignatures().ToList(),
-                        FormName = "Inspection Report",
+                        FormName = "CSE EI(R1) FORM",
                         Title = "Inspection Report",
                         Type = ReportType.Inspection
                     });

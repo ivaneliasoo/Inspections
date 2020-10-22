@@ -38,10 +38,6 @@ namespace Inspections.Infrastructure.Repositories
         public async Task<IEnumerable<Report>> GetAll(string filter, bool? closed)
         {
             var query = _context.Reports
-                .Include(p => p.CheckList)
-                    .ThenInclude(p => p.Checks)
-                .Include(p => p.Signatures)
-                .Include(p => p.Notes)
                 .Include(p => p.PhotoRecords);
 
             if(closed.HasValue)

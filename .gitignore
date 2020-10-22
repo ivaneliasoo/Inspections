@@ -353,3 +353,4 @@ MigrationBackup/
 /src/Backend/.system
 /src/Backend/Inspections.API/Properties
 /src/Backend/Inspections.API/MediaUpload/img/Reports
+src/Backend/postgres-data/

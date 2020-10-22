@@ -62,7 +62,55 @@
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
+                     <v-col cols="12" md="6">
+                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+                          <v-text-field
+                            v-model="item.country"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="country"
+                            label="Country"
+                          />
+                        </ValidationProvider>
+                      </v-col>
                       <v-col>
+                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+                          <v-text-field
+                            v-model="item.unit"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="unit"
+                            label="Unit"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                       <v-col cols="12" md="6">
+                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+                          <v-text-field
+                            v-model="item.postalCode"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="postalCode"
+                            label="PostalCode"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col>
+                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+                          <v-text-field
+                            v-model="item.licenseNumber"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="license"
+                            label="License Number"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                    </v-row>
+                    <v-row align="center" justify="space-between">
+                      
+                     
+                       <v-col>
                           <v-textarea
                             v-model="item.addressLine2"
                             autocomplete="nope"
@@ -70,30 +118,6 @@
                             name="addressLine2"
                             label="Address Additional"
                           />
-                      </v-col>
-                      <v-col>
-                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
-                          <v-text-field
-                            v-model="item.city"
-                            autocomplete="nope"
-                            :error-messages="errors"
-                            name="city"
-                            label="City"
-                          />
-                        </ValidationProvider>
-                      </v-col>
-                    </v-row>
-                    <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="12">
-                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
-                          <v-text-field
-                            v-model="item.province"
-                            autocomplete="nope"
-                            :error-messages="errors"
-                            name="province"
-                            label="Province"
-                          />
-                        </ValidationProvider>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -179,20 +203,20 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
       align: "left",
     },
     {
-      text: "Address 2",
-      value: "addressLine2",
+      text: "Unit",
+      value: "unit",
       sortable: true,
       align: "left",
     },
     {
-      text: "City",
-      value: "city",
+      text: "Country",
+      value: "country",
       sortable: true,
       align: "left",
     },
     {
-      text: "Province",
-      value: "province",
+      text: "Postal Code",
+      value: "postalCode",
       sortable: true,
       align: "left",
     },

@@ -1,12 +1,26 @@
 <template>
   <v-container fluid>
-    <v-row dense>
-      <v-col
-        v-for="(photo, index) in currentReport.photoRecords"
-        :key="index"
-        :cols="index===0 ? 12: $vuetify.breakpoint.smAndDown ? 6:3"
-      >
-        <v-card>
+    <v-data-iterator
+      :items="currentReport.photoRecords"
+      key="id"
+      :footer-props="{ itemsPerPageAllText: 'todos',
+      showFirstLastPage: true,
+      itemsPerPageText: 'Photos by page',
+      itemsPerPageOptions: [8, 16]}"
+      :items-per-page.sync="itemsPerPage"
+      no-results-text="No photos"
+    >
+      <template v-slot:default="props">
+        <v-row>
+          <v-col
+            v-for="photo, index in props.items"
+            :key="index"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="3"
+          >
+        <v-card >
           <v-img
             :src="`${hostName}${photo.fileName}`"
             class="white--text align-end"
@@ -44,9 +58,11 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-      </v-col>
-    </v-row>
-    <v-dialog v-if="currentPhoto" v-model="showCarousel">
+          </v-col>
+        </v-row>
+      </template>
+    </v-data-iterator>
+    <v-dialog v-model="showCarousel">
       <v-carousel v-model="currentPhoto" height="80%">
         <v-carousel-item v-for="(photo, index) in currentReport.photoRecords" :key="index" :src="`${hostName}${photo.fileName}`">
         </v-carousel-item>
@@ -66,6 +82,8 @@ export default class PhotoRecordManager extends Vue {
   currentPhoto: number = 0;
   showLabelEdit: number[] = [];
   hostName: string= this.$axios!.defaults!.baseURL!.replace('/api','')
+
+  itemsPerPage: number = 8
 
   async removePhoto(id: number) {
     const delPhoto: DeletePhotoRecordCommand = {

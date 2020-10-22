@@ -1,13 +1,14 @@
 <template>
+
   <div id="report">
     <alert-dialog
       v-model="dialogClose"
       title="Close Report"
-      message="your are about to close this report."
+      message="you are about to close this report."
       :code="currentReport.id"
       :description="currentReport.name"
       :loading="savingNewReport"
-      @yes="currentReport.isClosed = true; saveReportChanges(); dialogClose = false; currentReport.isClosed = true;"
+      @yes="closeReport"
       @no="currentReport.isClosed = true"
     />
     <v-row>
@@ -39,19 +40,21 @@
                   :loading="searchingAddresses"
                   :search-input.sync="search"
                   @keypress="isDirty = true"
+                  @change="setLicenseFromAddress"
                   hide-selected
                   item-text="formatedAddress"
                   item-value="formatedAddress"
                   label="Inspection Address"
                   placeholder="Start typing to Search"
                   prepend-icon="mdi-crosshairs-gps"
+                  clearable
                 />
               </ValidationProvider>
             </v-col>
             <v-col cols="12" md="3" v-if="currentReport.license">
               <ValidationProvider rules="required" immediate  v-slot="{ errors }">
               <v-text-field 
-                :readonly="currentReport.isClosed"
+                readonly
                 v-model="currentReport.license.number"
                 :error-messages="errors"
                label="License" />
@@ -81,7 +84,7 @@
           </v-row>
           <v-fab-transition>
             <v-btn
-              v-if="valid && !currentReport.isClosed"
+              v-if="!currentReport.isClosed && tabs!=='photos'"
               color="success"
               fab
               fixed
@@ -90,7 +93,7 @@
               right
               :loading="savingNewReport"
               class="v-btn--example2"
-              @click="saveReportChanges().then(CanCloseReport ? dialogClose = true: undefined)"
+              @click="saveReportChanges().then(CanCloseReport ? dialogClose = true: errorsDialog = true)"
             >
               <v-icon>mdi-content-save</v-icon>
             </v-btn>
@@ -100,26 +103,30 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-tabs v-model="tabs" centered fixed-tabs icons-and-text>
+        <v-tabs v-model="tabs"  centered fixed-tabs icons-and-text>
           <v-tabs-slider></v-tabs-slider>
-          <v-tab href="#checklists" class="primary--text">
+          <v-tab href="#checklists" :class="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable > 0 ? 'error--text':'primary--text'">
             Report Details
-            <v-icon>mdi-message-bulleted</v-icon>
+             <v-tooltip v-if="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable" top>
+            <template v-slot:activator="{ on }">
+              <v-icon :color="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable ? 'error':''" v-on="on">
+                mdi-message-bulleted
+              </v-icon>
+            </template>
+            <span>You must complete all the required checks, notes and signatures in tab Report Details to proceeded uploading photos</span>
+          </v-tooltip>
+          <v-icon v-else>
+            mdi-message-bulleted
+          </v-icon>
           </v-tab>
-
-          <v-tab v-if="false" href="#notes" class="primary--text">
-            <v-icon>mdi-message-bulleted</v-icon>
-          </v-tab>
-
-          <v-tab href="#photos" class="primary--text">
+          <v-tab href="#photos">
             Photo Record
-            <v-icon>mdi-folder-multiple-image</v-icon>
-          </v-tab>
-          <v-tab v-if="false" href="#signatures" class="primary--text">
-            <v-icon>mdi-signature-freehand</v-icon>
+            <v-icon>
+              mdi-folder-multiple-image
+            </v-icon>
           </v-tab>
         </v-tabs>
-        <v-tabs-items v-model="tabs">
+        <v-tabs-items v-model="tabs" touchless>
           <v-tab-item key="checklists" value="checklists">
             <v-expansion-panels
           multiple
@@ -127,8 +134,18 @@
           :value="openedPanels"
         >
           <v-expansion-panel>
-            <v-expansion-panel-header>
-              <span>Check List</span>
+            <v-expansion-panel-header :style="!IsCompleted ? 'color: white;':''" :color="!IsCompleted ? 'red':''">
+              <span class="font-weight-black">Check List</span>
+              <v-row v-if="!IsCompleted" dense>
+                <v-col>
+                  <v-icon dark>
+                    mdi-alert-circle
+                  </v-icon>
+                  <span style="color: white;" class="font-weight-accent">
+                    there are items that need to be completed or checked
+                  </span>
+                </v-col>
+              </v-row>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-list subheader two-line flat dense>
@@ -139,14 +156,16 @@
                     <template v-slot:default>
                       <v-list-item-content class="text-left">
                         <v-list-item-title>
-                          <v-row justify="start" align="center">
-                            <v-col cols="10" md="6" class="font-weight-black">
-                              {{ checkListIndex + 1 }} .- {{ item.text }} {{ item.annotation }}
+                          <v-row justify="start" align="center" dense>
+                            <v-col cols="10" md="6" class="font-weight-black text-wrap">
+                              <h3>
+                              	{{ checkListIndex + 1 }} .- {{ item.text }} {{ item.annotation }}
+                              </h3>
                               <span v-if="item.checks.filter(c => c.required && c.checked===0).length == 0">
                                 <v-chip x-small color="success">Completed</v-chip>
                               </span>
                             </v-col>
-                            <v-col cols="2" md="6" :class="$vuetify.breakpoint.mdAndDown ? 'ml-n5':'ml-n8'">
+                            <v-col cols="2" md="6" :class="$vuetify.breakpoint.mdAndDown ? 'ml-n5':'ml-n6'">
                               <v-checkbox
                                 :disabled="currentReport.isClosed"
                                 color="primary"
@@ -156,7 +175,7 @@
                               />
                             </v-col>
                           </v-row>
-                          <v-row>
+                          <v-row dense>
                             <v-col cols="12">
                               <v-list-item
                                 v-for="(checkItem, checkListItemIndex) in item.checks"
@@ -173,11 +192,14 @@
                                             class="text-wrap"
                                           >
                                             <v-row justify="space-around" align="center" dense>
-                                              <v-col cols="1"><span>{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1}} .- </span></v-col>
-                                              <v-col cols="10">
-                                                
-                                                <span v-if="!checkItem.editable">{{ checkItem.text }}</span>
-                                                <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)"/>
+                                              <v-col cols="1" :class="['text-right', checkItem.required && !checkItem.checked ? 'error--text' : '']"><h3>{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1}} </h3></v-col>
+                                              <v-col cols="10" :class="['text-left', checkItem.required && !checkItem.checked ? 'error--text' : '']">
+                                                <h3 v-if="!checkItem.editable">.-{{ checkItem.text }} <v-chip v-if="!checkItem.editable && checkItem.required" class="text-uppercase" color="error" x-small>required</v-chip></h3>
+                                                <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)">
+                                                  <template v-slot:append="">
+                                                    <v-chip x-small class="text-uppercase" color="error" v-if="checkItem.required">required</v-chip>
+                                                  </template>
+                                                </v-text-field>
                                               </v-col>
                                             </v-row>
                                           </v-col>
@@ -222,8 +244,18 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel>
-            <v-expansion-panel-header>
-              Notes
+            <v-expansion-panel-header :style="HasNotesWithPendingChecks ? 'color: white;':''" :color="HasNotesWithPendingChecks ? 'red':''">
+              <span class="font-weight-black">Notes</span>
+              <v-row v-if="HasNotesWithPendingChecks" dense>
+                <v-col>
+                  <v-icon dark>
+                    mdi-alert-circle
+                  </v-icon>
+                  <span style="color: white;" class="font-weight-accent">
+                    there are items that need to be completed or checked
+                  </span>
+                </v-col>
+              </v-row>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-row justify="end" align="end" class="text-right">
@@ -276,23 +308,67 @@
             </v-row>
           </v-tab-item>
           <v-tab-item key="photos" value="photos">
-            <PhotoRecords v-model="currentReport" @uploaded="loadReport" />
+            <PhotoRecords v-model="currentReport" @uploaded="saveReportChanges(); loadReport()" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
-        
-      </v-col>
-    </v-row>
-    
+    <message-dialog v-model="errorsDialog" :actions="['no']" no-text="close" @no="errorsDialog = false">
+      <template v-slot:title="{}">
+        Report Errors
+      </template>
+      <h2>The Report has been saved! but we've found some errors: </h2><br>
+      <span class="subtitle-1 error--text font-weight-black" v-if="!IsCompleted">- Please, Complete and check all the required item in the checklist</span><br>
+      <span class="subtitle-1 error--text font-weight-black" v-if="HasNotesWithPendingChecks">- There are notes that you need to check. verify if it needs to be checked and filled</span><br>
+      <span class="subtitle-1 error--text font-weight-black" v-if="!PrincipalSignatureHasAResponsable">- The Principal Signature must have an responsable name and type</span>
+    </message-dialog>
+    <v-dialog
+      v-model="dialogPrinting"
+      hide-overlay
+      persistent
+      width="300"
+    >
+      <v-card
+        color="primary"
+        dark
+      >
+        <v-card-text>
+          Processing and Downloading pdf report
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+    <v-snackbar
+      v-model="savedNotification"
+      top
+      centered
+      color="success"
+      :timeout="3000"
+    >
+      Changes has been saved
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          dark
+          text
+          v-bind="attrs"
+          @click="savedNotification = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Watch, mixins } from "nuxt-property-decorator";
 import InnerPageMixin from '@/mixins/innerpage'
+import { PrintHelper } from '@/Helpers'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { AddressesState } from '@/store/addresses'
 import { Report, 
@@ -323,11 +399,15 @@ export default class EditReport extends mixins(InnerPageMixin) {
     obs: InstanceType<typeof ValidationObserver>
   }
 
+  errorsDialog: boolean = false
+  dialogPrinting: boolean = false
+  savedNotification: boolean = false
+
   search: string = ''
   isDirty: boolean = false
   searchingAddresses: boolean = false
   openedPanels: number[] = [0,1]
-  
+  printHelper!: PrintHelper
   savingNewReport: boolean = false
   currentPhoto: number = 0
   showLabelEdit:number[] = []
@@ -446,6 +526,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
           }
           this.$axios.$put(`signatures/${signature.id}`, command)
       })
+      this.savedNotification=true
     })
     this.savingNewReport=false
   }
@@ -458,6 +539,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   async fetch() {
     await this.loadReport()
+    await this.getSuggestedAddresses('')
   }
 
   async loadReport() {
@@ -502,10 +584,14 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   get PrincipalSignatureHasAResponsable() {
+    if(!this.currentReport) return true
+    if(!this.currentReport!.signatures) return true
     return this.currentReport.signatures.findIndex(s=>s.responsable.type !== undefined && s.responsable.name !== '' && s.principal) >= 0
   }
 
   get HasNotesWithPendingChecks() {
+    if(!this.currentReport) return false
+    if(!this.currentReport!.notes) return false
     return this.currentReport.notes.findIndex(n => n.needsCheck && !n.checked) >= 0
   }
 
@@ -526,7 +612,18 @@ export default class EditReport extends mixins(InnerPageMixin) {
     return item.checks.length === item.checks.filter((c:any) => c.checked).length
   }
 
+  setLicenseFromAddress() {
+    if(!this.currentReport.address) {
+      this.currentReport!.license.number = ''
+      return
+    }
+    const addressData = this.addresses.filter(a=>a.formatedAddress === this.currentReport.address)
+    if(addressData)
+      this.currentReport!.license.number = addressData[0].licenseNumber ?? ''
+  }
+
   mounted() {
+    this.printHelper = new PrintHelper(this.$store)
     return this.$refs.obs.validate()
   }
 
@@ -534,6 +631,17 @@ export default class EditReport extends mixins(InnerPageMixin) {
     await this.$store.dispatch("addresses/getAddresses", { filter }, { root: true });
     this.searchingAddresses = false
     this.isDirty=false
+  }
+
+  async closeReport() {
+    this.currentReport.isClosed = true; 
+    await this.saveReportChanges(); 
+    this.dialogClose = false; 
+    this.currentReport.isClosed = true; 
+    this.dialogPrinting = true; 
+    await this.printHelper.print(this.currentReport.id)
+    this.dialogPrinting = false; 
+    this.$router.push('/reports')
   }
 
   @Watch('search')

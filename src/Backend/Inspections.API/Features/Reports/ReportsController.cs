@@ -20,7 +20,7 @@ using Microsoft.Extensions.Options;
 
 namespace Inspections.API.Features.Inspections
 {
-  [Authorize]
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ReportsController : ControllerBase
@@ -42,7 +42,7 @@ namespace Inspections.API.Features.Inspections
         public async Task<IActionResult> Post([FromBody] CreateReportCommand createData)
         {
             var result = await _mediator.Send(createData).ConfigureAwait(false);
-            if (result<=0)
+            if (result <= 0)
                 return BadRequest();
 
             return Ok(result);
@@ -92,8 +92,13 @@ namespace Inspections.API.Features.Inspections
         public IActionResult GetPhotoRecords(int id)
         {
             var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id)
-                            .Select(p => new { p.Label, p.FileName, Base64String = ToBase64String($"{Directory.GetCurrentDirectory()}{p.FileName.Replace("ReportsImages", storageOptions.Value.ReportsImagesFolder, StringComparison.InvariantCultureIgnoreCase)}") });
-            if (photos!=null)
+                            .Select(p => new
+                            {
+                                p.Label,
+                                p.FileName,
+                                Base64String = ToBase64String($"{Directory.GetCurrentDirectory()}{p.FileNameResized.Replace("ReportsImages", storageOptions.Value.ReportsImagesFolder, StringComparison.InvariantCultureIgnoreCase)}"),
+                            });
+            if (photos != null)
                 return Ok(photos);
 
             return BadRequest();

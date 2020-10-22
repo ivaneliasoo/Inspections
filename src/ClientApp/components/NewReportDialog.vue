@@ -84,7 +84,6 @@ export default class NewReportDialog extends Vue {
   creatingReport: boolean = false
   search: string = ''
   configuration: number = 0
-
   async fetch() {
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
   }

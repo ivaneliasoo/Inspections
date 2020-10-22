@@ -26,8 +26,8 @@
                     <h1>Login</h1>
                   </v-col>
                 </v-row>
+                  <v-form id="signin-form" action="" @submit.prevent="userLogin">
                 <v-card-text>
-                  <v-form>
                     <v-text-field
                       v-model="userName"
                       label="UserName"
@@ -44,14 +44,14 @@
                       prepend-icon="mdi-lock"
                       type="password"
                     />
-                  </v-form>
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer />
-                  <v-btn color="primary" :loading="loading" @click="login">
+                  <v-btn color="primary" :loading="loading" type="submit" @click.prevent="login">
                     Login
                   </v-btn>
                 </v-card-actions>
+                  </v-form>
                 <v-row>
                   <v-alert
                     :value="hasError"

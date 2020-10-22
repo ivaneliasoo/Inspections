@@ -10,7 +10,7 @@
       @no="dialogRemove=false"
     />
     <new-report-dialog v-model="dialog" />
-    <v-data-table :class="$device.isTablet ? 'tablet-text':''" :items="reportList" item-key="id" :search="filter" dense :headers="headers">
+    <v-data-table :class="$device.isTablet ? 'tablet-text':''" :items="reportList" item-key="id" :search="filter" dense :headers="headers" :loading="loading">
       <template v-slot:top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Inspection Reports</v-toolbar-title>
@@ -37,7 +37,7 @@
               mdi-camera
             </v-icon>
             </template>
-          <span>Print Report With Photos</span>
+          <span>Print Inspection Report With Photos</span>
         </v-tooltip>
         <v-tooltip top>
           <template v-slot:activator="{ on }">
@@ -51,7 +51,7 @@
               mdi-printer
             </v-icon>
         </template>
-          <span>Print Report</span>
+          <span>Print Inspections Report without Photos</span>
         </v-tooltip>
         <v-tooltip top>
           <template v-slot:activator="{ on }">
@@ -155,6 +155,7 @@ import CreateReportDialog from '@/components/NewReportDialog.vue'
   }
 })
 export default class ReportsPage extends mixins(InnerPageMixin) {
+  loading: boolean = false
   printHelper!: PrintHelper
   dialogRemove: Boolean = false
   dialog: Boolean = false
@@ -204,8 +205,11 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
         .reportList
     }
 
-    fetch ({ store, query }: any) {
-      store.dispatch('reportstrore/getReports', { filter: '', closed: query.closed }, { root: true })
+    async fetch () {
+      this.loading = true
+      await this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed }, { root: true })
+
+      this.loading= false 
     }
 
     mounted() {

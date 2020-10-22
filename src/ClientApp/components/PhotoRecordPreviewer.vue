@@ -4,7 +4,10 @@
       <v-col
         v-for="(photo, index) in urls"
         :key="index"
-        :cols="index===0 ? 12: $vuetify.breakpoint.smAndDown ? 6:3"
+        cols="12"
+            sm="6"
+            md="4"
+            lg="3"
       >
         <v-card>
           <v-img
@@ -22,19 +25,26 @@
               hint="write a description if needed"
             />
             <v-spacer></v-spacer>
-            <v-btn icon @click="currentPhoto=index; showCarousel=true">
+            <!-- <v-btn icon @click="currentPhoto=index; showCarousel=true">
               <v-icon>mdi-eye</v-icon>
-            </v-btn>
+            </v-btn> -->
             <v-btn icon @click="removePhoto(index)">
               <v-icon>mdi-delete</v-icon>
             </v-btn>
           </v-card-actions>
+          <v-progress-linear
+            color="light-blue"
+            height="10"
+            :value="progress"
+            striped
+          ></v-progress-linear>
         </v-card>
       </v-col>
     </v-row>
-    <v-dialog v-if="currentPhoto" v-model="showCarousel">
+    <v-dialog v-model="showCarousel">
       <v-carousel v-model="currentPhoto" height="80%">
         <v-carousel-item v-for="(photo, index) in urls" :key="index" :src="photo.url">
+          <span>{{ photo }} {{ index }}</span>
         </v-carousel-item>
       </v-carousel>
     </v-dialog>
@@ -42,13 +52,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model, PropSync } from "vue-property-decorator";
+import { Component, Vue, Model, PropSync, Prop } from "vue-property-decorator";
 import { Report, DeletePhotoRecordCommand, PhotoRecord, EditPhotoRecordCommand } from "~/types";
 
 @Component
 export default class PhotoRecordPreviewer extends Vue {
   @Model("input") urls: string[] | undefined;
   @PropSync('files', { required: true }) filesSync: File[] | undefined
+  @Prop({ type: Number }) progress!: number 
 
   showCarousel: boolean = false
   currentPhoto: number = 0;

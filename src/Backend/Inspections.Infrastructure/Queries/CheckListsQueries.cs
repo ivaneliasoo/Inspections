@@ -26,32 +26,32 @@ namespace Inspections.Infrastructure.Queries
                 inConfigurationOnly = null;
 
             return _context.ResumenCheckLists.FromSqlRaw(@"
-                SELECT Id,
-                        Text,
-                        Annotation,
-                        ISNULL(Params.TotalParams, 0) TotalParams,
-                        ISNULL(Items.TotalItems, 0) TotalItems,
-                        LastEdit,
-                        LastEditUser
-                    FROM Inspections.CheckLists cl
-                        LEFT JOIN (
-                                            SELECT CheckListId, COUNT([Key]) AS TotalParams
-                        FROM Inspections.CheckListParams
-                        GROUP BY CheckListId
-                                        ) Params
-                        ON cl.Id = Params.CheckListId
-                        LEFT JOIN (
-                                            SELECT CheckListId, COUNT(Id) AS TotalItems
-                        FROM Inspections.CheckListItems
-                        GROUP BY CheckListId
-                                        ) Items
-                        ON cl.Id = Items.CheckListId
+                SELECT ""Id"",
+                        ""Text"",
+                        ""Annotation"",
+                        COALESCE(""Params"".TotalParams, 0) ""TotalParams"",
+                        COALESCE(""Items"".TotalItems, 0) ""TotalItems"",
+                        ""LastEdit"",
+                        ""LastEditUser""
+                    FROM ""Inspections"".""CheckLists"" ""cl""
+                        LEFT JOIN(
+                                            SELECT ""CheckListId"", COUNT(""Key"") AS TotalParams
+                        FROM ""Inspections"".""CheckListParams""
+                        GROUP BY ""CheckListId""
+                                        ) ""Params""
+                        ON ""cl"".""Id"" = ""Params"".""CheckListId""
+                        LEFT JOIN(
+                                            SELECT ""CheckListId"", COUNT(""Id"") AS TotalItems
+                        FROM ""Inspections"".""CheckListItems""
+                        GROUP BY ""CheckListId""
+                                        ) ""Items""
+                        ON ""cl"".""Id"" = ""Items"".""CheckListId""
                     WHERE 1=1
-                        AND ([Text] LIKE {0}
-                        OR Annotation LIKE {0})
-                        AND (cl.ReportId = {1} OR {1} IS NULL)
-                        AND (cl.IsConfiguration = {2} OR {2} IS NULL)
-                        AND (cl.ReportConfigurationId = {3} OR {3} IS NULL)
+                        AND (""Text"" LIKE {0}
+                        OR ""Annotation"" LIKE {0})
+                        AND (""cl"".""ReportId"" = {1} OR {1} IS NULL)
+                        AND (""cl"".""IsConfiguration"" = {2} OR {2} IS NULL)
+                        AND (""cl"".""ReportConfigurationId"" = {3} OR {3} IS NULL)
             ", $"%{filter ?? string.Empty}%", reportId, inConfigurationOnly, reportConfigurationId);
         }
     }

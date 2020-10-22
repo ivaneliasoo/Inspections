@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Shared;
 
 namespace Inspections.Core.Domain
@@ -9,12 +10,14 @@ namespace Inspections.Core.Domain
     {
         public string AddressLine { get; set; }
         public string AddressLine2 { get; set; }
-        public string City { get; set; }
-        public string Province { get; set; }
+        public string Unit { get; set; }
+        public string Country { get; set; }
+        public string PostalCode { get; set; }
+        public string LicenseNumber { get; set; }
 
         public override string ToString()
         {
-            return $"{AddressLine} {AddressLine2}, {City}, {Province}";
+            return $"{AddressLine} {AddressLine2} {Unit} {Country} {PostalCode}";
         }
 
     }
