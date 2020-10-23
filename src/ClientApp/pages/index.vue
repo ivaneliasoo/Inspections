@@ -1,9 +1,31 @@
 
 <template>
-  <v-row>
-    <new-report-dialog v-model="dialog" @report-created="goToNewReport($event)" />
-    <OptionsCards :options="cardOptions" />
+  <div>
+    <v-row>
+      <new-report-dialog v-model="dialog" @report-created="goToNewReport($event)" />
+      <OptionsCards :options="cardOptions" />
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="6" sm="12">
+        <v-card>
+          <v-card-title class="justify-center">
+            <h3>Licenses Expiring Soon</h3>
+          </v-card-title>
+          <v-data-table :headers="[]" />
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6" sm="12">
+        <v-card>
+          <v-card-title class="justify-center">
+            <h3>
+              Expired Licenses
+            </h3>
+          </v-card-title>
+          <v-data-table :headers="[]" />
+        </v-card>
+      </v-col>
   </v-row>
+  </div>
 </template>
 
 <script lang="ts">

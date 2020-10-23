@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    [Migration("20201014022754_Initial_Postgress")]
-    partial class Initial_Postgress
+    [Migration("20201023004935_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,9 +47,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("character varying(20)")
                         .HasMaxLength(20);
 
-                    b.Property<string>("LicenseNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("LicenseId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
@@ -60,6 +59,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LicenseId")
+                        .IsUnique();
 
                     b.ToTable("Addresses","Inspections");
                 });
@@ -184,6 +186,29 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.HasIndex("CheckListItemId");
 
                     b.ToTable("CheckListParams","Inspections");
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.EMALicense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasColumnType("character varying(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Number")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Licenses");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", b =>
@@ -431,6 +456,15 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Inspections.Core.Domain.Address", b =>
+                {
+                    b.HasOne("Inspections.Core.Domain.EMALicense", "License")
+                        .WithOne("Address")
+                        .HasForeignKey("Inspections.Core.Domain.Address", "LicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckList", b =>
                 {
                     b.HasOne("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", "ReportConfiguration")
@@ -464,6 +498,30 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
                 });
 
+            modelBuilder.Entity("Inspections.Core.Domain.EMALicense", b =>
+                {
+                    b.OwnsOne("Inspections.Shared.DateTimeRange", "Validity", b1 =>
+                        {
+                            b1.Property<int>("EMALicenseId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<DateTime>("End")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.Property<DateTime>("Start")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("EMALicenseId");
+
+                            b1.ToTable("Licenses");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EMALicenseId");
+                        });
+                });
+
             modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.Note", b =>
                 {
                     b.HasOne("Inspections.Core.Domain.ReportsAggregate.Report", null)
@@ -484,15 +542,12 @@ namespace Inspections.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.Report", b =>
                 {
-                    b.OwnsOne("Inspections.Core.Domain.ReportsAggregate.EMALicense", "License", b1 =>
+                    b.OwnsOne("Inspections.Core.Domain.ReportsAggregate.License", "License", b1 =>
                         {
                             b1.Property<int>("ReportId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("integer")
                                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                            b1.Property<int>("LicenseType")
-                                .HasColumnType("integer");
 
                             b1.Property<string>("Number")
                                 .IsRequired()
@@ -507,7 +562,7 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                             b1.OwnsOne("Inspections.Shared.DateTimeRange", "Validity", b2 =>
                                 {
-                                    b2.Property<int>("EMALicenseReportId")
+                                    b2.Property<int>("LicenseReportId")
                                         .ValueGeneratedOnAdd()
                                         .HasColumnType("integer")
                                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -518,12 +573,12 @@ namespace Inspections.Infrastructure.Data.Migrations
                                     b2.Property<DateTime>("Start")
                                         .HasColumnType("timestamp without time zone");
 
-                                    b2.HasKey("EMALicenseReportId");
+                                    b2.HasKey("LicenseReportId");
 
                                     b2.ToTable("Reports");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("EMALicenseReportId");
+                                        .HasForeignKey("LicenseReportId");
                                 });
                         });
                 });

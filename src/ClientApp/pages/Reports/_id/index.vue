@@ -48,6 +48,7 @@
                   placeholder="Start typing to Search"
                   prepend-icon="mdi-crosshairs-gps"
                   clearable
+                  autocomplete="nope"
                 />
               </ValidationProvider>
             </v-col>

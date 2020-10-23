@@ -11,7 +11,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
     {
         public string Name { get; private set; }
         public string Address { get; private set; }
-        public EMALicense License { get; private set; }
+        public License License { get; private set; }
         public DateTimeOffset Date { get; private set; }
         public bool IsClosed { get; private set; }
 
@@ -34,7 +34,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         }
 
-        public Report(string name, string address, EMALicense license, DateTimeOffset date)
+        public Report(string name, string address, License license, DateTimeOffset date)
         {
             Name = name;
             Address = address;
@@ -56,7 +56,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
             RemarksLabelText = remarksLabelText;
         }
 
-        public void Edit(string name, string address, EMALicense license, DateTimeOffset date)
+        public void Edit(string name, string address, License license, DateTimeOffset date)
         {
             CheckIfClosed();
             Name = name;

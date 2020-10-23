@@ -27,11 +27,11 @@ namespace Inspections.API.Features.Reports.Handlers
             Guard.Against.Null(request, nameof(request));
             var report = await _reportsRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
             var reportName = $"{request.Date:yyyyMMdd}-{report.Title}-{request.LicenseNumber}-{request.Address}";
-            report.Edit(reportName, request.Address, new EMALicense
+            //TODO: verify licences when comming form UI
+            report.Edit(reportName, request.Address, new License
             {
-                LicenseType = EMALicenseType.NA, //No Apply
                 Number = request.LicenseNumber,
-                Validity = new DateTimeRange(DateTime.Now, DateTime.Now.AddYears(1))
+                Validity = new DateTimeRange(DateTime.Now, DateTime.Now.AddYears(1)) // TODO: USe the real one
             }, request.Date);
 
             if (request.IsClosed)

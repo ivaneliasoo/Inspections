@@ -1,5 +1,4 @@
 ﻿using Inspections.Core;
-using Inspections.Core.Domain;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
@@ -7,6 +6,7 @@ using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Core.QueryModels;
 using Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguration;
 using Inspections.Infrastructure.Data.ReportsAggregateConfiguration;
+using Inspections.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -49,8 +49,9 @@ namespace Inspections.Infrastructure.Data
         public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
         public DbSet<Signature> Signatures { get; set; }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Core.Domain.User> Users { get; set; }
+        public DbSet<Core.Domain.Address> Addresses { get; set; }
+        public DbSet<Core.Domain.EMALicense> Licenses { get; set; }
 
 
         //Queries
@@ -67,6 +68,7 @@ namespace Inspections.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new CheckListEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new NotesEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new AddressEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new EMALicenseEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfigurationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ReportEntityTypeConfiguration(_userNameResolver));
 
@@ -75,7 +77,13 @@ namespace Inspections.Infrastructure.Data
                 if (entityType is ResumenReportConfiguration)
                     continue;
 
-                if (entityType is EMALicense)
+                if (entityType is License)
+                    continue;
+
+                if (entityType is Core.Domain.EMALicense)
+                    continue;
+
+                if (entityType is DateTimeRange)
                     continue;
 
                 modelBuilder.Entity(entityType.Name).Property<DateTimeOffset>("LastEdit").IsRequired();
@@ -83,15 +91,15 @@ namespace Inspections.Infrastructure.Data
             }
 
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<Core.Domain.User>()
                 .HasKey(p => p.UserName);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<Core.Domain.User>()
             .Property(p => p.UserName)
                 .HasMaxLength(20);
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<Core.Domain.User>()
             .Property(p => p.Name).IsRequired().HasMaxLength(50);
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<Core.Domain.User>()
             .Property(p => p.LastName).IsRequired().HasMaxLength(50);
 
 

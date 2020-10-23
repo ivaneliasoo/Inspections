@@ -4,12 +4,29 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Inspections.Infrastructure.Data.Migrations
 {
-    public partial class Initial_Postgress : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "Inspections");
+
+            migrationBuilder.CreateTable(
+                name: "Licenses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Number = table.Column<string>(nullable: true),
+                    Validity_Start = table.Column<DateTime>(nullable: true),
+                    Validity_End = table.Column<DateTime>(nullable: true),
+                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Licenses", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Users",
@@ -30,27 +47,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Addresses",
-                schema: "Inspections",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AddressLine = table.Column<string>(nullable: false),
-                    AddressLine2 = table.Column<string>(nullable: true),
-                    Unit = table.Column<string>(nullable: false),
-                    Country = table.Column<string>(nullable: false),
-                    PostalCode = table.Column<string>(nullable: false),
-                    LicenseNumber = table.Column<string>(nullable: false),
-                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
-                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reports",
                 schema: "Inspections",
                 columns: table => new
@@ -59,7 +55,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: false),
-                    License_LicenseType = table.Column<int>(nullable: true),
                     License_Number = table.Column<string>(nullable: true),
                     License_Validity_Start = table.Column<DateTime>(nullable: true),
                     License_Validity_End = table.Column<DateTime>(nullable: true),
@@ -93,6 +88,33 @@ namespace Inspections.Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReportsConfiguration", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                schema: "Inspections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AddressLine = table.Column<string>(nullable: false),
+                    AddressLine2 = table.Column<string>(nullable: true),
+                    Unit = table.Column<string>(nullable: false),
+                    Country = table.Column<string>(nullable: false),
+                    PostalCode = table.Column<string>(nullable: false),
+                    LicenseId = table.Column<int>(nullable: false),
+                    LastEdit = table.Column<DateTimeOffset>(nullable: false),
+                    LastEditUser = table.Column<string>(maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Licenses_LicenseId",
+                        column: x => x.LicenseId,
+                        principalTable: "Licenses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -283,6 +305,13 @@ namespace Inspections.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Addresses_LicenseId",
+                schema: "Inspections",
+                table: "Addresses",
+                column: "LicenseId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CheckListItems_CheckListId",
                 schema: "Inspections",
                 table: "CheckListItems",
@@ -361,6 +390,9 @@ namespace Inspections.Infrastructure.Data.Migrations
             migrationBuilder.DropTable(
                 name: "Signatures",
                 schema: "Inspections");
+
+            migrationBuilder.DropTable(
+                name: "Licenses");
 
             migrationBuilder.DropTable(
                 name: "CheckListItems",

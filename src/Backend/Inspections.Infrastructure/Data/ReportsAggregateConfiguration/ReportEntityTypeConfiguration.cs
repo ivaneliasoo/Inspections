@@ -26,7 +26,6 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.OwnsOne(p => p.License, ir =>
             {
                 ir.Property(p => p.Number).IsRequired();
-                ir.Property(p => p.LicenseType).IsRequired();
                 ir.OwnsOne(p => p.Validity, l =>
                 {
                     l.Property(p => p.Start).IsRequired();

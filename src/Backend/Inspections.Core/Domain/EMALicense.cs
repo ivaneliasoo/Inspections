@@ -1,12 +1,14 @@
-﻿using Inspections.Shared;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Inspections.Shared;
 
-namespace Inspections.Core.Domain.ReportsAggregate
+namespace Inspections.Core.Domain
 {
-    public class EMALicense : ValueObject
+    public class EMALicense : Entity<int>
     {
-        public EMALicenseType LicenseType { get; set; }
         public string Number { get; set; }
         public DateTimeRange Validity { get; set; }
+        public Address Address { get; set; }
     }
 }

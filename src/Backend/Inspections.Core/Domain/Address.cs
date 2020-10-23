@@ -13,12 +13,12 @@ namespace Inspections.Core.Domain
         public string Unit { get; set; }
         public string Country { get; set; }
         public string PostalCode { get; set; }
-        public string LicenseNumber { get; set; }
+        public int LicenseId { get; set; }
+        public EMALicense License { get; set; }
 
         public override string ToString()
         {
             return $"{AddressLine} {AddressLine2} {Unit} {Country} {PostalCode}";
         }
-
     }
 }

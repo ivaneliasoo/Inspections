@@ -32,6 +32,14 @@ import { CardOption } from '~/types';
         icon: 'mdi-cog-outline',
         color: 'accent',
         path: '/addresses'
+      },
+      {
+        name: 'licenses',
+        text: 'Licenses Management',
+        helpText: 'Allows to create, update, delete addreess from de suggestion registry',
+        icon: 'mdi-cog-outline',
+        color: 'accent',
+        path: '/addresses'
       }
     ]
 

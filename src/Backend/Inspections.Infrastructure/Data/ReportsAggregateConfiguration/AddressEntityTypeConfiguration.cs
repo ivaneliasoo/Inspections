@@ -20,7 +20,8 @@ namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
             builder.Property(p => p.Unit).IsRequired();
             builder.Property(p => p.Country).IsRequired();
             builder.Property(p => p.PostalCode).IsRequired();
-            builder.Property(p => p.LicenseNumber).IsRequired();
+            builder.Property(p => p.LicenseId).IsRequired();
+            builder.HasOne(p => p.License).WithOne(a => a.Address).HasForeignKey<Address>(f => f.LicenseId);
         }
     }
 }

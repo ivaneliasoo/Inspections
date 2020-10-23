@@ -16,7 +16,7 @@ namespace Inspections.API.Features.Addresses.Models
             Unit = address.Unit;
             Country = address.Country;
             PostalCode = address.PostalCode;
-            LicenseNumber = address.LicenseNumber;
+            LicenseId = address.LicenseId;
             FormatedAddress = address.ToString();
         }
 
@@ -31,7 +31,7 @@ namespace Inspections.API.Features.Addresses.Models
         public string Unit { get; set; }
         public string Country { get; set; }
         public string PostalCode { get; set; }
-        public string LicenseNumber { get; set; }
+        public int LicenseId { get; set; }
         public string FormatedAddress { get; set; }
     }
 }
