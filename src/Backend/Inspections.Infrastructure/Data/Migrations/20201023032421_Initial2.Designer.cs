@@ -3,15 +3,17 @@ using System;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    partial class InspectionsContextModelSnapshot : ModelSnapshot
+    [Migration("20201023032421_Initial2")]
+    partial class Initial2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +60,8 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LicenseId");
+                    b.HasIndex("LicenseId")
+                        .IsUnique();
 
                     b.ToTable("Addresses","Inspections");
                 });
@@ -456,8 +459,8 @@ namespace Inspections.Infrastructure.Data.Migrations
             modelBuilder.Entity("Inspections.Core.Domain.Address", b =>
                 {
                     b.HasOne("Inspections.Core.Domain.EMALicense", "License")
-                        .WithMany()
-                        .HasForeignKey("LicenseId")
+                        .WithOne("Address")
+                        .HasForeignKey("Inspections.Core.Domain.Address", "LicenseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -28,6 +28,7 @@
     "nuxt-compress": "^3.0.0",
     "nuxt-property-decorator": "2.7.2",
     "pdfmake": "0.1.65",
+    "ts-image-processor": "^1.1.17",
     "vee-validate": "^3.3.9",
     "vue-chartjs": "^3.5.1",
     "vue-signature-pad": "^2.0.2",

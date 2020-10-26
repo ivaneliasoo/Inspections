@@ -97,12 +97,19 @@
                       </v-col>
                       <v-col>
                         <ValidationProvider rules="required" immediate v-slot="{ errors }">
-                          <v-text-field
+                          <!-- <v-text-field
                             v-model="item.licenseNumber"
                             autocomplete="nope"
                             :error-messages="errors"
                             name="license"
                             label="License Number"
+                          /> -->
+                          <v-autocomplete 
+                            v-model="item.licenseId"
+                            :items="licenses"
+                            item-text="number"
+                            item-value="licenseId"
+                            autocomplete="nope"
                           />
                         </ValidationProvider>
                       </v-col>
@@ -173,6 +180,7 @@ import { Vue, Component, mixins } from "nuxt-property-decorator";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import InnerPageMixin from "@/mixins/innerpage";
 import { AddressesState } from "store/addresses";
+import { LicensesState } from "store/licenses";
 import { AddressDTO } from "@/types/Addresses";
 
 @Component({
@@ -235,6 +243,10 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
     return (this.$store.state.addresses as AddressesState).addressList;
   }
 
+  get licenses() {
+    return (this.$store.state.licenses as LicensesState).licensesList
+  }
+
   selectItem(item: AddressDTO): void {
     this.selectedItem = item;
     this.$store
@@ -247,7 +259,10 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
   async fetch() {
     if (!this.$auth.user.isAdmin)
       this.$nuxt.error({ statusCode: 403, message: "Forbbiden" });
-    await this.$store.dispatch("addresses/getAddresses", {}, { root: true });
+    
+    Promise.all([ await this.$store.dispatch("addresses/getAddresses", {}, { root: true }),
+    await this.$store.dispatch("licenses/getLicenses", {}, { root: true })])
+   
   }
 
   deleteAddress() {

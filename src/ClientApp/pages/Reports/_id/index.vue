@@ -431,7 +431,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     return this.$store.state.showFabSaveButton
   }
   get localAddress(): AddressDTO[] {
-    return [{ formatedAddress: this.currentReport.address }]
+    return [{ formatedAddress: this.currentReport.address } as AddressDTO]
   }
   get addresses(): AddressDTO[] {
     const dbAddressses = (this.$store.state.addresses as AddressesState).addressList;
@@ -620,7 +620,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     }
     const addressData = this.addresses.filter(a=>a.formatedAddress === this.currentReport.address)
     if(addressData)
-      this.currentReport!.license.number = addressData[0].licenseNumber ?? ''
+      this.currentReport!.license.number = addressData[0].number ?? ''
   }
 
   mounted() {

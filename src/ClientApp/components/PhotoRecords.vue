@@ -71,6 +71,7 @@ import { Component, Vue, Model } from "vue-property-decorator";
 import { Report } from "~/types";
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
+import { imageProcessor, resize, sharpen } from 'ts-image-processor';
 
 @Component({
   components: {
@@ -88,6 +89,20 @@ export default class PhotoRecords extends Vue {
   percentCompleted: number= 0
 
   async uploadFiles() {
+
+    
+      // Use any of the functions with an existing blob (base64-string)
+      imageProcessor
+        .src(this.files)
+        .pipe(
+          resize({maxWidth: 800, maxHeight: 800}),
+          sharpen(),
+        )
+        .then(processedBase64 => {
+          console.log(processedBase64)
+          // Do whatever with your happy result :)
+        });
+
     const Pthis =  this
     let formData = new FormData();
     this.dialogUploading=true

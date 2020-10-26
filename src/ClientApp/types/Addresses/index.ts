@@ -1,3 +1,5 @@
+import { DateTimeRange, LicenseDTO } from "../Licenses";
+
 export interface AddressDTO {
   id?: number;
   addressLine?: string;
@@ -5,6 +7,8 @@ export interface AddressDTO {
   unit?: string;
   country?: string;
   postalCode?: string;
-  licenseNumber?: string;
+  licenseId: number;
+  number: string;
+  validity: DateTimeRange;
   formatedAddress: string;
 }

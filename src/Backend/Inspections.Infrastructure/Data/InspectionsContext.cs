@@ -117,12 +117,17 @@ namespace Inspections.Infrastructure.Data
                 if (entity.CurrentValues.EntityType.DisplayName() == "Responsable")
                     continue;
 
-                if (entity.CurrentValues.EntityType.DisplayName() == "EMALicense")
+                if (entity.CurrentValues.EntityType.DisplayName() == "License")
+                    continue;
+
+                if (entity.CurrentValues.EntityType.DisplayName() == "License.Validity#DateTimeRange")
                     continue;
 
                 if (entity.CurrentValues.EntityType.DisplayName() == "DateTimeRange")
                     continue;
-
+                
+                if (entity.CurrentValues.EntityType.DisplayName() == "EMALicense.Validity#DateTimeRange")
+                    continue;
 
                 entity.Property("LastEdit").CurrentValue = DateTimeOffset.UtcNow;
                 entity.Property("LastEditUser").CurrentValue = _userNameResolver.UserName ?? "Seed";

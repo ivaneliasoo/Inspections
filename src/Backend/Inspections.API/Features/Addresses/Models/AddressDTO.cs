@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Inspections.Core.Domain;
+using Inspections.Shared;
 
 namespace Inspections.API.Features.Addresses.Models
 {
@@ -17,6 +18,8 @@ namespace Inspections.API.Features.Addresses.Models
             Country = address.Country;
             PostalCode = address.PostalCode;
             LicenseId = address.LicenseId;
+            Number = address.License.Number;
+            Validity= address.License.Validity;
             FormatedAddress = address.ToString();
         }
 
@@ -32,6 +35,8 @@ namespace Inspections.API.Features.Addresses.Models
         public string Country { get; set; }
         public string PostalCode { get; set; }
         public int LicenseId { get; set; }
+        public string Number { get; set; }
+        public DateTimeRange Validity { get; set; }
         public string FormatedAddress { get; set; }
     }
 }

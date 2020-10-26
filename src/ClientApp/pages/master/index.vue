@@ -28,7 +28,7 @@ import { CardOption } from '~/types';
       {
         name: 'addresses',
         text: 'Address Management',
-        helpText: 'Allows to create, update, delete addreess from de suggestion registry',
+        helpText: 'Allows to create, update, delete addreess',
         icon: 'mdi-cog-outline',
         color: 'accent',
         path: '/addresses'
@@ -36,10 +36,10 @@ import { CardOption } from '~/types';
       {
         name: 'licenses',
         text: 'Licenses Management',
-        helpText: 'Allows to create, update, delete addreess from de suggestion registry',
-        icon: 'mdi-cog-outline',
+        helpText: 'Allows to create, update, delete licenses',
+        icon: 'mdi-license',
         color: 'accent',
-        path: '/addresses'
+        path: '/licenses'
       }
     ]
 

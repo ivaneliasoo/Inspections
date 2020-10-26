@@ -1,13 +1,13 @@
-delete from Inspections.CheckListParams
-delete from Inspections.CheckListItems
-delete from Inspections.CheckLists
-delete from Inspections.Signatures
-delete from Inspections.Notes
-delete from Inspections.Photos
-delete from Inspections.Reports
-delete from Inspections.ReportsConfiguration
-delete from Users
-delete from [Inspections].[Addresses]
+delete from "Inspections"."CheckListParams";
+delete from "Inspections"."CheckListItems";
+delete from "Inspections"."CheckLists";
+delete from "Inspections"."Signatures";
+delete from "Inspections"."Notes";
+delete from "Inspections"."Photos";
+delete from "Inspections"."Reports";
+delete from "Inspections"."ReportsConfiguration";
+delete from "Users";
+delete from "Inspections"."Addresses";
 
 
 DBCC CHECKIDENT ('Inspections.CheckListParams', RESEED, 0);  
