@@ -5,7 +5,7 @@
       <new-report-dialog v-model="dialog" @report-created="goToNewReport($event)" />
       <OptionsCards :options="cardOptions" />
     </v-row>
-    <v-row>
+    <v-row v-if="$auth.user.isAdmin">
       <v-col cols="12" md="6" sm="12">
         <v-card>
           <v-card-title class="justify-center">
