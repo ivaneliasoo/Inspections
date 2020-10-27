@@ -120,7 +120,7 @@ export class PrintHelper {
 
     (docDef.content as any).push([
       {
-        text: `Name of ${ResponsableType[principalSignature!.responsable.type]}: ${principalSignature!.responsable.name}   Designation: ${principalSignature!.designation}`,
+        text: `Name of ${ResponsableType[principalSignature!.responsable.type]}: ${principalSignature!.responsable.name ?? '_________________'}   Designation: ${principalSignature!.designation ?? '____________________________'}`,
         style: 'filedName',
         margin: [0, 10, 0, 0]
       },
@@ -183,7 +183,7 @@ export class PrintHelper {
           text: `${sign.annotation}`, style: 'fieldName'
         },
         {
-          text: `Name of ${ResponsableType[sign!.responsable.type]}: ${sign!.responsable.name}   Designation: ${sign!.designation ?? ''}`,
+          text: `Name of ${ResponsableType[sign!.responsable.type]}: ${sign!.responsable.name ?? '____________________________'}   Designation: ${sign!.designation ?? '___________________________'}`,
           style: 'filedName',
           margin: [0, 5, 0, 0]
         },
@@ -236,7 +236,7 @@ export class PrintHelper {
             }
           ]
         },
-          , { text: '__________________', width: '25%' }]
+          , { text: check.remarks ? check.remarks : '__________________', width: '25%' }]
       }
     })
     const checksContent = [{ text: `${index + 1}    ${checklist.text} ${checklist.annotation}        ${index === 0 ? 'Remarks' : ''}`, style: 'checklistName', margin: [0, 10, 0, 10] }, mappedChecks]
@@ -294,7 +294,7 @@ export class PrintHelper {
 
   (inspectionreport.content as any).push([
     {
-      text: `Name of ${ResponsableType[principalSignature!.responsable.type]}: ${principalSignature!.responsable.name}   Designation: ${principalSignature!.designation}`,
+      text: `Name of ${ResponsableType[principalSignature!.responsable.type]}: ${principalSignature!.responsable.name ?? '___________________'}   Designation: ${principalSignature!.designation ?? '____________________________'}`,
       style: 'filedName',
       margin: [0, 10, 0, 0]
     },
@@ -357,7 +357,7 @@ export class PrintHelper {
         text: `${sign.annotation}`, style: 'fieldName'
       },
       {
-        text: `Name of ${ResponsableType[sign!.responsable.type]}: ${sign!.responsable.name}   Designation: ${sign!.designation ?? ''}`,
+        text: `Name of ${ResponsableType[sign!.responsable.type]}: ${sign!.responsable.name ?? '______________________'}   Designation: ${sign!.designation ?? '__________________'}`,
         style: 'filedName',
         margin: [0, 5, 0, 0]
       },

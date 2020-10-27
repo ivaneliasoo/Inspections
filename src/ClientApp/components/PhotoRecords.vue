@@ -24,25 +24,6 @@
         />
       </v-col>
       <v-col cols="4"></v-col>
-      <!-- <v-col v-if="files.length>0" cols="2">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn
-              color="indigo"
-              v-on="on"
-              dark
-              fab
-              :small="$device.isMobile"
-              elevation="2"
-              :disabled="!files.length>0 || currentReport.isClosed || dialogUploading"
-              @click="uploadFiles"
-            >
-              <v-icon>mdi-upload</v-icon>
-            </v-btn>
-          </template>
-          <span>Upload Selected Files</span>
-        </v-tooltip>
-      </v-col> -->
     </v-row>
     <v-divider />
     <v-row>
@@ -71,7 +52,7 @@ import { Component, Vue, Model } from "vue-property-decorator";
 import { Report } from "~/types";
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
-import { imageProcessor, resize, sharpen } from 'ts-image-processor';
+// import pica from 'pica'
 
 @Component({
   components: {
@@ -89,31 +70,22 @@ export default class PhotoRecords extends Vue {
   percentCompleted: number= 0
 
   async uploadFiles() {
-
-    
-      // Use any of the functions with an existing blob (base64-string)
-      imageProcessor
-        .src(this.files)
-        .pipe(
-          resize({maxWidth: 800, maxHeight: 800}),
-          sharpen(),
-        )
-        .then(processedBase64 => {
-          console.log(processedBase64)
-          // Do whatever with your happy result :)
-        });
-
     const Pthis =  this
     let formData = new FormData();
     this.dialogUploading=true
     var config = {
             onUploadProgress: function(progressEvent: any) {
-              console.log(progressEvent)
               Pthis.percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
             }
           };
 
-    this.files.forEach((file: File, index) => {
+    this.files.forEach(async (file: File, index) => {
+    //  pica.resize(from, to, {
+    //                         unsharpAmount: 80,
+    //                         unsharpRadius: 0.6,
+    //                         unsharpThreshold: 2
+    //                       })
+    //                       .then(result => console.log('resize done!'));
       formData.append("files", file, `${file.name}|${this.filesUrls[index].label}`);
     });
 

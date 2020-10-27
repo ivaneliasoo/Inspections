@@ -4,3 +4,8 @@ export interface LicenseDTO {
   validityStart: string;
   validityEnd: string;
 }
+
+export interface DateTimeRange {
+  start: string;
+  end: string;
+}

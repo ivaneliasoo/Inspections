@@ -131,7 +131,7 @@ export default class IndexPage extends Vue{
      return DateTime.fromISO(date).toLocaleString()
    }
 
-   goToLicenses(event, row) {
+   goToLicenses(event: any, row: any) {
     this.$router.push(`/licenses?id=${row.item.licenseId}`)
    }
 }
