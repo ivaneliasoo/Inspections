@@ -31,7 +31,7 @@ namespace Inspections.API.Features.Reports.Handlers
             report.Edit(reportName, request.Address, new License
             {
                 Number = request.LicenseNumber,
-                Validity = new DateTimeRange(DateTime.Now, DateTime.Now.AddYears(1)) // TODO: USe the real one
+                Validity = new DateTimeRange { Start = DateTime.Now, End = DateTime.Now.AddYears(1) } // TODO: USe the real one
             }, request.Date);
 
             if (request.IsClosed)

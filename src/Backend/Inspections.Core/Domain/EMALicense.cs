@@ -9,6 +9,5 @@ namespace Inspections.Core.Domain
     {
         public string Number { get; set; }
         public DateTimeRange Validity { get; set; }
-        //public Address Address { get; set; }
     }
 }

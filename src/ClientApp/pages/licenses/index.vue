@@ -75,68 +75,20 @@
                       </v-row>
                     <v-row align="center" justify="space-between">
                       <v-col>
-                        <v-menu
-                          ref="startVisible"
-                          v-model="startVisible"
-                          :close-on-content-click="false"
-                          transition="scale-transition"
-                          offset-y
-                          max-width="290px"
-                          min-width="290px"
-                        >
-                          <template v-slot:activator="{ on, attrs }">
-                            <ValidationProvider rules="required" immediate vid="validFrom" v-slot="{ errors }">
-                              <v-text-field
-                                v-model="validFromFormatted"
-                                label="Valid From"
-                                hint="MM/DD/YYYY format"
-                                persistent-hint
-                                prepend-icon="mdi-calendar"
-                                v-bind="attrs"
-                                :error-messages="errors[0]"
-                                @blur="validFrom = parseDate(validFromFormatted)"
-                                v-on="on"
-                              ></v-text-field>
-                            </ValidationProvider>
-                          </template>
-                          <v-date-picker
-                            v-model="validFrom"
-                            no-title
-                            @input="startVisible = false"
-                          ></v-date-picker>
-                        </v-menu>
+                        <ValidationProvider rules="required" immediate vid="validFrom" v-slot="{ errors }">
+                          <DatePickerBase type="number" label="License"
+                              v-model="item.validityStart"
+                              :error-messages="errors"
+                              max="" />
+                        </ValidationProvider>
                       </v-col>
                        <v-col cols="12" md="6">
-                        <v-menu
-                          ref="endVisible"
-                          v-model="endVisible"
-                          :close-on-content-click="false"
-                          transition="scale-transition"
-                          offset-y
-                          max-width="290px"
-                          min-width="290px"
-                        >
-                          <template v-slot:activator="{ on, attrs }">
-                            <ValidationProvider rules="required|precedesDate:validFrom" immediate v-slot="{ errors }">
-                              <v-text-field
-                                v-model="validToFormatted"
-                                label="Valid To"
-                                hint="MM/DD/YYYY format"
-                                persistent-hint
-                                prepend-icon="mdi-calendar"
-                                :error-messages="errors[0]"
-                                @blur="validTo = parseDate(validToFormatted)"
-                                v-bind="attrs"
-                                v-on="on"
-                              ></v-text-field>
-                            </ValidationProvider>
-                          </template>
-                          <v-date-picker
-                            v-model="validTo"
-                            no-title
-                            @input="endVisible = false"
-                          ></v-date-picker>
-                        </v-menu>
+                        <ValidationProvider rules="required|precedesDate:validFrom" immediate v-slot="{ errors }">
+                          <DatePickerBase type="number" label="License"
+                            v-model="item.validityEnd"
+                            :error-messages="errors"
+                            max="" />
+                        </ValidationProvider>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -184,6 +136,12 @@
           <span>Delete</span>
         </v-tooltip>
       </template>
+       <template v-slot:item.validityStart="{ item }">
+              {{ parseDate(item.validityStart) }}
+            </template>
+            <template v-slot:item.validityEnd="{ item }">
+              {{ parseDate(item.validityEnd) }}
+        </template>
     </v-data-table>
   </div>
 </template>
@@ -193,6 +151,7 @@ import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
 import InnerPageMixin from "@/mixins/innerpage";
 import { LicensesState } from "store/licenses";
 import { LicenseDTO } from "@/types/Licenses";
+import { DateTime } from "luxon";
 
 // Regla para validadr fechas rangos de fechas
 extend('precedesDate', {
@@ -234,13 +193,13 @@ export default class LicensesAdmin extends mixins(InnerPageMixin) {
     },
     {
       text: "Valid From",
-      value: "validity.start",
+      value: "validityStart",
       sortable: true,
       align: "left",
     },
     {
       text: "Valid To",
-      value: "validity.end",
+      value: "validityEnd",
       sortable: true,
       align: "left",
     },
@@ -252,14 +211,8 @@ export default class LicensesAdmin extends mixins(InnerPageMixin) {
     },
   ];
   selectedItem: LicenseDTO = {} as LicenseDTO;
-  item: LicenseDTO = { licenseId: 0, validity: {start: '', end: '' } } as LicenseDTO;
+  item: LicenseDTO = { licenseId: 0, validityStart: '', validityEnd: '' } as LicenseDTO;
   isNew: boolean = false;
-
-  validFrom= new Date().toISOString().substr(0, 10)
-  validFromFormatted= this.formatDate(new Date().toISOString().substr(0, 10))
-
-  validTo= new Date().toISOString().substr(0, 10)
-  validToFormatted= this.formatDate(new Date().toISOString().substr(0, 10))
 
   get Licenses(): LicenseDTO[] {
     return (this.$store.state.licenses as LicensesState).licensesList;
@@ -278,6 +231,17 @@ export default class LicensesAdmin extends mixins(InnerPageMixin) {
     if (!this.$auth.user.isAdmin)
       this.$nuxt.error({ statusCode: 403, message: "Forbbiden" });
     await this.$store.dispatch("licenses/getLicenses", {}, { root: true });
+
+    if(this.$route.query.id) {
+
+      this.$store
+      .dispatch("licenses/getLicenseById", this.$route.query.id, {
+        root: true,
+      })
+      .then((resp) => (this.item = resp));
+      this.isNew = false; 
+      this. dialog = true
+    }
   }
 
   deleteLicense() {
@@ -301,29 +265,8 @@ export default class LicensesAdmin extends mixins(InnerPageMixin) {
     this.loading = false;
   }
   
-  formatDate (date: any) {
-    if (!date) return null
-
-    const [year, month, day] = date.split('-')
-    return `${month}/${day}/${year}`
-  }
-  parseDate (date: any) {
-    if (!date) return null
-
-    const [month, day, year] = date.split('/')
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-  }
-
-  @Watch('validFrom')
-  onValidFromChanged() {
-    this.validFromFormatted = this.formatDate(this.validFrom)
-    this.item.validity.start = this.validFrom
-  }
-
-   @Watch('validTo')
-  onValidToChanged() {
-    this.validToFormatted = this.formatDate(this.validTo)
-    this.item.validity.end = this.validTo
+  parseDate(date: string) {
+    return DateTime.fromISO(date).toLocaleString()
   }
 }
 </script>

@@ -97,26 +97,20 @@
                       </v-col>
                       <v-col>
                         <ValidationProvider rules="required" immediate v-slot="{ errors }">
-                          <!-- <v-text-field
-                            v-model="item.licenseNumber"
-                            autocomplete="nope"
-                            :error-messages="errors"
-                            name="license"
-                            label="License Number"
-                          /> -->
                           <v-autocomplete 
                             v-model="item.licenseId"
                             :items="licenses"
                             item-text="number"
                             item-value="licenseId"
+                            :error-messages="errors"
                             autocomplete="nope"
+                            label="License"
+                            hint="Select a License From the List"
                           />
                         </ValidationProvider>
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
-                      
-                     
                        <v-col>
                           <v-textarea
                             v-model="item.addressLine2"

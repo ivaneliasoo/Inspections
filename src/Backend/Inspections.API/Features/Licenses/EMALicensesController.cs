@@ -55,14 +55,13 @@ namespace Inspections.API.Features.Licenses
                 return BadRequest();
             }
 
-            var license = new EMALicense
-            {
-                Id = eMALicense.LicenseId,
-                Number = eMALicense.Number,
-                Validity = eMALicense.Validity
-            };
+            var license = await _context.Licenses.FindAsync(id);
+            license.Id = eMALicense.LicenseId;
+            license.Number = eMALicense.Number;
+            license.Validity = new Shared.DateTimeRange { Start = eMALicense.ValidityStart, End = eMALicense.ValidityEnd };
 
             _context.Entry(license).State = EntityState.Modified;
+            _context.Entry(license.Validity).State = EntityState.Modified;
 
             try
             {
@@ -87,13 +86,13 @@ namespace Inspections.API.Features.Licenses
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<EMALicense>> PostEMALicense(LicenseDTO eMALicense)
+        public async Task<ActionResult<EMALicense>> PostEMALicense([FromBody]LicenseDTO eMALicense)
         {
             var license = new EMALicense
             {
                 Id = eMALicense.LicenseId,
                 Number = eMALicense.Number,
-                Validity = eMALicense.Validity
+                Validity = new Shared.DateTimeRange { Start = eMALicense.ValidityStart, End = eMALicense.ValidityEnd }
             };
             _context.Licenses.Add(license);
             await _context.SaveChangesAsync().ConfigureAwait(false);
@@ -115,6 +114,21 @@ namespace Inspections.API.Features.Licenses
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
             return eMALicense;
+        }
+
+        [HttpGet("dashboard")]
+        public async Task<ActionResult<IEnumerable<LicenseDTO>>> GetLicensesDashboard()
+        {
+            var expiringLicenses = await _context.Licenses
+                .Where(l => l.Validity.End.Year == DateTime.Now.Year 
+                            && l.Validity.End.Month == DateTime.Now.Month && l.Validity.End > DateTime.Now.Date)
+                .Select(l => new LicenseDTO(l)).ToListAsync().ConfigureAwait(false);
+
+            var expiredLicenses = await _context.Licenses
+                .Where(l => l.Validity.End <= DateTime.Now.Date)
+                .Select(l => new LicenseDTO(l)).ToListAsync().ConfigureAwait(false);
+
+            return Ok(new { expiring = expiringLicenses, expired = expiredLicenses });
         }
 
         private bool EMALicenseExists(int id)

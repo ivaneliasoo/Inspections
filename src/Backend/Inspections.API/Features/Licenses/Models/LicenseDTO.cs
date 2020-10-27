@@ -13,14 +13,16 @@ namespace Inspections.API.Features.Licenses.Models
         {
             LicenseId = licenseId;
             Number = number;
-            Validity = validity;
+            ValidityStart = validity.Start;
+            ValidityEnd = validity.End;
         }
 
         public LicenseDTO(EMALicense eMALicense)
         {
             LicenseId = eMALicense.Id;
             Number = eMALicense.Number;
-            Validity = eMALicense.Validity;
+            ValidityStart = eMALicense.Validity.Start;
+            ValidityEnd = eMALicense.Validity.End;
         }
 
         internal LicenseDTO()
@@ -30,6 +32,7 @@ namespace Inspections.API.Features.Licenses.Models
 
         public int LicenseId { get; set; }
         public string Number { get; set; }
-        public DateTimeRange Validity { get; set; }
+        public DateTime ValidityStart { get; set; }
+        public DateTime ValidityEnd { get; set; }
     }
 }
