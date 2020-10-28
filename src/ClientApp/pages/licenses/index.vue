@@ -76,7 +76,7 @@
                     <v-row align="center" justify="space-between">
                       <v-col>
                         <ValidationProvider rules="required" immediate vid="validFrom" v-slot="{ errors }">
-                          <DatePickerBase type="number" label="License"
+                          <DatePickerBase type="number" label="License" titulo="Valid From"
                               v-model="item.validityStart"
                               :error-messages="errors"
                               max="" />
@@ -84,7 +84,7 @@
                       </v-col>
                        <v-col cols="12" md="6">
                         <ValidationProvider rules="required|precedesDate:validFrom" immediate v-slot="{ errors }">
-                          <DatePickerBase type="number" label="License"
+                          <DatePickerBase type="number" label="License" titulo="Valid To"
                             v-model="item.validityEnd"
                             :error-messages="errors"
                             max="" />
