@@ -44,8 +44,6 @@
       <PhotoRecordPreviewer v-else v-model="filesUrls" :files="files" :progress="percentCompleted"/>
 
     </v-row>
-    <v-img :src="testurl" />
-    <v-img :src="testurlproc" />
   </v-card>
 </template>
 
@@ -54,7 +52,7 @@ import { Component, Vue, Model } from "vue-property-decorator";
 import { Report } from "~/types";
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
-import pica from 'pica'
+
 import { DateTime } from "luxon";
 
 @Component({
@@ -88,26 +86,24 @@ export default class PhotoRecords extends Vue {
 
     for (let i = 0; i < this.files.length; i++) {
       const file = this.files[i];
-      var from = new Image
-      from.width = 500  
-      from.height = 500
-      from.src = URL.createObjectURL(file)
-      this.testurl = from.src
-      console.log(from.src)
-
-
-      var to = document.createElement('canvas')
-     const result = await pica().resize(from, to, {
-                            unsharpAmount: 80,
-                            unsharpRadius: 0.6,
-                            unsharpThreshold: 2
-                          })
-      const blob = await pica().toBlob(result, 'image/png', 0.90)
+      // var from = new Image
+      // from.width = 1280 
+      // from.height = 900
+      // from.src = URL.createObjectURL(file)
+      // this.testurl = from.src
+      const reduce = require('image-blob-reduce') //reduce from 'image-blob-reduce'
+      const blob = await reduce()
+        .toBlob(file, { max: 1000 })
+    //   var to = document.createElement('canvas')
+    //  const result = await reduce.resize(from, to, {
+    //                         unsharpAmount: 60,
+    //                         unsharpRadius: 0.5,
+    //                         unsharpThreshold: 2
+    //                       })
+      // const blob = await pica().toBlob(result, 'image/png')
       const newFile = new File([blob], file.name)
       this.testurlproc = URL.createObjectURL(newFile)
       formData.append("files", newFile, `${file.name}|${this.filesUrls[i].label}`);
-      console.log(file.size)
-      console.log(newFile.size)
     }
 
     formData.append("label", "archivos de Prueba");
