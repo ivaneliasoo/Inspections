@@ -92,7 +92,7 @@ export default class PhotoRecords extends Vue {
       const newFile = new File([blob], file.name)
       this.testurlproc = URL.createObjectURL(newFile)
       console.log('file size before images optimization', file.size)
-      console.log('file size before images optimization', newFile.size)
+      console.log('file size after images optimization', newFile.size)
       formData.append("files", newFile, `${file.name}|${this.filesUrls[i].label}`);
     }
 

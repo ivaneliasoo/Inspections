@@ -309,7 +309,7 @@
             </v-row>
           </v-tab-item>
           <v-tab-item key="photos" value="photos">
-            <PhotoRecords v-model="currentReport" @uploaded="saveReportChanges(); loadReport()" />
+            <PhotoRecords v-model="currentReport" @uploaded="saveAndLoad()" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -643,6 +643,11 @@ export default class EditReport extends mixins(InnerPageMixin) {
     await this.printHelper.print(this.currentReport.id)
     this.dialogPrinting = false; 
     this.$router.push('/reports')
+  }
+
+  async saveAndLoad() {
+    await this.saveReportChanges(); 
+    await this.loadReport()
   }
 
   @Watch('search')
