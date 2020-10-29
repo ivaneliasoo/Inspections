@@ -1,13 +1,15 @@
-delete from "Inspections"."CheckListParams";
-delete from "Inspections"."CheckListItems";
-delete from "Inspections"."CheckLists";
-delete from "Inspections"."Signatures";
-delete from "Inspections"."Notes";
-delete from "Inspections"."Photos";
-delete from "Inspections"."Reports";
-delete from "Inspections"."ReportsConfiguration";
-delete from "Users";
-delete from "Inspections"."Addresses";
+DROP TABLE "Inspections"."CheckListParams";
+DROP TABLE "Inspections"."CheckListItems";
+DROP TABLE "Inspections"."CheckLists";
+DROP TABLE "Inspections"."Signatures";
+DROP TABLE "Inspections"."Notes";
+DROP TABLE "Inspections"."Photos";
+DROP TABLE "Inspections"."Reports";
+DROP TABLE "Inspections"."ReportsConfiguration";
+DROP TABLE public."Users";
+DROP TABLE "Inspections"."Addresses";
+DROP TABLE public."Licenses"
+DROP TABLE public."__EFMigrationsHistory";
 
 
 DBCC CHECKIDENT ('Inspections.CheckListParams', RESEED, 0);  
