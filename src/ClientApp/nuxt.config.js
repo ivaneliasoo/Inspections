@@ -73,8 +73,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'https://localhost:44388',
-    browserBaseURL: 'https://localhost:44388'
+    baseURL: 'http://cseinspectionreport-env.eba-wgpmsrsb.ap-southeast-1.elasticbeanstalk.com',
+    browserBaseURL: 'http://cseinspectionreport-env.eba-wgpmsrsb.ap-southeast-1.elasticbeanstalk.com'
   },
   router: {
     middleware: ['auth']
