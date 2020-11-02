@@ -56,7 +56,7 @@ namespace Inspections.Core
             {
                 Text = "Premise owner to rectify items marked \"not acceptable\"",
                 NeedsCheck = true,
-                Checked = false
+                Checked = true
             };
 
             _report.AddNote(note);
