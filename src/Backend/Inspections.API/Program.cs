@@ -29,7 +29,7 @@ namespace Inspections.API
                 try
                 {
                     var inspectionsContext = services.GetRequiredService<InspectionsContext>();
-                    //InspectionsSeed.SeedAsync(inspectionsContext, loggerFactory).Wait();
+                    InspectionsSeed.SeedAsync(inspectionsContext, loggerFactory).Wait();
                 }
                 catch (DbException ex)
                 {

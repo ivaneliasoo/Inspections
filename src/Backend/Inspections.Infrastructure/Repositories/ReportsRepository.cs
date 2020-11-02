@@ -50,6 +50,7 @@ namespace Inspections.Infrastructure.Repositories
         {
             _context.CheckLists.RemoveRange(entity.CheckList);
             _context.Signatures.RemoveRange(entity.Signatures);
+            _context.SaveChanges();
             _context.Reports.Remove(entity);
             _context.SaveChangesAsync();
 
