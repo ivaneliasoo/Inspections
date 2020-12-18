@@ -30,7 +30,8 @@ namespace Inspections.API.Features.Signatures.Handlers
             newSignature.Designation = request.Designation;
             newSignature.Date = request.Date;
             newSignature.Principal = request.Principal;
-            newSignature.Responsable = new Responsable() { Name = request.ResponsableName, Type = request.ResponsableType };
+            var determinedResponsableType = request.Title.Contains("LEW") ? ResponsableType.LEW : request.ResponsableType;
+            newSignature.Responsable = new Responsable() { Name = request.ResponsableName, Type = determinedResponsableType };
             newSignature.IsConfiguration = false;
             newSignature.DrawedSign = request.DrawedSign;
 

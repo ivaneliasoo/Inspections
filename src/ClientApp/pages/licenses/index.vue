@@ -53,7 +53,7 @@
                       <v-col cols="12" md="4">
                         <ValidationProvider v-slot="{ errors }" rules="required" immediate>
                           <v-text-field
-                            v-model="item.licenseId"
+                            v-model.number="item.licenseId"
                             readonly
                             autocomplete="nope"
                             name="LicenseId"
@@ -62,8 +62,18 @@
                           />
                         </ValidationProvider>
                       </v-col>
-
-                      <v-col cols="12" md="8">
+                      <v-col cols="12" md="4">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                          <v-text-field
+                            v-model="item.name"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="name"
+                            label="License Name (Company's/Owner's name)"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="4">
                         <ValidationProvider v-slot="{ errors }" rules="required" immediate>
                           <v-text-field
                             v-model="item.number"
@@ -71,6 +81,41 @@
                             :error-messages="errors"
                             name="licenseNumber"
                             label="Number"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                    </v-row>
+                    <v-row align="center" justify="space-between">
+                      <v-col>
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                          <v-text-field
+                            v-model="item.personInCharge"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="personInCharge"
+                            label="Name of Person in Charge"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col>
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                          <v-text-field
+                            v-model="item.contact"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="contact"
+                            label="Contact"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col>
+                        <ValidationProvider v-slot="{ errors }" rules="required|email" immediate>
+                          <v-text-field
+                            v-model="item.email"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="email"
+                            label="E-Mail"
                           />
                         </ValidationProvider>
                       </v-col>
@@ -97,6 +142,45 @@
                             titulo="Valid To"
                             :error-messages="errors"
                             max=""
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                    </v-row>
+                    <span class="subtitle-text">Approval Load: </span>
+                    <v-row align="center" justify="space-between">
+                      <v-col cols="12" md="4">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                          <v-text-field
+                            v-model.number="item.amp"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            type="number"
+                            name="amp"
+                            label="Amp"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                          <v-text-field
+                            v-model.number="item.volt"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            type="number"
+                            name="volt"
+                            label="Volt"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                          <v-text-field
+                            v-model.number="item.kva"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            type="number"
+                            name="kva"
+                            label="kVA"
                           />
                         </ValidationProvider>
                       </v-col>
@@ -165,6 +249,7 @@
 </template>
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
+import { email } from 'vee-validate/dist/rules'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
 import { LicensesState } from 'store/licenses'
 import { DateTime } from 'luxon'
@@ -178,6 +263,8 @@ extend('precedesDate', {
   message: 'end validity date cant be a date before than start validity date',
   params: [{ name: 'dateFrom', isTarget: true }]
 })
+
+extend('email', { ...email })
 
 @Component({
   components: {

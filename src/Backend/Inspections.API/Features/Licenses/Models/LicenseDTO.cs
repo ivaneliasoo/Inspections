@@ -21,6 +21,13 @@ namespace Inspections.API.Features.Licenses.Models
         {
             LicenseId = eMALicense.Id;
             Number = eMALicense.Number;
+            Name = eMALicense.Name;
+            PersonInCharge = eMALicense.PersonInCharge;
+            Contact = eMALicense.Contact;
+            Email = eMALicense.Email;
+            Amp = eMALicense.Amp;
+            Volt = eMALicense.Volt;
+            KVA = eMALicense.KVA;
             ValidityStart = eMALicense.Validity.Start;
             ValidityEnd = eMALicense.Validity.End;
         }
@@ -32,6 +39,13 @@ namespace Inspections.API.Features.Licenses.Models
 
         public int LicenseId { get; set; }
         public string Number { get; set; }
+        public string Name { get; set; }
+        public string PersonInCharge { get; set; }
+        public string Contact { get; set; }
+        public string Email { get; set; }
+        public decimal Amp { get; set; }
+        public decimal Volt { get; set; }
+        public decimal KVA { get; set; }
         public DateTime ValidityStart { get; set; }
         public DateTime ValidityEnd { get; set; }
     }

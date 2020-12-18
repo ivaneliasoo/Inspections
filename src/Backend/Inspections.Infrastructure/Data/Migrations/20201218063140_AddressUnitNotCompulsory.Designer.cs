@@ -3,15 +3,17 @@ using System;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    partial class InspectionsContextModelSnapshot : ModelSnapshot
+    [Migration("20201218063140_AddressUnitNotCompulsory")]
+    partial class AddressUnitNotCompulsory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,20 +193,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<decimal>("Amp")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Contact")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("KVA")
-                        .HasColumnType("numeric");
-
                     b.Property<DateTimeOffset>("LastEdit")
                         .HasColumnType("timestamp with time zone");
 
@@ -213,19 +201,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("character varying(20)")
                         .HasMaxLength(20);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Number")
                         .HasColumnType("text");
-
-                    b.Property<string>("PersonInCharge")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Volt")
-                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 

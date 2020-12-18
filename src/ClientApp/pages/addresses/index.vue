@@ -29,7 +29,7 @@
             fab
             dark
             color="primary"
-            @click="dialog = true; isNew = true; item = { id: 0, addressLine2: '' }"
+            @click="dialog = true; isNew = true; item = { id: 0, country: 'Singapore', addressLine2: '' }"
           >
             <v-icon dark>
               mdi-plus
@@ -50,13 +50,27 @@
                 <v-card-text>
                   <v-container>
                     <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="12">
+                      <v-col cols="12" md="6">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                          <v-autocomplete
+                            v-model="item.licenseId"
+                            :items="licenses"
+                            item-text="number"
+                            item-value="licenseId"
+                            :error-messages="errors"
+                            autocomplete="nope"
+                            label="Electrical License"
+                            hint="Select a License From the List"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="6">
                         <ValidationProvider v-slot="{ errors }" rules="required" immediate>
                           <v-textarea
                             v-model="item.addressLine"
                             autocomplete="nope"
                             name="addressLine"
-                            rows="2"
+                            rows="1"
                             :error-messages="errors"
                             label="Address"
                           />
@@ -64,7 +78,15 @@
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="6">
+                      <v-col cols="12" md="4">
+                        <v-text-field
+                          v-model="item.unit"
+                          autocomplete="nope"
+                          name="unit"
+                          label="Unit"
+                        />
+                      </v-col>
+                      <v-col cols="12" md="4">
                         <ValidationProvider v-slot="{ errors }" rules="required" immediate>
                           <v-text-field
                             v-model="item.country"
@@ -75,39 +97,14 @@
                           />
                         </ValidationProvider>
                       </v-col>
-                      <v-col>
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
-                          <v-text-field
-                            v-model="item.unit"
-                            autocomplete="nope"
-                            :error-messages="errors"
-                            name="unit"
-                            label="Unit"
-                          />
-                        </ValidationProvider>
-                      </v-col>
-                      <v-col cols="12" md="6">
+                      <v-col cols="12" md="4">
                         <ValidationProvider v-slot="{ errors }" rules="required" immediate>
                           <v-text-field
                             v-model="item.postalCode"
                             autocomplete="nope"
                             :error-messages="errors"
                             name="postalCode"
-                            label="PostalCode"
-                          />
-                        </ValidationProvider>
-                      </v-col>
-                      <v-col>
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
-                          <v-autocomplete
-                            v-model="item.licenseId"
-                            :items="licenses"
-                            item-text="number"
-                            item-value="licenseId"
-                            :error-messages="errors"
-                            autocomplete="nope"
-                            label="License"
-                            hint="Select a License From the List"
+                            label="Postal Code"
                           />
                         </ValidationProvider>
                       </v-col>
@@ -119,7 +116,7 @@
                           autocomplete="nope"
                           rows="2"
                           name="addressLine2"
-                          label="Address Additional"
+                          label="Other Remark"
                         />
                       </v-col>
                     </v-row>
@@ -139,7 +136,7 @@
                   <v-btn
                     color="default"
                     text
-                    @click="reset(); item = { id: 0, addressLine2: '' }; dialog = false"
+                    @click="reset(); item = { id: 0, country: 'Singapore', addressLine2: '' }; dialog = false"
                   >
                     Cancel
                   </v-btn>

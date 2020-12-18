@@ -16,7 +16,7 @@
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="200px"
           >
-            <v-card-title>{{ photo ? photo.label : '' }}</v-card-title>
+            <v-card-title class="text-uppercase">{{ photo ? photo.label : '' }}</v-card-title>
           </v-img>
           <v-card-actions>
             <v-text-field

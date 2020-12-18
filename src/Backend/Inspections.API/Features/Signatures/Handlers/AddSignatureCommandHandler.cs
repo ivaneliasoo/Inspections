@@ -31,7 +31,7 @@ namespace Inspections.API.Features.Signatures.Handlers
                 Designation= request.Designation,
                 Date = request.Date,
                 Principal =  request.Principal,
-                Responsable = new Responsable() { Name= request.ResponsableName, Type= request.ResponsableType },
+                Responsable = new Responsable() { Name= request.ResponsableName, Type= request.Title.Contains("LEW") ? ResponsableType.LEW : request.ResponsableType },
                 IsConfiguration = request.ReportConfigurationId>0,
                 ReportConfigurationId = request.ReportConfigurationId == 0 ? default:request.ReportConfigurationId,
                 ReportId = request.ReportId == 0 ? default : request.ReportId

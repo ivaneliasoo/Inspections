@@ -26,7 +26,7 @@ namespace Inspections.API.Features.Reports.Handlers
 
             var photo = report.PhotoRecords.Where(n => n.Id == request.Id).FirstOrDefault();
             report.RemovePhoto(photo);
-            photo.Label = request.Label;
+            photo.Label = request.Label?.ToUpperInvariant();
             report.AddPhoto(photo);
             await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
             return true;

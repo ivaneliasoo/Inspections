@@ -55,9 +55,16 @@ namespace Inspections.API.Features.Licenses
                 return BadRequest();
             }
 
-            var license = await _context.Licenses.FindAsync(id);
+            var license = await _context.Licenses.FindAsync(id).ConfigureAwait(false);
             license.Id = eMALicense.LicenseId;
             license.Number = eMALicense.Number;
+            license.Name = eMALicense.Name;
+            license.PersonInCharge = eMALicense.PersonInCharge;
+            license.Contact = eMALicense.Contact;
+            license.Email = eMALicense.Email;
+            license.Amp = eMALicense.Amp;
+            license.Volt = eMALicense.Volt;
+            license.KVA = eMALicense.KVA;
             license.Validity = new Shared.DateTimeRange { Start = eMALicense.ValidityStart, End = eMALicense.ValidityEnd };
 
             _context.Entry(license).State = EntityState.Modified;
@@ -86,12 +93,19 @@ namespace Inspections.API.Features.Licenses
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<EMALicense>> PostEMALicense([FromBody]LicenseDTO eMALicense)
+        public async Task<ActionResult<EMALicense>> PostEMALicense([FromBody] LicenseDTO eMALicense)
         {
             var license = new EMALicense
             {
                 Id = eMALicense.LicenseId,
                 Number = eMALicense.Number,
+                Name = eMALicense.Name,
+                PersonInCharge = eMALicense.PersonInCharge,
+                Contact = eMALicense.Contact,
+                Email = eMALicense.Email,
+                Amp = eMALicense.Amp,
+                Volt = eMALicense.Volt,
+                KVA = eMALicense.KVA,
                 Validity = new Shared.DateTimeRange { Start = eMALicense.ValidityStart, End = eMALicense.ValidityEnd }
             };
             _context.Licenses.Add(license);
@@ -120,7 +134,7 @@ namespace Inspections.API.Features.Licenses
         public async Task<ActionResult<IEnumerable<LicenseDTO>>> GetLicensesDashboard()
         {
             var expiringLicenses = await _context.Licenses
-                .Where(l => l.Validity.End.Year == DateTime.Now.Year 
+                .Where(l => l.Validity.End.Year == DateTime.Now.Year
                             && l.Validity.End.Month == DateTime.Now.Month && l.Validity.End > DateTime.Now.Date)
                 .Select(l => new LicenseDTO(l)).ToListAsync().ConfigureAwait(false);
 

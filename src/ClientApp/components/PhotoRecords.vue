@@ -6,10 +6,9 @@
       </v-col>
       <v-col :cols="2">
         <v-file-input
-          :disabled="currentReport.isClosed"
+          ref="fileInputElement"
           color="primary accent-4"
           counter
-          ref="fileInputElement"
           label="Upload File"
           multiple
           hide-input
@@ -23,37 +22,35 @@
           @click:clear="filesUrls = []"
         />
       </v-col>
-      <v-col cols="4"></v-col>
+      <v-col cols="4" />
     </v-row>
     <v-divider />
     <v-row>
-            <v-btn
-              color="indigo"
-              dark
-              block
-              x-large
-              :small="$device.isMobile"
-              elevation="2"
-              :disabled="!files.length>0 || currentReport.isClosed || dialogUploading"
-              @click="uploadFiles"
-            >
-              Save Photos
-              <v-icon>mdi-upload</v-icon>
-            </v-btn>
+      <v-btn
+        color="indigo"
+        dark
+        block
+        x-large
+        :small="$device.isMobile"
+        elevation="2"
+        :disabled="!files.length>0 || dialogUploading"
+        @click="uploadFiles"
+      >
+        Save Photos
+        <v-icon>mdi-upload</v-icon>
+      </v-btn>
       <PhotoRecordManager v-if="files.length===0" v-model="currentReport" />
-      <PhotoRecordPreviewer v-else v-model="filesUrls" :files="files" :progress="percentCompleted"/>
-
+      <PhotoRecordPreviewer v-else v-model="filesUrls" :files="files" :progress="percentCompleted" />
     </v-row>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model } from "vue-property-decorator";
-import { Report } from "~/types";
+import { Component, Vue, Model } from 'vue-property-decorator'
+import { DateTime } from 'luxon'
+import { Report } from '~/types'
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
-
-import { DateTime } from "luxon";
 
 @Component({
   components: {
@@ -62,7 +59,7 @@ import { DateTime } from "luxon";
   }
 })
 export default class PhotoRecords extends Vue {
-  @Model("input") currentReport: Report | undefined;
+  @Model('input') currentReport: Report | undefined;
   files: File[] = [];
   filesUrls: { url: string, id: number, label: string }[] = [];
 
@@ -73,59 +70,58 @@ export default class PhotoRecords extends Vue {
   testurl = ''
   testurlproc = ''
 
-  async uploadFiles() {
-    const Pthis =  this
-    let filesProcessed = 0
-    let formData = new FormData();
-    this.dialogUploading=true
-    var config = {
-            onUploadProgress: function(progressEvent: any) {
-              Pthis.percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
-            }
-          };
+  async uploadFiles () {
+    const Pthis = this
+    const filesProcessed = 0
+    const formData = new FormData()
+    this.dialogUploading = true
+    const config = {
+      onUploadProgress (progressEvent: any) {
+        Pthis.percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+      }
+    }
 
     for (let i = 0; i < this.files.length; i++) {
-      const file = this.files[i];
-      const reduce = require('image-blob-reduce') //reduce from 'image-blob-reduce'
+      const file = this.files[i]
+      const reduce = require('image-blob-reduce') // reduce from 'image-blob-reduce'
       const blob = await reduce()
         .toBlob(file, { max: 1000 })
       const newFile = new File([blob], file.name)
       this.testurlproc = URL.createObjectURL(newFile)
       console.log('file size before images optimization', file.size)
       console.log('file size after images optimization', newFile.size)
-      formData.append("files", newFile, `${file.name}|${this.filesUrls[i].label}`);
+      formData.append('files', newFile, `${file.name}|${this.filesUrls[i].label}`)
     }
 
-    formData.append("label", "archivos de Prueba");
+    formData.append('label', 'archivos de Prueba')
 
     await this.$axios
       .post(`reports/${this.$route.params.id}/photorecord`, formData, config)
       .then(() => {
-        this.files = [];
-        this.filesUrls = [];
+        this.files = []
+        this.filesUrls = []
         this.$emit('uploaded')
-        this.selectedPhotoComponent = "PhotoRecordManager"
+        this.selectedPhotoComponent = 'PhotoRecordManager'
         this.percentCompleted = 0
         this.files = []
-      });
+      })
 
-    this.dialogUploading=false
+    this.dialogUploading = false
   }
 
-  showPreview(filesAdded: File[]) {
-    filesAdded.forEach((file, index)=> {
+  showPreview (filesAdded: File[]) {
+    filesAdded.forEach((file, index) => {
       this.files.push(file)
-      var url = URL.createObjectURL(file)
-      this.filesUrls.push({ url, id: index, label: ''})
+      const url = URL.createObjectURL(file)
+      this.filesUrls.push({ url, id: index, label: '' })
     })
 
-    this.selectedPhotoComponent = "PhotoRecordPreviewer"
+    this.selectedPhotoComponent = 'PhotoRecordPreviewer'
   }
 
-  get source() {
-    if(this.filesUrls.length>0)
-      return this.filesUrls
-    
+  get source () {
+    if (this.filesUrls.length > 0) { return this.filesUrls }
+
     return this.currentReport!.photoRecords
   }
 }

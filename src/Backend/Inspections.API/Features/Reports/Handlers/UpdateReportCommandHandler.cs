@@ -34,7 +34,7 @@ namespace Inspections.API.Features.Reports.Handlers
                 Validity = new DateTimeRange { Start = DateTime.Now, End = DateTime.Now.AddYears(1) } // TODO: USe the real one
             }, request.Date);
 
-            if (request.IsClosed)
+            if (!report.IsClosed && request.IsClosed)
             {
                 report.Close();
             }

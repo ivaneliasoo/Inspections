@@ -42,7 +42,7 @@ namespace Inspections.API.Features.Addresses
         [HttpGet("{id}")]
         public async Task<ActionResult<AddressDTO>> GetAddress(int id)
         {
-            var address = await _context.Addresses.FindAsync(id).ConfigureAwait(false);
+            var address = await _context.Set<Address>().Include("License").Where(a=>a.Id == id).SingleOrDefaultAsync().ConfigureAwait(false);
 
             if (address == null)
             {

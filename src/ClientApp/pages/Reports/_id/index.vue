@@ -95,7 +95,7 @@
               right
               :loading="savingNewReport"
               class="v-btn--example2"
-              @click="saveReportChanges().then(CanCloseReport ? dialogClose = true: errorsDialog = true)"
+              @click="saveReportChanges().then(CanCloseReport && !currentReport.isClosed ? dialogClose = true: !CanCloseReport ? errorsDialog = true : errorsDialog = false)"
             >
               <v-icon>mdi-content-save</v-icon>
             </v-btn>
@@ -193,18 +193,18 @@
                                               class="text-wrap"
                                             >
                                               <v-row justify="space-around" align="center" dense>
-                                                <v-col cols="1" :class="['text-right', checkItem.required && !checkItem.checked ? 'error--text' : '']">
+                                                <v-col cols="1" :class="['text-right', checkItem.required && !checkItem.checked && shouldShowRequired ? 'error--text' : '']">
                                                   <h3>{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1 }} </h3>
                                                 </v-col>
-                                                <v-col cols="10" :class="['text-left', checkItem.required && !checkItem.checked ? 'error--text' : '']">
+                                                <v-col cols="10" :class="['text-left', checkItem.required && !checkItem.checked && shouldShowRequired ? 'error--text' : '']">
                                                   <h3 v-if="!checkItem.editable">
-                                                    .-{{ checkItem.text }} <v-chip v-if="!checkItem.editable && checkItem.required" class="text-uppercase" color="error" x-small>
+                                                    .-{{ checkItem.text }} <v-chip v-if="!checkItem.editable && checkItem.required" class="text-uppercase" :color="shouldShowRequired ? 'error':''" x-small>
                                                       required
                                                     </v-chip>
                                                   </h3>
                                                   <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)">
                                                     <template v-slot:append="">
-                                                      <v-chip v-if="checkItem.required" x-small class="text-uppercase" color="error">
+                                                      <v-chip v-if="checkItem.required" x-small class="text-uppercase" :color="shouldShowRequired ? 'error':''">
                                                         required
                                                       </v-chip>
                                                     </template>
@@ -319,7 +319,7 @@
                 <h2 class="text-left">
                   Signatures
                 </h2>
-                <SignaturesForm v-model="currentReport.signatures" :is-closed="currentReport.isClosed" />
+                <SignaturesForm v-model="currentReport.signatures" :is-closed="false" />
               </v-col>
             </v-row>
           </v-tab-item>
@@ -416,6 +416,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
   errorsDialog: boolean = false
   dialogPrinting: boolean = false
   savedNotification: boolean = false
+  shouldShowRequired: boolean = false
 
   search: string = ''
   isDirty: boolean = false
@@ -543,6 +544,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       this.savedNotification = true
     })
     this.savingNewReport = false
+    this.shouldShowRequired = true
   }
 
   @Watch('currentReport', { deep: false })
