@@ -53,14 +53,15 @@ export default {
     '@nuxtjs/auth',
     '@nuxtjs/device',
     ['nuxt-compress',
-    {
-      gzip: {
-        cache: true
-      },
-      brotli: {
-        threshold: 10240
+      {
+        gzip: {
+          cache: true
+        },
+        brotli: {
+          threshold: 10240
+        }
       }
-    }]
+    ]
   ],
   pwa: {
     icon: {
