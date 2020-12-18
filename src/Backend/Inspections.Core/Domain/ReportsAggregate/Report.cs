@@ -44,7 +44,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         internal void SetName(string name)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             Name = name;
         }
 
@@ -58,7 +58,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public void Edit(string name, string address, License license, DateTimeOffset date)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             Name = name;
             Address = address;
             License = license;
@@ -70,7 +70,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public void AddNote(Note note)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             notes.Add(note);
         }
 
@@ -82,37 +82,37 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public void AddNote(IEnumerable<Note> note)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             notes.AddRange(note);
         }
 
         public void RemoveNote(Note note)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             notes.Remove(note);
         }
 
         public void AddPhoto(PhotoRecord photo)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             photoRecords.Add(photo);
         }
 
         public void AddPhoto(IEnumerable<PhotoRecord> photo)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             photoRecords.AddRange(photo);
         }
 
         public void RemovePhoto(PhotoRecord photo)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             photoRecords.Remove(photo);
         }
 
         internal void AddCheckList(IEnumerable<CheckList> checkList)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             foreach (var check in checkList)
             {
                 this.checkList.Add(check.CloneForReport());
@@ -122,13 +122,13 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         internal void RemoveCheckList(CheckList checkList)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             this.checkList.Remove(checkList);
         }
 
         internal void AddSignature(IEnumerable<Signature> signature)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             foreach (var sign in signature)
             {
                 signatures.Add(sign.PreparteForNewReport());
@@ -137,7 +137,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         internal void RemoveSignature(Signature signature)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             signatures.Remove(signature);
         }
 

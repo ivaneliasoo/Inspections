@@ -20,7 +20,6 @@
                   v-model="currentReport.date"
                   type="number"
                   label="License"
-                  :disabled="currentReport.isClosed"
                   :error-messages="errors"
                   :max="new Date().toISOString()"
                 />
@@ -36,7 +35,6 @@
               <ValidationProvider v-slot="{ errors }" rules="required" immediate>
                 <v-autocomplete
                   v-model="currentReport.address"
-                  :readonly="currentReport.isClosed"
                   :error-messages="errors"
                   :items="addresses"
                   :loading="searchingAddresses"
@@ -88,7 +86,7 @@
           </v-row>
           <v-fab-transition>
             <v-btn
-              v-if="!currentReport.isClosed && tabs!=='photos'"
+              v-if="tabs!=='photos'"
               color="success"
               fab
               fixed
@@ -172,7 +170,6 @@
                               <v-col cols="2" md="6" :class="$vuetify.breakpoint.mdAndDown ? 'ml-n5':'ml-n6'">
                                 <v-checkbox
                                   v-model="item.checked"
-                                  :disabled="currentReport.isClosed"
                                   color="primary"
                                   :indeterminate="item.checks.length !== item.checks.filter(c => c.checked).length && item.checks.filter(c => c.checked).length > 0"
                                   @click.stop=" item.checked=!item.checked; checkItemChecks(item.id, item.checked)"
@@ -218,7 +215,6 @@
                                             <v-col cols="2" md="1">
                                               <v-checkbox
                                                 v-model="checkItem.checked"
-                                                :disabled="currentReport.isClosed"
                                                 color="primary"
                                                 :indeterminate="checkItem.checked===2"
                                                 @click.stop="checkItem.checked < 2 ? checkItem.checked++:checkItem.checked=0; saveCheckItem(checkItem)"
@@ -227,7 +223,6 @@
                                             <v-col cols="10" md="4">
                                               <v-text-field
                                                 v-model="checkItem.remarks"
-                                                :readonly="currentReport.isClosed"
                                                 :label="currentReport.remarksLabelText"
                                                 @blur="saveCheckItem(checkItem)"
                                               />
@@ -297,7 +292,7 @@
                           title="delete this note"
                           icon
                           text
-                          :disabled="note.needsCheck || currentReport.isClosed"
+                          :disabled="note.needsCheck"
                           color="error"
                           @click="removeNote(note.id)"
                         >
@@ -307,10 +302,10 @@
                         </v-btn>
                       </v-col>
                       <v-col cols="8">
-                        <v-text-field v-model="note.text" :readonly="currentReport.isClosed" label="Note" @blur="saveNote(note)" />
+                        <v-text-field v-model="note.text" label="Note" @blur="saveNote(note)" />
                       </v-col>
                       <v-col cols="2">
-                        <v-checkbox v-model="note.checked" :disabled="currentReport.isClosed" :label="note.needsCheck ? '(Check Required)':''" @change="saveNote(note)" />
+                        <v-checkbox v-model="note.checked" :label="note.needsCheck ? '(Check Required)':''" @change="saveNote(note)" />
                       </v-col>
                       <v-col />
                     </v-row>
