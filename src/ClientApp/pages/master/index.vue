@@ -3,11 +3,11 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-import { CardOption } from '~/types';
+import { Component, Vue } from 'vue-property-decorator'
+import { CardOption } from '~/types'
 
   @Component
-  export default class MasterMenu extends Vue {
+export default class MasterMenu extends Vue {
     cardOptions: CardOption[] = [
       {
         name: 'users',
@@ -15,7 +15,7 @@ import { CardOption } from '~/types';
         helpText: 'Manage Users',
         icon: 'mdi-account-multiple',
         color: 'accent',
-        path: `/users`
+        path: '/users'
       },
       {
         name: 'settings',
@@ -28,7 +28,7 @@ import { CardOption } from '~/types';
       {
         name: 'addresses',
         text: 'Address Management',
-        helpText: 'Allows to create, update, delete addreess',
+        helpText: 'Allows to create, update, delete address',
         icon: 'mdi-cog-outline',
         color: 'accent',
         path: '/addresses'
@@ -43,14 +43,12 @@ import { CardOption } from '~/types';
       }
     ]
 
-    get options() {
-      if(!this.$auth.user.isAdmin)
-        return this.cardOptions.filter(co=>co.name !== 'settings')
-      
+    get options () {
+      if (!this.$auth.user.isAdmin) { return this.cardOptions.filter(co => co.name !== 'settings') }
+
       return this.cardOptions
     }
-    
-  }
+}
 </script>
 
 <style scoped>

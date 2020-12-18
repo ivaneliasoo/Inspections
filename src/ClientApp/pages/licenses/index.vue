@@ -3,7 +3,7 @@
     <alert-dialog
       v-model="dialogRemove"
       title="Remove Licenses"
-      message="This operation will remove this License. If Proceed, you no longer get it Avaliable again"
+      message="This operation will remove this License. If Proceed, you no longer get it Available again"
       :code="selectedItem.id"
       :description="selectedItem.title"
       @yes="deleteLicense();"
@@ -31,7 +31,9 @@
             color="primary"
             @click="dialog = true; isNew = true; item = { licenseId: 0, validity: {start: '', end: '' } }"
           >
-            <v-icon dark>mdi-plus</v-icon>
+            <v-icon dark>
+              mdi-plus
+            </v-icon>
           </v-btn>
           <v-dialog
             v-model="dialog"
@@ -40,7 +42,7 @@
             :fullscreen="$vuetify.breakpoint.smAndDown"
             :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'"
           >
-            <ValidationObserver tag="form" v-slot="{ valid, reset }">
+            <ValidationObserver v-slot="{ valid, reset }" tag="form">
               <v-card>
                 <v-card-title>
                   <span class="headline">Edit License</span>
@@ -49,7 +51,7 @@
                   <v-container>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="4">
-                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
                           <v-text-field
                             v-model="item.licenseId"
                             readonly
@@ -60,9 +62,9 @@
                           />
                         </ValidationProvider>
                       </v-col>
-                    
-                     <v-col cols="12" md="8">
-                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+
+                      <v-col cols="12" md="8">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
                           <v-text-field
                             v-model="item.number"
                             autocomplete="nope"
@@ -72,22 +74,30 @@
                           />
                         </ValidationProvider>
                       </v-col>
-                      </v-row>
+                    </v-row>
                     <v-row align="center" justify="space-between">
                       <v-col>
-                        <ValidationProvider rules="required" immediate vid="validFrom" v-slot="{ errors }">
-                          <DatePickerBase type="number" label="License" titulo="Valid From"
-                              v-model="item.validityStart"
-                              :error-messages="errors"
-                              max="" />
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate vid="validFrom">
+                          <DatePickerBase
+                            v-model="item.validityStart"
+                            type="number"
+                            label="License"
+                            titulo="Valid From"
+                            :error-messages="errors"
+                            max=""
+                          />
                         </ValidationProvider>
                       </v-col>
-                       <v-col cols="12" md="6">
-                        <ValidationProvider rules="required|precedesDate:validFrom" immediate v-slot="{ errors }">
-                          <DatePickerBase type="number" label="License" titulo="Valid To"
+                      <v-col cols="12" md="6">
+                        <ValidationProvider v-slot="{ errors }" rules="required|precedesDate:validFrom" immediate>
+                          <DatePickerBase
                             v-model="item.validityEnd"
+                            type="number"
+                            label="License"
+                            titulo="Valid To"
                             :error-messages="errors"
-                            max="" />
+                            max=""
+                          />
                         </ValidationProvider>
                       </v-col>
                     </v-row>
@@ -101,12 +111,16 @@
                     :loading="loading"
                     :disabled="!valid"
                     @click="upsertLicense()"
-                  >Save</v-btn>
+                  >
+                    Save
+                  </v-btn>
                   <v-btn
                     color="default"
                     text
                     @click="reset(); item = { id: 0 }; dialog = false"
-                  >Cancel</v-btn>
+                  >
+                    Cancel
+                  </v-btn>
                 </v-card-actions>
               </v-card>
             </ValidationObserver>
@@ -117,43 +131,46 @@
         <v-tooltip v-if="$auth.user.isAdmin" top>
           <template v-slot:activator="{ on }">
             <v-icon
-              v-on="on"
               color="primary"
               class="mr-2"
+              v-on="on"
               @click="selectItem(item); isNew = false; dialog = true"
-            >mdi-pencil</v-icon>
+            >
+              mdi-pencil
+            </v-icon>
           </template>
           <span>Edit</span>
         </v-tooltip>
         <v-tooltip v-if="$auth.user.isAdmin" top>
           <template v-slot:activator="{ on }">
             <v-icon
-              v-on="on"
               color="error"
+              v-on="on"
               @click="selectItem(item); dialogRemove = true"
-            >mdi-delete</v-icon>
+            >
+              mdi-delete
+            </v-icon>
           </template>
           <span>Delete</span>
         </v-tooltip>
       </template>
-       <template v-slot:item.validityStart="{ item }">
-              {{ parseDate(item.validityStart) }}
-            </template>
-            <template v-slot:item.validityEnd="{ item }">
-              {{ parseDate(item.validityEnd) }}
-        </template>
+      <template v-slot:item.validityStart="{ item }">
+        {{ parseDate(item.validityStart) }}
+      </template>
+      <template v-slot:item.validityEnd="{ item }">
+        {{ parseDate(item.validityEnd) }}
+      </template>
     </v-data-table>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, mixins, Watch } from "nuxt-property-decorator";
-import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
-import InnerPageMixin from "@/mixins/innerpage";
-import { LicensesState } from "store/licenses";
-import { LicenseDTO } from "@/types/Licenses";
-import { DateTime } from "luxon";
+import { Component, mixins } from 'nuxt-property-decorator'
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
+import { LicensesState } from 'store/licenses'
+import { DateTime } from 'luxon'
+import InnerPageMixin from '@/mixins/innerpage'
+import { LicenseDTO } from '@/types/Licenses'
 
-// Regla para validadr fechas rangos de fechas
 extend('precedesDate', {
   validate: (dateTo, { dateFrom }: any) => {
     return dateTo >= dateFrom
@@ -165,8 +182,8 @@ extend('precedesDate', {
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-  },
+    ValidationProvider
+  }
 })
 export default class LicensesAdmin extends mixins(InnerPageMixin) {
   dialog: boolean = false;
@@ -174,98 +191,96 @@ export default class LicensesAdmin extends mixins(InnerPageMixin) {
   loading: boolean = false;
   startVisible: boolean = false;
   endVisible: boolean = false;
-  
+
   filter: any = {
-    filterText: "",
+    filterText: ''
   };
+
   headers: any[] = [
     {
-      text: "ID",
-      value: "licenseId",
+      text: 'ID',
+      value: 'licenseId',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "License",
-      value: "number",
+      text: 'License',
+      value: 'number',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "Valid From",
-      value: "validityStart",
+      text: 'Valid From',
+      value: 'validityStart',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "Valid To",
-      value: "validityEnd",
+      text: 'Valid To',
+      value: 'validityEnd',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "",
-      value: "actions",
+      text: '',
+      value: 'actions',
       sortable: false,
-      align: "left",
-    },
+      align: 'left'
+    }
   ];
+
   selectedItem: LicenseDTO = {} as LicenseDTO;
   item: LicenseDTO = { licenseId: 0, validityStart: '', validityEnd: '' } as LicenseDTO;
   isNew: boolean = false;
 
-  get Licenses(): LicenseDTO[] {
-    return (this.$store.state.licenses as LicensesState).licensesList;
+  get Licenses (): LicenseDTO[] {
+    return (this.$store.state.licenses as LicensesState).licensesList
   }
 
-  selectItem(item: LicenseDTO): void {
-    this.selectedItem = item;
+  selectItem (item: LicenseDTO): void {
+    this.selectedItem = item
     this.$store
-      .dispatch("licenses/getLicenseById", this.selectedItem.licenseId, {
-        root: true,
+      .dispatch('licenses/getLicenseById', this.selectedItem.licenseId, {
+        root: true
       })
-      .then((resp) => (this.item = resp));
+      .then(resp => (this.item = resp))
   }
 
-  async fetch() {
-    if (!this.$auth.user.isAdmin)
-      this.$nuxt.error({ statusCode: 403, message: "Forbbiden" });
-    await this.$store.dispatch("licenses/getLicenses", {}, { root: true });
+  async fetch () {
+    if (!this.$auth.user.isAdmin) { this.$nuxt.error({ statusCode: 403, message: 'Forbidden' }) }
+    await this.$store.dispatch('licenses/getLicenses', {}, { root: true })
 
-    if(this.$route.query.id) {
-
+    if (this.$route.query.id) {
       this.$store
-      .dispatch("licenses/getLicenseById", this.$route.query.id, {
-        root: true,
-      })
-      .then((resp) => (this.item = resp));
-      this.isNew = false; 
-      this. dialog = true
+        .dispatch('licenses/getLicenseById', this.$route.query.id, {
+          root: true
+        })
+        .then(resp => (this.item = resp))
+      this.isNew = false
+      this.dialog = true
     }
   }
 
-  deleteLicense() {
+  deleteLicense () {
     this.$store
-      .dispatch("licenses/deleteLicense", this.selectedItem.licenseId, { root: true })
+      .dispatch('licenses/deleteLicense', this.selectedItem.licenseId, { root: true })
       .then(() => {
-        this.dialog = false;
-      });
+        this.dialog = false
+      })
   }
 
-  async upsertLicense() {
-    this.loading = true;
-    if (!this.isNew)
-      await this.$store.dispatch("licenses/updateLicense", this.item, { root: true });
-    else {
-      await this.$store.dispatch("licenses/createLicense", this.item, { root: true });
-      await this.$store.dispatch("licenses/getLicenses", {}, { root: true });
+  async upsertLicense () {
+    this.loading = true
+    if (!this.isNew) { await this.$store.dispatch('licenses/updateLicense', this.item, { root: true }) } else {
+      await this.$store.dispatch('licenses/createLicense', this.item, { root: true })
+      await this.$store.dispatch('licenses/getLicenses', {}, { root: true })
     }
-    this.dialog = false;
-    this.isNew = true;
-    this.loading = false;
+    this.dialog = false
+    this.isNew = true
+    this.loading = false
   }
-  
-  parseDate(date: string) {
+
+  parseDate (date: string) {
     return DateTime.fromISO(date).toLocaleString()
   }
 }
