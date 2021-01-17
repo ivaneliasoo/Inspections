@@ -3682,6 +3682,2674 @@ namespace ReportsApp.Droid
 			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_type = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_type;
 			global::Xamarin.Essentials.Resource.Xml.image_share_filepaths = global::ReportsApp.Droid.Resource.Xml.image_share_filepaths;
 			global::Xamarin.Essentials.Resource.Xml.xamarin_essentials_fileprovider_file_paths = global::ReportsApp.Droid.Resource.Xml.xamarin_essentials_fileprovider_file_paths;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_fade_in = global::ReportsApp.Droid.Resource.Animation.abc_fade_in;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_fade_out = global::ReportsApp.Droid.Resource.Animation.abc_fade_out;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_grow_fade_in_from_bottom = global::ReportsApp.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_popup_enter = global::ReportsApp.Droid.Resource.Animation.abc_popup_enter;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_popup_exit = global::ReportsApp.Droid.Resource.Animation.abc_popup_exit;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_shrink_fade_out_from_bottom = global::ReportsApp.Droid.Resource.Animation.abc_shrink_fade_out_from_bottom;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_slide_in_bottom = global::ReportsApp.Droid.Resource.Animation.abc_slide_in_bottom;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_slide_in_top = global::ReportsApp.Droid.Resource.Animation.abc_slide_in_top;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_slide_out_bottom = global::ReportsApp.Droid.Resource.Animation.abc_slide_out_bottom;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_slide_out_top = global::ReportsApp.Droid.Resource.Animation.abc_slide_out_top;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_tooltip_enter = global::ReportsApp.Droid.Resource.Animation.abc_tooltip_enter;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.abc_tooltip_exit = global::ReportsApp.Droid.Resource.Animation.abc_tooltip_exit;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_checkbox_to_checked_box_inner_merged_animation = global::ReportsApp.Droid.Resource.Animation.btn_checkbox_to_checked_box_inner_merged_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_checkbox_to_checked_box_outer_merged_animation = global::ReportsApp.Droid.Resource.Animation.btn_checkbox_to_checked_box_outer_merged_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_checkbox_to_checked_icon_null_animation = global::ReportsApp.Droid.Resource.Animation.btn_checkbox_to_checked_icon_null_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_checkbox_to_unchecked_box_inner_merged_animation = global::ReportsApp.Droid.Resource.Animation.btn_checkbox_to_unchecked_box_inner_merged_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_checkbox_to_unchecked_check_path_merged_animation = global::ReportsApp.Droid.Resource.Animation.btn_checkbox_to_unchecked_check_path_merged_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_checkbox_to_unchecked_icon_null_animation = global::ReportsApp.Droid.Resource.Animation.btn_checkbox_to_unchecked_icon_null_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_radio_to_off_mtrl_dot_group_animation = global::ReportsApp.Droid.Resource.Animation.btn_radio_to_off_mtrl_dot_group_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_animation = global::ReportsApp.Droid.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_path_animation = global::ReportsApp.Droid.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_path_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_radio_to_on_mtrl_dot_group_animation = global::ReportsApp.Droid.Resource.Animation.btn_radio_to_on_mtrl_dot_group_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_animation = global::ReportsApp.Droid.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_path_animation = global::ReportsApp.Droid.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_path_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.design_bottom_sheet_slide_in = global::ReportsApp.Droid.Resource.Animation.design_bottom_sheet_slide_in;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.design_bottom_sheet_slide_out = global::ReportsApp.Droid.Resource.Animation.design_bottom_sheet_slide_out;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.design_snackbar_in = global::ReportsApp.Droid.Resource.Animation.design_snackbar_in;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.design_snackbar_out = global::ReportsApp.Droid.Resource.Animation.design_snackbar_out;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.EnterFromLeft = global::ReportsApp.Droid.Resource.Animation.EnterFromLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.EnterFromRight = global::ReportsApp.Droid.Resource.Animation.EnterFromRight;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.ExitToLeft = global::ReportsApp.Droid.Resource.Animation.ExitToLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.ExitToRight = global::ReportsApp.Droid.Resource.Animation.ExitToRight;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.fragment_close_enter = global::ReportsApp.Droid.Resource.Animation.fragment_close_enter;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.fragment_close_exit = global::ReportsApp.Droid.Resource.Animation.fragment_close_exit;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.fragment_fade_enter = global::ReportsApp.Droid.Resource.Animation.fragment_fade_enter;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.fragment_fade_exit = global::ReportsApp.Droid.Resource.Animation.fragment_fade_exit;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.fragment_fast_out_extra_slow_in = global::ReportsApp.Droid.Resource.Animation.fragment_fast_out_extra_slow_in;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.fragment_open_enter = global::ReportsApp.Droid.Resource.Animation.fragment_open_enter;
+			global::Xamarin.Forms.PancakeView.Resource.Animation.fragment_open_exit = global::ReportsApp.Droid.Resource.Animation.fragment_open_exit;
+			global::Xamarin.Forms.PancakeView.Resource.Animator.design_appbar_state_list_animator = global::ReportsApp.Droid.Resource.Animator.design_appbar_state_list_animator;
+			global::Xamarin.Forms.PancakeView.Resource.Animator.design_fab_hide_motion_spec = global::ReportsApp.Droid.Resource.Animator.design_fab_hide_motion_spec;
+			global::Xamarin.Forms.PancakeView.Resource.Animator.design_fab_show_motion_spec = global::ReportsApp.Droid.Resource.Animator.design_fab_show_motion_spec;
+			global::Xamarin.Forms.PancakeView.Resource.Animator.mtrl_btn_state_list_anim = global::ReportsApp.Droid.Resource.Animator.mtrl_btn_state_list_anim;
+			global::Xamarin.Forms.PancakeView.Resource.Animator.mtrl_btn_unelevated_state_list_anim = global::ReportsApp.Droid.Resource.Animator.mtrl_btn_unelevated_state_list_anim;
+			global::Xamarin.Forms.PancakeView.Resource.Animator.mtrl_chip_state_list_anim = global::ReportsApp.Droid.Resource.Animator.mtrl_chip_state_list_anim;
+			global::Xamarin.Forms.PancakeView.Resource.Animator.mtrl_fab_hide_motion_spec = global::ReportsApp.Droid.Resource.Animator.mtrl_fab_hide_motion_spec;
+			global::Xamarin.Forms.PancakeView.Resource.Animator.mtrl_fab_show_motion_spec = global::ReportsApp.Droid.Resource.Animator.mtrl_fab_show_motion_spec;
+			global::Xamarin.Forms.PancakeView.Resource.Animator.mtrl_fab_transformation_sheet_collapse_spec = global::ReportsApp.Droid.Resource.Animator.mtrl_fab_transformation_sheet_collapse_spec;
+			global::Xamarin.Forms.PancakeView.Resource.Animator.mtrl_fab_transformation_sheet_expand_spec = global::ReportsApp.Droid.Resource.Animator.mtrl_fab_transformation_sheet_expand_spec;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarDivider = global::ReportsApp.Droid.Resource.Attribute.actionBarDivider;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarItemBackground = global::ReportsApp.Droid.Resource.Attribute.actionBarItemBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarPopupTheme = global::ReportsApp.Droid.Resource.Attribute.actionBarPopupTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarSize = global::ReportsApp.Droid.Resource.Attribute.actionBarSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarSplitStyle = global::ReportsApp.Droid.Resource.Attribute.actionBarSplitStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarStyle = global::ReportsApp.Droid.Resource.Attribute.actionBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarTabBarStyle = global::ReportsApp.Droid.Resource.Attribute.actionBarTabBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarTabStyle = global::ReportsApp.Droid.Resource.Attribute.actionBarTabStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarTabTextStyle = global::ReportsApp.Droid.Resource.Attribute.actionBarTabTextStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarTheme = global::ReportsApp.Droid.Resource.Attribute.actionBarTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionBarWidgetTheme = global::ReportsApp.Droid.Resource.Attribute.actionBarWidgetTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionButtonStyle = global::ReportsApp.Droid.Resource.Attribute.actionButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionDropDownStyle = global::ReportsApp.Droid.Resource.Attribute.actionDropDownStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionLayout = global::ReportsApp.Droid.Resource.Attribute.actionLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionMenuTextAppearance = global::ReportsApp.Droid.Resource.Attribute.actionMenuTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionMenuTextColor = global::ReportsApp.Droid.Resource.Attribute.actionMenuTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeBackground = global::ReportsApp.Droid.Resource.Attribute.actionModeBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeCloseButtonStyle = global::ReportsApp.Droid.Resource.Attribute.actionModeCloseButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeCloseDrawable = global::ReportsApp.Droid.Resource.Attribute.actionModeCloseDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeCopyDrawable = global::ReportsApp.Droid.Resource.Attribute.actionModeCopyDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeCutDrawable = global::ReportsApp.Droid.Resource.Attribute.actionModeCutDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeFindDrawable = global::ReportsApp.Droid.Resource.Attribute.actionModeFindDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModePasteDrawable = global::ReportsApp.Droid.Resource.Attribute.actionModePasteDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModePopupWindowStyle = global::ReportsApp.Droid.Resource.Attribute.actionModePopupWindowStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeSelectAllDrawable = global::ReportsApp.Droid.Resource.Attribute.actionModeSelectAllDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeShareDrawable = global::ReportsApp.Droid.Resource.Attribute.actionModeShareDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeSplitBackground = global::ReportsApp.Droid.Resource.Attribute.actionModeSplitBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeStyle = global::ReportsApp.Droid.Resource.Attribute.actionModeStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionModeWebSearchDrawable = global::ReportsApp.Droid.Resource.Attribute.actionModeWebSearchDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionOverflowButtonStyle = global::ReportsApp.Droid.Resource.Attribute.actionOverflowButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionOverflowMenuStyle = global::ReportsApp.Droid.Resource.Attribute.actionOverflowMenuStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionProviderClass = global::ReportsApp.Droid.Resource.Attribute.actionProviderClass;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.actionViewClass = global::ReportsApp.Droid.Resource.Attribute.actionViewClass;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.activityChooserViewStyle = global::ReportsApp.Droid.Resource.Attribute.activityChooserViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.alertDialogButtonGroupStyle = global::ReportsApp.Droid.Resource.Attribute.alertDialogButtonGroupStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.alertDialogCenterButtons = global::ReportsApp.Droid.Resource.Attribute.alertDialogCenterButtons;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.alertDialogStyle = global::ReportsApp.Droid.Resource.Attribute.alertDialogStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.alertDialogTheme = global::ReportsApp.Droid.Resource.Attribute.alertDialogTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.allowStacking = global::ReportsApp.Droid.Resource.Attribute.allowStacking;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.alpha = global::ReportsApp.Droid.Resource.Attribute.alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.alphabeticModifiers = global::ReportsApp.Droid.Resource.Attribute.alphabeticModifiers;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.arrowHeadLength = global::ReportsApp.Droid.Resource.Attribute.arrowHeadLength;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.arrowShaftLength = global::ReportsApp.Droid.Resource.Attribute.arrowShaftLength;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.autoCompleteTextViewStyle = global::ReportsApp.Droid.Resource.Attribute.autoCompleteTextViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.autoSizeMaxTextSize = global::ReportsApp.Droid.Resource.Attribute.autoSizeMaxTextSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.autoSizeMinTextSize = global::ReportsApp.Droid.Resource.Attribute.autoSizeMinTextSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.autoSizePresetSizes = global::ReportsApp.Droid.Resource.Attribute.autoSizePresetSizes;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.autoSizeStepGranularity = global::ReportsApp.Droid.Resource.Attribute.autoSizeStepGranularity;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.autoSizeTextType = global::ReportsApp.Droid.Resource.Attribute.autoSizeTextType;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.background = global::ReportsApp.Droid.Resource.Attribute.background;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.backgroundSplit = global::ReportsApp.Droid.Resource.Attribute.backgroundSplit;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.backgroundStacked = global::ReportsApp.Droid.Resource.Attribute.backgroundStacked;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.backgroundTint = global::ReportsApp.Droid.Resource.Attribute.backgroundTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.backgroundTintMode = global::ReportsApp.Droid.Resource.Attribute.backgroundTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.barLength = global::ReportsApp.Droid.Resource.Attribute.barLength;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.behavior_autoHide = global::ReportsApp.Droid.Resource.Attribute.behavior_autoHide;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.behavior_fitToContents = global::ReportsApp.Droid.Resource.Attribute.behavior_fitToContents;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.behavior_hideable = global::ReportsApp.Droid.Resource.Attribute.behavior_hideable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.behavior_overlapTop = global::ReportsApp.Droid.Resource.Attribute.behavior_overlapTop;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.behavior_peekHeight = global::ReportsApp.Droid.Resource.Attribute.behavior_peekHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.behavior_skipCollapsed = global::ReportsApp.Droid.Resource.Attribute.behavior_skipCollapsed;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.borderlessButtonStyle = global::ReportsApp.Droid.Resource.Attribute.borderlessButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.borderWidth = global::ReportsApp.Droid.Resource.Attribute.borderWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.bottomAppBarStyle = global::ReportsApp.Droid.Resource.Attribute.bottomAppBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.bottomNavigationStyle = global::ReportsApp.Droid.Resource.Attribute.bottomNavigationStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.bottomSheetDialogTheme = global::ReportsApp.Droid.Resource.Attribute.bottomSheetDialogTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.bottomSheetStyle = global::ReportsApp.Droid.Resource.Attribute.bottomSheetStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.boxBackgroundColor = global::ReportsApp.Droid.Resource.Attribute.boxBackgroundColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.boxBackgroundMode = global::ReportsApp.Droid.Resource.Attribute.boxBackgroundMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.boxCollapsedPaddingTop = global::ReportsApp.Droid.Resource.Attribute.boxCollapsedPaddingTop;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.boxCornerRadiusBottomEnd = global::ReportsApp.Droid.Resource.Attribute.boxCornerRadiusBottomEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.boxCornerRadiusBottomStart = global::ReportsApp.Droid.Resource.Attribute.boxCornerRadiusBottomStart;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.boxCornerRadiusTopEnd = global::ReportsApp.Droid.Resource.Attribute.boxCornerRadiusTopEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.boxCornerRadiusTopStart = global::ReportsApp.Droid.Resource.Attribute.boxCornerRadiusTopStart;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.boxStrokeColor = global::ReportsApp.Droid.Resource.Attribute.boxStrokeColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.boxStrokeWidth = global::ReportsApp.Droid.Resource.Attribute.boxStrokeWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonBarButtonStyle = global::ReportsApp.Droid.Resource.Attribute.buttonBarButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonBarNegativeButtonStyle = global::ReportsApp.Droid.Resource.Attribute.buttonBarNegativeButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonBarNeutralButtonStyle = global::ReportsApp.Droid.Resource.Attribute.buttonBarNeutralButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonBarPositiveButtonStyle = global::ReportsApp.Droid.Resource.Attribute.buttonBarPositiveButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonBarStyle = global::ReportsApp.Droid.Resource.Attribute.buttonBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonCompat = global::ReportsApp.Droid.Resource.Attribute.buttonCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonGravity = global::ReportsApp.Droid.Resource.Attribute.buttonGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonIconDimen = global::ReportsApp.Droid.Resource.Attribute.buttonIconDimen;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonPanelSideLayout = global::ReportsApp.Droid.Resource.Attribute.buttonPanelSideLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonStyle = global::ReportsApp.Droid.Resource.Attribute.buttonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonStyleSmall = global::ReportsApp.Droid.Resource.Attribute.buttonStyleSmall;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonTint = global::ReportsApp.Droid.Resource.Attribute.buttonTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.buttonTintMode = global::ReportsApp.Droid.Resource.Attribute.buttonTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.cardBackgroundColor = global::ReportsApp.Droid.Resource.Attribute.cardBackgroundColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.cardCornerRadius = global::ReportsApp.Droid.Resource.Attribute.cardCornerRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.cardElevation = global::ReportsApp.Droid.Resource.Attribute.cardElevation;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.cardMaxElevation = global::ReportsApp.Droid.Resource.Attribute.cardMaxElevation;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.cardPreventCornerOverlap = global::ReportsApp.Droid.Resource.Attribute.cardPreventCornerOverlap;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.cardUseCompatPadding = global::ReportsApp.Droid.Resource.Attribute.cardUseCompatPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.cardViewStyle = global::ReportsApp.Droid.Resource.Attribute.cardViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.checkboxStyle = global::ReportsApp.Droid.Resource.Attribute.checkboxStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.checkedChip = global::ReportsApp.Droid.Resource.Attribute.checkedChip;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.checkedIcon = global::ReportsApp.Droid.Resource.Attribute.checkedIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.checkedIconEnabled = global::ReportsApp.Droid.Resource.Attribute.checkedIconEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.checkedIconVisible = global::ReportsApp.Droid.Resource.Attribute.checkedIconVisible;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.checkedTextViewStyle = global::ReportsApp.Droid.Resource.Attribute.checkedTextViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipBackgroundColor = global::ReportsApp.Droid.Resource.Attribute.chipBackgroundColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipCornerRadius = global::ReportsApp.Droid.Resource.Attribute.chipCornerRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipEndPadding = global::ReportsApp.Droid.Resource.Attribute.chipEndPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipGroupStyle = global::ReportsApp.Droid.Resource.Attribute.chipGroupStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipIcon = global::ReportsApp.Droid.Resource.Attribute.chipIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipIconEnabled = global::ReportsApp.Droid.Resource.Attribute.chipIconEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipIconSize = global::ReportsApp.Droid.Resource.Attribute.chipIconSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipIconTint = global::ReportsApp.Droid.Resource.Attribute.chipIconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipIconVisible = global::ReportsApp.Droid.Resource.Attribute.chipIconVisible;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipMinHeight = global::ReportsApp.Droid.Resource.Attribute.chipMinHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipSpacing = global::ReportsApp.Droid.Resource.Attribute.chipSpacing;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipSpacingHorizontal = global::ReportsApp.Droid.Resource.Attribute.chipSpacingHorizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipSpacingVertical = global::ReportsApp.Droid.Resource.Attribute.chipSpacingVertical;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipStandaloneStyle = global::ReportsApp.Droid.Resource.Attribute.chipStandaloneStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipStartPadding = global::ReportsApp.Droid.Resource.Attribute.chipStartPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipStrokeColor = global::ReportsApp.Droid.Resource.Attribute.chipStrokeColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipStrokeWidth = global::ReportsApp.Droid.Resource.Attribute.chipStrokeWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.chipStyle = global::ReportsApp.Droid.Resource.Attribute.chipStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.closeIcon = global::ReportsApp.Droid.Resource.Attribute.closeIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.closeIconEnabled = global::ReportsApp.Droid.Resource.Attribute.closeIconEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.closeIconEndPadding = global::ReportsApp.Droid.Resource.Attribute.closeIconEndPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.closeIconSize = global::ReportsApp.Droid.Resource.Attribute.closeIconSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.closeIconStartPadding = global::ReportsApp.Droid.Resource.Attribute.closeIconStartPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.closeIconTint = global::ReportsApp.Droid.Resource.Attribute.closeIconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.closeIconVisible = global::ReportsApp.Droid.Resource.Attribute.closeIconVisible;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.closeItemLayout = global::ReportsApp.Droid.Resource.Attribute.closeItemLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.collapseContentDescription = global::ReportsApp.Droid.Resource.Attribute.collapseContentDescription;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.collapsedTitleGravity = global::ReportsApp.Droid.Resource.Attribute.collapsedTitleGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.collapsedTitleTextAppearance = global::ReportsApp.Droid.Resource.Attribute.collapsedTitleTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.collapseIcon = global::ReportsApp.Droid.Resource.Attribute.collapseIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.collectionViewStyle = global::ReportsApp.Droid.Resource.Attribute.collectionViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.color = global::ReportsApp.Droid.Resource.Attribute.color;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorAccent = global::ReportsApp.Droid.Resource.Attribute.colorAccent;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorBackgroundFloating = global::ReportsApp.Droid.Resource.Attribute.colorBackgroundFloating;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorButtonNormal = global::ReportsApp.Droid.Resource.Attribute.colorButtonNormal;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorControlActivated = global::ReportsApp.Droid.Resource.Attribute.colorControlActivated;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorControlHighlight = global::ReportsApp.Droid.Resource.Attribute.colorControlHighlight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorControlNormal = global::ReportsApp.Droid.Resource.Attribute.colorControlNormal;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorError = global::ReportsApp.Droid.Resource.Attribute.colorError;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorPrimary = global::ReportsApp.Droid.Resource.Attribute.colorPrimary;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorPrimaryDark = global::ReportsApp.Droid.Resource.Attribute.colorPrimaryDark;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorSecondary = global::ReportsApp.Droid.Resource.Attribute.colorSecondary;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.colorSwitchThumbNormal = global::ReportsApp.Droid.Resource.Attribute.colorSwitchThumbNormal;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.commitIcon = global::ReportsApp.Droid.Resource.Attribute.commitIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentDescription = global::ReportsApp.Droid.Resource.Attribute.contentDescription;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentInsetEnd = global::ReportsApp.Droid.Resource.Attribute.contentInsetEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentInsetEndWithActions = global::ReportsApp.Droid.Resource.Attribute.contentInsetEndWithActions;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentInsetLeft = global::ReportsApp.Droid.Resource.Attribute.contentInsetLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentInsetRight = global::ReportsApp.Droid.Resource.Attribute.contentInsetRight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentInsetStart = global::ReportsApp.Droid.Resource.Attribute.contentInsetStart;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentInsetStartWithNavigation = global::ReportsApp.Droid.Resource.Attribute.contentInsetStartWithNavigation;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentPadding = global::ReportsApp.Droid.Resource.Attribute.contentPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentPaddingBottom = global::ReportsApp.Droid.Resource.Attribute.contentPaddingBottom;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentPaddingLeft = global::ReportsApp.Droid.Resource.Attribute.contentPaddingLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentPaddingRight = global::ReportsApp.Droid.Resource.Attribute.contentPaddingRight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentPaddingTop = global::ReportsApp.Droid.Resource.Attribute.contentPaddingTop;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.contentScrim = global::ReportsApp.Droid.Resource.Attribute.contentScrim;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.controlBackground = global::ReportsApp.Droid.Resource.Attribute.controlBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.coordinatorLayoutStyle = global::ReportsApp.Droid.Resource.Attribute.coordinatorLayoutStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.cornerRadius = global::ReportsApp.Droid.Resource.Attribute.cornerRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.counterEnabled = global::ReportsApp.Droid.Resource.Attribute.counterEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.counterMaxLength = global::ReportsApp.Droid.Resource.Attribute.counterMaxLength;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.counterOverflowTextAppearance = global::ReportsApp.Droid.Resource.Attribute.counterOverflowTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.counterTextAppearance = global::ReportsApp.Droid.Resource.Attribute.counterTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.customNavigationLayout = global::ReportsApp.Droid.Resource.Attribute.customNavigationLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.defaultQueryHint = global::ReportsApp.Droid.Resource.Attribute.defaultQueryHint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.dialogCornerRadius = global::ReportsApp.Droid.Resource.Attribute.dialogCornerRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.dialogPreferredPadding = global::ReportsApp.Droid.Resource.Attribute.dialogPreferredPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.dialogTheme = global::ReportsApp.Droid.Resource.Attribute.dialogTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.displayOptions = global::ReportsApp.Droid.Resource.Attribute.displayOptions;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.divider = global::ReportsApp.Droid.Resource.Attribute.divider;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.dividerHorizontal = global::ReportsApp.Droid.Resource.Attribute.dividerHorizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.dividerPadding = global::ReportsApp.Droid.Resource.Attribute.dividerPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.dividerVertical = global::ReportsApp.Droid.Resource.Attribute.dividerVertical;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.drawableBottomCompat = global::ReportsApp.Droid.Resource.Attribute.drawableBottomCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.drawableEndCompat = global::ReportsApp.Droid.Resource.Attribute.drawableEndCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.drawableLeftCompat = global::ReportsApp.Droid.Resource.Attribute.drawableLeftCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.drawableRightCompat = global::ReportsApp.Droid.Resource.Attribute.drawableRightCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.drawableSize = global::ReportsApp.Droid.Resource.Attribute.drawableSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.drawableStartCompat = global::ReportsApp.Droid.Resource.Attribute.drawableStartCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.drawableTint = global::ReportsApp.Droid.Resource.Attribute.drawableTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.drawableTintMode = global::ReportsApp.Droid.Resource.Attribute.drawableTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.drawableTopCompat = global::ReportsApp.Droid.Resource.Attribute.drawableTopCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.drawerArrowStyle = global::ReportsApp.Droid.Resource.Attribute.drawerArrowStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.dropdownListPreferredItemHeight = global::ReportsApp.Droid.Resource.Attribute.dropdownListPreferredItemHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.dropDownListViewStyle = global::ReportsApp.Droid.Resource.Attribute.dropDownListViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.editTextBackground = global::ReportsApp.Droid.Resource.Attribute.editTextBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.editTextColor = global::ReportsApp.Droid.Resource.Attribute.editTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.editTextStyle = global::ReportsApp.Droid.Resource.Attribute.editTextStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.elevation = global::ReportsApp.Droid.Resource.Attribute.elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.enforceMaterialTheme = global::ReportsApp.Droid.Resource.Attribute.enforceMaterialTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.enforceTextAppearance = global::ReportsApp.Droid.Resource.Attribute.enforceTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.errorEnabled = global::ReportsApp.Droid.Resource.Attribute.errorEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.errorTextAppearance = global::ReportsApp.Droid.Resource.Attribute.errorTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.expandActivityOverflowButtonDrawable = global::ReportsApp.Droid.Resource.Attribute.expandActivityOverflowButtonDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.expanded = global::ReportsApp.Droid.Resource.Attribute.expanded;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.expandedTitleGravity = global::ReportsApp.Droid.Resource.Attribute.expandedTitleGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.expandedTitleMargin = global::ReportsApp.Droid.Resource.Attribute.expandedTitleMargin;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.expandedTitleMarginBottom = global::ReportsApp.Droid.Resource.Attribute.expandedTitleMarginBottom;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.expandedTitleMarginEnd = global::ReportsApp.Droid.Resource.Attribute.expandedTitleMarginEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.expandedTitleMarginStart = global::ReportsApp.Droid.Resource.Attribute.expandedTitleMarginStart;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.expandedTitleMarginTop = global::ReportsApp.Droid.Resource.Attribute.expandedTitleMarginTop;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.expandedTitleTextAppearance = global::ReportsApp.Droid.Resource.Attribute.expandedTitleTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fabAlignmentMode = global::ReportsApp.Droid.Resource.Attribute.fabAlignmentMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fabCradleMargin = global::ReportsApp.Droid.Resource.Attribute.fabCradleMargin;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fabCradleRoundedCornerRadius = global::ReportsApp.Droid.Resource.Attribute.fabCradleRoundedCornerRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fabCradleVerticalOffset = global::ReportsApp.Droid.Resource.Attribute.fabCradleVerticalOffset;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fabCustomSize = global::ReportsApp.Droid.Resource.Attribute.fabCustomSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fabSize = global::ReportsApp.Droid.Resource.Attribute.fabSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fastScrollEnabled = global::ReportsApp.Droid.Resource.Attribute.fastScrollEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fastScrollHorizontalThumbDrawable = global::ReportsApp.Droid.Resource.Attribute.fastScrollHorizontalThumbDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fastScrollHorizontalTrackDrawable = global::ReportsApp.Droid.Resource.Attribute.fastScrollHorizontalTrackDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fastScrollVerticalThumbDrawable = global::ReportsApp.Droid.Resource.Attribute.fastScrollVerticalThumbDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fastScrollVerticalTrackDrawable = global::ReportsApp.Droid.Resource.Attribute.fastScrollVerticalTrackDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.firstBaselineToTopHeight = global::ReportsApp.Droid.Resource.Attribute.firstBaselineToTopHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.floatingActionButtonStyle = global::ReportsApp.Droid.Resource.Attribute.floatingActionButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.font = global::ReportsApp.Droid.Resource.Attribute.font;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fontFamily = global::ReportsApp.Droid.Resource.Attribute.fontFamily;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fontProviderAuthority = global::ReportsApp.Droid.Resource.Attribute.fontProviderAuthority;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fontProviderCerts = global::ReportsApp.Droid.Resource.Attribute.fontProviderCerts;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fontProviderFetchStrategy = global::ReportsApp.Droid.Resource.Attribute.fontProviderFetchStrategy;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fontProviderFetchTimeout = global::ReportsApp.Droid.Resource.Attribute.fontProviderFetchTimeout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fontProviderPackage = global::ReportsApp.Droid.Resource.Attribute.fontProviderPackage;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fontProviderQuery = global::ReportsApp.Droid.Resource.Attribute.fontProviderQuery;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fontStyle = global::ReportsApp.Droid.Resource.Attribute.fontStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fontVariationSettings = global::ReportsApp.Droid.Resource.Attribute.fontVariationSettings;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.fontWeight = global::ReportsApp.Droid.Resource.Attribute.fontWeight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.foregroundInsidePadding = global::ReportsApp.Droid.Resource.Attribute.foregroundInsidePadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.gapBetweenBars = global::ReportsApp.Droid.Resource.Attribute.gapBetweenBars;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.goIcon = global::ReportsApp.Droid.Resource.Attribute.goIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.headerLayout = global::ReportsApp.Droid.Resource.Attribute.headerLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.height = global::ReportsApp.Droid.Resource.Attribute.height;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.helperText = global::ReportsApp.Droid.Resource.Attribute.helperText;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.helperTextEnabled = global::ReportsApp.Droid.Resource.Attribute.helperTextEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.helperTextTextAppearance = global::ReportsApp.Droid.Resource.Attribute.helperTextTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.hideMotionSpec = global::ReportsApp.Droid.Resource.Attribute.hideMotionSpec;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.hideOnContentScroll = global::ReportsApp.Droid.Resource.Attribute.hideOnContentScroll;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.hideOnScroll = global::ReportsApp.Droid.Resource.Attribute.hideOnScroll;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.hintAnimationEnabled = global::ReportsApp.Droid.Resource.Attribute.hintAnimationEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.hintEnabled = global::ReportsApp.Droid.Resource.Attribute.hintEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.hintTextAppearance = global::ReportsApp.Droid.Resource.Attribute.hintTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.homeAsUpIndicator = global::ReportsApp.Droid.Resource.Attribute.homeAsUpIndicator;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.homeLayout = global::ReportsApp.Droid.Resource.Attribute.homeLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.hoveredFocusedTranslationZ = global::ReportsApp.Droid.Resource.Attribute.hoveredFocusedTranslationZ;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.icon = global::ReportsApp.Droid.Resource.Attribute.icon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.iconEndPadding = global::ReportsApp.Droid.Resource.Attribute.iconEndPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.iconGravity = global::ReportsApp.Droid.Resource.Attribute.iconGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.iconifiedByDefault = global::ReportsApp.Droid.Resource.Attribute.iconifiedByDefault;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.iconPadding = global::ReportsApp.Droid.Resource.Attribute.iconPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.iconSize = global::ReportsApp.Droid.Resource.Attribute.iconSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.iconStartPadding = global::ReportsApp.Droid.Resource.Attribute.iconStartPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.iconTint = global::ReportsApp.Droid.Resource.Attribute.iconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.iconTintMode = global::ReportsApp.Droid.Resource.Attribute.iconTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.imageButtonStyle = global::ReportsApp.Droid.Resource.Attribute.imageButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.indeterminateProgressStyle = global::ReportsApp.Droid.Resource.Attribute.indeterminateProgressStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.initialActivityCount = global::ReportsApp.Droid.Resource.Attribute.initialActivityCount;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.insetForeground = global::ReportsApp.Droid.Resource.Attribute.insetForeground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.isLightTheme = global::ReportsApp.Droid.Resource.Attribute.isLightTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemBackground = global::ReportsApp.Droid.Resource.Attribute.itemBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemHorizontalPadding = global::ReportsApp.Droid.Resource.Attribute.itemHorizontalPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemHorizontalTranslationEnabled = global::ReportsApp.Droid.Resource.Attribute.itemHorizontalTranslationEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemIconPadding = global::ReportsApp.Droid.Resource.Attribute.itemIconPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemIconSize = global::ReportsApp.Droid.Resource.Attribute.itemIconSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemIconTint = global::ReportsApp.Droid.Resource.Attribute.itemIconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemPadding = global::ReportsApp.Droid.Resource.Attribute.itemPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemSpacing = global::ReportsApp.Droid.Resource.Attribute.itemSpacing;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemTextAppearance = global::ReportsApp.Droid.Resource.Attribute.itemTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemTextAppearanceActive = global::ReportsApp.Droid.Resource.Attribute.itemTextAppearanceActive;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemTextAppearanceInactive = global::ReportsApp.Droid.Resource.Attribute.itemTextAppearanceInactive;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.itemTextColor = global::ReportsApp.Droid.Resource.Attribute.itemTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.keylines = global::ReportsApp.Droid.Resource.Attribute.keylines;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.labelVisibilityMode = global::ReportsApp.Droid.Resource.Attribute.labelVisibilityMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.lastBaselineToBottomHeight = global::ReportsApp.Droid.Resource.Attribute.lastBaselineToBottomHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout = global::ReportsApp.Droid.Resource.Attribute.layout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layoutManager = global::ReportsApp.Droid.Resource.Attribute.layoutManager;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout_anchor = global::ReportsApp.Droid.Resource.Attribute.layout_anchor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout_anchorGravity = global::ReportsApp.Droid.Resource.Attribute.layout_anchorGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout_behavior = global::ReportsApp.Droid.Resource.Attribute.layout_behavior;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout_collapseMode = global::ReportsApp.Droid.Resource.Attribute.layout_collapseMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout_collapseParallaxMultiplier = global::ReportsApp.Droid.Resource.Attribute.layout_collapseParallaxMultiplier;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout_dodgeInsetEdges = global::ReportsApp.Droid.Resource.Attribute.layout_dodgeInsetEdges;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout_insetEdge = global::ReportsApp.Droid.Resource.Attribute.layout_insetEdge;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout_keyline = global::ReportsApp.Droid.Resource.Attribute.layout_keyline;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout_scrollFlags = global::ReportsApp.Droid.Resource.Attribute.layout_scrollFlags;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.layout_scrollInterpolator = global::ReportsApp.Droid.Resource.Attribute.layout_scrollInterpolator;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.liftOnScroll = global::ReportsApp.Droid.Resource.Attribute.liftOnScroll;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.lineHeight = global::ReportsApp.Droid.Resource.Attribute.lineHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.lineSpacing = global::ReportsApp.Droid.Resource.Attribute.lineSpacing;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listChoiceBackgroundIndicator = global::ReportsApp.Droid.Resource.Attribute.listChoiceBackgroundIndicator;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listChoiceIndicatorMultipleAnimated = global::ReportsApp.Droid.Resource.Attribute.listChoiceIndicatorMultipleAnimated;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listChoiceIndicatorSingleAnimated = global::ReportsApp.Droid.Resource.Attribute.listChoiceIndicatorSingleAnimated;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listDividerAlertDialog = global::ReportsApp.Droid.Resource.Attribute.listDividerAlertDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listItemLayout = global::ReportsApp.Droid.Resource.Attribute.listItemLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listLayout = global::ReportsApp.Droid.Resource.Attribute.listLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listMenuViewStyle = global::ReportsApp.Droid.Resource.Attribute.listMenuViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listPopupWindowStyle = global::ReportsApp.Droid.Resource.Attribute.listPopupWindowStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listPreferredItemHeight = global::ReportsApp.Droid.Resource.Attribute.listPreferredItemHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listPreferredItemHeightLarge = global::ReportsApp.Droid.Resource.Attribute.listPreferredItemHeightLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listPreferredItemHeightSmall = global::ReportsApp.Droid.Resource.Attribute.listPreferredItemHeightSmall;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listPreferredItemPaddingEnd = global::ReportsApp.Droid.Resource.Attribute.listPreferredItemPaddingEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listPreferredItemPaddingLeft = global::ReportsApp.Droid.Resource.Attribute.listPreferredItemPaddingLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listPreferredItemPaddingRight = global::ReportsApp.Droid.Resource.Attribute.listPreferredItemPaddingRight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.listPreferredItemPaddingStart = global::ReportsApp.Droid.Resource.Attribute.listPreferredItemPaddingStart;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.logo = global::ReportsApp.Droid.Resource.Attribute.logo;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.logoDescription = global::ReportsApp.Droid.Resource.Attribute.logoDescription;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.materialButtonStyle = global::ReportsApp.Droid.Resource.Attribute.materialButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.materialCardViewStyle = global::ReportsApp.Droid.Resource.Attribute.materialCardViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.maxActionInlineWidth = global::ReportsApp.Droid.Resource.Attribute.maxActionInlineWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.maxButtonHeight = global::ReportsApp.Droid.Resource.Attribute.maxButtonHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.maxImageSize = global::ReportsApp.Droid.Resource.Attribute.maxImageSize;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.measureWithLargestChild = global::ReportsApp.Droid.Resource.Attribute.measureWithLargestChild;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.menu = global::ReportsApp.Droid.Resource.Attribute.menu;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.multiChoiceItemLayout = global::ReportsApp.Droid.Resource.Attribute.multiChoiceItemLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.navigationContentDescription = global::ReportsApp.Droid.Resource.Attribute.navigationContentDescription;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.navigationIcon = global::ReportsApp.Droid.Resource.Attribute.navigationIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.navigationMode = global::ReportsApp.Droid.Resource.Attribute.navigationMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.navigationViewStyle = global::ReportsApp.Droid.Resource.Attribute.navigationViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.numericModifiers = global::ReportsApp.Droid.Resource.Attribute.numericModifiers;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.overlapAnchor = global::ReportsApp.Droid.Resource.Attribute.overlapAnchor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.paddingBottomNoButtons = global::ReportsApp.Droid.Resource.Attribute.paddingBottomNoButtons;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.paddingEnd = global::ReportsApp.Droid.Resource.Attribute.paddingEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.paddingStart = global::ReportsApp.Droid.Resource.Attribute.paddingStart;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.paddingTopNoTitle = global::ReportsApp.Droid.Resource.Attribute.paddingTopNoTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.panelBackground = global::ReportsApp.Droid.Resource.Attribute.panelBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.panelMenuListTheme = global::ReportsApp.Droid.Resource.Attribute.panelMenuListTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.panelMenuListWidth = global::ReportsApp.Droid.Resource.Attribute.panelMenuListWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.passwordToggleContentDescription = global::ReportsApp.Droid.Resource.Attribute.passwordToggleContentDescription;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.passwordToggleDrawable = global::ReportsApp.Droid.Resource.Attribute.passwordToggleDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.passwordToggleEnabled = global::ReportsApp.Droid.Resource.Attribute.passwordToggleEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.passwordToggleTint = global::ReportsApp.Droid.Resource.Attribute.passwordToggleTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.passwordToggleTintMode = global::ReportsApp.Droid.Resource.Attribute.passwordToggleTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.popupMenuStyle = global::ReportsApp.Droid.Resource.Attribute.popupMenuStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.popupTheme = global::ReportsApp.Droid.Resource.Attribute.popupTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.popupWindowStyle = global::ReportsApp.Droid.Resource.Attribute.popupWindowStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.preserveIconSpacing = global::ReportsApp.Droid.Resource.Attribute.preserveIconSpacing;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.pressedTranslationZ = global::ReportsApp.Droid.Resource.Attribute.pressedTranslationZ;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.progressBarPadding = global::ReportsApp.Droid.Resource.Attribute.progressBarPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.progressBarStyle = global::ReportsApp.Droid.Resource.Attribute.progressBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.queryBackground = global::ReportsApp.Droid.Resource.Attribute.queryBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.queryHint = global::ReportsApp.Droid.Resource.Attribute.queryHint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.radioButtonStyle = global::ReportsApp.Droid.Resource.Attribute.radioButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.ratingBarStyle = global::ReportsApp.Droid.Resource.Attribute.ratingBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.ratingBarStyleIndicator = global::ReportsApp.Droid.Resource.Attribute.ratingBarStyleIndicator;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.ratingBarStyleSmall = global::ReportsApp.Droid.Resource.Attribute.ratingBarStyleSmall;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.recyclerViewStyle = global::ReportsApp.Droid.Resource.Attribute.recyclerViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.reverseLayout = global::ReportsApp.Droid.Resource.Attribute.reverseLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.rippleColor = global::ReportsApp.Droid.Resource.Attribute.rippleColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.scrimAnimationDuration = global::ReportsApp.Droid.Resource.Attribute.scrimAnimationDuration;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.scrimBackground = global::ReportsApp.Droid.Resource.Attribute.scrimBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.scrimVisibleHeightTrigger = global::ReportsApp.Droid.Resource.Attribute.scrimVisibleHeightTrigger;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.scrollViewStyle = global::ReportsApp.Droid.Resource.Attribute.scrollViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.searchHintIcon = global::ReportsApp.Droid.Resource.Attribute.searchHintIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.searchIcon = global::ReportsApp.Droid.Resource.Attribute.searchIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.searchViewStyle = global::ReportsApp.Droid.Resource.Attribute.searchViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.seekBarStyle = global::ReportsApp.Droid.Resource.Attribute.seekBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.selectableItemBackground = global::ReportsApp.Droid.Resource.Attribute.selectableItemBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.selectableItemBackgroundBorderless = global::ReportsApp.Droid.Resource.Attribute.selectableItemBackgroundBorderless;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.showAsAction = global::ReportsApp.Droid.Resource.Attribute.showAsAction;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.showDividers = global::ReportsApp.Droid.Resource.Attribute.showDividers;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.showMotionSpec = global::ReportsApp.Droid.Resource.Attribute.showMotionSpec;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.showText = global::ReportsApp.Droid.Resource.Attribute.showText;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.showTitle = global::ReportsApp.Droid.Resource.Attribute.showTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.singleChoiceItemLayout = global::ReportsApp.Droid.Resource.Attribute.singleChoiceItemLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.singleLine = global::ReportsApp.Droid.Resource.Attribute.singleLine;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.singleSelection = global::ReportsApp.Droid.Resource.Attribute.singleSelection;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.snackbarButtonStyle = global::ReportsApp.Droid.Resource.Attribute.snackbarButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.snackbarStyle = global::ReportsApp.Droid.Resource.Attribute.snackbarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.spanCount = global::ReportsApp.Droid.Resource.Attribute.spanCount;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.spinBars = global::ReportsApp.Droid.Resource.Attribute.spinBars;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.spinnerDropDownItemStyle = global::ReportsApp.Droid.Resource.Attribute.spinnerDropDownItemStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.spinnerStyle = global::ReportsApp.Droid.Resource.Attribute.spinnerStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.splitTrack = global::ReportsApp.Droid.Resource.Attribute.splitTrack;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.srcCompat = global::ReportsApp.Droid.Resource.Attribute.srcCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.stackFromEnd = global::ReportsApp.Droid.Resource.Attribute.stackFromEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.state_above_anchor = global::ReportsApp.Droid.Resource.Attribute.state_above_anchor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.state_collapsed = global::ReportsApp.Droid.Resource.Attribute.state_collapsed;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.state_collapsible = global::ReportsApp.Droid.Resource.Attribute.state_collapsible;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.state_liftable = global::ReportsApp.Droid.Resource.Attribute.state_liftable;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.state_lifted = global::ReportsApp.Droid.Resource.Attribute.state_lifted;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.statusBarBackground = global::ReportsApp.Droid.Resource.Attribute.statusBarBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.statusBarScrim = global::ReportsApp.Droid.Resource.Attribute.statusBarScrim;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.strokeColor = global::ReportsApp.Droid.Resource.Attribute.strokeColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.strokeWidth = global::ReportsApp.Droid.Resource.Attribute.strokeWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.subMenuArrow = global::ReportsApp.Droid.Resource.Attribute.subMenuArrow;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.submitBackground = global::ReportsApp.Droid.Resource.Attribute.submitBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.subtitle = global::ReportsApp.Droid.Resource.Attribute.subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.subtitleTextAppearance = global::ReportsApp.Droid.Resource.Attribute.subtitleTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.subtitleTextColor = global::ReportsApp.Droid.Resource.Attribute.subtitleTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.subtitleTextStyle = global::ReportsApp.Droid.Resource.Attribute.subtitleTextStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.suggestionRowLayout = global::ReportsApp.Droid.Resource.Attribute.suggestionRowLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.switchMinWidth = global::ReportsApp.Droid.Resource.Attribute.switchMinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.switchPadding = global::ReportsApp.Droid.Resource.Attribute.switchPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.switchStyle = global::ReportsApp.Droid.Resource.Attribute.switchStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.switchTextAppearance = global::ReportsApp.Droid.Resource.Attribute.switchTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabBackground = global::ReportsApp.Droid.Resource.Attribute.tabBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabContentStart = global::ReportsApp.Droid.Resource.Attribute.tabContentStart;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabGravity = global::ReportsApp.Droid.Resource.Attribute.tabGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabIconTint = global::ReportsApp.Droid.Resource.Attribute.tabIconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabIconTintMode = global::ReportsApp.Droid.Resource.Attribute.tabIconTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabIndicator = global::ReportsApp.Droid.Resource.Attribute.tabIndicator;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabIndicatorAnimationDuration = global::ReportsApp.Droid.Resource.Attribute.tabIndicatorAnimationDuration;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabIndicatorColor = global::ReportsApp.Droid.Resource.Attribute.tabIndicatorColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabIndicatorFullWidth = global::ReportsApp.Droid.Resource.Attribute.tabIndicatorFullWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabIndicatorGravity = global::ReportsApp.Droid.Resource.Attribute.tabIndicatorGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabIndicatorHeight = global::ReportsApp.Droid.Resource.Attribute.tabIndicatorHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabInlineLabel = global::ReportsApp.Droid.Resource.Attribute.tabInlineLabel;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabMaxWidth = global::ReportsApp.Droid.Resource.Attribute.tabMaxWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabMinWidth = global::ReportsApp.Droid.Resource.Attribute.tabMinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabMode = global::ReportsApp.Droid.Resource.Attribute.tabMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabPadding = global::ReportsApp.Droid.Resource.Attribute.tabPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabPaddingBottom = global::ReportsApp.Droid.Resource.Attribute.tabPaddingBottom;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabPaddingEnd = global::ReportsApp.Droid.Resource.Attribute.tabPaddingEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabPaddingStart = global::ReportsApp.Droid.Resource.Attribute.tabPaddingStart;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabPaddingTop = global::ReportsApp.Droid.Resource.Attribute.tabPaddingTop;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabRippleColor = global::ReportsApp.Droid.Resource.Attribute.tabRippleColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabSelectedTextColor = global::ReportsApp.Droid.Resource.Attribute.tabSelectedTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabStyle = global::ReportsApp.Droid.Resource.Attribute.tabStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabTextAppearance = global::ReportsApp.Droid.Resource.Attribute.tabTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabTextColor = global::ReportsApp.Droid.Resource.Attribute.tabTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tabUnboundedRipple = global::ReportsApp.Droid.Resource.Attribute.tabUnboundedRipple;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAllCaps = global::ReportsApp.Droid.Resource.Attribute.textAllCaps;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceBody1 = global::ReportsApp.Droid.Resource.Attribute.textAppearanceBody1;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceBody2 = global::ReportsApp.Droid.Resource.Attribute.textAppearanceBody2;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceButton = global::ReportsApp.Droid.Resource.Attribute.textAppearanceButton;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceCaption = global::ReportsApp.Droid.Resource.Attribute.textAppearanceCaption;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceHeadline1 = global::ReportsApp.Droid.Resource.Attribute.textAppearanceHeadline1;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceHeadline2 = global::ReportsApp.Droid.Resource.Attribute.textAppearanceHeadline2;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceHeadline3 = global::ReportsApp.Droid.Resource.Attribute.textAppearanceHeadline3;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceHeadline4 = global::ReportsApp.Droid.Resource.Attribute.textAppearanceHeadline4;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceHeadline5 = global::ReportsApp.Droid.Resource.Attribute.textAppearanceHeadline5;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceHeadline6 = global::ReportsApp.Droid.Resource.Attribute.textAppearanceHeadline6;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceLargePopupMenu = global::ReportsApp.Droid.Resource.Attribute.textAppearanceLargePopupMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceListItem = global::ReportsApp.Droid.Resource.Attribute.textAppearanceListItem;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceListItemSecondary = global::ReportsApp.Droid.Resource.Attribute.textAppearanceListItemSecondary;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceListItemSmall = global::ReportsApp.Droid.Resource.Attribute.textAppearanceListItemSmall;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceOverline = global::ReportsApp.Droid.Resource.Attribute.textAppearanceOverline;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearancePopupMenuHeader = global::ReportsApp.Droid.Resource.Attribute.textAppearancePopupMenuHeader;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceSearchResultSubtitle = global::ReportsApp.Droid.Resource.Attribute.textAppearanceSearchResultSubtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceSearchResultTitle = global::ReportsApp.Droid.Resource.Attribute.textAppearanceSearchResultTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceSmallPopupMenu = global::ReportsApp.Droid.Resource.Attribute.textAppearanceSmallPopupMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceSubtitle1 = global::ReportsApp.Droid.Resource.Attribute.textAppearanceSubtitle1;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textAppearanceSubtitle2 = global::ReportsApp.Droid.Resource.Attribute.textAppearanceSubtitle2;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textColorAlertDialogListItem = global::ReportsApp.Droid.Resource.Attribute.textColorAlertDialogListItem;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textColorSearchUrl = global::ReportsApp.Droid.Resource.Attribute.textColorSearchUrl;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textEndPadding = global::ReportsApp.Droid.Resource.Attribute.textEndPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textInputStyle = global::ReportsApp.Droid.Resource.Attribute.textInputStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textLocale = global::ReportsApp.Droid.Resource.Attribute.textLocale;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.textStartPadding = global::ReportsApp.Droid.Resource.Attribute.textStartPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.theme = global::ReportsApp.Droid.Resource.Attribute.theme;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.thickness = global::ReportsApp.Droid.Resource.Attribute.thickness;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.thumbTextPadding = global::ReportsApp.Droid.Resource.Attribute.thumbTextPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.thumbTint = global::ReportsApp.Droid.Resource.Attribute.thumbTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.thumbTintMode = global::ReportsApp.Droid.Resource.Attribute.thumbTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tickMark = global::ReportsApp.Droid.Resource.Attribute.tickMark;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tickMarkTint = global::ReportsApp.Droid.Resource.Attribute.tickMarkTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tickMarkTintMode = global::ReportsApp.Droid.Resource.Attribute.tickMarkTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tint = global::ReportsApp.Droid.Resource.Attribute.tint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tintMode = global::ReportsApp.Droid.Resource.Attribute.tintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.title = global::ReportsApp.Droid.Resource.Attribute.title;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.titleEnabled = global::ReportsApp.Droid.Resource.Attribute.titleEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.titleMargin = global::ReportsApp.Droid.Resource.Attribute.titleMargin;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.titleMarginBottom = global::ReportsApp.Droid.Resource.Attribute.titleMarginBottom;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.titleMarginEnd = global::ReportsApp.Droid.Resource.Attribute.titleMarginEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.titleMargins = global::ReportsApp.Droid.Resource.Attribute.titleMargins;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.titleMarginStart = global::ReportsApp.Droid.Resource.Attribute.titleMarginStart;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.titleMarginTop = global::ReportsApp.Droid.Resource.Attribute.titleMarginTop;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.titleTextAppearance = global::ReportsApp.Droid.Resource.Attribute.titleTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.titleTextColor = global::ReportsApp.Droid.Resource.Attribute.titleTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.titleTextStyle = global::ReportsApp.Droid.Resource.Attribute.titleTextStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.toolbarId = global::ReportsApp.Droid.Resource.Attribute.toolbarId;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.toolbarNavigationButtonStyle = global::ReportsApp.Droid.Resource.Attribute.toolbarNavigationButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.toolbarStyle = global::ReportsApp.Droid.Resource.Attribute.toolbarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tooltipForegroundColor = global::ReportsApp.Droid.Resource.Attribute.tooltipForegroundColor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tooltipFrameBackground = global::ReportsApp.Droid.Resource.Attribute.tooltipFrameBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.tooltipText = global::ReportsApp.Droid.Resource.Attribute.tooltipText;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.track = global::ReportsApp.Droid.Resource.Attribute.track;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.trackTint = global::ReportsApp.Droid.Resource.Attribute.trackTint;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.trackTintMode = global::ReportsApp.Droid.Resource.Attribute.trackTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.ttcIndex = global::ReportsApp.Droid.Resource.Attribute.ttcIndex;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.useCompatPadding = global::ReportsApp.Droid.Resource.Attribute.useCompatPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.viewInflaterClass = global::ReportsApp.Droid.Resource.Attribute.viewInflaterClass;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.voiceIcon = global::ReportsApp.Droid.Resource.Attribute.voiceIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.windowActionBar = global::ReportsApp.Droid.Resource.Attribute.windowActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.windowActionBarOverlay = global::ReportsApp.Droid.Resource.Attribute.windowActionBarOverlay;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.windowActionModeOverlay = global::ReportsApp.Droid.Resource.Attribute.windowActionModeOverlay;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.windowFixedHeightMajor = global::ReportsApp.Droid.Resource.Attribute.windowFixedHeightMajor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.windowFixedHeightMinor = global::ReportsApp.Droid.Resource.Attribute.windowFixedHeightMinor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.windowFixedWidthMajor = global::ReportsApp.Droid.Resource.Attribute.windowFixedWidthMajor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.windowFixedWidthMinor = global::ReportsApp.Droid.Resource.Attribute.windowFixedWidthMinor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.windowMinWidthMajor = global::ReportsApp.Droid.Resource.Attribute.windowMinWidthMajor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.windowMinWidthMinor = global::ReportsApp.Droid.Resource.Attribute.windowMinWidthMinor;
+			global::Xamarin.Forms.PancakeView.Resource.Attribute.windowNoTitle = global::ReportsApp.Droid.Resource.Attribute.windowNoTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Boolean.abc_action_bar_embed_tabs = global::ReportsApp.Droid.Resource.Boolean.abc_action_bar_embed_tabs;
+			global::Xamarin.Forms.PancakeView.Resource.Boolean.abc_allow_stacked_button_bar = global::ReportsApp.Droid.Resource.Boolean.abc_allow_stacked_button_bar;
+			global::Xamarin.Forms.PancakeView.Resource.Boolean.abc_config_actionMenuItemAllCaps = global::ReportsApp.Droid.Resource.Boolean.abc_config_actionMenuItemAllCaps;
+			global::Xamarin.Forms.PancakeView.Resource.Boolean.mtrl_btn_textappearance_all_caps = global::ReportsApp.Droid.Resource.Boolean.mtrl_btn_textappearance_all_caps;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_background_cache_hint_selector_material_dark = global::ReportsApp.Droid.Resource.Color.abc_background_cache_hint_selector_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_background_cache_hint_selector_material_light = global::ReportsApp.Droid.Resource.Color.abc_background_cache_hint_selector_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_btn_colored_borderless_text_material = global::ReportsApp.Droid.Resource.Color.abc_btn_colored_borderless_text_material;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_btn_colored_text_material = global::ReportsApp.Droid.Resource.Color.abc_btn_colored_text_material;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_color_highlight_material = global::ReportsApp.Droid.Resource.Color.abc_color_highlight_material;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_decor_view_status_guard = global::ReportsApp.Droid.Resource.Color.abc_decor_view_status_guard;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_decor_view_status_guard_light = global::ReportsApp.Droid.Resource.Color.abc_decor_view_status_guard_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_hint_foreground_material_dark = global::ReportsApp.Droid.Resource.Color.abc_hint_foreground_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_hint_foreground_material_light = global::ReportsApp.Droid.Resource.Color.abc_hint_foreground_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_primary_text_disable_only_material_dark = global::ReportsApp.Droid.Resource.Color.abc_primary_text_disable_only_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_primary_text_disable_only_material_light = global::ReportsApp.Droid.Resource.Color.abc_primary_text_disable_only_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_primary_text_material_dark = global::ReportsApp.Droid.Resource.Color.abc_primary_text_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_primary_text_material_light = global::ReportsApp.Droid.Resource.Color.abc_primary_text_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_search_url_text = global::ReportsApp.Droid.Resource.Color.abc_search_url_text;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_search_url_text_normal = global::ReportsApp.Droid.Resource.Color.abc_search_url_text_normal;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_search_url_text_pressed = global::ReportsApp.Droid.Resource.Color.abc_search_url_text_pressed;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_search_url_text_selected = global::ReportsApp.Droid.Resource.Color.abc_search_url_text_selected;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_secondary_text_material_dark = global::ReportsApp.Droid.Resource.Color.abc_secondary_text_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_secondary_text_material_light = global::ReportsApp.Droid.Resource.Color.abc_secondary_text_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_tint_btn_checkable = global::ReportsApp.Droid.Resource.Color.abc_tint_btn_checkable;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_tint_default = global::ReportsApp.Droid.Resource.Color.abc_tint_default;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_tint_edittext = global::ReportsApp.Droid.Resource.Color.abc_tint_edittext;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_tint_seek_thumb = global::ReportsApp.Droid.Resource.Color.abc_tint_seek_thumb;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_tint_spinner = global::ReportsApp.Droid.Resource.Color.abc_tint_spinner;
+			global::Xamarin.Forms.PancakeView.Resource.Color.abc_tint_switch_track = global::ReportsApp.Droid.Resource.Color.abc_tint_switch_track;
+			global::Xamarin.Forms.PancakeView.Resource.Color.accent_material_dark = global::ReportsApp.Droid.Resource.Color.accent_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.accent_material_light = global::ReportsApp.Droid.Resource.Color.accent_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.androidx_core_ripple_material_light = global::ReportsApp.Droid.Resource.Color.androidx_core_ripple_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.androidx_core_secondary_text_default_material_light = global::ReportsApp.Droid.Resource.Color.androidx_core_secondary_text_default_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.background_floating_material_dark = global::ReportsApp.Droid.Resource.Color.background_floating_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.background_floating_material_light = global::ReportsApp.Droid.Resource.Color.background_floating_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.background_material_dark = global::ReportsApp.Droid.Resource.Color.background_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.background_material_light = global::ReportsApp.Droid.Resource.Color.background_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.bright_foreground_disabled_material_dark = global::ReportsApp.Droid.Resource.Color.bright_foreground_disabled_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.bright_foreground_disabled_material_light = global::ReportsApp.Droid.Resource.Color.bright_foreground_disabled_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.bright_foreground_inverse_material_dark = global::ReportsApp.Droid.Resource.Color.bright_foreground_inverse_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.bright_foreground_inverse_material_light = global::ReportsApp.Droid.Resource.Color.bright_foreground_inverse_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.bright_foreground_material_dark = global::ReportsApp.Droid.Resource.Color.bright_foreground_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.bright_foreground_material_light = global::ReportsApp.Droid.Resource.Color.bright_foreground_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.browser_actions_bg_grey = global::ReportsApp.Droid.Resource.Color.browser_actions_bg_grey;
+			global::Xamarin.Forms.PancakeView.Resource.Color.browser_actions_divider_color = global::ReportsApp.Droid.Resource.Color.browser_actions_divider_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.browser_actions_text_color = global::ReportsApp.Droid.Resource.Color.browser_actions_text_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.browser_actions_title_color = global::ReportsApp.Droid.Resource.Color.browser_actions_title_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.button_material_dark = global::ReportsApp.Droid.Resource.Color.button_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.button_material_light = global::ReportsApp.Droid.Resource.Color.button_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.cardview_dark_background = global::ReportsApp.Droid.Resource.Color.cardview_dark_background;
+			global::Xamarin.Forms.PancakeView.Resource.Color.cardview_light_background = global::ReportsApp.Droid.Resource.Color.cardview_light_background;
+			global::Xamarin.Forms.PancakeView.Resource.Color.cardview_shadow_end_color = global::ReportsApp.Droid.Resource.Color.cardview_shadow_end_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.cardview_shadow_start_color = global::ReportsApp.Droid.Resource.Color.cardview_shadow_start_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_bottom_navigation_shadow_color = global::ReportsApp.Droid.Resource.Color.design_bottom_navigation_shadow_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_default_color_primary = global::ReportsApp.Droid.Resource.Color.design_default_color_primary;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_default_color_primary_dark = global::ReportsApp.Droid.Resource.Color.design_default_color_primary_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_error = global::ReportsApp.Droid.Resource.Color.design_error;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_fab_shadow_end_color = global::ReportsApp.Droid.Resource.Color.design_fab_shadow_end_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_fab_shadow_mid_color = global::ReportsApp.Droid.Resource.Color.design_fab_shadow_mid_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_fab_shadow_start_color = global::ReportsApp.Droid.Resource.Color.design_fab_shadow_start_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_fab_stroke_end_inner_color = global::ReportsApp.Droid.Resource.Color.design_fab_stroke_end_inner_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_fab_stroke_end_outer_color = global::ReportsApp.Droid.Resource.Color.design_fab_stroke_end_outer_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_fab_stroke_top_inner_color = global::ReportsApp.Droid.Resource.Color.design_fab_stroke_top_inner_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_fab_stroke_top_outer_color = global::ReportsApp.Droid.Resource.Color.design_fab_stroke_top_outer_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.design_snackbar_background_color = global::ReportsApp.Droid.Resource.Color.design_snackbar_background_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.dim_foreground_disabled_material_dark = global::ReportsApp.Droid.Resource.Color.dim_foreground_disabled_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.dim_foreground_disabled_material_light = global::ReportsApp.Droid.Resource.Color.dim_foreground_disabled_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.dim_foreground_material_dark = global::ReportsApp.Droid.Resource.Color.dim_foreground_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.dim_foreground_material_light = global::ReportsApp.Droid.Resource.Color.dim_foreground_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.error_color_material_dark = global::ReportsApp.Droid.Resource.Color.error_color_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.error_color_material_light = global::ReportsApp.Droid.Resource.Color.error_color_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.foreground_material_dark = global::ReportsApp.Droid.Resource.Color.foreground_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.foreground_material_light = global::ReportsApp.Droid.Resource.Color.foreground_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.highlighted_text_material_dark = global::ReportsApp.Droid.Resource.Color.highlighted_text_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.highlighted_text_material_light = global::ReportsApp.Droid.Resource.Color.highlighted_text_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_blue_grey_800 = global::ReportsApp.Droid.Resource.Color.material_blue_grey_800;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_blue_grey_900 = global::ReportsApp.Droid.Resource.Color.material_blue_grey_900;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_blue_grey_950 = global::ReportsApp.Droid.Resource.Color.material_blue_grey_950;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_deep_teal_200 = global::ReportsApp.Droid.Resource.Color.material_deep_teal_200;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_deep_teal_500 = global::ReportsApp.Droid.Resource.Color.material_deep_teal_500;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_grey_100 = global::ReportsApp.Droid.Resource.Color.material_grey_100;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_grey_300 = global::ReportsApp.Droid.Resource.Color.material_grey_300;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_grey_50 = global::ReportsApp.Droid.Resource.Color.material_grey_50;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_grey_600 = global::ReportsApp.Droid.Resource.Color.material_grey_600;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_grey_800 = global::ReportsApp.Droid.Resource.Color.material_grey_800;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_grey_850 = global::ReportsApp.Droid.Resource.Color.material_grey_850;
+			global::Xamarin.Forms.PancakeView.Resource.Color.material_grey_900 = global::ReportsApp.Droid.Resource.Color.material_grey_900;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_bottom_nav_colored_item_tint = global::ReportsApp.Droid.Resource.Color.mtrl_bottom_nav_colored_item_tint;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_bottom_nav_item_tint = global::ReportsApp.Droid.Resource.Color.mtrl_bottom_nav_item_tint;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_btn_bg_color_selector = global::ReportsApp.Droid.Resource.Color.mtrl_btn_bg_color_selector;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_btn_ripple_color = global::ReportsApp.Droid.Resource.Color.mtrl_btn_ripple_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_btn_stroke_color_selector = global::ReportsApp.Droid.Resource.Color.mtrl_btn_stroke_color_selector;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_btn_text_btn_ripple_color = global::ReportsApp.Droid.Resource.Color.mtrl_btn_text_btn_ripple_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_btn_text_color_disabled = global::ReportsApp.Droid.Resource.Color.mtrl_btn_text_color_disabled;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_btn_text_color_selector = global::ReportsApp.Droid.Resource.Color.mtrl_btn_text_color_selector;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_btn_transparent_bg_color = global::ReportsApp.Droid.Resource.Color.mtrl_btn_transparent_bg_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_chip_background_color = global::ReportsApp.Droid.Resource.Color.mtrl_chip_background_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_chip_close_icon_tint = global::ReportsApp.Droid.Resource.Color.mtrl_chip_close_icon_tint;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_chip_ripple_color = global::ReportsApp.Droid.Resource.Color.mtrl_chip_ripple_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_chip_text_color = global::ReportsApp.Droid.Resource.Color.mtrl_chip_text_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_fab_ripple_color = global::ReportsApp.Droid.Resource.Color.mtrl_fab_ripple_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_scrim_color = global::ReportsApp.Droid.Resource.Color.mtrl_scrim_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_tabs_colored_ripple_color = global::ReportsApp.Droid.Resource.Color.mtrl_tabs_colored_ripple_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_tabs_icon_color_selector = global::ReportsApp.Droid.Resource.Color.mtrl_tabs_icon_color_selector;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_tabs_icon_color_selector_colored = global::ReportsApp.Droid.Resource.Color.mtrl_tabs_icon_color_selector_colored;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_tabs_legacy_text_color_selector = global::ReportsApp.Droid.Resource.Color.mtrl_tabs_legacy_text_color_selector;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_tabs_ripple_color = global::ReportsApp.Droid.Resource.Color.mtrl_tabs_ripple_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_textinput_default_box_stroke_color = global::ReportsApp.Droid.Resource.Color.mtrl_textinput_default_box_stroke_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_textinput_disabled_color = global::ReportsApp.Droid.Resource.Color.mtrl_textinput_disabled_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_textinput_filled_box_default_background_color = global::ReportsApp.Droid.Resource.Color.mtrl_textinput_filled_box_default_background_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_textinput_hovered_box_stroke_color = global::ReportsApp.Droid.Resource.Color.mtrl_textinput_hovered_box_stroke_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.mtrl_text_btn_text_color_selector = global::ReportsApp.Droid.Resource.Color.mtrl_text_btn_text_color_selector;
+			global::Xamarin.Forms.PancakeView.Resource.Color.notification_action_color_filter = global::ReportsApp.Droid.Resource.Color.notification_action_color_filter;
+			global::Xamarin.Forms.PancakeView.Resource.Color.notification_icon_bg_color = global::ReportsApp.Droid.Resource.Color.notification_icon_bg_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.notification_material_background_media_default_color = global::ReportsApp.Droid.Resource.Color.notification_material_background_media_default_color;
+			global::Xamarin.Forms.PancakeView.Resource.Color.primary_dark_material_dark = global::ReportsApp.Droid.Resource.Color.primary_dark_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.primary_dark_material_light = global::ReportsApp.Droid.Resource.Color.primary_dark_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.primary_material_dark = global::ReportsApp.Droid.Resource.Color.primary_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.primary_material_light = global::ReportsApp.Droid.Resource.Color.primary_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.primary_text_default_material_dark = global::ReportsApp.Droid.Resource.Color.primary_text_default_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.primary_text_default_material_light = global::ReportsApp.Droid.Resource.Color.primary_text_default_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.primary_text_disabled_material_dark = global::ReportsApp.Droid.Resource.Color.primary_text_disabled_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.primary_text_disabled_material_light = global::ReportsApp.Droid.Resource.Color.primary_text_disabled_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.ripple_material_dark = global::ReportsApp.Droid.Resource.Color.ripple_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.ripple_material_light = global::ReportsApp.Droid.Resource.Color.ripple_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.secondary_text_default_material_dark = global::ReportsApp.Droid.Resource.Color.secondary_text_default_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.secondary_text_default_material_light = global::ReportsApp.Droid.Resource.Color.secondary_text_default_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.secondary_text_disabled_material_dark = global::ReportsApp.Droid.Resource.Color.secondary_text_disabled_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.secondary_text_disabled_material_light = global::ReportsApp.Droid.Resource.Color.secondary_text_disabled_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.switch_thumb_disabled_material_dark = global::ReportsApp.Droid.Resource.Color.switch_thumb_disabled_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.switch_thumb_disabled_material_light = global::ReportsApp.Droid.Resource.Color.switch_thumb_disabled_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.switch_thumb_material_dark = global::ReportsApp.Droid.Resource.Color.switch_thumb_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.switch_thumb_material_light = global::ReportsApp.Droid.Resource.Color.switch_thumb_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.switch_thumb_normal_material_dark = global::ReportsApp.Droid.Resource.Color.switch_thumb_normal_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.switch_thumb_normal_material_light = global::ReportsApp.Droid.Resource.Color.switch_thumb_normal_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Color.tooltip_background_dark = global::ReportsApp.Droid.Resource.Color.tooltip_background_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Color.tooltip_background_light = global::ReportsApp.Droid.Resource.Color.tooltip_background_light;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_content_inset_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_content_inset_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_content_inset_with_nav = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_content_inset_with_nav;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_default_height_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_default_height_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_default_padding_end_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_default_padding_end_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_default_padding_start_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_default_padding_start_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_elevation_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_elevation_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_icon_vertical_padding_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_icon_vertical_padding_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_overflow_padding_end_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_overflow_padding_end_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_overflow_padding_start_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_overflow_padding_start_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_stacked_max_height = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_stacked_max_height;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_stacked_tab_max_width = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_stacked_tab_max_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_subtitle_bottom_margin_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_subtitle_bottom_margin_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_bar_subtitle_top_margin_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_bar_subtitle_top_margin_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_button_min_height_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_button_min_height_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_button_min_width_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_button_min_width_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_action_button_min_width_overflow_material = global::ReportsApp.Droid.Resource.Dimension.abc_action_button_min_width_overflow_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_alert_dialog_button_bar_height = global::ReportsApp.Droid.Resource.Dimension.abc_alert_dialog_button_bar_height;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_alert_dialog_button_dimen = global::ReportsApp.Droid.Resource.Dimension.abc_alert_dialog_button_dimen;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_button_inset_horizontal_material = global::ReportsApp.Droid.Resource.Dimension.abc_button_inset_horizontal_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_button_inset_vertical_material = global::ReportsApp.Droid.Resource.Dimension.abc_button_inset_vertical_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_button_padding_horizontal_material = global::ReportsApp.Droid.Resource.Dimension.abc_button_padding_horizontal_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_button_padding_vertical_material = global::ReportsApp.Droid.Resource.Dimension.abc_button_padding_vertical_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_cascading_menus_min_smallest_width = global::ReportsApp.Droid.Resource.Dimension.abc_cascading_menus_min_smallest_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_config_prefDialogWidth = global::ReportsApp.Droid.Resource.Dimension.abc_config_prefDialogWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_control_corner_material = global::ReportsApp.Droid.Resource.Dimension.abc_control_corner_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_control_inset_material = global::ReportsApp.Droid.Resource.Dimension.abc_control_inset_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_control_padding_material = global::ReportsApp.Droid.Resource.Dimension.abc_control_padding_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_corner_radius_material = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_corner_radius_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_fixed_height_major = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_fixed_height_major;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_fixed_height_minor = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_fixed_height_minor;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_fixed_width_major = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_fixed_width_major;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_fixed_width_minor = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_fixed_width_minor;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_list_padding_bottom_no_buttons = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_list_padding_bottom_no_buttons;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_list_padding_top_no_title = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_list_padding_top_no_title;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_min_width_major = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_min_width_major;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_min_width_minor = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_min_width_minor;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_padding_material = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_padding_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_padding_top_material = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_padding_top_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dialog_title_divider_material = global::ReportsApp.Droid.Resource.Dimension.abc_dialog_title_divider_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_disabled_alpha_material_dark = global::ReportsApp.Droid.Resource.Dimension.abc_disabled_alpha_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_disabled_alpha_material_light = global::ReportsApp.Droid.Resource.Dimension.abc_disabled_alpha_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dropdownitem_icon_width = global::ReportsApp.Droid.Resource.Dimension.abc_dropdownitem_icon_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dropdownitem_text_padding_left = global::ReportsApp.Droid.Resource.Dimension.abc_dropdownitem_text_padding_left;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_dropdownitem_text_padding_right = global::ReportsApp.Droid.Resource.Dimension.abc_dropdownitem_text_padding_right;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_edit_text_inset_bottom_material = global::ReportsApp.Droid.Resource.Dimension.abc_edit_text_inset_bottom_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_edit_text_inset_horizontal_material = global::ReportsApp.Droid.Resource.Dimension.abc_edit_text_inset_horizontal_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_edit_text_inset_top_material = global::ReportsApp.Droid.Resource.Dimension.abc_edit_text_inset_top_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_floating_window_z = global::ReportsApp.Droid.Resource.Dimension.abc_floating_window_z;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_list_item_height_large_material = global::ReportsApp.Droid.Resource.Dimension.abc_list_item_height_large_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_list_item_height_material = global::ReportsApp.Droid.Resource.Dimension.abc_list_item_height_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_list_item_height_small_material = global::ReportsApp.Droid.Resource.Dimension.abc_list_item_height_small_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_list_item_padding_horizontal_material = global::ReportsApp.Droid.Resource.Dimension.abc_list_item_padding_horizontal_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_panel_menu_list_width = global::ReportsApp.Droid.Resource.Dimension.abc_panel_menu_list_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_progress_bar_height_material = global::ReportsApp.Droid.Resource.Dimension.abc_progress_bar_height_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_search_view_preferred_height = global::ReportsApp.Droid.Resource.Dimension.abc_search_view_preferred_height;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_search_view_preferred_width = global::ReportsApp.Droid.Resource.Dimension.abc_search_view_preferred_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_seekbar_track_background_height_material = global::ReportsApp.Droid.Resource.Dimension.abc_seekbar_track_background_height_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_seekbar_track_progress_height_material = global::ReportsApp.Droid.Resource.Dimension.abc_seekbar_track_progress_height_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_select_dialog_padding_start_material = global::ReportsApp.Droid.Resource.Dimension.abc_select_dialog_padding_start_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_switch_padding = global::ReportsApp.Droid.Resource.Dimension.abc_switch_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_body_1_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_body_1_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_body_2_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_body_2_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_button_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_button_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_caption_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_caption_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_display_1_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_display_1_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_display_2_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_display_2_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_display_3_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_display_3_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_display_4_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_display_4_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_headline_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_headline_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_large_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_large_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_medium_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_medium_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_menu_header_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_menu_header_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_menu_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_menu_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_small_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_small_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_subhead_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_subhead_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_subtitle_material_toolbar = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_subtitle_material_toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_title_material = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_title_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.abc_text_size_title_material_toolbar = global::ReportsApp.Droid.Resource.Dimension.abc_text_size_title_material_toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.browser_actions_context_menu_max_width = global::ReportsApp.Droid.Resource.Dimension.browser_actions_context_menu_max_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.browser_actions_context_menu_min_padding = global::ReportsApp.Droid.Resource.Dimension.browser_actions_context_menu_min_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.cardview_compat_inset_shadow = global::ReportsApp.Droid.Resource.Dimension.cardview_compat_inset_shadow;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.cardview_default_elevation = global::ReportsApp.Droid.Resource.Dimension.cardview_default_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.cardview_default_radius = global::ReportsApp.Droid.Resource.Dimension.cardview_default_radius;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.compat_button_inset_horizontal_material = global::ReportsApp.Droid.Resource.Dimension.compat_button_inset_horizontal_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.compat_button_inset_vertical_material = global::ReportsApp.Droid.Resource.Dimension.compat_button_inset_vertical_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.compat_button_padding_horizontal_material = global::ReportsApp.Droid.Resource.Dimension.compat_button_padding_horizontal_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.compat_button_padding_vertical_material = global::ReportsApp.Droid.Resource.Dimension.compat_button_padding_vertical_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.compat_control_corner_material = global::ReportsApp.Droid.Resource.Dimension.compat_control_corner_material;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.compat_notification_large_icon_max_height = global::ReportsApp.Droid.Resource.Dimension.compat_notification_large_icon_max_height;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.compat_notification_large_icon_max_width = global::ReportsApp.Droid.Resource.Dimension.compat_notification_large_icon_max_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_appbar_elevation = global::ReportsApp.Droid.Resource.Dimension.design_appbar_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_active_item_max_width = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_active_item_max_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_active_item_min_width = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_active_item_min_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_active_text_size = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_active_text_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_elevation = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_height = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_height;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_icon_size = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_icon_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_item_max_width = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_item_max_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_item_min_width = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_item_min_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_margin = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_margin;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_shadow_height = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_shadow_height;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_navigation_text_size = global::ReportsApp.Droid.Resource.Dimension.design_bottom_navigation_text_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_sheet_modal_elevation = global::ReportsApp.Droid.Resource.Dimension.design_bottom_sheet_modal_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_bottom_sheet_peek_height_min = global::ReportsApp.Droid.Resource.Dimension.design_bottom_sheet_peek_height_min;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_fab_border_width = global::ReportsApp.Droid.Resource.Dimension.design_fab_border_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_fab_elevation = global::ReportsApp.Droid.Resource.Dimension.design_fab_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_fab_image_size = global::ReportsApp.Droid.Resource.Dimension.design_fab_image_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_fab_size_mini = global::ReportsApp.Droid.Resource.Dimension.design_fab_size_mini;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_fab_size_normal = global::ReportsApp.Droid.Resource.Dimension.design_fab_size_normal;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_fab_translation_z_hovered_focused = global::ReportsApp.Droid.Resource.Dimension.design_fab_translation_z_hovered_focused;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_fab_translation_z_pressed = global::ReportsApp.Droid.Resource.Dimension.design_fab_translation_z_pressed;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_navigation_elevation = global::ReportsApp.Droid.Resource.Dimension.design_navigation_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_navigation_icon_padding = global::ReportsApp.Droid.Resource.Dimension.design_navigation_icon_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_navigation_icon_size = global::ReportsApp.Droid.Resource.Dimension.design_navigation_icon_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_navigation_item_horizontal_padding = global::ReportsApp.Droid.Resource.Dimension.design_navigation_item_horizontal_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_navigation_item_icon_padding = global::ReportsApp.Droid.Resource.Dimension.design_navigation_item_icon_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_navigation_max_width = global::ReportsApp.Droid.Resource.Dimension.design_navigation_max_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_navigation_padding_bottom = global::ReportsApp.Droid.Resource.Dimension.design_navigation_padding_bottom;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_navigation_separator_vertical_padding = global::ReportsApp.Droid.Resource.Dimension.design_navigation_separator_vertical_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_snackbar_action_inline_max_width = global::ReportsApp.Droid.Resource.Dimension.design_snackbar_action_inline_max_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_snackbar_background_corner_radius = global::ReportsApp.Droid.Resource.Dimension.design_snackbar_background_corner_radius;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_snackbar_elevation = global::ReportsApp.Droid.Resource.Dimension.design_snackbar_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_snackbar_extra_spacing_horizontal = global::ReportsApp.Droid.Resource.Dimension.design_snackbar_extra_spacing_horizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_snackbar_max_width = global::ReportsApp.Droid.Resource.Dimension.design_snackbar_max_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_snackbar_min_width = global::ReportsApp.Droid.Resource.Dimension.design_snackbar_min_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_snackbar_padding_horizontal = global::ReportsApp.Droid.Resource.Dimension.design_snackbar_padding_horizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_snackbar_padding_vertical = global::ReportsApp.Droid.Resource.Dimension.design_snackbar_padding_vertical;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_snackbar_padding_vertical_2lines = global::ReportsApp.Droid.Resource.Dimension.design_snackbar_padding_vertical_2lines;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_snackbar_text_size = global::ReportsApp.Droid.Resource.Dimension.design_snackbar_text_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_tab_max_width = global::ReportsApp.Droid.Resource.Dimension.design_tab_max_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_tab_scrollable_min_width = global::ReportsApp.Droid.Resource.Dimension.design_tab_scrollable_min_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_tab_text_size = global::ReportsApp.Droid.Resource.Dimension.design_tab_text_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_tab_text_size_2line = global::ReportsApp.Droid.Resource.Dimension.design_tab_text_size_2line;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.design_textinput_caption_translate_y = global::ReportsApp.Droid.Resource.Dimension.design_textinput_caption_translate_y;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.disabled_alpha_material_dark = global::ReportsApp.Droid.Resource.Dimension.disabled_alpha_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.disabled_alpha_material_light = global::ReportsApp.Droid.Resource.Dimension.disabled_alpha_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.fastscroll_default_thickness = global::ReportsApp.Droid.Resource.Dimension.fastscroll_default_thickness;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.fastscroll_margin = global::ReportsApp.Droid.Resource.Dimension.fastscroll_margin;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.fastscroll_minimum_range = global::ReportsApp.Droid.Resource.Dimension.fastscroll_minimum_range;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.highlight_alpha_material_colored = global::ReportsApp.Droid.Resource.Dimension.highlight_alpha_material_colored;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.highlight_alpha_material_dark = global::ReportsApp.Droid.Resource.Dimension.highlight_alpha_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.highlight_alpha_material_light = global::ReportsApp.Droid.Resource.Dimension.highlight_alpha_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.hint_alpha_material_dark = global::ReportsApp.Droid.Resource.Dimension.hint_alpha_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.hint_alpha_material_light = global::ReportsApp.Droid.Resource.Dimension.hint_alpha_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.hint_pressed_alpha_material_dark = global::ReportsApp.Droid.Resource.Dimension.hint_pressed_alpha_material_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.hint_pressed_alpha_material_light = global::ReportsApp.Droid.Resource.Dimension.hint_pressed_alpha_material_light;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame = global::ReportsApp.Droid.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity = global::ReportsApp.Droid.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.item_touch_helper_swipe_escape_velocity = global::ReportsApp.Droid.Resource.Dimension.item_touch_helper_swipe_escape_velocity;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_bottomappbar_fabOffsetEndMode = global::ReportsApp.Droid.Resource.Dimension.mtrl_bottomappbar_fabOffsetEndMode;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_bottomappbar_fab_cradle_margin = global::ReportsApp.Droid.Resource.Dimension.mtrl_bottomappbar_fab_cradle_margin;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_bottomappbar_fab_cradle_rounded_corner_radius = global::ReportsApp.Droid.Resource.Dimension.mtrl_bottomappbar_fab_cradle_rounded_corner_radius;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_bottomappbar_fab_cradle_vertical_offset = global::ReportsApp.Droid.Resource.Dimension.mtrl_bottomappbar_fab_cradle_vertical_offset;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_bottomappbar_height = global::ReportsApp.Droid.Resource.Dimension.mtrl_bottomappbar_height;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_corner_radius = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_corner_radius;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_dialog_btn_min_width = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_dialog_btn_min_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_disabled_elevation = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_disabled_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_disabled_z = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_disabled_z;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_elevation = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_focused_z = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_focused_z;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_hovered_z = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_hovered_z;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_icon_btn_padding_left = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_icon_btn_padding_left;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_icon_padding = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_icon_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_inset = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_inset;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_letter_spacing = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_letter_spacing;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_padding_bottom = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_padding_bottom;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_padding_left = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_padding_left;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_padding_right = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_padding_right;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_padding_top = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_padding_top;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_pressed_z = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_pressed_z;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_stroke_size = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_stroke_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_text_btn_icon_padding = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_text_btn_icon_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_text_btn_padding_left = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_text_btn_padding_left;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_text_btn_padding_right = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_text_btn_padding_right;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_text_size = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_text_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_btn_z = global::ReportsApp.Droid.Resource.Dimension.mtrl_btn_z;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_card_elevation = global::ReportsApp.Droid.Resource.Dimension.mtrl_card_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_card_spacing = global::ReportsApp.Droid.Resource.Dimension.mtrl_card_spacing;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_chip_pressed_translation_z = global::ReportsApp.Droid.Resource.Dimension.mtrl_chip_pressed_translation_z;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_chip_text_size = global::ReportsApp.Droid.Resource.Dimension.mtrl_chip_text_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_fab_elevation = global::ReportsApp.Droid.Resource.Dimension.mtrl_fab_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_fab_translation_z_hovered_focused = global::ReportsApp.Droid.Resource.Dimension.mtrl_fab_translation_z_hovered_focused;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_fab_translation_z_pressed = global::ReportsApp.Droid.Resource.Dimension.mtrl_fab_translation_z_pressed;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_navigation_elevation = global::ReportsApp.Droid.Resource.Dimension.mtrl_navigation_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_navigation_item_horizontal_padding = global::ReportsApp.Droid.Resource.Dimension.mtrl_navigation_item_horizontal_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_navigation_item_icon_padding = global::ReportsApp.Droid.Resource.Dimension.mtrl_navigation_item_icon_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_snackbar_background_corner_radius = global::ReportsApp.Droid.Resource.Dimension.mtrl_snackbar_background_corner_radius;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_snackbar_margin = global::ReportsApp.Droid.Resource.Dimension.mtrl_snackbar_margin;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_textinput_box_corner_radius_medium = global::ReportsApp.Droid.Resource.Dimension.mtrl_textinput_box_corner_radius_medium;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_textinput_box_corner_radius_small = global::ReportsApp.Droid.Resource.Dimension.mtrl_textinput_box_corner_radius_small;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_textinput_box_label_cutout_padding = global::ReportsApp.Droid.Resource.Dimension.mtrl_textinput_box_label_cutout_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_textinput_box_stroke_width_default = global::ReportsApp.Droid.Resource.Dimension.mtrl_textinput_box_stroke_width_default;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_textinput_box_stroke_width_focused = global::ReportsApp.Droid.Resource.Dimension.mtrl_textinput_box_stroke_width_focused;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_textinput_outline_box_expanded_padding = global::ReportsApp.Droid.Resource.Dimension.mtrl_textinput_outline_box_expanded_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.mtrl_toolbar_default_height = global::ReportsApp.Droid.Resource.Dimension.mtrl_toolbar_default_height;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_action_icon_size = global::ReportsApp.Droid.Resource.Dimension.notification_action_icon_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_action_text_size = global::ReportsApp.Droid.Resource.Dimension.notification_action_text_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_big_circle_margin = global::ReportsApp.Droid.Resource.Dimension.notification_big_circle_margin;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_content_margin_start = global::ReportsApp.Droid.Resource.Dimension.notification_content_margin_start;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_large_icon_height = global::ReportsApp.Droid.Resource.Dimension.notification_large_icon_height;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_large_icon_width = global::ReportsApp.Droid.Resource.Dimension.notification_large_icon_width;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_main_column_padding_top = global::ReportsApp.Droid.Resource.Dimension.notification_main_column_padding_top;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_media_narrow_margin = global::ReportsApp.Droid.Resource.Dimension.notification_media_narrow_margin;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_right_icon_size = global::ReportsApp.Droid.Resource.Dimension.notification_right_icon_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_right_side_padding_top = global::ReportsApp.Droid.Resource.Dimension.notification_right_side_padding_top;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_small_icon_background_padding = global::ReportsApp.Droid.Resource.Dimension.notification_small_icon_background_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_small_icon_size_as_large = global::ReportsApp.Droid.Resource.Dimension.notification_small_icon_size_as_large;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_subtext_size = global::ReportsApp.Droid.Resource.Dimension.notification_subtext_size;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_top_pad = global::ReportsApp.Droid.Resource.Dimension.notification_top_pad;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.notification_top_pad_large_text = global::ReportsApp.Droid.Resource.Dimension.notification_top_pad_large_text;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.tooltip_corner_radius = global::ReportsApp.Droid.Resource.Dimension.tooltip_corner_radius;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.tooltip_horizontal_padding = global::ReportsApp.Droid.Resource.Dimension.tooltip_horizontal_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.tooltip_margin = global::ReportsApp.Droid.Resource.Dimension.tooltip_margin;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.tooltip_precise_anchor_extra_offset = global::ReportsApp.Droid.Resource.Dimension.tooltip_precise_anchor_extra_offset;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.tooltip_precise_anchor_threshold = global::ReportsApp.Droid.Resource.Dimension.tooltip_precise_anchor_threshold;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.tooltip_vertical_padding = global::ReportsApp.Droid.Resource.Dimension.tooltip_vertical_padding;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.tooltip_y_offset_non_touch = global::ReportsApp.Droid.Resource.Dimension.tooltip_y_offset_non_touch;
+			global::Xamarin.Forms.PancakeView.Resource.Dimension.tooltip_y_offset_touch = global::ReportsApp.Droid.Resource.Dimension.tooltip_y_offset_touch;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ab_share_pack_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_ab_share_pack_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_action_bar_item_background_material = global::ReportsApp.Droid.Resource.Drawable.abc_action_bar_item_background_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_borderless_material = global::ReportsApp.Droid.Resource.Drawable.abc_btn_borderless_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_check_material = global::ReportsApp.Droid.Resource.Drawable.abc_btn_check_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_check_material_anim = global::ReportsApp.Droid.Resource.Drawable.abc_btn_check_material_anim;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_check_to_on_mtrl_000 = global::ReportsApp.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_000;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_check_to_on_mtrl_015 = global::ReportsApp.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_015;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_colored_material = global::ReportsApp.Droid.Resource.Drawable.abc_btn_colored_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_default_mtrl_shape = global::ReportsApp.Droid.Resource.Drawable.abc_btn_default_mtrl_shape;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_radio_material = global::ReportsApp.Droid.Resource.Drawable.abc_btn_radio_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_radio_material_anim = global::ReportsApp.Droid.Resource.Drawable.abc_btn_radio_material_anim;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_radio_to_on_mtrl_000 = global::ReportsApp.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_000;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_radio_to_on_mtrl_015 = global::ReportsApp.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_015;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001 = global::ReportsApp.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_btn_switch_to_on_mtrl_00012 = global::ReportsApp.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00012;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_cab_background_internal_bg = global::ReportsApp.Droid.Resource.Drawable.abc_cab_background_internal_bg;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_cab_background_top_material = global::ReportsApp.Droid.Resource.Drawable.abc_cab_background_top_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_cab_background_top_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_cab_background_top_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_control_background_material = global::ReportsApp.Droid.Resource.Drawable.abc_control_background_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_dialog_material_background = global::ReportsApp.Droid.Resource.Drawable.abc_dialog_material_background;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_edit_text_material = global::ReportsApp.Droid.Resource.Drawable.abc_edit_text_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_ab_back_material = global::ReportsApp.Droid.Resource.Drawable.abc_ic_ab_back_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_arrow_drop_right_black_24dp = global::ReportsApp.Droid.Resource.Drawable.abc_ic_arrow_drop_right_black_24dp;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_clear_material = global::ReportsApp.Droid.Resource.Drawable.abc_ic_clear_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_commit_search_api_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_ic_commit_search_api_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_go_search_api_material = global::ReportsApp.Droid.Resource.Drawable.abc_ic_go_search_api_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_menu_copy_mtrl_am_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_ic_menu_copy_mtrl_am_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_menu_cut_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_ic_menu_cut_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_menu_overflow_material = global::ReportsApp.Droid.Resource.Drawable.abc_ic_menu_overflow_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_menu_paste_mtrl_am_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_ic_menu_paste_mtrl_am_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_menu_selectall_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_ic_menu_selectall_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_menu_share_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_ic_menu_share_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_search_api_material = global::ReportsApp.Droid.Resource.Drawable.abc_ic_search_api_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_star_black_16dp = global::ReportsApp.Droid.Resource.Drawable.abc_ic_star_black_16dp;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_star_black_36dp = global::ReportsApp.Droid.Resource.Drawable.abc_ic_star_black_36dp;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_star_black_48dp = global::ReportsApp.Droid.Resource.Drawable.abc_ic_star_black_48dp;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_star_half_black_16dp = global::ReportsApp.Droid.Resource.Drawable.abc_ic_star_half_black_16dp;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_star_half_black_36dp = global::ReportsApp.Droid.Resource.Drawable.abc_ic_star_half_black_36dp;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_star_half_black_48dp = global::ReportsApp.Droid.Resource.Drawable.abc_ic_star_half_black_48dp;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ic_voice_search_api_material = global::ReportsApp.Droid.Resource.Drawable.abc_ic_voice_search_api_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_item_background_holo_dark = global::ReportsApp.Droid.Resource.Drawable.abc_item_background_holo_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_item_background_holo_light = global::ReportsApp.Droid.Resource.Drawable.abc_item_background_holo_light;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_divider_material = global::ReportsApp.Droid.Resource.Drawable.abc_list_divider_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_divider_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_list_divider_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_focused_holo = global::ReportsApp.Droid.Resource.Drawable.abc_list_focused_holo;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_longpressed_holo = global::ReportsApp.Droid.Resource.Drawable.abc_list_longpressed_holo;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_pressed_holo_dark = global::ReportsApp.Droid.Resource.Drawable.abc_list_pressed_holo_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_pressed_holo_light = global::ReportsApp.Droid.Resource.Drawable.abc_list_pressed_holo_light;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_selector_background_transition_holo_dark = global::ReportsApp.Droid.Resource.Drawable.abc_list_selector_background_transition_holo_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_selector_background_transition_holo_light = global::ReportsApp.Droid.Resource.Drawable.abc_list_selector_background_transition_holo_light;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_selector_disabled_holo_dark = global::ReportsApp.Droid.Resource.Drawable.abc_list_selector_disabled_holo_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_selector_disabled_holo_light = global::ReportsApp.Droid.Resource.Drawable.abc_list_selector_disabled_holo_light;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_selector_holo_dark = global::ReportsApp.Droid.Resource.Drawable.abc_list_selector_holo_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_list_selector_holo_light = global::ReportsApp.Droid.Resource.Drawable.abc_list_selector_holo_light;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_menu_hardkey_panel_mtrl_mult = global::ReportsApp.Droid.Resource.Drawable.abc_menu_hardkey_panel_mtrl_mult;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_popup_background_mtrl_mult = global::ReportsApp.Droid.Resource.Drawable.abc_popup_background_mtrl_mult;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ratingbar_indicator_material = global::ReportsApp.Droid.Resource.Drawable.abc_ratingbar_indicator_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ratingbar_material = global::ReportsApp.Droid.Resource.Drawable.abc_ratingbar_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_ratingbar_small_material = global::ReportsApp.Droid.Resource.Drawable.abc_ratingbar_small_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_scrubber_control_off_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_scrubber_control_off_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_000 = global::ReportsApp.Droid.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_000;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_005 = global::ReportsApp.Droid.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_005;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_scrubber_primary_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_scrubber_primary_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_scrubber_track_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_scrubber_track_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_seekbar_thumb_material = global::ReportsApp.Droid.Resource.Drawable.abc_seekbar_thumb_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_seekbar_tick_mark_material = global::ReportsApp.Droid.Resource.Drawable.abc_seekbar_tick_mark_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_seekbar_track_material = global::ReportsApp.Droid.Resource.Drawable.abc_seekbar_track_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_spinner_mtrl_am_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_spinner_mtrl_am_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_spinner_textfield_background_material = global::ReportsApp.Droid.Resource.Drawable.abc_spinner_textfield_background_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_switch_thumb_material = global::ReportsApp.Droid.Resource.Drawable.abc_switch_thumb_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_switch_track_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_switch_track_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_tab_indicator_material = global::ReportsApp.Droid.Resource.Drawable.abc_tab_indicator_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_tab_indicator_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_tab_indicator_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_textfield_activated_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_textfield_activated_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_textfield_default_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_textfield_default_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_textfield_search_activated_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_textfield_search_activated_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_textfield_search_default_mtrl_alpha = global::ReportsApp.Droid.Resource.Drawable.abc_textfield_search_default_mtrl_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_textfield_search_material = global::ReportsApp.Droid.Resource.Drawable.abc_textfield_search_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_text_cursor_material = global::ReportsApp.Droid.Resource.Drawable.abc_text_cursor_material;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_text_select_handle_left_mtrl_dark = global::ReportsApp.Droid.Resource.Drawable.abc_text_select_handle_left_mtrl_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_text_select_handle_left_mtrl_light = global::ReportsApp.Droid.Resource.Drawable.abc_text_select_handle_left_mtrl_light;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_text_select_handle_middle_mtrl_dark = global::ReportsApp.Droid.Resource.Drawable.abc_text_select_handle_middle_mtrl_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_text_select_handle_middle_mtrl_light = global::ReportsApp.Droid.Resource.Drawable.abc_text_select_handle_middle_mtrl_light;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_text_select_handle_right_mtrl_dark = global::ReportsApp.Droid.Resource.Drawable.abc_text_select_handle_right_mtrl_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_text_select_handle_right_mtrl_light = global::ReportsApp.Droid.Resource.Drawable.abc_text_select_handle_right_mtrl_light;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.abc_vector_test = global::ReportsApp.Droid.Resource.Drawable.abc_vector_test;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.avd_hide_password = global::ReportsApp.Droid.Resource.Drawable.avd_hide_password;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.avd_show_password = global::ReportsApp.Droid.Resource.Drawable.avd_show_password;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.btn_checkbox_checked_mtrl = global::ReportsApp.Droid.Resource.Drawable.btn_checkbox_checked_mtrl;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.btn_checkbox_checked_to_unchecked_mtrl_animation = global::ReportsApp.Droid.Resource.Drawable.btn_checkbox_checked_to_unchecked_mtrl_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.btn_checkbox_unchecked_mtrl = global::ReportsApp.Droid.Resource.Drawable.btn_checkbox_unchecked_mtrl;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.btn_checkbox_unchecked_to_checked_mtrl_animation = global::ReportsApp.Droid.Resource.Drawable.btn_checkbox_unchecked_to_checked_mtrl_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.btn_radio_off_mtrl = global::ReportsApp.Droid.Resource.Drawable.btn_radio_off_mtrl;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.btn_radio_off_to_on_mtrl_animation = global::ReportsApp.Droid.Resource.Drawable.btn_radio_off_to_on_mtrl_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.btn_radio_on_mtrl = global::ReportsApp.Droid.Resource.Drawable.btn_radio_on_mtrl;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.btn_radio_on_to_off_mtrl_animation = global::ReportsApp.Droid.Resource.Drawable.btn_radio_on_to_off_mtrl_animation;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.design_bottom_navigation_item_background = global::ReportsApp.Droid.Resource.Drawable.design_bottom_navigation_item_background;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.design_fab_background = global::ReportsApp.Droid.Resource.Drawable.design_fab_background;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.design_ic_visibility = global::ReportsApp.Droid.Resource.Drawable.design_ic_visibility;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.design_ic_visibility_off = global::ReportsApp.Droid.Resource.Drawable.design_ic_visibility_off;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.design_password_eye = global::ReportsApp.Droid.Resource.Drawable.design_password_eye;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.design_snackbar_background = global::ReportsApp.Droid.Resource.Drawable.design_snackbar_background;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.ic_mtrl_chip_checked_black = global::ReportsApp.Droid.Resource.Drawable.ic_mtrl_chip_checked_black;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.ic_mtrl_chip_checked_circle = global::ReportsApp.Droid.Resource.Drawable.ic_mtrl_chip_checked_circle;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.ic_mtrl_chip_close_circle = global::ReportsApp.Droid.Resource.Drawable.ic_mtrl_chip_close_circle;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.mtrl_tabs_default_indicator = global::ReportsApp.Droid.Resource.Drawable.mtrl_tabs_default_indicator;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.navigation_empty_icon = global::ReportsApp.Droid.Resource.Drawable.navigation_empty_icon;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_action_background = global::ReportsApp.Droid.Resource.Drawable.notification_action_background;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_bg = global::ReportsApp.Droid.Resource.Drawable.notification_bg;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_bg_low = global::ReportsApp.Droid.Resource.Drawable.notification_bg_low;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_bg_low_normal = global::ReportsApp.Droid.Resource.Drawable.notification_bg_low_normal;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_bg_low_pressed = global::ReportsApp.Droid.Resource.Drawable.notification_bg_low_pressed;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_bg_normal = global::ReportsApp.Droid.Resource.Drawable.notification_bg_normal;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_bg_normal_pressed = global::ReportsApp.Droid.Resource.Drawable.notification_bg_normal_pressed;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_icon_background = global::ReportsApp.Droid.Resource.Drawable.notification_icon_background;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_template_icon_bg = global::ReportsApp.Droid.Resource.Drawable.notification_template_icon_bg;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_template_icon_low_bg = global::ReportsApp.Droid.Resource.Drawable.notification_template_icon_low_bg;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notification_tile_bg = global::ReportsApp.Droid.Resource.Drawable.notification_tile_bg;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.notify_panel_notification_icon_bg = global::ReportsApp.Droid.Resource.Drawable.notify_panel_notification_icon_bg;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.tooltip_frame_dark = global::ReportsApp.Droid.Resource.Drawable.tooltip_frame_dark;
+			global::Xamarin.Forms.PancakeView.Resource.Drawable.tooltip_frame_light = global::ReportsApp.Droid.Resource.Drawable.tooltip_frame_light;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_action_clickable_span = global::ReportsApp.Droid.Resource.Id.accessibility_action_clickable_span;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_0 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_0;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_1 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_1;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_10 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_10;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_11 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_11;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_12 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_12;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_13 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_13;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_14 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_14;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_15 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_15;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_16 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_16;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_17 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_17;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_18 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_18;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_19 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_19;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_2 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_2;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_20 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_20;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_21 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_21;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_22 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_22;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_23 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_23;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_24 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_24;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_25 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_25;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_26 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_26;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_27 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_27;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_28 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_28;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_29 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_29;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_3 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_3;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_30 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_30;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_31 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_31;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_4 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_4;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_5 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_5;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_6 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_6;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_7 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_7;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_8 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_8;
+			global::Xamarin.Forms.PancakeView.Resource.Id.accessibility_custom_action_9 = global::ReportsApp.Droid.Resource.Id.accessibility_custom_action_9;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action0 = global::ReportsApp.Droid.Resource.Id.action0;
+			global::Xamarin.Forms.PancakeView.Resource.Id.actions = global::ReportsApp.Droid.Resource.Id.actions;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_bar = global::ReportsApp.Droid.Resource.Id.action_bar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_bar_activity_content = global::ReportsApp.Droid.Resource.Id.action_bar_activity_content;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_bar_container = global::ReportsApp.Droid.Resource.Id.action_bar_container;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_bar_root = global::ReportsApp.Droid.Resource.Id.action_bar_root;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_bar_spinner = global::ReportsApp.Droid.Resource.Id.action_bar_spinner;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_bar_subtitle = global::ReportsApp.Droid.Resource.Id.action_bar_subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_bar_title = global::ReportsApp.Droid.Resource.Id.action_bar_title;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_container = global::ReportsApp.Droid.Resource.Id.action_container;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_context_bar = global::ReportsApp.Droid.Resource.Id.action_context_bar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_divider = global::ReportsApp.Droid.Resource.Id.action_divider;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_image = global::ReportsApp.Droid.Resource.Id.action_image;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_menu_divider = global::ReportsApp.Droid.Resource.Id.action_menu_divider;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_menu_presenter = global::ReportsApp.Droid.Resource.Id.action_menu_presenter;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_mode_bar = global::ReportsApp.Droid.Resource.Id.action_mode_bar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_mode_bar_stub = global::ReportsApp.Droid.Resource.Id.action_mode_bar_stub;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_mode_close_button = global::ReportsApp.Droid.Resource.Id.action_mode_close_button;
+			global::Xamarin.Forms.PancakeView.Resource.Id.action_text = global::ReportsApp.Droid.Resource.Id.action_text;
+			global::Xamarin.Forms.PancakeView.Resource.Id.activity_chooser_view_content = global::ReportsApp.Droid.Resource.Id.activity_chooser_view_content;
+			global::Xamarin.Forms.PancakeView.Resource.Id.add = global::ReportsApp.Droid.Resource.Id.add;
+			global::Xamarin.Forms.PancakeView.Resource.Id.alertTitle = global::ReportsApp.Droid.Resource.Id.alertTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Id.all = global::ReportsApp.Droid.Resource.Id.all;
+			global::Xamarin.Forms.PancakeView.Resource.Id.ALT = global::ReportsApp.Droid.Resource.Id.ALT;
+			global::Xamarin.Forms.PancakeView.Resource.Id.always = global::ReportsApp.Droid.Resource.Id.always;
+			global::Xamarin.Forms.PancakeView.Resource.Id.async = global::ReportsApp.Droid.Resource.Id.async;
+			global::Xamarin.Forms.PancakeView.Resource.Id.auto = global::ReportsApp.Droid.Resource.Id.auto;
+			global::Xamarin.Forms.PancakeView.Resource.Id.beginning = global::ReportsApp.Droid.Resource.Id.beginning;
+			global::Xamarin.Forms.PancakeView.Resource.Id.blocking = global::ReportsApp.Droid.Resource.Id.blocking;
+			global::Xamarin.Forms.PancakeView.Resource.Id.bottom = global::ReportsApp.Droid.Resource.Id.bottom;
+			global::Xamarin.Forms.PancakeView.Resource.Id.bottomtab_navarea = global::ReportsApp.Droid.Resource.Id.bottomtab_navarea;
+			global::Xamarin.Forms.PancakeView.Resource.Id.bottomtab_tabbar = global::ReportsApp.Droid.Resource.Id.bottomtab_tabbar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.browser_actions_header_text = global::ReportsApp.Droid.Resource.Id.browser_actions_header_text;
+			global::Xamarin.Forms.PancakeView.Resource.Id.browser_actions_menu_items = global::ReportsApp.Droid.Resource.Id.browser_actions_menu_items;
+			global::Xamarin.Forms.PancakeView.Resource.Id.browser_actions_menu_item_icon = global::ReportsApp.Droid.Resource.Id.browser_actions_menu_item_icon;
+			global::Xamarin.Forms.PancakeView.Resource.Id.browser_actions_menu_item_text = global::ReportsApp.Droid.Resource.Id.browser_actions_menu_item_text;
+			global::Xamarin.Forms.PancakeView.Resource.Id.browser_actions_menu_view = global::ReportsApp.Droid.Resource.Id.browser_actions_menu_view;
+			global::Xamarin.Forms.PancakeView.Resource.Id.buttonPanel = global::ReportsApp.Droid.Resource.Id.buttonPanel;
+			global::Xamarin.Forms.PancakeView.Resource.Id.cancel_action = global::ReportsApp.Droid.Resource.Id.cancel_action;
+			global::Xamarin.Forms.PancakeView.Resource.Id.center = global::ReportsApp.Droid.Resource.Id.center;
+			global::Xamarin.Forms.PancakeView.Resource.Id.center_horizontal = global::ReportsApp.Droid.Resource.Id.center_horizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Id.center_vertical = global::ReportsApp.Droid.Resource.Id.center_vertical;
+			global::Xamarin.Forms.PancakeView.Resource.Id.checkbox = global::ReportsApp.Droid.Resource.Id.checkbox;
+			global::Xamarin.Forms.PancakeView.Resource.Id.@checked = global::ReportsApp.Droid.Resource.Id.@checked;
+			global::Xamarin.Forms.PancakeView.Resource.Id.chronometer = global::ReportsApp.Droid.Resource.Id.chronometer;
+			global::Xamarin.Forms.PancakeView.Resource.Id.clip_horizontal = global::ReportsApp.Droid.Resource.Id.clip_horizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Id.clip_vertical = global::ReportsApp.Droid.Resource.Id.clip_vertical;
+			global::Xamarin.Forms.PancakeView.Resource.Id.collapseActionView = global::ReportsApp.Droid.Resource.Id.collapseActionView;
+			global::Xamarin.Forms.PancakeView.Resource.Id.container = global::ReportsApp.Droid.Resource.Id.container;
+			global::Xamarin.Forms.PancakeView.Resource.Id.content = global::ReportsApp.Droid.Resource.Id.content;
+			global::Xamarin.Forms.PancakeView.Resource.Id.contentPanel = global::ReportsApp.Droid.Resource.Id.contentPanel;
+			global::Xamarin.Forms.PancakeView.Resource.Id.coordinator = global::ReportsApp.Droid.Resource.Id.coordinator;
+			global::Xamarin.Forms.PancakeView.Resource.Id.CTRL = global::ReportsApp.Droid.Resource.Id.CTRL;
+			global::Xamarin.Forms.PancakeView.Resource.Id.custom = global::ReportsApp.Droid.Resource.Id.custom;
+			global::Xamarin.Forms.PancakeView.Resource.Id.customPanel = global::ReportsApp.Droid.Resource.Id.customPanel;
+			global::Xamarin.Forms.PancakeView.Resource.Id.decor_content_parent = global::ReportsApp.Droid.Resource.Id.decor_content_parent;
+			global::Xamarin.Forms.PancakeView.Resource.Id.default_activity_button = global::ReportsApp.Droid.Resource.Id.default_activity_button;
+			global::Xamarin.Forms.PancakeView.Resource.Id.design_bottom_sheet = global::ReportsApp.Droid.Resource.Id.design_bottom_sheet;
+			global::Xamarin.Forms.PancakeView.Resource.Id.design_menu_item_action_area = global::ReportsApp.Droid.Resource.Id.design_menu_item_action_area;
+			global::Xamarin.Forms.PancakeView.Resource.Id.design_menu_item_action_area_stub = global::ReportsApp.Droid.Resource.Id.design_menu_item_action_area_stub;
+			global::Xamarin.Forms.PancakeView.Resource.Id.design_menu_item_text = global::ReportsApp.Droid.Resource.Id.design_menu_item_text;
+			global::Xamarin.Forms.PancakeView.Resource.Id.design_navigation_view = global::ReportsApp.Droid.Resource.Id.design_navigation_view;
+			global::Xamarin.Forms.PancakeView.Resource.Id.dialog_button = global::ReportsApp.Droid.Resource.Id.dialog_button;
+			global::Xamarin.Forms.PancakeView.Resource.Id.disableHome = global::ReportsApp.Droid.Resource.Id.disableHome;
+			global::Xamarin.Forms.PancakeView.Resource.Id.edit_query = global::ReportsApp.Droid.Resource.Id.edit_query;
+			global::Xamarin.Forms.PancakeView.Resource.Id.end = global::ReportsApp.Droid.Resource.Id.end;
+			global::Xamarin.Forms.PancakeView.Resource.Id.end_padder = global::ReportsApp.Droid.Resource.Id.end_padder;
+			global::Xamarin.Forms.PancakeView.Resource.Id.enterAlways = global::ReportsApp.Droid.Resource.Id.enterAlways;
+			global::Xamarin.Forms.PancakeView.Resource.Id.enterAlwaysCollapsed = global::ReportsApp.Droid.Resource.Id.enterAlwaysCollapsed;
+			global::Xamarin.Forms.PancakeView.Resource.Id.exitUntilCollapsed = global::ReportsApp.Droid.Resource.Id.exitUntilCollapsed;
+			global::Xamarin.Forms.PancakeView.Resource.Id.expanded_menu = global::ReportsApp.Droid.Resource.Id.expanded_menu;
+			global::Xamarin.Forms.PancakeView.Resource.Id.expand_activities_button = global::ReportsApp.Droid.Resource.Id.expand_activities_button;
+			global::Xamarin.Forms.PancakeView.Resource.Id.fill = global::ReportsApp.Droid.Resource.Id.fill;
+			global::Xamarin.Forms.PancakeView.Resource.Id.filled = global::ReportsApp.Droid.Resource.Id.filled;
+			global::Xamarin.Forms.PancakeView.Resource.Id.fill_horizontal = global::ReportsApp.Droid.Resource.Id.fill_horizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Id.fill_vertical = global::ReportsApp.Droid.Resource.Id.fill_vertical;
+			global::Xamarin.Forms.PancakeView.Resource.Id.@fixed = global::ReportsApp.Droid.Resource.Id.@fixed;
+			global::Xamarin.Forms.PancakeView.Resource.Id.flyoutcontent_appbar = global::ReportsApp.Droid.Resource.Id.flyoutcontent_appbar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.forever = global::ReportsApp.Droid.Resource.Id.forever;
+			global::Xamarin.Forms.PancakeView.Resource.Id.fragment_container_view_tag = global::ReportsApp.Droid.Resource.Id.fragment_container_view_tag;
+			global::Xamarin.Forms.PancakeView.Resource.Id.FUNCTION = global::ReportsApp.Droid.Resource.Id.FUNCTION;
+			global::Xamarin.Forms.PancakeView.Resource.Id.ghost_view = global::ReportsApp.Droid.Resource.Id.ghost_view;
+			global::Xamarin.Forms.PancakeView.Resource.Id.ghost_view_holder = global::ReportsApp.Droid.Resource.Id.ghost_view_holder;
+			global::Xamarin.Forms.PancakeView.Resource.Id.group_divider = global::ReportsApp.Droid.Resource.Id.group_divider;
+			global::Xamarin.Forms.PancakeView.Resource.Id.home = global::ReportsApp.Droid.Resource.Id.home;
+			global::Xamarin.Forms.PancakeView.Resource.Id.homeAsUp = global::ReportsApp.Droid.Resource.Id.homeAsUp;
+			global::Xamarin.Forms.PancakeView.Resource.Id.icon = global::ReportsApp.Droid.Resource.Id.icon;
+			global::Xamarin.Forms.PancakeView.Resource.Id.icon_group = global::ReportsApp.Droid.Resource.Id.icon_group;
+			global::Xamarin.Forms.PancakeView.Resource.Id.ifRoom = global::ReportsApp.Droid.Resource.Id.ifRoom;
+			global::Xamarin.Forms.PancakeView.Resource.Id.image = global::ReportsApp.Droid.Resource.Id.image;
+			global::Xamarin.Forms.PancakeView.Resource.Id.info = global::ReportsApp.Droid.Resource.Id.info;
+			global::Xamarin.Forms.PancakeView.Resource.Id.italic = global::ReportsApp.Droid.Resource.Id.italic;
+			global::Xamarin.Forms.PancakeView.Resource.Id.item_touch_helper_previous_elevation = global::ReportsApp.Droid.Resource.Id.item_touch_helper_previous_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Id.labeled = global::ReportsApp.Droid.Resource.Id.labeled;
+			global::Xamarin.Forms.PancakeView.Resource.Id.largeLabel = global::ReportsApp.Droid.Resource.Id.largeLabel;
+			global::Xamarin.Forms.PancakeView.Resource.Id.left = global::ReportsApp.Droid.Resource.Id.left;
+			global::Xamarin.Forms.PancakeView.Resource.Id.line1 = global::ReportsApp.Droid.Resource.Id.line1;
+			global::Xamarin.Forms.PancakeView.Resource.Id.line3 = global::ReportsApp.Droid.Resource.Id.line3;
+			global::Xamarin.Forms.PancakeView.Resource.Id.listMode = global::ReportsApp.Droid.Resource.Id.listMode;
+			global::Xamarin.Forms.PancakeView.Resource.Id.list_item = global::ReportsApp.Droid.Resource.Id.list_item;
+			global::Xamarin.Forms.PancakeView.Resource.Id.main_appbar = global::ReportsApp.Droid.Resource.Id.main_appbar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.main_tablayout = global::ReportsApp.Droid.Resource.Id.main_tablayout;
+			global::Xamarin.Forms.PancakeView.Resource.Id.main_toolbar = global::ReportsApp.Droid.Resource.Id.main_toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.main_viewpager = global::ReportsApp.Droid.Resource.Id.main_viewpager;
+			global::Xamarin.Forms.PancakeView.Resource.Id.masked = global::ReportsApp.Droid.Resource.Id.masked;
+			global::Xamarin.Forms.PancakeView.Resource.Id.media_actions = global::ReportsApp.Droid.Resource.Id.media_actions;
+			global::Xamarin.Forms.PancakeView.Resource.Id.message = global::ReportsApp.Droid.Resource.Id.message;
+			global::Xamarin.Forms.PancakeView.Resource.Id.META = global::ReportsApp.Droid.Resource.Id.META;
+			global::Xamarin.Forms.PancakeView.Resource.Id.middle = global::ReportsApp.Droid.Resource.Id.middle;
+			global::Xamarin.Forms.PancakeView.Resource.Id.mini = global::ReportsApp.Droid.Resource.Id.mini;
+			global::Xamarin.Forms.PancakeView.Resource.Id.mtrl_child_content_container = global::ReportsApp.Droid.Resource.Id.mtrl_child_content_container;
+			global::Xamarin.Forms.PancakeView.Resource.Id.mtrl_internal_children_alpha_tag = global::ReportsApp.Droid.Resource.Id.mtrl_internal_children_alpha_tag;
+			global::Xamarin.Forms.PancakeView.Resource.Id.multiply = global::ReportsApp.Droid.Resource.Id.multiply;
+			global::Xamarin.Forms.PancakeView.Resource.Id.navigation_header_container = global::ReportsApp.Droid.Resource.Id.navigation_header_container;
+			global::Xamarin.Forms.PancakeView.Resource.Id.never = global::ReportsApp.Droid.Resource.Id.never;
+			global::Xamarin.Forms.PancakeView.Resource.Id.none = global::ReportsApp.Droid.Resource.Id.none;
+			global::Xamarin.Forms.PancakeView.Resource.Id.normal = global::ReportsApp.Droid.Resource.Id.normal;
+			global::Xamarin.Forms.PancakeView.Resource.Id.notification_background = global::ReportsApp.Droid.Resource.Id.notification_background;
+			global::Xamarin.Forms.PancakeView.Resource.Id.notification_main_column = global::ReportsApp.Droid.Resource.Id.notification_main_column;
+			global::Xamarin.Forms.PancakeView.Resource.Id.notification_main_column_container = global::ReportsApp.Droid.Resource.Id.notification_main_column_container;
+			global::Xamarin.Forms.PancakeView.Resource.Id.off = global::ReportsApp.Droid.Resource.Id.off;
+			global::Xamarin.Forms.PancakeView.Resource.Id.on = global::ReportsApp.Droid.Resource.Id.on;
+			global::Xamarin.Forms.PancakeView.Resource.Id.outline = global::ReportsApp.Droid.Resource.Id.outline;
+			global::Xamarin.Forms.PancakeView.Resource.Id.parallax = global::ReportsApp.Droid.Resource.Id.parallax;
+			global::Xamarin.Forms.PancakeView.Resource.Id.parentPanel = global::ReportsApp.Droid.Resource.Id.parentPanel;
+			global::Xamarin.Forms.PancakeView.Resource.Id.parent_matrix = global::ReportsApp.Droid.Resource.Id.parent_matrix;
+			global::Xamarin.Forms.PancakeView.Resource.Id.pin = global::ReportsApp.Droid.Resource.Id.pin;
+			global::Xamarin.Forms.PancakeView.Resource.Id.progress_circular = global::ReportsApp.Droid.Resource.Id.progress_circular;
+			global::Xamarin.Forms.PancakeView.Resource.Id.progress_horizontal = global::ReportsApp.Droid.Resource.Id.progress_horizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Id.radio = global::ReportsApp.Droid.Resource.Id.radio;
+			global::Xamarin.Forms.PancakeView.Resource.Id.right = global::ReportsApp.Droid.Resource.Id.right;
+			global::Xamarin.Forms.PancakeView.Resource.Id.right_icon = global::ReportsApp.Droid.Resource.Id.right_icon;
+			global::Xamarin.Forms.PancakeView.Resource.Id.right_side = global::ReportsApp.Droid.Resource.Id.right_side;
+			global::Xamarin.Forms.PancakeView.Resource.Id.save_non_transition_alpha = global::ReportsApp.Droid.Resource.Id.save_non_transition_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Id.save_overlay_view = global::ReportsApp.Droid.Resource.Id.save_overlay_view;
+			global::Xamarin.Forms.PancakeView.Resource.Id.screen = global::ReportsApp.Droid.Resource.Id.screen;
+			global::Xamarin.Forms.PancakeView.Resource.Id.scroll = global::ReportsApp.Droid.Resource.Id.scroll;
+			global::Xamarin.Forms.PancakeView.Resource.Id.scrollable = global::ReportsApp.Droid.Resource.Id.scrollable;
+			global::Xamarin.Forms.PancakeView.Resource.Id.scrollIndicatorDown = global::ReportsApp.Droid.Resource.Id.scrollIndicatorDown;
+			global::Xamarin.Forms.PancakeView.Resource.Id.scrollIndicatorUp = global::ReportsApp.Droid.Resource.Id.scrollIndicatorUp;
+			global::Xamarin.Forms.PancakeView.Resource.Id.scrollView = global::ReportsApp.Droid.Resource.Id.scrollView;
+			global::Xamarin.Forms.PancakeView.Resource.Id.search_badge = global::ReportsApp.Droid.Resource.Id.search_badge;
+			global::Xamarin.Forms.PancakeView.Resource.Id.search_bar = global::ReportsApp.Droid.Resource.Id.search_bar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.search_button = global::ReportsApp.Droid.Resource.Id.search_button;
+			global::Xamarin.Forms.PancakeView.Resource.Id.search_close_btn = global::ReportsApp.Droid.Resource.Id.search_close_btn;
+			global::Xamarin.Forms.PancakeView.Resource.Id.search_edit_frame = global::ReportsApp.Droid.Resource.Id.search_edit_frame;
+			global::Xamarin.Forms.PancakeView.Resource.Id.search_go_btn = global::ReportsApp.Droid.Resource.Id.search_go_btn;
+			global::Xamarin.Forms.PancakeView.Resource.Id.search_mag_icon = global::ReportsApp.Droid.Resource.Id.search_mag_icon;
+			global::Xamarin.Forms.PancakeView.Resource.Id.search_plate = global::ReportsApp.Droid.Resource.Id.search_plate;
+			global::Xamarin.Forms.PancakeView.Resource.Id.search_src_text = global::ReportsApp.Droid.Resource.Id.search_src_text;
+			global::Xamarin.Forms.PancakeView.Resource.Id.search_voice_btn = global::ReportsApp.Droid.Resource.Id.search_voice_btn;
+			global::Xamarin.Forms.PancakeView.Resource.Id.selected = global::ReportsApp.Droid.Resource.Id.selected;
+			global::Xamarin.Forms.PancakeView.Resource.Id.select_dialog_listview = global::ReportsApp.Droid.Resource.Id.select_dialog_listview;
+			global::Xamarin.Forms.PancakeView.Resource.Id.shellcontent_appbar = global::ReportsApp.Droid.Resource.Id.shellcontent_appbar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.shellcontent_toolbar = global::ReportsApp.Droid.Resource.Id.shellcontent_toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.SHIFT = global::ReportsApp.Droid.Resource.Id.SHIFT;
+			global::Xamarin.Forms.PancakeView.Resource.Id.shortcut = global::ReportsApp.Droid.Resource.Id.shortcut;
+			global::Xamarin.Forms.PancakeView.Resource.Id.showCustom = global::ReportsApp.Droid.Resource.Id.showCustom;
+			global::Xamarin.Forms.PancakeView.Resource.Id.showHome = global::ReportsApp.Droid.Resource.Id.showHome;
+			global::Xamarin.Forms.PancakeView.Resource.Id.showTitle = global::ReportsApp.Droid.Resource.Id.showTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Id.sliding_tabs = global::ReportsApp.Droid.Resource.Id.sliding_tabs;
+			global::Xamarin.Forms.PancakeView.Resource.Id.smallLabel = global::ReportsApp.Droid.Resource.Id.smallLabel;
+			global::Xamarin.Forms.PancakeView.Resource.Id.snackbar_action = global::ReportsApp.Droid.Resource.Id.snackbar_action;
+			global::Xamarin.Forms.PancakeView.Resource.Id.snackbar_text = global::ReportsApp.Droid.Resource.Id.snackbar_text;
+			global::Xamarin.Forms.PancakeView.Resource.Id.snap = global::ReportsApp.Droid.Resource.Id.snap;
+			global::Xamarin.Forms.PancakeView.Resource.Id.snapMargins = global::ReportsApp.Droid.Resource.Id.snapMargins;
+			global::Xamarin.Forms.PancakeView.Resource.Id.spacer = global::ReportsApp.Droid.Resource.Id.spacer;
+			global::Xamarin.Forms.PancakeView.Resource.Id.split_action_bar = global::ReportsApp.Droid.Resource.Id.split_action_bar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.src_atop = global::ReportsApp.Droid.Resource.Id.src_atop;
+			global::Xamarin.Forms.PancakeView.Resource.Id.src_in = global::ReportsApp.Droid.Resource.Id.src_in;
+			global::Xamarin.Forms.PancakeView.Resource.Id.src_over = global::ReportsApp.Droid.Resource.Id.src_over;
+			global::Xamarin.Forms.PancakeView.Resource.Id.start = global::ReportsApp.Droid.Resource.Id.start;
+			global::Xamarin.Forms.PancakeView.Resource.Id.status_bar_latest_event_content = global::ReportsApp.Droid.Resource.Id.status_bar_latest_event_content;
+			global::Xamarin.Forms.PancakeView.Resource.Id.stretch = global::ReportsApp.Droid.Resource.Id.stretch;
+			global::Xamarin.Forms.PancakeView.Resource.Id.submenuarrow = global::ReportsApp.Droid.Resource.Id.submenuarrow;
+			global::Xamarin.Forms.PancakeView.Resource.Id.submit_area = global::ReportsApp.Droid.Resource.Id.submit_area;
+			global::Xamarin.Forms.PancakeView.Resource.Id.SYM = global::ReportsApp.Droid.Resource.Id.SYM;
+			global::Xamarin.Forms.PancakeView.Resource.Id.tabMode = global::ReportsApp.Droid.Resource.Id.tabMode;
+			global::Xamarin.Forms.PancakeView.Resource.Id.tag_accessibility_actions = global::ReportsApp.Droid.Resource.Id.tag_accessibility_actions;
+			global::Xamarin.Forms.PancakeView.Resource.Id.tag_accessibility_clickable_spans = global::ReportsApp.Droid.Resource.Id.tag_accessibility_clickable_spans;
+			global::Xamarin.Forms.PancakeView.Resource.Id.tag_accessibility_heading = global::ReportsApp.Droid.Resource.Id.tag_accessibility_heading;
+			global::Xamarin.Forms.PancakeView.Resource.Id.tag_accessibility_pane_title = global::ReportsApp.Droid.Resource.Id.tag_accessibility_pane_title;
+			global::Xamarin.Forms.PancakeView.Resource.Id.tag_screen_reader_focusable = global::ReportsApp.Droid.Resource.Id.tag_screen_reader_focusable;
+			global::Xamarin.Forms.PancakeView.Resource.Id.tag_transition_group = global::ReportsApp.Droid.Resource.Id.tag_transition_group;
+			global::Xamarin.Forms.PancakeView.Resource.Id.tag_unhandled_key_event_manager = global::ReportsApp.Droid.Resource.Id.tag_unhandled_key_event_manager;
+			global::Xamarin.Forms.PancakeView.Resource.Id.tag_unhandled_key_listeners = global::ReportsApp.Droid.Resource.Id.tag_unhandled_key_listeners;
+			global::Xamarin.Forms.PancakeView.Resource.Id.text = global::ReportsApp.Droid.Resource.Id.text;
+			global::Xamarin.Forms.PancakeView.Resource.Id.text2 = global::ReportsApp.Droid.Resource.Id.text2;
+			global::Xamarin.Forms.PancakeView.Resource.Id.textinput_counter = global::ReportsApp.Droid.Resource.Id.textinput_counter;
+			global::Xamarin.Forms.PancakeView.Resource.Id.textinput_error = global::ReportsApp.Droid.Resource.Id.textinput_error;
+			global::Xamarin.Forms.PancakeView.Resource.Id.textinput_helper_text = global::ReportsApp.Droid.Resource.Id.textinput_helper_text;
+			global::Xamarin.Forms.PancakeView.Resource.Id.textSpacerNoButtons = global::ReportsApp.Droid.Resource.Id.textSpacerNoButtons;
+			global::Xamarin.Forms.PancakeView.Resource.Id.textSpacerNoTitle = global::ReportsApp.Droid.Resource.Id.textSpacerNoTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Id.textStart = global::ReportsApp.Droid.Resource.Id.textStart;
+			global::Xamarin.Forms.PancakeView.Resource.Id.time = global::ReportsApp.Droid.Resource.Id.time;
+			global::Xamarin.Forms.PancakeView.Resource.Id.title = global::ReportsApp.Droid.Resource.Id.title;
+			global::Xamarin.Forms.PancakeView.Resource.Id.titleDividerNoCustom = global::ReportsApp.Droid.Resource.Id.titleDividerNoCustom;
+			global::Xamarin.Forms.PancakeView.Resource.Id.title_template = global::ReportsApp.Droid.Resource.Id.title_template;
+			global::Xamarin.Forms.PancakeView.Resource.Id.toolbar = global::ReportsApp.Droid.Resource.Id.toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Id.top = global::ReportsApp.Droid.Resource.Id.top;
+			global::Xamarin.Forms.PancakeView.Resource.Id.topPanel = global::ReportsApp.Droid.Resource.Id.topPanel;
+			global::Xamarin.Forms.PancakeView.Resource.Id.touch_outside = global::ReportsApp.Droid.Resource.Id.touch_outside;
+			global::Xamarin.Forms.PancakeView.Resource.Id.transition_current_scene = global::ReportsApp.Droid.Resource.Id.transition_current_scene;
+			global::Xamarin.Forms.PancakeView.Resource.Id.transition_layout_save = global::ReportsApp.Droid.Resource.Id.transition_layout_save;
+			global::Xamarin.Forms.PancakeView.Resource.Id.transition_position = global::ReportsApp.Droid.Resource.Id.transition_position;
+			global::Xamarin.Forms.PancakeView.Resource.Id.transition_scene_layoutid_cache = global::ReportsApp.Droid.Resource.Id.transition_scene_layoutid_cache;
+			global::Xamarin.Forms.PancakeView.Resource.Id.transition_transform = global::ReportsApp.Droid.Resource.Id.transition_transform;
+			global::Xamarin.Forms.PancakeView.Resource.Id.@unchecked = global::ReportsApp.Droid.Resource.Id.@unchecked;
+			global::Xamarin.Forms.PancakeView.Resource.Id.uniform = global::ReportsApp.Droid.Resource.Id.uniform;
+			global::Xamarin.Forms.PancakeView.Resource.Id.unlabeled = global::ReportsApp.Droid.Resource.Id.unlabeled;
+			global::Xamarin.Forms.PancakeView.Resource.Id.up = global::ReportsApp.Droid.Resource.Id.up;
+			global::Xamarin.Forms.PancakeView.Resource.Id.useLogo = global::ReportsApp.Droid.Resource.Id.useLogo;
+			global::Xamarin.Forms.PancakeView.Resource.Id.view_offset_helper = global::ReportsApp.Droid.Resource.Id.view_offset_helper;
+			global::Xamarin.Forms.PancakeView.Resource.Id.view_tree_saved_state_registry_owner = global::ReportsApp.Droid.Resource.Id.view_tree_saved_state_registry_owner;
+			global::Xamarin.Forms.PancakeView.Resource.Id.visible = global::ReportsApp.Droid.Resource.Id.visible;
+			global::Xamarin.Forms.PancakeView.Resource.Id.visible_removing_fragment_view_tag = global::ReportsApp.Droid.Resource.Id.visible_removing_fragment_view_tag;
+			global::Xamarin.Forms.PancakeView.Resource.Id.withText = global::ReportsApp.Droid.Resource.Id.withText;
+			global::Xamarin.Forms.PancakeView.Resource.Id.wrap_content = global::ReportsApp.Droid.Resource.Id.wrap_content;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.abc_config_activityDefaultDur = global::ReportsApp.Droid.Resource.Integer.abc_config_activityDefaultDur;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.abc_config_activityShortDur = global::ReportsApp.Droid.Resource.Integer.abc_config_activityShortDur;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.app_bar_elevation_anim_duration = global::ReportsApp.Droid.Resource.Integer.app_bar_elevation_anim_duration;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.bottom_sheet_slide_duration = global::ReportsApp.Droid.Resource.Integer.bottom_sheet_slide_duration;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.cancel_button_image_alpha = global::ReportsApp.Droid.Resource.Integer.cancel_button_image_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.config_tooltipAnimTime = global::ReportsApp.Droid.Resource.Integer.config_tooltipAnimTime;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.design_snackbar_text_max_lines = global::ReportsApp.Droid.Resource.Integer.design_snackbar_text_max_lines;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.design_tab_indicator_anim_duration_ms = global::ReportsApp.Droid.Resource.Integer.design_tab_indicator_anim_duration_ms;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.hide_password_duration = global::ReportsApp.Droid.Resource.Integer.hide_password_duration;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.mtrl_btn_anim_delay_ms = global::ReportsApp.Droid.Resource.Integer.mtrl_btn_anim_delay_ms;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.mtrl_btn_anim_duration_ms = global::ReportsApp.Droid.Resource.Integer.mtrl_btn_anim_duration_ms;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.mtrl_chip_anim_duration = global::ReportsApp.Droid.Resource.Integer.mtrl_chip_anim_duration;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.mtrl_tab_indicator_anim_duration_ms = global::ReportsApp.Droid.Resource.Integer.mtrl_tab_indicator_anim_duration_ms;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.show_password_duration = global::ReportsApp.Droid.Resource.Integer.show_password_duration;
+			global::Xamarin.Forms.PancakeView.Resource.Integer.status_bar_notification_info_maxnum = global::ReportsApp.Droid.Resource.Integer.status_bar_notification_info_maxnum;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_0 = global::ReportsApp.Droid.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_1 = global::ReportsApp.Droid.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_1;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_0 = global::ReportsApp.Droid.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_1 = global::ReportsApp.Droid.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_1;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.btn_radio_to_off_mtrl_animation_interpolator_0 = global::ReportsApp.Droid.Resource.Interpolator.btn_radio_to_off_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.btn_radio_to_on_mtrl_animation_interpolator_0 = global::ReportsApp.Droid.Resource.Interpolator.btn_radio_to_on_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.fast_out_slow_in = global::ReportsApp.Droid.Resource.Interpolator.fast_out_slow_in;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.mtrl_fast_out_linear_in = global::ReportsApp.Droid.Resource.Interpolator.mtrl_fast_out_linear_in;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.mtrl_fast_out_slow_in = global::ReportsApp.Droid.Resource.Interpolator.mtrl_fast_out_slow_in;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.mtrl_linear = global::ReportsApp.Droid.Resource.Interpolator.mtrl_linear;
+			global::Xamarin.Forms.PancakeView.Resource.Interpolator.mtrl_linear_out_slow_in = global::ReportsApp.Droid.Resource.Interpolator.mtrl_linear_out_slow_in;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_action_bar_title_item = global::ReportsApp.Droid.Resource.Layout.abc_action_bar_title_item;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_action_bar_up_container = global::ReportsApp.Droid.Resource.Layout.abc_action_bar_up_container;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_action_menu_item_layout = global::ReportsApp.Droid.Resource.Layout.abc_action_menu_item_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_action_menu_layout = global::ReportsApp.Droid.Resource.Layout.abc_action_menu_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_action_mode_bar = global::ReportsApp.Droid.Resource.Layout.abc_action_mode_bar;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_action_mode_close_item_material = global::ReportsApp.Droid.Resource.Layout.abc_action_mode_close_item_material;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_activity_chooser_view = global::ReportsApp.Droid.Resource.Layout.abc_activity_chooser_view;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_activity_chooser_view_list_item = global::ReportsApp.Droid.Resource.Layout.abc_activity_chooser_view_list_item;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_alert_dialog_button_bar_material = global::ReportsApp.Droid.Resource.Layout.abc_alert_dialog_button_bar_material;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_alert_dialog_material = global::ReportsApp.Droid.Resource.Layout.abc_alert_dialog_material;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_alert_dialog_title_material = global::ReportsApp.Droid.Resource.Layout.abc_alert_dialog_title_material;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_cascading_menu_item_layout = global::ReportsApp.Droid.Resource.Layout.abc_cascading_menu_item_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_dialog_title_material = global::ReportsApp.Droid.Resource.Layout.abc_dialog_title_material;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_expanded_menu_layout = global::ReportsApp.Droid.Resource.Layout.abc_expanded_menu_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_list_menu_item_checkbox = global::ReportsApp.Droid.Resource.Layout.abc_list_menu_item_checkbox;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_list_menu_item_icon = global::ReportsApp.Droid.Resource.Layout.abc_list_menu_item_icon;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_list_menu_item_layout = global::ReportsApp.Droid.Resource.Layout.abc_list_menu_item_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_list_menu_item_radio = global::ReportsApp.Droid.Resource.Layout.abc_list_menu_item_radio;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_popup_menu_header_item_layout = global::ReportsApp.Droid.Resource.Layout.abc_popup_menu_header_item_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_popup_menu_item_layout = global::ReportsApp.Droid.Resource.Layout.abc_popup_menu_item_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_screen_content_include = global::ReportsApp.Droid.Resource.Layout.abc_screen_content_include;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_screen_simple = global::ReportsApp.Droid.Resource.Layout.abc_screen_simple;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_screen_simple_overlay_action_mode = global::ReportsApp.Droid.Resource.Layout.abc_screen_simple_overlay_action_mode;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_screen_toolbar = global::ReportsApp.Droid.Resource.Layout.abc_screen_toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_search_dropdown_item_icons_2line = global::ReportsApp.Droid.Resource.Layout.abc_search_dropdown_item_icons_2line;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_search_view = global::ReportsApp.Droid.Resource.Layout.abc_search_view;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_select_dialog_material = global::ReportsApp.Droid.Resource.Layout.abc_select_dialog_material;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.abc_tooltip = global::ReportsApp.Droid.Resource.Layout.abc_tooltip;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.BottomTabLayout = global::ReportsApp.Droid.Resource.Layout.BottomTabLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.browser_actions_context_menu_page = global::ReportsApp.Droid.Resource.Layout.browser_actions_context_menu_page;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.browser_actions_context_menu_row = global::ReportsApp.Droid.Resource.Layout.browser_actions_context_menu_row;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.custom_dialog = global::ReportsApp.Droid.Resource.Layout.custom_dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_bottom_navigation_item = global::ReportsApp.Droid.Resource.Layout.design_bottom_navigation_item;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_bottom_sheet_dialog = global::ReportsApp.Droid.Resource.Layout.design_bottom_sheet_dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_layout_snackbar = global::ReportsApp.Droid.Resource.Layout.design_layout_snackbar;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_layout_snackbar_include = global::ReportsApp.Droid.Resource.Layout.design_layout_snackbar_include;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_layout_tab_icon = global::ReportsApp.Droid.Resource.Layout.design_layout_tab_icon;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_layout_tab_text = global::ReportsApp.Droid.Resource.Layout.design_layout_tab_text;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_menu_item_action_area = global::ReportsApp.Droid.Resource.Layout.design_menu_item_action_area;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_navigation_item = global::ReportsApp.Droid.Resource.Layout.design_navigation_item;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_navigation_item_header = global::ReportsApp.Droid.Resource.Layout.design_navigation_item_header;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_navigation_item_separator = global::ReportsApp.Droid.Resource.Layout.design_navigation_item_separator;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_navigation_item_subheader = global::ReportsApp.Droid.Resource.Layout.design_navigation_item_subheader;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_navigation_menu = global::ReportsApp.Droid.Resource.Layout.design_navigation_menu;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.design_navigation_menu_item = global::ReportsApp.Droid.Resource.Layout.design_navigation_menu_item;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.FallbackTabbarDoNotUse = global::ReportsApp.Droid.Resource.Layout.FallbackTabbarDoNotUse;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.FallbackToolbarDoNotUse = global::ReportsApp.Droid.Resource.Layout.FallbackToolbarDoNotUse;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.FlyoutContent = global::ReportsApp.Droid.Resource.Layout.FlyoutContent;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.mtrl_layout_snackbar = global::ReportsApp.Droid.Resource.Layout.mtrl_layout_snackbar;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.mtrl_layout_snackbar_include = global::ReportsApp.Droid.Resource.Layout.mtrl_layout_snackbar_include;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_action = global::ReportsApp.Droid.Resource.Layout.notification_action;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_action_tombstone = global::ReportsApp.Droid.Resource.Layout.notification_action_tombstone;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_media_action = global::ReportsApp.Droid.Resource.Layout.notification_media_action;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_media_cancel_action = global::ReportsApp.Droid.Resource.Layout.notification_media_cancel_action;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_big_media = global::ReportsApp.Droid.Resource.Layout.notification_template_big_media;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_big_media_custom = global::ReportsApp.Droid.Resource.Layout.notification_template_big_media_custom;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_big_media_narrow = global::ReportsApp.Droid.Resource.Layout.notification_template_big_media_narrow;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_big_media_narrow_custom = global::ReportsApp.Droid.Resource.Layout.notification_template_big_media_narrow_custom;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_custom_big = global::ReportsApp.Droid.Resource.Layout.notification_template_custom_big;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_icon_group = global::ReportsApp.Droid.Resource.Layout.notification_template_icon_group;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_lines_media = global::ReportsApp.Droid.Resource.Layout.notification_template_lines_media;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_media = global::ReportsApp.Droid.Resource.Layout.notification_template_media;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_media_custom = global::ReportsApp.Droid.Resource.Layout.notification_template_media_custom;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_part_chronometer = global::ReportsApp.Droid.Resource.Layout.notification_template_part_chronometer;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.notification_template_part_time = global::ReportsApp.Droid.Resource.Layout.notification_template_part_time;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.RootLayout = global::ReportsApp.Droid.Resource.Layout.RootLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.select_dialog_item_material = global::ReportsApp.Droid.Resource.Layout.select_dialog_item_material;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.select_dialog_multichoice_material = global::ReportsApp.Droid.Resource.Layout.select_dialog_multichoice_material;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.select_dialog_singlechoice_material = global::ReportsApp.Droid.Resource.Layout.select_dialog_singlechoice_material;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.ShellContent = global::ReportsApp.Droid.Resource.Layout.ShellContent;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.support_simple_spinner_dropdown_item = global::ReportsApp.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.Tabbar = global::ReportsApp.Droid.Resource.Layout.Tabbar;
+			global::Xamarin.Forms.PancakeView.Resource.Layout.Toolbar = global::ReportsApp.Droid.Resource.Layout.Toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_action_bar_home_description = global::ReportsApp.Droid.Resource.String.abc_action_bar_home_description;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_action_bar_up_description = global::ReportsApp.Droid.Resource.String.abc_action_bar_up_description;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_action_menu_overflow_description = global::ReportsApp.Droid.Resource.String.abc_action_menu_overflow_description;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_action_mode_done = global::ReportsApp.Droid.Resource.String.abc_action_mode_done;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_activitychooserview_choose_application = global::ReportsApp.Droid.Resource.String.abc_activitychooserview_choose_application;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_activity_chooser_view_see_all = global::ReportsApp.Droid.Resource.String.abc_activity_chooser_view_see_all;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_capital_off = global::ReportsApp.Droid.Resource.String.abc_capital_off;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_capital_on = global::ReportsApp.Droid.Resource.String.abc_capital_on;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_menu_alt_shortcut_label = global::ReportsApp.Droid.Resource.String.abc_menu_alt_shortcut_label;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_menu_ctrl_shortcut_label = global::ReportsApp.Droid.Resource.String.abc_menu_ctrl_shortcut_label;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_menu_delete_shortcut_label = global::ReportsApp.Droid.Resource.String.abc_menu_delete_shortcut_label;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_menu_enter_shortcut_label = global::ReportsApp.Droid.Resource.String.abc_menu_enter_shortcut_label;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_menu_function_shortcut_label = global::ReportsApp.Droid.Resource.String.abc_menu_function_shortcut_label;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_menu_meta_shortcut_label = global::ReportsApp.Droid.Resource.String.abc_menu_meta_shortcut_label;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_menu_shift_shortcut_label = global::ReportsApp.Droid.Resource.String.abc_menu_shift_shortcut_label;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_menu_space_shortcut_label = global::ReportsApp.Droid.Resource.String.abc_menu_space_shortcut_label;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_menu_sym_shortcut_label = global::ReportsApp.Droid.Resource.String.abc_menu_sym_shortcut_label;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_prepend_shortcut_label = global::ReportsApp.Droid.Resource.String.abc_prepend_shortcut_label;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_searchview_description_clear = global::ReportsApp.Droid.Resource.String.abc_searchview_description_clear;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_searchview_description_query = global::ReportsApp.Droid.Resource.String.abc_searchview_description_query;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_searchview_description_search = global::ReportsApp.Droid.Resource.String.abc_searchview_description_search;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_searchview_description_submit = global::ReportsApp.Droid.Resource.String.abc_searchview_description_submit;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_searchview_description_voice = global::ReportsApp.Droid.Resource.String.abc_searchview_description_voice;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_search_hint = global::ReportsApp.Droid.Resource.String.abc_search_hint;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_shareactionprovider_share_with = global::ReportsApp.Droid.Resource.String.abc_shareactionprovider_share_with;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_shareactionprovider_share_with_application = global::ReportsApp.Droid.Resource.String.abc_shareactionprovider_share_with_application;
+			global::Xamarin.Forms.PancakeView.Resource.String.abc_toolbar_collapse_description = global::ReportsApp.Droid.Resource.String.abc_toolbar_collapse_description;
+			global::Xamarin.Forms.PancakeView.Resource.String.appbar_scrolling_view_behavior = global::ReportsApp.Droid.Resource.String.appbar_scrolling_view_behavior;
+			global::Xamarin.Forms.PancakeView.Resource.String.bottom_sheet_behavior = global::ReportsApp.Droid.Resource.String.bottom_sheet_behavior;
+			global::Xamarin.Forms.PancakeView.Resource.String.character_counter_content_description = global::ReportsApp.Droid.Resource.String.character_counter_content_description;
+			global::Xamarin.Forms.PancakeView.Resource.String.character_counter_pattern = global::ReportsApp.Droid.Resource.String.character_counter_pattern;
+			global::Xamarin.Forms.PancakeView.Resource.String.fab_transformation_scrim_behavior = global::ReportsApp.Droid.Resource.String.fab_transformation_scrim_behavior;
+			global::Xamarin.Forms.PancakeView.Resource.String.fab_transformation_sheet_behavior = global::ReportsApp.Droid.Resource.String.fab_transformation_sheet_behavior;
+			global::Xamarin.Forms.PancakeView.Resource.String.hide_bottom_view_on_scroll_behavior = global::ReportsApp.Droid.Resource.String.hide_bottom_view_on_scroll_behavior;
+			global::Xamarin.Forms.PancakeView.Resource.String.mtrl_chip_close_icon_content_description = global::ReportsApp.Droid.Resource.String.mtrl_chip_close_icon_content_description;
+			global::Xamarin.Forms.PancakeView.Resource.String.overflow_tab_title = global::ReportsApp.Droid.Resource.String.overflow_tab_title;
+			global::Xamarin.Forms.PancakeView.Resource.String.password_toggle_content_description = global::ReportsApp.Droid.Resource.String.password_toggle_content_description;
+			global::Xamarin.Forms.PancakeView.Resource.String.path_password_eye = global::ReportsApp.Droid.Resource.String.path_password_eye;
+			global::Xamarin.Forms.PancakeView.Resource.String.path_password_eye_mask_strike_through = global::ReportsApp.Droid.Resource.String.path_password_eye_mask_strike_through;
+			global::Xamarin.Forms.PancakeView.Resource.String.path_password_eye_mask_visible = global::ReportsApp.Droid.Resource.String.path_password_eye_mask_visible;
+			global::Xamarin.Forms.PancakeView.Resource.String.path_password_strike_through = global::ReportsApp.Droid.Resource.String.path_password_strike_through;
+			global::Xamarin.Forms.PancakeView.Resource.String.search_menu_title = global::ReportsApp.Droid.Resource.String.search_menu_title;
+			global::Xamarin.Forms.PancakeView.Resource.String.status_bar_notification_info_overflow = global::ReportsApp.Droid.Resource.String.status_bar_notification_info_overflow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.AlertDialog_AppCompat = global::ReportsApp.Droid.Resource.Style.AlertDialog_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.AlertDialog_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.AlertDialog_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Animation_AppCompat_Dialog = global::ReportsApp.Droid.Resource.Style.Animation_AppCompat_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Animation_AppCompat_DropDownUp = global::ReportsApp.Droid.Resource.Style.Animation_AppCompat_DropDownUp;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Animation_AppCompat_Tooltip = global::ReportsApp.Droid.Resource.Style.Animation_AppCompat_Tooltip;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Animation_Design_BottomSheetDialog = global::ReportsApp.Droid.Resource.Style.Animation_Design_BottomSheetDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.AppCompatDialogStyle = global::ReportsApp.Droid.Resource.Style.AppCompatDialogStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_AlertDialog_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_AlertDialog_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_AlertDialog_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Base_AlertDialog_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Animation_AppCompat_Dialog = global::ReportsApp.Droid.Resource.Style.Base_Animation_AppCompat_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Animation_AppCompat_DropDownUp = global::ReportsApp.Droid.Resource.Style.Base_Animation_AppCompat_DropDownUp;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Animation_AppCompat_Tooltip = global::ReportsApp.Droid.Resource.Style.Base_Animation_AppCompat_Tooltip;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_CardView = global::ReportsApp.Droid.Resource.Style.Base_CardView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_DialogWindowTitleBackground_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_DialogWindowTitleBackground_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_DialogWindowTitle_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_DialogWindowTitle_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Body1 = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Body1;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Body2 = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Body2;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Button = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Button;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Caption = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Caption;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Display1 = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display1;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Display2 = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display2;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Display3 = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display3;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Display4 = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display4;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Headline = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Headline;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Inverse = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Large = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Large;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Large_Inverse = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Large_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Medium = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Medium;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Medium_Inverse = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Medium_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Menu = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Menu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_SearchResult = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Subtitle = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Title = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Small = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Small;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Small_Inverse = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Small_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Subhead = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Subhead;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Subhead_Inverse = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Subhead_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Title = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Title_Inverse = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Title_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Tooltip = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Tooltip;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Menu = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Menu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Title = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Borderless_Colored = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Borderless_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Colored = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Inverse = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_DropDownItem = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_DropDownItem;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Header = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Header;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Large = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Large;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Small = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Small;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_Switch = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Switch;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Title = global::ReportsApp.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_ThemeOverlay_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_ThemeOverlay_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_ThemeOverlay_AppCompat_ActionBar = global::ReportsApp.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_ThemeOverlay_AppCompat_Dark = global::ReportsApp.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dark;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_ThemeOverlay_AppCompat_Dark_ActionBar = global::ReportsApp.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dark_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_ThemeOverlay_AppCompat_Dialog = global::ReportsApp.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_ThemeOverlay_AppCompat_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_ThemeOverlay_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_ThemeOverlay_MaterialComponents_Dialog = global::ReportsApp.Droid.Resource.Style.Base_ThemeOverlay_MaterialComponents_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_ThemeOverlay_MaterialComponents_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Base_ThemeOverlay_MaterialComponents_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_CompactMenu = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_CompactMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Dialog = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_DialogWhenLarge = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_DialogWhenLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Dialog_FixedSize = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_FixedSize;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Dialog_MinWidth = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_MinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Light_DarkActionBar = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Light_DarkActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Light_Dialog = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Light_DialogWhenLarge = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Light_DialogWhenLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Light_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Light_Dialog_FixedSize = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_FixedSize;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_AppCompat_Light_Dialog_MinWidth = global::ReportsApp.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_MinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Bridge = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_CompactMenu = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_CompactMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Dialog = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_DialogWhenLarge = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_DialogWhenLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Dialog_FixedSize = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Dialog_FixedSize;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Dialog_MinWidth = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Dialog_MinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Light = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Light_Bridge = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Light_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Light_DarkActionBar = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Light_DarkActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Light_DarkActionBar_Bridge = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Light_DarkActionBar_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Light_Dialog = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Light_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Light_DialogWhenLarge = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Light_DialogWhenLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Light_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Light_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Light_Dialog_FixedSize = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Light_Dialog_FixedSize;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Theme_MaterialComponents_Light_Dialog_MinWidth = global::ReportsApp.Droid.Resource.Style.Base_Theme_MaterialComponents_Light_Dialog_MinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V14_ThemeOverlay_MaterialComponents_Dialog = global::ReportsApp.Droid.Resource.Style.Base_V14_ThemeOverlay_MaterialComponents_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V14_ThemeOverlay_MaterialComponents_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Base_V14_ThemeOverlay_MaterialComponents_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V14_Theme_MaterialComponents = global::ReportsApp.Droid.Resource.Style.Base_V14_Theme_MaterialComponents;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V14_Theme_MaterialComponents_Bridge = global::ReportsApp.Droid.Resource.Style.Base_V14_Theme_MaterialComponents_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V14_Theme_MaterialComponents_Dialog = global::ReportsApp.Droid.Resource.Style.Base_V14_Theme_MaterialComponents_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V14_Theme_MaterialComponents_Light = global::ReportsApp.Droid.Resource.Style.Base_V14_Theme_MaterialComponents_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V14_Theme_MaterialComponents_Light_Bridge = global::ReportsApp.Droid.Resource.Style.Base_V14_Theme_MaterialComponents_Light_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V14_Theme_MaterialComponents_Light_DarkActionBar_Bridge = global::ReportsApp.Droid.Resource.Style.Base_V14_Theme_MaterialComponents_Light_DarkActionBar_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V14_Theme_MaterialComponents_Light_Dialog = global::ReportsApp.Droid.Resource.Style.Base_V14_Theme_MaterialComponents_Light_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V21_ThemeOverlay_AppCompat_Dialog = global::ReportsApp.Droid.Resource.Style.Base_V21_ThemeOverlay_AppCompat_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V21_Theme_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_V21_Theme_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V21_Theme_AppCompat_Dialog = global::ReportsApp.Droid.Resource.Style.Base_V21_Theme_AppCompat_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V21_Theme_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Base_V21_Theme_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V21_Theme_AppCompat_Light_Dialog = global::ReportsApp.Droid.Resource.Style.Base_V21_Theme_AppCompat_Light_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V22_Theme_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_V22_Theme_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V22_Theme_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Base_V22_Theme_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V23_Theme_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_V23_Theme_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V23_Theme_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Base_V23_Theme_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V26_Theme_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_V26_Theme_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V26_Theme_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Base_V26_Theme_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V26_Widget_AppCompat_Toolbar = global::ReportsApp.Droid.Resource.Style.Base_V26_Widget_AppCompat_Toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V28_Theme_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_V28_Theme_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V28_Theme_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Base_V28_Theme_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V7_ThemeOverlay_AppCompat_Dialog = global::ReportsApp.Droid.Resource.Style.Base_V7_ThemeOverlay_AppCompat_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V7_Theme_AppCompat = global::ReportsApp.Droid.Resource.Style.Base_V7_Theme_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V7_Theme_AppCompat_Dialog = global::ReportsApp.Droid.Resource.Style.Base_V7_Theme_AppCompat_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V7_Theme_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Base_V7_Theme_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V7_Theme_AppCompat_Light_Dialog = global::ReportsApp.Droid.Resource.Style.Base_V7_Theme_AppCompat_Light_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V7_Widget_AppCompat_AutoCompleteTextView = global::ReportsApp.Droid.Resource.Style.Base_V7_Widget_AppCompat_AutoCompleteTextView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V7_Widget_AppCompat_EditText = global::ReportsApp.Droid.Resource.Style.Base_V7_Widget_AppCompat_EditText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_V7_Widget_AppCompat_Toolbar = global::ReportsApp.Droid.Resource.Style.Base_V7_Widget_AppCompat_Toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ActionBar = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ActionBar_Solid = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_Solid;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ActionBar_TabBar = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ActionBar_TabText = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ActionBar_TabView = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ActionButton = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ActionButton_CloseMode = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton_CloseMode;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ActionButton_Overflow = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton_Overflow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ActionMode = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ActionMode;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ActivityChooserView = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ActivityChooserView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_AutoCompleteTextView = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_AutoCompleteTextView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Button = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Button;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ButtonBar = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ButtonBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ButtonBar_AlertDialog = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ButtonBar_AlertDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Button_Borderless = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Button_Borderless;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Button_Borderless_Colored = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Button_Borderless_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Button_ButtonBar_AlertDialog = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Button_ButtonBar_AlertDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Button_Colored = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Button_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Button_Small = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Button_Small;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_CompoundButton_CheckBox = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_CheckBox;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_CompoundButton_RadioButton = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_RadioButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_CompoundButton_Switch = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_Switch;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle_Common = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle_Common;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_DropDownItem_Spinner = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_DropDownItem_Spinner;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_EditText = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_EditText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ImageButton = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ImageButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Light_ActionBar = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_Solid = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_Solid;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabBar = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabView = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu_Overflow = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu_Overflow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ListMenuView = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ListMenuView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ListPopupWindow = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ListPopupWindow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ListView = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ListView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ListView_DropDown = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ListView_DropDown;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ListView_Menu = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ListView_Menu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_PopupMenu = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_PopupMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_PopupMenu_Overflow = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_PopupMenu_Overflow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_PopupWindow = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_PopupWindow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ProgressBar = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ProgressBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_ProgressBar_Horizontal = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_ProgressBar_Horizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_RatingBar = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_RatingBar_Indicator = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar_Indicator;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_RatingBar_Small = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar_Small;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_SearchView = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_SearchView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_SearchView_ActionBar = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_SearchView_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_SeekBar = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_SeekBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_SeekBar_Discrete = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_SeekBar_Discrete;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Spinner = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Spinner;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_TextView = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_TextView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Toolbar = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation = global::ReportsApp.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_Design_TabLayout = global::ReportsApp.Droid.Resource.Style.Base_Widget_Design_TabLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_MaterialComponents_Chip = global::ReportsApp.Droid.Resource.Style.Base_Widget_MaterialComponents_Chip;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_MaterialComponents_TextInputEditText = global::ReportsApp.Droid.Resource.Style.Base_Widget_MaterialComponents_TextInputEditText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Base_Widget_MaterialComponents_TextInputLayout = global::ReportsApp.Droid.Resource.Style.Base_Widget_MaterialComponents_TextInputLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Style.CardView = global::ReportsApp.Droid.Resource.Style.CardView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.CardView_Dark = global::ReportsApp.Droid.Resource.Style.CardView_Dark;
+			global::Xamarin.Forms.PancakeView.Resource.Style.CardView_Light = global::ReportsApp.Droid.Resource.Style.CardView_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.collectionViewTheme = global::ReportsApp.Droid.Resource.Style.collectionViewTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Style.MainTheme = global::ReportsApp.Droid.Resource.Style.MainTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Style.MainTheme_Base = global::ReportsApp.Droid.Resource.Style.MainTheme_Base;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_AppCompat = global::ReportsApp.Droid.Resource.Style.Platform_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Platform_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_MaterialComponents = global::ReportsApp.Droid.Resource.Style.Platform_MaterialComponents;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_MaterialComponents_Dialog = global::ReportsApp.Droid.Resource.Style.Platform_MaterialComponents_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_MaterialComponents_Light = global::ReportsApp.Droid.Resource.Style.Platform_MaterialComponents_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_MaterialComponents_Light_Dialog = global::ReportsApp.Droid.Resource.Style.Platform_MaterialComponents_Light_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_ThemeOverlay_AppCompat = global::ReportsApp.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_ThemeOverlay_AppCompat_Dark = global::ReportsApp.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Dark;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_ThemeOverlay_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_V21_AppCompat = global::ReportsApp.Droid.Resource.Style.Platform_V21_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_V21_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Platform_V21_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_V25_AppCompat = global::ReportsApp.Droid.Resource.Style.Platform_V25_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_V25_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Platform_V25_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Platform_Widget_AppCompat_Spinner = global::ReportsApp.Droid.Resource.Style.Platform_Widget_AppCompat_Spinner;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_DialogWindowTitle_AppCompat = global::ReportsApp.Droid.Resource.Style.RtlOverlay_DialogWindowTitle_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_ActionBar_TitleItem = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_ActionBar_TitleItem;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_DialogTitle_Icon = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_DialogTitle_Icon;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Shortcut = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Shortcut;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_SubmenuArrow = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_SubmenuArrow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Text = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Text;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Title = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_SearchView_MagIcon = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_SearchView_MagIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1 = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2 = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Query = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Query;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Text = global::ReportsApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Text;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton = global::ReportsApp.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton_Overflow = global::ReportsApp.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton_Overflow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.scrollViewScrollBars = global::ReportsApp.Droid.Resource.Style.scrollViewScrollBars;
+			global::Xamarin.Forms.PancakeView.Resource.Style.scrollViewTheme = global::ReportsApp.Droid.Resource.Style.scrollViewTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Body1 = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Body1;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Body2 = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Body2;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Button = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Button;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Caption = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Caption;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Display1 = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Display1;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Display2 = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Display2;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Display3 = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Display3;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Display4 = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Display4;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Headline = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Headline;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Large = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Large;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Large_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Large_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Subtitle = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Title = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Large = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Large;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Small = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Small;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Medium = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Medium;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Medium_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Medium_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Menu = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Menu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_SearchResult_Subtitle = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_SearchResult_Title = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Small = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Small;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Small_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Small_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Subhead = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Subhead;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Subhead_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Subhead_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Title = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Title_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Title_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Tooltip = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Tooltip;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Menu = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Menu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_Button = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_Button_Borderless_Colored = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button_Borderless_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_Button_Colored = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_Button_Inverse = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_DropDownItem = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_DropDownItem;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Header = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Header;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Large = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Large;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Small = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Small;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_Switch = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Switch;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_AppCompat_Widget_TextView_SpinnerItem = global::ReportsApp.Droid.Resource.Style.TextAppearance_AppCompat_Widget_TextView_SpinnerItem;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Compat_Notification = global::ReportsApp.Droid.Resource.Style.TextAppearance_Compat_Notification;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Compat_Notification_Info = global::ReportsApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Info;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Compat_Notification_Info_Media = global::ReportsApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Info_Media;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Compat_Notification_Line2 = global::ReportsApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Line2;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Compat_Notification_Line2_Media = global::ReportsApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Line2_Media;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Compat_Notification_Media = global::ReportsApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Media;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Compat_Notification_Time = global::ReportsApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Time;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Compat_Notification_Time_Media = global::ReportsApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Time_Media;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Compat_Notification_Title = global::ReportsApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Compat_Notification_Title_Media = global::ReportsApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Title_Media;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Design_CollapsingToolbar_Expanded = global::ReportsApp.Droid.Resource.Style.TextAppearance_Design_CollapsingToolbar_Expanded;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Design_Counter = global::ReportsApp.Droid.Resource.Style.TextAppearance_Design_Counter;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Design_Counter_Overflow = global::ReportsApp.Droid.Resource.Style.TextAppearance_Design_Counter_Overflow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Design_Error = global::ReportsApp.Droid.Resource.Style.TextAppearance_Design_Error;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Design_HelperText = global::ReportsApp.Droid.Resource.Style.TextAppearance_Design_HelperText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Design_Hint = global::ReportsApp.Droid.Resource.Style.TextAppearance_Design_Hint;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Design_Snackbar_Message = global::ReportsApp.Droid.Resource.Style.TextAppearance_Design_Snackbar_Message;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Design_Tab = global::ReportsApp.Droid.Resource.Style.TextAppearance_Design_Tab;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Body1 = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Body1;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Body2 = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Body2;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Button = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Button;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Caption = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Caption;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Chip = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Chip;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Headline1 = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Headline1;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Headline2 = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Headline2;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Headline3 = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Headline3;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Headline4 = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Headline4;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Headline5 = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Headline5;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Headline6 = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Headline6;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Overline = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Overline;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Subtitle1 = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Subtitle1;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_MaterialComponents_Subtitle2 = global::ReportsApp.Droid.Resource.Style.TextAppearance_MaterialComponents_Subtitle2;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Widget_AppCompat_ExpandedMenu_Item = global::ReportsApp.Droid.Resource.Style.TextAppearance_Widget_AppCompat_ExpandedMenu_Item;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Subtitle = global::ReportsApp.Droid.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Title = global::ReportsApp.Droid.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Title;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_AppCompat = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_AppCompat_ActionBar = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_AppCompat_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_AppCompat_Dark = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_AppCompat_DayNight = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_AppCompat_DayNight;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_AppCompat_DayNight_ActionBar = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_AppCompat_DayNight_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_AppCompat_Dialog = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_AppCompat_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_ActionBar = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_Dark = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_Dark;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_Dark_ActionBar = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_Dark_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_Dialog = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_Light = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_TextInputEditText = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_TextInputEditText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox_Dense = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox_Dense;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox;
+			global::Xamarin.Forms.PancakeView.Resource.Style.ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox_Dense = global::ReportsApp.Droid.Resource.Style.ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox_Dense;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_CompactMenu = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_CompactMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_DayNight = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_DayNight;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_DayNight_DarkActionBar = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_DayNight_DarkActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_DayNight_Dialog = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_DayNight_DialogWhenLarge = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_DayNight_DialogWhenLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_DayNight_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_DayNight_Dialog_MinWidth = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog_MinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_DayNight_NoActionBar = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_DayNight_NoActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Dialog = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_DialogWhenLarge = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_DialogWhenLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Dialog_MinWidth = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Dialog_MinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Empty = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Empty;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Light = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Light_DarkActionBar = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Light_DarkActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Light_Dialog = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Light_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Light_DialogWhenLarge = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Light_DialogWhenLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Light_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Light_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Light_Dialog_MinWidth = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Light_Dialog_MinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_Light_NoActionBar = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_Light_NoActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_AppCompat_NoActionBar = global::ReportsApp.Droid.Resource.Style.Theme_AppCompat_NoActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_Design = global::ReportsApp.Droid.Resource.Style.Theme_Design;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_Design_BottomSheetDialog = global::ReportsApp.Droid.Resource.Style.Theme_Design_BottomSheetDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_Design_Light = global::ReportsApp.Droid.Resource.Style.Theme_Design_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_Design_Light_BottomSheetDialog = global::ReportsApp.Droid.Resource.Style.Theme_Design_Light_BottomSheetDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_Design_Light_NoActionBar = global::ReportsApp.Droid.Resource.Style.Theme_Design_Light_NoActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_Design_NoActionBar = global::ReportsApp.Droid.Resource.Style.Theme_Design_NoActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_BottomSheetDialog = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_BottomSheetDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Bridge = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_CompactMenu = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_CompactMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Dialog = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_DialogWhenLarge = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_DialogWhenLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Dialog_MinWidth = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Dialog_MinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light_BottomSheetDialog = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light_BottomSheetDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light_Bridge = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light_DarkActionBar = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light_DarkActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light_DarkActionBar_Bridge = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light_DarkActionBar_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light_Dialog = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light_DialogWhenLarge = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light_DialogWhenLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light_Dialog_Alert = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light_Dialog_Alert;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light_Dialog_MinWidth = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light_Dialog_MinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light_NoActionBar = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light_NoActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_Light_NoActionBar_Bridge = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_Light_NoActionBar_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_NoActionBar = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_NoActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Theme_MaterialComponents_NoActionBar_Bridge = global::ReportsApp.Droid.Resource.Style.Theme_MaterialComponents_NoActionBar_Bridge;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ActionBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ActionBar_Solid = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ActionBar_Solid;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ActionBar_TabBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ActionBar_TabText = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ActionBar_TabView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ActionButton = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ActionButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ActionButton_CloseMode = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ActionButton_CloseMode;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ActionButton_Overflow = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ActionButton_Overflow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ActionMode = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ActionMode;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ActivityChooserView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ActivityChooserView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_AutoCompleteTextView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_AutoCompleteTextView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Button = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Button;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ButtonBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ButtonBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ButtonBar_AlertDialog = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ButtonBar_AlertDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Button_Borderless = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Button_Borderless;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Button_Borderless_Colored = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Button_Borderless_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Button_ButtonBar_AlertDialog = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Button_ButtonBar_AlertDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Button_Colored = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Button_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Button_Small = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Button_Small;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_CompoundButton_CheckBox = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_CompoundButton_CheckBox;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_CompoundButton_RadioButton = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_CompoundButton_RadioButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_CompoundButton_Switch = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_CompoundButton_Switch;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_DrawerArrowToggle = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_DrawerArrowToggle;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_DropDownItem_Spinner = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_DropDownItem_Spinner;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_EditText = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_EditText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ImageButton = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ImageButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid_Inverse = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar_Inverse = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText_Inverse = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView_Inverse = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionButton = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionButton_CloseMode = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton_CloseMode;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionButton_Overflow = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton_Overflow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActionMode_Inverse = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActionMode_Inverse;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ActivityChooserView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ActivityChooserView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_AutoCompleteTextView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_AutoCompleteTextView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_DropDownItem_Spinner = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_DropDownItem_Spinner;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ListPopupWindow = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ListPopupWindow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_ListView_DropDown = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_ListView_DropDown;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_PopupMenu = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_PopupMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_PopupMenu_Overflow = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_PopupMenu_Overflow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_SearchView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_SearchView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Light_Spinner_DropDown_ActionBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Light_Spinner_DropDown_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ListMenuView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ListMenuView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ListPopupWindow = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ListPopupWindow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ListView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ListView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ListView_DropDown = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ListView_DropDown;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ListView_Menu = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ListView_Menu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_PopupMenu = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_PopupMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_PopupMenu_Overflow = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_PopupMenu_Overflow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_PopupWindow = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_PopupWindow;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ProgressBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ProgressBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_ProgressBar_Horizontal = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_ProgressBar_Horizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_RatingBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_RatingBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_RatingBar_Indicator = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_RatingBar_Indicator;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_RatingBar_Small = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_RatingBar_Small;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_SearchView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_SearchView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_SearchView_ActionBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_SearchView_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_SeekBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_SeekBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_SeekBar_Discrete = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_SeekBar_Discrete;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Spinner = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Spinner;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Spinner_DropDown = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Spinner_Underlined = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Spinner_Underlined;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_TextView = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_TextView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_TextView_SpinnerItem = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_TextView_SpinnerItem;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Toolbar = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation = global::ReportsApp.Droid.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Compat_NotificationActionContainer = global::ReportsApp.Droid.Resource.Style.Widget_Compat_NotificationActionContainer;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Compat_NotificationActionText = global::ReportsApp.Droid.Resource.Style.Widget_Compat_NotificationActionText;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Design_AppBarLayout = global::ReportsApp.Droid.Resource.Style.Widget_Design_AppBarLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Design_BottomNavigationView = global::ReportsApp.Droid.Resource.Style.Widget_Design_BottomNavigationView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Design_BottomSheet_Modal = global::ReportsApp.Droid.Resource.Style.Widget_Design_BottomSheet_Modal;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Design_CollapsingToolbar = global::ReportsApp.Droid.Resource.Style.Widget_Design_CollapsingToolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Design_FloatingActionButton = global::ReportsApp.Droid.Resource.Style.Widget_Design_FloatingActionButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Design_NavigationView = global::ReportsApp.Droid.Resource.Style.Widget_Design_NavigationView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Design_ScrimInsetsFrameLayout = global::ReportsApp.Droid.Resource.Style.Widget_Design_ScrimInsetsFrameLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Design_Snackbar = global::ReportsApp.Droid.Resource.Style.Widget_Design_Snackbar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Design_TabLayout = global::ReportsApp.Droid.Resource.Style.Widget_Design_TabLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Design_TextInputLayout = global::ReportsApp.Droid.Resource.Style.Widget_Design_TextInputLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_BottomAppBar = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_BottomAppBar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_BottomAppBar_Colored = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_BottomAppBar_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_BottomNavigationView = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_BottomNavigationView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_BottomNavigationView_Colored = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_BottomNavigationView_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_BottomSheet_Modal = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_BottomSheet_Modal;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Button = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Button;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Button_Icon = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Button_Icon;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Button_OutlinedButton = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Button_OutlinedButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Button_OutlinedButton_Icon = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Button_OutlinedButton_Icon;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Button_TextButton = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Button_TextButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Button_TextButton_Dialog = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Button_TextButton_Dialog;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Button_TextButton_Dialog_Icon = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Button_TextButton_Dialog_Icon;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Button_TextButton_Icon = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Button_TextButton_Icon;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Button_UnelevatedButton = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Button_UnelevatedButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Button_UnelevatedButton_Icon = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Button_UnelevatedButton_Icon;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_CardView = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_CardView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_ChipGroup = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_ChipGroup;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Chip_Action = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Chip_Action;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Chip_Choice = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Chip_Choice;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Chip_Entry = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Chip_Entry;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Chip_Filter = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Chip_Filter;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_FloatingActionButton = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_FloatingActionButton;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_NavigationView = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_NavigationView;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Snackbar = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Snackbar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Snackbar_FullWidth = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Snackbar_FullWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_TabLayout = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_TabLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_TabLayout_Colored = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_TabLayout_Colored;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_TextInputEditText_FilledBox = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_TextInputEditText_FilledBox;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_TextInputEditText_FilledBox_Dense = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_TextInputEditText_FilledBox_Dense;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_TextInputEditText_OutlinedBox = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_TextInputEditText_OutlinedBox;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_TextInputEditText_OutlinedBox_Dense = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_TextInputEditText_OutlinedBox_Dense;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_TextInputLayout_FilledBox = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_TextInputLayout_FilledBox;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_TextInputLayout_FilledBox_Dense = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_TextInputLayout_FilledBox_Dense;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_TextInputLayout_OutlinedBox = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_TextInputLayout_OutlinedBox;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_MaterialComponents_Toolbar = global::ReportsApp.Droid.Resource.Style.Widget_MaterialComponents_Toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Style.Widget_Support_CoordinatorLayout = global::ReportsApp.Droid.Resource.Style.Widget_Support_CoordinatorLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar = global::ReportsApp.Droid.Resource.Styleable.ActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBarLayout = global::ReportsApp.Droid.Resource.Styleable.ActionBarLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBarLayout_android_layout_gravity = global::ReportsApp.Droid.Resource.Styleable.ActionBarLayout_android_layout_gravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_background = global::ReportsApp.Droid.Resource.Styleable.ActionBar_background;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_backgroundSplit = global::ReportsApp.Droid.Resource.Styleable.ActionBar_backgroundSplit;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_backgroundStacked = global::ReportsApp.Droid.Resource.Styleable.ActionBar_backgroundStacked;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_contentInsetEnd = global::ReportsApp.Droid.Resource.Styleable.ActionBar_contentInsetEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_contentInsetEndWithActions = global::ReportsApp.Droid.Resource.Styleable.ActionBar_contentInsetEndWithActions;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_contentInsetLeft = global::ReportsApp.Droid.Resource.Styleable.ActionBar_contentInsetLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_contentInsetRight = global::ReportsApp.Droid.Resource.Styleable.ActionBar_contentInsetRight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_contentInsetStart = global::ReportsApp.Droid.Resource.Styleable.ActionBar_contentInsetStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_contentInsetStartWithNavigation = global::ReportsApp.Droid.Resource.Styleable.ActionBar_contentInsetStartWithNavigation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_customNavigationLayout = global::ReportsApp.Droid.Resource.Styleable.ActionBar_customNavigationLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_displayOptions = global::ReportsApp.Droid.Resource.Styleable.ActionBar_displayOptions;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_divider = global::ReportsApp.Droid.Resource.Styleable.ActionBar_divider;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_elevation = global::ReportsApp.Droid.Resource.Styleable.ActionBar_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_height = global::ReportsApp.Droid.Resource.Styleable.ActionBar_height;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_hideOnContentScroll = global::ReportsApp.Droid.Resource.Styleable.ActionBar_hideOnContentScroll;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_homeAsUpIndicator = global::ReportsApp.Droid.Resource.Styleable.ActionBar_homeAsUpIndicator;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_homeLayout = global::ReportsApp.Droid.Resource.Styleable.ActionBar_homeLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_icon = global::ReportsApp.Droid.Resource.Styleable.ActionBar_icon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_indeterminateProgressStyle = global::ReportsApp.Droid.Resource.Styleable.ActionBar_indeterminateProgressStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_itemPadding = global::ReportsApp.Droid.Resource.Styleable.ActionBar_itemPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_logo = global::ReportsApp.Droid.Resource.Styleable.ActionBar_logo;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_navigationMode = global::ReportsApp.Droid.Resource.Styleable.ActionBar_navigationMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_popupTheme = global::ReportsApp.Droid.Resource.Styleable.ActionBar_popupTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_progressBarPadding = global::ReportsApp.Droid.Resource.Styleable.ActionBar_progressBarPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_progressBarStyle = global::ReportsApp.Droid.Resource.Styleable.ActionBar_progressBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_subtitle = global::ReportsApp.Droid.Resource.Styleable.ActionBar_subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_subtitleTextStyle = global::ReportsApp.Droid.Resource.Styleable.ActionBar_subtitleTextStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_title = global::ReportsApp.Droid.Resource.Styleable.ActionBar_title;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionBar_titleTextStyle = global::ReportsApp.Droid.Resource.Styleable.ActionBar_titleTextStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionMenuItemView = global::ReportsApp.Droid.Resource.Styleable.ActionMenuItemView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionMenuItemView_android_minWidth = global::ReportsApp.Droid.Resource.Styleable.ActionMenuItemView_android_minWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionMenuView = global::ReportsApp.Droid.Resource.Styleable.ActionMenuView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionMode = global::ReportsApp.Droid.Resource.Styleable.ActionMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionMode_background = global::ReportsApp.Droid.Resource.Styleable.ActionMode_background;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionMode_backgroundSplit = global::ReportsApp.Droid.Resource.Styleable.ActionMode_backgroundSplit;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionMode_closeItemLayout = global::ReportsApp.Droid.Resource.Styleable.ActionMode_closeItemLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionMode_height = global::ReportsApp.Droid.Resource.Styleable.ActionMode_height;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionMode_subtitleTextStyle = global::ReportsApp.Droid.Resource.Styleable.ActionMode_subtitleTextStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActionMode_titleTextStyle = global::ReportsApp.Droid.Resource.Styleable.ActionMode_titleTextStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActivityChooserView = global::ReportsApp.Droid.Resource.Styleable.ActivityChooserView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActivityChooserView_expandActivityOverflowButtonDrawable = global::ReportsApp.Droid.Resource.Styleable.ActivityChooserView_expandActivityOverflowButtonDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ActivityChooserView_initialActivityCount = global::ReportsApp.Droid.Resource.Styleable.ActivityChooserView_initialActivityCount;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AlertDialog = global::ReportsApp.Droid.Resource.Styleable.AlertDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AlertDialog_android_layout = global::ReportsApp.Droid.Resource.Styleable.AlertDialog_android_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AlertDialog_buttonIconDimen = global::ReportsApp.Droid.Resource.Styleable.AlertDialog_buttonIconDimen;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AlertDialog_buttonPanelSideLayout = global::ReportsApp.Droid.Resource.Styleable.AlertDialog_buttonPanelSideLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AlertDialog_listItemLayout = global::ReportsApp.Droid.Resource.Styleable.AlertDialog_listItemLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AlertDialog_listLayout = global::ReportsApp.Droid.Resource.Styleable.AlertDialog_listLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AlertDialog_multiChoiceItemLayout = global::ReportsApp.Droid.Resource.Styleable.AlertDialog_multiChoiceItemLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AlertDialog_showTitle = global::ReportsApp.Droid.Resource.Styleable.AlertDialog_showTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AlertDialog_singleChoiceItemLayout = global::ReportsApp.Droid.Resource.Styleable.AlertDialog_singleChoiceItemLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableCompat = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableCompat_android_constantSize = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableCompat_android_constantSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableCompat_android_dither = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableCompat_android_dither;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableCompat_android_enterFadeDuration = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableCompat_android_enterFadeDuration;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableCompat_android_exitFadeDuration = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableCompat_android_exitFadeDuration;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableCompat_android_variablePadding = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableCompat_android_variablePadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableCompat_android_visible = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableCompat_android_visible;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableItem = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableItem;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableItem_android_drawable = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableItem_android_drawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableItem_android_id = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableItem_android_id;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableTransition = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableTransition;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableTransition_android_drawable = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableTransition_android_drawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableTransition_android_fromId = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableTransition_android_fromId;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableTransition_android_reversible = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableTransition_android_reversible;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AnimatedStateListDrawableTransition_android_toId = global::ReportsApp.Droid.Resource.Styleable.AnimatedStateListDrawableTransition_android_toId;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayout = global::ReportsApp.Droid.Resource.Styleable.AppBarLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayoutStates = global::ReportsApp.Droid.Resource.Styleable.AppBarLayoutStates;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayoutStates_state_collapsed = global::ReportsApp.Droid.Resource.Styleable.AppBarLayoutStates_state_collapsed;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayoutStates_state_collapsible = global::ReportsApp.Droid.Resource.Styleable.AppBarLayoutStates_state_collapsible;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayoutStates_state_liftable = global::ReportsApp.Droid.Resource.Styleable.AppBarLayoutStates_state_liftable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayoutStates_state_lifted = global::ReportsApp.Droid.Resource.Styleable.AppBarLayoutStates_state_lifted;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayout_android_background = global::ReportsApp.Droid.Resource.Styleable.AppBarLayout_android_background;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayout_android_keyboardNavigationCluster = global::ReportsApp.Droid.Resource.Styleable.AppBarLayout_android_keyboardNavigationCluster;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayout_android_touchscreenBlocksFocus = global::ReportsApp.Droid.Resource.Styleable.AppBarLayout_android_touchscreenBlocksFocus;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayout_elevation = global::ReportsApp.Droid.Resource.Styleable.AppBarLayout_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayout_expanded = global::ReportsApp.Droid.Resource.Styleable.AppBarLayout_expanded;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayout_Layout = global::ReportsApp.Droid.Resource.Styleable.AppBarLayout_Layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayout_Layout_layout_scrollFlags = global::ReportsApp.Droid.Resource.Styleable.AppBarLayout_Layout_layout_scrollFlags;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayout_Layout_layout_scrollInterpolator = global::ReportsApp.Droid.Resource.Styleable.AppBarLayout_Layout_layout_scrollInterpolator;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppBarLayout_liftOnScroll = global::ReportsApp.Droid.Resource.Styleable.AppBarLayout_liftOnScroll;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatImageView = global::ReportsApp.Droid.Resource.Styleable.AppCompatImageView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatImageView_android_src = global::ReportsApp.Droid.Resource.Styleable.AppCompatImageView_android_src;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatImageView_srcCompat = global::ReportsApp.Droid.Resource.Styleable.AppCompatImageView_srcCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatImageView_tint = global::ReportsApp.Droid.Resource.Styleable.AppCompatImageView_tint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatImageView_tintMode = global::ReportsApp.Droid.Resource.Styleable.AppCompatImageView_tintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatSeekBar = global::ReportsApp.Droid.Resource.Styleable.AppCompatSeekBar;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatSeekBar_android_thumb = global::ReportsApp.Droid.Resource.Styleable.AppCompatSeekBar_android_thumb;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatSeekBar_tickMark = global::ReportsApp.Droid.Resource.Styleable.AppCompatSeekBar_tickMark;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatSeekBar_tickMarkTint = global::ReportsApp.Droid.Resource.Styleable.AppCompatSeekBar_tickMarkTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatSeekBar_tickMarkTintMode = global::ReportsApp.Droid.Resource.Styleable.AppCompatSeekBar_tickMarkTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextHelper = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextHelper;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextHelper_android_drawableBottom = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableBottom;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextHelper_android_drawableEnd = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextHelper_android_drawableLeft = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextHelper_android_drawableRight = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableRight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextHelper_android_drawableStart = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextHelper_android_drawableTop = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableTop;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextHelper_android_textAppearance = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextHelper_android_textAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_android_textAppearance = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_android_textAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_autoSizeMaxTextSize = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_autoSizeMaxTextSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_autoSizeMinTextSize = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_autoSizeMinTextSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_autoSizePresetSizes = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_autoSizePresetSizes;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_autoSizeStepGranularity = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_autoSizeStepGranularity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_autoSizeTextType = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_autoSizeTextType;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_drawableBottomCompat = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_drawableBottomCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_drawableEndCompat = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_drawableEndCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_drawableLeftCompat = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_drawableLeftCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_drawableRightCompat = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_drawableRightCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_drawableStartCompat = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_drawableStartCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_drawableTint = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_drawableTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_drawableTintMode = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_drawableTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_drawableTopCompat = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_drawableTopCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_firstBaselineToTopHeight = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_firstBaselineToTopHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_fontFamily = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_fontFamily;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_fontVariationSettings = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_fontVariationSettings;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_lastBaselineToBottomHeight = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_lastBaselineToBottomHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_lineHeight = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_lineHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_textAllCaps = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_textAllCaps;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTextView_textLocale = global::ReportsApp.Droid.Resource.Styleable.AppCompatTextView_textLocale;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarDivider = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarDivider;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarItemBackground = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarItemBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarPopupTheme = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarPopupTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarSize = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarSplitStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarSplitStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarTabBarStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarTabBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarTabStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarTabStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarTabTextStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarTabTextStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarTheme = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionBarWidgetTheme = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionBarWidgetTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionDropDownStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionDropDownStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionMenuTextAppearance = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionMenuTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionMenuTextColor = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionMenuTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeBackground = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeCloseButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeCloseButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeCloseDrawable = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeCloseDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeCopyDrawable = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeCopyDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeCutDrawable = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeCutDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeFindDrawable = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeFindDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModePasteDrawable = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModePasteDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModePopupWindowStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModePopupWindowStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeSelectAllDrawable = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeSelectAllDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeShareDrawable = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeShareDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeSplitBackground = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeSplitBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionModeWebSearchDrawable = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionModeWebSearchDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionOverflowButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionOverflowButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_actionOverflowMenuStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_actionOverflowMenuStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_activityChooserViewStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_activityChooserViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_alertDialogButtonGroupStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_alertDialogButtonGroupStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_alertDialogCenterButtons = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_alertDialogCenterButtons;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_alertDialogStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_alertDialogStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_alertDialogTheme = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_alertDialogTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_android_windowAnimationStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_android_windowAnimationStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_android_windowIsFloating = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_android_windowIsFloating;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_autoCompleteTextViewStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_autoCompleteTextViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_borderlessButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_borderlessButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_buttonBarButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_buttonBarButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_buttonBarNegativeButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_buttonBarNegativeButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_buttonBarNeutralButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_buttonBarNeutralButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_buttonBarPositiveButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_buttonBarPositiveButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_buttonBarStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_buttonBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_buttonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_buttonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_buttonStyleSmall = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_buttonStyleSmall;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_checkboxStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_checkboxStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_checkedTextViewStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_checkedTextViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_colorAccent = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_colorAccent;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_colorBackgroundFloating = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_colorBackgroundFloating;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_colorButtonNormal = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_colorButtonNormal;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_colorControlActivated = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_colorControlActivated;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_colorControlHighlight = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_colorControlHighlight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_colorControlNormal = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_colorControlNormal;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_colorError = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_colorError;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_colorPrimary = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_colorPrimary;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_colorPrimaryDark = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_colorPrimaryDark;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_colorSwitchThumbNormal = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_colorSwitchThumbNormal;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_controlBackground = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_controlBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_dialogCornerRadius = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_dialogCornerRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_dialogPreferredPadding = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_dialogPreferredPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_dialogTheme = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_dialogTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_dividerHorizontal = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_dividerHorizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_dividerVertical = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_dividerVertical;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_dropdownListPreferredItemHeight = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_dropdownListPreferredItemHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_dropDownListViewStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_dropDownListViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_editTextBackground = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_editTextBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_editTextColor = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_editTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_editTextStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_editTextStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_homeAsUpIndicator = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_homeAsUpIndicator;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_imageButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_imageButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listChoiceIndicatorMultipleAnimated = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listChoiceIndicatorMultipleAnimated;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listChoiceIndicatorSingleAnimated = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listChoiceIndicatorSingleAnimated;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listDividerAlertDialog = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listDividerAlertDialog;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listMenuViewStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listMenuViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listPopupWindowStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listPopupWindowStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listPreferredItemHeight = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingEnd = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingStart = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_panelBackground = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_panelBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_panelMenuListTheme = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_panelMenuListTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_panelMenuListWidth = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_panelMenuListWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_popupMenuStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_popupMenuStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_popupWindowStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_popupWindowStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_radioButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_radioButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_ratingBarStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_ratingBarStyleIndicator = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyleIndicator;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_ratingBarStyleSmall = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyleSmall;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_searchViewStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_searchViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_seekBarStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_seekBarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_selectableItemBackground = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_selectableItemBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_selectableItemBackgroundBorderless = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_selectableItemBackgroundBorderless;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_spinnerDropDownItemStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_spinnerDropDownItemStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_spinnerStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_spinnerStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_switchStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_switchStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_textAppearanceLargePopupMenu = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_textAppearanceLargePopupMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_textAppearanceListItem = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItem;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_textAppearanceListItemSecondary = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItemSecondary;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_textAppearanceListItemSmall = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItemSmall;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_textAppearancePopupMenuHeader = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_textAppearancePopupMenuHeader;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultSubtitle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultSubtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultTitle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_textAppearanceSmallPopupMenu = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSmallPopupMenu;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_textColorAlertDialogListItem = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_textColorAlertDialogListItem;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_textColorSearchUrl = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_textColorSearchUrl;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_toolbarNavigationButtonStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_toolbarNavigationButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_toolbarStyle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_toolbarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_tooltipForegroundColor = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_tooltipForegroundColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_tooltipFrameBackground = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_tooltipFrameBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_viewInflaterClass = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_viewInflaterClass;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_windowActionBar = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_windowActionBar;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_windowActionBarOverlay = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_windowActionBarOverlay;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_windowActionModeOverlay = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_windowActionModeOverlay;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_windowFixedHeightMajor = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_windowFixedHeightMajor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_windowFixedHeightMinor = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_windowFixedHeightMinor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_windowFixedWidthMajor = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_windowFixedWidthMajor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_windowFixedWidthMinor = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_windowFixedWidthMinor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_windowMinWidthMajor = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_windowMinWidthMajor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_windowMinWidthMinor = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_windowMinWidthMinor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.AppCompatTheme_windowNoTitle = global::ReportsApp.Droid.Resource.Styleable.AppCompatTheme_windowNoTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomAppBar = global::ReportsApp.Droid.Resource.Styleable.BottomAppBar;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomAppBar_backgroundTint = global::ReportsApp.Droid.Resource.Styleable.BottomAppBar_backgroundTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomAppBar_fabAlignmentMode = global::ReportsApp.Droid.Resource.Styleable.BottomAppBar_fabAlignmentMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomAppBar_fabCradleMargin = global::ReportsApp.Droid.Resource.Styleable.BottomAppBar_fabCradleMargin;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomAppBar_fabCradleRoundedCornerRadius = global::ReportsApp.Droid.Resource.Styleable.BottomAppBar_fabCradleRoundedCornerRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomAppBar_fabCradleVerticalOffset = global::ReportsApp.Droid.Resource.Styleable.BottomAppBar_fabCradleVerticalOffset;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomAppBar_hideOnScroll = global::ReportsApp.Droid.Resource.Styleable.BottomAppBar_hideOnScroll;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView_elevation = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView_itemBackground = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView_itemBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView_itemHorizontalTranslationEnabled = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView_itemHorizontalTranslationEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView_itemIconSize = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView_itemIconSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView_itemIconTint = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView_itemIconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView_itemTextAppearanceActive = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView_itemTextAppearanceActive;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView_itemTextAppearanceInactive = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView_itemTextAppearanceInactive;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView_itemTextColor = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView_itemTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView_labelVisibilityMode = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView_labelVisibilityMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomNavigationView_menu = global::ReportsApp.Droid.Resource.Styleable.BottomNavigationView_menu;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomSheetBehavior_Layout = global::ReportsApp.Droid.Resource.Styleable.BottomSheetBehavior_Layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomSheetBehavior_Layout_behavior_fitToContents = global::ReportsApp.Droid.Resource.Styleable.BottomSheetBehavior_Layout_behavior_fitToContents;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomSheetBehavior_Layout_behavior_hideable = global::ReportsApp.Droid.Resource.Styleable.BottomSheetBehavior_Layout_behavior_hideable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomSheetBehavior_Layout_behavior_peekHeight = global::ReportsApp.Droid.Resource.Styleable.BottomSheetBehavior_Layout_behavior_peekHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.BottomSheetBehavior_Layout_behavior_skipCollapsed = global::ReportsApp.Droid.Resource.Styleable.BottomSheetBehavior_Layout_behavior_skipCollapsed;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ButtonBarLayout = global::ReportsApp.Droid.Resource.Styleable.ButtonBarLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ButtonBarLayout_allowStacking = global::ReportsApp.Droid.Resource.Styleable.ButtonBarLayout_allowStacking;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView = global::ReportsApp.Droid.Resource.Styleable.CardView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_android_minHeight = global::ReportsApp.Droid.Resource.Styleable.CardView_android_minHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_android_minWidth = global::ReportsApp.Droid.Resource.Styleable.CardView_android_minWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_cardBackgroundColor = global::ReportsApp.Droid.Resource.Styleable.CardView_cardBackgroundColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_cardCornerRadius = global::ReportsApp.Droid.Resource.Styleable.CardView_cardCornerRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_cardElevation = global::ReportsApp.Droid.Resource.Styleable.CardView_cardElevation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_cardMaxElevation = global::ReportsApp.Droid.Resource.Styleable.CardView_cardMaxElevation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_cardPreventCornerOverlap = global::ReportsApp.Droid.Resource.Styleable.CardView_cardPreventCornerOverlap;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_cardUseCompatPadding = global::ReportsApp.Droid.Resource.Styleable.CardView_cardUseCompatPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_contentPadding = global::ReportsApp.Droid.Resource.Styleable.CardView_contentPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_contentPaddingBottom = global::ReportsApp.Droid.Resource.Styleable.CardView_contentPaddingBottom;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_contentPaddingLeft = global::ReportsApp.Droid.Resource.Styleable.CardView_contentPaddingLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_contentPaddingRight = global::ReportsApp.Droid.Resource.Styleable.CardView_contentPaddingRight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CardView_contentPaddingTop = global::ReportsApp.Droid.Resource.Styleable.CardView_contentPaddingTop;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip = global::ReportsApp.Droid.Resource.Styleable.Chip;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ChipGroup = global::ReportsApp.Droid.Resource.Styleable.ChipGroup;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ChipGroup_checkedChip = global::ReportsApp.Droid.Resource.Styleable.ChipGroup_checkedChip;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ChipGroup_chipSpacing = global::ReportsApp.Droid.Resource.Styleable.ChipGroup_chipSpacing;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ChipGroup_chipSpacingHorizontal = global::ReportsApp.Droid.Resource.Styleable.ChipGroup_chipSpacingHorizontal;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ChipGroup_chipSpacingVertical = global::ReportsApp.Droid.Resource.Styleable.ChipGroup_chipSpacingVertical;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ChipGroup_singleLine = global::ReportsApp.Droid.Resource.Styleable.ChipGroup_singleLine;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ChipGroup_singleSelection = global::ReportsApp.Droid.Resource.Styleable.ChipGroup_singleSelection;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_android_checkable = global::ReportsApp.Droid.Resource.Styleable.Chip_android_checkable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_android_ellipsize = global::ReportsApp.Droid.Resource.Styleable.Chip_android_ellipsize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_android_maxWidth = global::ReportsApp.Droid.Resource.Styleable.Chip_android_maxWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_android_text = global::ReportsApp.Droid.Resource.Styleable.Chip_android_text;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_android_textAppearance = global::ReportsApp.Droid.Resource.Styleable.Chip_android_textAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_checkedIcon = global::ReportsApp.Droid.Resource.Styleable.Chip_checkedIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_checkedIconEnabled = global::ReportsApp.Droid.Resource.Styleable.Chip_checkedIconEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_checkedIconVisible = global::ReportsApp.Droid.Resource.Styleable.Chip_checkedIconVisible;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipBackgroundColor = global::ReportsApp.Droid.Resource.Styleable.Chip_chipBackgroundColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipCornerRadius = global::ReportsApp.Droid.Resource.Styleable.Chip_chipCornerRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipEndPadding = global::ReportsApp.Droid.Resource.Styleable.Chip_chipEndPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipIcon = global::ReportsApp.Droid.Resource.Styleable.Chip_chipIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipIconEnabled = global::ReportsApp.Droid.Resource.Styleable.Chip_chipIconEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipIconSize = global::ReportsApp.Droid.Resource.Styleable.Chip_chipIconSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipIconTint = global::ReportsApp.Droid.Resource.Styleable.Chip_chipIconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipIconVisible = global::ReportsApp.Droid.Resource.Styleable.Chip_chipIconVisible;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipMinHeight = global::ReportsApp.Droid.Resource.Styleable.Chip_chipMinHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipStartPadding = global::ReportsApp.Droid.Resource.Styleable.Chip_chipStartPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipStrokeColor = global::ReportsApp.Droid.Resource.Styleable.Chip_chipStrokeColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_chipStrokeWidth = global::ReportsApp.Droid.Resource.Styleable.Chip_chipStrokeWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_closeIcon = global::ReportsApp.Droid.Resource.Styleable.Chip_closeIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_closeIconEnabled = global::ReportsApp.Droid.Resource.Styleable.Chip_closeIconEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_closeIconEndPadding = global::ReportsApp.Droid.Resource.Styleable.Chip_closeIconEndPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_closeIconSize = global::ReportsApp.Droid.Resource.Styleable.Chip_closeIconSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_closeIconStartPadding = global::ReportsApp.Droid.Resource.Styleable.Chip_closeIconStartPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_closeIconTint = global::ReportsApp.Droid.Resource.Styleable.Chip_closeIconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_closeIconVisible = global::ReportsApp.Droid.Resource.Styleable.Chip_closeIconVisible;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_hideMotionSpec = global::ReportsApp.Droid.Resource.Styleable.Chip_hideMotionSpec;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_iconEndPadding = global::ReportsApp.Droid.Resource.Styleable.Chip_iconEndPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_iconStartPadding = global::ReportsApp.Droid.Resource.Styleable.Chip_iconStartPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_rippleColor = global::ReportsApp.Droid.Resource.Styleable.Chip_rippleColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_showMotionSpec = global::ReportsApp.Droid.Resource.Styleable.Chip_showMotionSpec;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_textEndPadding = global::ReportsApp.Droid.Resource.Styleable.Chip_textEndPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Chip_textStartPadding = global::ReportsApp.Droid.Resource.Styleable.Chip_textStartPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleGravity = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_contentScrim = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_contentScrim;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_expandedTitleGravity = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMargin = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMargin;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginBottom = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginBottom;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginEnd = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginStart = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginTop = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginTop;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_expandedTitleTextAppearance = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_Layout = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_Layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_Layout_layout_collapseMode = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_Layout_layout_collapseMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_Layout_layout_collapseParallaxMultiplier = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_Layout_layout_collapseParallaxMultiplier;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_scrimAnimationDuration = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_scrimAnimationDuration;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_scrimVisibleHeightTrigger = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_scrimVisibleHeightTrigger;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_statusBarScrim = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_statusBarScrim;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_title = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_title;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_titleEnabled = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_titleEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CollapsingToolbarLayout_toolbarId = global::ReportsApp.Droid.Resource.Styleable.CollapsingToolbarLayout_toolbarId;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ColorStateListItem = global::ReportsApp.Droid.Resource.Styleable.ColorStateListItem;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ColorStateListItem_alpha = global::ReportsApp.Droid.Resource.Styleable.ColorStateListItem_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ColorStateListItem_android_alpha = global::ReportsApp.Droid.Resource.Styleable.ColorStateListItem_android_alpha;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ColorStateListItem_android_color = global::ReportsApp.Droid.Resource.Styleable.ColorStateListItem_android_color;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CompoundButton = global::ReportsApp.Droid.Resource.Styleable.CompoundButton;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CompoundButton_android_button = global::ReportsApp.Droid.Resource.Styleable.CompoundButton_android_button;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CompoundButton_buttonCompat = global::ReportsApp.Droid.Resource.Styleable.CompoundButton_buttonCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CompoundButton_buttonTint = global::ReportsApp.Droid.Resource.Styleable.CompoundButton_buttonTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CompoundButton_buttonTintMode = global::ReportsApp.Droid.Resource.Styleable.CompoundButton_buttonTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout_keylines = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout_keylines;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout_Layout = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout_Layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.CoordinatorLayout_statusBarBackground = global::ReportsApp.Droid.Resource.Styleable.CoordinatorLayout_statusBarBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.DrawerArrowToggle = global::ReportsApp.Droid.Resource.Styleable.DrawerArrowToggle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.DrawerArrowToggle_arrowHeadLength = global::ReportsApp.Droid.Resource.Styleable.DrawerArrowToggle_arrowHeadLength;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.DrawerArrowToggle_arrowShaftLength = global::ReportsApp.Droid.Resource.Styleable.DrawerArrowToggle_arrowShaftLength;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.DrawerArrowToggle_barLength = global::ReportsApp.Droid.Resource.Styleable.DrawerArrowToggle_barLength;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.DrawerArrowToggle_color = global::ReportsApp.Droid.Resource.Styleable.DrawerArrowToggle_color;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.DrawerArrowToggle_drawableSize = global::ReportsApp.Droid.Resource.Styleable.DrawerArrowToggle_drawableSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.DrawerArrowToggle_gapBetweenBars = global::ReportsApp.Droid.Resource.Styleable.DrawerArrowToggle_gapBetweenBars;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.DrawerArrowToggle_spinBars = global::ReportsApp.Droid.Resource.Styleable.DrawerArrowToggle_spinBars;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.DrawerArrowToggle_thickness = global::ReportsApp.Droid.Resource.Styleable.DrawerArrowToggle_thickness;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_backgroundTint = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_backgroundTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_backgroundTintMode = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_backgroundTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_Behavior_Layout = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_Behavior_Layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_Behavior_Layout_behavior_autoHide = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_Behavior_Layout_behavior_autoHide;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_borderWidth = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_borderWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_elevation = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_fabCustomSize = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_fabCustomSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_fabSize = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_fabSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_hideMotionSpec = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_hideMotionSpec;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_hoveredFocusedTranslationZ = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_hoveredFocusedTranslationZ;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_maxImageSize = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_maxImageSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_pressedTranslationZ = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_pressedTranslationZ;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_rippleColor = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_rippleColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_showMotionSpec = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_showMotionSpec;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FloatingActionButton_useCompatPadding = global::ReportsApp.Droid.Resource.Styleable.FloatingActionButton_useCompatPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FlowLayout = global::ReportsApp.Droid.Resource.Styleable.FlowLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FlowLayout_itemSpacing = global::ReportsApp.Droid.Resource.Styleable.FlowLayout_itemSpacing;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FlowLayout_lineSpacing = global::ReportsApp.Droid.Resource.Styleable.FlowLayout_lineSpacing;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamily = global::ReportsApp.Droid.Resource.Styleable.FontFamily;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont_android_font = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont_android_font;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont_android_fontStyle = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont_android_fontStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont_android_fontVariationSettings = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont_android_fontVariationSettings;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont_android_fontWeight = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont_android_fontWeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont_android_ttcIndex = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont_android_ttcIndex;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont_font = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont_font;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont_fontStyle = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont_fontStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont_fontVariationSettings = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont_fontVariationSettings;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont_fontWeight = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont_fontWeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamilyFont_ttcIndex = global::ReportsApp.Droid.Resource.Styleable.FontFamilyFont_ttcIndex;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamily_fontProviderAuthority = global::ReportsApp.Droid.Resource.Styleable.FontFamily_fontProviderAuthority;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamily_fontProviderCerts = global::ReportsApp.Droid.Resource.Styleable.FontFamily_fontProviderCerts;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamily_fontProviderFetchStrategy = global::ReportsApp.Droid.Resource.Styleable.FontFamily_fontProviderFetchStrategy;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamily_fontProviderFetchTimeout = global::ReportsApp.Droid.Resource.Styleable.FontFamily_fontProviderFetchTimeout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamily_fontProviderPackage = global::ReportsApp.Droid.Resource.Styleable.FontFamily_fontProviderPackage;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FontFamily_fontProviderQuery = global::ReportsApp.Droid.Resource.Styleable.FontFamily_fontProviderQuery;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ForegroundLinearLayout = global::ReportsApp.Droid.Resource.Styleable.ForegroundLinearLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ForegroundLinearLayout_android_foreground = global::ReportsApp.Droid.Resource.Styleable.ForegroundLinearLayout_android_foreground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ForegroundLinearLayout_android_foregroundGravity = global::ReportsApp.Droid.Resource.Styleable.ForegroundLinearLayout_android_foregroundGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ForegroundLinearLayout_foregroundInsidePadding = global::ReportsApp.Droid.Resource.Styleable.ForegroundLinearLayout_foregroundInsidePadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Fragment = global::ReportsApp.Droid.Resource.Styleable.Fragment;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FragmentContainerView = global::ReportsApp.Droid.Resource.Styleable.FragmentContainerView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FragmentContainerView_android_name = global::ReportsApp.Droid.Resource.Styleable.FragmentContainerView_android_name;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.FragmentContainerView_android_tag = global::ReportsApp.Droid.Resource.Styleable.FragmentContainerView_android_tag;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Fragment_android_id = global::ReportsApp.Droid.Resource.Styleable.Fragment_android_id;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Fragment_android_name = global::ReportsApp.Droid.Resource.Styleable.Fragment_android_name;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Fragment_android_tag = global::ReportsApp.Droid.Resource.Styleable.Fragment_android_tag;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor = global::ReportsApp.Droid.Resource.Styleable.GradientColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColorItem = global::ReportsApp.Droid.Resource.Styleable.GradientColorItem;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColorItem_android_color = global::ReportsApp.Droid.Resource.Styleable.GradientColorItem_android_color;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColorItem_android_offset = global::ReportsApp.Droid.Resource.Styleable.GradientColorItem_android_offset;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_centerColor = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_centerColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_centerX = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_centerX;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_centerY = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_centerY;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_endColor = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_endColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_endX = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_endX;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_endY = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_endY;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_gradientRadius = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_gradientRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_startColor = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_startColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_startX = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_startX;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_startY = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_startY;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_tileMode = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_tileMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.GradientColor_android_type = global::ReportsApp.Droid.Resource.Styleable.GradientColor_android_type;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ItemsViewRendererTheme = global::ReportsApp.Droid.Resource.Styleable.ItemsViewRendererTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ItemsViewRendererTheme_collectionViewStyle = global::ReportsApp.Droid.Resource.Styleable.ItemsViewRendererTheme_collectionViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_android_baselineAligned = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAligned;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_android_baselineAlignedChildIndex = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAlignedChildIndex;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_android_gravity = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_android_gravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_android_orientation = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_android_orientation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_android_weightSum = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_android_weightSum;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_divider = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_divider;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_dividerPadding = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_dividerPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_Layout = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_Layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_gravity = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_gravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_height = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_height;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_weight = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_weight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_width = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_width;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_measureWithLargestChild = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_measureWithLargestChild;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.LinearLayoutCompat_showDividers = global::ReportsApp.Droid.Resource.Styleable.LinearLayoutCompat_showDividers;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ListPopupWindow = global::ReportsApp.Droid.Resource.Styleable.ListPopupWindow;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ListPopupWindow_android_dropDownHorizontalOffset = global::ReportsApp.Droid.Resource.Styleable.ListPopupWindow_android_dropDownHorizontalOffset;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ListPopupWindow_android_dropDownVerticalOffset = global::ReportsApp.Droid.Resource.Styleable.ListPopupWindow_android_dropDownVerticalOffset;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton = global::ReportsApp.Droid.Resource.Styleable.MaterialButton;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_android_insetBottom = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_android_insetBottom;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_android_insetLeft = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_android_insetLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_android_insetRight = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_android_insetRight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_android_insetTop = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_android_insetTop;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_backgroundTint = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_backgroundTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_backgroundTintMode = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_backgroundTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_cornerRadius = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_cornerRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_icon = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_icon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_iconGravity = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_iconGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_iconPadding = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_iconPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_iconSize = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_iconSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_iconTint = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_iconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_iconTintMode = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_iconTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_rippleColor = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_rippleColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_strokeColor = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_strokeColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialButton_strokeWidth = global::ReportsApp.Droid.Resource.Styleable.MaterialButton_strokeWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialCardView = global::ReportsApp.Droid.Resource.Styleable.MaterialCardView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialCardView_strokeColor = global::ReportsApp.Droid.Resource.Styleable.MaterialCardView_strokeColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MaterialCardView_strokeWidth = global::ReportsApp.Droid.Resource.Styleable.MaterialCardView_strokeWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuGroup = global::ReportsApp.Droid.Resource.Styleable.MenuGroup;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuGroup_android_checkableBehavior = global::ReportsApp.Droid.Resource.Styleable.MenuGroup_android_checkableBehavior;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuGroup_android_enabled = global::ReportsApp.Droid.Resource.Styleable.MenuGroup_android_enabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuGroup_android_id = global::ReportsApp.Droid.Resource.Styleable.MenuGroup_android_id;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuGroup_android_menuCategory = global::ReportsApp.Droid.Resource.Styleable.MenuGroup_android_menuCategory;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuGroup_android_orderInCategory = global::ReportsApp.Droid.Resource.Styleable.MenuGroup_android_orderInCategory;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuGroup_android_visible = global::ReportsApp.Droid.Resource.Styleable.MenuGroup_android_visible;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem = global::ReportsApp.Droid.Resource.Styleable.MenuItem;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_actionLayout = global::ReportsApp.Droid.Resource.Styleable.MenuItem_actionLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_actionProviderClass = global::ReportsApp.Droid.Resource.Styleable.MenuItem_actionProviderClass;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_actionViewClass = global::ReportsApp.Droid.Resource.Styleable.MenuItem_actionViewClass;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_alphabeticModifiers = global::ReportsApp.Droid.Resource.Styleable.MenuItem_alphabeticModifiers;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_alphabeticShortcut = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_alphabeticShortcut;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_checkable = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_checkable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_checked = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_checked;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_enabled = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_enabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_icon = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_icon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_id = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_id;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_menuCategory = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_menuCategory;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_numericShortcut = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_numericShortcut;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_onClick = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_onClick;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_orderInCategory = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_orderInCategory;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_title = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_title;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_titleCondensed = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_titleCondensed;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_android_visible = global::ReportsApp.Droid.Resource.Styleable.MenuItem_android_visible;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_contentDescription = global::ReportsApp.Droid.Resource.Styleable.MenuItem_contentDescription;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_iconTint = global::ReportsApp.Droid.Resource.Styleable.MenuItem_iconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_iconTintMode = global::ReportsApp.Droid.Resource.Styleable.MenuItem_iconTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_numericModifiers = global::ReportsApp.Droid.Resource.Styleable.MenuItem_numericModifiers;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_showAsAction = global::ReportsApp.Droid.Resource.Styleable.MenuItem_showAsAction;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuItem_tooltipText = global::ReportsApp.Droid.Resource.Styleable.MenuItem_tooltipText;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuView = global::ReportsApp.Droid.Resource.Styleable.MenuView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuView_android_headerBackground = global::ReportsApp.Droid.Resource.Styleable.MenuView_android_headerBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuView_android_horizontalDivider = global::ReportsApp.Droid.Resource.Styleable.MenuView_android_horizontalDivider;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuView_android_itemBackground = global::ReportsApp.Droid.Resource.Styleable.MenuView_android_itemBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuView_android_itemIconDisabledAlpha = global::ReportsApp.Droid.Resource.Styleable.MenuView_android_itemIconDisabledAlpha;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuView_android_itemTextAppearance = global::ReportsApp.Droid.Resource.Styleable.MenuView_android_itemTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuView_android_verticalDivider = global::ReportsApp.Droid.Resource.Styleable.MenuView_android_verticalDivider;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuView_android_windowAnimationStyle = global::ReportsApp.Droid.Resource.Styleable.MenuView_android_windowAnimationStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuView_preserveIconSpacing = global::ReportsApp.Droid.Resource.Styleable.MenuView_preserveIconSpacing;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.MenuView_subMenuArrow = global::ReportsApp.Droid.Resource.Styleable.MenuView_subMenuArrow;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView = global::ReportsApp.Droid.Resource.Styleable.NavigationView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_android_background = global::ReportsApp.Droid.Resource.Styleable.NavigationView_android_background;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_android_fitsSystemWindows = global::ReportsApp.Droid.Resource.Styleable.NavigationView_android_fitsSystemWindows;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_android_maxWidth = global::ReportsApp.Droid.Resource.Styleable.NavigationView_android_maxWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_elevation = global::ReportsApp.Droid.Resource.Styleable.NavigationView_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_headerLayout = global::ReportsApp.Droid.Resource.Styleable.NavigationView_headerLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_itemBackground = global::ReportsApp.Droid.Resource.Styleable.NavigationView_itemBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_itemHorizontalPadding = global::ReportsApp.Droid.Resource.Styleable.NavigationView_itemHorizontalPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_itemIconPadding = global::ReportsApp.Droid.Resource.Styleable.NavigationView_itemIconPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_itemIconTint = global::ReportsApp.Droid.Resource.Styleable.NavigationView_itemIconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_itemTextAppearance = global::ReportsApp.Droid.Resource.Styleable.NavigationView_itemTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_itemTextColor = global::ReportsApp.Droid.Resource.Styleable.NavigationView_itemTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.NavigationView_menu = global::ReportsApp.Droid.Resource.Styleable.NavigationView_menu;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.PopupWindow = global::ReportsApp.Droid.Resource.Styleable.PopupWindow;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.PopupWindowBackgroundState = global::ReportsApp.Droid.Resource.Styleable.PopupWindowBackgroundState;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.PopupWindowBackgroundState_state_above_anchor = global::ReportsApp.Droid.Resource.Styleable.PopupWindowBackgroundState_state_above_anchor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.PopupWindow_android_popupAnimationStyle = global::ReportsApp.Droid.Resource.Styleable.PopupWindow_android_popupAnimationStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.PopupWindow_android_popupBackground = global::ReportsApp.Droid.Resource.Styleable.PopupWindow_android_popupBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.PopupWindow_overlapAnchor = global::ReportsApp.Droid.Resource.Styleable.PopupWindow_overlapAnchor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecycleListView = global::ReportsApp.Droid.Resource.Styleable.RecycleListView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecycleListView_paddingBottomNoButtons = global::ReportsApp.Droid.Resource.Styleable.RecycleListView_paddingBottomNoButtons;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecycleListView_paddingTopNoTitle = global::ReportsApp.Droid.Resource.Styleable.RecycleListView_paddingTopNoTitle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView = global::ReportsApp.Droid.Resource.Styleable.RecyclerView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_android_clipToPadding = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_android_clipToPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_android_descendantFocusability = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_android_descendantFocusability;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_android_orientation = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_android_orientation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_fastScrollEnabled = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_fastScrollEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_fastScrollHorizontalThumbDrawable = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_fastScrollHorizontalThumbDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_fastScrollHorizontalTrackDrawable = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_fastScrollHorizontalTrackDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_fastScrollVerticalThumbDrawable = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_fastScrollVerticalThumbDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_fastScrollVerticalTrackDrawable = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_fastScrollVerticalTrackDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_layoutManager = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_layoutManager;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_reverseLayout = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_reverseLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_spanCount = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_spanCount;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.RecyclerView_stackFromEnd = global::ReportsApp.Droid.Resource.Styleable.RecyclerView_stackFromEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ScrimInsetsFrameLayout = global::ReportsApp.Droid.Resource.Styleable.ScrimInsetsFrameLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ScrimInsetsFrameLayout_insetForeground = global::ReportsApp.Droid.Resource.Styleable.ScrimInsetsFrameLayout_insetForeground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ScrollingViewBehavior_Layout = global::ReportsApp.Droid.Resource.Styleable.ScrollingViewBehavior_Layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ScrollingViewBehavior_Layout_behavior_overlapTop = global::ReportsApp.Droid.Resource.Styleable.ScrollingViewBehavior_Layout_behavior_overlapTop;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ScrollViewRendererTheme = global::ReportsApp.Droid.Resource.Styleable.ScrollViewRendererTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ScrollViewRendererTheme_scrollViewStyle = global::ReportsApp.Droid.Resource.Styleable.ScrollViewRendererTheme_scrollViewStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView = global::ReportsApp.Droid.Resource.Styleable.SearchView;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_android_focusable = global::ReportsApp.Droid.Resource.Styleable.SearchView_android_focusable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_android_imeOptions = global::ReportsApp.Droid.Resource.Styleable.SearchView_android_imeOptions;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_android_inputType = global::ReportsApp.Droid.Resource.Styleable.SearchView_android_inputType;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_android_maxWidth = global::ReportsApp.Droid.Resource.Styleable.SearchView_android_maxWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_closeIcon = global::ReportsApp.Droid.Resource.Styleable.SearchView_closeIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_commitIcon = global::ReportsApp.Droid.Resource.Styleable.SearchView_commitIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_defaultQueryHint = global::ReportsApp.Droid.Resource.Styleable.SearchView_defaultQueryHint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_goIcon = global::ReportsApp.Droid.Resource.Styleable.SearchView_goIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_iconifiedByDefault = global::ReportsApp.Droid.Resource.Styleable.SearchView_iconifiedByDefault;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_layout = global::ReportsApp.Droid.Resource.Styleable.SearchView_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_queryBackground = global::ReportsApp.Droid.Resource.Styleable.SearchView_queryBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_queryHint = global::ReportsApp.Droid.Resource.Styleable.SearchView_queryHint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_searchHintIcon = global::ReportsApp.Droid.Resource.Styleable.SearchView_searchHintIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_searchIcon = global::ReportsApp.Droid.Resource.Styleable.SearchView_searchIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_submitBackground = global::ReportsApp.Droid.Resource.Styleable.SearchView_submitBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_suggestionRowLayout = global::ReportsApp.Droid.Resource.Styleable.SearchView_suggestionRowLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SearchView_voiceIcon = global::ReportsApp.Droid.Resource.Styleable.SearchView_voiceIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Snackbar = global::ReportsApp.Droid.Resource.Styleable.Snackbar;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SnackbarLayout = global::ReportsApp.Droid.Resource.Styleable.SnackbarLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SnackbarLayout_android_maxWidth = global::ReportsApp.Droid.Resource.Styleable.SnackbarLayout_android_maxWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SnackbarLayout_elevation = global::ReportsApp.Droid.Resource.Styleable.SnackbarLayout_elevation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SnackbarLayout_maxActionInlineWidth = global::ReportsApp.Droid.Resource.Styleable.SnackbarLayout_maxActionInlineWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Snackbar_snackbarButtonStyle = global::ReportsApp.Droid.Resource.Styleable.Snackbar_snackbarButtonStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Snackbar_snackbarStyle = global::ReportsApp.Droid.Resource.Styleable.Snackbar_snackbarStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Spinner = global::ReportsApp.Droid.Resource.Styleable.Spinner;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Spinner_android_dropDownWidth = global::ReportsApp.Droid.Resource.Styleable.Spinner_android_dropDownWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Spinner_android_entries = global::ReportsApp.Droid.Resource.Styleable.Spinner_android_entries;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Spinner_android_popupBackground = global::ReportsApp.Droid.Resource.Styleable.Spinner_android_popupBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Spinner_android_prompt = global::ReportsApp.Droid.Resource.Styleable.Spinner_android_prompt;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Spinner_popupTheme = global::ReportsApp.Droid.Resource.Styleable.Spinner_popupTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.StateListDrawable = global::ReportsApp.Droid.Resource.Styleable.StateListDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.StateListDrawableItem = global::ReportsApp.Droid.Resource.Styleable.StateListDrawableItem;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.StateListDrawableItem_android_drawable = global::ReportsApp.Droid.Resource.Styleable.StateListDrawableItem_android_drawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.StateListDrawable_android_constantSize = global::ReportsApp.Droid.Resource.Styleable.StateListDrawable_android_constantSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.StateListDrawable_android_dither = global::ReportsApp.Droid.Resource.Styleable.StateListDrawable_android_dither;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.StateListDrawable_android_enterFadeDuration = global::ReportsApp.Droid.Resource.Styleable.StateListDrawable_android_enterFadeDuration;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.StateListDrawable_android_exitFadeDuration = global::ReportsApp.Droid.Resource.Styleable.StateListDrawable_android_exitFadeDuration;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.StateListDrawable_android_variablePadding = global::ReportsApp.Droid.Resource.Styleable.StateListDrawable_android_variablePadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.StateListDrawable_android_visible = global::ReportsApp.Droid.Resource.Styleable.StateListDrawable_android_visible;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_android_textOff = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_android_textOff;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_android_textOn = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_android_textOn;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_android_thumb = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_android_thumb;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_showText = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_showText;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_splitTrack = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_splitTrack;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_switchMinWidth = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_switchMinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_switchPadding = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_switchPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_switchTextAppearance = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_switchTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_thumbTextPadding = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_thumbTextPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_thumbTint = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_thumbTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_thumbTintMode = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_thumbTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_track = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_track;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_trackTint = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_trackTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.SwitchCompat_trackTintMode = global::ReportsApp.Droid.Resource.Styleable.SwitchCompat_trackTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabItem = global::ReportsApp.Droid.Resource.Styleable.TabItem;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabItem_android_icon = global::ReportsApp.Droid.Resource.Styleable.TabItem_android_icon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabItem_android_layout = global::ReportsApp.Droid.Resource.Styleable.TabItem_android_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabItem_android_text = global::ReportsApp.Droid.Resource.Styleable.TabItem_android_text;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout = global::ReportsApp.Droid.Resource.Styleable.TabLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabBackground = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabBackground;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabContentStart = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabContentStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabGravity = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabIconTint = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabIconTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabIconTintMode = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabIconTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabIndicator = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabIndicator;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabIndicatorAnimationDuration = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabIndicatorAnimationDuration;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabIndicatorColor = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabIndicatorColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabIndicatorFullWidth = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabIndicatorFullWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabIndicatorGravity = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabIndicatorGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabIndicatorHeight = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabIndicatorHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabInlineLabel = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabInlineLabel;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabMaxWidth = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabMaxWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabMinWidth = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabMinWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabMode = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabPadding = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabPadding;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabPaddingBottom = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabPaddingBottom;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabPaddingEnd = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabPaddingEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabPaddingStart = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabPaddingStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabPaddingTop = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabPaddingTop;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabRippleColor = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabRippleColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabSelectedTextColor = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabSelectedTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabTextAppearance = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabTextColor = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TabLayout_tabUnboundedRipple = global::ReportsApp.Droid.Resource.Styleable.TabLayout_tabUnboundedRipple;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance = global::ReportsApp.Droid.Resource.Styleable.TextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_fontFamily = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_fontFamily;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_shadowColor = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_shadowColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_shadowDx = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_shadowDx;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_shadowDy = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_shadowDy;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_shadowRadius = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_shadowRadius;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_textColor = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_textColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_textColorHint = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_textColorHint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_textColorLink = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_textColorLink;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_textFontWeight = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_textFontWeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_textSize = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_textSize;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_textStyle = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_textStyle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_android_typeface = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_android_typeface;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_fontFamily = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_fontFamily;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_fontVariationSettings = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_fontVariationSettings;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_textAllCaps = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_textAllCaps;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextAppearance_textLocale = global::ReportsApp.Droid.Resource.Styleable.TextAppearance_textLocale;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_android_hint = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_android_hint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_android_textColorHint = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_android_textColorHint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_boxBackgroundColor = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_boxBackgroundColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_boxBackgroundMode = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_boxBackgroundMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_boxCollapsedPaddingTop = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_boxCollapsedPaddingTop;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_boxCornerRadiusBottomEnd = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_boxCornerRadiusBottomEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_boxCornerRadiusBottomStart = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_boxCornerRadiusBottomStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_boxCornerRadiusTopEnd = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_boxCornerRadiusTopEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_boxCornerRadiusTopStart = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_boxCornerRadiusTopStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_boxStrokeColor = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_boxStrokeColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_boxStrokeWidth = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_boxStrokeWidth;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_counterEnabled = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_counterEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_counterMaxLength = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_counterMaxLength;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_counterOverflowTextAppearance = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_counterOverflowTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_counterTextAppearance = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_counterTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_errorEnabled = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_errorEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_errorTextAppearance = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_errorTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_helperText = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_helperText;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_helperTextEnabled = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_helperTextEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_helperTextTextAppearance = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_helperTextTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_hintAnimationEnabled = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_hintAnimationEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_hintEnabled = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_hintEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_hintTextAppearance = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_hintTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_passwordToggleContentDescription = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_passwordToggleContentDescription;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_passwordToggleDrawable = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_passwordToggleDrawable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_passwordToggleEnabled = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_passwordToggleEnabled;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_passwordToggleTint = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_passwordToggleTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.TextInputLayout_passwordToggleTintMode = global::ReportsApp.Droid.Resource.Styleable.TextInputLayout_passwordToggleTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ThemeEnforcement = global::ReportsApp.Droid.Resource.Styleable.ThemeEnforcement;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ThemeEnforcement_android_textAppearance = global::ReportsApp.Droid.Resource.Styleable.ThemeEnforcement_android_textAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ThemeEnforcement_enforceMaterialTheme = global::ReportsApp.Droid.Resource.Styleable.ThemeEnforcement_enforceMaterialTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ThemeEnforcement_enforceTextAppearance = global::ReportsApp.Droid.Resource.Styleable.ThemeEnforcement_enforceTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar = global::ReportsApp.Droid.Resource.Styleable.Toolbar;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_android_gravity = global::ReportsApp.Droid.Resource.Styleable.Toolbar_android_gravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_android_minHeight = global::ReportsApp.Droid.Resource.Styleable.Toolbar_android_minHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_buttonGravity = global::ReportsApp.Droid.Resource.Styleable.Toolbar_buttonGravity;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_collapseContentDescription = global::ReportsApp.Droid.Resource.Styleable.Toolbar_collapseContentDescription;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_collapseIcon = global::ReportsApp.Droid.Resource.Styleable.Toolbar_collapseIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_contentInsetEnd = global::ReportsApp.Droid.Resource.Styleable.Toolbar_contentInsetEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_contentInsetEndWithActions = global::ReportsApp.Droid.Resource.Styleable.Toolbar_contentInsetEndWithActions;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_contentInsetLeft = global::ReportsApp.Droid.Resource.Styleable.Toolbar_contentInsetLeft;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_contentInsetRight = global::ReportsApp.Droid.Resource.Styleable.Toolbar_contentInsetRight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_contentInsetStart = global::ReportsApp.Droid.Resource.Styleable.Toolbar_contentInsetStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_contentInsetStartWithNavigation = global::ReportsApp.Droid.Resource.Styleable.Toolbar_contentInsetStartWithNavigation;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_logo = global::ReportsApp.Droid.Resource.Styleable.Toolbar_logo;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_logoDescription = global::ReportsApp.Droid.Resource.Styleable.Toolbar_logoDescription;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_maxButtonHeight = global::ReportsApp.Droid.Resource.Styleable.Toolbar_maxButtonHeight;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_menu = global::ReportsApp.Droid.Resource.Styleable.Toolbar_menu;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_navigationContentDescription = global::ReportsApp.Droid.Resource.Styleable.Toolbar_navigationContentDescription;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_navigationIcon = global::ReportsApp.Droid.Resource.Styleable.Toolbar_navigationIcon;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_popupTheme = global::ReportsApp.Droid.Resource.Styleable.Toolbar_popupTheme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_subtitle = global::ReportsApp.Droid.Resource.Styleable.Toolbar_subtitle;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_subtitleTextAppearance = global::ReportsApp.Droid.Resource.Styleable.Toolbar_subtitleTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_subtitleTextColor = global::ReportsApp.Droid.Resource.Styleable.Toolbar_subtitleTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_title = global::ReportsApp.Droid.Resource.Styleable.Toolbar_title;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_titleMargin = global::ReportsApp.Droid.Resource.Styleable.Toolbar_titleMargin;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_titleMarginBottom = global::ReportsApp.Droid.Resource.Styleable.Toolbar_titleMarginBottom;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_titleMarginEnd = global::ReportsApp.Droid.Resource.Styleable.Toolbar_titleMarginEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_titleMargins = global::ReportsApp.Droid.Resource.Styleable.Toolbar_titleMargins;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_titleMarginStart = global::ReportsApp.Droid.Resource.Styleable.Toolbar_titleMarginStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_titleMarginTop = global::ReportsApp.Droid.Resource.Styleable.Toolbar_titleMarginTop;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_titleTextAppearance = global::ReportsApp.Droid.Resource.Styleable.Toolbar_titleTextAppearance;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.Toolbar_titleTextColor = global::ReportsApp.Droid.Resource.Styleable.Toolbar_titleTextColor;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.View = global::ReportsApp.Droid.Resource.Styleable.View;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ViewBackgroundHelper = global::ReportsApp.Droid.Resource.Styleable.ViewBackgroundHelper;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ViewBackgroundHelper_android_background = global::ReportsApp.Droid.Resource.Styleable.ViewBackgroundHelper_android_background;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ViewBackgroundHelper_backgroundTint = global::ReportsApp.Droid.Resource.Styleable.ViewBackgroundHelper_backgroundTint;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ViewBackgroundHelper_backgroundTintMode = global::ReportsApp.Droid.Resource.Styleable.ViewBackgroundHelper_backgroundTintMode;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ViewStubCompat = global::ReportsApp.Droid.Resource.Styleable.ViewStubCompat;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ViewStubCompat_android_id = global::ReportsApp.Droid.Resource.Styleable.ViewStubCompat_android_id;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ViewStubCompat_android_inflatedId = global::ReportsApp.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.ViewStubCompat_android_layout = global::ReportsApp.Droid.Resource.Styleable.ViewStubCompat_android_layout;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.View_android_focusable = global::ReportsApp.Droid.Resource.Styleable.View_android_focusable;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.View_android_theme = global::ReportsApp.Droid.Resource.Styleable.View_android_theme;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.View_paddingEnd = global::ReportsApp.Droid.Resource.Styleable.View_paddingEnd;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.View_paddingStart = global::ReportsApp.Droid.Resource.Styleable.View_paddingStart;
+			global::Xamarin.Forms.PancakeView.Resource.Styleable.View_theme = global::ReportsApp.Droid.Resource.Styleable.View_theme;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_fade_in = global::ReportsApp.Droid.Resource.Animation.abc_fade_in;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_fade_out = global::ReportsApp.Droid.Resource.Animation.abc_fade_out;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_grow_fade_in_from_bottom = global::ReportsApp.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
@@ -13247,34 +15915,37 @@ namespace ReportsApp.Droid
 			public const int secondary_text_disabled_material_light = 2131034303;
 			
 			// aapt resource value: 0x7F0500C0
-			public const int switch_thumb_disabled_material_dark = 2131034304;
+			public const int splash_background = 2131034304;
 			
 			// aapt resource value: 0x7F0500C1
-			public const int switch_thumb_disabled_material_light = 2131034305;
+			public const int switch_thumb_disabled_material_dark = 2131034305;
 			
 			// aapt resource value: 0x7F0500C2
-			public const int switch_thumb_material_dark = 2131034306;
+			public const int switch_thumb_disabled_material_light = 2131034306;
 			
 			// aapt resource value: 0x7F0500C3
-			public const int switch_thumb_material_light = 2131034307;
+			public const int switch_thumb_material_dark = 2131034307;
 			
 			// aapt resource value: 0x7F0500C4
-			public const int switch_thumb_normal_material_dark = 2131034308;
+			public const int switch_thumb_material_light = 2131034308;
 			
 			// aapt resource value: 0x7F0500C5
-			public const int switch_thumb_normal_material_light = 2131034309;
+			public const int switch_thumb_normal_material_dark = 2131034309;
 			
 			// aapt resource value: 0x7F0500C6
-			public const int test_mtrl_calendar_day = 2131034310;
+			public const int switch_thumb_normal_material_light = 2131034310;
 			
 			// aapt resource value: 0x7F0500C7
-			public const int test_mtrl_calendar_day_selected = 2131034311;
+			public const int test_mtrl_calendar_day = 2131034311;
 			
 			// aapt resource value: 0x7F0500C8
-			public const int tooltip_background_dark = 2131034312;
+			public const int test_mtrl_calendar_day_selected = 2131034312;
 			
 			// aapt resource value: 0x7F0500C9
-			public const int tooltip_background_light = 2131034313;
+			public const int tooltip_background_dark = 2131034313;
+			
+			// aapt resource value: 0x7F0500CA
+			public const int tooltip_background_light = 2131034314;
 			
 			static Color()
 			{
@@ -14665,52 +17336,55 @@ namespace ReportsApp.Droid
 			public const int navigation_empty_icon = 2131165314;
 			
 			// aapt resource value: 0x7F070083
-			public const int notification_action_background = 2131165315;
+			public const int nodata = 2131165315;
 			
 			// aapt resource value: 0x7F070084
-			public const int notification_bg = 2131165316;
+			public const int notification_action_background = 2131165316;
 			
 			// aapt resource value: 0x7F070085
-			public const int notification_bg_low = 2131165317;
+			public const int notification_bg = 2131165317;
 			
 			// aapt resource value: 0x7F070086
-			public const int notification_bg_low_normal = 2131165318;
+			public const int notification_bg_low = 2131165318;
 			
 			// aapt resource value: 0x7F070087
-			public const int notification_bg_low_pressed = 2131165319;
+			public const int notification_bg_low_normal = 2131165319;
 			
 			// aapt resource value: 0x7F070088
-			public const int notification_bg_normal = 2131165320;
+			public const int notification_bg_low_pressed = 2131165320;
 			
 			// aapt resource value: 0x7F070089
-			public const int notification_bg_normal_pressed = 2131165321;
+			public const int notification_bg_normal = 2131165321;
 			
 			// aapt resource value: 0x7F07008A
-			public const int notification_icon_background = 2131165322;
+			public const int notification_bg_normal_pressed = 2131165322;
 			
 			// aapt resource value: 0x7F07008B
-			public const int notification_template_icon_bg = 2131165323;
+			public const int notification_icon_background = 2131165323;
 			
 			// aapt resource value: 0x7F07008C
-			public const int notification_template_icon_low_bg = 2131165324;
+			public const int notification_template_icon_bg = 2131165324;
 			
 			// aapt resource value: 0x7F07008D
-			public const int notification_tile_bg = 2131165325;
+			public const int notification_template_icon_low_bg = 2131165325;
 			
 			// aapt resource value: 0x7F07008E
-			public const int notify_panel_notification_icon_bg = 2131165326;
+			public const int notification_tile_bg = 2131165326;
 			
 			// aapt resource value: 0x7F07008F
-			public const int test_custom_background = 2131165327;
+			public const int notify_panel_notification_icon_bg = 2131165327;
 			
 			// aapt resource value: 0x7F070090
-			public const int tooltip_frame_dark = 2131165328;
+			public const int test_custom_background = 2131165328;
 			
 			// aapt resource value: 0x7F070091
-			public const int tooltip_frame_light = 2131165329;
+			public const int tooltip_frame_dark = 2131165329;
 			
 			// aapt resource value: 0x7F070092
-			public const int xamarin_logo = 2131165330;
+			public const int tooltip_frame_light = 2131165330;
+			
+			// aapt resource value: 0x7F070093
+			public const int xamarin_logo = 2131165331;
 			
 			static Drawable()
 			{
@@ -17099,8 +19773,8 @@ namespace ReportsApp.Droid
 			// aapt resource value: 0x7F0F00DB
 			public const int CardView_Light = 2131689691;
 			
-			// aapt resource value: 0x7F0F02A7
-			public const int collectionViewTheme = 2131690151;
+			// aapt resource value: 0x7F0F02A8
+			public const int collectionViewTheme = 2131690152;
 			
 			// aapt resource value: 0x7F0F00DC
 			public const int EmptyTheme = 2131689692;
@@ -17234,11 +19908,11 @@ namespace ReportsApp.Droid
 			// aapt resource value: 0x7F0F0107
 			public const int RtlUnderlay_Widget_AppCompat_ActionButton_Overflow = 2131689735;
 			
-			// aapt resource value: 0x7F0F02A8
-			public const int scrollViewScrollBars = 2131690152;
-			
 			// aapt resource value: 0x7F0F02A9
-			public const int scrollViewTheme = 2131690153;
+			public const int scrollViewScrollBars = 2131690153;
+			
+			// aapt resource value: 0x7F0F02AA
+			public const int scrollViewTheme = 2131690154;
 			
 			// aapt resource value: 0x7F0F010D
 			public const int ShapeAppearanceOverlay = 2131689741;
@@ -17300,1190 +19974,1193 @@ namespace ReportsApp.Droid
 			// aapt resource value: 0x7F0F010C
 			public const int ShapeAppearance_MaterialComponents_Test = 2131689740;
 			
-			// aapt resource value: 0x7F0F0121
-			public const int TestStyleWithLineHeight = 2131689761;
+			// aapt resource value: 0x7F0F011C
+			public const int SplashTheme = 2131689756;
 			
 			// aapt resource value: 0x7F0F0122
-			public const int TestStyleWithLineHeightAppearance = 2131689762;
-			
-			// aapt resource value: 0x7F0F0124
-			public const int TestStyleWithoutLineHeight = 2131689764;
+			public const int TestStyleWithLineHeight = 2131689762;
 			
 			// aapt resource value: 0x7F0F0123
-			public const int TestStyleWithThemeLineHeightAttribute = 2131689763;
+			public const int TestStyleWithLineHeightAppearance = 2131689763;
 			
 			// aapt resource value: 0x7F0F0125
-			public const int TestThemeWithLineHeight = 2131689765;
+			public const int TestStyleWithoutLineHeight = 2131689765;
+			
+			// aapt resource value: 0x7F0F0124
+			public const int TestStyleWithThemeLineHeightAttribute = 2131689764;
 			
 			// aapt resource value: 0x7F0F0126
-			public const int TestThemeWithLineHeightDisabled = 2131689766;
-			
-			// aapt resource value: 0x7F0F011C
-			public const int Test_ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Day = 2131689756;
-			
-			// aapt resource value: 0x7F0F011D
-			public const int Test_Theme_MaterialComponents_MaterialCalendar = 2131689757;
-			
-			// aapt resource value: 0x7F0F011E
-			public const int Test_Widget_MaterialComponents_MaterialCalendar = 2131689758;
-			
-			// aapt resource value: 0x7F0F011F
-			public const int Test_Widget_MaterialComponents_MaterialCalendar_Day = 2131689759;
-			
-			// aapt resource value: 0x7F0F0120
-			public const int Test_Widget_MaterialComponents_MaterialCalendar_Day_Selected = 2131689760;
+			public const int TestThemeWithLineHeight = 2131689766;
 			
 			// aapt resource value: 0x7F0F0127
-			public const int TextAppearance_AppCompat = 2131689767;
+			public const int TestThemeWithLineHeightDisabled = 2131689767;
+			
+			// aapt resource value: 0x7F0F011D
+			public const int Test_ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Day = 2131689757;
+			
+			// aapt resource value: 0x7F0F011E
+			public const int Test_Theme_MaterialComponents_MaterialCalendar = 2131689758;
+			
+			// aapt resource value: 0x7F0F011F
+			public const int Test_Widget_MaterialComponents_MaterialCalendar = 2131689759;
+			
+			// aapt resource value: 0x7F0F0120
+			public const int Test_Widget_MaterialComponents_MaterialCalendar_Day = 2131689760;
+			
+			// aapt resource value: 0x7F0F0121
+			public const int Test_Widget_MaterialComponents_MaterialCalendar_Day_Selected = 2131689761;
 			
 			// aapt resource value: 0x7F0F0128
-			public const int TextAppearance_AppCompat_Body1 = 2131689768;
+			public const int TextAppearance_AppCompat = 2131689768;
 			
 			// aapt resource value: 0x7F0F0129
-			public const int TextAppearance_AppCompat_Body2 = 2131689769;
+			public const int TextAppearance_AppCompat_Body1 = 2131689769;
 			
 			// aapt resource value: 0x7F0F012A
-			public const int TextAppearance_AppCompat_Button = 2131689770;
+			public const int TextAppearance_AppCompat_Body2 = 2131689770;
 			
 			// aapt resource value: 0x7F0F012B
-			public const int TextAppearance_AppCompat_Caption = 2131689771;
+			public const int TextAppearance_AppCompat_Button = 2131689771;
 			
 			// aapt resource value: 0x7F0F012C
-			public const int TextAppearance_AppCompat_Display1 = 2131689772;
+			public const int TextAppearance_AppCompat_Caption = 2131689772;
 			
 			// aapt resource value: 0x7F0F012D
-			public const int TextAppearance_AppCompat_Display2 = 2131689773;
+			public const int TextAppearance_AppCompat_Display1 = 2131689773;
 			
 			// aapt resource value: 0x7F0F012E
-			public const int TextAppearance_AppCompat_Display3 = 2131689774;
+			public const int TextAppearance_AppCompat_Display2 = 2131689774;
 			
 			// aapt resource value: 0x7F0F012F
-			public const int TextAppearance_AppCompat_Display4 = 2131689775;
+			public const int TextAppearance_AppCompat_Display3 = 2131689775;
 			
 			// aapt resource value: 0x7F0F0130
-			public const int TextAppearance_AppCompat_Headline = 2131689776;
+			public const int TextAppearance_AppCompat_Display4 = 2131689776;
 			
 			// aapt resource value: 0x7F0F0131
-			public const int TextAppearance_AppCompat_Inverse = 2131689777;
+			public const int TextAppearance_AppCompat_Headline = 2131689777;
 			
 			// aapt resource value: 0x7F0F0132
-			public const int TextAppearance_AppCompat_Large = 2131689778;
+			public const int TextAppearance_AppCompat_Inverse = 2131689778;
 			
 			// aapt resource value: 0x7F0F0133
-			public const int TextAppearance_AppCompat_Large_Inverse = 2131689779;
+			public const int TextAppearance_AppCompat_Large = 2131689779;
 			
 			// aapt resource value: 0x7F0F0134
-			public const int TextAppearance_AppCompat_Light_SearchResult_Subtitle = 2131689780;
+			public const int TextAppearance_AppCompat_Large_Inverse = 2131689780;
 			
 			// aapt resource value: 0x7F0F0135
-			public const int TextAppearance_AppCompat_Light_SearchResult_Title = 2131689781;
+			public const int TextAppearance_AppCompat_Light_SearchResult_Subtitle = 2131689781;
 			
 			// aapt resource value: 0x7F0F0136
-			public const int TextAppearance_AppCompat_Light_Widget_PopupMenu_Large = 2131689782;
+			public const int TextAppearance_AppCompat_Light_SearchResult_Title = 2131689782;
 			
 			// aapt resource value: 0x7F0F0137
-			public const int TextAppearance_AppCompat_Light_Widget_PopupMenu_Small = 2131689783;
+			public const int TextAppearance_AppCompat_Light_Widget_PopupMenu_Large = 2131689783;
 			
 			// aapt resource value: 0x7F0F0138
-			public const int TextAppearance_AppCompat_Medium = 2131689784;
+			public const int TextAppearance_AppCompat_Light_Widget_PopupMenu_Small = 2131689784;
 			
 			// aapt resource value: 0x7F0F0139
-			public const int TextAppearance_AppCompat_Medium_Inverse = 2131689785;
+			public const int TextAppearance_AppCompat_Medium = 2131689785;
 			
 			// aapt resource value: 0x7F0F013A
-			public const int TextAppearance_AppCompat_Menu = 2131689786;
+			public const int TextAppearance_AppCompat_Medium_Inverse = 2131689786;
 			
 			// aapt resource value: 0x7F0F013B
-			public const int TextAppearance_AppCompat_SearchResult_Subtitle = 2131689787;
+			public const int TextAppearance_AppCompat_Menu = 2131689787;
 			
 			// aapt resource value: 0x7F0F013C
-			public const int TextAppearance_AppCompat_SearchResult_Title = 2131689788;
+			public const int TextAppearance_AppCompat_SearchResult_Subtitle = 2131689788;
 			
 			// aapt resource value: 0x7F0F013D
-			public const int TextAppearance_AppCompat_Small = 2131689789;
+			public const int TextAppearance_AppCompat_SearchResult_Title = 2131689789;
 			
 			// aapt resource value: 0x7F0F013E
-			public const int TextAppearance_AppCompat_Small_Inverse = 2131689790;
+			public const int TextAppearance_AppCompat_Small = 2131689790;
 			
 			// aapt resource value: 0x7F0F013F
-			public const int TextAppearance_AppCompat_Subhead = 2131689791;
+			public const int TextAppearance_AppCompat_Small_Inverse = 2131689791;
 			
 			// aapt resource value: 0x7F0F0140
-			public const int TextAppearance_AppCompat_Subhead_Inverse = 2131689792;
+			public const int TextAppearance_AppCompat_Subhead = 2131689792;
 			
 			// aapt resource value: 0x7F0F0141
-			public const int TextAppearance_AppCompat_Title = 2131689793;
+			public const int TextAppearance_AppCompat_Subhead_Inverse = 2131689793;
 			
 			// aapt resource value: 0x7F0F0142
-			public const int TextAppearance_AppCompat_Title_Inverse = 2131689794;
+			public const int TextAppearance_AppCompat_Title = 2131689794;
 			
 			// aapt resource value: 0x7F0F0143
-			public const int TextAppearance_AppCompat_Tooltip = 2131689795;
+			public const int TextAppearance_AppCompat_Title_Inverse = 2131689795;
 			
 			// aapt resource value: 0x7F0F0144
-			public const int TextAppearance_AppCompat_Widget_ActionBar_Menu = 2131689796;
+			public const int TextAppearance_AppCompat_Tooltip = 2131689796;
 			
 			// aapt resource value: 0x7F0F0145
-			public const int TextAppearance_AppCompat_Widget_ActionBar_Subtitle = 2131689797;
+			public const int TextAppearance_AppCompat_Widget_ActionBar_Menu = 2131689797;
 			
 			// aapt resource value: 0x7F0F0146
-			public const int TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse = 2131689798;
+			public const int TextAppearance_AppCompat_Widget_ActionBar_Subtitle = 2131689798;
 			
 			// aapt resource value: 0x7F0F0147
-			public const int TextAppearance_AppCompat_Widget_ActionBar_Title = 2131689799;
+			public const int TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse = 2131689799;
 			
 			// aapt resource value: 0x7F0F0148
-			public const int TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse = 2131689800;
+			public const int TextAppearance_AppCompat_Widget_ActionBar_Title = 2131689800;
 			
 			// aapt resource value: 0x7F0F0149
-			public const int TextAppearance_AppCompat_Widget_ActionMode_Subtitle = 2131689801;
+			public const int TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse = 2131689801;
 			
 			// aapt resource value: 0x7F0F014A
-			public const int TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse = 2131689802;
+			public const int TextAppearance_AppCompat_Widget_ActionMode_Subtitle = 2131689802;
 			
 			// aapt resource value: 0x7F0F014B
-			public const int TextAppearance_AppCompat_Widget_ActionMode_Title = 2131689803;
+			public const int TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse = 2131689803;
 			
 			// aapt resource value: 0x7F0F014C
-			public const int TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse = 2131689804;
+			public const int TextAppearance_AppCompat_Widget_ActionMode_Title = 2131689804;
 			
 			// aapt resource value: 0x7F0F014D
-			public const int TextAppearance_AppCompat_Widget_Button = 2131689805;
+			public const int TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse = 2131689805;
 			
 			// aapt resource value: 0x7F0F014E
-			public const int TextAppearance_AppCompat_Widget_Button_Borderless_Colored = 2131689806;
+			public const int TextAppearance_AppCompat_Widget_Button = 2131689806;
 			
 			// aapt resource value: 0x7F0F014F
-			public const int TextAppearance_AppCompat_Widget_Button_Colored = 2131689807;
+			public const int TextAppearance_AppCompat_Widget_Button_Borderless_Colored = 2131689807;
 			
 			// aapt resource value: 0x7F0F0150
-			public const int TextAppearance_AppCompat_Widget_Button_Inverse = 2131689808;
+			public const int TextAppearance_AppCompat_Widget_Button_Colored = 2131689808;
 			
 			// aapt resource value: 0x7F0F0151
-			public const int TextAppearance_AppCompat_Widget_DropDownItem = 2131689809;
+			public const int TextAppearance_AppCompat_Widget_Button_Inverse = 2131689809;
 			
 			// aapt resource value: 0x7F0F0152
-			public const int TextAppearance_AppCompat_Widget_PopupMenu_Header = 2131689810;
+			public const int TextAppearance_AppCompat_Widget_DropDownItem = 2131689810;
 			
 			// aapt resource value: 0x7F0F0153
-			public const int TextAppearance_AppCompat_Widget_PopupMenu_Large = 2131689811;
+			public const int TextAppearance_AppCompat_Widget_PopupMenu_Header = 2131689811;
 			
 			// aapt resource value: 0x7F0F0154
-			public const int TextAppearance_AppCompat_Widget_PopupMenu_Small = 2131689812;
+			public const int TextAppearance_AppCompat_Widget_PopupMenu_Large = 2131689812;
 			
 			// aapt resource value: 0x7F0F0155
-			public const int TextAppearance_AppCompat_Widget_Switch = 2131689813;
+			public const int TextAppearance_AppCompat_Widget_PopupMenu_Small = 2131689813;
 			
 			// aapt resource value: 0x7F0F0156
-			public const int TextAppearance_AppCompat_Widget_TextView_SpinnerItem = 2131689814;
+			public const int TextAppearance_AppCompat_Widget_Switch = 2131689814;
 			
 			// aapt resource value: 0x7F0F0157
-			public const int TextAppearance_Compat_Notification = 2131689815;
+			public const int TextAppearance_AppCompat_Widget_TextView_SpinnerItem = 2131689815;
 			
 			// aapt resource value: 0x7F0F0158
-			public const int TextAppearance_Compat_Notification_Info = 2131689816;
+			public const int TextAppearance_Compat_Notification = 2131689816;
 			
 			// aapt resource value: 0x7F0F0159
-			public const int TextAppearance_Compat_Notification_Info_Media = 2131689817;
+			public const int TextAppearance_Compat_Notification_Info = 2131689817;
 			
 			// aapt resource value: 0x7F0F015A
-			public const int TextAppearance_Compat_Notification_Line2 = 2131689818;
+			public const int TextAppearance_Compat_Notification_Info_Media = 2131689818;
 			
 			// aapt resource value: 0x7F0F015B
-			public const int TextAppearance_Compat_Notification_Line2_Media = 2131689819;
+			public const int TextAppearance_Compat_Notification_Line2 = 2131689819;
 			
 			// aapt resource value: 0x7F0F015C
-			public const int TextAppearance_Compat_Notification_Media = 2131689820;
+			public const int TextAppearance_Compat_Notification_Line2_Media = 2131689820;
 			
 			// aapt resource value: 0x7F0F015D
-			public const int TextAppearance_Compat_Notification_Time = 2131689821;
+			public const int TextAppearance_Compat_Notification_Media = 2131689821;
 			
 			// aapt resource value: 0x7F0F015E
-			public const int TextAppearance_Compat_Notification_Time_Media = 2131689822;
+			public const int TextAppearance_Compat_Notification_Time = 2131689822;
 			
 			// aapt resource value: 0x7F0F015F
-			public const int TextAppearance_Compat_Notification_Title = 2131689823;
+			public const int TextAppearance_Compat_Notification_Time_Media = 2131689823;
 			
 			// aapt resource value: 0x7F0F0160
-			public const int TextAppearance_Compat_Notification_Title_Media = 2131689824;
+			public const int TextAppearance_Compat_Notification_Title = 2131689824;
 			
 			// aapt resource value: 0x7F0F0161
-			public const int TextAppearance_Design_CollapsingToolbar_Expanded = 2131689825;
+			public const int TextAppearance_Compat_Notification_Title_Media = 2131689825;
 			
 			// aapt resource value: 0x7F0F0162
-			public const int TextAppearance_Design_Counter = 2131689826;
+			public const int TextAppearance_Design_CollapsingToolbar_Expanded = 2131689826;
 			
 			// aapt resource value: 0x7F0F0163
-			public const int TextAppearance_Design_Counter_Overflow = 2131689827;
+			public const int TextAppearance_Design_Counter = 2131689827;
 			
 			// aapt resource value: 0x7F0F0164
-			public const int TextAppearance_Design_Error = 2131689828;
+			public const int TextAppearance_Design_Counter_Overflow = 2131689828;
 			
 			// aapt resource value: 0x7F0F0165
-			public const int TextAppearance_Design_HelperText = 2131689829;
+			public const int TextAppearance_Design_Error = 2131689829;
 			
 			// aapt resource value: 0x7F0F0166
-			public const int TextAppearance_Design_Hint = 2131689830;
+			public const int TextAppearance_Design_HelperText = 2131689830;
 			
 			// aapt resource value: 0x7F0F0167
-			public const int TextAppearance_Design_Snackbar_Message = 2131689831;
+			public const int TextAppearance_Design_Hint = 2131689831;
 			
 			// aapt resource value: 0x7F0F0168
-			public const int TextAppearance_Design_Tab = 2131689832;
+			public const int TextAppearance_Design_Snackbar_Message = 2131689832;
 			
 			// aapt resource value: 0x7F0F0169
-			public const int TextAppearance_MaterialComponents_Badge = 2131689833;
+			public const int TextAppearance_Design_Tab = 2131689833;
 			
 			// aapt resource value: 0x7F0F016A
-			public const int TextAppearance_MaterialComponents_Body1 = 2131689834;
+			public const int TextAppearance_MaterialComponents_Badge = 2131689834;
 			
 			// aapt resource value: 0x7F0F016B
-			public const int TextAppearance_MaterialComponents_Body2 = 2131689835;
+			public const int TextAppearance_MaterialComponents_Body1 = 2131689835;
 			
 			// aapt resource value: 0x7F0F016C
-			public const int TextAppearance_MaterialComponents_Button = 2131689836;
+			public const int TextAppearance_MaterialComponents_Body2 = 2131689836;
 			
 			// aapt resource value: 0x7F0F016D
-			public const int TextAppearance_MaterialComponents_Caption = 2131689837;
+			public const int TextAppearance_MaterialComponents_Button = 2131689837;
 			
 			// aapt resource value: 0x7F0F016E
-			public const int TextAppearance_MaterialComponents_Chip = 2131689838;
+			public const int TextAppearance_MaterialComponents_Caption = 2131689838;
 			
 			// aapt resource value: 0x7F0F016F
-			public const int TextAppearance_MaterialComponents_Headline1 = 2131689839;
+			public const int TextAppearance_MaterialComponents_Chip = 2131689839;
 			
 			// aapt resource value: 0x7F0F0170
-			public const int TextAppearance_MaterialComponents_Headline2 = 2131689840;
+			public const int TextAppearance_MaterialComponents_Headline1 = 2131689840;
 			
 			// aapt resource value: 0x7F0F0171
-			public const int TextAppearance_MaterialComponents_Headline3 = 2131689841;
+			public const int TextAppearance_MaterialComponents_Headline2 = 2131689841;
 			
 			// aapt resource value: 0x7F0F0172
-			public const int TextAppearance_MaterialComponents_Headline4 = 2131689842;
+			public const int TextAppearance_MaterialComponents_Headline3 = 2131689842;
 			
 			// aapt resource value: 0x7F0F0173
-			public const int TextAppearance_MaterialComponents_Headline5 = 2131689843;
+			public const int TextAppearance_MaterialComponents_Headline4 = 2131689843;
 			
 			// aapt resource value: 0x7F0F0174
-			public const int TextAppearance_MaterialComponents_Headline6 = 2131689844;
+			public const int TextAppearance_MaterialComponents_Headline5 = 2131689844;
 			
 			// aapt resource value: 0x7F0F0175
-			public const int TextAppearance_MaterialComponents_Overline = 2131689845;
+			public const int TextAppearance_MaterialComponents_Headline6 = 2131689845;
 			
 			// aapt resource value: 0x7F0F0176
-			public const int TextAppearance_MaterialComponents_Subtitle1 = 2131689846;
+			public const int TextAppearance_MaterialComponents_Overline = 2131689846;
 			
 			// aapt resource value: 0x7F0F0177
-			public const int TextAppearance_MaterialComponents_Subtitle2 = 2131689847;
+			public const int TextAppearance_MaterialComponents_Subtitle1 = 2131689847;
 			
 			// aapt resource value: 0x7F0F0178
-			public const int TextAppearance_Widget_AppCompat_ExpandedMenu_Item = 2131689848;
+			public const int TextAppearance_MaterialComponents_Subtitle2 = 2131689848;
 			
 			// aapt resource value: 0x7F0F0179
-			public const int TextAppearance_Widget_AppCompat_Toolbar_Subtitle = 2131689849;
+			public const int TextAppearance_Widget_AppCompat_ExpandedMenu_Item = 2131689849;
 			
 			// aapt resource value: 0x7F0F017A
-			public const int TextAppearance_Widget_AppCompat_Toolbar_Title = 2131689850;
-			
-			// aapt resource value: 0x7F0F01C8
-			public const int ThemeOverlay_AppCompat = 2131689928;
-			
-			// aapt resource value: 0x7F0F01C9
-			public const int ThemeOverlay_AppCompat_ActionBar = 2131689929;
-			
-			// aapt resource value: 0x7F0F01CA
-			public const int ThemeOverlay_AppCompat_Dark = 2131689930;
-			
-			// aapt resource value: 0x7F0F01CB
-			public const int ThemeOverlay_AppCompat_Dark_ActionBar = 2131689931;
-			
-			// aapt resource value: 0x7F0F01CC
-			public const int ThemeOverlay_AppCompat_DayNight = 2131689932;
-			
-			// aapt resource value: 0x7F0F01CD
-			public const int ThemeOverlay_AppCompat_DayNight_ActionBar = 2131689933;
-			
-			// aapt resource value: 0x7F0F01CE
-			public const int ThemeOverlay_AppCompat_Dialog = 2131689934;
-			
-			// aapt resource value: 0x7F0F01CF
-			public const int ThemeOverlay_AppCompat_Dialog_Alert = 2131689935;
-			
-			// aapt resource value: 0x7F0F01D0
-			public const int ThemeOverlay_AppCompat_Light = 2131689936;
-			
-			// aapt resource value: 0x7F0F01D1
-			public const int ThemeOverlay_Design_TextInputEditText = 2131689937;
-			
-			// aapt resource value: 0x7F0F01D2
-			public const int ThemeOverlay_MaterialComponents = 2131689938;
-			
-			// aapt resource value: 0x7F0F01D3
-			public const int ThemeOverlay_MaterialComponents_ActionBar = 2131689939;
-			
-			// aapt resource value: 0x7F0F01D4
-			public const int ThemeOverlay_MaterialComponents_ActionBar_Primary = 2131689940;
-			
-			// aapt resource value: 0x7F0F01D5
-			public const int ThemeOverlay_MaterialComponents_ActionBar_Surface = 2131689941;
-			
-			// aapt resource value: 0x7F0F01D6
-			public const int ThemeOverlay_MaterialComponents_AutoCompleteTextView = 2131689942;
-			
-			// aapt resource value: 0x7F0F01D7
-			public const int ThemeOverlay_MaterialComponents_AutoCompleteTextView_FilledBox = 2131689943;
-			
-			// aapt resource value: 0x7F0F01D8
-			public const int ThemeOverlay_MaterialComponents_AutoCompleteTextView_FilledBox_Dense = 2131689944;
-			
-			// aapt resource value: 0x7F0F01D9
-			public const int ThemeOverlay_MaterialComponents_AutoCompleteTextView_OutlinedBox = 2131689945;
-			
-			// aapt resource value: 0x7F0F01DA
-			public const int ThemeOverlay_MaterialComponents_AutoCompleteTextView_OutlinedBox_Dense = 2131689946;
-			
-			// aapt resource value: 0x7F0F01DB
-			public const int ThemeOverlay_MaterialComponents_BottomAppBar_Primary = 2131689947;
-			
-			// aapt resource value: 0x7F0F01DC
-			public const int ThemeOverlay_MaterialComponents_BottomAppBar_Surface = 2131689948;
-			
-			// aapt resource value: 0x7F0F01DD
-			public const int ThemeOverlay_MaterialComponents_BottomSheetDialog = 2131689949;
-			
-			// aapt resource value: 0x7F0F01DE
-			public const int ThemeOverlay_MaterialComponents_Dark = 2131689950;
-			
-			// aapt resource value: 0x7F0F01DF
-			public const int ThemeOverlay_MaterialComponents_Dark_ActionBar = 2131689951;
-			
-			// aapt resource value: 0x7F0F01E0
-			public const int ThemeOverlay_MaterialComponents_DayNight_BottomSheetDialog = 2131689952;
-			
-			// aapt resource value: 0x7F0F01E1
-			public const int ThemeOverlay_MaterialComponents_Dialog = 2131689953;
-			
-			// aapt resource value: 0x7F0F01E2
-			public const int ThemeOverlay_MaterialComponents_Dialog_Alert = 2131689954;
-			
-			// aapt resource value: 0x7F0F01E3
-			public const int ThemeOverlay_MaterialComponents_Light = 2131689955;
-			
-			// aapt resource value: 0x7F0F01E4
-			public const int ThemeOverlay_MaterialComponents_Light_BottomSheetDialog = 2131689956;
-			
-			// aapt resource value: 0x7F0F01E5
-			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog = 2131689957;
-			
-			// aapt resource value: 0x7F0F01E6
-			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered = 2131689958;
-			
-			// aapt resource value: 0x7F0F01E7
-			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date = 2131689959;
-			
-			// aapt resource value: 0x7F0F01E8
-			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Calendar = 2131689960;
-			
-			// aapt resource value: 0x7F0F01E9
-			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Header_Text = 2131689961;
-			
-			// aapt resource value: 0x7F0F01EA
-			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Header_Text_Day = 2131689962;
-			
-			// aapt resource value: 0x7F0F01EB
-			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Spinner = 2131689963;
-			
-			// aapt resource value: 0x7F0F01EC
-			public const int ThemeOverlay_MaterialComponents_MaterialCalendar = 2131689964;
-			
-			// aapt resource value: 0x7F0F01ED
-			public const int ThemeOverlay_MaterialComponents_MaterialCalendar_Fullscreen = 2131689965;
-			
-			// aapt resource value: 0x7F0F01EE
-			public const int ThemeOverlay_MaterialComponents_TextInputEditText = 2131689966;
-			
-			// aapt resource value: 0x7F0F01EF
-			public const int ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox = 2131689967;
-			
-			// aapt resource value: 0x7F0F01F0
-			public const int ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox_Dense = 2131689968;
-			
-			// aapt resource value: 0x7F0F01F1
-			public const int ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox = 2131689969;
-			
-			// aapt resource value: 0x7F0F01F2
-			public const int ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox_Dense = 2131689970;
-			
-			// aapt resource value: 0x7F0F01F3
-			public const int ThemeOverlay_MaterialComponents_Toolbar_Primary = 2131689971;
-			
-			// aapt resource value: 0x7F0F01F4
-			public const int ThemeOverlay_MaterialComponents_Toolbar_Surface = 2131689972;
+			public const int TextAppearance_Widget_AppCompat_Toolbar_Subtitle = 2131689850;
 			
 			// aapt resource value: 0x7F0F017B
-			public const int Theme_AppCompat = 2131689851;
+			public const int TextAppearance_Widget_AppCompat_Toolbar_Title = 2131689851;
 			
-			// aapt resource value: 0x7F0F017C
-			public const int Theme_AppCompat_CompactMenu = 2131689852;
+			// aapt resource value: 0x7F0F01C9
+			public const int ThemeOverlay_AppCompat = 2131689929;
 			
-			// aapt resource value: 0x7F0F017D
-			public const int Theme_AppCompat_DayNight = 2131689853;
+			// aapt resource value: 0x7F0F01CA
+			public const int ThemeOverlay_AppCompat_ActionBar = 2131689930;
 			
-			// aapt resource value: 0x7F0F017E
-			public const int Theme_AppCompat_DayNight_DarkActionBar = 2131689854;
+			// aapt resource value: 0x7F0F01CB
+			public const int ThemeOverlay_AppCompat_Dark = 2131689931;
 			
-			// aapt resource value: 0x7F0F017F
-			public const int Theme_AppCompat_DayNight_Dialog = 2131689855;
+			// aapt resource value: 0x7F0F01CC
+			public const int ThemeOverlay_AppCompat_Dark_ActionBar = 2131689932;
 			
-			// aapt resource value: 0x7F0F0182
-			public const int Theme_AppCompat_DayNight_DialogWhenLarge = 2131689858;
+			// aapt resource value: 0x7F0F01CD
+			public const int ThemeOverlay_AppCompat_DayNight = 2131689933;
 			
-			// aapt resource value: 0x7F0F0180
-			public const int Theme_AppCompat_DayNight_Dialog_Alert = 2131689856;
+			// aapt resource value: 0x7F0F01CE
+			public const int ThemeOverlay_AppCompat_DayNight_ActionBar = 2131689934;
 			
-			// aapt resource value: 0x7F0F0181
-			public const int Theme_AppCompat_DayNight_Dialog_MinWidth = 2131689857;
+			// aapt resource value: 0x7F0F01CF
+			public const int ThemeOverlay_AppCompat_Dialog = 2131689935;
 			
-			// aapt resource value: 0x7F0F0183
-			public const int Theme_AppCompat_DayNight_NoActionBar = 2131689859;
+			// aapt resource value: 0x7F0F01D0
+			public const int ThemeOverlay_AppCompat_Dialog_Alert = 2131689936;
 			
-			// aapt resource value: 0x7F0F0184
-			public const int Theme_AppCompat_Dialog = 2131689860;
+			// aapt resource value: 0x7F0F01D1
+			public const int ThemeOverlay_AppCompat_Light = 2131689937;
 			
-			// aapt resource value: 0x7F0F0187
-			public const int Theme_AppCompat_DialogWhenLarge = 2131689863;
+			// aapt resource value: 0x7F0F01D2
+			public const int ThemeOverlay_Design_TextInputEditText = 2131689938;
 			
-			// aapt resource value: 0x7F0F0185
-			public const int Theme_AppCompat_Dialog_Alert = 2131689861;
+			// aapt resource value: 0x7F0F01D3
+			public const int ThemeOverlay_MaterialComponents = 2131689939;
 			
-			// aapt resource value: 0x7F0F0186
-			public const int Theme_AppCompat_Dialog_MinWidth = 2131689862;
+			// aapt resource value: 0x7F0F01D4
+			public const int ThemeOverlay_MaterialComponents_ActionBar = 2131689940;
 			
-			// aapt resource value: 0x7F0F0188
-			public const int Theme_AppCompat_Empty = 2131689864;
+			// aapt resource value: 0x7F0F01D5
+			public const int ThemeOverlay_MaterialComponents_ActionBar_Primary = 2131689941;
 			
-			// aapt resource value: 0x7F0F0189
-			public const int Theme_AppCompat_Light = 2131689865;
+			// aapt resource value: 0x7F0F01D6
+			public const int ThemeOverlay_MaterialComponents_ActionBar_Surface = 2131689942;
 			
-			// aapt resource value: 0x7F0F018A
-			public const int Theme_AppCompat_Light_DarkActionBar = 2131689866;
+			// aapt resource value: 0x7F0F01D7
+			public const int ThemeOverlay_MaterialComponents_AutoCompleteTextView = 2131689943;
 			
-			// aapt resource value: 0x7F0F018B
-			public const int Theme_AppCompat_Light_Dialog = 2131689867;
+			// aapt resource value: 0x7F0F01D8
+			public const int ThemeOverlay_MaterialComponents_AutoCompleteTextView_FilledBox = 2131689944;
 			
-			// aapt resource value: 0x7F0F018E
-			public const int Theme_AppCompat_Light_DialogWhenLarge = 2131689870;
+			// aapt resource value: 0x7F0F01D9
+			public const int ThemeOverlay_MaterialComponents_AutoCompleteTextView_FilledBox_Dense = 2131689945;
 			
-			// aapt resource value: 0x7F0F018C
-			public const int Theme_AppCompat_Light_Dialog_Alert = 2131689868;
+			// aapt resource value: 0x7F0F01DA
+			public const int ThemeOverlay_MaterialComponents_AutoCompleteTextView_OutlinedBox = 2131689946;
 			
-			// aapt resource value: 0x7F0F018D
-			public const int Theme_AppCompat_Light_Dialog_MinWidth = 2131689869;
+			// aapt resource value: 0x7F0F01DB
+			public const int ThemeOverlay_MaterialComponents_AutoCompleteTextView_OutlinedBox_Dense = 2131689947;
 			
-			// aapt resource value: 0x7F0F018F
-			public const int Theme_AppCompat_Light_NoActionBar = 2131689871;
+			// aapt resource value: 0x7F0F01DC
+			public const int ThemeOverlay_MaterialComponents_BottomAppBar_Primary = 2131689948;
 			
-			// aapt resource value: 0x7F0F0190
-			public const int Theme_AppCompat_NoActionBar = 2131689872;
+			// aapt resource value: 0x7F0F01DD
+			public const int ThemeOverlay_MaterialComponents_BottomAppBar_Surface = 2131689949;
 			
-			// aapt resource value: 0x7F0F0191
-			public const int Theme_Design = 2131689873;
+			// aapt resource value: 0x7F0F01DE
+			public const int ThemeOverlay_MaterialComponents_BottomSheetDialog = 2131689950;
 			
-			// aapt resource value: 0x7F0F0192
-			public const int Theme_Design_BottomSheetDialog = 2131689874;
+			// aapt resource value: 0x7F0F01DF
+			public const int ThemeOverlay_MaterialComponents_Dark = 2131689951;
 			
-			// aapt resource value: 0x7F0F0193
-			public const int Theme_Design_Light = 2131689875;
+			// aapt resource value: 0x7F0F01E0
+			public const int ThemeOverlay_MaterialComponents_Dark_ActionBar = 2131689952;
 			
-			// aapt resource value: 0x7F0F0194
-			public const int Theme_Design_Light_BottomSheetDialog = 2131689876;
+			// aapt resource value: 0x7F0F01E1
+			public const int ThemeOverlay_MaterialComponents_DayNight_BottomSheetDialog = 2131689953;
 			
-			// aapt resource value: 0x7F0F0195
-			public const int Theme_Design_Light_NoActionBar = 2131689877;
+			// aapt resource value: 0x7F0F01E2
+			public const int ThemeOverlay_MaterialComponents_Dialog = 2131689954;
 			
-			// aapt resource value: 0x7F0F0196
-			public const int Theme_Design_NoActionBar = 2131689878;
+			// aapt resource value: 0x7F0F01E3
+			public const int ThemeOverlay_MaterialComponents_Dialog_Alert = 2131689955;
 			
-			// aapt resource value: 0x7F0F0197
-			public const int Theme_MaterialComponents = 2131689879;
+			// aapt resource value: 0x7F0F01E4
+			public const int ThemeOverlay_MaterialComponents_Light = 2131689956;
 			
-			// aapt resource value: 0x7F0F0198
-			public const int Theme_MaterialComponents_BottomSheetDialog = 2131689880;
+			// aapt resource value: 0x7F0F01E5
+			public const int ThemeOverlay_MaterialComponents_Light_BottomSheetDialog = 2131689957;
 			
-			// aapt resource value: 0x7F0F0199
-			public const int Theme_MaterialComponents_Bridge = 2131689881;
+			// aapt resource value: 0x7F0F01E6
+			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog = 2131689958;
 			
-			// aapt resource value: 0x7F0F019A
-			public const int Theme_MaterialComponents_CompactMenu = 2131689882;
+			// aapt resource value: 0x7F0F01E7
+			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered = 2131689959;
 			
-			// aapt resource value: 0x7F0F019B
-			public const int Theme_MaterialComponents_DayNight = 2131689883;
+			// aapt resource value: 0x7F0F01E8
+			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date = 2131689960;
 			
-			// aapt resource value: 0x7F0F019C
-			public const int Theme_MaterialComponents_DayNight_BottomSheetDialog = 2131689884;
+			// aapt resource value: 0x7F0F01E9
+			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Calendar = 2131689961;
 			
-			// aapt resource value: 0x7F0F019D
-			public const int Theme_MaterialComponents_DayNight_Bridge = 2131689885;
+			// aapt resource value: 0x7F0F01EA
+			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Header_Text = 2131689962;
 			
-			// aapt resource value: 0x7F0F019E
-			public const int Theme_MaterialComponents_DayNight_DarkActionBar = 2131689886;
+			// aapt resource value: 0x7F0F01EB
+			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Header_Text_Day = 2131689963;
 			
-			// aapt resource value: 0x7F0F019F
-			public const int Theme_MaterialComponents_DayNight_DarkActionBar_Bridge = 2131689887;
+			// aapt resource value: 0x7F0F01EC
+			public const int ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Spinner = 2131689964;
 			
-			// aapt resource value: 0x7F0F01A0
-			public const int Theme_MaterialComponents_DayNight_Dialog = 2131689888;
+			// aapt resource value: 0x7F0F01ED
+			public const int ThemeOverlay_MaterialComponents_MaterialCalendar = 2131689965;
 			
-			// aapt resource value: 0x7F0F01A8
-			public const int Theme_MaterialComponents_DayNight_DialogWhenLarge = 2131689896;
+			// aapt resource value: 0x7F0F01EE
+			public const int ThemeOverlay_MaterialComponents_MaterialCalendar_Fullscreen = 2131689966;
 			
-			// aapt resource value: 0x7F0F01A1
-			public const int Theme_MaterialComponents_DayNight_Dialog_Alert = 2131689889;
+			// aapt resource value: 0x7F0F01EF
+			public const int ThemeOverlay_MaterialComponents_TextInputEditText = 2131689967;
 			
-			// aapt resource value: 0x7F0F01A2
-			public const int Theme_MaterialComponents_DayNight_Dialog_Alert_Bridge = 2131689890;
+			// aapt resource value: 0x7F0F01F0
+			public const int ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox = 2131689968;
 			
-			// aapt resource value: 0x7F0F01A3
-			public const int Theme_MaterialComponents_DayNight_Dialog_Bridge = 2131689891;
+			// aapt resource value: 0x7F0F01F1
+			public const int ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox_Dense = 2131689969;
 			
-			// aapt resource value: 0x7F0F01A4
-			public const int Theme_MaterialComponents_DayNight_Dialog_FixedSize = 2131689892;
+			// aapt resource value: 0x7F0F01F2
+			public const int ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox = 2131689970;
 			
-			// aapt resource value: 0x7F0F01A5
-			public const int Theme_MaterialComponents_DayNight_Dialog_FixedSize_Bridge = 2131689893;
+			// aapt resource value: 0x7F0F01F3
+			public const int ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox_Dense = 2131689971;
 			
-			// aapt resource value: 0x7F0F01A6
-			public const int Theme_MaterialComponents_DayNight_Dialog_MinWidth = 2131689894;
-			
-			// aapt resource value: 0x7F0F01A7
-			public const int Theme_MaterialComponents_DayNight_Dialog_MinWidth_Bridge = 2131689895;
-			
-			// aapt resource value: 0x7F0F01A9
-			public const int Theme_MaterialComponents_DayNight_NoActionBar = 2131689897;
-			
-			// aapt resource value: 0x7F0F01AA
-			public const int Theme_MaterialComponents_DayNight_NoActionBar_Bridge = 2131689898;
-			
-			// aapt resource value: 0x7F0F01AB
-			public const int Theme_MaterialComponents_Dialog = 2131689899;
-			
-			// aapt resource value: 0x7F0F01B3
-			public const int Theme_MaterialComponents_DialogWhenLarge = 2131689907;
-			
-			// aapt resource value: 0x7F0F01AC
-			public const int Theme_MaterialComponents_Dialog_Alert = 2131689900;
-			
-			// aapt resource value: 0x7F0F01AD
-			public const int Theme_MaterialComponents_Dialog_Alert_Bridge = 2131689901;
-			
-			// aapt resource value: 0x7F0F01AE
-			public const int Theme_MaterialComponents_Dialog_Bridge = 2131689902;
-			
-			// aapt resource value: 0x7F0F01AF
-			public const int Theme_MaterialComponents_Dialog_FixedSize = 2131689903;
-			
-			// aapt resource value: 0x7F0F01B0
-			public const int Theme_MaterialComponents_Dialog_FixedSize_Bridge = 2131689904;
-			
-			// aapt resource value: 0x7F0F01B1
-			public const int Theme_MaterialComponents_Dialog_MinWidth = 2131689905;
-			
-			// aapt resource value: 0x7F0F01B2
-			public const int Theme_MaterialComponents_Dialog_MinWidth_Bridge = 2131689906;
-			
-			// aapt resource value: 0x7F0F01B4
-			public const int Theme_MaterialComponents_Light = 2131689908;
-			
-			// aapt resource value: 0x7F0F01B5
-			public const int Theme_MaterialComponents_Light_BarSize = 2131689909;
-			
-			// aapt resource value: 0x7F0F01B6
-			public const int Theme_MaterialComponents_Light_BottomSheetDialog = 2131689910;
-			
-			// aapt resource value: 0x7F0F01B7
-			public const int Theme_MaterialComponents_Light_Bridge = 2131689911;
-			
-			// aapt resource value: 0x7F0F01B8
-			public const int Theme_MaterialComponents_Light_DarkActionBar = 2131689912;
-			
-			// aapt resource value: 0x7F0F01B9
-			public const int Theme_MaterialComponents_Light_DarkActionBar_Bridge = 2131689913;
-			
-			// aapt resource value: 0x7F0F01BA
-			public const int Theme_MaterialComponents_Light_Dialog = 2131689914;
-			
-			// aapt resource value: 0x7F0F01C2
-			public const int Theme_MaterialComponents_Light_DialogWhenLarge = 2131689922;
-			
-			// aapt resource value: 0x7F0F01BB
-			public const int Theme_MaterialComponents_Light_Dialog_Alert = 2131689915;
-			
-			// aapt resource value: 0x7F0F01BC
-			public const int Theme_MaterialComponents_Light_Dialog_Alert_Bridge = 2131689916;
-			
-			// aapt resource value: 0x7F0F01BD
-			public const int Theme_MaterialComponents_Light_Dialog_Bridge = 2131689917;
-			
-			// aapt resource value: 0x7F0F01BE
-			public const int Theme_MaterialComponents_Light_Dialog_FixedSize = 2131689918;
-			
-			// aapt resource value: 0x7F0F01BF
-			public const int Theme_MaterialComponents_Light_Dialog_FixedSize_Bridge = 2131689919;
-			
-			// aapt resource value: 0x7F0F01C0
-			public const int Theme_MaterialComponents_Light_Dialog_MinWidth = 2131689920;
-			
-			// aapt resource value: 0x7F0F01C1
-			public const int Theme_MaterialComponents_Light_Dialog_MinWidth_Bridge = 2131689921;
-			
-			// aapt resource value: 0x7F0F01C3
-			public const int Theme_MaterialComponents_Light_LargeTouch = 2131689923;
-			
-			// aapt resource value: 0x7F0F01C4
-			public const int Theme_MaterialComponents_Light_NoActionBar = 2131689924;
-			
-			// aapt resource value: 0x7F0F01C5
-			public const int Theme_MaterialComponents_Light_NoActionBar_Bridge = 2131689925;
-			
-			// aapt resource value: 0x7F0F01C6
-			public const int Theme_MaterialComponents_NoActionBar = 2131689926;
-			
-			// aapt resource value: 0x7F0F01C7
-			public const int Theme_MaterialComponents_NoActionBar_Bridge = 2131689927;
+			// aapt resource value: 0x7F0F01F4
+			public const int ThemeOverlay_MaterialComponents_Toolbar_Primary = 2131689972;
 			
 			// aapt resource value: 0x7F0F01F5
-			public const int Widget_AppCompat_ActionBar = 2131689973;
+			public const int ThemeOverlay_MaterialComponents_Toolbar_Surface = 2131689973;
+			
+			// aapt resource value: 0x7F0F017C
+			public const int Theme_AppCompat = 2131689852;
+			
+			// aapt resource value: 0x7F0F017D
+			public const int Theme_AppCompat_CompactMenu = 2131689853;
+			
+			// aapt resource value: 0x7F0F017E
+			public const int Theme_AppCompat_DayNight = 2131689854;
+			
+			// aapt resource value: 0x7F0F017F
+			public const int Theme_AppCompat_DayNight_DarkActionBar = 2131689855;
+			
+			// aapt resource value: 0x7F0F0180
+			public const int Theme_AppCompat_DayNight_Dialog = 2131689856;
+			
+			// aapt resource value: 0x7F0F0183
+			public const int Theme_AppCompat_DayNight_DialogWhenLarge = 2131689859;
+			
+			// aapt resource value: 0x7F0F0181
+			public const int Theme_AppCompat_DayNight_Dialog_Alert = 2131689857;
+			
+			// aapt resource value: 0x7F0F0182
+			public const int Theme_AppCompat_DayNight_Dialog_MinWidth = 2131689858;
+			
+			// aapt resource value: 0x7F0F0184
+			public const int Theme_AppCompat_DayNight_NoActionBar = 2131689860;
+			
+			// aapt resource value: 0x7F0F0185
+			public const int Theme_AppCompat_Dialog = 2131689861;
+			
+			// aapt resource value: 0x7F0F0188
+			public const int Theme_AppCompat_DialogWhenLarge = 2131689864;
+			
+			// aapt resource value: 0x7F0F0186
+			public const int Theme_AppCompat_Dialog_Alert = 2131689862;
+			
+			// aapt resource value: 0x7F0F0187
+			public const int Theme_AppCompat_Dialog_MinWidth = 2131689863;
+			
+			// aapt resource value: 0x7F0F0189
+			public const int Theme_AppCompat_Empty = 2131689865;
+			
+			// aapt resource value: 0x7F0F018A
+			public const int Theme_AppCompat_Light = 2131689866;
+			
+			// aapt resource value: 0x7F0F018B
+			public const int Theme_AppCompat_Light_DarkActionBar = 2131689867;
+			
+			// aapt resource value: 0x7F0F018C
+			public const int Theme_AppCompat_Light_Dialog = 2131689868;
+			
+			// aapt resource value: 0x7F0F018F
+			public const int Theme_AppCompat_Light_DialogWhenLarge = 2131689871;
+			
+			// aapt resource value: 0x7F0F018D
+			public const int Theme_AppCompat_Light_Dialog_Alert = 2131689869;
+			
+			// aapt resource value: 0x7F0F018E
+			public const int Theme_AppCompat_Light_Dialog_MinWidth = 2131689870;
+			
+			// aapt resource value: 0x7F0F0190
+			public const int Theme_AppCompat_Light_NoActionBar = 2131689872;
+			
+			// aapt resource value: 0x7F0F0191
+			public const int Theme_AppCompat_NoActionBar = 2131689873;
+			
+			// aapt resource value: 0x7F0F0192
+			public const int Theme_Design = 2131689874;
+			
+			// aapt resource value: 0x7F0F0193
+			public const int Theme_Design_BottomSheetDialog = 2131689875;
+			
+			// aapt resource value: 0x7F0F0194
+			public const int Theme_Design_Light = 2131689876;
+			
+			// aapt resource value: 0x7F0F0195
+			public const int Theme_Design_Light_BottomSheetDialog = 2131689877;
+			
+			// aapt resource value: 0x7F0F0196
+			public const int Theme_Design_Light_NoActionBar = 2131689878;
+			
+			// aapt resource value: 0x7F0F0197
+			public const int Theme_Design_NoActionBar = 2131689879;
+			
+			// aapt resource value: 0x7F0F0198
+			public const int Theme_MaterialComponents = 2131689880;
+			
+			// aapt resource value: 0x7F0F0199
+			public const int Theme_MaterialComponents_BottomSheetDialog = 2131689881;
+			
+			// aapt resource value: 0x7F0F019A
+			public const int Theme_MaterialComponents_Bridge = 2131689882;
+			
+			// aapt resource value: 0x7F0F019B
+			public const int Theme_MaterialComponents_CompactMenu = 2131689883;
+			
+			// aapt resource value: 0x7F0F019C
+			public const int Theme_MaterialComponents_DayNight = 2131689884;
+			
+			// aapt resource value: 0x7F0F019D
+			public const int Theme_MaterialComponents_DayNight_BottomSheetDialog = 2131689885;
+			
+			// aapt resource value: 0x7F0F019E
+			public const int Theme_MaterialComponents_DayNight_Bridge = 2131689886;
+			
+			// aapt resource value: 0x7F0F019F
+			public const int Theme_MaterialComponents_DayNight_DarkActionBar = 2131689887;
+			
+			// aapt resource value: 0x7F0F01A0
+			public const int Theme_MaterialComponents_DayNight_DarkActionBar_Bridge = 2131689888;
+			
+			// aapt resource value: 0x7F0F01A1
+			public const int Theme_MaterialComponents_DayNight_Dialog = 2131689889;
+			
+			// aapt resource value: 0x7F0F01A9
+			public const int Theme_MaterialComponents_DayNight_DialogWhenLarge = 2131689897;
+			
+			// aapt resource value: 0x7F0F01A2
+			public const int Theme_MaterialComponents_DayNight_Dialog_Alert = 2131689890;
+			
+			// aapt resource value: 0x7F0F01A3
+			public const int Theme_MaterialComponents_DayNight_Dialog_Alert_Bridge = 2131689891;
+			
+			// aapt resource value: 0x7F0F01A4
+			public const int Theme_MaterialComponents_DayNight_Dialog_Bridge = 2131689892;
+			
+			// aapt resource value: 0x7F0F01A5
+			public const int Theme_MaterialComponents_DayNight_Dialog_FixedSize = 2131689893;
+			
+			// aapt resource value: 0x7F0F01A6
+			public const int Theme_MaterialComponents_DayNight_Dialog_FixedSize_Bridge = 2131689894;
+			
+			// aapt resource value: 0x7F0F01A7
+			public const int Theme_MaterialComponents_DayNight_Dialog_MinWidth = 2131689895;
+			
+			// aapt resource value: 0x7F0F01A8
+			public const int Theme_MaterialComponents_DayNight_Dialog_MinWidth_Bridge = 2131689896;
+			
+			// aapt resource value: 0x7F0F01AA
+			public const int Theme_MaterialComponents_DayNight_NoActionBar = 2131689898;
+			
+			// aapt resource value: 0x7F0F01AB
+			public const int Theme_MaterialComponents_DayNight_NoActionBar_Bridge = 2131689899;
+			
+			// aapt resource value: 0x7F0F01AC
+			public const int Theme_MaterialComponents_Dialog = 2131689900;
+			
+			// aapt resource value: 0x7F0F01B4
+			public const int Theme_MaterialComponents_DialogWhenLarge = 2131689908;
+			
+			// aapt resource value: 0x7F0F01AD
+			public const int Theme_MaterialComponents_Dialog_Alert = 2131689901;
+			
+			// aapt resource value: 0x7F0F01AE
+			public const int Theme_MaterialComponents_Dialog_Alert_Bridge = 2131689902;
+			
+			// aapt resource value: 0x7F0F01AF
+			public const int Theme_MaterialComponents_Dialog_Bridge = 2131689903;
+			
+			// aapt resource value: 0x7F0F01B0
+			public const int Theme_MaterialComponents_Dialog_FixedSize = 2131689904;
+			
+			// aapt resource value: 0x7F0F01B1
+			public const int Theme_MaterialComponents_Dialog_FixedSize_Bridge = 2131689905;
+			
+			// aapt resource value: 0x7F0F01B2
+			public const int Theme_MaterialComponents_Dialog_MinWidth = 2131689906;
+			
+			// aapt resource value: 0x7F0F01B3
+			public const int Theme_MaterialComponents_Dialog_MinWidth_Bridge = 2131689907;
+			
+			// aapt resource value: 0x7F0F01B5
+			public const int Theme_MaterialComponents_Light = 2131689909;
+			
+			// aapt resource value: 0x7F0F01B6
+			public const int Theme_MaterialComponents_Light_BarSize = 2131689910;
+			
+			// aapt resource value: 0x7F0F01B7
+			public const int Theme_MaterialComponents_Light_BottomSheetDialog = 2131689911;
+			
+			// aapt resource value: 0x7F0F01B8
+			public const int Theme_MaterialComponents_Light_Bridge = 2131689912;
+			
+			// aapt resource value: 0x7F0F01B9
+			public const int Theme_MaterialComponents_Light_DarkActionBar = 2131689913;
+			
+			// aapt resource value: 0x7F0F01BA
+			public const int Theme_MaterialComponents_Light_DarkActionBar_Bridge = 2131689914;
+			
+			// aapt resource value: 0x7F0F01BB
+			public const int Theme_MaterialComponents_Light_Dialog = 2131689915;
+			
+			// aapt resource value: 0x7F0F01C3
+			public const int Theme_MaterialComponents_Light_DialogWhenLarge = 2131689923;
+			
+			// aapt resource value: 0x7F0F01BC
+			public const int Theme_MaterialComponents_Light_Dialog_Alert = 2131689916;
+			
+			// aapt resource value: 0x7F0F01BD
+			public const int Theme_MaterialComponents_Light_Dialog_Alert_Bridge = 2131689917;
+			
+			// aapt resource value: 0x7F0F01BE
+			public const int Theme_MaterialComponents_Light_Dialog_Bridge = 2131689918;
+			
+			// aapt resource value: 0x7F0F01BF
+			public const int Theme_MaterialComponents_Light_Dialog_FixedSize = 2131689919;
+			
+			// aapt resource value: 0x7F0F01C0
+			public const int Theme_MaterialComponents_Light_Dialog_FixedSize_Bridge = 2131689920;
+			
+			// aapt resource value: 0x7F0F01C1
+			public const int Theme_MaterialComponents_Light_Dialog_MinWidth = 2131689921;
+			
+			// aapt resource value: 0x7F0F01C2
+			public const int Theme_MaterialComponents_Light_Dialog_MinWidth_Bridge = 2131689922;
+			
+			// aapt resource value: 0x7F0F01C4
+			public const int Theme_MaterialComponents_Light_LargeTouch = 2131689924;
+			
+			// aapt resource value: 0x7F0F01C5
+			public const int Theme_MaterialComponents_Light_NoActionBar = 2131689925;
+			
+			// aapt resource value: 0x7F0F01C6
+			public const int Theme_MaterialComponents_Light_NoActionBar_Bridge = 2131689926;
+			
+			// aapt resource value: 0x7F0F01C7
+			public const int Theme_MaterialComponents_NoActionBar = 2131689927;
+			
+			// aapt resource value: 0x7F0F01C8
+			public const int Theme_MaterialComponents_NoActionBar_Bridge = 2131689928;
 			
 			// aapt resource value: 0x7F0F01F6
-			public const int Widget_AppCompat_ActionBar_Solid = 2131689974;
+			public const int Widget_AppCompat_ActionBar = 2131689974;
 			
 			// aapt resource value: 0x7F0F01F7
-			public const int Widget_AppCompat_ActionBar_TabBar = 2131689975;
+			public const int Widget_AppCompat_ActionBar_Solid = 2131689975;
 			
 			// aapt resource value: 0x7F0F01F8
-			public const int Widget_AppCompat_ActionBar_TabText = 2131689976;
+			public const int Widget_AppCompat_ActionBar_TabBar = 2131689976;
 			
 			// aapt resource value: 0x7F0F01F9
-			public const int Widget_AppCompat_ActionBar_TabView = 2131689977;
+			public const int Widget_AppCompat_ActionBar_TabText = 2131689977;
 			
 			// aapt resource value: 0x7F0F01FA
-			public const int Widget_AppCompat_ActionButton = 2131689978;
+			public const int Widget_AppCompat_ActionBar_TabView = 2131689978;
 			
 			// aapt resource value: 0x7F0F01FB
-			public const int Widget_AppCompat_ActionButton_CloseMode = 2131689979;
+			public const int Widget_AppCompat_ActionButton = 2131689979;
 			
 			// aapt resource value: 0x7F0F01FC
-			public const int Widget_AppCompat_ActionButton_Overflow = 2131689980;
+			public const int Widget_AppCompat_ActionButton_CloseMode = 2131689980;
 			
 			// aapt resource value: 0x7F0F01FD
-			public const int Widget_AppCompat_ActionMode = 2131689981;
+			public const int Widget_AppCompat_ActionButton_Overflow = 2131689981;
 			
 			// aapt resource value: 0x7F0F01FE
-			public const int Widget_AppCompat_ActivityChooserView = 2131689982;
+			public const int Widget_AppCompat_ActionMode = 2131689982;
 			
 			// aapt resource value: 0x7F0F01FF
-			public const int Widget_AppCompat_AutoCompleteTextView = 2131689983;
+			public const int Widget_AppCompat_ActivityChooserView = 2131689983;
 			
 			// aapt resource value: 0x7F0F0200
-			public const int Widget_AppCompat_Button = 2131689984;
-			
-			// aapt resource value: 0x7F0F0206
-			public const int Widget_AppCompat_ButtonBar = 2131689990;
-			
-			// aapt resource value: 0x7F0F0207
-			public const int Widget_AppCompat_ButtonBar_AlertDialog = 2131689991;
+			public const int Widget_AppCompat_AutoCompleteTextView = 2131689984;
 			
 			// aapt resource value: 0x7F0F0201
-			public const int Widget_AppCompat_Button_Borderless = 2131689985;
+			public const int Widget_AppCompat_Button = 2131689985;
 			
-			// aapt resource value: 0x7F0F0202
-			public const int Widget_AppCompat_Button_Borderless_Colored = 2131689986;
-			
-			// aapt resource value: 0x7F0F0203
-			public const int Widget_AppCompat_Button_ButtonBar_AlertDialog = 2131689987;
-			
-			// aapt resource value: 0x7F0F0204
-			public const int Widget_AppCompat_Button_Colored = 2131689988;
-			
-			// aapt resource value: 0x7F0F0205
-			public const int Widget_AppCompat_Button_Small = 2131689989;
+			// aapt resource value: 0x7F0F0207
+			public const int Widget_AppCompat_ButtonBar = 2131689991;
 			
 			// aapt resource value: 0x7F0F0208
-			public const int Widget_AppCompat_CompoundButton_CheckBox = 2131689992;
+			public const int Widget_AppCompat_ButtonBar_AlertDialog = 2131689992;
+			
+			// aapt resource value: 0x7F0F0202
+			public const int Widget_AppCompat_Button_Borderless = 2131689986;
+			
+			// aapt resource value: 0x7F0F0203
+			public const int Widget_AppCompat_Button_Borderless_Colored = 2131689987;
+			
+			// aapt resource value: 0x7F0F0204
+			public const int Widget_AppCompat_Button_ButtonBar_AlertDialog = 2131689988;
+			
+			// aapt resource value: 0x7F0F0205
+			public const int Widget_AppCompat_Button_Colored = 2131689989;
+			
+			// aapt resource value: 0x7F0F0206
+			public const int Widget_AppCompat_Button_Small = 2131689990;
 			
 			// aapt resource value: 0x7F0F0209
-			public const int Widget_AppCompat_CompoundButton_RadioButton = 2131689993;
+			public const int Widget_AppCompat_CompoundButton_CheckBox = 2131689993;
 			
 			// aapt resource value: 0x7F0F020A
-			public const int Widget_AppCompat_CompoundButton_Switch = 2131689994;
+			public const int Widget_AppCompat_CompoundButton_RadioButton = 2131689994;
 			
 			// aapt resource value: 0x7F0F020B
-			public const int Widget_AppCompat_DrawerArrowToggle = 2131689995;
+			public const int Widget_AppCompat_CompoundButton_Switch = 2131689995;
 			
 			// aapt resource value: 0x7F0F020C
-			public const int Widget_AppCompat_DropDownItem_Spinner = 2131689996;
+			public const int Widget_AppCompat_DrawerArrowToggle = 2131689996;
 			
 			// aapt resource value: 0x7F0F020D
-			public const int Widget_AppCompat_EditText = 2131689997;
+			public const int Widget_AppCompat_DropDownItem_Spinner = 2131689997;
 			
 			// aapt resource value: 0x7F0F020E
-			public const int Widget_AppCompat_ImageButton = 2131689998;
+			public const int Widget_AppCompat_EditText = 2131689998;
 			
 			// aapt resource value: 0x7F0F020F
-			public const int Widget_AppCompat_Light_ActionBar = 2131689999;
+			public const int Widget_AppCompat_ImageButton = 2131689999;
 			
 			// aapt resource value: 0x7F0F0210
-			public const int Widget_AppCompat_Light_ActionBar_Solid = 2131690000;
+			public const int Widget_AppCompat_Light_ActionBar = 2131690000;
 			
 			// aapt resource value: 0x7F0F0211
-			public const int Widget_AppCompat_Light_ActionBar_Solid_Inverse = 2131690001;
+			public const int Widget_AppCompat_Light_ActionBar_Solid = 2131690001;
 			
 			// aapt resource value: 0x7F0F0212
-			public const int Widget_AppCompat_Light_ActionBar_TabBar = 2131690002;
+			public const int Widget_AppCompat_Light_ActionBar_Solid_Inverse = 2131690002;
 			
 			// aapt resource value: 0x7F0F0213
-			public const int Widget_AppCompat_Light_ActionBar_TabBar_Inverse = 2131690003;
+			public const int Widget_AppCompat_Light_ActionBar_TabBar = 2131690003;
 			
 			// aapt resource value: 0x7F0F0214
-			public const int Widget_AppCompat_Light_ActionBar_TabText = 2131690004;
+			public const int Widget_AppCompat_Light_ActionBar_TabBar_Inverse = 2131690004;
 			
 			// aapt resource value: 0x7F0F0215
-			public const int Widget_AppCompat_Light_ActionBar_TabText_Inverse = 2131690005;
+			public const int Widget_AppCompat_Light_ActionBar_TabText = 2131690005;
 			
 			// aapt resource value: 0x7F0F0216
-			public const int Widget_AppCompat_Light_ActionBar_TabView = 2131690006;
+			public const int Widget_AppCompat_Light_ActionBar_TabText_Inverse = 2131690006;
 			
 			// aapt resource value: 0x7F0F0217
-			public const int Widget_AppCompat_Light_ActionBar_TabView_Inverse = 2131690007;
+			public const int Widget_AppCompat_Light_ActionBar_TabView = 2131690007;
 			
 			// aapt resource value: 0x7F0F0218
-			public const int Widget_AppCompat_Light_ActionButton = 2131690008;
+			public const int Widget_AppCompat_Light_ActionBar_TabView_Inverse = 2131690008;
 			
 			// aapt resource value: 0x7F0F0219
-			public const int Widget_AppCompat_Light_ActionButton_CloseMode = 2131690009;
+			public const int Widget_AppCompat_Light_ActionButton = 2131690009;
 			
 			// aapt resource value: 0x7F0F021A
-			public const int Widget_AppCompat_Light_ActionButton_Overflow = 2131690010;
+			public const int Widget_AppCompat_Light_ActionButton_CloseMode = 2131690010;
 			
 			// aapt resource value: 0x7F0F021B
-			public const int Widget_AppCompat_Light_ActionMode_Inverse = 2131690011;
+			public const int Widget_AppCompat_Light_ActionButton_Overflow = 2131690011;
 			
 			// aapt resource value: 0x7F0F021C
-			public const int Widget_AppCompat_Light_ActivityChooserView = 2131690012;
+			public const int Widget_AppCompat_Light_ActionMode_Inverse = 2131690012;
 			
 			// aapt resource value: 0x7F0F021D
-			public const int Widget_AppCompat_Light_AutoCompleteTextView = 2131690013;
+			public const int Widget_AppCompat_Light_ActivityChooserView = 2131690013;
 			
 			// aapt resource value: 0x7F0F021E
-			public const int Widget_AppCompat_Light_DropDownItem_Spinner = 2131690014;
+			public const int Widget_AppCompat_Light_AutoCompleteTextView = 2131690014;
 			
 			// aapt resource value: 0x7F0F021F
-			public const int Widget_AppCompat_Light_ListPopupWindow = 2131690015;
+			public const int Widget_AppCompat_Light_DropDownItem_Spinner = 2131690015;
 			
 			// aapt resource value: 0x7F0F0220
-			public const int Widget_AppCompat_Light_ListView_DropDown = 2131690016;
+			public const int Widget_AppCompat_Light_ListPopupWindow = 2131690016;
 			
 			// aapt resource value: 0x7F0F0221
-			public const int Widget_AppCompat_Light_PopupMenu = 2131690017;
+			public const int Widget_AppCompat_Light_ListView_DropDown = 2131690017;
 			
 			// aapt resource value: 0x7F0F0222
-			public const int Widget_AppCompat_Light_PopupMenu_Overflow = 2131690018;
+			public const int Widget_AppCompat_Light_PopupMenu = 2131690018;
 			
 			// aapt resource value: 0x7F0F0223
-			public const int Widget_AppCompat_Light_SearchView = 2131690019;
+			public const int Widget_AppCompat_Light_PopupMenu_Overflow = 2131690019;
 			
 			// aapt resource value: 0x7F0F0224
-			public const int Widget_AppCompat_Light_Spinner_DropDown_ActionBar = 2131690020;
+			public const int Widget_AppCompat_Light_SearchView = 2131690020;
 			
 			// aapt resource value: 0x7F0F0225
-			public const int Widget_AppCompat_ListMenuView = 2131690021;
+			public const int Widget_AppCompat_Light_Spinner_DropDown_ActionBar = 2131690021;
 			
 			// aapt resource value: 0x7F0F0226
-			public const int Widget_AppCompat_ListPopupWindow = 2131690022;
+			public const int Widget_AppCompat_ListMenuView = 2131690022;
 			
 			// aapt resource value: 0x7F0F0227
-			public const int Widget_AppCompat_ListView = 2131690023;
+			public const int Widget_AppCompat_ListPopupWindow = 2131690023;
 			
 			// aapt resource value: 0x7F0F0228
-			public const int Widget_AppCompat_ListView_DropDown = 2131690024;
+			public const int Widget_AppCompat_ListView = 2131690024;
 			
 			// aapt resource value: 0x7F0F0229
-			public const int Widget_AppCompat_ListView_Menu = 2131690025;
+			public const int Widget_AppCompat_ListView_DropDown = 2131690025;
 			
 			// aapt resource value: 0x7F0F022A
-			public const int Widget_AppCompat_PopupMenu = 2131690026;
+			public const int Widget_AppCompat_ListView_Menu = 2131690026;
 			
 			// aapt resource value: 0x7F0F022B
-			public const int Widget_AppCompat_PopupMenu_Overflow = 2131690027;
+			public const int Widget_AppCompat_PopupMenu = 2131690027;
 			
 			// aapt resource value: 0x7F0F022C
-			public const int Widget_AppCompat_PopupWindow = 2131690028;
+			public const int Widget_AppCompat_PopupMenu_Overflow = 2131690028;
 			
 			// aapt resource value: 0x7F0F022D
-			public const int Widget_AppCompat_ProgressBar = 2131690029;
+			public const int Widget_AppCompat_PopupWindow = 2131690029;
 			
 			// aapt resource value: 0x7F0F022E
-			public const int Widget_AppCompat_ProgressBar_Horizontal = 2131690030;
+			public const int Widget_AppCompat_ProgressBar = 2131690030;
 			
 			// aapt resource value: 0x7F0F022F
-			public const int Widget_AppCompat_RatingBar = 2131690031;
+			public const int Widget_AppCompat_ProgressBar_Horizontal = 2131690031;
 			
 			// aapt resource value: 0x7F0F0230
-			public const int Widget_AppCompat_RatingBar_Indicator = 2131690032;
+			public const int Widget_AppCompat_RatingBar = 2131690032;
 			
 			// aapt resource value: 0x7F0F0231
-			public const int Widget_AppCompat_RatingBar_Small = 2131690033;
+			public const int Widget_AppCompat_RatingBar_Indicator = 2131690033;
 			
 			// aapt resource value: 0x7F0F0232
-			public const int Widget_AppCompat_SearchView = 2131690034;
+			public const int Widget_AppCompat_RatingBar_Small = 2131690034;
 			
 			// aapt resource value: 0x7F0F0233
-			public const int Widget_AppCompat_SearchView_ActionBar = 2131690035;
+			public const int Widget_AppCompat_SearchView = 2131690035;
 			
 			// aapt resource value: 0x7F0F0234
-			public const int Widget_AppCompat_SeekBar = 2131690036;
+			public const int Widget_AppCompat_SearchView_ActionBar = 2131690036;
 			
 			// aapt resource value: 0x7F0F0235
-			public const int Widget_AppCompat_SeekBar_Discrete = 2131690037;
+			public const int Widget_AppCompat_SeekBar = 2131690037;
 			
 			// aapt resource value: 0x7F0F0236
-			public const int Widget_AppCompat_Spinner = 2131690038;
+			public const int Widget_AppCompat_SeekBar_Discrete = 2131690038;
 			
 			// aapt resource value: 0x7F0F0237
-			public const int Widget_AppCompat_Spinner_DropDown = 2131690039;
+			public const int Widget_AppCompat_Spinner = 2131690039;
 			
 			// aapt resource value: 0x7F0F0238
-			public const int Widget_AppCompat_Spinner_DropDown_ActionBar = 2131690040;
+			public const int Widget_AppCompat_Spinner_DropDown = 2131690040;
 			
 			// aapt resource value: 0x7F0F0239
-			public const int Widget_AppCompat_Spinner_Underlined = 2131690041;
+			public const int Widget_AppCompat_Spinner_DropDown_ActionBar = 2131690041;
 			
 			// aapt resource value: 0x7F0F023A
-			public const int Widget_AppCompat_TextView = 2131690042;
+			public const int Widget_AppCompat_Spinner_Underlined = 2131690042;
 			
 			// aapt resource value: 0x7F0F023B
-			public const int Widget_AppCompat_TextView_SpinnerItem = 2131690043;
+			public const int Widget_AppCompat_TextView = 2131690043;
 			
 			// aapt resource value: 0x7F0F023C
-			public const int Widget_AppCompat_Toolbar = 2131690044;
+			public const int Widget_AppCompat_TextView_SpinnerItem = 2131690044;
 			
 			// aapt resource value: 0x7F0F023D
-			public const int Widget_AppCompat_Toolbar_Button_Navigation = 2131690045;
+			public const int Widget_AppCompat_Toolbar = 2131690045;
 			
 			// aapt resource value: 0x7F0F023E
-			public const int Widget_Compat_NotificationActionContainer = 2131690046;
+			public const int Widget_AppCompat_Toolbar_Button_Navigation = 2131690046;
 			
 			// aapt resource value: 0x7F0F023F
-			public const int Widget_Compat_NotificationActionText = 2131690047;
+			public const int Widget_Compat_NotificationActionContainer = 2131690047;
 			
 			// aapt resource value: 0x7F0F0240
-			public const int Widget_Design_AppBarLayout = 2131690048;
+			public const int Widget_Compat_NotificationActionText = 2131690048;
 			
 			// aapt resource value: 0x7F0F0241
-			public const int Widget_Design_BottomNavigationView = 2131690049;
+			public const int Widget_Design_AppBarLayout = 2131690049;
 			
 			// aapt resource value: 0x7F0F0242
-			public const int Widget_Design_BottomSheet_Modal = 2131690050;
+			public const int Widget_Design_BottomNavigationView = 2131690050;
 			
 			// aapt resource value: 0x7F0F0243
-			public const int Widget_Design_CollapsingToolbar = 2131690051;
+			public const int Widget_Design_BottomSheet_Modal = 2131690051;
 			
 			// aapt resource value: 0x7F0F0244
-			public const int Widget_Design_FloatingActionButton = 2131690052;
+			public const int Widget_Design_CollapsingToolbar = 2131690052;
 			
 			// aapt resource value: 0x7F0F0245
-			public const int Widget_Design_NavigationView = 2131690053;
+			public const int Widget_Design_FloatingActionButton = 2131690053;
 			
 			// aapt resource value: 0x7F0F0246
-			public const int Widget_Design_ScrimInsetsFrameLayout = 2131690054;
+			public const int Widget_Design_NavigationView = 2131690054;
 			
 			// aapt resource value: 0x7F0F0247
-			public const int Widget_Design_Snackbar = 2131690055;
+			public const int Widget_Design_ScrimInsetsFrameLayout = 2131690055;
 			
 			// aapt resource value: 0x7F0F0248
-			public const int Widget_Design_TabLayout = 2131690056;
+			public const int Widget_Design_Snackbar = 2131690056;
 			
 			// aapt resource value: 0x7F0F0249
-			public const int Widget_Design_TextInputLayout = 2131690057;
+			public const int Widget_Design_TabLayout = 2131690057;
 			
 			// aapt resource value: 0x7F0F024A
-			public const int Widget_MaterialComponents_ActionBar_Primary = 2131690058;
+			public const int Widget_Design_TextInputLayout = 2131690058;
 			
 			// aapt resource value: 0x7F0F024B
-			public const int Widget_MaterialComponents_ActionBar_PrimarySurface = 2131690059;
+			public const int Widget_MaterialComponents_ActionBar_Primary = 2131690059;
 			
 			// aapt resource value: 0x7F0F024C
-			public const int Widget_MaterialComponents_ActionBar_Solid = 2131690060;
+			public const int Widget_MaterialComponents_ActionBar_PrimarySurface = 2131690060;
 			
 			// aapt resource value: 0x7F0F024D
-			public const int Widget_MaterialComponents_ActionBar_Surface = 2131690061;
+			public const int Widget_MaterialComponents_ActionBar_Solid = 2131690061;
 			
 			// aapt resource value: 0x7F0F024E
-			public const int Widget_MaterialComponents_AppBarLayout_Primary = 2131690062;
+			public const int Widget_MaterialComponents_ActionBar_Surface = 2131690062;
 			
 			// aapt resource value: 0x7F0F024F
-			public const int Widget_MaterialComponents_AppBarLayout_PrimarySurface = 2131690063;
+			public const int Widget_MaterialComponents_AppBarLayout_Primary = 2131690063;
 			
 			// aapt resource value: 0x7F0F0250
-			public const int Widget_MaterialComponents_AppBarLayout_Surface = 2131690064;
+			public const int Widget_MaterialComponents_AppBarLayout_PrimarySurface = 2131690064;
 			
 			// aapt resource value: 0x7F0F0251
-			public const int Widget_MaterialComponents_AutoCompleteTextView_FilledBox = 2131690065;
+			public const int Widget_MaterialComponents_AppBarLayout_Surface = 2131690065;
 			
 			// aapt resource value: 0x7F0F0252
-			public const int Widget_MaterialComponents_AutoCompleteTextView_FilledBox_Dense = 2131690066;
+			public const int Widget_MaterialComponents_AutoCompleteTextView_FilledBox = 2131690066;
 			
 			// aapt resource value: 0x7F0F0253
-			public const int Widget_MaterialComponents_AutoCompleteTextView_OutlinedBox = 2131690067;
+			public const int Widget_MaterialComponents_AutoCompleteTextView_FilledBox_Dense = 2131690067;
 			
 			// aapt resource value: 0x7F0F0254
-			public const int Widget_MaterialComponents_AutoCompleteTextView_OutlinedBox_Dense = 2131690068;
+			public const int Widget_MaterialComponents_AutoCompleteTextView_OutlinedBox = 2131690068;
 			
 			// aapt resource value: 0x7F0F0255
-			public const int Widget_MaterialComponents_Badge = 2131690069;
+			public const int Widget_MaterialComponents_AutoCompleteTextView_OutlinedBox_Dense = 2131690069;
 			
 			// aapt resource value: 0x7F0F0256
-			public const int Widget_MaterialComponents_BottomAppBar = 2131690070;
+			public const int Widget_MaterialComponents_Badge = 2131690070;
 			
 			// aapt resource value: 0x7F0F0257
-			public const int Widget_MaterialComponents_BottomAppBar_Colored = 2131690071;
+			public const int Widget_MaterialComponents_BottomAppBar = 2131690071;
 			
 			// aapt resource value: 0x7F0F0258
-			public const int Widget_MaterialComponents_BottomAppBar_PrimarySurface = 2131690072;
+			public const int Widget_MaterialComponents_BottomAppBar_Colored = 2131690072;
 			
 			// aapt resource value: 0x7F0F0259
-			public const int Widget_MaterialComponents_BottomNavigationView = 2131690073;
+			public const int Widget_MaterialComponents_BottomAppBar_PrimarySurface = 2131690073;
 			
 			// aapt resource value: 0x7F0F025A
-			public const int Widget_MaterialComponents_BottomNavigationView_Colored = 2131690074;
+			public const int Widget_MaterialComponents_BottomNavigationView = 2131690074;
 			
 			// aapt resource value: 0x7F0F025B
-			public const int Widget_MaterialComponents_BottomNavigationView_PrimarySurface = 2131690075;
+			public const int Widget_MaterialComponents_BottomNavigationView_Colored = 2131690075;
 			
 			// aapt resource value: 0x7F0F025C
-			public const int Widget_MaterialComponents_BottomSheet = 2131690076;
+			public const int Widget_MaterialComponents_BottomNavigationView_PrimarySurface = 2131690076;
 			
 			// aapt resource value: 0x7F0F025D
-			public const int Widget_MaterialComponents_BottomSheet_Modal = 2131690077;
+			public const int Widget_MaterialComponents_BottomSheet = 2131690077;
 			
 			// aapt resource value: 0x7F0F025E
-			public const int Widget_MaterialComponents_Button = 2131690078;
+			public const int Widget_MaterialComponents_BottomSheet_Modal = 2131690078;
 			
 			// aapt resource value: 0x7F0F025F
-			public const int Widget_MaterialComponents_Button_Icon = 2131690079;
+			public const int Widget_MaterialComponents_Button = 2131690079;
 			
 			// aapt resource value: 0x7F0F0260
-			public const int Widget_MaterialComponents_Button_OutlinedButton = 2131690080;
+			public const int Widget_MaterialComponents_Button_Icon = 2131690080;
 			
 			// aapt resource value: 0x7F0F0261
-			public const int Widget_MaterialComponents_Button_OutlinedButton_Icon = 2131690081;
+			public const int Widget_MaterialComponents_Button_OutlinedButton = 2131690081;
 			
 			// aapt resource value: 0x7F0F0262
-			public const int Widget_MaterialComponents_Button_TextButton = 2131690082;
+			public const int Widget_MaterialComponents_Button_OutlinedButton_Icon = 2131690082;
 			
 			// aapt resource value: 0x7F0F0263
-			public const int Widget_MaterialComponents_Button_TextButton_Dialog = 2131690083;
+			public const int Widget_MaterialComponents_Button_TextButton = 2131690083;
 			
 			// aapt resource value: 0x7F0F0264
-			public const int Widget_MaterialComponents_Button_TextButton_Dialog_Flush = 2131690084;
+			public const int Widget_MaterialComponents_Button_TextButton_Dialog = 2131690084;
 			
 			// aapt resource value: 0x7F0F0265
-			public const int Widget_MaterialComponents_Button_TextButton_Dialog_Icon = 2131690085;
+			public const int Widget_MaterialComponents_Button_TextButton_Dialog_Flush = 2131690085;
 			
 			// aapt resource value: 0x7F0F0266
-			public const int Widget_MaterialComponents_Button_TextButton_Icon = 2131690086;
+			public const int Widget_MaterialComponents_Button_TextButton_Dialog_Icon = 2131690086;
 			
 			// aapt resource value: 0x7F0F0267
-			public const int Widget_MaterialComponents_Button_TextButton_Snackbar = 2131690087;
+			public const int Widget_MaterialComponents_Button_TextButton_Icon = 2131690087;
 			
 			// aapt resource value: 0x7F0F0268
-			public const int Widget_MaterialComponents_Button_UnelevatedButton = 2131690088;
+			public const int Widget_MaterialComponents_Button_TextButton_Snackbar = 2131690088;
 			
 			// aapt resource value: 0x7F0F0269
-			public const int Widget_MaterialComponents_Button_UnelevatedButton_Icon = 2131690089;
+			public const int Widget_MaterialComponents_Button_UnelevatedButton = 2131690089;
 			
 			// aapt resource value: 0x7F0F026A
-			public const int Widget_MaterialComponents_CardView = 2131690090;
+			public const int Widget_MaterialComponents_Button_UnelevatedButton_Icon = 2131690090;
 			
 			// aapt resource value: 0x7F0F026B
-			public const int Widget_MaterialComponents_CheckedTextView = 2131690091;
-			
-			// aapt resource value: 0x7F0F0270
-			public const int Widget_MaterialComponents_ChipGroup = 2131690096;
+			public const int Widget_MaterialComponents_CardView = 2131690091;
 			
 			// aapt resource value: 0x7F0F026C
-			public const int Widget_MaterialComponents_Chip_Action = 2131690092;
-			
-			// aapt resource value: 0x7F0F026D
-			public const int Widget_MaterialComponents_Chip_Choice = 2131690093;
-			
-			// aapt resource value: 0x7F0F026E
-			public const int Widget_MaterialComponents_Chip_Entry = 2131690094;
-			
-			// aapt resource value: 0x7F0F026F
-			public const int Widget_MaterialComponents_Chip_Filter = 2131690095;
+			public const int Widget_MaterialComponents_CheckedTextView = 2131690092;
 			
 			// aapt resource value: 0x7F0F0271
-			public const int Widget_MaterialComponents_CompoundButton_CheckBox = 2131690097;
+			public const int Widget_MaterialComponents_ChipGroup = 2131690097;
+			
+			// aapt resource value: 0x7F0F026D
+			public const int Widget_MaterialComponents_Chip_Action = 2131690093;
+			
+			// aapt resource value: 0x7F0F026E
+			public const int Widget_MaterialComponents_Chip_Choice = 2131690094;
+			
+			// aapt resource value: 0x7F0F026F
+			public const int Widget_MaterialComponents_Chip_Entry = 2131690095;
+			
+			// aapt resource value: 0x7F0F0270
+			public const int Widget_MaterialComponents_Chip_Filter = 2131690096;
 			
 			// aapt resource value: 0x7F0F0272
-			public const int Widget_MaterialComponents_CompoundButton_RadioButton = 2131690098;
+			public const int Widget_MaterialComponents_CompoundButton_CheckBox = 2131690098;
 			
 			// aapt resource value: 0x7F0F0273
-			public const int Widget_MaterialComponents_CompoundButton_Switch = 2131690099;
+			public const int Widget_MaterialComponents_CompoundButton_RadioButton = 2131690099;
 			
 			// aapt resource value: 0x7F0F0274
-			public const int Widget_MaterialComponents_ExtendedFloatingActionButton = 2131690100;
+			public const int Widget_MaterialComponents_CompoundButton_Switch = 2131690100;
 			
 			// aapt resource value: 0x7F0F0275
-			public const int Widget_MaterialComponents_ExtendedFloatingActionButton_Icon = 2131690101;
+			public const int Widget_MaterialComponents_ExtendedFloatingActionButton = 2131690101;
 			
 			// aapt resource value: 0x7F0F0276
-			public const int Widget_MaterialComponents_FloatingActionButton = 2131690102;
+			public const int Widget_MaterialComponents_ExtendedFloatingActionButton_Icon = 2131690102;
 			
 			// aapt resource value: 0x7F0F0277
-			public const int Widget_MaterialComponents_Light_ActionBar_Solid = 2131690103;
+			public const int Widget_MaterialComponents_FloatingActionButton = 2131690103;
 			
 			// aapt resource value: 0x7F0F0278
-			public const int Widget_MaterialComponents_MaterialButtonToggleGroup = 2131690104;
+			public const int Widget_MaterialComponents_Light_ActionBar_Solid = 2131690104;
 			
 			// aapt resource value: 0x7F0F0279
-			public const int Widget_MaterialComponents_MaterialCalendar = 2131690105;
+			public const int Widget_MaterialComponents_MaterialButtonToggleGroup = 2131690105;
 			
 			// aapt resource value: 0x7F0F027A
-			public const int Widget_MaterialComponents_MaterialCalendar_Day = 2131690106;
-			
-			// aapt resource value: 0x7F0F027E
-			public const int Widget_MaterialComponents_MaterialCalendar_DayTextView = 2131690110;
+			public const int Widget_MaterialComponents_MaterialCalendar = 2131690106;
 			
 			// aapt resource value: 0x7F0F027B
-			public const int Widget_MaterialComponents_MaterialCalendar_Day_Invalid = 2131690107;
-			
-			// aapt resource value: 0x7F0F027C
-			public const int Widget_MaterialComponents_MaterialCalendar_Day_Selected = 2131690108;
-			
-			// aapt resource value: 0x7F0F027D
-			public const int Widget_MaterialComponents_MaterialCalendar_Day_Today = 2131690109;
+			public const int Widget_MaterialComponents_MaterialCalendar_Day = 2131690107;
 			
 			// aapt resource value: 0x7F0F027F
-			public const int Widget_MaterialComponents_MaterialCalendar_Fullscreen = 2131690111;
+			public const int Widget_MaterialComponents_MaterialCalendar_DayTextView = 2131690111;
+			
+			// aapt resource value: 0x7F0F027C
+			public const int Widget_MaterialComponents_MaterialCalendar_Day_Invalid = 2131690108;
+			
+			// aapt resource value: 0x7F0F027D
+			public const int Widget_MaterialComponents_MaterialCalendar_Day_Selected = 2131690109;
+			
+			// aapt resource value: 0x7F0F027E
+			public const int Widget_MaterialComponents_MaterialCalendar_Day_Today = 2131690110;
 			
 			// aapt resource value: 0x7F0F0280
-			public const int Widget_MaterialComponents_MaterialCalendar_HeaderConfirmButton = 2131690112;
+			public const int Widget_MaterialComponents_MaterialCalendar_Fullscreen = 2131690112;
 			
 			// aapt resource value: 0x7F0F0281
-			public const int Widget_MaterialComponents_MaterialCalendar_HeaderDivider = 2131690113;
+			public const int Widget_MaterialComponents_MaterialCalendar_HeaderConfirmButton = 2131690113;
 			
 			// aapt resource value: 0x7F0F0282
-			public const int Widget_MaterialComponents_MaterialCalendar_HeaderLayout = 2131690114;
+			public const int Widget_MaterialComponents_MaterialCalendar_HeaderDivider = 2131690114;
 			
 			// aapt resource value: 0x7F0F0283
-			public const int Widget_MaterialComponents_MaterialCalendar_HeaderSelection = 2131690115;
+			public const int Widget_MaterialComponents_MaterialCalendar_HeaderLayout = 2131690115;
 			
 			// aapt resource value: 0x7F0F0284
-			public const int Widget_MaterialComponents_MaterialCalendar_HeaderSelection_Fullscreen = 2131690116;
+			public const int Widget_MaterialComponents_MaterialCalendar_HeaderSelection = 2131690116;
 			
 			// aapt resource value: 0x7F0F0285
-			public const int Widget_MaterialComponents_MaterialCalendar_HeaderTitle = 2131690117;
+			public const int Widget_MaterialComponents_MaterialCalendar_HeaderSelection_Fullscreen = 2131690117;
 			
 			// aapt resource value: 0x7F0F0286
-			public const int Widget_MaterialComponents_MaterialCalendar_HeaderToggleButton = 2131690118;
+			public const int Widget_MaterialComponents_MaterialCalendar_HeaderTitle = 2131690118;
 			
 			// aapt resource value: 0x7F0F0287
-			public const int Widget_MaterialComponents_MaterialCalendar_Item = 2131690119;
+			public const int Widget_MaterialComponents_MaterialCalendar_HeaderToggleButton = 2131690119;
 			
 			// aapt resource value: 0x7F0F0288
-			public const int Widget_MaterialComponents_MaterialCalendar_Year = 2131690120;
+			public const int Widget_MaterialComponents_MaterialCalendar_Item = 2131690120;
 			
 			// aapt resource value: 0x7F0F0289
-			public const int Widget_MaterialComponents_MaterialCalendar_Year_Selected = 2131690121;
+			public const int Widget_MaterialComponents_MaterialCalendar_Year = 2131690121;
 			
 			// aapt resource value: 0x7F0F028A
-			public const int Widget_MaterialComponents_MaterialCalendar_Year_Today = 2131690122;
+			public const int Widget_MaterialComponents_MaterialCalendar_Year_Selected = 2131690122;
 			
 			// aapt resource value: 0x7F0F028B
-			public const int Widget_MaterialComponents_NavigationView = 2131690123;
+			public const int Widget_MaterialComponents_MaterialCalendar_Year_Today = 2131690123;
 			
 			// aapt resource value: 0x7F0F028C
-			public const int Widget_MaterialComponents_PopupMenu = 2131690124;
+			public const int Widget_MaterialComponents_NavigationView = 2131690124;
 			
 			// aapt resource value: 0x7F0F028D
-			public const int Widget_MaterialComponents_PopupMenu_ContextMenu = 2131690125;
+			public const int Widget_MaterialComponents_PopupMenu = 2131690125;
 			
 			// aapt resource value: 0x7F0F028E
-			public const int Widget_MaterialComponents_PopupMenu_ListPopupWindow = 2131690126;
+			public const int Widget_MaterialComponents_PopupMenu_ContextMenu = 2131690126;
 			
 			// aapt resource value: 0x7F0F028F
-			public const int Widget_MaterialComponents_PopupMenu_Overflow = 2131690127;
+			public const int Widget_MaterialComponents_PopupMenu_ListPopupWindow = 2131690127;
 			
 			// aapt resource value: 0x7F0F0290
-			public const int Widget_MaterialComponents_Snackbar = 2131690128;
+			public const int Widget_MaterialComponents_PopupMenu_Overflow = 2131690128;
 			
 			// aapt resource value: 0x7F0F0291
-			public const int Widget_MaterialComponents_Snackbar_FullWidth = 2131690129;
+			public const int Widget_MaterialComponents_Snackbar = 2131690129;
 			
 			// aapt resource value: 0x7F0F0292
-			public const int Widget_MaterialComponents_TabLayout = 2131690130;
+			public const int Widget_MaterialComponents_Snackbar_FullWidth = 2131690130;
 			
 			// aapt resource value: 0x7F0F0293
-			public const int Widget_MaterialComponents_TabLayout_Colored = 2131690131;
+			public const int Widget_MaterialComponents_TabLayout = 2131690131;
 			
 			// aapt resource value: 0x7F0F0294
-			public const int Widget_MaterialComponents_TabLayout_PrimarySurface = 2131690132;
+			public const int Widget_MaterialComponents_TabLayout_Colored = 2131690132;
 			
 			// aapt resource value: 0x7F0F0295
-			public const int Widget_MaterialComponents_TextInputEditText_FilledBox = 2131690133;
+			public const int Widget_MaterialComponents_TabLayout_PrimarySurface = 2131690133;
 			
 			// aapt resource value: 0x7F0F0296
-			public const int Widget_MaterialComponents_TextInputEditText_FilledBox_Dense = 2131690134;
+			public const int Widget_MaterialComponents_TextInputEditText_FilledBox = 2131690134;
 			
 			// aapt resource value: 0x7F0F0297
-			public const int Widget_MaterialComponents_TextInputEditText_OutlinedBox = 2131690135;
+			public const int Widget_MaterialComponents_TextInputEditText_FilledBox_Dense = 2131690135;
 			
 			// aapt resource value: 0x7F0F0298
-			public const int Widget_MaterialComponents_TextInputEditText_OutlinedBox_Dense = 2131690136;
+			public const int Widget_MaterialComponents_TextInputEditText_OutlinedBox = 2131690136;
 			
 			// aapt resource value: 0x7F0F0299
-			public const int Widget_MaterialComponents_TextInputLayout_FilledBox = 2131690137;
+			public const int Widget_MaterialComponents_TextInputEditText_OutlinedBox_Dense = 2131690137;
 			
 			// aapt resource value: 0x7F0F029A
-			public const int Widget_MaterialComponents_TextInputLayout_FilledBox_Dense = 2131690138;
+			public const int Widget_MaterialComponents_TextInputLayout_FilledBox = 2131690138;
 			
 			// aapt resource value: 0x7F0F029B
-			public const int Widget_MaterialComponents_TextInputLayout_FilledBox_Dense_ExposedDropdownMenu = 2131690139;
+			public const int Widget_MaterialComponents_TextInputLayout_FilledBox_Dense = 2131690139;
 			
 			// aapt resource value: 0x7F0F029C
-			public const int Widget_MaterialComponents_TextInputLayout_FilledBox_ExposedDropdownMenu = 2131690140;
+			public const int Widget_MaterialComponents_TextInputLayout_FilledBox_Dense_ExposedDropdownMenu = 2131690140;
 			
 			// aapt resource value: 0x7F0F029D
-			public const int Widget_MaterialComponents_TextInputLayout_OutlinedBox = 2131690141;
+			public const int Widget_MaterialComponents_TextInputLayout_FilledBox_ExposedDropdownMenu = 2131690141;
 			
 			// aapt resource value: 0x7F0F029E
-			public const int Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense = 2131690142;
+			public const int Widget_MaterialComponents_TextInputLayout_OutlinedBox = 2131690142;
 			
 			// aapt resource value: 0x7F0F029F
-			public const int Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense_ExposedDropdownMenu = 2131690143;
+			public const int Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense = 2131690143;
 			
 			// aapt resource value: 0x7F0F02A0
-			public const int Widget_MaterialComponents_TextInputLayout_OutlinedBox_ExposedDropdownMenu = 2131690144;
+			public const int Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense_ExposedDropdownMenu = 2131690144;
 			
 			// aapt resource value: 0x7F0F02A1
-			public const int Widget_MaterialComponents_TextView = 2131690145;
+			public const int Widget_MaterialComponents_TextInputLayout_OutlinedBox_ExposedDropdownMenu = 2131690145;
 			
 			// aapt resource value: 0x7F0F02A2
-			public const int Widget_MaterialComponents_Toolbar = 2131690146;
+			public const int Widget_MaterialComponents_TextView = 2131690146;
 			
 			// aapt resource value: 0x7F0F02A3
-			public const int Widget_MaterialComponents_Toolbar_Primary = 2131690147;
+			public const int Widget_MaterialComponents_Toolbar = 2131690147;
 			
 			// aapt resource value: 0x7F0F02A4
-			public const int Widget_MaterialComponents_Toolbar_PrimarySurface = 2131690148;
+			public const int Widget_MaterialComponents_Toolbar_Primary = 2131690148;
 			
 			// aapt resource value: 0x7F0F02A5
-			public const int Widget_MaterialComponents_Toolbar_Surface = 2131690149;
+			public const int Widget_MaterialComponents_Toolbar_PrimarySurface = 2131690149;
 			
 			// aapt resource value: 0x7F0F02A6
-			public const int Widget_Support_CoordinatorLayout = 2131690150;
+			public const int Widget_MaterialComponents_Toolbar_Surface = 2131690150;
+			
+			// aapt resource value: 0x7F0F02A7
+			public const int Widget_Support_CoordinatorLayout = 2131690151;
 			
 			static Style()
 			{

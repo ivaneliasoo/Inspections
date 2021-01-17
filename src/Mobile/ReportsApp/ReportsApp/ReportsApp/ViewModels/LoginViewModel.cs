@@ -5,6 +5,7 @@ using ReportsApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 
 namespace ReportsApp.ViewModels
@@ -30,24 +31,33 @@ namespace ReportsApp.ViewModels
         }
 
 
+        private LayoutState _currentState;
+
+        public LayoutState CurrentState
+        {
+            get { return _currentState; }
+            set { SetProperty(ref _currentState, value); }
+        }
+
+
         public Command LoginCommand { get; }
 
         public LoginViewModel()
         {
             authService = new AuthenticationService();
-
+            CurrentState = LayoutState.None;
             LoginCommand = new Command(OnLoginClicked);
         }
 
         private async void OnLoginClicked(object obj)
         {
-            // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
-            //await Shell.Current.GoToAsync($"//{nameof(ReportOptions)}");
             try
             {
+                IsBusy = true;
+                CurrentState = LayoutState.Loading;
                 await authService.Login(UserName, Password, string.Empty);
-                await Application.Current.MainPage.DisplayAlert("Success", "Welcome Mr. Stark", "OK");
-                await Shell.Current.GoToAsync($"//{nameof(ReportOptions)}");
+                // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
+                await Shell.Current.GoToAsync("//Reports");
             }
             catch (Exception ex)
             {
@@ -57,8 +67,24 @@ namespace ReportsApp.ViewModels
                 });
 
                 await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+                OnLoginFailed?.Invoke(this, new LoginFailedEventArgs(ex.Message));
+            }
+            finally
+            {
+                CurrentState = LayoutState.None;
+                IsBusy = false;
             }
 
+        }
+        public event EventHandler<LoginFailedEventArgs> OnLoginFailed;
+    }
+
+    public class LoginFailedEventArgs : EventArgs
+    {
+        public string Message { get; }
+        public LoginFailedEventArgs(string message)
+        {
+            Message = message;
         }
     }
 }

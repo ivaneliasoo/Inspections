@@ -16,20 +16,8 @@ namespace ReportsApp.Services.Secutiry
         void Logout();
     }
 
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : BaseService<IAuthenticationApi>,  IAuthenticationService
     {
-        private AuthorizationStore authStore;
-        private IAuthenticationApi _api;
-       
-        public AuthenticationService()
-        {
-            authStore = new AuthorizationStore();
-            _api = RestService.For<IAuthenticationApi>(new HttpClient(new AuthHeaderHandler(authStore))
-            {
-                BaseAddress = new Uri("http://inspectionsapi-dev.eba-r84ntzqp.us-east-2.elasticbeanstalk.com"),
-                Timeout = TimeSpan.FromSeconds(5)
-            });
-        }
         public async Task Login(string user, string password, string remember)
         {
             try
@@ -58,5 +46,12 @@ namespace ReportsApp.Services.Secutiry
                 throw;
             }
         }
+
+        public async Task<bool> IsLoggedIn()
+        {
+            var token = await authStore.GetAuthorizationTokenAsync();
+            return string.IsNullOrWhiteSpace(token) == false;
+        }
+
     }
 }

@@ -5,7 +5,7 @@ namespace ReportsApp.Persistence
 {
     public interface IAuthorizationStore
     {
-        Task<string> GetAuthorizationToken();
+        Task<string> GetAuthorizationTokenAsync();
         void RemoveAuthorizationInfo();
         Task SetAuthorizationInfo(string token);
         Task SetAuthorizationInfo(UserInfo activeUser);

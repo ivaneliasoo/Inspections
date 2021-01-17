@@ -4,4 +4,5 @@
 	<application android:label="ReportsApp.Android" android:theme="@style/MainTheme" android:allowBackup="false" android:usesCleartextTraffic="true" android:fullBackupContent="@xml/auto_backup_rules"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 </manifest>

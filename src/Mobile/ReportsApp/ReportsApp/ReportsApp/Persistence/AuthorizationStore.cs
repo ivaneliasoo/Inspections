@@ -12,7 +12,7 @@ namespace ReportsApp.Persistence
 {
     public class AuthorizationStore : IAuthorizationStore
     {
-        public async Task<string> GetAuthorizationToken()
+        public async Task<string> GetAuthorizationTokenAsync()
         {
             try
             {

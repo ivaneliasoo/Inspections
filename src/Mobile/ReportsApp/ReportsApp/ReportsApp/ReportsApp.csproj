@@ -6,20 +6,42 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\fa-Brands-Regular-400.otf" />
+    <None Remove="Resources\fa-Free-Regular-400.otf" />
+    <None Remove="Resources\fa-Free-Solid-900.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\fa-Brands-Regular-400.otf" />
+    <EmbeddedResource Include="Resources\fa-Free-Regular-400.otf" />
+    <EmbeddedResource Include="Resources\fa-Free-Solid-900.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="3.0.1" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.1.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.1.0" />
     <PackageReference Include="Refit" Version="5.2.4" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
-    <PackageReference Include="Xamarin.CommunityToolkit" Version="1.0.0" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="1.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.1-preview1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.1-preview1" />  
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\ReportOptions.xaml">
+    <EmbeddedResource Update="Views\ReportEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\ReportsListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\ReportsListPage.xaml.cs">
+      <DependentUpon>ReportsListPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

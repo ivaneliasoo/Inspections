@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace ReportsApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ReportOptions : ContentPage
+    public partial class ReportEditPage : ContentPage
     {
-        public ReportOptions()
+        public ReportEditPage()
         {
             InitializeComponent();
         }

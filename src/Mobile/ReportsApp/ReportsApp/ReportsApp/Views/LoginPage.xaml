@@ -4,22 +4,42 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModel="clr-namespace:ReportsApp.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              mc:Ignorable="d"
-             x:Class="ReportsApp.Views.LoginPage"
-             Shell.NavBarIsVisible="False">
+             Shell.PresentationMode="ModalAnimated"
+             Shell.NavBarIsVisible="false"
+             x:Class="ReportsApp.Views.LoginPage">
     <ContentPage.BindingContext>
-        <viewModel:LoginViewModel />
+        <viewModel:LoginViewModel OnLoginFailed="LoginViewModel_OnLoginFailed" />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+        <StackLayout xct:StateLayout.CurrentState="{Binding CurrentState}" xct:StateLayout.AnimateStateChanges="True"  Padding="10,0,10,0" VerticalOptions="Center">
+            <xct:StateLayout.StateViews>
+                <xct:StateView StateKey="Loading" >
+                    <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                        <ActivityIndicator Color="{StaticResource Primary}" IsRunning="{Binding IsBusy}" />
+                    </StackLayout>
+                </xct:StateView>
+                <xct:StateView StateKey="None">
+                    <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                        
+                    </StackLayout>
+                </xct:StateView>
+            </xct:StateLayout.StateViews>
             <Entry Keyboard="Default"
-                   Placeholder="UserName"
-                   VerticalOptions="CenterAndExpand" Text="{Binding UserName}" />
+                               ReturnType="Next"
+                               Placeholder="UserName"
+                               VerticalOptions="CenterAndExpand" Text="{Binding UserName}" />
             <Entry Keyboard="Default"
-                   IsPassword="True"
-                   Placeholder="Password"
-                   Text="{Binding Password}"
-                   VerticalOptions="CenterAndExpand" />
+                               IsPassword="True"
+                               Placeholder="Password"
+                               Text="{Binding Password}"
+                               ReturnType="Done"
+                               VerticalOptions="CenterAndExpand">
+                <Entry.Behaviors>
+                    <xct:EventToCommandBehavior EventName="Completed" Command="{Binding LoginCommand}" />
+                </Entry.Behaviors>
+            </Entry>
             <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
         </StackLayout>
     </ContentPage.Content>

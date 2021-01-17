@@ -16,7 +16,7 @@ namespace ReportsApp
             InitializeComponent();
 
             //DependencyService.Register<MockDataStore>();
-            MainPage = new LoginPage();
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()
@@ -25,15 +25,6 @@ namespace ReportsApp
                   "uwp={Your UWP App secret here};" +
                   "ios={Your iOS App secret here}",
                   typeof(Analytics), typeof(Crashes));
-            //try
-            //{
-            //    Crashes.GenerateTestCrash();
-            //}
-            //catch (Exception ex)
-            //{
-            //    Crashes.TrackError(ex);
-            //    throw;
-            //}
         }
 
         protected override void OnSleep()
