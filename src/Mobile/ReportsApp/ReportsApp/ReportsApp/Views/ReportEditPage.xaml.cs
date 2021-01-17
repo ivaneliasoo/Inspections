@@ -26,7 +26,7 @@ namespace ReportsApp.Views
 
         private void CameraView_OnAvailable(object sender, bool e)
         {
-
+            (BindingContext as ReportEditViewModel).IsInCameraMode = true;
         }
 
         private void CameraView_OnAvailable_1(object sender, bool e)

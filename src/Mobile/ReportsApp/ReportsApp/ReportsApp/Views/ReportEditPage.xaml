@@ -10,6 +10,7 @@
                 TabStripPlacement="Bottom"
                 TabStripBackgroundColor="White"
                 TabStripHeight="60"
+                IsTabStripVisible="{Binding IsInCameraMode, Converter={xct:InvertedBoolConverter}}"
                 TabIndicatorColor="{StaticResource Primary}">
             <xct:TabViewItem
                     Text="Tab 1"
@@ -34,10 +35,23 @@
                     TextColorSelected="{StaticResource Primary}"
                     FontSize="12">
                 <Grid>
-                    <xct:CameraView CaptureMode="Photo" CameraOptions="Back"  HorizontalOptions="FillAndExpand"
-                MediaCaptured="CameraView_MediaCaptured"
-                OnAvailable="CameraView_OnAvailable"
-                VerticalOptions="FillAndExpand"/>
+                    <xct:CameraView 
+                        x:Name ="cameraView" 
+                        CaptureMode="Photo" 
+                        CameraOptions="Back"  
+                        HorizontalOptions="FillAndExpand"
+                        MediaCaptured="CameraView_MediaCaptured"
+                        VerticalOptions="FillAndExpand"
+                        FlashMode="Auto">
+                    </xct:CameraView>
+                    <Ellipse Fill="Red"
+         WidthRequest="50"
+         HeightRequest="50"
+         HorizontalOptions="Center" VerticalOptions="End">
+                        <Ellipse.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShutterCommand, Source={x:Reference cameraView}}" />
+                        </Ellipse.GestureRecognizers>
+                    </Ellipse>
                 </Grid>
             </xct:TabViewItem>
         </xct:TabView>

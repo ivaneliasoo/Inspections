@@ -34,6 +34,14 @@ namespace ReportsApp.ViewModels
             set { _reportId = value; LoadReport(value); }
         }
 
+        private bool _isInCameraMode;
+
+        public bool IsInCameraMode
+        {
+            get { return _isInCameraMode; }
+            set { SetProperty(ref _isInCameraMode, value); }
+        }
+
         private string _name;
 
         public string Name
