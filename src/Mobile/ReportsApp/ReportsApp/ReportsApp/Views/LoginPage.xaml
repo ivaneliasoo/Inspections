@@ -20,11 +20,6 @@
                         <ActivityIndicator Color="{StaticResource Primary}" IsRunning="{Binding IsBusy}" />
                     </StackLayout>
                 </xct:StateView>
-                <xct:StateView StateKey="None">
-                    <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
-                        
-                    </StackLayout>
-                </xct:StateView>
             </xct:StateLayout.StateViews>
             <Entry Keyboard="Default"
                                ReturnType="Next"

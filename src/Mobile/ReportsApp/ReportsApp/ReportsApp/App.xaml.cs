@@ -5,6 +5,8 @@ using Xamarin.Forms;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using ReportsApp.Services.Secutiry;
+using ReportsApp.Persistence;
 
 namespace ReportsApp
 {
@@ -15,7 +17,9 @@ namespace ReportsApp
         {
             InitializeComponent();
 
-            //DependencyService.Register<MockDataStore>();
+            DependencyService.Register<AuthorizationStore>();
+            DependencyService.Register<ReportsService>();
+            DependencyService.Register<AuthenticationService>();
             MainPage = new AppShell();
         }
 

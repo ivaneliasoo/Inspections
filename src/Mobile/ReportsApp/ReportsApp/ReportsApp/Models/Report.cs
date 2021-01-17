@@ -17,7 +17,7 @@ namespace ReportsApp.Models
         public List<Signature> Signatures { get; set; }
         public List<Note> Notes { get; set; }
         public List<CheckList> CheckList { get; set; }
-        public List<object> PhotoRecords { get; set; }
+        public List<PhotoRecord> PhotoRecords { get; set; }
         public bool Completed { get; set; }
         public bool NotCompleted => !Completed;
         public bool IsNotClosed => !IsClosed;

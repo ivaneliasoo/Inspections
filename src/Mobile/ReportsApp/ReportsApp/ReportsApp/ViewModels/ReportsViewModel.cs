@@ -13,7 +13,7 @@ namespace ReportsApp.ViewModels
 {
     public class ReportsViewModel : BaseViewModel
     {
-        private ReportsService _reportsService;
+        private IReportsService _reportsService;
         public ObservableCollection<Report> Reports { get; set; }
 
 
@@ -36,7 +36,7 @@ namespace ReportsApp.ViewModels
         public ReportsViewModel()
         {
             Title = "Reports";
-            _reportsService = new ReportsService();
+            _reportsService = DependencyService.Get<IReportsService>();
             Reports = new ObservableCollection<Report>();
             GetReportsAsyncCommand = new Command(ExcecuteGetReportsCommand);
             SelectedReportCommand = new Command(ExecuteSelectedReportCommand);
@@ -63,7 +63,10 @@ namespace ReportsApp.ViewModels
 
         private async void ExecuteSelectedReportCommand(object obj)
         {
-            await Shell.Current.GoToAsync("ReportEdit", true);
+            if (SelectedReport != null)
+                await Shell.Current.GoToAsync($"ReportEdit?reportId={SelectedReport.Id}", true);
+
+            SelectedReport = null;
         }
 
         private async void ExcecuteGetReportsCommand(object obj)

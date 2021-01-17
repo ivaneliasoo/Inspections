@@ -11,5 +11,9 @@ namespace ReportsApp.Services
     {
         [Get("/reports")]
         Task<IEnumerable<Report>> GetReportsByFilter(string filter, bool? closed);
+        
+        [Get("/reports/{reportId}")]
+        Task<Report> GetById([AliasAs("reportId")]int id);
+
     }
 }

@@ -22,6 +22,7 @@
             Text="{Binding SearchText}"
            />
             <CollectionView 
+                x:Name="reportsList"
                 ItemsSource="{Binding Reports}" 
                 SelectionMode="Single" 
                 SelectedItem="{Binding SelectedReport}"

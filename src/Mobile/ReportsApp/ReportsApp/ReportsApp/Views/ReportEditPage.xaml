@@ -1,12 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ReportsApp.Views.ReportEditPage">
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:vm="clr-namespace:ReportsApp.ViewModels"
+             xmlns:icons="clr-namespace:ReportsApp.Styles"
+             x:Class="ReportsApp.Views.ReportEditPage" Visual="Material">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <xct:TabView
+                TabStripPlacement="Bottom"
+                TabStripBackgroundColor="White"
+                TabStripHeight="60"
+                TabIndicatorColor="{StaticResource Primary}">
+            <xct:TabViewItem
+                    Text="Tab 1"
+                    TextColor="{StaticResource Primary}"
+                    TextColorSelected="{StaticResource Primary}">
+                <xct:TabViewItem.Icon>
+                    <FontImageSource Glyph="Dropbox" FontFamily="FontAwesome" />
+                </xct:TabViewItem.Icon>
+                <StackLayout>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="2" />
+                    </StackLayout.GestureRecognizers>
+                    <Entry Placeholder="Name" Text="{Binding Name}" />
+                    <Label Text="Address of Installation"/>
+                    <Editor Placeholder="Address" Text="{Binding Address}" AutoSize="TextChanges" />
+                    <DatePicker Date="{Binding Date}"/>
+                </StackLayout>
+            </xct:TabViewItem>
+            <xct:TabViewItem
+                    Text="Tab 2"
+                    TextColor="{StaticResource Primary}"
+                    TextColorSelected="{StaticResource Primary}"
+                    FontSize="12">
+                <Grid>
+                    <xct:CameraView CaptureMode="Photo" CameraOptions="Back"  HorizontalOptions="FillAndExpand"
+                MediaCaptured="CameraView_MediaCaptured"
+                OnAvailable="CameraView_OnAvailable"
+                VerticalOptions="FillAndExpand"/>
+                </Grid>
+            </xct:TabViewItem>
+        </xct:TabView>
     </ContentPage.Content>
 </ContentPage>

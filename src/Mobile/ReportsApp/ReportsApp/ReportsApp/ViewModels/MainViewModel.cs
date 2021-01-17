@@ -11,11 +11,11 @@ namespace ReportsApp.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private readonly AuthenticationService authService;
+        private readonly IAuthenticationService authService;
 
         public MainViewModel()
         {
-            authService = new AuthenticationService();
+            authService = DependencyService.Get<IAuthenticationService>();
             LogoutCommand = new MvvmHelpers.Commands.Command(ExecuteLogout);
         }
 

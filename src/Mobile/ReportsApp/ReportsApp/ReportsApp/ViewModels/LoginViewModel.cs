@@ -12,7 +12,7 @@ namespace ReportsApp.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private readonly AuthenticationService authService;
+        private readonly IAuthenticationService authService;
 
         private string _userName;
 
@@ -44,7 +44,7 @@ namespace ReportsApp.ViewModels
 
         public LoginViewModel()
         {
-            authService = new AuthenticationService();
+            authService = DependencyService.Get<IAuthenticationService>();
             CurrentState = LayoutState.None;
             LoginCommand = new Command(OnLoginClicked);
         }
