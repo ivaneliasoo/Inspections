@@ -25,16 +25,15 @@ namespace ReportsApp.Models
         public int id { get; set; }
         public bool completed { get; set; }
         public bool @checked { get; set; }
-        public string text { get; set; }
+        public string Name { get; set; }
 
-        public GroupedChecks(int reportId, int id, bool completed, bool @checked, List<Check> checks, string text)
+        public GroupedChecks(int reportId, int id, bool completed, bool @checked, List<Check> checks, string name) : base(checks)
         {
             this.reportId = reportId;
             this.id = id;
             this.completed = completed;
             this.@checked = @checked;
-            this.text = text;
-            AddRange(checks);
+            Name = name;
         }
     }
 }

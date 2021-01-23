@@ -20,7 +20,7 @@ namespace ReportsApp.ViewModels
         private readonly IReportsService _reportsService;
 
         public ObservableRangeCollection<Signature> Signatures { get; set; }
-        public ObservableRangeCollection<CheckList> CheckLists { get; set; }
+        public ObservableRangeCollection<GroupedChecks> CheckLists { get; set; }
         public ObservableRangeCollection<PhotoRecord> Photos { get; set; }
         public ObservableRangeCollection<AddressDTO> AddressList { get; set; }
         public ReportEditViewModel()
@@ -30,7 +30,7 @@ namespace ReportsApp.ViewModels
             SelectedAddressChangedCommand = new Command(ExecuteSelectedAddressChangedCommand);
             Signatures = new ObservableRangeCollection<Signature>();
             Photos = new ObservableRangeCollection<PhotoRecord>();
-            CheckLists = new ObservableRangeCollection<CheckList>();
+            CheckLists = new ObservableRangeCollection<GroupedChecks>();
             AddressList = new ObservableRangeCollection<AddressDTO>();
             GetAddressesCommand.Execute(null);
         }
@@ -122,12 +122,13 @@ namespace ReportsApp.ViewModels
                 ReportTitle = result.Title;
                 Address = result.Address;
                 Date = result.Date;
+                Signatures.Clear();
                 Signatures.AddRange(result.Signatures);
-                //foreach (var ck in result.CheckList)
-                //    CheckLists.Add(new GroupedChecks(ck.reportId,ck.id,ck.completed,ck.@checked,ck.checks,ck.text));
-                CheckLists.AddRange(result.CheckList);
+                CheckLists.Clear();
+                foreach (var ck in result.CheckList)
+                    CheckLists.Add(new GroupedChecks(ck.reportId,ck.id,ck.completed,ck.@checked,ck.checks,ck.text));
 
-
+                Photos.Clear();
                 Photos.AddRange(result.PhotoRecords);
                 IsClosed = result.IsClosed;
                 return result;

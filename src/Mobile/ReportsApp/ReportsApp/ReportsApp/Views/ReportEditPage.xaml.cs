@@ -17,6 +17,7 @@ namespace ReportsApp.Views
         {
             InitializeComponent();
             BindingContext = new ReportEditViewModel();
+            tabViewReports.SelectedIndex = 1;
         }
 
         private void CameraView_MediaCaptured(object sender, Xamarin.CommunityToolkit.UI.Views.MediaCapturedEventArgs e)

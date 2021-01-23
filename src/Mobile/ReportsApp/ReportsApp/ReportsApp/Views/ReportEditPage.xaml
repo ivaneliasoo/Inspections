@@ -6,11 +6,22 @@
              x:Class="ReportsApp.Views.ReportEditPage" Shell.PresentationMode="ModalAnimated" Visual="Material">
     <ContentPage.Content>
         <xct:TabView
+            x:Name="tabViewReports"
                 TabStripPlacement="Bottom"
                 TabStripBackgroundColor="Transparent"
                 TabStripHeight="60"
                 IsTabStripVisible="False"
                 TabIndicatorColor="{StaticResource Primary}">
+            <xct:TabViewItem
+                Text="Operational reading"
+                >
+                <xct:TabViewItem.Icon>
+                    <FontImageSource Glyph="Dropbox" FontFamily="FontAwesome" />
+                </xct:TabViewItem.Icon>
+                <StackLayout>
+                    <Label Text="Operation Reading Page"/>
+                </StackLayout>
+            </xct:TabViewItem>
             <xct:TabViewItem
                     Text="Tab 1"
                     TextColor="{StaticResource Primary}"
@@ -18,63 +29,45 @@
                 <xct:TabViewItem.Icon>
                     <FontImageSource Glyph="Dropbox" FontFamily="FontAwesome" />
                 </xct:TabViewItem.Icon>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+                <StackLayout>
                     <StackLayout Grid.Row="0" Orientation="Horizontal">
                         <Label Text="{Binding ReportTitle}" TextColor="LightGray" HorizontalOptions="StartAndExpand" />
                         <Label Text="{Binding FormName}" TextColor="LightGray" HorizontalOptions="EndAndExpand" />
                     </StackLayout>
-                    <TableView Grid.Row="1" Margin="0" Intent="Form" HasUnevenRows="True">
-                        <TableSection Title="Particulars Of Instalation">
-                            <ViewCell>
-                                <Grid Margin="15,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Text="Address of Installation"/>
-                                    <Picker Grid.Row="1" ItemsSource="{Binding AddressList}" SelectedItem="{Binding SelectedAddress}" TextTransform="Uppercase">
-                                        <Picker.Behaviors>
-                                            <xct:EventToCommandBehavior EventName="SelectedIndexChanged" Command="{Binding SelectedAddressChangedCommand}" />
-                                        </Picker.Behaviors>
-                                    </Picker>
-                                </Grid>
-                            </ViewCell>
-                            <ViewCell>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Entry Grid.Column="0" Placeholder="License" Text="{Binding License}" IsEnabled="False"/>
-                                    <DatePicker Grid.Column="1" Date="{Binding Date}" />
-                                </Grid>
-                            </ViewCell>
-                            <SwitchCell Text="Mark as Completed" On="{Binding IsClosed}" />
-                        </TableSection>
-                    </TableView>
-                    <CollectionView Grid.Row="2" Margin="0" ItemsSource="{Binding CheckLists}">
-                        <!--<CollectionView.GroupHeaderTemplate>
+                    <StackLayout>
+                        <Label Text="Particulars of Installation" TextColor="Coral" FontSize="Title"/>
+                        <Label Text="Address of Installation"/>
+                        <Picker ItemsSource="{Binding AddressList}" SelectedItem="{Binding SelectedAddress}" TextTransform="Uppercase">
+                            <Picker.Behaviors>
+                                <xct:EventToCommandBehavior EventName="SelectedIndexChanged" Command="{Binding SelectedAddressChangedCommand}" />
+                            </Picker.Behaviors>
+                        </Picker>
+                        <Entry Placeholder="License" Text="{Binding License}" IsEnabled="False"/>
+                        <DatePicker Date="{Binding Date}"  />
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Mark as Completed" />
+                            <Switch  IsToggled="{Binding IsClosed}" />
+                        </StackLayout>
+                    </StackLayout>
+                    <CollectionView Grid.Row="2" Margin="20,20" ItemsSource="{Binding CheckLists}" IsGrouped="True">
+                        <CollectionView.GroupHeaderTemplate>
                             <DataTemplate x:DataType="models:GroupedChecks">
-                                <Label Text="{Binding text}" />
+                                <StackLayout Orientation="Horizontal" >
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="Subtitle" VerticalOptions="Center" HorizontalOptions="Start" />
+                                    <CheckBox IsChecked="{Binding checked}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                </StackLayout>
                             </DataTemplate>
-                        </CollectionView.GroupHeaderTemplate>-->
+                        </CollectionView.GroupHeaderTemplate>
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:GroupedChecks">
-                                <Grid>
-                                    <Label Text="{Binding text}" Grid.Row="0" />
-                                </Grid>
+                            <DataTemplate x:DataType="models:Check">
+                                <StackLayout Orientation="Horizontal" >
+                                    <Label Text="{Binding text}" VerticalOptions="Center" HorizontalOptions="Start" />
+                                    <CheckBox IsChecked="{Binding checked}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                </Grid>
+                </StackLayout>
             </xct:TabViewItem>
             <xct:TabViewItem
                     Text="Tab 2"
