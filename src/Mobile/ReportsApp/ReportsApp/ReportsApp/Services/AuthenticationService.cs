@@ -8,7 +8,7 @@ using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReportsApp.Services.Secutiry
+namespace ReportsApp.Services
 {
     public interface IAuthenticationService
     {
@@ -16,7 +16,7 @@ namespace ReportsApp.Services.Secutiry
         void Logout();
     }
 
-    public class AuthenticationService : BaseService<IAuthenticationApi>,  IAuthenticationService
+    public class AuthenticationService : BaseService<ICSEReportsApi>, IAuthenticationService
     {
         public async Task Login(string user, string password, string remember)
         {

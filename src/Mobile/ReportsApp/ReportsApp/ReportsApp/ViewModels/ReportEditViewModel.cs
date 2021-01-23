@@ -18,13 +18,25 @@ namespace ReportsApp.ViewModels
     public class ReportEditViewModel : BaseViewModel
     {
         private readonly IReportsService _reportsService;
+
         public ObservableRangeCollection<Signature> Signatures { get; set; }
         public ObservableRangeCollection<CheckList> CheckLists { get; set; }
         public ObservableRangeCollection<PhotoRecord> Photos { get; set; }
+        public ObservableRangeCollection<AddressDTO> AddressList { get; set; }
         public ReportEditViewModel()
         {
             _reportsService = DependencyService.Get<IReportsService>();
+            GetAddressesCommand = new Command(ExcecuteGetAddresses);
+            SelectedAddressChangedCommand = new Command(ExecuteSelectedAddressChangedCommand);
+            Signatures = new ObservableRangeCollection<Signature>();
+            Photos = new ObservableRangeCollection<PhotoRecord>();
+            CheckLists = new ObservableRangeCollection<CheckList>();
+            AddressList = new ObservableRangeCollection<AddressDTO>();
+            GetAddressesCommand.Execute(null);
         }
+        
+        private AddressDTO _selectedAddress;
+        public AddressDTO SelectedAddress { get => _selectedAddress; set => SetProperty(ref _selectedAddress, value); }
 
         private int _reportId;
 
@@ -42,13 +54,21 @@ namespace ReportsApp.ViewModels
             set { SetProperty(ref _isInCameraMode, value); }
         }
 
-        private string _name;
+        private string _reportTitle;
 
-        public string Name
+        public string ReportTitle
         {
-            get { return _name; }
-            set { SetProperty(ref _name, value); }
+            get { return _reportTitle; }
+            set { SetProperty(ref _reportTitle, value); }
         }
+        private string _formName;
+
+        public string FormName
+        {
+            get { return _formName; }
+            set { SetProperty(ref _formName, value); }
+        }
+
 
         private string _address;
 
@@ -64,6 +84,23 @@ namespace ReportsApp.ViewModels
             get { return _date; }
             set { SetProperty(ref _date, value); }
         }
+
+        private string _license;
+
+        public string License
+        {
+            get { return _license; }
+            set { SetProperty(ref _license, value); }
+        }
+
+        private bool _isClosed;
+
+        public bool IsClosed
+        {
+            get { return _isClosed; }
+            set { SetProperty(ref _isClosed, value); }
+        }
+
 
         private LayoutState _currentState;
 
@@ -81,12 +118,18 @@ namespace ReportsApp.ViewModels
                 CurrentState = LayoutState.Loading;
                 var result = await _reportsService.GetById(id);
                 if (result is null) return null;
-                Name = result.Name;
+                FormName = result.FormName;
+                ReportTitle = result.Title;
                 Address = result.Address;
                 Date = result.Date;
                 Signatures.AddRange(result.Signatures);
+                //foreach (var ck in result.CheckList)
+                //    CheckLists.Add(new GroupedChecks(ck.reportId,ck.id,ck.completed,ck.@checked,ck.checks,ck.text));
                 CheckLists.AddRange(result.CheckList);
+
+
                 Photos.AddRange(result.PhotoRecords);
+                IsClosed = result.IsClosed;
                 return result;
             }
             catch (Exception ex)
@@ -100,5 +143,29 @@ namespace ReportsApp.ViewModels
                 CurrentState = LayoutState.None;
             }
         }
+
+
+        private async void ExcecuteGetAddresses()
+        {
+            try
+            {
+                var result = await _reportsService.GetAddressByFilter("");
+                AddressList.AddRange(result);
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
+        public Command GetAddressesCommand { get; }
+
+        private async void ExecuteSelectedAddressChangedCommand()
+        {
+            this.Address = SelectedAddress.FormatedAddress;
+            License = SelectedAddress.Number;
+        }
+
+        public Command SelectedAddressChangedCommand { get; }
+
     }
 }

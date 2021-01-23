@@ -14,6 +14,7 @@ namespace ReportsApp.ViewModels
     public class ReportsViewModel : BaseViewModel
     {
         private IReportsService _reportsService;
+
         public ObservableCollection<Report> Reports { get; set; }
 
 
@@ -45,6 +46,8 @@ namespace ReportsApp.ViewModels
             CompleteReportCommand = new Command(ExecuteCompleteReportCommand);
             GetReportsAsyncCommand.Execute(null);
         }
+
+        
 
         private async void ExecutePrintReportCommand(object obj)
         {

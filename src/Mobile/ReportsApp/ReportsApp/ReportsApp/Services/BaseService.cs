@@ -1,6 +1,5 @@
 ﻿using Refit;
 using ReportsApp.Persistence;
-using ReportsApp.Services.Secutiry;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -18,7 +17,7 @@ namespace ReportsApp.Services
             authStore = DependencyService.Get<IAuthorizationStore>();
             _api = RestService.For<T>(new HttpClient(new AuthHeaderHandler(authStore))
             {
-                BaseAddress = new Uri(Config.ReportsApi),
+                BaseAddress = new Uri("http://inspectionsapi-dev.eba-r84ntzqp.us-east-2.elasticbeanstalk.com"),
                 Timeout = TimeSpan.FromSeconds(5)
             });
         }

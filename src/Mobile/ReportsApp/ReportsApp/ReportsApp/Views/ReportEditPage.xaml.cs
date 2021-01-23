@@ -21,17 +21,12 @@ namespace ReportsApp.Views
 
         private void CameraView_MediaCaptured(object sender, Xamarin.CommunityToolkit.UI.Views.MediaCapturedEventArgs e)
         {
-
+            
         }
 
-        private void CameraView_OnAvailable(object sender, bool e)
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            (BindingContext as ReportEditViewModel).IsInCameraMode = true;
-        }
-
-        private void CameraView_OnAvailable_1(object sender, bool e)
-        {
-
+            await DisplayAlert("asdfasd", "asdasdasd", "OK");
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ReportsApp.Services.Secutiry
+namespace ReportsApp.Services
 {
     public class AuthHeaderHandler : DelegatingHandler
     {
@@ -19,7 +19,7 @@ namespace ReportsApp.Services.Secutiry
         {
             var token = await _authorizationStore.GetAuthorizationTokenAsync();
 
-            if(request.Headers.Authorization == null)
+            if (request.Headers.Authorization == null)
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }

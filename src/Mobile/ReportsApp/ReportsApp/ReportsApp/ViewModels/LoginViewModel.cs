@@ -1,6 +1,6 @@
 ﻿using Microsoft.AppCenter.Analytics;
 using MvvmHelpers;
-using ReportsApp.Services.Secutiry;
+using ReportsApp.Services;
 using ReportsApp.Views;
 using System;
 using System.Collections.Generic;

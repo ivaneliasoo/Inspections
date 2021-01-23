@@ -17,4 +17,24 @@ namespace ReportsApp.Models
         public int id { get; set; }
         public object domainEvents { get; set; }
     }
+
+
+    public class GroupedChecks:List<Check>
+    {
+        public int reportId { get; set; }
+        public int id { get; set; }
+        public bool completed { get; set; }
+        public bool @checked { get; set; }
+        public string text { get; set; }
+
+        public GroupedChecks(int reportId, int id, bool completed, bool @checked, List<Check> checks, string text)
+        {
+            this.reportId = reportId;
+            this.id = id;
+            this.completed = completed;
+            this.@checked = @checked;
+            this.text = text;
+            AddRange(checks);
+        }
+    }
 }
