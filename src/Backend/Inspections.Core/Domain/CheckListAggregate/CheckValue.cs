@@ -4,6 +4,7 @@
     {
         False,
         True,
-        NA
+        NA,
+        New
     }
 }

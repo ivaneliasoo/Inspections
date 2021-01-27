@@ -6,14 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\fa-Brands-Regular-400.otf" />
-    <None Remove="Resources\fa-Free-Regular-400.otf" />
     <None Remove="Resources\fa-Free-Solid-900.otf" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\fa-Brands-Regular-400.otf" />
-    <EmbeddedResource Include="Resources\fa-Free-Regular-400.otf" />
     <EmbeddedResource Include="Resources\fa-Free-Solid-900.otf" />
   </ItemGroup>
 
@@ -31,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Control\CheckItem.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\ReportEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

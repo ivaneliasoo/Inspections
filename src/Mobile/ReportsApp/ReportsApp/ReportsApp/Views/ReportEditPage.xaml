@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:models="clr-namespace:ReportsApp.Models"
+             xmlns:ico="clr-namespace:ReportsApp.Styles"
+             xmlns:local="clr-namespace:ReportsApp.Control"
              x:Class="ReportsApp.Views.ReportEditPage" Shell.PresentationMode="ModalAnimated" Visual="Material">
     <ContentPage.Content>
         <xct:TabView
@@ -60,10 +62,7 @@
                         </CollectionView.GroupHeaderTemplate>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Check">
-                                <StackLayout Orientation="Horizontal" >
-                                    <Label Text="{Binding text}" VerticalOptions="Center" HorizontalOptions="Start" />
-                                    <CheckBox IsChecked="{Binding checked}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
-                                </StackLayout>
+                                <local:CheckItem Padding="5" Text="{Binding text}" Checked="{Binding checked}" />
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
@@ -109,7 +108,9 @@
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding ShutterCommand, Source={x:Reference cameraView}}" />
                                 </Frame.GestureRecognizers>
-                                <Label Text="\uf16b" FontFamily="FontAwesome" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                <Label Text="{x:Static ico:IconFont.Camera}" FontFamily="FontAwesome" 
+                                       TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" 
+                                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Subtitle" />
                             </Frame>
                         </Frame>
                     </StackLayout>
