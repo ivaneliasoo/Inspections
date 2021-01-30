@@ -148,9 +148,6 @@ export class PrintHelper {
           text: `${sign.title}`, style: 'titleNoBold'
         },
         {
-          text: `${sign.annotation}`, style: 'fieldName'
-        },
-        {
           text: `Name of ${ResponsableType[sign!.responsable.type]}: ${sign!.responsable.name ?? '____________________________'}   Designation: ${sign!.designation ?? '___________________________'}`,
           style: 'filedName',
           margin: [0, 5, 0, 0]
@@ -170,6 +167,9 @@ export class PrintHelper {
           text: `Remarks (if any): ${sign.remarks ?? ''}______________________________________________________________________________________________________________________________________________________________________________________________`,
           style: 'filedName',
           margin: [0, 5, 0, 0]
+        },
+        {
+          text: `${sign.annotation}`, style: 'fieldName'
         }
       ])
     })
@@ -184,7 +184,7 @@ export class PrintHelper {
           {
             stack: [
               {
-                canvas: [{ type: 'rect', x: 15, y: 0, w: 30, h: 15, color: 'white', lineColor: 'black' }],
+                canvas: [{ type: 'rect', x: 15, y: 0, w: 30, h: 15, r: 3, color: 'white', lineColor: 'black' }],
                 margin: [0, 0, 0, 10],
                 width: '10%'
               },
@@ -209,7 +209,7 @@ export class PrintHelper {
               }
             ]
           },
-          { text: check.remarks ? check.remarks : `_______${index === 3 && childIndex === 4}________`, width: '25%' }]
+          { text: check.remarks ? check.remarks : '_________________', width: '25%' }]
       }
     })
     const checksContent = [{ text: `${index + 1}    ${checklist.text} ${checklist.annotation}        ${index === 0 ? 'Remarks' : ''}`, style: 'checklistName', margin: [0, 10, 0, 10] }, mappedChecks]
