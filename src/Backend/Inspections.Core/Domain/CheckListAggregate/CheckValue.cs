@@ -2,9 +2,9 @@
 {
     public enum CheckValue
     {
-        False,
-        True,
-        NA,
-        New
+        NotAcceptableFalse,
+        Acceptable,
+        NotApplicable,
+        None
     }
 }

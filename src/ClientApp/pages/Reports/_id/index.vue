@@ -163,17 +163,20 @@
                                 <h3>
                                   {{ checkListIndex + 1 }} .- {{ item.text }} {{ item.annotation }}
                                 </h3>
-                                <span v-if="item.checks.filter(c => c.required && c.checked===0).length == 0">
+                                <span v-if="item.checks.filter(c => c.required && c.checked==3).length == 0">
                                   <v-chip x-small color="success">Completed</v-chip>
                                 </span>
                               </v-col>
                               <v-col cols="2" md="6" :class="$vuetify.breakpoint.mdAndDown ? 'ml-n5':'ml-n6'">
-                                <v-checkbox
-                                  v-model="item.checked"
-                                  color="primary"
-                                  :indeterminate="item.checks.length !== item.checks.filter(c => c.checked).length && item.checks.filter(c => c.checked).length > 0"
-                                  @click.stop=" item.checked=!item.checked; checkItemChecks(item.id, item.checked)"
-                                />
+                                <v-btn
+                                  icon
+                                  text
+                                  @click.stop="item.checked < 3 ? item.checked++:item.checked=0;checkItemChecks(item.id, item.checked);"
+                                >
+                                  <v-icon :color="item.checks.length !== item.checks.filter(c => c.checked == 1).length && item.checks.filter(c => c.checked == 1).length > 0 ? getCheckIconColor(2): getCheckIconColor(item.checks[0].checked)">
+                                    {{ `mdi-${item.checks.length !== item.checks.filter(c => c.checked == 1).length && item.checks.filter(c => c.checked == 1).length > 0 ? 'minus': getCheckIcon(item.checks[0].checked) }` }}
+                                  </v-icon>
+                                </v-btn>
                               </v-col>
                             </v-row>
                             <v-row dense>
@@ -193,18 +196,18 @@
                                               class="text-wrap"
                                             >
                                               <v-row justify="space-around" align="center" dense>
-                                                <v-col cols="1" :class="['text-right', checkItem.required && !checkItem.checked && shouldShowRequired ? 'error--text' : '']">
+                                                <v-col cols="1" :class="['text-right', checkItem.checked == 3 && shouldShowRequired ? 'error--text' : '']">
                                                   <h3>{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1 }} </h3>
                                                 </v-col>
-                                                <v-col cols="10" :class="['text-left', checkItem.required && !checkItem.checked && shouldShowRequired ? 'error--text' : '']">
+                                                <v-col cols="10" :class="['text-left', checkItem.checked == 3 && shouldShowRequired ? 'error--text' : '']">
                                                   <h3 v-if="!checkItem.editable">
-                                                    .-{{ checkItem.text }} <v-chip v-if="!checkItem.editable && checkItem.required" class="text-uppercase" :color="shouldShowRequired ? 'error':''" x-small>
+                                                    .-{{ checkItem.text }} <v-chip v-if="!checkItem.editable && checkItem.checked == 3" class="text-uppercase" :color="shouldShowRequired ? 'error':''" x-small>
                                                       required
                                                     </v-chip>
                                                   </h3>
                                                   <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)">
                                                     <template v-slot:append="">
-                                                      <v-chip v-if="checkItem.required" x-small class="text-uppercase" :color="shouldShowRequired ? 'error':''">
+                                                      <v-chip v-if="checkItem.checked == 3" x-small class="text-uppercase" :color="shouldShowRequired ? 'error':''">
                                                         required
                                                       </v-chip>
                                                     </template>
@@ -213,12 +216,14 @@
                                               </v-row>
                                             </v-col>
                                             <v-col cols="2" md="1">
-                                              <v-checkbox
-                                                v-model="checkItem.checked"
-                                                color="primary"
-                                                :indeterminate="checkItem.checked===2"
-                                                @click.stop="checkItem.checked < 2 ? checkItem.checked++:checkItem.checked=0; saveCheckItem(checkItem)"
-                                              />
+                                              <v-btn
+                                                icon
+                                                text
+                                                @click.stop="checkItem.checked < 2 ? checkItem.checked++:checkItem.checked=0;saveCheckItem(checkItem);">
+                                                <v-icon :color="getCheckIconColor(checkItem.checked)">
+                                                  {{ `mdi-${getCheckIcon(checkItem.checked)}` }}
+                                                </v-icon>
+                                              </v-btn>
                                             </v-col>
                                             <v-col cols="10" md="4">
                                               <v-text-field
@@ -490,6 +495,36 @@ export default class EditReport extends mixins(InnerPageMixin) {
     this.showUpdateCheck.push({ parentIndex, currentIndex })
   }
 
+  getCheckIcon (value: CheckValue) {
+    switch (value) {
+      case CheckValue.NotAcceptable:
+        return 'close'
+      case CheckValue.Acceptable:
+        return 'check'
+      case CheckValue.NotApplicable:
+        return 'minus'
+      default:
+        return ''
+    }
+  }
+
+  getCheckIconColor (value: CheckValue) {
+    switch (value) {
+      case CheckValue.NotAcceptable:
+        return 'error'
+      case CheckValue.Acceptable:
+        return 'success'
+      case CheckValue.NotApplicable:
+        return 'warning'
+      default:
+        return 'indigo'
+    }
+  }
+
+  getCheckName (id: number) {
+    return CheckValue[id]
+  }
+
   saveNote (note: Note) {
     const data: EditNoteCommand = {
       reportId: parseInt(this.$route.params.id),
@@ -588,7 +623,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   get IsCompleted () {
     if (this.currentReport.checkList) {
-      return this.currentReport.checkList.filter(cl => cl.checks.findIndex(c => c.required && (c.checked as any) === 0) >= 0).length === 0
+      return this.currentReport.checkList.filter(cl => cl.checks.findIndex(c => c.checked == 3) >= 0).length === 0
     }
 
     return false
@@ -610,10 +645,11 @@ export default class EditReport extends mixins(InnerPageMixin) {
     return this.IsCompleted && !this.HasNotesWithPendingChecks && this.PrincipalSignatureHasAResponsable && this.IsValidForm
   }
 
-  checkItemChecks (checkListId: number, value: boolean): void {
+  checkItemChecks (checkListId: number, value: CheckValue): void {
     const checkList = this.currentReport.checkList.find(c => c.id === checkListId)
-    checkList?.checks.forEach((check) => {
-      if (value) { check.checked = CheckValue.True } else { check.checked = CheckValue.False }
+    if (!checkList) { return }
+    checkList.checks.forEach((check) => {
+      check.checked = value
       this.saveCheckItem(check)
     })
   }

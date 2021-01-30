@@ -20,8 +20,8 @@ namespace Inspections.Core.Domain.CheckListAggregate
         public List<CheckListParam> TextParams { get; private set; } = new List<CheckListParam>();
         public string Annotation { get; private set; }
         public bool IsConfiguration { get; set; }
-        public bool Completed => !_checks.Any(c => c.Required && (c.Checked == CheckValue.False));
-        public bool @Checked => _checks.Any(c => c.Required && (c.Checked == CheckValue.True));
+        public bool Completed => !_checks.Any(c => c.Checked == CheckValue.None);
+        public bool @Checked => _checks.Any(c => c.Checked != CheckValue.None);
         private readonly List<CheckListItem> _checks = new List<CheckListItem>();
 
         public CheckList(string text, List<CheckListParam> textParams, string annotation, bool isConfiguration)
