@@ -137,7 +137,28 @@
             >
               <v-expansion-panel>
                 <v-expansion-panel-header :style="!IsCompleted ? 'color: white;':''" :color="!IsCompleted ? 'red':''">
-                  <span class="font-weight-black">Check List</span>
+                  <span class="font-weight-black">Check List
+                    States: New (
+                    <v-icon :color="!IsCompleted ? 'white':getCheckIconColor(3)">
+                      mdi-{{ getCheckIcon(3) }}
+                    </v-icon>
+                    )
+                    Not Acceptable (
+                    <v-icon :color="!IsCompleted ? 'white':getCheckIconColor(0)">
+                      mdi-{{ getCheckIcon(0) }}
+                    </v-icon>
+                    )
+                    Acceptable (
+                    <v-icon :color="!IsCompleted ? 'white':getCheckIconColor(1)">
+                      mdi-{{ getCheckIcon(1) }}
+                    </v-icon>
+                    )
+                    Not Aplicable (
+                    <v-icon :color="!IsCompleted ? 'white':getCheckIconColor(2)">
+                      mdi-{{ getCheckIcon(2) }}
+                    </v-icon>
+                    )
+                  </span>
                   <v-row v-if="!IsCompleted" dense>
                     <v-col>
                       <v-icon dark>
@@ -161,7 +182,7 @@
                             <v-row justify="start" align="center" dense>
                               <v-col cols="10" md="6" class="font-weight-black text-wrap">
                                 <h3>
-                                  {{ checkListIndex + 1 }} .- {{ item.text }} {{ item.annotation }}
+                                  {{ checkListIndex + 1 }} .- {{ item.text }}
                                 </h3>
                                 <span v-if="item.checks.filter(c => c.required && c.checked==3).length == 0">
                                   <v-chip x-small color="success">Completed</v-chip>
@@ -171,7 +192,7 @@
                                 <v-btn
                                   icon
                                   text
-                                  @click.stop="item.checked < 3 ? item.checked++:item.checked=0;checkItemChecks(item.id, item.checked);"
+                                  @click.stop="item.checked < 2 ? item.checked++:item.checked=0;checkItemChecks(item.id, item.checked);"
                                 >
                                   <v-icon :color="item.checks.length !== item.checks.filter(c => c.checked == 1).length && item.checks.filter(c => c.checked == 1).length > 0 ? getCheckIconColor(2): getCheckIconColor(item.checks[0].checked)">
                                     {{ `mdi-${item.checks.length !== item.checks.filter(c => c.checked == 1).length && item.checks.filter(c => c.checked == 1).length > 0 ? 'minus': getCheckIcon(item.checks[0].checked) }` }}
@@ -189,7 +210,7 @@
                                     <v-list-item-title :title="checkItem.text">
                                       <v-row dense align="center" justify="space-between">
                                         <v-col cols="10">
-                                          <v-row dense align="center" justify="space-between" :class="{ ml_5: true }">
+                                          <v-row dense align="center" justify="space-between" :class="{ ml_5: true }" @click.stop="checkItem.checked < 2 ? checkItem.checked++:checkItem.checked=0;saveCheckItem(checkItem);">
                                             <v-col
                                               cols="12"
                                               md="7"
@@ -205,7 +226,7 @@
                                                       required
                                                     </v-chip>
                                                   </h3>
-                                                  <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)">
+                                                  <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)" @click.stop.prevent="">
                                                     <template v-slot:append="">
                                                       <v-chip v-if="checkItem.checked == 3" x-small class="text-uppercase" :color="shouldShowRequired ? 'error':''">
                                                         required
@@ -219,7 +240,7 @@
                                               <v-btn
                                                 icon
                                                 text
-                                                @click.stop="checkItem.checked < 2 ? checkItem.checked++:checkItem.checked=0;saveCheckItem(checkItem);">
+                                              >
                                                 <v-icon :color="getCheckIconColor(checkItem.checked)">
                                                   {{ `mdi-${getCheckIcon(checkItem.checked)}` }}
                                                 </v-icon>
@@ -503,6 +524,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
         return 'check'
       case CheckValue.NotApplicable:
         return 'minus'
+      case CheckValue.None:
+        return 'new-box'
       default:
         return ''
     }
@@ -517,7 +540,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       case CheckValue.NotApplicable:
         return 'warning'
       default:
-        return 'indigo'
+        return 'info'
     }
   }
 

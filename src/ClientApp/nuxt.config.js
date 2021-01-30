@@ -74,8 +74,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://inspectionsapi-dev.eba-r84ntzqp.us-east-2.elasticbeanstalk.com',
-    browserBaseURL: 'http://inspectionsapi-dev.eba-r84ntzqp.us-east-2.elasticbeanstalk.com'
+    baseURL: 'https://inspectionsapi-dev.eba-r84ntzqp.us-east-2.elasticbeanstalk.com',
+    browserBaseURL: 'https://inspectionsapi-dev.eba-r84ntzqp.us-east-2.elasticbeanstalk.com'
   },
   router: {
     middleware: ['auth']
