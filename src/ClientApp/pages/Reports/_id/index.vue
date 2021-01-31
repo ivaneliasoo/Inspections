@@ -210,7 +210,14 @@
                                     <v-list-item-title :title="checkItem.text">
                                       <v-row dense align="center" justify="space-between">
                                         <v-col cols="10">
-                                          <v-row style="cursor: pointer;" dense align="center" justify="space-between" :class="{ ml_5: true }" @click.stop="checkItem.checked < 2 ? checkItem.checked++:checkItem.checked=0;saveCheckItem(checkItem);">
+                                          <v-row
+                                            style="cursor: pointer;"
+                                            dense
+                                            align="center"
+                                            justify="space-between"
+                                            :class="{ ml_5: true }"
+                                            @click.stop="checkItem.checked < 2 ? checkItem.checked++:checkItem.checked=0;saveCheckItem(checkItem);"
+                                          >
                                             <v-col
                                               cols="12"
                                               md="7"
@@ -650,7 +657,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   get IsCompleted () {
     if (this.currentReport.checkList) {
-      return this.currentReport.checkList.filter(cl => cl.checks.findIndex(c => c.checked == 3) >= 0).length === 0
+      return this.currentReport.checkList.filter(cl => cl.checks.findIndex(c => c.checked === CheckValue.None) >= 0).length === 0
     }
 
     return false

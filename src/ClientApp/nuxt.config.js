@@ -115,9 +115,9 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
-    },
+    // extend (config, ctx) {
+    // },
     // Excepcion para vee-validate (no quitar)
-    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth'],
+    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth']
   }
 }
