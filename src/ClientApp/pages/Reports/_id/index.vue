@@ -154,9 +154,9 @@
                     </v-icon>
                     )
                     Not Aplicable (
-                    <v-icon :color="!IsCompleted ? 'white':getCheckIconColor(2)">
-                      mdi-{{ getCheckIcon(2) }}
-                    </v-icon>
+                    <span :color="!IsCompleted ? 'white':getCheckIconColor(2)">
+                      {{ getCheckIcon(2) }}
+                    </span>
                     )
                   </span>
                   <v-row v-if="!IsCompleted" dense>
@@ -210,7 +210,7 @@
                                     <v-list-item-title :title="checkItem.text">
                                       <v-row dense align="center" justify="space-between">
                                         <v-col cols="10">
-                                          <v-row dense align="center" justify="space-between" :class="{ ml_5: true }" @click.stop="checkItem.checked < 2 ? checkItem.checked++:checkItem.checked=0;saveCheckItem(checkItem);">
+                                          <v-row style="cursor: pointer;" dense align="center" justify="space-between" :class="{ ml_5: true }" @click.stop="checkItem.checked < 2 ? checkItem.checked++:checkItem.checked=0;saveCheckItem(checkItem);">
                                             <v-col
                                               cols="12"
                                               md="7"
@@ -241,9 +241,12 @@
                                                 icon
                                                 text
                                               >
-                                                <v-icon :color="getCheckIconColor(checkItem.checked)">
+                                                <v-icon v-if="checkItem.checked != 2" :color="getCheckIconColor(checkItem.checked)">
                                                   {{ `mdi-${getCheckIcon(checkItem.checked)}` }}
                                                 </v-icon>
+                                                <span v-else>
+                                                  {{ getCheckIcon(checkItem.checked) }}
+                                                </span>
                                               </v-btn>
                                             </v-col>
                                             <v-col cols="10" md="4">
@@ -251,6 +254,7 @@
                                                 v-model="checkItem.remarks"
                                                 :label="currentReport.remarksLabelText"
                                                 @blur="saveCheckItem(checkItem)"
+                                                @click.stop.prevent=""
                                               />
                                             </v-col>
                                           </v-row>
@@ -523,7 +527,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       case CheckValue.Acceptable:
         return 'check'
       case CheckValue.NotApplicable:
-        return 'minus'
+        return 'N.A.'
       case CheckValue.None:
         return 'new-box'
       default:
@@ -538,7 +542,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       case CheckValue.Acceptable:
         return 'success'
       case CheckValue.NotApplicable:
-        return 'warning'
+        return 'black'
       default:
         return 'info'
     }

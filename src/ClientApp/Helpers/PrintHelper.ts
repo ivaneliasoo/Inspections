@@ -50,11 +50,11 @@ export class PrintHelper {
           style: 'title'
         },
         {
-          text: `Name of Installation: ${report.name.toUpperCase()}`,
+          text: `Name of Installation: ${report.name.toUpperCase()} Approved Load: ${report.license.amp}A/${report.license.volt}V`,
           style: 'fieldName'
         },
         {
-          text: `Address of Installation: ${report.address ? report.address.toUpperCase() : ''}`,
+          text: `Address of Installation: ${report.address ? report.address.toUpperCase() : ''} (${report.license.amp} kVA)`,
           style: 'fieldName'
         },
         {
@@ -85,8 +85,8 @@ export class PrintHelper {
           margin: [0, 0, 0, 10]
         },
         fieldName: {
-          fontSize: 11,
-          lineHeight: 1.5
+          fontSize: 12,
+          lineHeight: 1
         },
         text_right: {
           fontSize: 10

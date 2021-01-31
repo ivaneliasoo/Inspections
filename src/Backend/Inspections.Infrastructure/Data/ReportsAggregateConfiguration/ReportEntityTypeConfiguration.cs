@@ -31,6 +31,9 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
                     l.Property(p => p.Start).IsRequired();
                     l.Property(p => p.End).IsRequired();
                 });
+                ir.Property(p => p.Amp).IsRequired().HasDefaultValue(0);
+                ir.Property(p => p.Volt).IsRequired().HasDefaultValue(0);
+                ir.Property(p => p.Kva).IsRequired().HasDefaultValue(0);
             });
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.Address).IsRequired();
