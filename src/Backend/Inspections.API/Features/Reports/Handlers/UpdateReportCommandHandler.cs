@@ -32,7 +32,6 @@ namespace Inspections.API.Features.Reports.Handlers
             var report = await _reportsRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
             var reportName = $"{request.Date:yyyyMMdd}-{report.Title}-{request.LicenseNumber}-{request.Address}";
             var license = _context.Licenses.AsNoTracking().Where(l => l.Number == request.LicenseNumber).Select(li => new { li.Validity, li.Amp, li.Volt, li.KVA }).FirstOrDefault();
-            //TODO: verify licences when comming form UI
             report.Edit(reportName, request.Address, new License
             {
                 Number = request.LicenseNumber,

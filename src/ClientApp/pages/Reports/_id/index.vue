@@ -195,7 +195,7 @@
                                   @click.stop="item.checked < 2 ? item.checked++:item.checked=0;checkItemChecks(item.id, item.checked);"
                                 >
                                   <v-icon :color="item.checks.length !== item.checks.filter(c => c.checked == 1).length && item.checks.filter(c => c.checked == 1).length > 0 ? getCheckIconColor(2): getCheckIconColor(item.checks[0].checked)">
-                                    {{ `mdi-${item.checks.length !== item.checks.filter(c => c.checked == 1).length && item.checks.filter(c => c.checked == 1).length > 0 ? 'minus': getCheckIcon(item.checks[0].checked) }` }}
+                                    {{ `mdi-${item.checks.length !== item.checks.filter(c => c.checked == 1).length && item.checks.filter(c => c.checked == 1).length > 0 ? 'minus': item.checks.length === item.checks.filter(c => c.checked == 2).length ? 'minus' : item.checks.length === item.checks.filter(c => c.checked == 0).length ? 'close':getCheckIcon(1) }` }}
                                   </v-icon>
                                 </v-btn>
                               </v-col>
