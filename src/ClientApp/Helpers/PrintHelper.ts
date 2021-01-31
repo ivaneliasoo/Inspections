@@ -108,7 +108,7 @@ export class PrintHelper {
 
     const checksdata: any = []
     report.checkList.forEach((checklist: CheckList, index: number) => {
-      checksdata.push(this.mapChackLists(checklist, index))
+      checksdata.push(this.mapChackLists(checklist, index, report.title.includes('v2')))
     });
     (docDef.content as any).push(checksdata)
 
@@ -176,10 +176,13 @@ export class PrintHelper {
     pdfMake.createPdf(docDef).download(`report_S${report.name}`)
   }
 
-  private mapChackLists (checklist: CheckList, index: number) {
+  private mapChackLists (checklist: CheckList, index: number, isNewFormat: boolean) {
     const mappedChecks = checklist.checks.map((check, childIndex) => {
+      console.log(index === 2 && childIndex === 7 && isNewFormat)
+      console.log(index === 3 && childIndex === 4 && !isNewFormat)
+      console.log(isNewFormat)
       return {
-        pageBreak: index === 3 && childIndex === 4 ? 'before' : '',
+        pageBreak: index === 2 && childIndex === 7 && isNewFormat ? 'before' : index === 3 && childIndex === 4 && !isNewFormat ? 'before' : '', // esta mierda no me gusta muy cableado
         columns: [{ text: `    ${index + 1}.${childIndex + 1} ${check.text}`, style: 'checklistItem', width: '65%' },
           {
             stack: [
@@ -255,7 +258,7 @@ export class PrintHelper {
 
     const checksdata: any = []
     report.checkList.forEach((checklist: CheckList, index: number) => {
-      checksdata.push(this.mapChackLists(checklist, index))
+      checksdata.push(this.mapChackLists(checklist, index, report.title.includes('v2')))
     });
     (inspectionreport.content as any).push(checksdata)
 
