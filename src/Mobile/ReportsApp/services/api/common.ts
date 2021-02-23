@@ -116,7 +116,6 @@ export const serializeDataIfNeeded = function (value: any, requestOptions: any, 
  * @export
  */
 export const toPathString = function (url: URL) {
-    console.log({url})
     return url.pathname + url.search + url.hash
 }
 

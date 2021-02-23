@@ -5,7 +5,6 @@ import { AuthApi } from './services/api'
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {HomeScreen} from './containers/Home';
-import {DetailsScreen} from './containers/Details';
 import {SplashScreen} from './containers/SplashScreen';
 import {Authentication} from './containers/Authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -73,8 +72,8 @@ const HomeNavigator = () => {
         // After getting token, we need to persist the token using `AsyncStorage`
         // In the example, we'll use a dummy token
         try {
-          const token = await authApi.login({username: data.user, password: data.password})
-          console.log(token)
+          const resp = await authApi.login({username: data.user, password: data.password})
+          await AsyncStorage.mergeItem('userToken', resp.data)
           dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
         } catch (error) {
           console.log({error})          
@@ -91,10 +90,7 @@ const HomeNavigator = () => {
         {
           state.isLoading ? <Screen name="SplashScreen" component={SplashScreen} /> 
           : state.userToken === null ? <Screen name="Authentication" component={Authentication} /> :
-            <>
-              <Screen name="My Reports" component={HomeScreen} />
-              <Screen name="Report Detail" component={DetailsScreen} />
-            </>
+            <Screen name="My Reports" component={HomeScreen} />
         }
       </Navigator>
     </AuthContext.Provider>

@@ -1,28 +1,26 @@
-import React from 'react';
-import { SafeAreaView } from 'react-native';
-import { Divider, Icon, Layout, Text, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
+import React, { useState } from 'react';
+import { Divider, TopNavigation, Tab, TabView } from '@ui-kitten/components';
+import { ReportForm } from '../containers/ReportForm'
+import { Checklists } from '../containers/Checklists'
+import { OperationalReading } from '../containers/OperationalReading'
 
-const BackIcon = (props) => (
-  <Icon {...props} name='arrow-back' />
-);
-
-export const DetailsScreen = ({ navigation }) => {
-
-  const navigateBack = () => {
-    navigation.goBack();
-  };
-
-  const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={navigateBack}/>
-  );
-
+export const Details = () => {
+  const [selectedIndex, setSelectedIndex] = useState(1)
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <TopNavigation title='MyApp' alignment='center' accessoryLeft={BackAction}/>
-      <Divider/>
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text category='h1'>DETAILS</Text>
-      </Layout>
-    </SafeAreaView>
+    <>
+      <TopNavigation title='Report Detail' alignment='center' />
+      <Divider />
+      <TabView selectedIndex={selectedIndex} onSelect={index => setSelectedIndex(index)}>
+        <Tab title='Operational Readings'>
+          <OperationalReading />
+        </Tab>
+        <Tab title='Report Details'>
+          <ReportForm />
+        </Tab>
+        <Tab title='Checklist'>
+          <Checklists />
+        </Tab>
+      </TabView>
+    </>
   );
 };

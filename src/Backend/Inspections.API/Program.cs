@@ -47,8 +47,8 @@ namespace Inspections.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                    .UseUrls("http://0.0.0.0:5000")
-                    .UseStartup<Startup>();
+                    .UseStartup<Startup>()
+                    .UseUrls("http://0.0.0.0:5000");
                 });
     }
 }

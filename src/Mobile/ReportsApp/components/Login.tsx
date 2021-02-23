@@ -20,8 +20,8 @@ const Login = () => {
           <Text status="control" category='h4'>Sign In</Text>
         </View>
         <View style={styles.formContainer}>
-          <Input placeholder="enter your Username" status='control' label="Username" blurOnSubmit={false} returnKeyType={'next'} value={user} onChangeText={setUser} />
-          <Input placeholder="enter your Password" status='control' secureTextEntry={true} label="Password" returnKeyType={'done'} value={password} onSubmitEditing={(e) => authCtx.signIn({user, password})} onChangeText={setPassword} />
+          <Input placeholder="enter your Username" status='control' label="Username" blurOnSubmit={false} returnKeyType={'next'} value={user} onChangeText={setUser} autoCapitalize='none' />
+          <Input placeholder="enter your Password" status='control' secureTextEntry={true} label="Password" returnKeyType={'done'} value={password} onSubmitEditing={(e) => authCtx.signIn({user, password})} onChangeText={setPassword} autoCapitalize='none' />
           <Button style={styles.evaButton} status='primary' size='large' accessoryRight={LoginIcon} onPress={(e) => authCtx.signIn({user, password}) }>Sign In</Button>
         </View>
       </ImageOverlay>

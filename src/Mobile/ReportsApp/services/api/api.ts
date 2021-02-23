@@ -2440,7 +2440,6 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 baseOptions = configuration.baseOptions;
             }
             
-            console.log(localVarPath)
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
@@ -2457,10 +2456,6 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(loginModel, localVarRequestOptions, configuration)
-            console.log({
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            })
             return {
                 url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -2484,7 +2479,6 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async login(loginModel?: LoginModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            console.log({loginModel})
             const localVarAxiosArgs = await localVarAxiosParamCreator.login(loginModel, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2527,7 +2521,6 @@ export class AuthApi extends BaseAPI {
      * @memberof AuthApi
      */
     public login(loginModel?: LoginModel, options?: any) {
-        console.log({basePath: this.basePath})
         return AuthApiFp(this.configuration).login(loginModel, options).then((request) => request(this.axios, this.basePath));
     }
 }
