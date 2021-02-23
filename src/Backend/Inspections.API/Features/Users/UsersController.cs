@@ -26,14 +26,14 @@ namespace Inspections.API.Features.Users
         }
 
         // GET: api/Users
-        [HttpGet]
+        [HttpGet(Name = "GetUsers")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
             return await _context.Users.Select(x => new UserDTO(x)).ToListAsync().ConfigureAwait(false);
         }
 
         // GET: api/Users/username
-        [HttpGet("{userName}")]
+        [HttpGet("{userName}", Name ="GetUserByUserName")]
         public async Task<ActionResult<UserDTO>> GetUserByUserName(string userName)
         {
             var user = await _context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync().ConfigureAwait(false);
@@ -47,7 +47,7 @@ namespace Inspections.API.Features.Users
         }
 
         // GET: api/Users/username
-        [HttpGet("active")]
+        [HttpGet("active", Name ="GetActiveUser")]
         public async Task<ActionResult<UserDTO>> GetActiveUser()
         {
             var userName = HttpContext?.User?.Identity?.Name;
@@ -66,7 +66,7 @@ namespace Inspections.API.Features.Users
         }
 
         // PUT: api/Users/demo
-        [HttpPut("{userName}")]
+        [HttpPut("{userName}", Name ="UpdateUser")]
         public async Task<IActionResult> PutUser(string userName, [FromBody] UserDTO user)
         {
             Guard.Against.Null(user, nameof(user));
@@ -107,7 +107,7 @@ namespace Inspections.API.Features.Users
         }
 
         // POST: api/Users
-        [HttpPost]
+        [HttpPost(Name ="AddUser")]
         public async Task<ActionResult<User>> PostUser([FromBody] UserDTO user)
         {
             Guard.Against.Null(user, nameof(user));
@@ -141,7 +141,7 @@ namespace Inspections.API.Features.Users
         }
 
         // DELETE: api/Users/5
-        [HttpDelete("{userName}")]
+        [HttpDelete("{userName}", Name ="DeleteUser")]
         public async Task<ActionResult<User>> DeleteUser(string userName = null)
         {
             var user = _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
@@ -162,7 +162,7 @@ namespace Inspections.API.Features.Users
         /// <param name="userName"></param>
         /// <param name="passwordDTO"></param>
         /// <returns></returns>
-        [HttpPatch("{userName}")]
+        [HttpPatch("{userName}", Name ="ChangePassword")]
         public async Task<IActionResult> ChangePassword(string userName, ChangePasswordDTO passwordDTO)
         {
             Guard.Against.Null(passwordDTO, nameof(passwordDTO));

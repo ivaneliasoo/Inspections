@@ -27,7 +27,7 @@ namespace Inspections.API.Features.Users
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("token")]
+        [HttpPost("token", Name ="Login")]
         public IActionResult CreateToken([FromBody] LoginModel model)
         {
             var user = _context.Users.Where(u => u.UserName == model.username && u.Password == model.password).FirstOrDefault();

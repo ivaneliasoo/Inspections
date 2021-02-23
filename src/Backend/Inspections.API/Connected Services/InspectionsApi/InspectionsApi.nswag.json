@@ -1,0 +1,4553 @@
+﻿{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Inspections API",
+    "version": "v1"
+  },
+  "paths": {
+    "/Addresses": {
+      "get": {
+        "tags": [
+          "Addresses"
+        ],
+        "operationId": "GetAddresses",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddressDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddressDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddressDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Addresses"
+        ],
+        "operationId": "AddAddress",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Addresses/{id}": {
+      "get": {
+        "tags": [
+          "Addresses"
+        ],
+        "operationId": "Addresses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Addresses"
+        ],
+        "operationId": "UpdateAddress",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Addresses"
+        ],
+        "operationId": "DeleteAddress",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Auth/token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Generates a JWT token for use in api call",
+        "operationId": "Login",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/CheckLists": {
+      "post": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "CreateCheckList",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "GetChecklists",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "reportConfigurationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "reportId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "inConfigurationOnly",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CheckLists/{id}/items": {
+      "post": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "AddItemToChecklist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListItemCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListItemCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListItemCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListItemCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CheckLists/{id}/params": {
+      "post": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "AddParams",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListParamCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListParamCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListParamCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListParamCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CheckLists/{id}/items/{idItem}/params": {
+      "post": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "AddItemParam",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idItem",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListItemParamCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListItemParamCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListItemParamCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCheckListItemParamCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "UpdateItemParam",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idItem",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idParam",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListParamCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListParamCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListParamCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListParamCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "DeleteItemParam",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idItem",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idParam",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CheckLists/{id}": {
+      "put": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "UpdateChecklist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "DeleteChecklist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "GetCheckListbyId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CheckLists/{id}/items/{idItem}": {
+      "put": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "UpdateChecklistItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idItem",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListItemCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListItemCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListItemCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListItemCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "DeleteChecklistItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idItem",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CheckLists/{id}/params/{idParam}": {
+      "put": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "UpdateParam",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idParam",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListParamCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListParamCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListParamCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCheckListParamCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CheckLists"
+        ],
+        "operationId": "DeleteParam",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idParam",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/EMALicenses": {
+      "get": {
+        "tags": [
+          "EMALicenses"
+        ],
+        "operationId": "GetLicenses",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LicenseDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LicenseDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LicenseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "EMALicenses"
+        ],
+        "operationId": "AddLicense",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LicenseDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LicenseDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LicenseDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LicenseDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EMALicense"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EMALicense"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EMALicense"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/EMALicenses/{id}": {
+      "get": {
+        "tags": [
+          "EMALicenses"
+        ],
+        "operationId": "GetLicense",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LicenseDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LicenseDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LicenseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EMALicenses"
+        ],
+        "operationId": "UpdateLicense",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LicenseDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LicenseDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LicenseDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LicenseDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "EMALicenses"
+        ],
+        "operationId": "DeleteLicense",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EMALicense"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EMALicense"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EMALicense"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/EMALicenses/dashboard": {
+      "get": {
+        "tags": [
+          "EMALicenses"
+        ],
+        "operationId": "GetLicensesDashboard",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LicenseDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LicenseDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LicenseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ReportConfiguration": {
+      "post": {
+        "tags": [
+          "ReportConfiguration"
+        ],
+        "operationId": "ReportConfiguration",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddReportConfigurationCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddReportConfigurationCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddReportConfigurationCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddReportConfigurationCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ReportConfiguration"
+        ],
+        "operationId": "ReportConfigurationAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResumenReportConfiguration"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResumenReportConfiguration"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResumenReportConfiguration"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ReportConfiguration/{id}": {
+      "put": {
+        "tags": [
+          "ReportConfiguration"
+        ],
+        "operationId": "ReportConfiguration2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReportConfigurationCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReportConfigurationCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReportConfigurationCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReportConfigurationCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ReportConfiguration"
+        ],
+        "operationId": "ReportConfiguration3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ReportConfiguration"
+        ],
+        "operationId": "ReportConfiguration4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportConfigurationDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportConfigurationDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportConfigurationDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Reports": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "Reports",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReportCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReportCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReportCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReportCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "Reports2",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "closed",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Reports/{id}": {
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "Reports3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReportCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReportCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReportCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReportCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "Reports4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "Reports5",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Reports/{id}/photorecord": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "photorecord",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "photorecord2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              },
+              "encoding": {
+                "label": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Reports/{id}/note": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "note",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNoteCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNoteCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNoteCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNoteCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Reports/{id}/note/{idNote}": {
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "note2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idNote",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditNoteCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditNoteCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditNoteCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditNoteCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "note3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idNote",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Reports/{id}/photorecord/{idPhoto}": {
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "photorecord3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idPhoto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPhotoRecordCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPhotoRecordCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPhotoRecordCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPhotoRecordCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "photorecord4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idPhoto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Signatures": {
+      "post": {
+        "tags": [
+          "Signatures"
+        ],
+        "operationId": "Signatures",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSignatureCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSignatureCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSignatureCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSignatureCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Signatures"
+        ],
+        "operationId": "SignaturesAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "reportConfigurationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "reportId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "inConfigurationOnly",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SignatureDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SignatureDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SignatureDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Signatures/{id}": {
+      "put": {
+        "tags": [
+          "Signatures"
+        ],
+        "operationId": "Signatures2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditSignatureCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditSignatureCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditSignatureCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditSignatureCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Signatures"
+        ],
+        "operationId": "Signatures3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Signatures"
+        ],
+        "operationId": "Signatures4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "GetUsers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "AddUser",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Users/{userName}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "GetUserByUserName",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "UpdateUser",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "DeleteUser",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Change User Password afeter validated",
+        "operationId": "ChangePassword",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string",
+              "description": "",
+              "nullable": true
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Users/active": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "GetActiveUser",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DateTimeRange": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AddressDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "addressLine": {
+            "type": "string",
+            "nullable": true
+          },
+          "addressLine2": {
+            "type": "string",
+            "nullable": true
+          },
+          "unit": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "licenseId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "validity": {
+            "$ref": "#/components/schemas/DateTimeRange"
+          },
+          "formatedAddress": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "INotification": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "EMALicense": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "personInCharge": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "amp": {
+            "type": "number",
+            "format": "double"
+          },
+          "volt": {
+            "type": "number",
+            "format": "double"
+          },
+          "kva": {
+            "type": "number",
+            "format": "double"
+          },
+          "validity": {
+            "$ref": "#/components/schemas/DateTimeRange"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "domainEvents": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/INotification"
+            }
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "addressLine": {
+            "type": "string",
+            "nullable": true
+          },
+          "addressLine2": {
+            "type": "string",
+            "nullable": true
+          },
+          "unit": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "licenseId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "license": {
+            "$ref": "#/components/schemas/EMALicense"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "domainEvents": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/INotification"
+            }
+          }
+        }
+      },
+      "LoginModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CheckListParamType": {
+        "type": "integer",
+        "format": "int32",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "CheckListParamDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/CheckListParamType"
+          }
+        }
+      },
+      "CheckValue": {
+        "type": "integer",
+        "format": "int32",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "CheckListItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "checkListId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "checked": {
+            "$ref": "#/components/schemas/CheckValue"
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "textParams": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckListParamDTO"
+            }
+          }
+        }
+      },
+      "AddCheckListCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "textParams": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckListParamDTO"
+            }
+          },
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckListItemDTO"
+            }
+          },
+          "annotation": {
+            "type": "string",
+            "nullable": true
+          },
+          "isConfiguration": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": false
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AddCheckListItemCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idCheckList": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "checked": {
+            "$ref": "#/components/schemas/CheckValue"
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "checklistParams": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckListParamDTO"
+            }
+          }
+        }
+      },
+      "AddCheckListParamCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idCheckList": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "checklistParams": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckListParamDTO"
+            }
+          }
+        }
+      },
+      "AddCheckListItemParamCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idCheckList": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCheckListItem": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "checkListParams": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckListParamDTO"
+            }
+          }
+        }
+      },
+      "UpdateCheckListParamCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idCheckList": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idCheckListItem": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/CheckListParamType"
+          }
+        }
+      },
+      "UpdateCheckListCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idCheckList": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "annotation": {
+            "type": "string",
+            "nullable": true
+          },
+          "isConfiguration": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UpdateCheckListItemCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "checkListId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "checked": {
+            "$ref": "#/components/schemas/CheckValue"
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "LicenseDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "licenseId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "personInCharge": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "amp": {
+            "type": "number",
+            "format": "double"
+          },
+          "volt": {
+            "type": "number",
+            "format": "double"
+          },
+          "kva": {
+            "type": "number",
+            "format": "double"
+          },
+          "validityStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validityEnd": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ReportType": {
+        "type": "integer",
+        "format": "int32",
+        "enum": [
+          0
+        ]
+      },
+      "AddReportConfigurationCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ReportType"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "formName": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarksLabelText": {
+            "type": "string",
+            "nullable": true
+          },
+          "checksDefinition": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "signatureDefinitions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "ResumenReportConfiguration": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "formName": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarksLabelText": {
+            "type": "string",
+            "nullable": true
+          },
+          "definedCheckLists": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "definedSignatures": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "usedByReports": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UpdateReportConfigurationCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ReportType"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "formName": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarksLabelText": {
+            "type": "string",
+            "nullable": true
+          },
+          "checksDefinition": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "signatureDefinitions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "ReportConfigurationDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ReportType"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "formName": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarksLabelText": {
+            "type": "string",
+            "nullable": true
+          },
+          "checksDefinition": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "signatureDefinitions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "CreateReportCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "configurationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reportType": {
+            "$ref": "#/components/schemas/ReportType"
+          }
+        }
+      },
+      "UpdateReportCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "licenseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isClosed": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AddNoteCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reportId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "checked": {
+            "type": "boolean"
+          },
+          "needsCheck": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        }
+      },
+      "EditNoteCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reportId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "checked": {
+            "type": "boolean"
+          }
+        }
+      },
+      "EditPhotoRecordCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reportId": {
+            "type": "integer",
+            "readOnly": true,
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "label": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          }
+        }
+      },
+      "ResponsableType": {
+        "type": "integer",
+        "format": "int32",
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "AddSignatureCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "annotation": {
+            "type": "string",
+            "nullable": true
+          },
+          "responsableType": {
+            "$ref": "#/components/schemas/ResponsableType"
+          },
+          "responsableName": {
+            "type": "string",
+            "nullable": true
+          },
+          "designation": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "principal": {
+            "type": "boolean"
+          },
+          "isConfiguration": {
+            "type": "boolean"
+          },
+          "reportId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "reportConfigurationId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "License": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "validity": {
+            "$ref": "#/components/schemas/DateTimeRange"
+          },
+          "amp": {
+            "type": "number",
+            "format": "double"
+          },
+          "volt": {
+            "type": "number",
+            "format": "double"
+          },
+          "kva": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Responsable": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ResponsableType"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CheckListItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "checkListId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "checked": {
+            "$ref": "#/components/schemas/CheckValue"
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "textParams": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckListParam"
+            }
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "domainEvents": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/INotification"
+            }
+          }
+        }
+      },
+      "CheckListParam": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "checkListId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "checkListItemId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "checkListItem": {
+            "$ref": "#/components/schemas/CheckListItem"
+          },
+          "checkList": {
+            "$ref": "#/components/schemas/CheckList"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/CheckListParamType"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "domainEvents": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/INotification"
+            }
+          }
+        }
+      },
+      "CheckList": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reportId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "report": {
+            "$ref": "#/components/schemas/Report"
+          },
+          "reportConfigurationId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "reportConfiguration": {
+            "$ref": "#/components/schemas/ReportConfiguration"
+          },
+          "text": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "textParams": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckListParam"
+            }
+          },
+          "annotation": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "isConfiguration": {
+            "type": "boolean"
+          },
+          "completed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "checked": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "checks": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckListItem"
+            }
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "domainEvents": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/INotification"
+            }
+          }
+        }
+      },
+      "ReportConfiguration": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ReportType"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "formName": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarksLabelText": {
+            "type": "string",
+            "nullable": true
+          },
+          "checksDefinition": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckList"
+            }
+          },
+          "signatureDefinitions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Signature"
+            }
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "domainEvents": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/INotification"
+            }
+          }
+        }
+      },
+      "Signature": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "annotation": {
+            "type": "string",
+            "nullable": true
+          },
+          "responsable": {
+            "$ref": "#/components/schemas/Responsable"
+          },
+          "responsableName": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "designation": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "principal": {
+            "type": "boolean"
+          },
+          "isConfiguration": {
+            "type": "boolean"
+          },
+          "reportId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "report": {
+            "$ref": "#/components/schemas/Report"
+          },
+          "reportConfigurationId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "reportConfiguration": {
+            "$ref": "#/components/schemas/ReportConfiguration"
+          },
+          "drawedSign": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "domainEvents": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/INotification"
+            }
+          }
+        }
+      },
+      "Note": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reportId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "checked": {
+            "type": "boolean"
+          },
+          "needsCheck": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "domainEvents": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/INotification"
+            }
+          }
+        }
+      },
+      "PhotoRecord": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reportId": {
+            "type": "integer",
+            "readOnly": true,
+            "format": "int32"
+          },
+          "fileName": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "fileNameResized": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "label": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "domainEvents": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/INotification"
+            }
+          }
+        }
+      },
+      "Report": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "license": {
+            "$ref": "#/components/schemas/License"
+          },
+          "date": {
+            "type": "string",
+            "readOnly": true,
+            "format": "date-time"
+          },
+          "isClosed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "formName": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "remarksLabelText": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "signatures": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Signature"
+            }
+          },
+          "notes": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Note"
+            }
+          },
+          "checkList": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CheckList"
+            }
+          },
+          "photoRecords": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/PhotoRecord"
+            }
+          },
+          "completed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "domainEvents": {
+            "type": "array",
+            "readOnly": true,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/INotification"
+            }
+          }
+        }
+      },
+      "SignatureDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "annotation": {
+            "type": "string",
+            "nullable": true
+          },
+          "responsableType": {
+            "$ref": "#/components/schemas/ResponsableType"
+          },
+          "responsableName": {
+            "type": "string",
+            "nullable": true
+          },
+          "designation": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "principal": {
+            "type": "boolean"
+          },
+          "reportId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "report": {
+            "$ref": "#/components/schemas/Report"
+          },
+          "reportConfigurationId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "EditSignatureCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "annotation": {
+            "type": "string",
+            "nullable": true
+          },
+          "responsableType": {
+            "$ref": "#/components/schemas/ResponsableType"
+          },
+          "responsableName": {
+            "type": "string",
+            "nullable": true
+          },
+          "designation": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "principal": {
+            "type": "boolean"
+          },
+          "drawedSign": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UserDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastEditedReport": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isAdmin": {
+            "type": "boolean"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastEditedReport": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isAdmin": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ChangePasswordDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentPassword": {
+            "type": "string",
+            "nullable": true
+          },
+          "newPassword": {
+            "type": "string",
+            "nullable": true
+          },
+          "newPasswordConfirmation": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt_auth": {
+        "type": "http",
+        "description": "Add Token in Headers",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "jwt_auth": []
+    }
+  ]
+}

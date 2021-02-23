@@ -23,7 +23,7 @@ namespace Inspections.API.Features.Licenses
         }
 
         // GET: api/EMALicenses
-        [HttpGet]
+        [HttpGet(Name = "GetLicenses")]
         public async Task<ActionResult<IEnumerable<LicenseDTO>>> GetLicenses()
         {
             var result = await _context.Licenses.ToListAsync().ConfigureAwait(false);
@@ -31,7 +31,7 @@ namespace Inspections.API.Features.Licenses
         }
 
         // GET: api/EMALicenses/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetLicense")]
         public async Task<ActionResult<LicenseDTO>> GetEMALicense(int id)
         {
             var eMALicense = await _context.Licenses.FindAsync(id).ConfigureAwait(false);
@@ -47,7 +47,7 @@ namespace Inspections.API.Features.Licenses
         // PUT: api/EMALicenses/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name ="UpdateLicense")]
         public async Task<IActionResult> PutEMALicense(int id, LicenseDTO eMALicense)
         {
             if (id != eMALicense.LicenseId)
@@ -92,7 +92,7 @@ namespace Inspections.API.Features.Licenses
         // POST: api/EMALicenses
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost(Name ="AddLicense")]
         public async Task<ActionResult<EMALicense>> PostEMALicense([FromBody] LicenseDTO eMALicense)
         {
             var license = new EMALicense
@@ -115,7 +115,7 @@ namespace Inspections.API.Features.Licenses
         }
 
         // DELETE: api/EMALicenses/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name ="DeleteLicense")]
         public async Task<ActionResult<EMALicense>> DeleteEMALicense(int id)
         {
             var eMALicense = await _context.Licenses.FindAsync(id).ConfigureAwait(false);
@@ -130,7 +130,7 @@ namespace Inspections.API.Features.Licenses
             return eMALicense;
         }
 
-        [HttpGet("dashboard")]
+        [HttpGet("dashboard", Name="GetLicensesDashboard")]
         public async Task<ActionResult<IEnumerable<LicenseDTO>>> GetLicensesDashboard()
         {
             var expiringLicenses = await _context.Licenses

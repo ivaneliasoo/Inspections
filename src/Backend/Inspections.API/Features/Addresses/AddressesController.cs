@@ -23,7 +23,7 @@ namespace Inspections.API.Features.Addresses
         }
 
         // GET: api/Addresses
-        [HttpGet]
+        [HttpGet(Name = "GetAddresses")]
         public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAddresses(string filter)
         {
             var result = await _context.Addresses.Include("License")
@@ -53,7 +53,7 @@ namespace Inspections.API.Features.Addresses
         }
 
         // PUT: api/Addresses/5
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = "UpdateAddress")]
         public async Task<IActionResult> PutAddress(int id, [FromBody]AddressDTO address)
         {
             if (id != address.Id)
@@ -91,7 +91,7 @@ namespace Inspections.API.Features.Addresses
         }
 
         // POST: api/Addresses
-        [HttpPost]
+        [HttpPost(Name = "AddAddress")]
         public async Task<ActionResult<Address>> PostAddress([FromBody]AddressDTO address)
         {
             var newAddress = new Address()
@@ -114,7 +114,7 @@ namespace Inspections.API.Features.Addresses
         }
 
         // DELETE: api/Addresses/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}",Name = "DeleteAddress")]
         public async Task<ActionResult<AddressDTO>> DeleteAddress(int id)
         {
             var address = await _context.Addresses.FindAsync(id).ConfigureAwait(false);
