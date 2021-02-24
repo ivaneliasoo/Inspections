@@ -45,7 +45,7 @@ export const Details = ({ route, navigation }) => {
       licenseNumber: ''
     }} onSubmit={values => console.log(`Email: ${values.address}, Password: ${values.licenseNumber}, Date: ${values.date}`)}>
       <>
-        <TopNavigation title={`Report ${title} ${reportId}`} alignment='center' accessoryLeft={BackAction} accessoryRight={() => <Button onPress={handleSubmit}>Save</Button>} />
+        <TopNavigation title={`Report ${title} ${reportId}`} alignment='center' accessoryLeft={BackAction} accessoryRight={() => <Button size='small' onPress={handleSubmit}>Save</Button>} />
         <Divider />
         <ViewPager selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
           <OperationalReading />

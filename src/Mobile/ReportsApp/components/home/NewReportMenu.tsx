@@ -36,7 +36,7 @@ export const NewReportMenu = () => {
 
   return (
     <>
-      <Button accessoryLeft={AddIcon} onPress={() => setShowAddReport(!showAddReport)}></Button>
+      <Button accessoryLeft={AddIcon} appearance='ghost' status='primary' onPress={() => setShowAddReport(!showAddReport)}></Button>
       <Modal visible={showAddReport} backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
         <Card disabled={true} header={() => <View style={{ flex: 1 }}><Text category='h5'>Create Report</Text></View>} footer={() =>
         (

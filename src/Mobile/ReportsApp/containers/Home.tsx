@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const renderItemFooter = (footerProps, item) => (
   <View {...footerProps}>
-    { item.isClosed ? <ClosedIcon fill={'green'} style={{ width: 24, height: 24 }} /> : <NotClosedIcon fill={'orange'} style={{ width: 24, height: 24 }} />}
+    { item.item.isClosed ? <ClosedIcon fill={'green'} style={{ width: 24, height: 24 }} /> : <NotClosedIcon fill={'orange'} style={{ width: 24, height: 24 }} />}
   </View>
 );
 
@@ -20,10 +20,10 @@ const renderReport = ({ navigation, item, index }) => {
     navigation.navigate('Details', { reportId: item.item.id, title: item.item.title });
   };
   return (
-    <Card key={index} style={{ padding: 0, marginHorizontal: 15, marginVertical: 10 }} onPress={navigateDetails} status={item.isClosed ? 'success' : 'warning'}
+    <Card key={index} style={{ padding: 0, marginHorizontal: 15, marginVertical: 10 }} onPress={navigateDetails} status={item.item.isClosed ? 'success' : 'warning'}
       footer={footerProps => renderItemFooter(footerProps, item)} >
-      <Text category='s1'>{`${moment(item.date).format('DD/MM/YYYY HH:mm')} License ${item.license?.number ?? 'Not specified'}`}</Text>
-      <Text category='s2'>{item.address === '' ? 'address not specified' : item.address}</Text>
+      <Text category='s1'>{`${moment(item.item.date).format('DD/MM/YYYY HH:mm')} License ${item.item.license?.number ?? 'Not specified'}`}</Text>
+      <Text category='s2'>{item.item.address === '' ? 'address not specified' : item.item.address}</Text>
     </Card>
   );
 };

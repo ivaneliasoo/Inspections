@@ -1,7 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import {AuthContext} from './authentication-context'
-import { AuthApi } from './services/api'
+import { AuthApi, AuthApiFp, Configuration } from './services/api'
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {HomeScreen} from './containers/Home';
@@ -9,10 +8,11 @@ import {Details} from './containers/Details';
 import {SplashScreen} from './containers/SplashScreen';
 import {Authentication} from './containers/Authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_CONFIG } from './config/config'
 
 const {Navigator, Screen} = createStackNavigator();
 
-const authApi = new AuthApi({ basePath: 'http://192.168.88.250:5000', password: undefined, username: undefined, apiKey: 'falskjdufghasjdghfaskjdhgfa' })
+const authApi = new AuthApi(API_CONFIG as Configuration)
 
 const HomeNavigator = () => {
   const [state, dispatch] = React.useReducer(
