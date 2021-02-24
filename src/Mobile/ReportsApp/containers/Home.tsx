@@ -16,9 +16,11 @@ const renderItemFooter = (footerProps, item) => (
 );
 
 const renderReport = ({ navigation, item, index }) => {
-  
+  const navigateDetails = () => {
+    navigation.navigate('Details', { reportId: item.item.id, title: item.item.title });
+  };
   return (
-    <Card key={index} style={{ padding: 0, marginHorizontal: 15, marginVertical: 10 }} onPress={() => navigation.navigate('Details')} status={item.isClosed ? 'success' : 'warning'}
+    <Card key={index} style={{ padding: 0, marginHorizontal: 15, marginVertical: 10 }} onPress={navigateDetails} status={item.isClosed ? 'success' : 'warning'}
       footer={footerProps => renderItemFooter(footerProps, item)} >
       <Text category='s1'>{`${moment(item.date).format('DD/MM/YYYY HH:mm')} License ${item.license?.number ?? 'Not specified'}`}</Text>
       <Text category='s2'>{item.address === '' ? 'address not specified' : item.address}</Text>
@@ -30,7 +32,7 @@ export const HomeScreen = () => {
   const [searchText, setSearchText] = useState('')
   const [reports, setReports] = useState([])
   const [refreshing, setRefreshing] = useState(true)
-
+  const navigation = useNavigation()
   async function getReports() {
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
     const reportsApi = new ReportsApi({ accessToken: userToken, basePath: 'http://192.168.88.250:5000', password: undefined, username: undefined, apiKey: 'falskjdufghasjdghfaskjdhgfa' })
@@ -52,7 +54,7 @@ export const HomeScreen = () => {
       <Divider />
       <Layout style={{ flex: 1 }}>
         <Input style={{ paddingHorizontal: 15 }} status="info" accessoryLeft={SearchIcon} value={searchText} onChangeText={setSearchText} onEndEditing={getReports} />
-        {reports.length > 0 ? <List data={reports} renderItem={renderReport} onRefresh={getReports} refreshing={refreshing} /> : <Text>Nothing to see</Text>}
+        {reports.length > 0 ? <List data={reports} renderItem={(item, index) => renderReport({ navigation, item, index})} onRefresh={getReports} refreshing={refreshing} /> : <Text>Nothing to see</Text>}
       </Layout>
     </>
   );
