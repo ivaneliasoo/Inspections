@@ -11,3 +11,4 @@ export const OptionsIcon = (props) => (<Icon name='more-vertical-outline' {...pr
 export const BackIcon = (props) => (<Icon name='arrow-back-outline' {...props} />)
 export const PersonIcon = (props) => (<Icon name='person-outline' {...props} />)
 export const PasswordIcon = (props) => (<Icon name='keypad-outline' {...props} />)
+export const CalendarIcon = (props) => (<Icon name='calendar-outline' {...props}/>)

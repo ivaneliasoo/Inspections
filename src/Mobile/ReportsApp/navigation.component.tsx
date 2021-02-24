@@ -68,10 +68,6 @@ const HomeNavigator = () => {
   const authContext = React.useMemo(
     () => ({
       signIn: async (data: any) => {
-        // In a production app, we need to send some data (usually username, password) to server and get a token
-        // We will also need to handle errors if sign in failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
         try {
           const resp = await authApi.login({username: data.user, password: data.password})
           await AsyncStorage.mergeItem('userToken', resp.data)
