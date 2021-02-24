@@ -1,52 +1,58 @@
-import React, { useContext, useState, useEffect } from 'react';
-import {ReportsApi} from '../services/api'
-import { Divider, TopNavigation, Layout, Input, Icon, Button, List, ListItem, Text, Card } from '@ui-kitten/components';
-import { ThemeContext } from '../theme-context';
+import React, { useState, useEffect } from 'react';
+import { ReportsApi } from '../services/api'
+import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RefreshControl, TouchableOpacity } from 'react-native';
+import { Divider, TopNavigation, Layout, Input,List, Text, Card } from '@ui-kitten/components';
+import { ClosedIcon, SearchIcon, NotClosedIcon} from '../components/Icons'
+import { OptionsMenu } from '../components/home/OptionsMenu'
+import { NewReportMenu } from '../components/home/NewReportMenu'
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const SearchIcon = (props) => (<Icon name='search-outline' {...props} />)
-const DarkIcon = (props) => (<Icon name='moon-outline' {...props} />)
-const LightIcon = (props) => (<Icon name='sun-outline' {...props} />)
+const renderItemFooter = (footerProps, item) => (
+  <View {...footerProps}>
+    { item.isClosed ? <ClosedIcon fill={'green'} style={{ width: 24, height: 24 }} /> : <NotClosedIcon fill={'orange'} style={{ width: 24, height: 24 }} />}
+  </View>
+);
 
-
-const ThemeToggle = () => {
-  const context = useContext(ThemeContext)
+const renderReport = ({ navigation, item, index }) => {
+  
   return (
-      <Button appearance='ghost' onPress={context.toggleTheme} accessoryRight={context.theme === 'dark' ? DarkIcon:LightIcon} />
-  )
-}
-
-const renderReport = ({item, index}) => {
-  return <Card style={{padding: 0, marginHorizontal: 15, marginVertical: 10}} status={ item.isClosed ? 'success' : 'warning'}><ListItem title={`${item.name}`} description={`${item.address}`} /></Card>
+    <Card key={index} style={{ padding: 0, marginHorizontal: 15, marginVertical: 10 }} onPress={() => navigation.navigate('Details')} status={item.isClosed ? 'success' : 'warning'}
+      footer={footerProps => renderItemFooter(footerProps, item)} >
+      <Text category='s1'>{`${moment(item.date).format('DD/MM/YYYY HH:mm')} License ${item.license?.number ?? 'Not specified'}`}</Text>
+      <Text category='s2'>{item.address === '' ? 'address not specified' : item.address}</Text>
+    </Card>
+  );
 };
 
 export const HomeScreen = () => {
   const [searchText, setSearchText] = useState('')
-  const [onlyMyReports, setOnlyMyReports] = useState(true)
   const [reports, setReports] = useState([])
+  const [refreshing, setRefreshing] = useState(true)
+
+  async function getReports() {
+    const userToken: string = await AsyncStorage.getItem('userToken') as string;
+    const reportsApi = new ReportsApi({ accessToken: userToken, basePath: 'http://192.168.88.250:5000', password: undefined, username: undefined, apiKey: 'falskjdufghasjdghfaskjdhgfa' })
+    const resp = await reportsApi.reportsGet(searchText)
+    setReports(resp.data)
+    setRefreshing(false)
+  }
 
   useEffect(() => {
-    async function getReports() {
-      const userToken: string = await AsyncStorage.getItem('userToken') as string;
-      const reportsApi =  new ReportsApi({ accessToken: userToken, basePath: 'http://192.168.88.250:5000', password: undefined, username: undefined, apiKey: 'falskjdufghasjdghfaskjdhgfa' })
-      const resp = await reportsApi.reportsGet(searchText)
-      setReports(resp.data)
-    }
     getReports()
     return () => {
-      
+
     }
-  }, [searchText])
+  }, [])
 
   return (
     <>
-      <TopNavigation title='Report Detail' alignment='center' accessoryRight={ThemeToggle} />
+      <TopNavigation title={`Reports (total: ${reports.length})`} alignment='center' accessoryRight={OptionsMenu} accessoryLeft={NewReportMenu} />
       <Divider />
-      <Layout>
-        <Input  status="info" accessoryLeft={SearchIcon} />
-        <Text>{reports.length}</Text>
-        { reports.length> 0 ? <List data={reports} renderItem={renderReport} refreshControl={<RefreshControl refreshing={true}/>} /> : <Text>Nothing to see</Text> }
+      <Layout style={{ flex: 1 }}>
+        <Input style={{ paddingHorizontal: 15 }} status="info" accessoryLeft={SearchIcon} value={searchText} onChangeText={setSearchText} onEndEditing={getReports} />
+        {reports.length > 0 ? <List data={reports} renderItem={renderReport} onRefresh={getReports} refreshing={refreshing} /> : <Text>Nothing to see</Text>}
       </Layout>
     </>
   );

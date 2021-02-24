@@ -5,6 +5,7 @@ import { AuthApi } from './services/api'
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {HomeScreen} from './containers/Home';
+import {Details} from './containers/Details';
 import {SplashScreen} from './containers/SplashScreen';
 import {Authentication} from './containers/Authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -90,7 +91,8 @@ const HomeNavigator = () => {
         {
           state.isLoading ? <Screen name="SplashScreen" component={SplashScreen} /> 
           : state.userToken === null ? <Screen name="Authentication" component={Authentication} /> :
-            <Screen name="My Reports" component={HomeScreen} />
+            <><Screen name="My Reports" component={HomeScreen} />
+            <Screen name="Details" component={Details} /></>
         }
       </Navigator>
     </AuthContext.Provider>
