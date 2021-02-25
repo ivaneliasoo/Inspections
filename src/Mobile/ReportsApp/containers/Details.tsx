@@ -5,7 +5,7 @@ import { OperationalReading } from '../containers/OperationalReading'
 import { BackIcon } from '../components/Icons'
 import { Formik } from 'formik';
 import { Directions, FlingGestureHandler, State } from 'react-native-gesture-handler'
-import { Signatures } from './Signatures';
+import { Checklists } from './Checklists';
 
 
 export interface MyValues {
@@ -19,6 +19,10 @@ export const Details = ({ route, navigation }) => {
 
   const navigateToCamera = () => {
     navigation.navigate('Camera')
+  }
+
+  const navigateToSignatures = () => {
+    navigation.navigate('Signatures')
   }
 
   const navigateBack = () => {
@@ -55,18 +59,27 @@ export const Details = ({ route, navigation }) => {
         <Divider />
         <FlingGestureHandler
           numberOfPointers={2}
-          direction={Directions.DOWN | Directions.UP}
-          onHandlerStateChange={({nativeEvent}) => {
+          direction={Directions.LEFT}
+          onHandlerStateChange={({ nativeEvent }) => {
             if (nativeEvent.state === State.ACTIVE) {
               navigateToCamera()
             }
           }}
         >
-          <ViewPager style={{flex: 1}} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
-            <OperationalReading />
-            <ReportForm />
-            <Signatures />
-          </ViewPager>
+          <FlingGestureHandler
+            numberOfPointers={2}
+            direction={Directions.UP}
+            onHandlerStateChange={({ nativeEvent }) => {
+              if (nativeEvent.state === State.ACTIVE) {
+                navigateToSignatures()
+              }
+            }}
+          >
+            <ViewPager style={{ flex: 1 }} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
+              <OperationalReading />
+              <ReportForm />
+            </ViewPager>
+          </FlingGestureHandler>
         </FlingGestureHandler>
       </>
     </Formik >

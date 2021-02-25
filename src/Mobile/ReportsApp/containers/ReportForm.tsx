@@ -5,6 +5,7 @@ import { Button, Datepicker, Input, Layout } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
 import { CalendarIcon } from '../components/Icons'
 import { useOrientation } from '../utils/helpers'
+import { Checklists } from './Checklists'
 
 export interface MyValues {
   date: Date;
@@ -14,7 +15,7 @@ export interface MyValues {
 
 const ReportForm = () => {
   const { values, handleChange, setFieldValue, validationSchema } = useFormikContext<MyValues>()
-  const {orientation} = useOrientation();
+  const { orientation } = useOrientation();
 
   const flexType = orientation === 'landscape' ? 'row' : 'column'
 
@@ -23,7 +24,7 @@ const ReportForm = () => {
     <>
       <Layout style={[styles.container, { flexDirection: flexType }]}>
         <Datepicker
-          style={{ flex: flexType === 'row' ? 3 : undefined, marginHorizontal: 3,  }}
+          style={{ flex: flexType === 'row' ? 3 : undefined, marginHorizontal: 3, }}
           label='Label'
           caption=''
           placeholder='Pick Date'
@@ -35,6 +36,7 @@ const ReportForm = () => {
         <Input style={{ flex: flexType === 'row' ? 7 : undefined, marginHorizontal: 3 }} multiline label='Address' value={values.address} onChangeText={handleChange('address')} />
         <Input style={{ flex: flexType === 'row' ? 2 : undefined, marginHorizontal: 3 }} disabled label='License' value={values.licenseNumber} onChangeText={handleChange('licenseNumber')} />
       </Layout>
+      <Checklists />
     </>
   )
 }

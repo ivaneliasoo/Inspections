@@ -10,6 +10,7 @@ import {Authentication} from './containers/Authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_CONFIG } from './config/config'
 import { CameraScreen } from './containers/CameraScreen';
+import { Signatures } from './containers/Signatures';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -90,7 +91,9 @@ const HomeNavigator = () => {
           : state.userToken === null ? <Screen name="Authentication" component={Authentication} /> :
             <><Screen name="My Reports" component={HomeScreen} />
             <Screen name="Details" component={Details} />
-            <Screen name="Camera" component={CameraScreen} /></>
+            <Screen name="Camera" component={CameraScreen} />
+            <Screen name="Signatures" component={Signatures} />
+            </>
         }
       </Navigator>
     </AuthContext.Provider>
