@@ -10,7 +10,7 @@ const Signatures = () => {
   )
 }
 
-export default Signatures
+export {Signatures}
 
 const styles = StyleSheet.create({
   container: {
