@@ -1,11 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Divider, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
 import { ReportForm } from '../containers/ReportForm'
 import { OperationalReading } from '../containers/OperationalReading'
 import { BackIcon } from '../components/Icons'
 import { Formik } from 'formik';
 import { Directions, FlingGestureHandler, State } from 'react-native-gesture-handler'
-import { Checklists } from './Checklists';
+import config, { API_CONFIG } from '../config/config'
+import { ReportsApi } from '../services/api'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export interface MyValues {
@@ -16,6 +18,7 @@ export interface MyValues {
 }
 
 export const Details = ({ route, navigation }) => {
+
 
   const navigateToCamera = () => {
     navigation.navigate('Camera')
@@ -34,10 +37,11 @@ export const Details = ({ route, navigation }) => {
   );
 
   const [selectedIndex, setSelectedIndex] = useState(1)
+  const [reportData, setReportData] = useState({})
 
   const { reportId, title } = route.params
 
-  const shouldLoadComponent = (index) => index === selectedIndex;
+  const shouldLoadComponent = (index: number) => index === selectedIndex;
 
   const formRef = useRef<MyValues>()
 
@@ -47,13 +51,24 @@ export const Details = ({ route, navigation }) => {
     }
   }
 
+  const defaultValues = {
+    date: new Date(),
+    address: 'esrgesrgsergsedrgsdrg',
+    licenseNumber: ''
+  }
+  async function getReportData() {
+    const userToken: string = await AsyncStorage.getItem('userToken') as string;
+    const apiService =  new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey})
+    const respuesta = await apiService.reportsIdGet(reportId)
+    console.log({respuesta})
+  }
+  useEffect(() => {
+    getReportData()
+  }, [reportId])
+
   return (
 
-    <Formik innerRef={formRef} initialValues={{
-      date: new Date(),
-      address: '',
-      licenseNumber: ''
-    }} onSubmit={values => console.log(`Email: ${values.address}, Password: ${values.licenseNumber}, Date: ${values.date}`)}>
+    <Formik innerRef={formRef} initialValues={defaultValues} onSubmit={values => console.log(`Email: ${values.address}, Password: ${values.licenseNumber}, Date: ${values.date}`)}>
       <>
         <TopNavigation title={`Report  `} alignment='center' accessoryLeft={BackAction} accessoryRight={() => <Button size='small' onPress={handleSubmit}>Save</Button>} />
         <Divider />

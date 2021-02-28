@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import SignatureCapture from 'react-native-signature-capture'
-import { Layout, Text } from '@ui-kitten/components'
-import { StyleSheet, TouchableHighlight, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+
 /**
  *
  *
@@ -30,7 +30,6 @@ const Signatures = () => {
 
   return (
     <View style={{ flex: 1, flexDirection: "column" }}>
-      <Text style={{ alignItems: "center", justifyContent: "center" }}>Signature Capture Extended </Text>
       <SignatureCapture
         style={[{ flex: 1 }, styles.signature]}
         ref={sign}
@@ -38,7 +37,8 @@ const Signatures = () => {
         saveImageFileInExtStorage={true}
         showNativeButtons={true}
         showBorder ={true}
-        showTitleLabel={true}
+        onSaveEvent={_onSaveEvent}
+        onDragEvento={_onDragEvent}
         backgroundColor="#FFFFFF"
         strokeColor="#000000"
         minStrokeWidth={4}
@@ -53,7 +53,7 @@ export { Signatures }
 const styles = StyleSheet.create({
   signature: {
       flex: 1,
-      borderColor: 'green',
+      borderColor: '#000',
       borderWidth: 10,
   },
   buttonStyle: {
