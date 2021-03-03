@@ -1,18 +1,19 @@
 import React from 'react';
-import {AuthContext} from './authentication-context'
-import { AuthApi, AuthApiFp, Configuration } from './services/api'
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {HomeScreen} from './containers/Home';
-import {Details} from './containers/Details';
-import {SplashScreen} from './containers/SplashScreen';
-import {Authentication} from './containers/Authentication';
+import { AuthContext } from './authentication-context'
+import { AuthApi, Configuration } from './services/api'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { HomeScreen } from './containers/Home';
+import { Details } from './containers/Details';
+import { SplashScreen } from './containers/SplashScreen';
+import { Authentication } from './containers/Authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_CONFIG } from './config/config'
 import { CameraScreen } from './containers/CameraScreen';
 import { Signatures } from './containers/Signatures';
+import { ReportsProvider } from './reports-contexts';
 
-const {Navigator, Screen} = createStackNavigator();
+const { Navigator, Screen } = createStackNavigator();
 
 const authApi = new AuthApi(API_CONFIG as Configuration)
 
@@ -46,7 +47,7 @@ const HomeNavigator = () => {
       userToken: null,
     }
   );
-  
+
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const bootstrapAsync = async () => {
@@ -71,14 +72,22 @@ const HomeNavigator = () => {
     () => ({
       signIn: async (data: any) => {
         try {
-          const resp = await authApi.login({username: data.user, password: data.password})
+          const resp = await authApi.login({ username: data.user, password: data.password })
           await AsyncStorage.mergeItem('userToken', resp.data)
           dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
         } catch (error) {
-          console.log({error})          
+          console.log({ error })
         }
       },
       signOut: () => dispatch({ type: 'SIGN_OUT', token: null }),
+    }),
+    []
+  );
+
+  const reportsContext = React.useMemo(
+    () => ({
+      onlyMyReports: true,
+      onlyClosedReports: false
     }),
     []
   );
@@ -87,20 +96,24 @@ const HomeNavigator = () => {
     <AuthContext.Provider value={authContext}>
       <Navigator headerMode="none">
         {
-          state.isLoading ? <Screen name="SplashScreen" component={SplashScreen} /> 
-          : state.userToken === null ? <Screen name="Authentication" component={Authentication} /> :
-            <><Screen name="My Reports" component={HomeScreen} />
-            <Screen name="Details" component={Details} />
-            <Screen name="Camera" component={CameraScreen} />
-            <Screen name="Signatures" component={Signatures} />
-            </>
+          state.isLoading ? <Screen name="SplashScreen" component={SplashScreen} />
+            : state.userToken === null ? <Screen name="Authentication" component={Authentication} /> :
+              <>
+                <Screen name="My Reports" component={HomeScreen} />
+                <Screen name="Details" component={Details} />
+                <Screen name="Camera" component={CameraScreen} />
+                <Screen name="Signatures" component={Signatures} />
+              </>
         }
       </Navigator>
-    </AuthContext.Provider>
-  )};
+    </AuthContext.Provider >
+  )
+};
 
 export const AppNavigator = () => (
   <NavigationContainer>
-    <HomeNavigator />
+    <ReportsProvider>
+      <HomeNavigator />
+    </ReportsProvider>
   </NavigationContainer>
 );

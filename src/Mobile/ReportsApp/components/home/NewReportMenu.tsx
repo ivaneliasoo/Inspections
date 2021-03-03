@@ -3,6 +3,7 @@ import { Button, Card, Layout, Modal, Text } from "@ui-kitten/components"
 import { AddIcon } from "../Icons"
 import React, { useEffect, useState } from "react"
 import {View} from 'react-native'
+import { API_HOST, API_KEY} from '../../config/config';
 import { CreateReportCommand, ReportConfigurationApi, ReportsApi } from "../../services/api"
 
 export const NewReportMenu = () => {
@@ -13,7 +14,7 @@ export const NewReportMenu = () => {
   async function getConfigurationTemplates() {
     setCreatingReport(true)
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
-    const reportConfigurationApi = new ReportConfigurationApi({ accessToken: userToken, basePath: 'http://192.168.88.250:5000', password: undefined, username: undefined, apiKey: 'falskjdufghasjdghfaskjdhgfa' })
+    const reportConfigurationApi = new ReportConfigurationApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY })
     const resp = await reportConfigurationApi.reportConfigurationGet();
     setTemplates(resp.data)
     setCreatingReport(false)
@@ -22,7 +23,7 @@ export const NewReportMenu = () => {
   async function createReport(configuration: CreateReportCommand) {
     setCreatingReport(true)
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
-    const reportsApi = new ReportsApi({ accessToken: userToken, basePath: 'http://192.168.88.250:5000', password: undefined, username: undefined, apiKey: 'falskjdufghasjdghfaskjdhgfa' })
+    const reportsApi = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY })
     const reportId = await reportsApi.reportsPost(configuration)
     setCreatingReport(false)
   }

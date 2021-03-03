@@ -35,15 +35,15 @@ namespace Inspections.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task<IEnumerable<Report>> GetAll(string filter, bool? closed)
+        public async Task<IEnumerable<Report>> GetAll(string filter, bool? closed, bool myReports)
         {
             var query = _context.Reports
                 .Include(p => p.PhotoRecords);
 
-            if(closed.HasValue)
-                return await query.AsNoTracking().Where(r => (r.IsClosed)).OrderByDescending(r=>r.Date).ToListAsync();
+            if(closed.HasValue && closed.Value)
+                return await query.AsNoTracking().Where(r => (r.IsClosed) && (myReports ? EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName): true) && EF.Functions.Like(r.Name, $"%{filter}%")).OrderByDescending(r=>r.Date).ToListAsync();
 
-            return await query.AsNoTracking().OrderByDescending(r => r.Date).ToListAsync();
+            return await query.AsNoTracking().Where(r=> (myReports ? EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName) : true) && EF.Functions.Like(r.Name, $"%{filter}%")).OrderByDescending(r => r.Date).ToListAsync();
         }
 
         public Task DeleteAsync(Report entity)
