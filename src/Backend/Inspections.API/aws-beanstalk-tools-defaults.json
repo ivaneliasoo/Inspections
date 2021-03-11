@@ -1,7 +1,7 @@
 
 {
     "region" : "us-east-2",
-    "configuration" : "Release",
+    "configuration" : "Debug",
     "framework"     : "netcoreapp3.1",
     "self-contained" : false,
     "application"    : "InspectionsAPI",

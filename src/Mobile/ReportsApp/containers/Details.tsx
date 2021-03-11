@@ -59,8 +59,7 @@ export const Details = ({ route, navigation }) => {
   async function getReportData() {
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
     const apiService =  new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey})
-    const respuesta = await apiService.reportsIdGet(reportId)
-    console.log({respuesta})
+    await apiService.reportsIdGet(reportId)
   }
   useEffect(() => {
     getReportData()

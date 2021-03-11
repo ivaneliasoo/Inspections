@@ -13,7 +13,6 @@ function reportsReducer(state, action) {
       return { ...state, filter: action.payload.filter }
     }
     case 'SET_FILTERS_MYREPORTS': {
-      console.log(action.payload.myReports)
       return { ...state, myReports: action.payload.myReports }
     }
     case 'SET_FILTERS_ISCLOSED': {
