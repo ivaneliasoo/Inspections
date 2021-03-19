@@ -41,7 +41,8 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/vuetify',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/tailwindcss'
   ],
   /*
   ** Nuxt.js modules

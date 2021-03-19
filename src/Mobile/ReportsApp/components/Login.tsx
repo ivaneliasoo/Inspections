@@ -6,6 +6,8 @@ import {ImageOverlay} from './ImageOverlay'
 import { StyleSheet } from 'react-native';
 import {AuthContext} from '../authentication-context';
 import { PasswordIcon, PersonIcon } from './Icons';
+import { API_HOST } from '../services/api/api-accesor';
+
 
 const LoginIcon = (props) => <Icon name="log-in-outline" {...props} />;
 
@@ -24,6 +26,7 @@ const Login = () => {
           <Input placeholder="enter your Username" accessoryLeft={PersonIcon} status='control' label="Username" blurOnSubmit={false} returnKeyType={'next'} value={user} onChangeText={setUser} autoCapitalize='none' />
           <Input placeholder="enter your Password" accessoryLeft={PasswordIcon} status='control' secureTextEntry={true} label="Password" returnKeyType={'done'} value={password} onSubmitEditing={(e) => authCtx.signIn({user, password})} onChangeText={setPassword} autoCapitalize='none' />
           <Button style={styles.evaButton} status='primary' size='large' accessoryRight={LoginIcon} onPress={(e) => authCtx.signIn({user, password}) }>Sign In</Button>
+          <Text category='c1'>{ API_HOST }</Text>
         </View>
       </ImageOverlay>
     </KeyboardAvoidingView>

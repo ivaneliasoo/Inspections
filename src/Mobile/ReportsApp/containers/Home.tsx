@@ -128,6 +128,7 @@ export const HomeScreen = () => {
           footer={footerProps => renderItemFooter(footerProps, item)} >
           <Text category='s1'>{`${moment(item.item.date).format('DD/MM/YYYY HH:mm')} License ${item.item.license?.number ?? 'Not specified'}`}</Text>
           <Text category='s2'>{item.item.address === '' ? 'address not specified' : item.item.address}</Text>
+          <Text category='c1'>{ API_HOST }</Text>
         </Card>
       </Swipeable>
     );
