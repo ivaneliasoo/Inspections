@@ -34,7 +34,9 @@
     "react-native-screens": "^2.17.1",
     "react-native-signature-capture": "^0.4.11",
     "react-native-svg": "^12.1.0",
+    "react-native-svg-transformer": "^0.14.3",
     "react-native-url-polyfill": "^1.2.0",
+    "use-debounce": "^6.0.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { ReportsApi } from '../services/api'
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Animated, Alert } from 'react-native';
+import { Animated, Alert, View } from 'react-native';
 import { Icon, Divider, TopNavigation, Layout, Input, List, Text, Card } from '@ui-kitten/components';
 import { ClosedIcon, SearchIcon, NotClosedIcon } from '../components/Icons'
 import { OptionsMenu } from '../components/home/OptionsMenu'
@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { API_HOST, API_KEY } from '../config/config';
 import { ReportsContext } from '../reports-contexts';
 import { RectButton, Swipeable } from 'react-native-gesture-handler';
+import Empty from '../assets/images/empty.svg'
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
@@ -90,6 +91,7 @@ export const HomeScreen = () => {
 
   const navigation = useNavigation()
   async function getReports() {
+    setRefreshing(true)
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
     const reportsApi = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY })
     const resp = await reportsApi.reportsGet(filter, isClosed, myReports)
@@ -140,7 +142,14 @@ export const HomeScreen = () => {
       <Divider />
       <Layout style={{ flex: 1, justifyContent: 'flex-start' }}>
         <Input style={{ paddingHorizontal: 15 }} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilter} onEndEditing={getReports} />
-        {reports.length > 0 ? <List data={reports} renderItem={(item: any, index: any) => renderReport({ navigation, item, index })} onRefresh={getReports} refreshing={refreshing} /> : <Text style={{ alignSelf: 'center' }}>Nothing to see</Text>}
+        {reports.length > 0 ? 
+          <List data={reports} renderItem={(item: any, index: any) => renderReport({ navigation, item, index })} onRefresh={getReports} refreshing={refreshing} /> 
+            : 
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Empty height={200} width={300} />
+            <Text status='warning' category='h1'>No results</Text>
+            <Text status='info' category='s2'>try again later or try with a new search</Text>
+          </View>}
       </Layout>
     </>
   );

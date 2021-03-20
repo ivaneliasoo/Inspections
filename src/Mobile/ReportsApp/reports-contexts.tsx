@@ -1,5 +1,3 @@
-import { AuthContext } from "authentication-context";
-
 import React, { useReducer } from 'react';
 import { Report } from "services/api";
 export const ReportsContext = React.createContext({});

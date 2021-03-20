@@ -768,10 +768,10 @@ export enum CheckListParamType {
  * @enum {string}
  */
 export enum CheckValue {
-    NUMBER_0 = 0,
-    NUMBER_1 = 1,
-    NUMBER_2 = 2,
-    NUMBER_3 = 3
+    NotAcceptable = 0,
+    Acceptable = 1,
+    NotAplicable = 2,
+    Required = 3
 }
 
 /**

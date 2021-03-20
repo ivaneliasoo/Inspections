@@ -10,7 +10,7 @@ import { Authentication } from './containers/Authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_CONFIG } from './config/config'
 import { CameraScreen } from './containers/CameraScreen';
-import { Signatures } from './containers/Signatures';
+import { Signatures } from './components/reports/Signatures';
 import { ReportsProvider } from './reports-contexts';
 
 const { Navigator, Screen } = createStackNavigator();

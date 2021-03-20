@@ -1,21 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Divider, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
-import { ReportForm } from '../containers/ReportForm'
-import { OperationalReading } from '../containers/OperationalReading'
+import { Button, Divider, Spinner, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
+import { ReportForm } from '../components/reports/ReportForm'
+import { OperationalReading } from '../components/reports/OperationalReading'
 import { BackIcon } from '../components/Icons'
 import { Formik } from 'formik';
 import { Directions, FlingGestureHandler, State } from 'react-native-gesture-handler'
-import config, { API_CONFIG } from '../config/config'
-import { ReportsApi } from '../services/api'
+import { API_CONFIG } from '../config/config'
+import { Configuration, Report, ReportsApi } from '../services/api'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-export interface MyValues {
-  date: Date;
-  address: string;
-  licenseNumber: string;
-  handleSubmit: () => {}
-}
+import moment from 'moment';
+import * as Yup from 'yup';
 
 export const Details = ({ route, navigation }) => {
 
@@ -37,37 +31,39 @@ export const Details = ({ route, navigation }) => {
   );
 
   const [selectedIndex, setSelectedIndex] = useState(1)
-  const [reportData, setReportData] = useState({})
+  const [reportData, setReportData] = useState<Report>({})
 
-  const { reportId, title } = route.params
+  const { reportId } = route.params
 
   const shouldLoadComponent = (index: number) => index === selectedIndex;
 
-  const formRef = useRef<MyValues>()
+  const formRef = useRef()
 
   const handleSubmit = () => {
     if (formRef.current) {
-      formRef.current.handleSubmit()
+      formRef.current!.handleSubmit()
     }
   }
-
-  const defaultValues = {
-    date: new Date(),
-    address: 'esrgesrgsergsedrgsdrg',
-    licenseNumber: ''
-  }
-  async function getReportData() {
-    const userToken: string = await AsyncStorage.getItem('userToken') as string;
-    const apiService =  new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey})
-    await apiService.reportsIdGet(reportId)
-  }
+  
   useEffect(() => {
+    const getReportData = async () => {
+      const userToken: string = await AsyncStorage.getItem('userToken') as string;
+      const apiService =  new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey} as Configuration)
+      const result = (await apiService.reportsIdGet(reportId)).data
+      result.date = moment(result.date).toDate()
+      console.log(result.date)
+      setReportData(result as any)
+    }
     getReportData()
   }, [reportId])
 
+  const reportValidationSchema = Yup.object().shape({
+    address: Yup.string().required('Required. Please Select an Address')
+  })
+
   return (
 
-    <Formik innerRef={formRef} initialValues={defaultValues} onSubmit={values => console.log(`Email: ${values.address}, Password: ${values.licenseNumber}, Date: ${values.date}`)}>
+    <Formik innerRef={formRef} validationSchema={reportValidationSchema} initialValues={reportData} enableReinitialize onSubmit={values => console.log({values})}>
       <>
         <TopNavigation title={`Report  `} alignment='center' accessoryLeft={BackAction} accessoryRight={() => <Button size='small' onPress={handleSubmit}>Save</Button>} />
         <Divider />
@@ -89,10 +85,10 @@ export const Details = ({ route, navigation }) => {
               }
             }}
           >
-            <ViewPager style={{ flex: 1 }} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
+            {reportData ? <ViewPager style={{ flex: 1 }} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
               <OperationalReading />
               <ReportForm />
-            </ViewPager>
+            </ViewPager>:<Spinner  />}
           </FlingGestureHandler>
         </FlingGestureHandler>
       </>
