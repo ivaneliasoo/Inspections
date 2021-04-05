@@ -4,6 +4,7 @@ using Inspections.Core.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,8 +28,15 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             if (reportConfig is null)
                 return false;
 
-            await _reportConfigurationsRepository.DeleteAsync(reportConfig).ConfigureAwait(false);
-            return true;
+            try
+            {
+                await _reportConfigurationsRepository.DeleteAsync(reportConfig).ConfigureAwait(false);
+                return true;
+            }
+            catch (DbException ex)
+            {
+                throw;
+            }
         }
     }
 }

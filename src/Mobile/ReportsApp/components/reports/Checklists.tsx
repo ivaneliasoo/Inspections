@@ -18,12 +18,21 @@ type CheckListItemProps = {
 }
 
 const CheckListLine = ({ item, index, ...props }: CheckListItemProps) => {
-  const [iconName, setIconName] = useState('alert-circle-outline')
+  const [checked, setChecked] = useState(2)
+
+  const onPress = () => {
+
+    if(checked < 2)
+      setChecked(checked + 1)
+    else
+      setChecked(0)
+  }
+
   return (
     <>
-        <TouchableOpacity key={index} onPress={() => console.log('tocado')} style={[{ flex: 1, flexDirection: 'row', alignItems: 'center'}, props.style]}>
+        <TouchableOpacity key={index} onPress={onPress} style={[{ flex: 1, flexDirection: 'row', alignItems: 'center'}, props.style]}>
             <Text style={{flex: 10,  fontWeight: '900' }} category='s1' >{`${index + 1} - ${item.text}`}</Text>
-            <Icon name={iconName} fill='green' style={{ width: 30, height: 30 }} />
+            <Text style={{ alignSelf: 'center', alignContent: 'center' }} category='c1'>{CheckValue[checked]}<Icon name={checkItemIcon[checked].name} fill={checkItemIcon[checked].color} style={{ width: 30, height: 30 }} /></Text>
         </TouchableOpacity>
       {
         item && item.checks && item.checks.map((checkItem, checkIndex) => {
@@ -40,8 +49,6 @@ type CheckListItemCheckProps = {
   itemIndex: number
 }
 const CheckListItemCheck = ({ checkItem, checkIndex, itemIndex, ...props }: CheckListItemCheckProps) => {
-  
-  // const [checkItemIconColor, setCheckItemIconColor] = useState('blue')
   const [checked, setChecked] = useState(2)
 
   const onPress = () => {

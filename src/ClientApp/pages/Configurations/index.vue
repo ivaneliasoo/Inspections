@@ -144,13 +144,14 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
     return (this.$store.state.configurations as ReportConfigurationState).configurations
   }
 
-  deleteConfig() {
-    this.$store.dispatch('configurations/deleteConfiguration', this.selectedItem.id, { root: false })
+  async deleteConfig () {
+    await this.$store.dispatch('configurations/deleteConfiguration', this.selectedItem.id, { root: false })
   }
 
   async fetch () {
-    if(!this.$auth.user.isAdmin)
+    if (!this.$auth.user.isAdmin) {
       this.$nuxt.error({ statusCode: 403, message: 'Forbbiden' })
+    }
     this.loading = true
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
     this.loading = false
