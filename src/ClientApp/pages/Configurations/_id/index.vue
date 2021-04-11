@@ -117,7 +117,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { ReportConfiguration, ReportType, CheckList, FilterType, UpdateReportConfigurationCommand } from '@/types'
 import { CheckListsState } from '@/store/checklists'
 import { SignatureState } from '@/store/signatures'
-import { SignatureDTO } from '../../../types/Signatures/ViewModels/SignatureDTO'
+import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
 
 @Component({
     components: {
