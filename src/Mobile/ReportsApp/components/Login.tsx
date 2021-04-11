@@ -9,11 +9,11 @@ import { PasswordIcon, PersonIcon } from './Icons';
 import { API_HOST } from '../services/api/api-accesor';
 
 
-const LoginIcon = (props) => <Icon name="log-in-outline" {...props} />;
+const LoginIcon = (props: any) => <Icon name="log-in-outline" {...props} />;
 
 const Login = () => {
-  const [user, setUser] = React.useState<string>();
-  const [password, setPassword] = React.useState<string>();
+  const [user, setUser] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('');
   const authCtx = React.useContext(AuthContext)
   return (
     <KeyboardAvoidingView>

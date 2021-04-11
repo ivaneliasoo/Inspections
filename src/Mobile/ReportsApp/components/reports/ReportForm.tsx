@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import { useFormikContext } from 'formik'
-import { Autocomplete, AutocompleteItem, Button, Datepicker, Input, Layout, Select, SelectItem, Text } from '@ui-kitten/components'
+import { Datepicker, Input, Layout, Select, SelectItem } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
-import { CalendarIcon, ChevronDownIcon, CrossIcon } from '../Icons'
+import { CalendarIcon } from '../Icons'
 import { useOrientation } from '../../utils/helpers'
 import { Checklists } from './Checklists'
 import { AddressDTO, AddressesApi, Configuration, Report } from '../../services/api'
@@ -21,20 +21,10 @@ const getAddressList = async (filter?: string) => {
 }
 
 const ReportForm = () => {
-  const { values, handleChange, setFieldValue, errors, touched } = useFormikContext<Report>()
+  const { values, setFieldValue, errors } = useFormikContext<Report>()
   const { orientation } = useOrientation();
   const [addresses, setAddresses] = useState<AddressDTO[]>([])
   const flexType = orientation === 'landscape' ? 'row' : 'column'
-
-  const debouncedAddresses = useDebouncedCallback(async (filter: string) => {
-    const result = await getAddressList(filter)
-    setAddresses(result)
-  }, 1000)
-
-  const onChangeText = async (query: string) => {
-    setFieldValue('address', query)
-    await debouncedAddresses(query)
-  };
 
   useEffect(() => {
     getAddressList().then((resp) => {
@@ -61,7 +51,7 @@ const ReportForm = () => {
           label='Date'
           caption='Select the report date'
           placeholder='Pick Date'
-          date={values.date}
+          date={values.date as Date|undefined}
           max={new Date()}
           onSelect={(e) => setFieldValue('date', e)}
           accessoryRight={CalendarIcon}

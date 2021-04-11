@@ -4,8 +4,6 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {ThemeContext} from './theme-context';
 import {AppNavigator} from './navigation.component';
-// import {default as theme} from './cse.json';
-
 
 export default () => {
   const [theme, setTheme] = React.useState('light');

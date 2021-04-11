@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { CheckIcon } from '../Icons'
-import { Layout, Text, Icon } from '@ui-kitten/components'
-import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Layout, Text, Icon, Spinner } from '@ui-kitten/components'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useFormikContext } from 'formik'
 import { CheckList, CheckListItem, CheckValue, Report } from '../../services/api'
 
@@ -14,10 +13,10 @@ const checkItemIcon = [
 
 type CheckListItemProps = {
   item: CheckList,
-  index: number
+  index: number,
+  onChange: (checked: any) => any
 }
-
-const CheckListLine = ({ item, index, ...props }: CheckListItemProps) => {
+const CheckListLine = React.memo(({ item, index, onChange, ...props }: CheckListItemProps) => {
   const [checked, setChecked] = useState(2)
 
   const onPress = () => {
@@ -26,29 +25,31 @@ const CheckListLine = ({ item, index, ...props }: CheckListItemProps) => {
       setChecked(checked + 1)
     else
       setChecked(0)
+    
+    onChange(checked)
   }
 
   return (
     <>
-        <TouchableOpacity key={index} onPress={onPress} style={[{ flex: 1, flexDirection: 'row', alignItems: 'center'}, props.style]}>
+        <TouchableOpacity key={index} onPress={onPress} style={styles.line}>
             <Text style={{flex: 10,  fontWeight: '900' }} category='s1' >{`${index + 1} - ${item.text}`}</Text>
             <Text style={{ alignSelf: 'center', alignContent: 'center' }} category='c1'>{CheckValue[checked]}<Icon name={checkItemIcon[checked].name} fill={checkItemIcon[checked].color} style={{ width: 30, height: 30 }} /></Text>
         </TouchableOpacity>
       {
         item && item.checks && item.checks.map((checkItem, checkIndex) => {
-          return <CheckListItemCheck checkItem={checkItem} itemIndex={index} checkIndex={checkIndex} {...props} />
+          return <CheckListItemCheck key={`checkIcon${checkIndex}`} checkItem={checkItem} itemIndex={index} checkIndex={checkIndex} {...props} />
         })
       }
     </>
   )
-}
+})
 
 type CheckListItemCheckProps = {
   checkItem: CheckListItem,
   checkIndex: number,
   itemIndex: number
 }
-const CheckListItemCheck = ({ checkItem, checkIndex, itemIndex, ...props }: CheckListItemCheckProps) => {
+const CheckListItemCheck = React.memo(({ checkItem, checkIndex, itemIndex }: CheckListItemCheckProps) => {
   const [checked, setChecked] = useState(2)
 
   const onPress = () => {
@@ -59,23 +60,30 @@ const CheckListItemCheck = ({ checkItem, checkIndex, itemIndex, ...props }: Chec
       setChecked(0)
   }
 
-  return <TouchableOpacity style={[{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, props.style]} key={`${itemIndex}-${checkIndex}`} onPress={onPress}>
+  return <TouchableOpacity style={styles.line} key={`${itemIndex}-${checkIndex}`} onPress={onPress}>
         <Text style={{ flex: 10 }} category='s2'>{`${itemIndex + 1}.${checkIndex + 1} - ${checkItem.text} ${checked} (${CheckValue[checked]})`}</Text>
-        <Icon name={checkItemIcon[checked].name} fill={checkItemIcon[checked].color} style={{ width: 35, height: 35 }} />
+        <Icon name={checkItemIcon[checked].name} fill={checkItemIcon[checked].color} style={styles.lineIcon} />
     </TouchableOpacity>
-}
+})
 
 const Checklists = () => {
 
-  const { values } = useFormikContext<Report>();
+  const { values, setFieldValue } = useFormikContext<Report>();
 
   return (
     <Layout style={styles.container}>
       {values && values.checkList ? values.checkList.map((checkList, index) => {
         return (
-          <CheckListLine item={checkList} index={index} />
+          <CheckListLine item={checkList} index={index} key={index} onChange={(checked) => setFieldValue(`checkList[${index}].checked`, checked)} />
         )
-      }) : <Text>Nada Que ver Aqui</Text>}
+      }) : 
+      <>
+        <View style={styles.checkListLoading}>
+          <Spinner size="medium" status="primary" />
+          <Text>   Loading Checks...</Text>
+        </View>
+      </>
+      }
     </Layout>
   )
 }
@@ -88,5 +96,21 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     padding: 5,
+  },
+  line: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center' 
+  },
+  lineIcon: {
+    width: 35,
+    height: 35 
+  },
+  checkListLoading: {
+    flex: 1,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    justifyContent: 'space-around',
   }
 })

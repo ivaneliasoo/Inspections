@@ -3,15 +3,23 @@ import { Button, Divider, Spinner, TopNavigation, TopNavigationAction, ViewPager
 import { ReportForm } from '../components/reports/ReportForm'
 import { OperationalReading } from '../components/reports/OperationalReading'
 import { BackIcon } from '../components/Icons'
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Directions, FlingGestureHandler, State } from 'react-native-gesture-handler'
 import { API_CONFIG } from '../config/config'
-import { Configuration, Report, ReportsApi } from '../services/api'
+import { Configuration, Report, ReportsApi, UpdateReportCommand } from '../services/api'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import * as Yup from 'yup';
+import { Alert, StyleSheet } from 'react-native';
 
-export const Details = ({ route, navigation }) => {
+type DetailsScreenNavigationProp = StackNavigationProp<any, any>
+
+type Props ={
+  route: any,
+  navigation: DetailsScreenNavigationProp
+}
+export const Details = ({ route, navigation }: Props) => {
 
 
   const navigateToCamera = () => {
@@ -37,11 +45,30 @@ export const Details = ({ route, navigation }) => {
 
   const shouldLoadComponent = (index: number) => index === selectedIndex;
 
-  const formRef = useRef()
+  const formRef = useRef<FormikProps<Report>>(null)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (formRef.current) {
-      formRef.current!.handleSubmit()
+      if (formRef.current.isValid) {
+        console.log({values: formRef.current.values})
+        const userToken: string = await AsyncStorage.getItem('userToken') as string;
+        const apiService = new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey} as Configuration)
+        const updateCmd : UpdateReportCommand = {
+          address: formRef.current.values.address,
+          date: moment(formRef.current.values.date).format('YYYY-MM-DD'),
+          name: formRef.current.values.name,
+          id: formRef.current.values.id,
+          isClosed: formRef.current.values.isClosed,
+          licenseNumber: formRef.current.values.license?.number
+        }
+        await apiService.reportsIdPut(reportId, updateCmd)
+          .catch(error => {
+            Alert.alert('Datos Inválidos', error.response.message)
+          })
+        formRef.current!.handleSubmit()
+      } else {
+        Alert.alert('Datos Inválidos', `report contains invalid fields: ${Object.keys(formRef.current.errors).map(field => field)}`)
+      }
     }
   }
   
@@ -49,9 +76,8 @@ export const Details = ({ route, navigation }) => {
     const getReportData = async () => {
       const userToken: string = await AsyncStorage.getItem('userToken') as string;
       const apiService =  new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey} as Configuration)
-      const result = (await apiService.reportsIdGet(reportId)).data
+      const result: Report = (await apiService.reportsIdGet(reportId)).data as unknown as  Report
       result.date = moment(result.date).toDate()
-      console.log(result.date)
       setReportData(result as any)
     }
     getReportData()
@@ -63,7 +89,7 @@ export const Details = ({ route, navigation }) => {
 
   return (
 
-    <Formik innerRef={formRef} validationSchema={reportValidationSchema} initialValues={reportData} enableReinitialize onSubmit={values => console.log({values})}>
+    <Formik innerRef={formRef} validationSchema={reportValidationSchema} initialValues={reportData} enableReinitialize onSubmit={handleSubmit}>
       <>
         <TopNavigation title={`Report  `} alignment='center' accessoryLeft={BackAction} accessoryRight={() => <Button size='small' onPress={handleSubmit}>Save</Button>} />
         <Divider />
@@ -85,7 +111,7 @@ export const Details = ({ route, navigation }) => {
               }
             }}
           >
-            {reportData ? <ViewPager style={{ flex: 1 }} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
+            {reportData ? <ViewPager style={styles.viewPagerLayout} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
               <OperationalReading />
               <ReportForm />
             </ViewPager>:<Spinner  />}
@@ -95,3 +121,9 @@ export const Details = ({ route, navigation }) => {
     </Formik >
   );
 };
+
+const styles = StyleSheet.create({
+  viewPagerLayout: {
+    flex: 1
+  }
+})

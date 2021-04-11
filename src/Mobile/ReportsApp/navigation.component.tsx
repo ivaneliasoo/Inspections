@@ -73,7 +73,7 @@ const HomeNavigator = () => {
       signIn: async (data: any) => {
         try {
           const resp = await authApi.login({ username: data.user, password: data.password })
-          await AsyncStorage.mergeItem('userToken', resp.data)
+          await AsyncStorage.mergeItem('userToken', resp.data as unknown as string)
           dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
         } catch (error) {
           console.log({ error })

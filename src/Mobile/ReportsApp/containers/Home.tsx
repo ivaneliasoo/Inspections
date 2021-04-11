@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { ReportsApi } from '../services/api'
+import { Configuration, ReportsApi } from '../services/api'
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Animated, Alert, View } from 'react-native';
-import { Icon, Divider, TopNavigation, Layout, Input, List, Text, Card } from '@ui-kitten/components';
+import { Animated, Alert, View, StyleSheet } from 'react-native';
+import { Icon, Divider, TopNavigation, Layout, Input, List, Text, Card, StyleService } from '@ui-kitten/components';
 import { ClosedIcon, SearchIcon, NotClosedIcon } from '../components/Icons'
 import { OptionsMenu } from '../components/home/OptionsMenu'
 import { NewReportMenu } from '../components/home/NewReportMenu'
@@ -13,16 +13,9 @@ import { ReportsContext } from '../reports-contexts';
 import { RectButton, Swipeable } from 'react-native-gesture-handler';
 import Empty from '../assets/images/empty.svg'
 
-const AnimatedIcon = Animated.createAnimatedComponent(Icon);
-
-const renderLeftActions = (progress, dragX) => {
+const renderLeftActions = () => {
   return (
-    <RectButton style={{
-      backgroundColor: 'green',
-      flex: 1,
-      justifyContent: 'center',
-      alignContent: 'stretch',
-    }}>
+    <RectButton style={styles.leftActions}>
       <Animated.Text style={[
         {
           padding: 0,
@@ -39,7 +32,7 @@ const renderLeftActions = (progress, dragX) => {
   )
 }
 
-const renderRightActions = (progress, dragX) => {
+const renderRightActions = ({ dragX }: any) => {
   const trans = dragX.interpolate({
     inputRange: [-80, 0],
     outputRange: [1, 0],
@@ -73,8 +66,8 @@ const renderRightActions = (progress, dragX) => {
 }
 
 const renderItemFooter = (footerProps, item) => (
-  <Layout {...footerProps} style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 5 }}>
-    { item.item.isClosed ? <ClosedIcon fill={'green'} style={{ width: 24, height: 24 }} /> : <NotClosedIcon fill={'orange'} style={{ width: 24, height: 24 }} />}
+  <Layout {...footerProps} style={styles.cardFooter}>
+    {item.item.isClosed ? <ClosedIcon fill={'green'} style={{ width: 24, height: 24 }} /> : <NotClosedIcon fill={'orange'} style={{ width: 24, height: 24 }} />}
     <Layout key={item.name}>
       <Text>Not Synced</Text>
       <Icon name='wifi-off-outline' fill={'red'} style={{ width: 24, height: 24 }} />
@@ -93,7 +86,7 @@ export const HomeScreen = () => {
   async function getReports() {
     setRefreshing(true)
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
-    const reportsApi = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY })
+    const reportsApi = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
     const resp = await reportsApi.reportsGet(filter, isClosed, myReports)
     getAll(resp.data)
     setRefreshing(false)
@@ -123,14 +116,14 @@ export const HomeScreen = () => {
               onPress: () => console.log('canceled')
             }
           ]
-        ); 
-      }} renderLeftActions={ !item.item.isClosed ? renderLeftActions : () => null} renderRightActions={!item.item.isClosed ? renderRightActions : () => null}>
+        );
+      }} renderLeftActions={!item.item.isClosed ? renderLeftActions : () => null} renderRightActions={!item.item.isClosed ? renderRightActions : () => null}>
 
-        <Card key={index} style={{ padding: 0, marginHorizontal: 5, marginVertical: 2 }} onPress={navigateDetails} status={item.item.isClosed ? 'success' : 'warning'}
+        <Card key={index} style={styles.card} onPress={navigateDetails} status={item.item.isClosed ? 'success' : 'warning'}
           footer={footerProps => renderItemFooter(footerProps, item)} >
           <Text category='s1'>{`${moment(item.item.date).format('DD/MM/YYYY HH:mm')} License ${item.item.license?.number ?? 'Not specified'}`}</Text>
           <Text category='s2'>{item.item.address === '' ? 'address not specified' : item.item.address}</Text>
-          <Text category='c1'>{ API_HOST }</Text>
+          <Text category='c1'>{API_HOST}</Text>
         </Card>
       </Swipeable>
     );
@@ -138,14 +131,18 @@ export const HomeScreen = () => {
 
   return (
     <>
-      <TopNavigation title={`Reports (total: ${reports.length})`} alignment='center' accessoryRight={() => <OptionsMenu onChanged={() => getReports()} />} accessoryLeft={NewReportMenu} />
+      <TopNavigation
+        title={`Reports (total: ${reports.length})`}
+        alignment='center' 
+        accessoryRight={() => <OptionsMenu onChanged={getReports} />} 
+        accessoryLeft={NewReportMenu} />
       <Divider />
-      <Layout style={{ flex: 1, justifyContent: 'flex-start' }}>
-        <Input style={{ paddingHorizontal: 15 }} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilter} onEndEditing={getReports} />
-        {reports.length > 0 ? 
-          <List data={reports} renderItem={(item: any, index: any) => renderReport({ navigation, item, index })} onRefresh={getReports} refreshing={refreshing} /> 
-            : 
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Layout style={styles.cardList}>
+        <Input style={styles.inpustSearch} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilter} onEndEditing={getReports} />
+        {reports.length > 0 ?
+          <List data={reports} renderItem={(item: any, index: any) => renderReport({ navigation, item, index })} onRefresh={getReports} refreshing={refreshing} />
+          :
+          <View style={styles.noDataLayout}>
             <Empty height={200} width={300} />
             <Text status='warning' category='h1'>No results</Text>
             <Text status='info' category='s2'>try again later or try with a new search</Text>
@@ -154,3 +151,17 @@ export const HomeScreen = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  leftActions: {
+    backgroundColor: 'green',
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'stretch',
+  },
+  card: { padding: 0, marginHorizontal: 5, marginVertical: 2 },
+  cardFooter: { flexDirection: 'row', justifyContent: 'space-between', margin: 5 },
+  cardList: { flex: 1, justifyContent: 'flex-start' },
+  inpustSearch: { paddingHorizontal: 15 },
+  noDataLayout: { flex: 1, justifyContent: 'center', alignItems: 'center' }
+})

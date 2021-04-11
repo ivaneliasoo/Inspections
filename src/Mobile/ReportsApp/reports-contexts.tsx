@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { Report } from "services/api";
 export const ReportsContext = React.createContext({});
 
-function reportsReducer(state, action) {
+function reportsReducer(state: any, action: any) {
   switch (action.type) {
     case 'SET_REPORTS': {
       return { ...state, reports: action.payload.reports }
@@ -48,7 +48,7 @@ const ReportsProvider= ({ children }: any) => {
     })
   }
 
-  const getAll = (reports) => {
+  const getAll = (reports: Report) => {
     dispatch({
       type: 'SET_REPORTS',
       payload: { reports }
