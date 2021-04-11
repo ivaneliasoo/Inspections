@@ -50,6 +50,7 @@
     "eslint": "^6.1.0",
     "eslint-plugin-nuxt": ">=0.4.2",
     "postcss": "^7.0.35",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
+    "vuetify": "2.3"
   }
 }

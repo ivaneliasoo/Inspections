@@ -33,6 +33,7 @@ namespace Inspections.Infrastructure.Queries
                       , COALESCE(Reports, 0) as ""UsedByReports""
                       , ""LastEdit""
                       , ""LastEditUser""
+                      , ""Inactive""
                 FROM ""Inspections"".""ReportsConfiguration"" Config
                     LEFT OUTER JOIN(
                     SELECT ""ReportConfigurationId"", COUNT(""ReportConfigurationId"") AS CheckLists
@@ -52,8 +53,8 @@ namespace Inspections.Infrastructure.Queries
                     GROUP BY ""ReportConfigurationId""
                 ) AS ""Reports""
                     ON ""Reports"".""ReportConfigurationId"" = Config.""Id""
-                    WHERE 1=1 AND ""Config"".""Inactive"" = 0
-            ").Where(p => EF.Functions.Like(p.Title, $" %{filter ?? string.Empty}%") || EF.Functions.Like(p.FormName, $"%{filter ?? string.Empty}%"));
+                    WHERE 1=1
+            ").Where(p => !p.Inactive && (EF.Functions.Like(p.Title, $" %{filter ?? string.Empty}%") || EF.Functions.Like(p.FormName, $"%{filter ?? string.Empty}%")));
         }
     }
 }

@@ -75,8 +75,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://localhost:5000',
-    browserBaseURL: 'http://localhost:5000'
+    baseURL: process.env.BASE_URL || 'https://localhost:5001',
+    browserBaseURL: process.env.BASE_URL || 'https://localhost:5001'
   },
   router: {
     middleware: ['auth']

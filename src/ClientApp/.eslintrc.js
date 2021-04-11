@@ -8,10 +8,10 @@ module.exports = {
     '@nuxtjs/eslint-config-typescript',
     'plugin:nuxt/recommended'
   ],
-  // excludes:[
-  //   "**/node_modules/**"
-  // ],
-  // add your custom rules here
   rules: {
+    'semi': [2, 'never'],
+    'vue/comment-directive': ['error', {
+      'reportUnusedDisableDirectives': false
+    }]
   }
 }

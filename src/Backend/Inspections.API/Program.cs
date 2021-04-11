@@ -37,7 +37,6 @@ namespace Inspections.API
                     var logger = loggerFactory.CreateLogger<Program>();
                     logger.LogError(ex, DATABASE_ERROR_MESSAGE);
                 }
-
             }
 
            host.Run();

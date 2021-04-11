@@ -11,4 +11,5 @@ export interface ReportConfiguration {
     remarksLabelText: string;
     checksDefinition: CheckList[];
     signatureDefinitions: Signature[];
+    inactive: boolean;
 }

@@ -15,5 +15,6 @@ namespace Inspections.Core.QueryModels
         public int DefinedCheckLists { get; set; }
         public int DefinedSignatures { get; set; }
         public int UsedByReports { get; set; }
+        public bool Inactive { get; set; }
     }
 }

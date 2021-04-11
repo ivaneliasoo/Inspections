@@ -10,18 +10,6 @@
       @yes="closeReport"
       @no="currentReport.isClosed = true"
     />
-    <div
-      v-for="checklist in currentReport.checkList"
-      :key="checklist.checkListId"
-    >
-      <div v-for="(check, index) in checklist.checks" :key="index">
-        <check-item
-          :item.sync="check"
-          :index="`1.${index + 1}`"
-          @update:item="enqueueCheckItem"
-        />
-      </div>
-    </div>
     <v-row>
       <v-col>
         <ValidationObserver ref="obs" v-slot="{ valid }" tag="form">
@@ -34,6 +22,7 @@
               >
                 <DatePickerBase
                   v-model="currentReport.date"
+                  name="date"
                   type="number"
                   label="License"
                   :error-messages="errors"
@@ -67,6 +56,7 @@
                   prepend-icon="mdi-crosshairs-gps"
                   clearable
                   autocomplete="nope"
+                  name="address"
                   @keypress="isDirty = true"
                   @change="setLicenseFromAddress"
                 />
@@ -127,8 +117,8 @@
                   CanCloseReport && !currentReport.isClosed
                     ? (dialogClose = true)
                     : !CanCloseReport
-                    ? (errorsDialog = true)
-                    : (errorsDialog = false)
+                      ? (errorsDialog = true)
+                      : (errorsDialog = false)
                 )
               "
             >
@@ -146,8 +136,8 @@
             href="#checklists"
             :class="
               !IsCompleted ||
-              HasNotesWithPendingChecks ||
-              !PrincipalSignatureHasAResponsable > 0
+                HasNotesWithPendingChecks ||
+                !PrincipalSignatureHasAResponsable > 0
                 ? 'error--text'
                 : 'primary--text'
             "
@@ -156,8 +146,8 @@
             <v-tooltip
               v-if="
                 !IsCompleted ||
-                HasNotesWithPendingChecks ||
-                !PrincipalSignatureHasAResponsable
+                  HasNotesWithPendingChecks ||
+                  !PrincipalSignatureHasAResponsable
               "
               top
             >
@@ -165,8 +155,8 @@
                 <v-icon
                   :color="
                     !IsCompleted ||
-                    HasNotesWithPendingChecks ||
-                    !PrincipalSignatureHasAResponsable
+                      HasNotesWithPendingChecks ||
+                      !PrincipalSignatureHasAResponsable
                       ? 'error'
                       : ''
                   "
@@ -175,12 +165,12 @@
                   mdi-message-bulleted
                 </v-icon>
               </template>
-              <span
-                >You must complete all the required checks, notes and signatures
-                in tab Report Details to proceeded uploading photos</span
-              >
+              <span>You must complete all the required checks, notes and signatures
+                in tab Report Details to proceeded uploading photos</span>
             </v-tooltip>
-            <v-icon v-else> mdi-message-bulleted </v-icon>
+            <v-icon v-else>
+              mdi-message-bulleted
+            </v-icon>
           </v-tab>
           <v-tab href="#photos">
             Photo Record
@@ -195,8 +185,9 @@
                   :style="!IsCompleted ? 'color: white;' : ''"
                   :color="!IsCompleted ? 'red' : ''"
                 >
-                  <span class="font-weight-black"
-                    >Check List States: New (
+                  <span
+                    class="font-weight-black"
+                  >Check List States: New (
                     <v-icon
                       :color="!IsCompleted ? 'white' : getCheckIconColor(3)"
                     >
@@ -224,7 +215,9 @@
                   </span>
                   <v-row v-if="!IsCompleted" dense>
                     <v-col>
-                      <v-icon dark> mdi-alert-circle </v-icon>
+                      <v-icon dark>
+                        mdi-alert-circle
+                      </v-icon>
                       <span style="color: white" class="font-weight-accent">
                         there are items that need to be completed or checked
                       </span>
@@ -256,9 +249,10 @@
                                     ).length == 0
                                   "
                                 >
-                                  <v-chip x-small color="success"
-                                    >Completed</v-chip
-                                  >
+                                  <v-chip
+                                    x-small
+                                    color="success"
+                                  >Completed</v-chip>
                                 </span>
                               </v-col>
                               <v-col
@@ -286,20 +280,20 @@
                                         item.checks.filter(
                                           (c) => c.checked == 1
                                         ).length &&
-                                      item.checks.filter((c) => c.checked == 1)
-                                        .length > 0
+                                        item.checks.filter((c) => c.checked == 1)
+                                          .length > 0
                                         ? getCheckIconColor(2)
                                         : getCheckIconColor(
-                                            item.checks[0].checked
-                                          )
+                                          item.checks[0].checked
+                                        )
                                     "
                                   >
                                     {{
                                       `mdi-${
                                         item.checks.length !==
-                                          item.checks.filter(
-                                            (c) => c.checked == 1
-                                          ).length &&
+                                        item.checks.filter(
+                                          (c) => c.checked == 1
+                                        ).length &&
                                         item.checks.filter(
                                           (c) => c.checked == 1
                                         ).length > 0
@@ -308,13 +302,13 @@
                                             item.checks.filter(
                                               (c) => c.checked == 2
                                             ).length
-                                          ? "minus"
-                                          : item.checks.length ===
-                                            item.checks.filter(
-                                              (c) => c.checked == 0
-                                            ).length
-                                          ? "close"
-                                          : getCheckIcon(1)
+                                            ? "minus"
+                                            : item.checks.length ===
+                                              item.checks.filter(
+                                                (c) => c.checked == 0
+                                              ).length
+                                              ? "close"
+                                              : getCheckIcon(1)
                                       }`
                                     }}
                                   </v-icon>
@@ -365,7 +359,7 @@
                                                   :class="[
                                                     'text-right',
                                                     checkItem.checked == 3 &&
-                                                    shouldShowRequired
+                                                      shouldShowRequired
                                                       ? 'error--text'
                                                       : '',
                                                   ]"
@@ -381,7 +375,7 @@
                                                   :class="[
                                                     'text-left',
                                                     checkItem.checked == 3 &&
-                                                    shouldShowRequired
+                                                      shouldShowRequired
                                                       ? 'error--text'
                                                       : '',
                                                   ]"
@@ -393,7 +387,7 @@
                                                     <v-chip
                                                       v-if="
                                                         !checkItem.editable &&
-                                                        checkItem.checked == 3
+                                                          checkItem.checked == 3
                                                       "
                                                       class="text-uppercase"
                                                       :color="
@@ -477,9 +471,9 @@
                                               showUpdateCheck.findIndex(
                                                 (l) =>
                                                   l.currentIndex ===
-                                                    checkListItemIndex &&
+                                                  checkListItemIndex &&
                                                   l.parentIndex ===
-                                                    checkListIndex
+                                                  checkListIndex
                                               ) >= 0
                                             "
                                             color="amber"
@@ -489,9 +483,9 @@
                                                 showUpdateCheck.findIndex(
                                                   (l) =>
                                                     l.currentIndex ===
-                                                      checkListItemIndex &&
+                                                    checkListItemIndex &&
                                                     l.parentIndex ===
-                                                      checkListIndex
+                                                    checkListIndex
                                                 ),
                                                 1
                                               )
@@ -521,7 +515,9 @@
                   <span class="font-weight-black">Notes</span>
                   <v-row v-if="HasNotesWithPendingChecks" dense>
                     <v-col>
-                      <v-icon dark> mdi-alert-circle </v-icon>
+                      <v-icon dark>
+                        mdi-alert-circle
+                      </v-icon>
                       <span style="color: white" class="font-weight-accent">
                         there are items that need to be completed or checked
                       </span>
@@ -540,7 +536,9 @@
                         title="Add note"
                         @click="addNote"
                       >
-                        <v-icon dark> mdi-plus </v-icon>
+                        <v-icon dark>
+                          mdi-plus
+                        </v-icon>
                       </v-btn>
                     </v-col>
                   </v-row>
@@ -559,7 +557,9 @@
                           color="error"
                           @click="removeNote(note.id)"
                         >
-                          <v-icon dark> mdi-minus </v-icon>
+                          <v-icon dark>
+                            mdi-minus
+                          </v-icon>
                         </v-btn>
                       </v-col>
                       <v-col cols="8">
@@ -585,7 +585,9 @@
             </v-expansion-panels>
             <v-row>
               <v-col>
-                <h2 class="text-left">Signatures</h2>
+                <h2 class="text-left">
+                  Signatures
+                </h2>
                 <SignaturesForm
                   v-model="currentReport.signatures"
                   :is-closed="false"
@@ -605,24 +607,27 @@
       no-text="close"
       @no="errorsDialog = false"
     >
-      <template v-slot:title="{}"> Report Errors </template>
+      <template v-slot:title="{}">
+        Report Errors
+      </template>
       <h2>The Report has been saved! but we've found some errors:</h2>
-      <br />
-      <span v-if="!IsCompleted" class="subtitle-1 error--text font-weight-black"
-        >- Please, Complete and check all the required item in the
-        checklist</span
-      ><br />
+      <br>
+      <span
+        v-if="!IsCompleted"
+        class="subtitle-1 error--text font-weight-black"
+      >
+        - Please, Complete and check all the required item in the
+        checklist</span><br>
       <span
         v-if="HasNotesWithPendingChecks"
         class="subtitle-1 error--text font-weight-black"
-        >- There are notes that you need to check. verify if it needs to be
-        checked and filled</span
-      ><br />
+      >
+        - There are notes that you need to check. verify if it needs to be
+        checked and filled</span><br>
       <span
         v-if="!PrincipalSignatureHasAResponsable"
         class="subtitle-1 error--text font-weight-black"
-        >- The Principal Signature must have an responsable name and type</span
-      >
+      >- The Principal Signature must have an responsable name and type</span>
     </message-dialog>
     <v-dialog v-model="dialogPrinting" hide-overlay persistent width="300">
       <v-card color="primary" dark>
@@ -665,20 +670,18 @@ import {
   EMALicense,
   DeleteNoteCommand,
   AddNoteCommand,
-  UpdateReportCommand,
   EditNoteCommand,
-  EditSignatureCommand,
   CheckListItem,
   UpdateCheckListItemCommand,
   CheckValue,
-  AddressDTO,
+  AddressDTO
 } from '@/types'
 
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-  },
+    ValidationProvider
+  }
 })
 export default class EditReport extends mixins(InnerPageMixin) {
   $refs!: {
@@ -712,7 +715,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
       return { id: EMALicenseType[key], text: key }
     })
-    .filter((i) => i !== undefined);
+    .filter(i => i !== undefined);
 
   hostName: string = this.$axios!.defaults!.baseURL!.replace('/api', '');
   signaturesChanges: boolean = false;
@@ -741,37 +744,37 @@ export default class EditReport extends mixins(InnerPageMixin) {
       reportId: this.currentReport.id,
       text: '',
       checked: false,
-      needsCheck: false,
+      needsCheck: false
     }
     await this.$axios
       .$post(`reports/${this.$route.params.id}/note`, newNote)
       .then((resp) => {
         this.currentReport.notes.push({ id: resp, ...newNote })
       })
-      .catch((err) => alert(err))
+      .catch(err => alert(err))
   }
 
   async removeNote (id: number) {
     const delNote: DeleteNoteCommand = {
       reportId: this.currentReport.id,
-      id,
+      id
     }
     await this.$axios
       .delete(`reports/${delNote.reportId}/note/${delNote.id}`)
       .then(() => {
         this.currentReport.notes = this.currentReport.notes.filter(
-          (n) => n.id !== id
+          n => n.id !== id
         )
       })
   }
 
   editCheck (parentIndex: number, currentIndex: number) {
     const index = this.showUpdateCheck.findIndex(
-      (l) => l.parentIndex === parentIndex && l.currentIndex === currentIndex
+      l => l.parentIndex === parentIndex && l.currentIndex === currentIndex
     )
     if (index >= 0) {
       this.showUpdateCheck.splice(index, 1)
-      return;
+      return
     }
     this.showUpdateCheck.push({ parentIndex, currentIndex })
   }
@@ -813,7 +816,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       reportId: parseInt(this.$route.params.id),
       id: note.id,
       text: note.text,
-      checked: note.checked,
+      checked: note.checked
     }
     this.$axios.put(`reports/${data.reportId}/note/${note.id}`, data)
   }
@@ -826,7 +829,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       required: checkItem.required,
       checked: parseInt(checkItem.checked as any),
       editable: checkItem.editable,
-      remarks: checkItem.remarks,
+      remarks: checkItem.remarks
     }
     await this.$axios.put(
       `checklists/${command.checkListId}/items/${checkItem.id}`,
@@ -901,7 +904,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
           type: (ResponsableType[
             signature.responsable.type
           ] as unknown) as ResponsableType,
-          name: signature.responsable.name,
+          name: signature.responsable.name
         }
       }
     })
@@ -921,7 +924,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       'users/setUserLastEditedReport',
       {
         userName: this.$auth.user.userName,
-        lastEditedReport: this.$route.params.id,
+        lastEditedReport: this.$route.params.id
       },
       { root: true }
     )
@@ -936,7 +939,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     if (this.currentReport.checkList) {
       return (
         this.currentReport.checkList.filter(
-          (cl) => cl.checks.findIndex((c) => c.checked === CheckValue.None) >= 0
+          cl => cl.checks.findIndex(c => c.checked === CheckValue.None) >= 0
         ).length === 0
       )
     }
@@ -953,7 +956,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     }
     return (
       this.currentReport.signatures.findIndex(
-        (s) =>
+        s =>
           s.responsable.type !== undefined &&
           s.responsable.name !== '' &&
           s.principal
@@ -969,7 +972,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       return false
     }
     return (
-      this.currentReport.notes.findIndex((n) => n.needsCheck && !n.checked) >= 0
+      this.currentReport.notes.findIndex(n => n.needsCheck && !n.checked) >= 0
     )
   }
 
@@ -984,7 +987,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   checkItemChecks (checkListId: number, value: CheckValue): void {
     const checkList = this.currentReport.checkList.find(
-      (c) => c.id === checkListId
+      c => c.id === checkListId
     )
     if (!checkList) {
       return
@@ -1004,10 +1007,10 @@ export default class EditReport extends mixins(InnerPageMixin) {
   setLicenseFromAddress () {
     if (!this.currentReport.address) {
       this.currentReport!.license.number = ''
-      return;
+      return
     }
     const addressData = this.addresses.filter(
-      (a) => a.formatedAddress === this.currentReport.address
+      a => a.formatedAddress === this.currentReport.address
     )
     if (addressData) {
       this.currentReport!.license.number = addressData[0].number ?? ''

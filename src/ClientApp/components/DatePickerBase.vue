@@ -8,6 +8,7 @@
           readonly
           :clearable="!disabled"
           :prepend-icon="showIcon ? 'event' : ''"
+          autocomplete="nope"
           v-on="on"
           @input="emitEvent(fechaPickerModel)"
           @click:clear="limpiar()"
@@ -45,11 +46,12 @@ export default class DatePickerBase extends Vue {
 
   menu1:Boolean = false
 
-  get fechaPickerModel() {
-    if (this.value)
-      return this.fDateToYMD(this.value)
-    else
+  get fechaPickerModel () {
+    if (this.value) { 
+      return this.fDateToYMD(this.value) 
+    } else {
       return this.value === '' ? null : this.$emit('input', this.fechaHoy)
+    }
   }
 
   set fechaPickerModel(valor) {
