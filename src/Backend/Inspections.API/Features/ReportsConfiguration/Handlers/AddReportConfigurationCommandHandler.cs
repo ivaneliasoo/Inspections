@@ -50,6 +50,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
                 FormName = request.FormName,
                 ChecksDefinition = PrepareForConfiguration(checks),
                 SignatureDefinitions = PrepareForConfiguration(signatures)
+                
             };
 
             var result = await _reportConfigurationsRepository.AddAsync(repoConfig).ConfigureAwait(false);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -35,7 +36,7 @@ namespace Inspections.API.Features.Reports.Handlers
 
             if (!report.IsClosed)
             {
-                _storageHelper.DeleteFolder(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, report.Id.ToString()));
+                _storageHelper.DeleteFolder(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, report.Id.ToString(CultureInfo.InvariantCulture)));
                 await _reportsRepository.DeleteAsync(report).ConfigureAwait(false);
                 return true;
             }

@@ -33,7 +33,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
                 await _reportConfigurationsRepository.DeleteAsync(reportConfig).ConfigureAwait(false);
                 return true;
             }
-            catch (DbException ex)
+            catch (DbException)
             {
                 throw;
             }

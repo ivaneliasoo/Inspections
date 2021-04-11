@@ -13,9 +13,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Inspections.API
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1052:Static holder types should be Static or NotInheritable", Justification = "<Pending>")]
     public class Program
     {
-        private const string DATABASE_ERROR_MESSAGE = "ocurrio un error cargando datos a la base de datos";
+        private const string DATABASE_ERROR_MESSAGE = "can't seed, error connecting to database";
 
         public static void Main(string[] args)
         {
@@ -47,8 +48,10 @@ namespace Inspections.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                    .UseStartup<Startup>()
-                    .UseUrls("http://0.0.0.0:5000");
+#if DEBUG
+                    .UseUrls("http://0.0.0.0:5000", "https://0.0.0.0:5001")
+#endif
+                    .UseStartup<Startup>();
                 });
     }
 }

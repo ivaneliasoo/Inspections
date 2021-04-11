@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain;
 using Inspections.Shared;
 
@@ -11,6 +12,8 @@ namespace Inspections.API.Features.Licenses.Models
     {
         public LicenseDTO(int licenseId, string number, DateTimeRange validity)
         {
+            Guard.Against.Null(validity, nameof(validity));
+
             LicenseId = licenseId;
             Number = number;
             ValidityStart = validity.Start;
@@ -19,6 +22,8 @@ namespace Inspections.API.Features.Licenses.Models
 
         public LicenseDTO(EMALicense eMALicense)
         {
+            Guard.Against.Null(eMALicense, nameof(eMALicense));
+
             LicenseId = eMALicense.Id;
             Number = eMALicense.Number;
             Name = eMALicense.Name;

@@ -47,7 +47,7 @@ namespace Inspections.API.ApplicationServices
         {
             string folder = Path.Combine(Directory.GetCurrentDirectory(), _storageOptions.Value.ReportsImagesFolder, requestFolder);
             var result = await _storageHelper.SaveAsync(file.OpenReadStream(), folder, fileName.Length>0 ? fileName : file.FileName, true).ConfigureAwait(false);
-            await SaveResizedImage(file, folder, result);
+            await SaveResizedImage(file, folder, result).ConfigureAwait(false);
             return result;
         }
 
@@ -78,9 +78,9 @@ namespace Inspections.API.ApplicationServices
         }
 
 
-        internal async Task SaveResizedImage(IFormFile file, string filePath, string fileName)
+        internal static async Task SaveResizedImage(IFormFile file, string filePath, string fileName)
         {
-            using Image img = await Image.LoadAsync(file.OpenReadStream());
+            using Image img = await Image.LoadAsync(file.OpenReadStream()).ConfigureAwait(false);
             img.Mutate(i => i.Resize(img.Width / 3, img.Height / 3));
             img.Save(Path.Combine(filePath, Path.GetFileNameWithoutExtension(fileName)+"small"+Path.GetExtension(fileName)));
         }

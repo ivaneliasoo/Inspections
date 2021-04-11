@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data;
 using Inspections.API.Features.Licenses.Models;
+using Ardalis.GuardClauses;
 
 namespace Inspections.API.Features.Licenses
 {
@@ -50,6 +51,8 @@ namespace Inspections.API.Features.Licenses
         [HttpPut("{id}", Name ="UpdateLicense")]
         public async Task<IActionResult> PutEMALicense(int id, LicenseDTO eMALicense)
         {
+            Guard.Against.Null(eMALicense, nameof(eMALicense));
+
             if (id != eMALicense.LicenseId)
             {
                 return BadRequest();
@@ -95,6 +98,8 @@ namespace Inspections.API.Features.Licenses
         [HttpPost(Name ="AddLicense")]
         public async Task<ActionResult<EMALicense>> PostEMALicense([FromBody] LicenseDTO eMALicense)
         {
+            Guard.Against.Null(eMALicense, nameof(eMALicense));
+
             var license = new EMALicense
             {
                 Id = eMALicense.LicenseId,

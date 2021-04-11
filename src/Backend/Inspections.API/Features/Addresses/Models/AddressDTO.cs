@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain;
 using Inspections.Shared;
 
@@ -11,6 +12,8 @@ namespace Inspections.API.Features.Addresses.Models
     {
         public AddressDTO(Address address)
         {
+            Guard.Against.Null(address, nameof(address));
+
             Id = address.Id;
             AddressLine = address.AddressLine;
             AddressLine2 = address.AddressLine2;

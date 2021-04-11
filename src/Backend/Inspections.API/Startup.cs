@@ -203,7 +203,7 @@ namespace Inspections.API
 
         private void ConfigurarDbContextInSqlDb(IServiceCollection services)
         {
-            ILoggerFactory logger = LoggerFactory.Create((c) => { c.AddConsole(); });
+            var logger = LoggerFactory.Create(c => c.AddConsole());
             string cn = Configuration.GetConnectionString("Inspections");
             services.AddDbContext<InspectionsContext>(c =>
             c.UseLoggerFactory(logger).UseNpgsql(cn).EnableSensitiveDataLogging());

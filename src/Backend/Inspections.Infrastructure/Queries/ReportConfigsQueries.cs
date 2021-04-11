@@ -52,7 +52,7 @@ namespace Inspections.Infrastructure.Queries
                     GROUP BY ""ReportConfigurationId""
                 ) AS ""Reports""
                     ON ""Reports"".""ReportConfigurationId"" = Config.""Id""
-                    WHERE 1=1
+                    WHERE 1=1 AND ""Config"".""Inactive"" = 0
             ").Where(p => EF.Functions.Like(p.Title, $" %{filter ?? string.Empty}%") || EF.Functions.Like(p.FormName, $"%{filter ?? string.Empty}%"));
         }
     }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data;
 using Inspections.API.Features.Addresses.Models;
+using Ardalis.GuardClauses;
 
 namespace Inspections.API.Features.Addresses
 {
@@ -56,6 +57,8 @@ namespace Inspections.API.Features.Addresses
         [HttpPut("{id}", Name = "UpdateAddress")]
         public async Task<IActionResult> PutAddress(int id, [FromBody]AddressDTO address)
         {
+            Guard.Against.Null(address, nameof(address));
+
             if (id != address.Id)
             {
                 return BadRequest();
@@ -94,6 +97,8 @@ namespace Inspections.API.Features.Addresses
         [HttpPost(Name = "AddAddress")]
         public async Task<ActionResult<Address>> PostAddress([FromBody]AddressDTO address)
         {
+            Guard.Against.Null(address, nameof(address));
+
             var newAddress = new Address()
             {
                 AddressLine = address.AddressLine,

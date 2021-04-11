@@ -33,7 +33,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
         public string Title { get;  set; }
         public string FormName { get;  set; }
         public string RemarksLabelText { get;  set; }
-        public List<int> ChecksDefinition { get;  set; }
-        public List<int> SignatureDefinitions { get;  set; }
+        public List<int> ChecksDefinition { get; }
+        public List<int> SignatureDefinitions { get; }
     }
 }

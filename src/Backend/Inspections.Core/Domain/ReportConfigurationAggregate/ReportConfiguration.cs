@@ -15,5 +15,6 @@ namespace Inspections.Core.Domain.ReportConfigurationAggregate
         public string RemarksLabelText { get; set; }
         public List<CheckList> ChecksDefinition { get; set; }
         public List<Signature> SignatureDefinitions { get; set; }
+        public bool Inactive { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.Title).IsRequired();
             builder.Property(p => p.RemarksLabelText).IsRequired(false);
             builder.Property(p => p.FormName).IsRequired();
+            builder.Property(p => p.Inactive).IsRequired().HasDefaultValue(false);
 
             builder.Ignore(p => p.DomainEvents);
         }
