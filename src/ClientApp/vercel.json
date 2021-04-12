@@ -19,6 +19,6 @@
         "Service-Worker-Allowed": "/"
       }
     },
-    { "src": "/(.*)", "dest": "/static" }
+    { "src": "/(.*)", "dest": "/" }
   ]
 }
