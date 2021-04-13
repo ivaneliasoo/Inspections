@@ -92,7 +92,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
                 {
                     parameters.Add(new CheckListParam(null, 0, param.Key, param.Value, param.Type));
                 }
-                newCheckList.AddCheckItems(new CheckListItem(0, check.Text, check.Checked,check.Editable, check.Required, check.Remarks, parameters));
+                newCheckList.AddCheckItems(new CheckListItem(0, check.Text, CheckValue.None,check.Editable, check.Required, check.Remarks, parameters));
             }
             return newCheckList;
         }

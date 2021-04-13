@@ -29,7 +29,7 @@ const Signatures = () => {
   }
 
   return (
-    <View style={{ flex: 1, flexDirection: "column" }}>
+    <View style={styles.container}>
       <SignatureCapture
         style={[{ flex: 1 }, styles.signature]}
         ref={sign}
@@ -51,6 +51,10 @@ const Signatures = () => {
 export { Signatures }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+    flexDirection: "column"
+  },
   signature: {
       flex: 1,
       borderColor: '#000',

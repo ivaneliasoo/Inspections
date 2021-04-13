@@ -29,9 +29,9 @@ class CameraScreen extends PureComponent {
             console.log(barcodes);
           }}
         />
-        <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
+        <View style={styles.shooter}>
           <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-            <Text style={{ fontSize: 14 }}> SNAP </Text>
+            <Text style={styles.shooterText}> SNAP </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -67,4 +67,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 20,
   },
+  shooter: { flex: 0, flexDirection: 'row', justifyContent: 'center' },
+  shooterText: { fontSize: 14 }
 });

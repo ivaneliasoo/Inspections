@@ -16,9 +16,8 @@ type CheckListItemProps = {
   index: number,
   onChange: (checked: any) => any
 }
-const CheckListLine = React.memo(({ item, index, onChange, ...props }: CheckListItemProps) => {
+const CheckListLine = ({ item, index, onChange, ...props }: CheckListItemProps) => {
   const [checked, setChecked] = useState(2)
-
   const onPress = () => {
 
     if(checked < 2)
@@ -27,13 +26,14 @@ const CheckListLine = React.memo(({ item, index, onChange, ...props }: CheckList
       setChecked(0)
     
     onChange(checked)
+
   }
 
   return (
     <>
         <TouchableOpacity key={index} onPress={onPress} style={styles.line}>
-            <Text style={{flex: 10,  fontWeight: '900' }} category='s1' >{`${index + 1} - ${item.text}`}</Text>
-            <Text style={{ alignSelf: 'center', alignContent: 'center' }} category='c1'>{CheckValue[checked]}<Icon name={checkItemIcon[checked].name} fill={checkItemIcon[checked].color} style={{ width: 30, height: 30 }} /></Text>
+            <Text style={styles.checkListTitle} category='s1' >{`${index + 1} - ${item.text}`}</Text>
+            <Text style={styles.checkListSubtitle} category='c1'>{CheckValue[checked]}<Icon name={checkItemIcon[checked].name} fill={checkItemIcon[checked].color} style={styles.icon} /></Text>
         </TouchableOpacity>
       {
         item && item.checks && item.checks.map((checkItem, checkIndex) => {
@@ -42,29 +42,22 @@ const CheckListLine = React.memo(({ item, index, onChange, ...props }: CheckList
       }
     </>
   )
-})
+}
 
 type CheckListItemCheckProps = {
   checkItem: CheckListItem,
   checkIndex: number,
   itemIndex: number
 }
-const CheckListItemCheck = React.memo(({ checkItem, checkIndex, itemIndex }: CheckListItemCheckProps) => {
-  const [checked, setChecked] = useState(2)
+const CheckListItemCheck = ({ checkItem, checkIndex, itemIndex }: CheckListItemCheckProps) => {
+  if(checkItem.checked === 3) 
+    checkItem.checked = 2
 
-  const onPress = () => {
-
-    if(checked < 2)
-      setChecked(checked + 1)
-    else
-      setChecked(0)
-  }
-
-  return <TouchableOpacity style={styles.line} key={`${itemIndex}-${checkIndex}`} onPress={onPress}>
-        <Text style={{ flex: 10 }} category='s2'>{`${itemIndex + 1}.${checkIndex + 1} - ${checkItem.text} ${checked} (${CheckValue[checked]})`}</Text>
-        <Icon name={checkItemIcon[checked].name} fill={checkItemIcon[checked].color} style={styles.lineIcon} />
+  return <TouchableOpacity style={styles.line} key={`${itemIndex}-${checkIndex}`}>
+        <Text style={} category='s2'>{`${itemIndex + 1}.${checkIndex + 1} - ${checkItem.text} (${CheckValue[checkItem.checked!].toLocaleUpperCase()})`}</Text>
+        <Icon name={checkItemIcon[checkItem.checked!].name} fill={checkItemIcon[checkItem.checked!].color} style={styles.lineIcon} />
     </TouchableOpacity>
-})
+}
 
 const Checklists = () => {
 
@@ -74,7 +67,11 @@ const Checklists = () => {
     <Layout style={styles.container}>
       {values && values.checkList ? values.checkList.map((checkList, index) => {
         return (
-          <CheckListLine item={checkList} index={index} key={index} onChange={(checked) => setFieldValue(`checkList[${index}].checked`, checked)} />
+          <CheckListLine item={checkList} index={index} key={index} onChange={(checked) => { 
+            checked = checked === 2 ? 0 : checked + 1
+            setFieldValue(`checkList[${index}].checked`, checked)
+            checkList.checks?.forEach((check, checkIndex) => setFieldValue(`checkList[${index}].checks[${checkIndex}].checked`, checked))
+        }} />
         )
       }) : 
       <>
@@ -103,6 +100,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center' 
   },
+  icon: {
+    width: 30, 
+    height: 30
+  },
   lineIcon: {
     width: 35,
     height: 35 
@@ -112,5 +113,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     justifyContent: 'space-around',
-  }
+  },
+  checkListItem: { flex: 10 },
+  checkListTitle: {flex: 10,  fontWeight: '900' },
+  checkListSubtitle: { alignSelf: 'center', alignContent: 'center' },
 })

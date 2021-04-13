@@ -47,7 +47,7 @@ const ReportForm = () => {
     <>
       <Layout style={[styles.container, { flexDirection: flexType }]}>
         <Datepicker
-          style={{ flex: flexType === 'row' ? 3 : undefined, marginHorizontal: 3, }}
+          style={[{ flex: flexType === 'row' ? 3 : undefined}, styles.inputMargin]}
           label='Date'
           caption='Select the report date'
           placeholder='Pick Date'
@@ -59,14 +59,14 @@ const ReportForm = () => {
         <Select
           placeholder='type to search an address'
           value={values.address!}
-          style={{ flex: flexType === 'row' ? 7 : undefined, marginHorizontal: 3 }} label='Address' 
+          style={[{ flex: flexType === 'row' ? 7 : undefined}, styles.inputMargin]} label='Address' 
           onSelect={(e) => { setFieldValue('address', addresses[e.row].formatedAddress); setFieldValue('license.number', addresses[e.row].number)}}
           status={errors.address ? 'danger':'basic'}
           caption={errors.address}
         >
           {addresses.map(reanderOption)}
         </Select>
-        <Input style={{ flex: flexType === 'row' ? 2 : undefined, marginHorizontal: 3 }} disabled label='License' value={values.license?.number}
+        <Input style={[{ flex: flexType === 'row' ? 2 : undefined}, styles.inputMargin]}} disabled label='License' value={values.license?.number}
         caption='Selected Address License Number' />
       </Layout>
       <ScrollView>
@@ -81,5 +81,8 @@ export { ReportForm }
 const styles = StyleSheet.create({
   container: {
     padding: 10
+  },
+  inputMargin: {
+    marginHorizontal: 3
   }
 })

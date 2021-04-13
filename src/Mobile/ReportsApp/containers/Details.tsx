@@ -50,7 +50,6 @@ export const Details = ({ route, navigation }: Props) => {
   const handleSubmit = async () => {
     if (formRef.current) {
       if (formRef.current.isValid) {
-        console.log({values: formRef.current.values})
         const userToken: string = await AsyncStorage.getItem('userToken') as string;
         const apiService = new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey} as Configuration)
         const updateCmd : UpdateReportCommand = {

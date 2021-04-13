@@ -18,7 +18,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
         public string Title { get; private set; }
         public string FormName { get; private set; }
         public string RemarksLabelText { get; private set; }
-
+        public string OperationalReadings { get; set; }
         private readonly List<Signature> signatures = new List<Signature>();
         public IReadOnlyCollection<Signature> Signatures => signatures;
         private readonly List<Note> notes = new List<Note>();

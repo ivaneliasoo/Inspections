@@ -20,6 +20,7 @@
     "@ui-kitten/components": "^5.0.0",
     "@ui-kitten/eva-icons": "^5.0.0",
     "@ui-kitten/metro-config": "^5.0.0",
+    "@welldone-software/why-did-you-render": "^6.1.1",
     "axios": "^0.21.1",
     "formik": "^2.2.6",
     "moment": "^2.29.1",
