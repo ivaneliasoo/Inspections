@@ -1,68 +1,76 @@
-import React, { useRef } from 'react'
-import SignatureCapture from 'react-native-signature-capture'
-import { StyleSheet, View } from 'react-native'
+import { Card, Datepicker, Input, Layout, List, Select, SelectItem, Text, Button } from '@ui-kitten/components'
+import { CalendarIcon, CrossIcon, EditSignatureIcon } from '../Icons'
+import { useFormikContext } from 'formik'
+import moment from 'moment'
+import React, { useState } from 'react'
+import { Image, StyleSheet, View } from 'react-native'
+import { Signature } from 'services/api'
+import { ScrollView } from 'react-native-gesture-handler'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
-/**
- *
- *
- * @returns
- */
 const Signatures = () => {
-  const sign = useRef(null)
+  const navigation = useNavigation()
+  const route = useRoute()
+  const { setFieldValue, values, errors, handleChange } = useFormikContext()
 
-  const saveSign = () => {
-    sign.saveImage();
-  }
-
-  const resetSign = () => {
-    sign.resetImage();
-  }
-
-  const _onSaveEvent = (result) => {
-    //result.encoded - for the base64 encoded png
-    //result.pathName - for the file path name
-    console.log(result);
-  }
-  const _onDragEvent = () => {
-    // This callback will be called when the user enters signature
-    console.log("dragged");
-  }
+    console.log('hola mundo', route.params)
 
   return (
-    <View style={styles.container}>
-      <SignatureCapture
-        style={[{ flex: 1 }, styles.signature]}
-        ref={sign}
-        label='a pedo'
-        saveImageFileInExtStorage={true}
-        showNativeButtons={true}
-        showBorder ={true}
-        onSaveEvent={_onSaveEvent}
-        onDragEvento={_onDragEvent}
-        backgroundColor="#FFFFFF"
-        strokeColor="#000000"
-        minStrokeWidth={4}
-        maxStrokeWidth={4}
-         />
-    </View>
+    <>
+      <ScrollView>
+        {values.signatures.map((item, signIndex) => {
+          return (<Card key={signIndex} style={styles.card}>
+            <Text category='s1'>
+              {item.title}
+            </Text>
+            <Text status='warning' category='s2'>
+              {item.principal && !item.drawedSign ? 'This Signature is required. Please complete and sign' : ''}
+            </Text>
+            <Datepicker
+              label='Date'
+              placeholder='Pick Date'
+              date={typeof item.date === 'string' ? new Date() : item.date}
+              max={new Date()}
+              onSelect={(e) => setFieldValue(`signatures[${signIndex}].date`, e)}
+              accessoryRight={CalendarIcon}
+            />
+            <Select
+              placeholder='please select...'
+              value={item.responsable.type}
+              label='Representation Type'
+              onSelect={(e) => { setFieldValue(`signatures[${signIndex}].responsable.type`, ['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'][e.row]) }}
+              status={errors.responsable ? 'danger' : 'basic'}
+              caption={errors.responsable}
+            >
+              {['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'].map((responsible, index) =>
+                <SelectItem
+                  key={index}
+                  title={responsible}
+                ></SelectItem>)}
+            </Select>
+            <Input label='Name' value={item.responsible} />
+            <Input label='Designation' value={item.designation} />
+            <Input label='Remarks' multiline value={item.remarks} onChangeText={handleChange('remarks')} />
+            <View style={{ flex: 2, flexDirection: 'row' }}>
+              {item.drawedSign?.length > 0 && <Image style={{ flex: 1, alignSelf: 'center', borderColor: 'black', width: 150, height: 100, resizeMode: 'stretch' }} source={{ uri: item.drawedSign }} />}
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Button style={{ flex: 1, margin: 10, marginTop: 20 }} status='warning' size='small' appearance='outline' onPress={() => navigation.navigate('ModalSignatures')} accessoryLeft={EditSignatureIcon} />
+                <Button disabled={!item.drawedSign} style={{ flex: 1, margin: 10, marginTop: 20 }} status='danger' size='small' appearance='outline' accessoryLeft={CrossIcon} />
+              </View>
+            </View>
+          </Card>
+          )
+        }
+        )
+        }
+      </ScrollView>
+      
+    </>
   )
 }
 
 export { Signatures }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    flexDirection: "column"
-  },
-  signature: {
-      flex: 1,
-      borderColor: '#000',
-      borderWidth: 10,
-  },
-  buttonStyle: {
-      flex: 1, justifyContent: "center", alignItems: "center", height: 50,
-      backgroundColor: "#eeeeee",
-      margin: 10
-  }
-});
+  card: { padding: 0, marginHorizontal: 5, marginVertical: 2 },
+})

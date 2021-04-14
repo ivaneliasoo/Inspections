@@ -65,7 +65,7 @@ type CheckListItemCheckProps = {
   onPress: (payload: CheckListItem) => any
 }
 const CheckListItemCheck = ({ checkItem, checkIndex, itemIndex, onPress }: CheckListItemCheckProps) => {
-  const persistedValue = checkItem.checked! > 3 ? 2:checkItem.checked ?? 3
+  const persistedValue = checkItem.checked! >= 3 ? 2:checkItem.checked ?? 3
   const [itemChecked, setItemChecked] = useState(persistedValue)
 
   return <TouchableOpacity style={styles.line} key={`${itemIndex}-${checkIndex}`} onPress={() => {
@@ -77,7 +77,6 @@ const CheckListItemCheck = ({ checkItem, checkIndex, itemIndex, onPress }: Check
       setItemChecked(0)
       checkItem.checked! += 0
     }
-    console.log({checkItem})
     onPress(checkItem)
   }}>
     <Text 
@@ -105,7 +104,6 @@ const Checklists = ({ onCheckListUpdated, onCheckListItemUpdated }: any) => {
           }}
             onCheckUpdated={(payload: CheckListItem) => {
               const item = checkList.checks?.findIndex(it => it.id === payload.id)
-              console.log({item})
               setFieldValue(`checkList[${index}].checks[${item}].checked`, payload.checked! + 1 > 2 ? 0 : payload.checked! + 1)
               payload.checked = payload.checked! + 1 > 2 ? 0 : payload.checked! + 1
 

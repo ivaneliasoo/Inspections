@@ -12,8 +12,10 @@ import { API_CONFIG } from './config/config'
 import { CameraScreen } from './containers/CameraScreen';
 import { Signatures } from './components/reports/Signatures';
 import { ReportsProvider } from './reports-contexts';
+import { SignaturePad } from './components/reports/SignaturePad';
 
-const { Navigator, Screen } = createStackNavigator();
+const MainStack = createStackNavigator();
+const RootStack = createStackNavigator();
 
 const authApi = new AuthApi(API_CONFIG as Configuration)
 
@@ -84,28 +86,20 @@ const HomeNavigator = () => {
     []
   );
 
-  const reportsContext = React.useMemo(
-    () => ({
-      onlyMyReports: true,
-      onlyClosedReports: false
-    }),
-    []
-  );
-
   return (
     <AuthContext.Provider value={authContext}>
-      <Navigator headerMode="none">
+      <MainStack.Navigator headerMode="none">
         {
-          state.isLoading ? <Screen name="SplashScreen" component={SplashScreen} />
-            : state.userToken === null ? <Screen name="Authentication" component={Authentication} /> :
+          state.isLoading ? <MainStack.Screen name="SplashScreen" component={SplashScreen} />
+            : state.userToken === null ? <MainStack.Screen name="Authentication" component={Authentication} /> :
               <>
-                <Screen name="My Reports" component={HomeScreen} />
-                <Screen name="Details" component={Details} />
-                <Screen name="Camera" component={CameraScreen} />
-                <Screen name="Signatures" component={Signatures} />
+                <MainStack.Screen name="My Reports" component={HomeScreen} />
+                <MainStack.Screen name="Details" component={Details} />
+                <MainStack.Screen name="Camera" component={CameraScreen} />
+                <MainStack.Screen name="Signatures" component={Signatures} />
               </>
         }
-      </Navigator>
+      </MainStack.Navigator>
     </AuthContext.Provider >
   )
 };
@@ -113,7 +107,14 @@ const HomeNavigator = () => {
 export const AppNavigator = () => (
   <NavigationContainer>
     <ReportsProvider>
-      <HomeNavigator />
+      <RootStack.Navigator mode='modal'>
+        <RootStack.Screen
+          name="Main"
+          component={HomeNavigator}
+          options={{ headerShown: false }}
+        />
+        <RootStack.Screen name='ModalSignatures' component={SignaturePad} options={{ title: 'Please Sign' }}/>
+      </RootStack.Navigator>
     </ReportsProvider>
   </NavigationContainer>
 );

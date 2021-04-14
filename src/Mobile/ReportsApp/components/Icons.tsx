@@ -15,3 +15,4 @@ export const PasswordIcon = (props: any) => (<Icon name='keypad-outline' {...pro
 export const CalendarIcon = (props: any) => (<Icon name='calendar-outline' {...props}/>)
 export const CheckIcon = (props: any) => (<Icon name='checkmark-outline' {...props}/>)
 export const ChevronDownIcon = (props: any) => (<Icon name='chevron-down-outline' {...props}/>)
+export const EditSignatureIcon = (props: any) => (<Icon name='edit-2-outline' {...props}/>)

@@ -11,11 +11,13 @@ import { Configuration, Report, ReportsApi, UpdateReportCommand } from '../servi
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import * as Yup from 'yup';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Signatures } from '../components/reports/Signatures';
+import { SignaturePad } from '../components/reports/SignaturePad';
 
 type DetailsScreenNavigationProp = StackNavigationProp<any, any>
 
-type Props ={
+type Props = {
   route: any,
   navigation: DetailsScreenNavigationProp
 }
@@ -52,8 +54,8 @@ export const Details = ({ route, navigation }: Props) => {
     if (formRef.current) {
       if (formRef.current.isValid) {
         const userToken: string = await AsyncStorage.getItem('userToken') as string;
-        const apiService = new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey} as Configuration)
-        const updateCmd : UpdateReportCommand = {
+        const apiService = new ReportsApi({ accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey } as Configuration)
+        const updateCmd: UpdateReportCommand = {
           address: formRef.current.values.address,
           date: moment(formRef.current.values.date).format('YYYY-MM-DD'),
           name: formRef.current.values.name,
@@ -71,20 +73,20 @@ export const Details = ({ route, navigation }: Props) => {
       }
     }
   }
-  
+
   useEffect(() => {
     const getReportData = async () => {
       const userToken: string = await AsyncStorage.getItem('userToken') as string;
-      const apiService =  new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey} as Configuration)
-      const result: Report = (await apiService.reportsIdGet(reportId)).data as unknown as  Report
+      const apiService = new ReportsApi({ accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey } as Configuration)
+      const result: Report = (await apiService.reportsIdGet(reportId)).data as unknown as Report
       result.date = moment(result.date).toDate()
       setReportData(result as any)
     }
-    if(mountedRef.current)
+    if (mountedRef.current)
       getReportData()
-      return () => {
-        mountedRef.current = false
-      }
+    return () => {
+      mountedRef.current = false
+    }
   }, [])
 
   const reportValidationSchema = Yup.object().shape({
@@ -115,10 +117,16 @@ export const Details = ({ route, navigation }: Props) => {
               }
             }}
           >
-            {reportData ? <ViewPager style={styles.viewPagerLayout} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
+            {reportData ? <ViewPager style={styles.viewPagerLayout} swipeEnabled selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
               <OperationalReading />
               <ReportForm />
-            </ViewPager>:<Spinner  />}
+              <Signatures />
+              <View style={{ flex: 1 }}>
+                <TouchableOpacity disabled >
+                  <SignaturePad saved={(image) => { console.log('si llega', { image }) }} />
+                </TouchableOpacity>
+              </View>
+            </ViewPager> : <Spinner />}
           </FlingGestureHandler>
         </FlingGestureHandler>
       </>

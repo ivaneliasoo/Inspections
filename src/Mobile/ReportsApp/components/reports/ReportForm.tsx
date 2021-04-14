@@ -20,9 +20,8 @@ const getAddressList = async (filter?: string) => {
 }
 
 const updateCheckList = async (payload: { reportId: number; checkListId: number; newValue: number | undefined }) => {
-  console.log({payload})
   const api = new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey} as Configuration)
-  api.reportsReportIdChecklistsCheckListIdPatch(payload.reportId, payload.checkListId, payload.newValue)
+  api.bulkUpdateChecks(payload.reportId, payload.checkListId, payload.newValue)
 }
 
 const updateCheckListItem = async (payload: CheckListItem) => {

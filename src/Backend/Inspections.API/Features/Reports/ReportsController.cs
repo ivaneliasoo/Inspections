@@ -203,5 +203,17 @@ namespace Inspections.API.Features.Inspections
             return NoContent();
         }
 
+        [HttpPatch("{reportId:int}/complete", Name = nameof(CompleteReport))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<ActionResult<bool>> CompleteReport(int reportId)
+        {
+            var result = await _mediator.Send(new CompleteReportCommand(reportId)).ConfigureAwait(false);
+            if (!result)
+                return Conflict();
+
+            return NoContent();
+        }
+
     }
 }
