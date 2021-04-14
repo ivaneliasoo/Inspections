@@ -81,7 +81,6 @@ export const HomeScreen = () => {
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
     const reportsApi = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
     const reportId = await reportsApi.reportsPost(configuration)
-    await getReports({});
     return reportId
   }
 
@@ -97,9 +96,11 @@ export const HomeScreen = () => {
     navigation.navigate('Details', { reportId })
   }
   
-  const callCreateReport = (id: number) => {
-      createReport({ configurationId: id, reportType: 0 })
+  const callCreateReport = async (id: number) => {
+    setIsNewReportBusy(true)  
+    await createReport({ configurationId: id, reportType: 0 })
         .then((reportId) => navigateToDetails({reportId: reportId.data}))
+        .finally(() => { setIsNewReportBusy(false); setIsCreatingReport(false) })
   
   }
 
@@ -154,7 +155,7 @@ export const HomeScreen = () => {
         title={`Reports (total: ${reports.length})`}
         alignment='center' 
         accessoryRight={() => <OptionsMenu onChanged={getReports} />}
-        accessoryLeft={() => <OptionsMenu onChanged={getReports} /> }
+        accessoryLeft={() => <NewReportMenu templates={templates} isOpen={isCreatingReport} isBusy={isNewReportBusy} onTemplatePress={callCreateReport} onCreatePress={() => setIsCreatingReport(true)} onCancelPress={() => setIsCreatingReport(false)} /> }
         />
       <Divider />
       <Layout style={styles.cardList}>

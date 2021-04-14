@@ -45,6 +45,14 @@ namespace Inspections.Core.Domain.CheckListAggregate
             IsConfiguration = isConfiguration;
         }
 
+        public void SetValue(CheckValue checkValue)
+        {
+            foreach (var check in Checks)
+            {
+                check.Checked = checkValue;
+            }
+        }
+
         public void AddCheckItems(CheckListItem checkListItem)
         {
             Guard.Against.Null(checkListItem, nameof(checkListItem));

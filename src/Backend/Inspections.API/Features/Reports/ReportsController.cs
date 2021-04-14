@@ -191,5 +191,17 @@ namespace Inspections.API.Features.Inspections
             return BadRequest();
         }
 
+        [HttpPatch("{reportId:int}/checklists/{checkListId:int}", Name = nameof(BulkUpdateChecks))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<ActionResult<bool>> BulkUpdateChecks(int reportId, int checkListId, int newValue)
+        {
+            var result = await _mediator.Send(new BulkUpdateCheckItemsCommand(reportId, checkListId, newValue)).ConfigureAwait(false);
+            if (!result)
+                return Conflict();
+
+            return NoContent();
+        }
+
     }
 }

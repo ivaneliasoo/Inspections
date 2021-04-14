@@ -1318,6 +1318,12 @@ export interface Report {
     remarksLabelText?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof Report
+     */
+    operationalReadings?: string | null;
+    /**
+     * 
      * @type {Array<Signature>}
      * @memberof Report
      */
@@ -1401,6 +1407,12 @@ export interface ReportConfiguration {
      * @memberof ReportConfiguration
      */
     signatureDefinitions?: Array<Signature> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReportConfiguration
+     */
+    inactive?: boolean;
     /**
      * 
      * @type {number}
@@ -1558,6 +1570,12 @@ export interface ResumenReportConfiguration {
      * @memberof ResumenReportConfiguration
      */
     usedByReports?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResumenReportConfiguration
+     */
+    inactive?: boolean;
 }
 /**
  * 
@@ -4958,6 +4976,52 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {number} reportId 
+         * @param {number} checkListId 
+         * @param {number} [newValue] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reportsReportIdChecklistsCheckListIdPatch: async (reportId: number, checkListId: number, newValue?: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'reportId' is not null or undefined
+            assertParamExists('reportsReportIdChecklistsCheckListIdPatch', 'reportId', reportId)
+            // verify required parameter 'checkListId' is not null or undefined
+            assertParamExists('reportsReportIdChecklistsCheckListIdPatch', 'checkListId', checkListId)
+            const localVarPath = `/Reports/{reportId}/checklists/{checkListId}`
+                .replace(`{${"reportId"}}`, encodeURIComponent(String(reportId)))
+                .replace(`{${"checkListId"}}`, encodeURIComponent(String(checkListId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (newValue !== undefined) {
+                localVarQueryParameter['newValue'] = newValue;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -5099,6 +5163,18 @@ export const ReportsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.reportsPost(createReportCommand, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {number} reportId 
+         * @param {number} checkListId 
+         * @param {number} [newValue] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reportsReportIdChecklistsCheckListIdPatch(reportId: number, checkListId: number, newValue?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reportsReportIdChecklistsCheckListIdPatch(reportId, checkListId, newValue, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -5227,6 +5303,17 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
          */
         reportsPost(createReportCommand?: CreateReportCommand, options?: any): AxiosPromise<void> {
             return localVarFp.reportsPost(createReportCommand, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} reportId 
+         * @param {number} checkListId 
+         * @param {number} [newValue] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reportsReportIdChecklistsCheckListIdPatch(reportId: number, checkListId: number, newValue?: number, options?: any): AxiosPromise<void> {
+            return localVarFp.reportsReportIdChecklistsCheckListIdPatch(reportId, checkListId, newValue, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5379,6 +5466,19 @@ export class ReportsApi extends BaseAPI {
      */
     public reportsPost(createReportCommand?: CreateReportCommand, options?: any) {
         return ReportsApiFp(this.configuration).reportsPost(createReportCommand, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} reportId 
+     * @param {number} checkListId 
+     * @param {number} [newValue] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public reportsReportIdChecklistsCheckListIdPatch(reportId: number, checkListId: number, newValue?: number, options?: any) {
+        return ReportsApiFp(this.configuration).reportsReportIdChecklistsCheckListIdPatch(reportId, checkListId, newValue, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

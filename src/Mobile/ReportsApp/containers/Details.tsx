@@ -40,6 +40,7 @@ export const Details = ({ route, navigation }: Props) => {
 
   const [selectedIndex, setSelectedIndex] = useState(1)
   const [reportData, setReportData] = useState<Report>({})
+  const mountedRef = useRef(true)
 
   const { reportId } = route.params
 
@@ -79,8 +80,12 @@ export const Details = ({ route, navigation }: Props) => {
       result.date = moment(result.date).toDate()
       setReportData(result as any)
     }
-    getReportData()
-  }, [reportId])
+    if(mountedRef.current)
+      getReportData()
+      return () => {
+        mountedRef.current = false
+      }
+  }, [])
 
   const reportValidationSchema = Yup.object().shape({
     address: Yup.string().required('Required. Please Select an Address')
@@ -88,7 +93,7 @@ export const Details = ({ route, navigation }: Props) => {
 
   return (
 
-    <Formik innerRef={formRef} validationSchema={reportValidationSchema} initialValues={reportData} enableReinitialize onSubmit={handleSubmit}>
+    <Formik innerRef={formRef} validationSchema={reportValidationSchema} initialValues={reportData} enableReinitialize onSubmit={() => console.log('saved')}>
       <>
         <TopNavigation title={`Report  `} alignment='center' accessoryLeft={BackAction} accessoryRight={() => <Button size='small' onPress={handleSubmit}>Save</Button>} />
         <Divider />
