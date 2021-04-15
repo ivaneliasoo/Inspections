@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 import { Button, Divider, Spinner, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
 import { ReportForm } from '../components/reports/ReportForm'
 import { OperationalReading } from '../components/reports/OperationalReading'
@@ -7,7 +7,7 @@ import { Formik, FormikProps } from 'formik';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Directions, FlingGestureHandler, State } from 'react-native-gesture-handler'
 import { API_CONFIG } from '../config/config'
-import { Configuration, Report, ReportsApi, UpdateReportCommand } from '../services/api'
+import { Configuration, Report, ReportsApi, Signature, UpdateReportCommand } from '../services/api'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import * as Yup from 'yup';
@@ -64,9 +64,9 @@ export const Details = ({ route, navigation }: Props) => {
           licenseNumber: formRef.current.values.license?.number
         }
         await apiService.reportsIdPut(reportId, updateCmd)
-          .catch(error => {
-            Alert.alert('Datos Inválidos', error.response.message)
-          })
+        .catch(error => {
+          Alert.alert('Datos Inválidos', error.response.message)
+        })
         formRef.current!.handleSubmit()
       } else {
         Alert.alert('Datos Inválidos', `report contains invalid fields: ${Object.keys(formRef.current.errors).map(field => field)}`)
@@ -90,12 +90,13 @@ export const Details = ({ route, navigation }: Props) => {
   }, [])
 
   const reportValidationSchema = Yup.object().shape({
-    address: Yup.string().required('Required. Please Select an Address')
+    address: Yup.string().required('Required. Please Select an Address'),
+    date: Yup.date().required('Required. Please Select a date')
   })
 
   return (
 
-    <Formik innerRef={formRef} validationSchema={reportValidationSchema} initialValues={reportData} enableReinitialize onSubmit={() => console.log('saved')}>
+    <Formik innerRef={formRef} validateOnMount validationSchema={reportValidationSchema} initialValues={reportData} enableReinitialize onSubmit={() => console.log('saved')}>
       <>
         <TopNavigation title={`Report  `} alignment='center' accessoryLeft={BackAction} accessoryRight={() => <Button size='small' onPress={handleSubmit}>Save</Button>} />
         <Divider />
@@ -117,15 +118,10 @@ export const Details = ({ route, navigation }: Props) => {
               }
             }}
           >
-            {reportData ? <ViewPager style={styles.viewPagerLayout} swipeEnabled selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
-              <OperationalReading />
+            {reportData ? <ViewPager style={styles.viewPagerLayout} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
+              <OperationalReading reportData={reportData} />
               <ReportForm />
-              <Signatures />
-              <View style={{ flex: 1 }}>
-                <TouchableOpacity disabled >
-                  <SignaturePad saved={(image) => { console.log('si llega', { image }) }} />
-                </TouchableOpacity>
-              </View>
+              <Signatures report={reportData} />
             </ViewPager> : <Spinner />}
           </FlingGestureHandler>
         </FlingGestureHandler>
