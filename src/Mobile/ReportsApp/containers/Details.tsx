@@ -64,9 +64,9 @@ export const Details = ({ route, navigation }: Props) => {
           licenseNumber: formRef.current.values.license?.number
         }
         await apiService.reportsIdPut(reportId, updateCmd)
-        .catch(error => {
-          Alert.alert('Datos Inválidos', error.response.message)
-        })
+          .catch(error => {
+            Alert.alert('Datos Inválidos', error.response.message)
+          })
         formRef.current!.handleSubmit()
       } else {
         Alert.alert('Datos Inválidos', `report contains invalid fields: ${Object.keys(formRef.current.errors).map(field => field)}`)
@@ -98,7 +98,7 @@ export const Details = ({ route, navigation }: Props) => {
 
     <Formik innerRef={formRef} validateOnMount validationSchema={reportValidationSchema} initialValues={reportData} enableReinitialize onSubmit={() => console.log('saved')}>
       <>
-        <TopNavigation title={`Report  `} alignment='center' accessoryLeft={BackAction} accessoryRight={() => <Button size='small' onPress={handleSubmit}>Save</Button>} />
+        <TopNavigation title={`Report  `} alignment='center' accessoryLeft={BackAction} />
         <Divider />
         <FlingGestureHandler
           numberOfPointers={2}
@@ -109,21 +109,12 @@ export const Details = ({ route, navigation }: Props) => {
             }
           }}
         >
-          <FlingGestureHandler
-            numberOfPointers={2}
-            direction={Directions.UP}
-            onHandlerStateChange={({ nativeEvent }) => {
-              if (nativeEvent.state === State.ACTIVE) {
-                navigateToSignatures()
-              }
-            }}
-          >
-            {reportData ? <ViewPager style={styles.viewPagerLayout} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
-              <OperationalReading reportData={reportData} />
-              <ReportForm />
-              <Signatures report={reportData} />
-            </ViewPager> : <Spinner />}
-          </FlingGestureHandler>
+
+          {reportData ? <ViewPager style={styles.viewPagerLayout} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
+            <OperationalReading reportData={reportData} />
+            <ReportForm />
+            <Signatures report={reportData} />
+          </ViewPager> : <Spinner />}
         </FlingGestureHandler>
       </>
     </Formik >

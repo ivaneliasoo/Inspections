@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Layout, Text, Icon, Spinner } from '@ui-kitten/components'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useFormikContext } from 'formik'
-import { CheckList, CheckListItem, CheckValue, Report, ReportsApi } from '../../services/api'
+import { CheckList, CheckListItem, CheckValue, Report } from '../../services/api'
 
 const checkItemIcon = [
   { name: 'close-outline', color: 'red' },
@@ -18,11 +18,11 @@ const computeCheckListValue = (checkList: CheckList) => {
   const totalNotAplicable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAplicable).length
   const total = checkList.checks!.length
 
-  if(total === totalAcceptable) return CheckValue.Acceptable
-  else if(total === totalNotAcceptable) return CheckValue.NotAcceptable
-  else if(total === totalNotAplicable) return CheckValue.NotAplicable
+  if (total === totalAcceptable) return CheckValue.Acceptable
+  else if (total === totalNotAplicable) return CheckValue.NotAplicable
+  else if (total === totalNotAcceptable) return CheckValue.NotAcceptable
   else return CheckValue.NotAplicable
-} 
+}
 
 type CheckListItemProps = {
   item: CheckList,
@@ -34,12 +34,16 @@ const CheckListLine = ({ item, index, onChange, onCheckUpdated, ...props }: Chec
   const [checked, setChecked] = useState(computeCheckListValue(item) ?? 3)
   const onPress = () => {
 
-    if (checked < 2)
-      setChecked(checked + 1)
-    else
+    if (checked >= 2)
+      setChecked(1)
+    else if (checked === 1)
       setChecked(0)
+    else if (checked === 0)
+      setChecked(2)
+
 
     onChange(checked)
+
 
   }
 
@@ -65,23 +69,28 @@ type CheckListItemCheckProps = {
   onPress: (payload: CheckListItem) => any
 }
 const CheckListItemCheck = ({ checkItem, checkIndex, itemIndex, onPress }: CheckListItemCheckProps) => {
-  const persistedValue = checkItem.checked! >= 3 ? 2:checkItem.checked ?? 3
+  const persistedValue = checkItem.checked! >= 3 ? 2 : checkItem.checked ?? 2
   const [itemChecked, setItemChecked] = useState(persistedValue)
 
+
+  useEffect(() => {
+    setItemChecked(persistedValue)
+    checkItem.checked! =  persistedValue
+  }, [])
+
   return <TouchableOpacity style={styles.line} key={`${itemIndex}-${checkIndex}`} onPress={() => {
-    if (itemChecked < 2){
-      setItemChecked(itemChecked + 1)
-      checkItem.checked! += 1 
+     if (itemChecked! >= 2) {
+      setItemChecked(1)
+      checkItem.checked! = 1
     }
-    else {
-      setItemChecked(0)
-      checkItem.checked! += 0
-    }
+    else if (itemChecked === 1) { setItemChecked(0); checkItem.checked! = 0 }
+    else if (itemChecked === 0) { setItemChecked(2); checkItem.checked! = 2 }
+
     onPress(checkItem)
   }}>
-    <Text 
+    <Text
       style={styles.checkListItem}
-      category='s2'>{`${itemIndex + 1}.${checkIndex + 1} - ${checkItem.text} (${CheckValue[persistedValue]})`}
+      category='s2'>{`${itemIndex + 1}.${checkIndex + 1} - ${checkItem.text} (${CheckValue[persistedValue]}) value: ${checkItem.checked}`}
     </Text>
     <Icon name={checkItemIcon[persistedValue].name} fill={checkItemIcon[persistedValue].color} style={styles.lineIcon} />
   </TouchableOpacity>
@@ -91,7 +100,7 @@ const Checklists = ({ onCheckListUpdated, onCheckListItemUpdated }: any) => {
 
   const { values, setFieldValue } = useFormikContext<Report>();
 
-  
+
 
   return (
     <Layout style={styles.container}>
@@ -105,20 +114,19 @@ const Checklists = ({ onCheckListUpdated, onCheckListItemUpdated }: any) => {
             onCheckUpdated={(payload: CheckListItem) => {
               const item = checkList.checks?.findIndex(it => it.id === payload.id)
               setFieldValue(`checkList[${index}].checks[${item}].checked`, payload.checked! + 1 > 2 ? 0 : payload.checked! + 1)
-              payload.checked = payload.checked! + 1 > 2 ? 0 : payload.checked! + 1
 
               setFieldValue(`checkList[${index}].checked`, computeCheckListValue(checkList))
 
               onCheckListItemUpdated(payload)
             }}
-        />
-      )
+          />
+        )
       }) :
-      <>
-        <View style={styles.checkListLoading}>
-          <Text>   Loading Checks...</Text>
-        </View>
-      </>
+        <>
+          <View style={styles.checkListLoading}>
+            <Text>   Loading Checks...</Text>
+          </View>
+        </>
       }
     </Layout>
   )

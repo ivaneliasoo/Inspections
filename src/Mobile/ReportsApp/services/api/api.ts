@@ -1291,7 +1291,7 @@ export interface Report {
      * @type {string}
      * @memberof Report
      */
-    date?: string;
+    date?: string|Date;
     /**
      * 
      * @type {boolean}

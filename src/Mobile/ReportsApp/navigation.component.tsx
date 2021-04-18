@@ -3,7 +3,7 @@ import { AuthContext } from './authentication-context'
 import { AuthApi, Configuration } from './services/api'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { HomeScreen } from './containers/Home';
+import { MyReports } from './containers/MyReports';
 import { Details } from './containers/Details';
 import { SplashScreen } from './containers/SplashScreen';
 import { Authentication } from './containers/Authentication';
@@ -13,6 +13,7 @@ import { CameraScreen } from './containers/CameraScreen';
 import { Signatures } from './components/reports/Signatures';
 import { ReportsProvider } from './reports-contexts';
 import { SignaturePad } from './components/reports/SignaturePad';
+import {Home} from './containers/Home';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -93,10 +94,10 @@ const HomeNavigator = () => {
           state.isLoading ? <MainStack.Screen name="SplashScreen" component={SplashScreen} />
             : state.userToken === null ? <MainStack.Screen name="Authentication" component={Authentication} /> :
               <>
-                <MainStack.Screen name="My Reports" component={HomeScreen} />
+                <MainStack.Screen name="Home" component={Home} />
+                <MainStack.Screen name="MyReports" component={MyReports} />
                 <MainStack.Screen name="Details" component={Details} />
                 <MainStack.Screen name="Camera" component={CameraScreen} />
-                <MainStack.Screen name="Signatures" component={Signatures} />
               </>
         }
       </MainStack.Navigator>
