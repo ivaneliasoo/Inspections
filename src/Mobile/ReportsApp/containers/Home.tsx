@@ -5,6 +5,12 @@ import { StyleSheet } from 'react-native'
 
 export const Home = ({ navigation }) => {
   const [isCreatingReport, setIsCreatingReport] = useState(false)
+
+  const navigateToDetails = (reportId: any) => {
+    console.log({reportId})
+    setIsCreatingReport(false)
+    navigation.navigate('Details', { reportId })
+  }
   
   const cardOptions: any[] = [
     {
@@ -29,7 +35,7 @@ export const Home = ({ navigation }) => {
 
   return (
     <Layout>
-      <NewReport isOpen={isCreatingReport} onClose={() => setIsCreatingReport(false)}/>
+      <NewReport isOpen={isCreatingReport} onClose={() => setIsCreatingReport(false)} onCreate={navigateToDetails}/>
       {cardOptions.map(option => {
           return <Card key={option.name} style={{alignItems: 'center', borderRadius: 5, margin: 20}} onPress={() => {
             if(!option.action) navigation.navigate(option.path)

@@ -40,10 +40,10 @@ namespace Inspections.Infrastructure.Repositories
             var query = _context.Reports
                 .Include(p => p.PhotoRecords);
 
-            if(closed.HasValue && closed.Value)
-                return await query.AsNoTracking().Where(r => (r.IsClosed) && (myReports ? EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName): true) && EF.Functions.Like(r.Name, $"%{filter}%")).OrderByDescending(r=>r.Date).ToListAsync();
+            if (closed.HasValue && closed.Value)
+                return await query.AsNoTracking().Where(r => (r.IsClosed) && (myReports ? EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName) : true) && EF.Functions.Like(r.Name, $"%{filter}%")).OrderByDescending(r => r.Date).ToListAsync();
 
-            return await query.AsNoTracking().Where(r=> (myReports ? EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName) : true) && EF.Functions.Like(r.Name, $"%{filter}%")).OrderByDescending(r => r.Date).ToListAsync();
+            return await query.AsNoTracking().Where(r => (myReports ? EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName) : true) && EF.Functions.Like(r.Name, $"%{filter}%")).OrderByDescending(r => r.Date).ToListAsync();
         }
 
         public Task DeleteAsync(Report entity)
@@ -59,17 +59,60 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<Report> GetByIdAsync(int id)
         {
-            return await _context.Reports.Where(r=>r.Id == id)
+            return await _context.Reports.Where(r => r.Id == id)
                .Include(p => p.CheckList)
-                .ThenInclude(p=>p.Checks)
-                    .ThenInclude(p=>p.TextParams)
+                .ThenInclude(p => p.Checks)
+                    .ThenInclude(p => p.TextParams)
                .Include(p => p.Signatures)
-                .ThenInclude(p=>p.Responsable)
+                .ThenInclude(p => p.Responsable)
                .Include(p => p.Notes)
                .Include(p => p.PhotoRecords)
-               .Include(p=>p.License)
+               .Include(p => p.License)
                .SingleOrDefaultAsync();
         }
+
+        public async Task<dynamic> GetByIdAsync(int id, bool projected)
+        {
+            return await _context.Reports.Where(r=>r.Id==id)
+                .Select(report => new
+                {
+                    Id = report.Id,
+                    Name = report.Name,
+                    Address = report.Address,
+                    License = report.License,
+                    report.Title,
+                    report.FormName,
+                    report.RemarksLabelText,
+                    report.OperationalReadings,
+                    Signs = report.Signatures.Select(s => new
+                    {
+                        s.Date,
+                        s.Annotation,
+                        s.Designation,
+                        s.DrawedSign,
+                        s.Id,
+                        s.Principal,
+                        s.Remarks,
+                        s.Responsable,
+                        s.ResponsableName,
+                        s.Title,
+                    }),
+                    //No = report.Notes,
+                    //report.CheckList,
+                    //report.PhotoRecords
+                }).AsNoTracking().ToListAsync();
+
+            //.Include(p => p.CheckList)
+            // .ThenInclude(p => p.Checks)
+            //     .ThenInclude(p => p.TextParams)
+            //.Include(p => p.Signatures)
+            // .ThenInclude(p => p.Responsable)
+            //.Include(p => p.Notes)
+            //.Include(p => p.PhotoRecords)
+            //.Include(p => p.License)
+            //.SingleOrDefaultAsync();
+        }
+
 
         public async Task UpdateAsync(Report entity)
         {

@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import { createRef } from 'react'
 import { API_CONFIG } from '../../config/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AutoSave } from '../../components/AutoSave'
 
 
 const Signatures = ({ report }) => {
@@ -35,7 +36,7 @@ const Signatures = ({ report }) => {
         principal: s.principal,
         drawedSign: s.drawedSign
       }).catch(error => {
-        console.log({error, signatures: values.signatures})
+        console.log({ error, signatures: values.signatures })
         Alert.alert('error while saving signature', error.response.message)
       })
     })
@@ -49,6 +50,9 @@ const Signatures = ({ report }) => {
           <ScrollView>
             {values.signatures!.map((item, signIndex) => {
               return (<Card key={signIndex} style={styles.card}>
+                <View style={{ alignSelf: 'center' }}>
+                  <AutoSave debounceMs={300} />
+                </View>
                 <Text category='s1'>
                   {item.title}{JSON.stringify(errors)}
                 </Text>
@@ -85,7 +89,7 @@ const Signatures = ({ report }) => {
                   <View style={{ flex: 1, flexDirection: 'row' }}>
                     <Button style={{ flex: 1, margin: 10, marginTop: 20 }} status='warning' size='small' appearance='outline' onPress={() => navigation.navigate('ModalSignatures', { index: signIndex, existentSign: item.drawedSign, onGoBack: onGoBack })} accessoryLeft={EditSignatureIcon} />
                     <Button disabled={!item.drawedSign} style={{ flex: 1, margin: 10, marginTop: 20 }} status='danger' size='small' appearance='outline' onPress={() => setFieldValue(`signatures[${signIndex}].drawedSign`, '')} accessoryLeft={CrossIcon} />
-                    <Button style={{ flex: 1, margin: 10, marginTop: 20 }} status='success' size='small' appearance='outline' onPress={handleSubmit}>Save Sign</Button>
+                    {/* <Button style={{ flex: 1, margin: 10, marginTop: 20 }} status='success' size='small' appearance='outline' onPress={handleSubmit}>Save Sign</Button> */}
                   </View>
                 </View>
               </Card>

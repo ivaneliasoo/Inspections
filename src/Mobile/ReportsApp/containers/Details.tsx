@@ -1,5 +1,5 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
-import { Button, Divider, Spinner, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Divider, Spinner, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
 import { ReportForm } from '../components/reports/ReportForm'
 import { OperationalReading } from '../components/reports/OperationalReading'
 import { BackIcon } from '../components/Icons'
@@ -7,15 +7,16 @@ import { Formik, FormikProps } from 'formik';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Directions, FlingGestureHandler, State } from 'react-native-gesture-handler'
 import { API_CONFIG } from '../config/config'
-import { Configuration, Report, ReportsApi, Signature, UpdateReportCommand } from '../services/api'
+import { Configuration, Report, ReportsApi, UpdateReportCommand } from '../services/api'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import * as Yup from 'yup';
-import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { Signatures } from '../components/reports/Signatures';
 import { SignaturePad } from '../components/reports/SignaturePad';
 
 type DetailsScreenNavigationProp = StackNavigationProp<any, any>
+
 
 type Props = {
   route: any,
@@ -51,6 +52,7 @@ export const Details = ({ route, navigation }: Props) => {
   const formRef = useRef<FormikProps<Report>>(null)
 
   const handleSubmit = async () => {
+    console.log('save called')
     if (formRef.current) {
       if (formRef.current.isValid) {
         const userToken: string = await AsyncStorage.getItem('userToken') as string;
@@ -67,7 +69,6 @@ export const Details = ({ route, navigation }: Props) => {
           .catch(error => {
             Alert.alert('Datos Inválidos', error.response.message)
           })
-        formRef.current!.handleSubmit()
       } else {
         Alert.alert('Datos Inválidos', `report contains invalid fields: ${Object.keys(formRef.current.errors).map(field => field)}`)
       }
@@ -96,7 +97,7 @@ export const Details = ({ route, navigation }: Props) => {
 
   return (
 
-    <Formik innerRef={formRef} validateOnMount validationSchema={reportValidationSchema} initialValues={reportData} enableReinitialize onSubmit={() => console.log('saved')}>
+    <Formik innerRef={formRef} validateOnMount validationSchema={reportValidationSchema} initialValues={reportData} enableReinitialize onSubmit={handleSubmit}>
       <>
         <TopNavigation title={`Report  `} alignment='center' accessoryLeft={BackAction} />
         <Divider />

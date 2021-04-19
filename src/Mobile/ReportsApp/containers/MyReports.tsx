@@ -49,10 +49,7 @@ const renderRightActions = (_progress: any, dragX: any) => {
 const renderItemFooter = (footerProps: any, item: any) => (
   <Layout {...footerProps} style={styles.cardFooter}>
     {item.isClosed ? <ClosedIcon fill={'green'} style={styles.footerIcon} /> : <NotClosedIcon fill={'orange'} style={styles.footerIcon} />}
-    <Layout key={item.name}>
-      <Text>Not Synced</Text>
-      <Icon name='wifi-off-outline' fill={'red'} style={styles.footerIcon} />
-    </Layout>
+    <Text>{item.isClosed ? 'Completed': 'Incomplete'}</Text>
   </Layout>
 );
 

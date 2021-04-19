@@ -30,7 +30,7 @@ type CheckListItemProps = {
   onChange: (checked: any) => any,
   onCheckUpdated: (payload: CheckListItem) => any
 }
-const CheckListLine = ({ item, index, onChange, onCheckUpdated, ...props }: CheckListItemProps) => {
+const CheckListLine = React.memo(({ item, index, onChange, onCheckUpdated, ...props }: CheckListItemProps) => {
   const [checked, setChecked] = useState(computeCheckListValue(item) ?? 3)
   const onPress = () => {
 
@@ -60,7 +60,7 @@ const CheckListLine = ({ item, index, onChange, onCheckUpdated, ...props }: Chec
       }
     </>
   )
-}
+})
 
 type CheckListItemCheckProps = {
   checkItem: CheckListItem,

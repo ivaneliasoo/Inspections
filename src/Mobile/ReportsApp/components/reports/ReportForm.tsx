@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import moment from 'moment'
 import { useFormikContext } from 'formik'
 import { Datepicker, Input, Layout, Select, SelectItem } from '@ui-kitten/components'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { CalendarIcon } from '../Icons'
 import { useOrientation } from '../../utils/helpers'
 import { Checklists } from './Checklists'
@@ -10,6 +10,7 @@ import { AddressDTO, AddressesApi, ReportsApi, CheckListsApi, Configuration, Rep
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_CONFIG } from '../../config/config'
 import { ScrollView } from 'react-native-gesture-handler'
+import { AutoSave } from '../../components/AutoSave'
 
 
 const userToken = AsyncStorage.getItem('userToken');
@@ -68,6 +69,9 @@ const ReportForm = () => {
   return (
     <>
       <Layout style={[styles.container, { flexDirection: flexType }]}>
+        <View style={{alignSelf: 'center'}}>
+          <AutoSave debounceMs={300}/>
+        </View>
         <Datepicker
           style={[{ flex: flexType === 'row' ? 3 : undefined}, styles.inputMargin]}
           label='Date'

@@ -17,10 +17,11 @@ const Footer = ({ isBusy, onCancelPress }: FooterProps) => {
 }
 
 type NewReportProps = {
-  isOpen: boolean
-  onClose: any
+  isOpen: boolean;
+  onClose: any;
+  onCreate: any;
 }
-export const NewReport = ({ isOpen, onClose }: NewReportProps) => {
+export const NewReport = ({ isOpen, onClose, onCreate }: NewReportProps) => {
   const navigation = useNavigation()
   const [isBusy, setIsBusy] = useState(false)
   const [templates, setTemplates] = useState<ResumenReportConfiguration[]>([])
@@ -35,7 +36,7 @@ export const NewReport = ({ isOpen, onClose }: NewReportProps) => {
   const callCreateReport = async (id: number) => {
     setIsBusy(true)
     await createReport({ configurationId: id, reportType: 0 })
-      .then((reportId) => onClose(reportId))
+      .then((resp) => onCreate(resp.data))
       .finally(() => { setIsBusy(false); })
   }
 
@@ -47,9 +48,7 @@ export const NewReport = ({ isOpen, onClose }: NewReportProps) => {
     return result.data
   }
 
-  const navigateToDetails = ({ reportId }: any) => {
-    navigation.navigate('Details', { reportId })
-  }
+  
 
   useEffect(() => {
     getConfigurationTemplates()
