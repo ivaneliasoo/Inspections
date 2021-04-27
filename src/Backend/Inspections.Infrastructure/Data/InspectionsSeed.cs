@@ -69,19 +69,23 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                     Title = "Report Signature",
                     IsConfiguration = true,
                     Annotation = "",
-                    Principal = true
+                    Principal = true,
+                    Order = 1 
                 },
              new Signature
             {
                 Title = "THE INSPECTION WAS WITNESSED BY REPRESENTATIVE OF THE LICENSEE",
                 IsConfiguration = true,
-                Annotation = ""
+                Annotation = "",
+                    Order = 2
             },
                 new Signature
                 {
                     Title = "DECLARATION BY LEW",
                     IsConfiguration = true,
                     Annotation = "I am satisfied that the electrical installation is fit for operation."
+                    ,
+                    Order = 3
                 }};
         }
 

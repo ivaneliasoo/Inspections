@@ -35,6 +35,7 @@ export const Home = ({ navigation }) => {
 
   return (
     <Layout>
+      <Text category="h4">Welcome, User.</Text>
       <NewReport isOpen={isCreatingReport} onClose={() => setIsCreatingReport(false)} onCreate={navigateToDetails}/>
       {cardOptions.map(option => {
           return <Card key={option.name} style={{alignItems: 'center', borderRadius: 5, margin: 20}} onPress={() => {

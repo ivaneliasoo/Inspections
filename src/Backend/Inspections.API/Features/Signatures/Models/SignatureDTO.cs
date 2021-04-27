@@ -22,6 +22,7 @@ namespace Inspections.API.Features.Signatures.Models
         public int? ReportId { get; set; }
         public Report Report { get; set; }
         public int? ReportConfigurationId { get; set; }
+        public short Order { get; set; }
 
         public SignatureDTO(Signature signature)
         {
@@ -39,6 +40,7 @@ namespace Inspections.API.Features.Signatures.Models
                 ResponsableType = signature.Responsable.Type;
                 ResponsableName = signature.Responsable.Name;
             }
+            Order = signature.Order;
             ReportConfigurationId = signature.ReportConfigurationId;
             ReportId = signature.ReportId;
             Report = signature.Report;

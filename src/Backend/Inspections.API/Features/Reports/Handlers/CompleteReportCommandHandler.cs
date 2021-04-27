@@ -33,7 +33,7 @@ namespace Inspections.API.Features.Reports.Handlers
             else
             {
                 report.Close();
-                await _reportsRepository.UpdateAsync(report);
+                await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
                 return true;
             }
 

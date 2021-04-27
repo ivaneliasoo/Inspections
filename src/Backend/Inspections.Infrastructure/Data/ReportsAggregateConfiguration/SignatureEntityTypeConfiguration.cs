@@ -26,6 +26,8 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
                 s.Ignore("LastEditUser");
             });
 
+            builder.Property(p => p.Order).IsRequired();
+
             builder.Ignore(p => p.DomainEvents);
 
         }
