@@ -66,7 +66,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
             return new Signature[] {
                 new Signature
                 {
-                    Title = "Report Signature",
+                    Title = "INSPECTION CARRIED OUT BY",
                     IsConfiguration = true,
                     Annotation = "",
                     Principal = true,

@@ -27,15 +27,29 @@ namespace Inspections.API.Features.Addresses
         [HttpGet(Name = "GetAddresses")]
         public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAddresses(string filter)
         {
-            var result = await _context.Addresses.Include("License")
+            var result = await _context.Addresses
                 .Where(ad => EF.Functions.Like(ad.AddressLine, $"%{filter}%") ||
                 EF.Functions.Like(ad.Unit, $"%{filter}%") ||
                 EF.Functions.Like(ad.Country, $"%{filter}%") ||
                 EF.Functions.Like(ad.PostalCode, $"%{filter}%") ||
                 EF.Functions.Like(ad.License.Number, $"%{filter}%"))
+                .Select(a => new AddressDTO
+                {
+                    Id = a.Id,
+                    AddressLine = a.AddressLine,
+                    AddressLine2 = a.AddressLine2,
+                    Unit = a.Unit,
+                    Country = a.Country,
+                    PostalCode = a.PostalCode,
+                    LicenseId = a.LicenseId,
+                    Number = a.License.Number,
+                    Validity = a.License.Validity,
+                    FormatedAddress = a.ToString()
+                })
+                .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
-            var mappedResult = result.Select(a => new AddressDTO(a));
+            var mappedResult = result;
             return Ok(mappedResult);
         }
 
@@ -43,19 +57,19 @@ namespace Inspections.API.Features.Addresses
         [HttpGet("{id}")]
         public async Task<ActionResult<AddressDTO>> GetAddress(int id)
         {
-            var address = await _context.Set<Address>().Include("License").Where(a=>a.Id == id).SingleOrDefaultAsync().ConfigureAwait(false);
+            var address = await _context.Addresses.AsNoTracking().Where(a => a.Id == id).Select(ad => new AddressDTO(ad)).SingleOrDefaultAsync();
 
             if (address == null)
             {
                 return NotFound();
             }
 
-            return new AddressDTO(address);
+            return address;
         }
 
         // PUT: api/Addresses/5
         [HttpPut("{id}", Name = "UpdateAddress")]
-        public async Task<IActionResult> PutAddress(int id, [FromBody]AddressDTO address)
+        public async Task<IActionResult> PutAddress(int id, [FromBody] AddressDTO address)
         {
             Guard.Against.Null(address, nameof(address));
 
@@ -68,9 +82,9 @@ namespace Inspections.API.Features.Addresses
             savedAddress.AddressLine = address.AddressLine;
             savedAddress.AddressLine2 = address.AddressLine2;
             savedAddress.Unit = address.Unit;
-            savedAddress.Country= address.Country;
-            savedAddress.PostalCode= address.PostalCode;
-            savedAddress.LicenseId= address.LicenseId;
+            savedAddress.Country = address.Country;
+            savedAddress.PostalCode = address.PostalCode;
+            savedAddress.LicenseId = address.LicenseId;
 
             _context.Entry(savedAddress).State = EntityState.Modified;
 
@@ -95,7 +109,7 @@ namespace Inspections.API.Features.Addresses
 
         // POST: api/Addresses
         [HttpPost(Name = "AddAddress")]
-        public async Task<ActionResult<Address>> PostAddress([FromBody]AddressDTO address)
+        public async Task<ActionResult<Address>> PostAddress([FromBody] AddressDTO address)
         {
             Guard.Against.Null(address, nameof(address));
 
@@ -104,7 +118,7 @@ namespace Inspections.API.Features.Addresses
                 AddressLine = address.AddressLine,
                 AddressLine2 = address.AddressLine2,
                 Unit = address.Unit,
-                Country= address.Country,
+                Country = address.Country,
                 PostalCode = address.PostalCode,
                 LicenseId = address.LicenseId
             };
@@ -119,7 +133,7 @@ namespace Inspections.API.Features.Addresses
         }
 
         // DELETE: api/Addresses/5
-        [HttpDelete("{id}",Name = "DeleteAddress")]
+        [HttpDelete("{id}", Name = "DeleteAddress")]
         public async Task<ActionResult<AddressDTO>> DeleteAddress(int id)
         {
             var address = await _context.Addresses.FindAsync(id).ConfigureAwait(false);
@@ -144,7 +158,7 @@ namespace Inspections.API.Features.Addresses
             return _context.Addresses.Any(e => e.AddressLine == address.AddressLine &&
             e.AddressLine2 == address.AddressLine2 &&
             e.Unit == address.Unit &&
-            e.Country== address.Country &&
+            e.Country == address.Country &&
             e.PostalCode == address.PostalCode);
         }
     }

@@ -1006,7 +1006,7 @@ export interface EditSignatureCommand {
      * @type {string}
      * @memberof EditSignatureCommand
      */
-    drawedSign?: string | null;
+    drawnSign?: string | null;
 }
 /**
  * 
@@ -1666,7 +1666,7 @@ export interface Signature {
      * @type {string}
      * @memberof Signature
      */
-    drawedSign?: string | null;
+    drawnSign?: string | null;
     /**
      * 
      * @type {number}

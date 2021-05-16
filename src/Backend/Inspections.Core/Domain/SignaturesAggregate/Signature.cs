@@ -22,7 +22,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
         public Report Report { get; set; }
         public int? ReportConfigurationId { get; set; }
         public ReportConfiguration  ReportConfiguration { get; set; }
-        public string DrawedSign { get; set; }
+        public string DrawnSign { get; set; }
         public short Order { get; set; }
 
         public Signature PreparteForNewReport()

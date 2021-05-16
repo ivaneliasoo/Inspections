@@ -68,10 +68,11 @@ const ReportForm = () => {
 
   return (
     <>
+      <View style={{alignSelf: 'center', flex: 1 }}>
+        <AutoSave debounceMs={300}/>
+      </View>
       <Layout style={[styles.container, { flexDirection: flexType }]}>
-        <View style={{alignSelf: 'center'}}>
-          <AutoSave debounceMs={300}/>
-        </View>
+        
         <Datepicker
           style={[{ flex: flexType === 'row' ? 3 : undefined}, styles.inputMargin]}
           label='Date'

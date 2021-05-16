@@ -73,44 +73,46 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<dynamic> GetByIdAsync(int id, bool projected)
         {
-            return await _context.Reports.Where(r=>r.Id==id)
+            return await _context.Reports
                 .Select(report => new
                 {
-                    Id = report.Id,
-                    Name = report.Name,
-                    Address = report.Address,
-                    License = report.License,
+                    report.Id,
+                    report.Name,
+                    report.Address,
+                    report.License,
                     report.Title,
                     report.FormName,
                     report.RemarksLabelText,
                     report.OperationalReadings,
-                    Signs = report.Signatures.Select(s => new
+                    Signatures = report.Signatures.OrderBy(o=>o.Order).Select(s => new
                     {
                         s.Date,
                         s.Annotation,
                         s.Designation,
-                        s.DrawedSign,
+                        s.DrawnSign,
                         s.Id,
                         s.Principal,
                         s.Remarks,
-                        s.Responsable,
+                        Responsable = new
+                        {
+                            s.Responsable.Name,
+                            s.Responsable.Type
+                        },
                         s.ResponsableName,
                         s.Title,
                     }),
-                    //No = report.Notes,
-                    //report.CheckList,
-                    //report.PhotoRecords
-                }).AsNoTracking().ToListAsync();
+                    report.Notes,
+                    CheckList = report.CheckList.Select(ch => new
+                    {
+                        ch.Annotation,
+                        ch.Checked,
+                        ch.Checks,
+                        ch.Id,
+                        ch.Text
+                    }),
+                    report.PhotoRecords
+                }).AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
 
-            //.Include(p => p.CheckList)
-            // .ThenInclude(p => p.Checks)
-            //     .ThenInclude(p => p.TextParams)
-            //.Include(p => p.Signatures)
-            // .ThenInclude(p => p.Responsable)
-            //.Include(p => p.Notes)
-            //.Include(p => p.PhotoRecords)
-            //.Include(p => p.License)
-            //.SingleOrDefaultAsync();
         }
 
 

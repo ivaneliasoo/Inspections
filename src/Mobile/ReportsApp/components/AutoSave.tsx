@@ -10,8 +10,10 @@ export const AutoSave = ({ debounceMs }: any) => {
   const [lastSaved, setLastSaved] = useState('');
   const debouncedSubmit = useCallback(
     debounce(
-      () =>
-        formik.submitForm().then(() => setLastSaved((moment(new Date()).format('DD/MM/YYYY HH:mm')))),
+      () => {
+        console.log({ touched: formik.touched })
+        formik.submitForm().then(() => setLastSaved((moment(new Date()).format('DD/MM/YYYY HH:mm'))))
+      },
       debounceMs
     ),
     [debounceMs, formik.submitForm]
@@ -26,7 +28,7 @@ export const AutoSave = ({ debounceMs }: any) => {
   if (!!formik.isSubmitting) {
     result = "saving...";
   } else if (Object.keys(formik.errors).length > 0) {
-    result = `ERROR: ${JSON.stringify(formik.errors)}`;
+    result = ''; // `ERROR: ${JSON.stringify(formik.errors)}`;
   } else if (lastSaved !== null) {
     result = `Last Saved: ${lastSaved}`;
   }

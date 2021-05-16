@@ -17,7 +17,7 @@ const Signatures = ({ report }) => {
   const formRef = createRef<FormikProps<Report>>()
 
   const onGoBack = (result) => {
-    formRef.current?.setFieldValue(`signatures[${result.index}].drawedSign`, `data:image/png;base64,${result.encoded}`)
+    formRef.current?.setFieldValue(`signatures[${result.index}].drawnSign`, `data:image/png;base64,${result.encoded}`)
   }
 
   const saveSignatures = async (values: Report) => {
@@ -34,7 +34,7 @@ const Signatures = ({ report }) => {
         remarks: s.remarks,
         date: s.date,
         principal: s.principal,
-        drawedSign: s.drawedSign
+        drawnSign: s.drawnSign
       }).catch(error => {
         console.log({ error, signatures: values.signatures })
         Alert.alert('error while saving signature', error.response.message)
@@ -54,10 +54,10 @@ const Signatures = ({ report }) => {
                   <AutoSave debounceMs={300} />
                 </View>
                 <Text category='s1'>
-                  {item.title}{JSON.stringify(errors)}
+                  {`${item.title}${JSON.stringify(errors)}`}
                 </Text>
                 <Text status='warning' category='s2'>
-                  {item.principal && !item.drawedSign ? 'This Signature is required. Please complete and sign' : ''}
+                  {item.principal && !item.drawnSign ? 'This Signature is required. Please complete and sign' : ''}
                 </Text>
                 <Datepicker
                   label='Date'
@@ -70,7 +70,7 @@ const Signatures = ({ report }) => {
                 />
                 <Select
                   placeholder='please select...'
-                  value={['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'][item.responsable.type]}
+                  value={['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'][item?.responsable?.type ?? 0]}
                   label='Representation Type'
                   onSelect={(e) => { setFieldValue(`signatures[${signIndex}].responsable.type`, [e.row]) }}
                   status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsable && errors.signatures[signIndex].responsable.type ? 'danger' : 'basic'}
@@ -85,11 +85,10 @@ const Signatures = ({ report }) => {
                 <Input label='Designation' value={item.designation} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].designation`, e)} />
                 <Input label='Remarks' multiline value={item.remarks} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].remarks`, e)} />
                 <View style={{ flex: 2, flexDirection: 'row' }}>
-                  {item.drawedSign?.length > 0 && <Image style={{ flex: 1, alignSelf: 'center', borderColor: 'black', width: 150, height: 100, resizeMode: 'stretch' }} source={{ uri: item.drawedSign }} />}
+                  {item.drawnSign?.length > 0 && <Image style={{ flex: 1, alignSelf: 'center', borderColor: 'black', width: 150, height: 100, resizeMode: 'stretch' }} source={{ uri: item.drawnSign }} />}
                   <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Button style={{ flex: 1, margin: 10, marginTop: 20 }} status='warning' size='small' appearance='outline' onPress={() => navigation.navigate('ModalSignatures', { index: signIndex, existentSign: item.drawedSign, onGoBack: onGoBack })} accessoryLeft={EditSignatureIcon} />
-                    <Button disabled={!item.drawedSign} style={{ flex: 1, margin: 10, marginTop: 20 }} status='danger' size='small' appearance='outline' onPress={() => setFieldValue(`signatures[${signIndex}].drawedSign`, '')} accessoryLeft={CrossIcon} />
-                    {/* <Button style={{ flex: 1, margin: 10, marginTop: 20 }} status='success' size='small' appearance='outline' onPress={handleSubmit}>Save Sign</Button> */}
+                    <Button style={{ flex: 1, margin: 10, marginTop: 20 }} status='warning' size='small' appearance='outline' onPress={() => navigation.navigate('ModalSignatures', { index: signIndex, existentSign: item.drawnSign, onGoBack: onGoBack })} accessoryLeft={EditSignatureIcon} />
+                    <Button disabled={!item.drawnSign} style={{ flex: 1, margin: 10, marginTop: 20 }} status='danger' size='small' appearance='outline' onPress={() => setFieldValue(`signatures[${signIndex}].drawnSign`, '')} accessoryLeft={CrossIcon} />
                   </View>
                 </View>
               </Card>

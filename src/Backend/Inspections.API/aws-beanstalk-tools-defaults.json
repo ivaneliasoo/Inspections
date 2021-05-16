@@ -2,7 +2,7 @@
 {
     "region" : "us-east-2",
     "configuration" : "Debug",
-    "framework"     : "netcoreapp3.1",
+    "framework"     : "net5.0",
     "self-contained" : false,
     "application"    : "InspectionsAPI",
     "environment"    : "Inspectionsapi-dev",

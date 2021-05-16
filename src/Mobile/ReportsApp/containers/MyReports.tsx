@@ -3,7 +3,7 @@ import { Configuration, CreateReportCommand, ReportConfigurationApi, ReportsApi,
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Animated, Alert, View, StyleSheet, Button } from 'react-native';
-import { Icon, Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction } from '@ui-kitten/components';
+import { Icon, Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction, Select } from '@ui-kitten/components';
 import { ClosedIcon, SearchIcon, NotClosedIcon } from '../components/Icons'
 import { OptionsMenu } from '../components/home/OptionsMenu'
 import { useNavigation } from '@react-navigation/native';
@@ -157,6 +157,16 @@ export const MyReports = () => {
       <Divider />
       <Layout style={styles.cardList}>
         <Input style={styles.inpustSearch} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilter} onEndEditing={getReports} />
+        {/* <Select
+          placeholder='type to search an address'
+          value={}
+          label='Sort By' 
+          onSelect={(e) => { setFieldValue('address', addresses[e.row].formatedAddress); setFieldValue('license.number', addresses[e.row].number)}}
+          status={errors.address ? 'danger':'basic'}
+          caption={errors.address}
+        >
+          {[].map(reanderOption)}
+        </Select> */}
         {reports.length > 0 ?
           <List data={reports} renderItem={renderReport} onRefresh={() => getReports({})} refreshing={refreshing} />
           :

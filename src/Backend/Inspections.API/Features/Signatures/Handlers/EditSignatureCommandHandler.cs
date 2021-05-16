@@ -33,7 +33,7 @@ namespace Inspections.API.Features.Signatures.Handlers
             var determinedResponsableType = request.Title.Contains("LEW", StringComparison.OrdinalIgnoreCase) ? ResponsableType.LEW : request.ResponsableType;
             newSignature.Responsable = new Responsable() { Name = request.ResponsableName, Type = determinedResponsableType };
             newSignature.IsConfiguration = false;
-            newSignature.DrawedSign = request.DrawedSign;
+            newSignature.DrawnSign = request.DrawedSign;
 
             await _signaturesRepository.UpdateAsync(newSignature).ConfigureAwait(false);
 
