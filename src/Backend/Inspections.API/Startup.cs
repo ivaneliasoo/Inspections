@@ -136,7 +136,7 @@ namespace Inspections.API
             services.AddTransient<IUserNameResolver, UserNameResolver>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped(typeof(FileUploadService));
-            services.AddSingleton<IStorageHelper>(sh => new StorageHelper(Configuration.GetSection("ClientSettings:TempFolder").Value));
+            services.AddSingleton<IStorageHelper, StorageHelper>();
 
             services.AddScoped<ICheckListsRepository, CheckListsRepository>();
             services.AddScoped<IReportConfigurationsRepository, ReportsConfigurationsRepository>();

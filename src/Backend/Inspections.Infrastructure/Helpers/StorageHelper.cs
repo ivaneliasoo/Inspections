@@ -19,6 +19,11 @@ namespace Inspections.Infrastructure.Helpers
             TempFolderRoute = tempFolderRoute;
         }
 
+        public StorageHelper()
+        {
+            TempFolderRoute = Path.GetTempPath();
+        }
+
         public bool FileExists(string filePath)
         {
             return File.Exists(filePath);

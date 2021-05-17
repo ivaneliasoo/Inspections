@@ -100,21 +100,29 @@ namespace Inspections.Infrastructure.Repositories
                         },
                         s.ResponsableName,
                         s.Title,
+                        s.Order
                     }),
                     report.Notes,
                     CheckList = report.CheckList.Select(ch => new
                     {
                         ch.Annotation,
                         ch.Checked,
-                        ch.Checks,
+                        Checks = ch.Checks.Select(chch => new
+                        {
+                            chch.Checked,
+                            chch.CheckListId,
+                            chch.Editable,
+                            chch.Id,
+                            chch.Remarks,
+                            chch.Required,
+                            chch.Text
+                        }),
                         ch.Id,
                         ch.Text
                     }),
                     report.PhotoRecords
                 }).AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
-
         }
-
 
         public async Task UpdateAsync(Report entity)
         {

@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="MediaUploadimgReports\**" />
+    <Compile Remove="TempFolder\**" />
     <Content Remove="MediaUploadimgReports\**" />
+    <Content Remove="TempFolder\**" />
     <EmbeddedResource Remove="MediaUploadimgReports\**" />
+    <EmbeddedResource Remove="TempFolder\**" />
     <None Remove="MediaUploadimgReports\**" />
+    <None Remove="TempFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,7 +42,6 @@
 
   <ItemGroup>
     <Folder Include="MediaUpload\img\Reports\1\" />
-    <Folder Include="TempFolder\" />
   </ItemGroup>
 
   <ItemGroup>

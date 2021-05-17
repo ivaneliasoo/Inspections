@@ -11,6 +11,5 @@ namespace Inspections.Core.QueryModels
         public string Annotation { get; private set; }
         public int TotalItems { get; set; }
         public int TotalParams { get; set; }
-
     }
 }
