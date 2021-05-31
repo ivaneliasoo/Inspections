@@ -10,12 +10,12 @@
         </v-row>
         <v-row align="center" justify="space-around" dense>
           <v-col cols="6" xl="2">
-              <v-select 
+              <v-select
               :id="`type${index}`"
               :name="`type${index}`"
-              v-model="signature.responsable.type" 
+              v-model="signature.responsable.type"
               :readonly="isReportClosed"
-              :items="responsableTypes" 
+              :items="responsableTypes"
               label="Representation Type" />
           </v-col>
           <v-col cols="6" xl="4">
@@ -32,12 +32,12 @@
           <v-col cols="12" sm="6" md="6" xl="12">
             <v-text-field :id="`remarks${index}`" :name="`remarks${index}`" v-model="signature.remarks" :readonly="isReportClosed" label="Remarks (if any)" />
           </v-col>
-          <SignaturePad v-model="signature.drawedSign" :signature-id="signature.id" 
+          <SignaturePad v-model="signature.drawedSign" :signature-id="signature.id"
             :savedData="signature.drawedSign"
             @input="viewSign(index, signature);"
             @close="viewSign(index, signature);" />
         </v-row>
-        <v-row>  
+        <v-row>
           <v-col class="text-right">
             <v-btn v-if="!signature.viewSign || isReportClosed" class="mx-2" dark color="primary" @click="viewSign(index, signature);">
               <v-icon dark>{{ signature.viewSign ? 'mdi-close' : 'mdi-draw' }}</v-icon>
@@ -70,7 +70,7 @@ import { SignatureDTO } from '~/types/Signatures/ViewModels/SignatureDTO';
     mounted() {
       this.name = this.signature!.responsable.name
     }
-    
+
     responsableTypes: any = Object.keys(ResponsableType)
     .map((key: any) => {
       if (!isNaN(Number(key.toString()))) return;
@@ -78,10 +78,8 @@ import { SignatureDTO } from '~/types/Signatures/ViewModels/SignatureDTO';
       return { id: ResponsableType[key], text: key };
     })
     .filter(i => i !== undefined)
-    
+
     viewSign(index: number, item: SignatureDTO) {
-      console.log(index)
-      console.log(item)
       item!.viewSign = !item!.viewSign
       item!.drawedSign = item!.drawedSign
       this.$emit('sign', {index, item})

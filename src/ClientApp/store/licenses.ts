@@ -28,7 +28,6 @@ export const actions: ActionTree<LicensesState, RootState> = {
 
   async getLicensesDashboard({commit}, payload) {
     const dashboard = await this.$axios.$get('EMALicenses/dashboard')
-    console.log(dashboard)
     commit('SET_DASHBOARD', dashboard)
     return dashboard
   },

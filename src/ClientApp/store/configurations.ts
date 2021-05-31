@@ -30,7 +30,6 @@ export const actions: ActionTree<ReportConfigurationState, RootState> = {
     return await this.$axios.$put(`reportconfiguration/${payload.id}`, payload )
   },
   async deleteConfiguration ({ commit }, payload: number) {
-    console.log(payload)
     return await this.$axios.$delete(`reportconfiguration/${payload ?? 0}`)
       .then(() => {
         commit('REMOVE_CONFIGURATION', payload)

@@ -51,7 +51,7 @@
               Inactive
             </v-switch>
           </v-col>
-        </v-row> 
+        </v-row>
       <v-row>
           <v-col cols="12" md="6">
               <ValidationProvider rules="required" v-slot="{ errors }">
@@ -128,7 +128,7 @@ import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
 export default class AddEditReportConiguration extends mixins(InnerPageMixin){
     defaultType: ReportType = ReportType.Inspection
     newConfig!: ReportConfiguration
-    
+
     get checks (): CheckList[] {
         return (this.$store.state.checklists as CheckListsState)
         .checkLists
@@ -173,7 +173,6 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin){
 
     async asyncData({ store, params }: any) {
         const id: number = parseInt(params.id)
-        console.log(id)
         const filter: FilterType = {
             filterText: '',
             inConfigurationOnly: true,

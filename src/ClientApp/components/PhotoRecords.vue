@@ -47,7 +47,6 @@
 
 <script lang="ts">
 import { Component, Vue, Model } from 'vue-property-decorator'
-import { DateTime } from 'luxon'
 import { Report } from '~/types'
 import reduce from 'image-blob-reduce'
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
@@ -88,8 +87,6 @@ export default class PhotoRecords extends Vue {
       const blob = await reduce().toBlob(file, { max: 1000 })
       const newFile = new File([blob], file.name)
       this.testurlproc = URL.createObjectURL(newFile)
-      console.log('file size before images optimization', file.size)
-      console.log('file size after images optimization', newFile.size)
       formData.append('files', newFile, `${file.name}|${this.filesUrls[i].label}`)
     }
 

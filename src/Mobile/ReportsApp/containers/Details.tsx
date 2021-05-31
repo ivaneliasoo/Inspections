@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Divider, Spinner, Tab, TabView, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
+import { BottomNavigation, BottomNavigationTab, Divider, Spinner, Tab, TabView, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
 import { ReportForm } from '../components/reports/ReportForm'
 import { OperationalReading } from '../components/reports/OperationalReading'
 import { BackIcon } from '../components/Icons'
@@ -11,7 +11,7 @@ import { Configuration, Report, ReportsApi, UpdateReportCommand } from '../servi
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import * as Yup from 'yup';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { Signatures } from '../components/reports/Signatures';
 import { SignaturePad } from '../components/reports/SignaturePad';
 
@@ -111,17 +111,16 @@ export const Details = ({ route, navigation }: Props) => {
           }}
         >
 
-          {reportData ? <TabView style={styles.viewPagerLayout} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
-            <Tab title="Operational Readings">
-              <OperationalReading reportData={reportData} />
-            </Tab>
-            <Tab title="Report Detail">
-              <ReportForm />
-            </Tab>
-            <Tab title="Signatures">
-              <Signatures report={reportData} />
-            </Tab>
-          </TabView> : <Spinner />}
+          {reportData ? <View style={styles.viewPagerLayout}><ViewPager style={styles.viewPagerLayout} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
+            <OperationalReading reportData={reportData} />
+            <ReportForm />
+            <Signatures report={reportData} />
+          </ViewPager><BottomNavigation selectedIndex={selectedIndex} onSelect={index => setSelectedIndex(index)}>
+              <BottomNavigationTab title="Operational Readings" />
+              <BottomNavigationTab title="Report Detail" />
+              <BottomNavigationTab title="Signatures" />
+            </BottomNavigation></View>
+           : <Spinner />}
         </FlingGestureHandler>
       </>
     </Formik >

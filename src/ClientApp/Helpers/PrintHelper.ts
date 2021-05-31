@@ -178,9 +178,6 @@ export class PrintHelper {
 
   private mapChackLists (checklist: CheckList, index: number, isNewFormat: boolean) {
     const mappedChecks = checklist.checks.map((check, childIndex) => {
-      console.log(index === 2 && childIndex === 7 && isNewFormat)
-      console.log(index === 3 && childIndex === 4 && !isNewFormat)
-      console.log(isNewFormat)
       return {
         pageBreak: index === 2 && childIndex === 7 && isNewFormat ? 'before' : index === 3 && childIndex === 4 && !isNewFormat ? 'before' : '', // esta mierda no me gusta muy cableado
         columns: [{ text: `    ${index + 1}.${childIndex + 1} ${check.text}`, style: 'checklistItem', width: '65%' },
