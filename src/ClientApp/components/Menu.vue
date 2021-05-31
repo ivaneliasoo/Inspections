@@ -20,7 +20,8 @@
       v-for="(menu, index) in menuDefinition.filter(m=>m.parentName==='')"
       :key="`${menu.name}${index}`"
       link
-      :to="menu.route"
+      :to="menu.route.includes('http') ? '' : menu.route"
+      @click="menu.route.includes('http') ? redirect(menu.route):''"
       :disabled="!menu.route"
     >
       <v-list-item-icon>
@@ -91,6 +92,10 @@ export default class Menu extends Vue {
   initials(menu: any) {
     const words = menu.name.split(' ')
     return words[0][0] + words[1][0]
+  }
+
+  redirect(route: string) {
+    window.open(route, '_blank')
   }
 }
 </script>

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Divider, Spinner, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
+import { Divider, Spinner, Tab, TabView, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
 import { ReportForm } from '../components/reports/ReportForm'
 import { OperationalReading } from '../components/reports/OperationalReading'
 import { BackIcon } from '../components/Icons'
@@ -111,11 +111,17 @@ export const Details = ({ route, navigation }: Props) => {
           }}
         >
 
-          {reportData ? <ViewPager style={styles.viewPagerLayout} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
-            <OperationalReading reportData={reportData} />
-            <ReportForm />
-            <Signatures report={reportData} />
-          </ViewPager> : <Spinner />}
+          {reportData ? <TabView style={styles.viewPagerLayout} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
+            <Tab title="Operational Readings">
+              <OperationalReading reportData={reportData} />
+            </Tab>
+            <Tab title="Report Detail">
+              <ReportForm />
+            </Tab>
+            <Tab title="Signatures">
+              <Signatures report={reportData} />
+            </Tab>
+          </TabView> : <Spinner />}
         </FlingGestureHandler>
       </>
     </Formik >
