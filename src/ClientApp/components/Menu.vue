@@ -53,6 +53,12 @@ export default class Menu extends Vue {
       icon: "mdi-file",
     },
     {
+      name: 'Energy Report',
+      parentName: '',
+      route: 'http://3.133.113.179:8080/',
+      icon: 'mdi-graph'
+    },
+    {
       name: "Risk Assessment",
       parentName: "",
       route: "",
