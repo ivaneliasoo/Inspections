@@ -93,7 +93,7 @@ const ReportForm = () => {
         >
           {addresses.map(reanderOption)}
         </Select>
-        <Input style={[{ flex: flexType === 'row' ? 2 : undefined}, styles.inputMargin]} disabled label='License' value={values.license?.number}
+        <Input style={[{ flex: flexType === 'row' ? 2 : undefined}, styles.inputMargin]} disabled label='License' value={values.license?.number!}
         caption='Selected Address License Number' />
       </Layout>
       <ScrollView>

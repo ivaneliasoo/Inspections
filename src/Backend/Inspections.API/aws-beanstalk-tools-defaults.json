@@ -1,11 +1,11 @@
 
 {
     "region" : "us-east-2",
-    "configuration" : "Release",
+    "configuration" : "Debug",
     "framework"     : "net5.0",
     "self-contained" : false,
-    "application"    : "InspectionsAPI",
-    "environment"    : "Inspectionsapi-dev",
+    "application"    : "csereportsapps-dev",
+    "environment"    : "Csereportsappsdev-env",
     "enable-xray"    : false,
     "enhanced-health-type" : "enhanced",
     "additional-options"   : "",

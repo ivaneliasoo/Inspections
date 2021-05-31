@@ -9,9 +9,11 @@ using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data;
 using Inspections.API.Features.Licenses.Models;
 using Ardalis.GuardClauses;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Inspections.API.Features.Licenses
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class EMALicensesController : ControllerBase

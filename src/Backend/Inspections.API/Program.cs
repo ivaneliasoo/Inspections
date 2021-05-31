@@ -47,11 +47,10 @@ namespace Inspections.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-//#if DEBUG
-//                    .UseUrls("http://0.0.0.0:5000")
-//#endif
-                    .UseStartup<Startup>()
-                    .UseSentry("https://de65c4017c4f4512a17548b7966a45e9@o633300.ingest.sentry.io/5755555");
+#if DEBUG
+                    .UseUrls("http://0.0.0.0:5000")
+#endif
+                    .UseStartup<Startup>();
                 });
     }
 }

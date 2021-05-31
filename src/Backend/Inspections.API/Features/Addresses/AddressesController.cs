@@ -9,9 +9,11 @@ using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data;
 using Inspections.API.Features.Addresses.Models;
 using Ardalis.GuardClauses;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Inspections.API.Features.Addresses
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class AddressesController : ControllerBase
