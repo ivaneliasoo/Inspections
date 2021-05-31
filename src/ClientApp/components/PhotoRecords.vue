@@ -49,6 +49,7 @@
 import { Component, Vue, Model } from 'vue-property-decorator'
 import { DateTime } from 'luxon'
 import { Report } from '~/types'
+import reduce from 'image-blob-reduce'
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
 
@@ -83,9 +84,8 @@ export default class PhotoRecords extends Vue {
 
     for (let i = 0; i < this.files.length; i++) {
       const file = this.files[i]
-      const reduce = require('image-blob-reduce') // reduce from 'image-blob-reduce'
-      const blob = await reduce()
-        .toBlob(file, { max: 1000 })
+      // const reduce = require('image-blob-reduce') // reduce from 'image-blob-reduce'
+      const blob = await reduce().toBlob(file, { max: 1000 })
       const newFile = new File([blob], file.name)
       this.testurlproc = URL.createObjectURL(newFile)
       console.log('file size before images optimization', file.size)
