@@ -1,107 +1,81 @@
-import React, { useReducer } from 'react';
+import React, { createContext, useReducer } from 'react';
 import { Report } from "services/api";
-export const ReportsContext = React.createContext({});
+import { reportsReducer } from './reportsreducer';
+import { ReportsFilterPayload } from './reportsReducer';
 
-function reportsReducer(state: any, action: any) {
-  switch (action.type) {
-    case 'SET_REPORTS': {
-      return { ...state, reports: action.payload.reports }
-    }
-    case 'SET_FILTERS_FILTER': {
-      return { ...state, filter: action.payload.filter }
-    }
-    case 'SET_FILTERS_MYREPORTS': {
-      return { ...state, myReports: action.payload.myReports }
-    }
-    case 'SET_FILTERS_ISCLOSED': {
-      return { ...state, isClosed: action.payload.isClosed }
-    }
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
+export interface ReportsState {
+  reports?: any[],
+  myReports: boolean,
+  isClosed: boolean,
+  filter: string
 }
 
-const initialState = { reports: [],  myReports: true, isClosed: false, filter: '' }
+export interface ReportsContextProps {
+  setFilter: () => void,
+  setMyReports: () => void,
 
-const ReportsProvider= ({ children }: any) => {
-  const [state, dispatch] = useReducer(reportsReducer, initialState)
-  
+}
+
+export const ReportsContext = createContext({});
+
+const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '' }
+
+const ReportsProvider = ({ children }: any) => {
+  const [reportsState, dispatch] = useReducer(reportsReducer, initialState)
+
   //Actions
-  const setFilter = (filter: string) => {
+  const setFilter = (payload: ReportsFilterPayload) => {
     dispatch({
-      type: 'SET_FILTERS_FILTER',
-      payload: {filter}
+      type: 'SET_FILTER',
+      payload
     })
   }
 
-  const setMyReports = (myReports: boolean) => {
-    dispatch({
-      type: 'SET_FILTERS_MYREPORTS',
-      payload: {myReports}
-    })
-  }
-
-  const setIsClosed = (isClosed: boolean) => {
-    dispatch({
-      type: 'SET_FILTERS_ISCLOSED',
-      payload: {isClosed}
-    })
-  }
-
-  const getAll = (reports: Report) => {
+  const getAll = (reports: Report[]) => {
     dispatch({
       type: 'SET_REPORTS',
       payload: { reports }
     })
   }
 
-  const getById = (id: number) => {
-    const report: Report = {}
-    dispatch({
-      type: 'ADD_REPORT',
-      payload: report
-    })
-  }
+  // const getById = (id: number) => {
+  //   const report: Report = {}
+  //   dispatch({
+  //     type: 'ADD_REPORT',
+  //     payload: report
+  //   })
+  // }
 
-  const addReport = (report: Report) => {
-    dispatch({
-      type: 'ADD_REPORT',
-      payload: report
-    })
-  }
+  // const addReport = (report: Report) => {
+  //   dispatch({
+  //     type: 'ADD_REPORT',
+  //     payload: report
+  //   })
+  // }
 
-  const editReport = (report: Report) => {
-    dispatch({
-      type: 'EDIT_REPORT',
-      payload: report
-    })
-  }
+  // const editReport = (report: Report) => {
+  //   dispatch({
+  //     type: 'EDIT_REPORT',
+  //     payload: report
+  //   })
+  // }
 
-  const deleteReport = (report: Report) => {
-    dispatch({
-      type: 'DELETE_REPORT',
-      payload: report
-    })
-  }
+  // const deleteReport = (report: Report) => {
+  //   dispatch({
+  //     type: 'DELETE_REPORT',
+  //     payload: report
+  //   })
+  // }
 
   return (
     <ReportsContext.Provider value={{
-      reports: state.reports,
-      filter: state.filter,
-      myReports: state.myReports,
-      isClosed: state.isClosed,
-      addReport,
+      reportsState,
       getAll,
-      getById,
-      editReport,
-      deleteReport,
       setFilter,
-      setMyReports,
-      setIsClosed
-      }}>
-        {children}
+    }}>
+      {children}
     </ReportsContext.Provider>
   )
 }
 
-export {reportsReducer, ReportsProvider}
+export { reportsReducer, ReportsProvider }

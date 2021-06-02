@@ -1,5 +1,4 @@
-import { useReducer } from "react";
-import { AuthState, initialState } from './AuthContext';
+import { AuthState } from './AuthContext';
 
 type AuthAction =
   | { type: 'SIGN_IN', payload: { userInfo: any; token: string; } }

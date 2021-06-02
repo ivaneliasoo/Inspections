@@ -3,7 +3,7 @@ import { NewReport } from '../components/home/NewReport'
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
 
-export const Home = ({ navigation }) => {
+export const Home = ({ navigation }: any) => {
   const [isCreatingReport, setIsCreatingReport] = useState(false)
 
   const navigateToDetails = (reportId: any) => {
@@ -24,8 +24,16 @@ export const Home = ({ navigation }) => {
     },
     {
       name: 'edit',
-      text: 'Edit/View Report',
-      helpText: 'Click one of the Options bellow',
+      text: 'Edit/View Pending Reports',
+      helpText: '',
+      icon: 'edit-outline',
+      color: 'accent',
+      path: 'MyReports'
+    },
+    {
+      name: 'edit',
+      text: 'View Completed Reports',
+      helpText: '',
       icon: 'edit-outline',
       color: 'accent',
       path: 'MyReports'
