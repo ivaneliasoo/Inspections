@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createContext, useEffect, useMemo, useReducer } from 'react';
+import React, { createContext, useEffect, useMemo, useReducer } from 'react';
 import { useAuthorization } from '../hooks/useAuthorization';
 import { authReducer } from './authReducer';
 
@@ -11,7 +11,7 @@ export interface AuthState {
 }
 
 export const initialState: AuthState = {
-  isLoading: true,
+  isLoading: false,
   isSignOut: true,
   userToken: undefined,
   userInfo: undefined
@@ -26,17 +26,20 @@ export interface AuthContextProps {
 export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({ children }: any) => {
-  const { createToken, userInfo } = useAuthorization()
+  const { createToken, userInfo, signOut: logout } = useAuthorization()
 
   const [authState, dispatch] = useReducer(authReducer, initialState)
 
   const signIn = async (data: { user: string, password: string }) => {
     const token = await createToken(data)
-    const userData = await userInfo()
-    if (token) dispatch({ type: 'SIGN_IN', payload: { userInfo: userData, token } });
+    if (token) {
+      const userData = await userInfo(token)
+      dispatch({ type: 'SIGN_IN', payload: { userInfo: userData, token } });
+    }
   }
 
-  const signOut = () => {
+  const signOut = async () => {
+    await logout()
     dispatch({ type: 'SIGN_OUT' })
   }
 
@@ -46,11 +49,11 @@ export const AuthProvider = ({ children }: any) => {
       try {
         let userToken = await AsyncStorage.getItem('userToken');
         if(userToken) {
-          const userData = await userInfo()
+          const userData = await userInfo(userToken)
           dispatch({ type: 'RESTORE_TOKEN', payload: { userInfo: userData, token: userToken } });
         }
       } catch (e) {
-        console.warn('erro try to recover persisten user token')
+        console.warn('error trying to recover persisted user token')
         dispatch({ type: 'SIGN_OUT' })
       }
     }

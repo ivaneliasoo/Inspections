@@ -4,7 +4,7 @@ import {KeyboardAvoidingView} from './KeyboardAvoidingView'
 import { Icon, Button, Input, Text } from '@ui-kitten/components';
 import {ImageOverlay} from './ImageOverlay'
 import { StyleSheet } from 'react-native';
-import {AuthContext} from '../authentication-context';
+import {AuthContext} from '../contexts/AuthContext';
 import { PasswordIcon, PersonIcon } from './Icons';
 import { API_HOST } from '../services/api/api-accesor';
 

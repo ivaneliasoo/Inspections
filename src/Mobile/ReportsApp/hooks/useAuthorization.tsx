@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { API_CONFIG } from "config/config";
-import { AuthApi, Configuration } from "services/api";
+import { API_CONFIG } from "../config/config";
+import { AuthApi, Configuration } from "../services/api";
 import { UsersApi } from '../services/api/api';
 
 const authApi = new AuthApi(API_CONFIG as Configuration)
@@ -17,7 +17,7 @@ export const useAuthorization = () => {
     }
   }
 
-  const userInfo = async () => {
+  const userInfo = async (token: string) => {
     try {
       const resp = await usersApi.getActiveUser()
       return resp.data || {}
@@ -26,6 +26,14 @@ export const useAuthorization = () => {
     }
   }
 
-  return {createToken, userInfo}
+  const signOut = async () => {
+    try {
+      await AsyncStorage.removeItem('userToken')
+    } catch (error) {
+      console.warn(error)
+    }
+  }
+
+  return {createToken, userInfo, signOut}
 }
 

@@ -19,13 +19,14 @@ export const authReducer = (prevState: AuthState, action: AuthAction): AuthState
       return {
         ...prevState,
         userToken: undefined,
+        userInfo: undefined,
         isSignOut: true,
       }
     case 'RESTORE_TOKEN':
       return {
         ...prevState,
         userToken: action.payload.token,
-        userInfo: undefined,
+        userInfo: action.payload.userInfo,
         isLoading: false,
       }
     default:

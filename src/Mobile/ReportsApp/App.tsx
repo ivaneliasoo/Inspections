@@ -5,6 +5,7 @@ import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {ThemeContext} from './contexts/ThemeContext';
 import {AuthProvider} from './contexts/AuthContext';
 import {AppNavigator} from './navigations/AppNavigator';
+import { ReportsProvider } from './contexts/ReportsContext';
 
 export default () => {
   const [theme, setTheme] = React.useState('light');
@@ -20,7 +21,9 @@ export default () => {
       <ThemeContext.Provider value={{theme, toggleTheme}}>
         <ApplicationProvider {...eva} theme={eva[theme]}>
           <AuthProvider>
-            <AppNavigator />
+            <ReportsProvider>
+              <AppNavigator />
+            </ReportsProvider>
           </AuthProvider>
         </ApplicationProvider>
       </ThemeContext.Provider>
