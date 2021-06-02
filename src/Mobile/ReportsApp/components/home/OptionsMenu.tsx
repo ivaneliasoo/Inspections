@@ -1,8 +1,8 @@
 import { Button, MenuItem, OverflowMenu, Toggle } from "@ui-kitten/components"
 import { DarkIcon, LightIcon, OptionsIcon } from "../Icons"
 import React, { useContext, useState } from "react"
-import { ThemeContext } from "../../theme-context"
-import { ReportsContext } from "../../reports-contexts"
+import { ThemeContext } from "../../contexts/ThemeContext"
+import { ReportsContext } from "../../contexts/ReportsContext"
 import { StyleSheet } from "react-native"
 
 type Props = {

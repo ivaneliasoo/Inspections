@@ -119,8 +119,7 @@ namespace Inspections.Infrastructure.Repositories
                         }),
                         ch.Id,
                         ch.Text
-                    }),
-                    report.PhotoRecords
+                    })
                 }).AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
         }
 

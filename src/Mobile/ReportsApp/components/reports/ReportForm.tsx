@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik'
 import { Datepicker, Input, Layout, Select, SelectItem } from '@ui-kitten/components'
 import { StyleSheet, View } from 'react-native'
 import { CalendarIcon } from '../Icons'
-import { useOrientation } from '../../utils/helpers'
+import { useOrientation } from '../../hooks/helpers'
 import { Checklists } from './Checklists'
 import { AddressDTO, AddressesApi, ReportsApi, CheckListsApi, Configuration, Report, UpdateCheckListItemCommand, CheckListItem } from '../../services/api'
 import AsyncStorage from '@react-native-async-storage/async-storage';

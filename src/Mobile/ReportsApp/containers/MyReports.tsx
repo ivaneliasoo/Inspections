@@ -9,7 +9,7 @@ import { OptionsMenu } from '../components/home/OptionsMenu'
 import { useNavigation } from '@react-navigation/native';
 import { BackIcon } from '../components/Icons'
 import { API_HOST, API_KEY } from '../config/config';
-import { ReportsContext } from '../reports-contexts';
+import { ReportsContext } from '../contexts/ReportsContext';
 import { RectButton, Swipeable } from 'react-native-gesture-handler';
 import Empty from '../assets/images/empty.svg'
 
