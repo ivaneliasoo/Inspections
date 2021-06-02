@@ -1,13 +1,15 @@
+import {useContext} from 'react';
 import { Card, Icon, Layout, Text } from '@ui-kitten/components'
 import { NewReport } from '../components/home/NewReport'
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
+import { AuthContext } from '../contexts/AuthContext';
 
 export const Home = ({ navigation }: any) => {
   const [isCreatingReport, setIsCreatingReport] = useState(false)
+  const { authState } = useContext(AuthContext)
 
   const navigateToDetails = (reportId: any) => {
-    console.log({reportId})
     setIsCreatingReport(false)
     navigation.navigate('Details', { reportId })
   }
@@ -23,7 +25,7 @@ export const Home = ({ navigation }: any) => {
       action: () => setIsCreatingReport(true)
     },
     {
-      name: 'edit',
+      name: 'pending',
       text: 'Edit/View Pending Reports',
       helpText: '',
       icon: 'edit-outline',
@@ -31,7 +33,7 @@ export const Home = ({ navigation }: any) => {
       path: 'MyReports'
     },
     {
-      name: 'edit',
+      name: 'completed',
       text: 'View Completed Reports',
       helpText: '',
       icon: 'edit-outline',
@@ -43,7 +45,7 @@ export const Home = ({ navigation }: any) => {
 
   return (
     <Layout>
-      <Text category="h4">Welcome, User.</Text>
+      <Text category="h4">Welcome, {authState.userInfo.lastName} {authState.userInfo.name}.</Text>
       <NewReport isOpen={isCreatingReport} onClose={() => setIsCreatingReport(false)} onCreate={navigateToDetails}/>
       {cardOptions.map(option => {
           return <Card key={option.name} style={{alignItems: 'center', borderRadius: 5, margin: 20}} onPress={() => {

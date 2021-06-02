@@ -1,17 +1,15 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { Configuration, CreateReportCommand, ReportConfigurationApi, ReportsApi, ResumenReportConfiguration } from '../services/api'
+import React, { useState, useContext, useRef } from 'react';
 import moment from 'moment';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Animated, Alert, View, StyleSheet, Button } from 'react-native';
-import { Icon, Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction, Select } from '@ui-kitten/components';
+import { Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction } from '@ui-kitten/components';
 import { ClosedIcon, SearchIcon, NotClosedIcon } from '../components/Icons'
 import { OptionsMenu } from '../components/home/OptionsMenu'
 import { useNavigation } from '@react-navigation/native';
 import { BackIcon } from '../components/Icons'
-import { API_HOST, API_KEY } from '../config/config';
-import { ReportsContext } from '../contexts/ReportsContext';
 import { RectButton, Swipeable } from 'react-native-gesture-handler';
 import Empty from '../assets/images/empty.svg'
+import { useReports } from '../hooks/useReports';
+import { ReportsState } from '../contexts/ReportsContext';
 
 const renderLeftActions = () => {
   return (
@@ -54,47 +52,9 @@ const renderItemFooter = (footerProps: any, item: any) => (
 );
 
 export const MyReports = () => {
-  const [refreshing, setRefreshing] = useState(true)
-  const { getAll, reports, filter, setMyReports, myReports, setIsClosed, isClosed, setFilter } = useContext<any>(ReportsContext)
   const swipe = useRef<Swipeable>(null)
-  const mountedRef = useRef(true)
-
   const navigation = useNavigation()
-  async function getReports(options: any) {
-    setRefreshing(true)
-    const userToken: string = await AsyncStorage.getItem('userToken') as string;
-    const reportsApi = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
-    const resp = await reportsApi.reportsGet(filter, options.isClosed, options.myReports)
-    getAll(resp.data)
-    setRefreshing(false)
-  }
-
-  async function completeReport(reportId: number) {
-    const userToken: string = await AsyncStorage.getItem('userToken') as string;
-    const api = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
-    const result = await api.completeReport(reportId).catch(error => console.log(error.response.message))
-    return result
-  }
-
-  async function deleteReport(reportId: number) {
-    const userToken: string = await AsyncStorage.getItem('userToken') as string;
-    const api = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
-    const result = await api.reportsIdDelete(reportId).catch(error => console.log(error.response.message))
-    return result
-  }
-
-  useEffect(() => {
-    if (mountedRef.current) {
-      getReports({})
-      if (isClosed === undefined)
-        setIsClosed(false)
-      if (myReports === undefined)
-        setMyReports(true)
-    }
-    return () => {
-      mountedRef.current = false
-    }
-  }, [])
+  const { getReports, deleteReport, completeReport, reports, filter, setFilterText, refreshing } = useReports()
 
   const renderReport = ({ item }: any) => {
     const navigateDetails = () => {
@@ -108,7 +68,7 @@ export const MyReports = () => {
             [
               {
                 text: 'Yes',
-                onPress: () => { completeReport(item.id).then(() => getReports({})); swipe.current?.close();  }
+                onPress: () => { completeReport(item.id).then(() => getReports()); swipe.current?.close();  }
               },
               {
                 text: 'No',
@@ -123,7 +83,7 @@ export const MyReports = () => {
             [
               {
                 text: 'Yes',
-                onPress: () => { deleteReport(item.id).then(() => getReports({})); swipe.current?.close(); }
+                onPress: () => { deleteReport(item.id).then(() => getReports()); swipe.current?.close(); }
               },
               {
                 text: 'No',
@@ -138,7 +98,6 @@ export const MyReports = () => {
           footer={footerProps => renderItemFooter(footerProps, item)} >
           <Text category='s1'>{`${moment(item.date).format('DD/MM/YYYY HH:mm')} License ${item.license?.number ?? 'Not specified'}`}</Text>
           <Text category='s2'>{item.address === '' ? 'address not specified' : item.address}</Text>
-          <Text category='c1'>{API_HOST}</Text>
         </Card>
       </Swipeable>
     );
@@ -156,7 +115,7 @@ export const MyReports = () => {
       />
       <Divider />
       <Layout style={styles.cardList}>
-        <Input style={styles.inpustSearch} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilter} onEndEditing={getReports} />
+        <Input style={styles.inpustSearch} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilterText} onEndEditing={getReports} />
         {/* <Select
           placeholder='type to search an address'
           value={}
@@ -168,7 +127,7 @@ export const MyReports = () => {
           {[].map(reanderOption)}
         </Select> */}
         {reports.length > 0 ?
-          <List data={reports} renderItem={renderReport} onRefresh={() => getReports({})} refreshing={refreshing} />
+          <List data={reports} renderItem={renderReport} onRefresh={getReports} refreshing={refreshing} />
           :
           <View style={styles.noDataLayout}>
             <Empty height={200} width={300} />

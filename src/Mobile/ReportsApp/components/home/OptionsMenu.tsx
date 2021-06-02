@@ -11,7 +11,7 @@ type Props = {
 export const OptionsMenu = ({onChanged}: Props) => {
   const context = useContext(ThemeContext)
   const [showMenu, setShowMenu] = useState(false)
-  const { setMyReports, setIsClosed, myReports, isClosed } = useContext<any>(ReportsContext)
+  const { setFilter, reportsState: { myReports, isClosed, filter } } = useContext(ReportsContext)
 
   const hide = () => {
     if(showMenu) setShowMenu(false)
@@ -21,6 +21,16 @@ export const OptionsMenu = ({onChanged}: Props) => {
     if(!showMenu) setShowMenu(true)
   }
 
+  const handleIsClosed = () => {
+    setFilter({ isClosed: !isClosed, myReports, filter}); 
+    onChanged({ myReports: myReports, isClosed: !isClosed })
+  }
+
+  const handleMyReports = () => {
+    setFilter({ isClosed, myReports: !myReports, filter}); 
+    onChanged({ myReports: myReports, isClosed: !isClosed })
+  }
+
   return (
     <>
       <OverflowMenu
@@ -28,8 +38,8 @@ export const OptionsMenu = ({onChanged}: Props) => {
         visible={showMenu}
         onBackdropPress={hide}>
         <MenuItem style={styles.toggle} title={() => <Button status='control' style={styles.options} onPress={context.toggleTheme} accessoryRight={context.theme === 'dark' ? DarkIcon : LightIcon} />} />
-        <MenuItem title={() => <Toggle style={styles.toggle} onPress={context.toggleTheme} checked={myReports} onChange={() => { setMyReports(!myReports); onChanged({ myReports: !myReports, isClosed: isClosed }) }}>My Reports</Toggle>} />
-        <MenuItem title={() => <Toggle style={styles.toggle} onPress={context.toggleTheme} checked={isClosed} onChange={() => { setIsClosed(!isClosed); onChanged({ myReports: myReports, isClosed: !isClosed }) }}>Closed Only</Toggle>} />
+        <MenuItem title={() => <Toggle style={styles.toggle} checked={myReports} onChange={handleMyReports}>My Reports</Toggle>} />
+        <MenuItem title={() => <Toggle style={styles.toggle} checked={isClosed} onChange={handleIsClosed}>Closed Only</Toggle>} />
       </OverflowMenu></>
   )
 }
