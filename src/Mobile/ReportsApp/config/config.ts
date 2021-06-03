@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import env from 'react-native-config';
 
 const config = {

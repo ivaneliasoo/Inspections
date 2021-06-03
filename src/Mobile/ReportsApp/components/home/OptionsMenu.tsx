@@ -5,9 +5,10 @@ import { ThemeContext } from "../../contexts/ThemeContext"
 import { ReportsContext } from "../../contexts/ReportsContext"
 import { StyleSheet } from "react-native"
 
-type Props = {
-  onChanged: any
+export interface Props {
+  onChanged: (payload: { myReports: boolean; isClosed: boolean; filter?: string }) => void
 }
+
 export const OptionsMenu = ({onChanged}: Props) => {
   const context = useContext(ThemeContext)
   const [showMenu, setShowMenu] = useState(false)
@@ -23,12 +24,12 @@ export const OptionsMenu = ({onChanged}: Props) => {
 
   const handleIsClosed = () => {
     setFilter({ isClosed: !isClosed, myReports, filter}); 
-    onChanged({ myReports: myReports, isClosed: !isClosed })
+    onChanged({ myReports, isClosed: !isClosed })
   }
 
   const handleMyReports = () => {
-    setFilter({ isClosed, myReports: !myReports, filter}); 
-    onChanged({ myReports: myReports, isClosed: !isClosed })
+    setFilter({ isClosed, myReports: !myReports, filter }); 
+    onChanged({ myReports: !myReports, isClosed })
   }
 
   return (
@@ -43,7 +44,7 @@ export const OptionsMenu = ({onChanged}: Props) => {
       </OverflowMenu></>
   )
 }
-OptionsMenu.whyDidYouRender = true
+
 const styles = StyleSheet.create({
   options: {
     justifyContent: 'center'
