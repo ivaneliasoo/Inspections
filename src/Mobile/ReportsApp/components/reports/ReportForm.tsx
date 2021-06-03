@@ -74,7 +74,7 @@ const ReportForm = () => {
       <Layout style={[styles.container, { flexDirection: flexType }]}>
         
         <Datepicker
-          style={[{ flex: flexType === 'row' ? 3 : undefined}, styles.inputMargin]}
+          style={[{ flex: flexType === 'row' ? 3 : undefined }, styles.inputMargin]}
           label='Date'
           caption='Select the report date'
           placeholder='Pick Date'

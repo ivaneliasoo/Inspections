@@ -9,7 +9,7 @@ import { Report } from '../services/api/api';
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
-  const { getAll, setFilter, reportsState } = useContext(ReportsContext)
+  const { getAll, setFilter, setWorkingReport, reportsState } = useContext(ReportsContext)
 
   const reportsApi = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
 
@@ -62,6 +62,8 @@ export const useReports = () => {
     refreshing,
     filter: reportsState.filter,
     setFilterText,
+    setWorkingReport,
+    workingReport: reportsState.workingReport,
     reports: reportsState.reports || []
   }
 }

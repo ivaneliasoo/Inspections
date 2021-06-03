@@ -1,37 +1,29 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { BottomNavigation, BottomNavigationTab, Divider, Spinner, Tab, TabView, TopNavigation, TopNavigationAction, ViewPager } from '@ui-kitten/components';
-import { ReportForm } from '../components/reports/ReportForm'
-import { OperationalReading } from '../components/reports/OperationalReading'
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { BottomNavigation, BottomNavigationTab, Divider, Spinner, TabView, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { BackIcon } from '../components/Icons'
 import { Formik, FormikProps } from 'formik';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Directions, FlingGestureHandler, State } from 'react-native-gesture-handler'
 import { API_CONFIG } from '../config/config'
 import { Configuration, Report, ReportsApi, UpdateReportCommand } from '../services/api'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import * as Yup from 'yup';
 import { Alert, StyleSheet, View } from 'react-native';
+import { ReportsContext } from '../contexts/ReportsContext';
+import { ReportForm } from '../components/reports/ReportForm';
+import { OperationalReading } from '../components/reports/OperationalReading';
+import { CameraScreen } from '../containers/CameraScreen';
 import { Signatures } from '../components/reports/Signatures';
-import { SignaturePad } from '../components/reports/SignaturePad';
 
 type DetailsScreenNavigationProp = StackNavigationProp<any, any>
 
 
-type Props = {
-  route: any,
-  navigation: DetailsScreenNavigationProp
+interface Props {
+  route: any;
+  navigation: DetailsScreenNavigationProp;
+  state: any;
 }
-export const Details = ({ route, navigation }: Props) => {
-
-
-  const navigateToCamera = () => {
-    navigation.navigate('Camera')
-  }
-
-  const navigateToSignatures = () => {
-    navigation.navigate('Signatures')
-  }
+export const Details = ({ route, navigation, state }: Props) => {
 
   const navigateBack = () => {
     navigation.goBack();
@@ -45,9 +37,9 @@ export const Details = ({ route, navigation }: Props) => {
   const [reportData, setReportData] = useState<Report>({})
   const mountedRef = useRef(true)
 
-  const { reportId } = route.params
+  const { reportsState: { workingReport: reportId } } = useContext(ReportsContext)
 
-  const shouldLoadComponent = (index: number) => index === selectedIndex;
+  // const shouldLoadComponent = (index: number) => index === selectedIndex;
 
   const formRef = useRef<FormikProps<Report>>(null)
 
@@ -58,12 +50,12 @@ export const Details = ({ route, navigation }: Props) => {
         const userToken: string = await AsyncStorage.getItem('userToken') as string;
         const apiService = new ReportsApi({ accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey } as Configuration)
         const updateCmd: UpdateReportCommand = {
-          address: formRef.current.values.address,
+          address: formRef.current.values.address ?? '',
           date: moment(formRef.current.values.date).format('YYYY-MM-DD'),
-          name: formRef.current.values.name,
-          id: formRef.current.values.id,
-          isClosed: formRef.current.values.isClosed,
-          licenseNumber: formRef.current.values.license?.number
+          name: formRef.current.values.name ?? '',
+          id: formRef.current.values.id ?? 0,
+          isClosed: formRef.current.values.isClosed ?? false,
+          licenseNumber: formRef.current.values.license?.number ?? ''
         }
         await apiService.reportsIdPut(reportId, updateCmd)
           .catch(error => {
@@ -101,27 +93,23 @@ export const Details = ({ route, navigation }: Props) => {
       <>
         <TopNavigation title={`Report  `} alignment='center' accessoryLeft={BackAction} />
         <Divider />
-        <FlingGestureHandler
-          numberOfPointers={2}
-          direction={Directions.LEFT}
-          onHandlerStateChange={({ nativeEvent }) => {
-            if (nativeEvent.state === State.ACTIVE) {
-              navigateToCamera()
-            }
-          }}
-        >
-
-          {reportData ? <View style={styles.viewPagerLayout}><ViewPager style={styles.viewPagerLayout} selectedIndex={selectedIndex} shouldLoadComponent={shouldLoadComponent} onSelect={index => setSelectedIndex(index)}>
-            <OperationalReading reportData={reportData} />
-            <ReportForm />
-            <Signatures report={reportData} />
-          </ViewPager><BottomNavigation selectedIndex={selectedIndex} onSelect={index => setSelectedIndex(index)}>
-              <BottomNavigationTab title="Operational Readings" />
+        {reportData ?
+          <View style={styles.viewPagerLayout}>
+            <TabView selectedIndex={selectedIndex}
+              onSelect={index => navigation.navigate(state.routeNames[index])}>
+              <CameraScreen />
+              <OperationalReading reportData={reportData} />
+              <ReportForm />
+              <Signatures report={reportData} />
+            </TabView>
+            <BottomNavigation selectedIndex={selectedIndex}
+              onSelect={index => navigation.navigate(state.routeNames[index])}>
               <BottomNavigationTab title="Report Detail" />
+              <BottomNavigationTab title="Camera and Photos" />
+              <BottomNavigationTab title="Operational Readings" />
               <BottomNavigationTab title="Signatures" />
-            </BottomNavigation></View>
-           : <Spinner />}
-        </FlingGestureHandler>
+            </BottomNavigation>
+          </View> : <Spinner />}
       </>
     </Formik >
   );

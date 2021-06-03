@@ -8,6 +8,7 @@ export interface ReportsFilterPayload {
 
 type ReportsAction =
   | { type: 'SET_REPORTS'; payload: { reports: any[]; }; }
+  | { type: 'SET_WORKING_REPORT', payload: number }
   | { type: 'SET_FILTER'; payload: ReportsFilterPayload };
 
 export const reportsReducer = (prevState: ReportsState, action: ReportsAction) => {
@@ -17,6 +18,9 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
     }
     case 'SET_FILTER': {
       return { ...prevState, ...action.payload };
+    }
+    case 'SET_WORKING_REPORT': {
+      return { ...prevState, workinReport: action.payload};
     }
     default:
       return prevState

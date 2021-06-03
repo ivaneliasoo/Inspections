@@ -54,10 +54,12 @@ const renderItemFooter = (footerProps: any, item: any) => (
 export const MyReports = () => {
   const swipe = useRef<Swipeable>(null)
   const navigation = useNavigation()
-  const { getReports, deleteReport, completeReport, reports, filter, setFilterText, refreshing } = useReports()
+  const { getReports, deleteReport, completeReport, reports, filter, setFilterText, refreshing, setWorkingReport } = useReports()
 
   const renderReport = ({ item }: any) => {
     const navigateDetails = () => {
+      console.log({ item })
+      setWorkingReport(item.id)
       navigation.navigate('Details', { reportId: item.id, title: item.title });
     };
     return (

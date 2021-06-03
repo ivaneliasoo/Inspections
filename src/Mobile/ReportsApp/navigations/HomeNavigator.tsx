@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MyReports } from '../containers/MyReports';
-import { Details } from '../containers/Details';
-import { Authentication } from '../containers/Authentication';
 import { Home } from '../containers/Home';
+import { ReportDetailsNavigator } from './ReportDetailsNavigator';
+import { Details } from '../containers/Details';
 
 const MainStack = createStackNavigator();
 export const HomeNavigator = () => {
