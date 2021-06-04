@@ -34,7 +34,6 @@ export const AuthProvider = ({ children }: any) => {
     const token = await createToken(data)
     if (token) {
       const userData = await userInfo(token)
-      console.log(userData)
       dispatch({ type: 'SIGN_IN', payload: { userInfo: userData, token } });
     }
   }

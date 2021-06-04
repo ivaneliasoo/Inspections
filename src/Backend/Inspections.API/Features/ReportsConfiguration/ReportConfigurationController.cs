@@ -78,7 +78,7 @@ namespace Inspections.API.Features.ReportsConfiguration
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ResumenReportConfiguration>> GetReportsConfig(string filter)
+        public ActionResult<IEnumerable<ResumenReportConfiguration>> GetReportsConfig(string? filter)
         {
             var reportConfig = _reportConfigsQueries.GetByFilter(filter);
 

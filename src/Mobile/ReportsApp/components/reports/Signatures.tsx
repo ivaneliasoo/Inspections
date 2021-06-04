@@ -42,7 +42,6 @@ const Signatures = () => {
         Alert.alert('error while saving signature', error.response.message)
       })
     })
-    console.log('ok')
   }
 
   return (

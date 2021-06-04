@@ -20,7 +20,7 @@ namespace Inspections.Infrastructure.Queries
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IEnumerable<ResumenReportConfiguration> GetByFilter(string filter)
+        public IEnumerable<ResumenReportConfiguration> GetByFilter(string? filter)
         {
             return _context.ResumenReportConfigurations.FromSqlInterpolated($@"
                 SELECT ""Id""

@@ -22,11 +22,8 @@ const ReportForm = () => {
   const { workingReport: reportData, saveReport, updateCheckList, updateCheckListItem } = useReports()
 
   const handleSubmit = async () => {
-    console.log('save called')
     if (formRef.current) {
-      console.log(formRef.current)
       if (formRef.current.isValid && formRef.current.dirty) {
-        console.log('jajaja')
         const updateCmd: UpdateReportCommand = {
           address: formRef.current.values.address ?? '',
           date: moment(formRef.current.values.date).format('YYYY-MM-DD'),
