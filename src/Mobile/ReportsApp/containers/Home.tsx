@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import { useContext } from 'react';
 import { Card, Icon, Layout, Text } from '@ui-kitten/components'
 import { NewReport } from '../components/home/NewReport'
 import React, { useState } from 'react'
@@ -13,7 +13,7 @@ export const Home = ({ navigation }: any) => {
     setIsCreatingReport(false)
     navigation.navigate('Details', { reportId })
   }
-  
+
   const cardOptions: any[] = [
     {
       name: 'new',
@@ -44,21 +44,36 @@ export const Home = ({ navigation }: any) => {
 
 
   return (
-    <Layout>
+    <Layout style={styles.container}>
       <Text category="h4">Welcome, {authState.userInfo.lastName} {authState.userInfo.name}.</Text>
-      <NewReport isOpen={isCreatingReport} onClose={() => setIsCreatingReport(false)} onCreate={navigateToDetails}/>
+      <NewReport isOpen={isCreatingReport} onClose={() => setIsCreatingReport(false)} onCreate={navigateToDetails} />
       {cardOptions.map(option => {
-          return <Card key={option.name} style={{alignItems: 'center', borderRadius: 5, margin: 20}} onPress={() => {
-            if(!option.action) navigation.navigate(option.path)
-            else option.action.call()
-          }}>
-            <Text category="h1">{option.text}</Text>
-            <Text category="s1">{option.helpText}</Text>
-            <Icon name={option.icon} style={{width: 48, height: 48}} />
-          </Card>
-        })}
+        return <Card key={option.name} style={styles.card} onPress={() => {
+          if (!option.action) navigation.navigate(option.path)
+          else option.action.call()
+        }}>
+          <Text category="h1">{option.text}</Text>
+          <Text category="s1">{option.helpText}</Text>
+          <Icon name={option.icon} style={{ width: 48, height: 48 }} />
+        </Card>
+      })}
     </Layout>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  card: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
+    alignItems: 'center', margin: 10
+  }
+})
