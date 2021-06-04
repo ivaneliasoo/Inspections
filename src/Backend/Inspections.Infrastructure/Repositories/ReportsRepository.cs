@@ -59,16 +59,16 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<Report> GetByIdAsync(int id)
         {
-            return await _context.Reports.Where(r => r.Id == id)
-               .Include(p => p.CheckList)
-                .ThenInclude(p => p.Checks)
-                    .ThenInclude(p => p.TextParams)
-               .Include(p => p.Signatures)
-                .ThenInclude(p => p.Responsable)
-               .Include(p => p.Notes)
-               .Include(p => p.PhotoRecords)
-               .Include(p => p.License)
-               .SingleOrDefaultAsync();
+            return await _context.Reports
+               //.Include(p => p.CheckList)
+               // .ThenInclude(p => p.Checks)
+               //     .ThenInclude(p => p.TextParams)
+               //.Include(p => p.Signatures)
+               // .ThenInclude(p => p.Responsable)
+               //.Include(p => p.Notes)
+               //.Include(p => p.PhotoRecords)
+               //.Include(p => p.License)
+               .AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task<dynamic> GetByIdAsync(int id, bool projected)
@@ -79,12 +79,19 @@ namespace Inspections.Infrastructure.Repositories
                     report.Id,
                     report.Name,
                     report.Address,
-                    report.License,
+                    License = report.License != null ? new
+                    {
+                        report.License.Number,
+                        report.License.Name,
+                        report.License.KVA,
+                        report.License.Volt,
+                        report.License.Amp
+                    }:null,
                     report.Title,
                     report.FormName,
                     report.RemarksLabelText,
                     report.OperationalReadings,
-                    Signatures = report.Signatures.OrderBy(o=>o.Order).Select(s => new
+                    Signatures = report.Signatures.OrderBy(o => o.Order).Select(s => new
                     {
                         s.Date,
                         s.Annotation,

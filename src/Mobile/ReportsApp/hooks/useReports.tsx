@@ -1,53 +1,58 @@
-import { ReportsFilterPayload } from '../contexts/reportsReducer';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { ReportsContext } from '../contexts/ReportsContext';
 import { API_HOST, API_KEY } from '../config/config';
-import { Configuration, ReportsApi } from '../services/api';
+import { Configuration, ReportsApi, CheckListsApiFactory } from '../services/api';
 import { AuthContext } from '../contexts/AuthContext';
-import { Report } from '../services/api/api';
+import { CheckListItem, Report, UpdateCheckListItemCommand, UpdateReportCommand } from '../services/api/api';
+import moment from 'moment';
 
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
   const { getAll, setFilter, setWorkingReport, reportsState } = useContext(ReportsContext)
 
-  const reportsApi = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
+  const configuration = new Configuration({
+    accessToken: userToken!,
+    basePath: API_HOST,
+    apiKey: API_KEY
+  })
 
-  const [refreshing, setRefreshing] = useState(false)
+  const checkListsApi = CheckListsApiFactory(configuration)
+  const reportsApi = new ReportsApi(configuration)
 
   const getReports = async () => {
     try {
-      setRefreshing(true)
       const resp = await reportsApi.reportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports)
       getAll(resp.data as unknown as Report[])
     } catch (error) {
       console.log(error)
     } finally {
-      setRefreshing(false)
     }
+  }
+
+  const getReportById = async (id: number) => {
+    const result: Report = (await reportsApi.reportsIdGet(id)).data as unknown as Report
+    result.date = moment(result.date).toDate()
+    setWorkingReport(result)
   }
 
   const completeReport = async (reportId: number) => {
     try {
-      setRefreshing(true)
       const result = await reportsApi.completeReport(reportId).catch(error => console.log(error.response.message))
       return result
     } catch (error) {
-      console.log(error)      
+      console.log(error)
     } finally {
-      setRefreshing(false)
     }
   }
 
   const deleteReport = async (reportId: number) => {
     try {
-      setRefreshing(true)
       const result = await reportsApi.reportsIdDelete(reportId).catch(error => console.log(error.response.message))
       return result
     } catch (error) {
-      console.log(error)      
+      console.log(error)
     } finally {
-      setRefreshing(false)
     }
   }
 
@@ -55,15 +60,42 @@ export const useReports = () => {
     setFilter({ filter: text, myReports: reportsState.myReports, isClosed: reportsState.isClosed })
   }
 
+  const updateCheckList = async (payload: { reportId: number; checkListId: number; newValue: number | undefined }) => {
+    await reportsApi.bulkUpdateChecks(payload.reportId, payload.checkListId, payload.newValue)
+  }
+
+  const updateCheckListItem = async (payload: CheckListItem) => {
+    const command: UpdateCheckListItemCommand = {
+      checkListId: payload.checkListId!,
+      checked: payload.checked!,
+      editable: payload.editable!,
+      id: payload.id!,
+      remarks: payload.remarks!,
+      required: payload.required!,
+      text: payload.text!
+    }
+    await checkListsApi.updateChecklistItem(payload.checkListId ?? -1, payload.id ?? -1, command)
+  }
+
+  const saveReport = async (updateCmd: UpdateReportCommand) => {
+    if (updateCmd && updateCmd.id) {
+      await reportsApi.reportsIdPut(updateCmd.id.toString(), updateCmd)
+    }
+  }
+
   return {
     getReports,
+    getReportById,
     completeReport,
     deleteReport,
-    refreshing,
+    saveReport,
     filter: reportsState.filter,
     setFilterText,
     setWorkingReport,
     workingReport: reportsState.workingReport,
-    reports: reportsState.reports || []
+    reports: reportsState.reports || [],
+    workingRerport: reportsState.workingReport,
+    updateCheckList,
+    updateCheckListItem
   }
 }

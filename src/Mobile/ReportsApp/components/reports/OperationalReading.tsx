@@ -2,35 +2,40 @@ import Picker from '@gregfrench/react-native-wheel-picker'
 import { CheckBox, Divider, Input, Layout, Select, SelectItem, Text } from '@ui-kitten/components'
 import NumericPicker from '../NumericPicker'
 import { Formik, FormikProps } from 'formik'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useContext, useMemo, useRef, useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Report } from 'services/api'
+import { ReportsContext } from '../../contexts/ReportsContext';
 
-type OperationalReadingsProps = {
-  reportData: Report
-}
-const OperationalReading = ({ reportData }: OperationalReadingsProps) => {
-  var PickerItem = Picker.Item;
+// type OperationalReadingsProps = {
+//   reportData: Report
+// }
+const OperationalReading = () => {
+
+  const { reportsState: {workingReport: reportData} } = useContext(ReportsContext)
   const formRef = useRef<FormikProps<Report>>(null)
-  const [amp, setAmp] = useState(20)
-  const [volt, setVolt] = useState(220)
+
+  // var PickerItem = Picker.Item;
+  // const formRef = useRef<FormikProps<Report>>(null)
+  // const [amp, setAmp] = useState(20)
+  // const [volt, setVolt] = useState(220)
 
   const [testNumber, setTestNumber] = useState<number[]>([])
 
-  const voltageMoreThen400 = useMemo(() => {
+  // const voltageMoreThen400 = useMemo(() => {
 
-  }, [reportData])
+  // }, [reportData])
 
   return (
     <ScrollView>
-      <Formik ref={formRef} initialValues={reportData} enableReinitialize onSubmit={() => console.log('saved')}>
+      <Formik ref={formRef} initialValues={reportData!} enableReinitialize onSubmit={() => console.log('saved')}>
         <ScrollView>
           <Layout style={styles.container}>
             <Text category='h2' style={{ alignSelf: 'center', marginBottom: 20 }}>Operational Reading Page</Text>
             <Text category='h4'>Particular of Installation: </Text>
             <View>
               <Text category='h6'>Name: </Text>
-              <Input size='large' value={reportData.name!} />
+              <Input size='large' value={reportData!.name!} />
               <Text category='h6'>Address: </Text>
               <Input size='large' value='Test Address' />
             </View>

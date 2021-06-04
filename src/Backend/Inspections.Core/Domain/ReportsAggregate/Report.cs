@@ -9,16 +9,18 @@ namespace Inspections.Core.Domain.ReportsAggregate
 {
     public class Report : Entity<int>, IAggregateRoot
     {
-        public string Name { get; private set; }
-        public string Address { get; private set; }
-        public License License { get; private set; }
-        public DateTimeOffset Date { get; private set; }
-        public bool IsClosed { get; private set; }
+        public string Name { get; private set; } = default!;
+        public string Address { get; private set; } = default!;
 
-        public string Title { get; private set; }
-        public string FormName { get; private set; }
-        public string RemarksLabelText { get; private set; }
-        public string OperationalReadings { get; set; }
+        public int? EMALicenseId { get; set; } = default!;
+        public EMALicense? License { get; private set; } = default!;
+        public DateTimeOffset Date { get; private set; } = default!;
+        public bool IsClosed { get; private set; } = default!;
+
+        public string Title { get; private set; } = default!;
+        public string FormName { get; private set; } = default!;
+        public string? RemarksLabelText { get; private set; }
+        public string? OperationalReadings { get; set; }
         private readonly List<Signature> signatures = new List<Signature>();
         public IReadOnlyCollection<Signature> Signatures => signatures;
         private readonly List<Note> notes = new List<Note>();
@@ -34,7 +36,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         }
 
-        public Report(string name, string address, License license, DateTimeOffset date)
+        public Report(string name, string address, EMALicense? license, DateTimeOffset date)
         {
             Name = name;
             Address = address;
@@ -56,7 +58,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
             RemarksLabelText = remarksLabelText;
         }
 
-        public void Edit(string name, string address, License license, DateTimeOffset date)
+        public void Edit(string name, string address, EMALicense license, DateTimeOffset date)
         {
             //CheckIfClosed();
             Name = name;
@@ -117,7 +119,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
             {
                 this.checkList.Add(check.CloneForReport());
             }
-           
+
         }
 
         internal void RemoveCheckList(CheckList checkList)

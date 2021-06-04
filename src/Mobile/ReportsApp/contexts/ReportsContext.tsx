@@ -3,18 +3,18 @@ import { Report } from "services/api";
 import { ReportsFilterPayload, reportsReducer } from './reportsReducer';
 
 export interface ReportsState {
-  reports?: any[];
+  reports?: Report[];
   myReports: boolean;
   isClosed: boolean;
   filter: string;
-  workingReport?: number;
+  workingReport?: Report;
 }
 
 export interface ReportsContextProps {
   reportsState: ReportsState,
   setFilter: (filter: ReportsFilterPayload) => void,
   getAll: (reports: Report[]) => void,
-  setWorkingReport: (payload: number) => void,
+  setWorkingReport: (payload: Report) => void,
 }
 const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '', workingReport: undefined! }
 
@@ -37,10 +37,10 @@ export const ReportsContext = createContext({} as ReportsContextProps);
     })
   }
 
-  const setWorkingReport = (payload: number) => {
+  const setWorkingReport = (payload: Report) => {
     dispatch({
       type: 'SET_WORKING_REPORT',
-      payload
+      report: payload
     })
   }
 

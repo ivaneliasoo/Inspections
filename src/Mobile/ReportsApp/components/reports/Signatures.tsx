@@ -1,7 +1,7 @@
 import { Card, Datepicker, Input, Select, SelectItem, Text, Button } from '@ui-kitten/components'
 import { CalendarIcon, CrossIcon, EditSignatureIcon } from '../Icons'
 import { Formik, FormikProps } from 'formik'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Alert, Image, StyleSheet, View } from 'react-native'
 import { Configuration, Report, SignaturesApi } from '../../services/api'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -10,13 +10,16 @@ import { createRef } from 'react'
 import { API_CONFIG } from '../../config/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AutoSave } from '../../components/AutoSave'
+import { ReportsContext } from '../../contexts/ReportsContext'
 
 
-const Signatures = ({ report }) => {
+const Signatures = () => {
   const navigation = useNavigation()
+
+  const { reportsState: {workingReport: report} } = useContext(ReportsContext)
   const formRef = createRef<FormikProps<Report>>()
 
-  const onGoBack = (result) => {
+  const onGoBack = (result: any) => {
     formRef.current?.setFieldValue(`signatures[${result.index}].drawnSign`, `data:image/png;base64,${result.encoded}`)
   }
 
@@ -36,7 +39,6 @@ const Signatures = ({ report }) => {
         principal: s.principal,
         drawnSign: s.drawnSign
       }).catch(error => {
-        console.log({ error, signatures: values.signatures })
         Alert.alert('error while saving signature', error.response.message)
       })
     })
@@ -45,7 +47,7 @@ const Signatures = ({ report }) => {
 
   return (
     <>
-      <Formik innerRef={formRef} validateOnMount={true} initialValues={report} enableReinitialize onSubmit={saveSignatures}>
+      <Formik innerRef={formRef} validateOnMount={true} initialValues={report!} enableReinitialize onSubmit={saveSignatures}>
         {({ setFieldValue, handleSubmit, errors, handleBlur, values }) =>
           <ScrollView>
             {values.signatures!.map((item, signIndex) => {
@@ -81,11 +83,11 @@ const Signatures = ({ report }) => {
                       title={responsible}
                     ></SelectItem>)}
                 </Select>
-                <Input label='Name' value={item.responsable.name} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].responsable.name`, e)} status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsable && errors.signatures[signIndex].responsable.name ? 'danger' : 'basic'} />
-                <Input label='Designation' value={item.designation} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].designation`, e)} />
-                <Input label='Remarks' multiline value={item.remarks} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].remarks`, e)} />
+                <Input label='Name' value={item.responsable!.name!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].responsable.name`, e)} status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsable && errors.signatures[signIndex].responsable.name ? 'danger' : 'basic'} />
+                <Input label='Designation' value={item.designation!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].designation`, e)} />
+                <Input label='Remarks' multiline value={item.remarks!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].remarks`, e)} />
                 <View style={{ flex: 2, flexDirection: 'row' }}>
-                  {item.drawnSign?.length > 0 && <Image style={{ flex: 1, alignSelf: 'center', borderColor: 'black', width: 150, height: 100, resizeMode: 'stretch' }} source={{ uri: item.drawnSign }} />}
+                  {item.drawnSign!.length > 0 && <Image style={{ flex: 1, alignSelf: 'center', borderColor: 'black', width: 150, height: 100, resizeMode: 'stretch' }} source={{ uri: item.drawnSign! }} />}
                   <View style={{ flex: 1, flexDirection: 'row' }}>
                     <Button style={{ flex: 1, margin: 10, marginTop: 20 }} status='warning' size='small' appearance='outline' onPress={() => navigation.navigate('ModalSignatures', { index: signIndex, existentSign: item.drawnSign, onGoBack: onGoBack })} accessoryLeft={EditSignatureIcon} />
                     <Button disabled={!item.drawnSign} style={{ flex: 1, margin: 10, marginTop: 20 }} status='danger' size='small' appearance='outline' onPress={() => setFieldValue(`signatures[${signIndex}].drawnSign`, '')} accessoryLeft={CrossIcon} />

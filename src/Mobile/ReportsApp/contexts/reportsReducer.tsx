@@ -1,3 +1,4 @@
+import { Report } from 'services/api';
 import { ReportsState } from './ReportsContext';
 
 export interface ReportsFilterPayload {
@@ -8,7 +9,7 @@ export interface ReportsFilterPayload {
 
 type ReportsAction =
   | { type: 'SET_REPORTS'; payload: { reports: any[]; }; }
-  | { type: 'SET_WORKING_REPORT', payload: number }
+  | { type: 'SET_WORKING_REPORT', report: Report }
   | { type: 'SET_FILTER'; payload: ReportsFilterPayload };
 
 export const reportsReducer = (prevState: ReportsState, action: ReportsAction) => {
@@ -20,7 +21,7 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
       return { ...prevState, ...action.payload };
     }
     case 'SET_WORKING_REPORT': {
-      return { ...prevState, workinReport: action.payload};
+      return { ...prevState, workingReport: action.report};
     }
     default:
       return prevState

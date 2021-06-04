@@ -6,7 +6,7 @@ import { authReducer } from './authReducer';
 export interface AuthState {
   isLoading: boolean;
   isSignOut: boolean;
-  userToken?: string;
+  userToken?: string | undefined;
   userInfo?: any;
 }
 
@@ -51,7 +51,6 @@ export const AuthProvider = ({ children }: any) => {
         let userToken = await AsyncStorage.getItem('userToken');
         if(userToken) {
           const userData = await userInfo(userToken)
-          console.log(userData)
           dispatch({ type: 'RESTORE_TOKEN', payload: { userInfo: userData, token: userToken } });
         }
       } catch (e) {

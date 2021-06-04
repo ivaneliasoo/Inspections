@@ -1,105 +1,80 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import moment from 'moment'
-import { useFormikContext } from 'formik'
-import { Datepicker, Input, Layout, Select, SelectItem } from '@ui-kitten/components'
-import { StyleSheet, View } from 'react-native'
+import { Formik, FormikProps } from 'formik'
+import { Datepicker, Layout } from '@ui-kitten/components'
+import { Alert, StyleSheet, View } from 'react-native'
 import { CalendarIcon } from '../Icons'
 import { useOrientation } from '../../hooks/helpers'
 import { Checklists } from './Checklists'
-import { AddressDTO, AddressesApi, ReportsApi, CheckListsApi, Configuration, Report, UpdateCheckListItemCommand, CheckListItem } from '../../services/api'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API_CONFIG } from '../../config/config'
 import { ScrollView } from 'react-native-gesture-handler'
 import { AutoSave } from '../../components/AutoSave'
-
-
-const userToken = AsyncStorage.getItem('userToken');
-const getAddressList = async (filter?: string) => {
-    const apiService =  new AddressesApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey} as Configuration)
-    const result = await apiService.getAddresses(filter);
-    return result.data
-}
-
-const updateCheckList = async (payload: { reportId: number; checkListId: number; newValue: number | undefined }) => {
-  const api = new ReportsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey} as Configuration)
-  api.bulkUpdateChecks(payload.reportId, payload.checkListId, payload.newValue)
-}
-
-const updateCheckListItem = async (payload: CheckListItem) => {
-  const api = new CheckListsApi({accessToken: userToken, basePath: API_CONFIG.basePath, apiKey: API_CONFIG.apiKey} as Configuration)
-  const command: UpdateCheckListItemCommand = {
-    checkListId: payload.checkListId,
-    checked: payload.checked,
-    editable: payload.editable,
-    id: payload.id,
-    remarks: payload.remarks,
-    required: payload.required,
-    text: payload.text
-  }
-  api.updateChecklistItem(payload.checkListId ?? -1, payload.id ?? -1, command)
-}
+import * as Yup from 'yup';
+import { useReports } from '../../hooks/useReports';
+import { Report, UpdateReportCommand } from 'services/api'
+import { AddressAutocomplete, AddressSelectedResult } from './AddressAutocomplete'
 
 const ReportForm = () => {
-  const { values, setFieldValue, errors } = useFormikContext<Report>()
-  const mountedRef = useRef(true)
+  const formRef = useRef<FormikProps<Report>>(null)
 
   const { orientation } = useOrientation();
-  const [addresses, setAddresses] = useState<AddressDTO[]>([])
   const flexType = orientation === 'landscape' ? 'row' : 'column'
 
-  useEffect(() => {
-    if(mountedRef.current) {
-      getAddressList().then((resp) => {
-        setAddresses(resp)
-      })
-    }
-    return () => {
-      mountedRef.current = false
-    }
-  }, [])
+  const { workingReport: reportData, saveReport, updateCheckList, updateCheckListItem } = useReports()
 
-  const reanderOption = (item: AddressDTO, index: number) => {
-    return (<SelectItem
-      key={index}
-      title={`${item.formatedAddress} (${item.number} Expires on ${moment(item.validity?.end).format('DD/MM/YYYY')})`}
-    ></SelectItem>
-    )
+  const handleSubmit = async () => {
+    console.log('save called')
+    if (formRef.current) {
+      console.log(formRef.current)
+      if (formRef.current.isValid && formRef.current.dirty) {
+        console.log('jajaja')
+        const updateCmd: UpdateReportCommand = {
+          address: formRef.current.values.address ?? '',
+          date: moment(formRef.current.values.date).format('YYYY-MM-DD'),
+          name: formRef.current.values.name ?? '',
+          id: formRef.current.values.id ?? 0,
+          isClosed: formRef.current.values.isClosed ?? false,
+          licenseNumber: formRef.current.values.license?.number ?? ''
+        }
+        await saveReport(updateCmd)
+          .catch(error => {
+            Alert.alert('Datos Inválidos', error.response.message)
+          })
+      } else {
+        Alert.alert('Datos Inválidos', `report contains invalid fields: ${Object.keys(formRef.current.errors).map(field => field)}`)
+      }
+    }
   }
 
+  const reportValidationSchema = Yup.object().shape({
+    address: Yup.string().required('Required. Please Select an Address'),
+    date: Yup.date().required('Required. Please Select a date')
+  })
+
   return (
-    <>
-      <View style={{alignSelf: 'center', flex: 1 }}>
-        <AutoSave debounceMs={300}/>
-      </View>
+    <ScrollView>
       <Layout style={[styles.container, { flexDirection: flexType }]}>
-        
-        <Datepicker
-          style={[{ flex: flexType === 'row' ? 3 : undefined }, styles.inputMargin]}
-          label='Date'
-          caption='Select the report date'
-          placeholder='Pick Date'
-          date={values.date as Date|undefined}
-          max={new Date()}
-          onSelect={(e) => setFieldValue('date', e)}
-          accessoryRight={CalendarIcon}
-        />
-        <Select
-          placeholder='type to search an address'
-          value={values.address!}
-          style={[{ flex: flexType === 'row' ? 7 : undefined}, styles.inputMargin]} label='Address' 
-          onSelect={(e) => { setFieldValue('address', addresses[e.row].formatedAddress); setFieldValue('license.number', addresses[e.row].number)}}
-          status={errors.address ? 'danger':'basic'}
-          caption={errors.address}
-        >
-          {addresses.map(reanderOption)}
-        </Select>
-        <Input style={[{ flex: flexType === 'row' ? 2 : undefined}, styles.inputMargin]} disabled label='License' value={values.license?.number!}
-        caption='Selected Address License Number' />
+        <Formik innerRef={formRef} validateOnMount validationSchema={reportValidationSchema} initialValues={reportData!} enableReinitialize onSubmit={handleSubmit}>
+          {({ values, errors, setFieldValue }) => (
+            <>
+              <View style={{ alignSelf: 'center', flex: 1 }}>
+                <AutoSave debounceMs={300} />
+              </View>
+              <Datepicker
+                style={[{ flex: flexType === 'row' ? 3 : 1 }, styles.inputMargin]}
+                label='Date'
+                caption='Select the report date'
+                placeholder='Pick Date'
+                date={values.date as Date | undefined}
+                max={new Date()}
+                onSelect={(e) => setFieldValue('date', e)}
+                accessoryRight={CalendarIcon} />
+              <AddressAutocomplete values={values} errors={errors} flexType={flexType} onSelect={(e: AddressSelectedResult) => { console.log({e}); setFieldValue('address', e.formattedAddress); setFieldValue('license.number', e.licenseNumber) }} />
+              <Checklists onCheckListUpdated={updateCheckList} onCheckListItemUpdated={updateCheckListItem} />
+            </>
+          )}
+        </Formik >
       </Layout>
-      <ScrollView>
-        <Checklists onCheckListUpdated={updateCheckList} onCheckListItemUpdated={updateCheckListItem} />
-      </ScrollView>
-    </>
+    </ScrollView>
   )
 }
 
@@ -107,7 +82,7 @@ export { ReportForm }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10
+    flex: 1,
   },
   inputMargin: {
     marginHorizontal: 3

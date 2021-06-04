@@ -27,7 +27,7 @@ namespace Inspections.API.Features.Addresses
 
         // GET: api/Addresses
         [HttpGet(Name = "GetAddresses")]
-        public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAddresses(string filter)
+        public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAddresses(string? filter)
         {
             var result = await _context.Addresses
                 .Where(ad => EF.Functions.Like(ad.AddressLine, $"%{filter}%") ||

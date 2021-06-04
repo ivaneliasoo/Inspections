@@ -103,8 +103,8 @@ namespace Inspections.Infrastructure.Data
             .Property(p => p.LastName).IsRequired().HasMaxLength(50);
 
 
-            modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToTable("ResumenCheckList", m=>m.ExcludeFromMigrations());
+            modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey().ToTable("ResumenReportConfiguration", m => m.ExcludeFromMigrations());
 
             base.OnModelCreating(modelBuilder);
         }

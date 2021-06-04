@@ -13,9 +13,9 @@ namespace Inspections.Core.Domain.CheckListAggregate
     public class CheckList : Entity<int>, IAggregateRoot
     {
         public int? ReportId { get; set; }
-        public Report Report { get; set; }
+        public Report? Report { get; set; }
         public int? ReportConfigurationId { get; set; }
-        public ReportConfiguration ReportConfiguration { get; set; }
+        public ReportConfiguration ReportConfiguration { get; set; } = default!;
         public string Text { get; private set; }
         public List<CheckListParam> TextParams { get; private set; } = new List<CheckListParam>();
         public string Annotation { get; private set; }

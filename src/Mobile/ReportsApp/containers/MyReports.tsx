@@ -1,15 +1,13 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import moment from 'moment';
 import { Animated, Alert, View, StyleSheet, Button } from 'react-native';
 import { Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction } from '@ui-kitten/components';
 import { ClosedIcon, SearchIcon, NotClosedIcon } from '../components/Icons'
 import { OptionsMenu } from '../components/home/OptionsMenu'
-import { useNavigation } from '@react-navigation/native';
 import { BackIcon } from '../components/Icons'
 import { RectButton, Swipeable } from 'react-native-gesture-handler';
 import Empty from '../assets/images/empty.svg'
 import { useReports } from '../hooks/useReports';
-import { ReportsState } from '../contexts/ReportsContext';
 
 const renderLeftActions = () => {
   return (
@@ -47,19 +45,28 @@ const renderRightActions = (_progress: any, dragX: any) => {
 const renderItemFooter = (footerProps: any, item: any) => (
   <Layout {...footerProps} style={styles.cardFooter}>
     {item.isClosed ? <ClosedIcon fill={'green'} style={styles.footerIcon} /> : <NotClosedIcon fill={'orange'} style={styles.footerIcon} />}
-    <Text>{item.isClosed ? 'Completed': 'Incomplete'}</Text>
+    <Text>{item.isClosed ? 'Completed' : 'Incomplete'}</Text>
   </Layout>
 );
 
-export const MyReports = () => {
+export const MyReports = ({ navigation }: any) => {
   const swipe = useRef<Swipeable>(null)
-  const navigation = useNavigation()
-  const { getReports, deleteReport, completeReport, reports, filter, setFilterText, refreshing, setWorkingReport } = useReports()
+  const [refreshing, setRefreshing] = useState(false)
+
+  const { getReports, deleteReport, completeReport, reports, filter, setFilterText } = useReports()
+
+  const handleGetReports = async () => {
+    setRefreshing(true)
+    await getReports()
+    setRefreshing(false)
+  }
+
+  useEffect(() => {
+    handleGetReports()
+  }, [])
 
   const renderReport = ({ item }: any) => {
     const navigateDetails = () => {
-      console.log({ item })
-      setWorkingReport(item.id)
       navigation.navigate('Details', { reportId: item.id, title: item.title });
     };
     return (
@@ -70,7 +77,7 @@ export const MyReports = () => {
             [
               {
                 text: 'Yes',
-                onPress: () => { completeReport(item.id).then(() => getReports()); swipe.current?.close();  }
+                onPress: () => { completeReport(item.id).then(() => handleGetReports()); swipe.current?.close(); }
               },
               {
                 text: 'No',
@@ -85,7 +92,7 @@ export const MyReports = () => {
             [
               {
                 text: 'Yes',
-                onPress: () => { deleteReport(item.id).then(() => getReports()); swipe.current?.close(); }
+                onPress: () => { deleteReport(item.id).then(() => handleGetReports()); swipe.current?.close(); }
               },
               {
                 text: 'No',
@@ -110,14 +117,14 @@ export const MyReports = () => {
       <TopNavigation
         title={`Reports (total: ${reports.length})`}
         alignment='center'
-        accessoryRight={() => <OptionsMenu onChanged={getReports} />}
+        accessoryRight={() => <OptionsMenu onChanged={handleGetReports} />}
         accessoryLeft={() =>
           <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
         }
       />
       <Divider />
       <Layout style={styles.cardList}>
-        <Input style={styles.inpustSearch} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilterText} onEndEditing={getReports} />
+        <Input style={styles.inpustSearch} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilterText} onEndEditing={handleGetReports} />
         {/* <Select
           placeholder='type to search an address'
           value={}
@@ -129,13 +136,13 @@ export const MyReports = () => {
           {[].map(reanderOption)}
         </Select> */}
         {reports.length > 0 ?
-          <List data={reports} renderItem={renderReport} onRefresh={getReports} refreshing={refreshing} />
+          <List data={reports} renderItem={renderReport} onRefresh={handleGetReports} refreshing={refreshing} />
           :
           <View style={styles.noDataLayout}>
             <Empty height={200} width={300} />
             <Text status='warning' category='h1'>No results</Text>
             <Text status='info' category='s2'>try again later or try with a new search</Text>
-            <Button title="Try Again" onPress={getReports} />
+            <Button title="Try Again" onPress={handleGetReports} />
           </View>}
       </Layout>
     </>

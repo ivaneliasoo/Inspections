@@ -59,7 +59,7 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string filter, bool? closed, bool myReports = true)
+        public async Task<IActionResult> GetAll(string? filter, bool? closed, bool myReports = true)
         {
             var result = await _reportsRepository.GetAll(filter, closed, myReports).ConfigureAwait(false);
             if (result is null)

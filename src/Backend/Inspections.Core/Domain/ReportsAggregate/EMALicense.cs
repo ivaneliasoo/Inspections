@@ -5,6 +5,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
 {
     public class License : ValueObject
     {
+        public string Name { get; set; }
         public string Number { get; set; }
         public DateTimeRange Validity { get; set; }
         public decimal Amp { get; set; }
