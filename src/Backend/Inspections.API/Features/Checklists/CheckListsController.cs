@@ -57,31 +57,6 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpPost("{id:int}/params", Name = "AddParams")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> AddCheckListParam([FromBody] AddCheckListParamCommand param)
-        {
-            if (await _mediator.Send(param).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-        [HttpPost("{id:int}/items/{idItem:int}/params", Name ="AddItemParam")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> AddCheckListItemParam([FromBody] AddCheckListItemParamCommand param)
-        {
-            if (await _mediator.Send(param).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-
         [HttpPut("{id:int}", Name ="UpdateChecklist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -114,38 +89,6 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpPut("{id:int}/params/{idParam:int}", Name ="UpdateParam")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateCheckListParam(int id, int idParam, [FromBody] UpdateCheckListParamCommand param)
-        {
-            Guard.Against.Null(param, nameof(param));
-            if (id != param.IdCheckList || idParam != param.Id)
-                return BadRequest();
-
-            if (await _mediator.Send(param).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-        [HttpPut("{id:int}/items/{idItem:int}/params", Name ="UpdateItemParam")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateCheckListItemParam(int id, int idItem, int idParam, [FromBody] UpdateCheckListParamCommand param)
-        {
-            Guard.Against.Null(param, nameof(param));
-            if (idParam != param.Id || idItem != param.IdCheckListItem || param.IdCheckList != id)
-                return BadRequest();
-
-            if (await _mediator.Send(param).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
         [HttpDelete("{id:int}", Name ="DeleteChecklist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -165,30 +108,6 @@ namespace Inspections.API.Features.Checklists
         public async Task<IActionResult> DeleteCheckListItem(int id, int idItem)
         {
             if (await _mediator.Send(new DeleteCheckListItemCommand(id, idItem)).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-        [HttpDelete("{id:int}/params/{idParam:int}", Name ="DeleteParam")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> DeleteCheckListParam(int id, int idParam)
-        {
-            if (await _mediator.Send(new DeleteCheckListParamCommand(id, 0, idParam)).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-        [HttpDelete("{id:int}/items/{idItem:int}/params", Name ="DeleteItemParam")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> DeleteCheckListItemParam(int id, int idItem, int idParam)
-        {
-            if (await _mediator.Send(new DeleteCheckListParamCommand(id, idItem, idParam)).ConfigureAwait(false))
                 return Ok();
 
             return BadRequest();

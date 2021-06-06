@@ -17,7 +17,6 @@ namespace Inspections.Core.Domain.CheckListAggregate
         public int? ReportConfigurationId { get; set; }
         public ReportConfiguration ReportConfiguration { get; set; } = default!;
         public string Text { get; private set; }
-        public List<CheckListParam> TextParams { get; private set; } = new List<CheckListParam>();
         public string? Annotation { get; private set; }
         public bool IsConfiguration { get; set; }
         public bool Completed => !_checks.Any(c => c.Checked == CheckValue.None);

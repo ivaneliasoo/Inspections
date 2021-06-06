@@ -44,7 +44,6 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Report> Reports { get; set; }
         public DbSet<CheckList> CheckLists { get; set; }
         public DbSet<CheckListItem> CheckListItems { get; set; }
-        public DbSet<CheckListParam> CheckListParams { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<PhotoRecord> Photos { get; set; }
         public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
@@ -64,7 +63,6 @@ namespace Inspections.Infrastructure.Data
         {
             modelBuilder.ApplyConfiguration(new PhotoRecordEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SignatureEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new CheckListParamEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CheckListItemEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CheckListEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new NotesEntityTypeConfiguration());
