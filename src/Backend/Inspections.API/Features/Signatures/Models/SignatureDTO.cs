@@ -14,13 +14,13 @@ namespace Inspections.API.Features.Signatures.Models
         public string Title { get; set; }
         public string Annotation { get; set; }
         public ResponsableType ResponsableType { get; set; }
-        public string ResponsableName { get; set; }
-        public string Designation { get; set; }
-        public string Remarks { get; set; }
+        public string ResponsableName { get; set; } = default!; 
+        public string? Designation { get; set; }
+        public string? Remarks { get; set; }
         public DateTimeOffset Date { get; set; }
         public bool Principal { get; set; }
         public int? ReportId { get; set; }
-        public Report Report { get; set; }
+        //public Report Report { get; set; }
         public int? ReportConfigurationId { get; set; }
         public short Order { get; set; }
 
@@ -43,7 +43,7 @@ namespace Inspections.API.Features.Signatures.Models
             Order = signature.Order;
             ReportConfigurationId = signature.ReportConfigurationId;
             ReportId = signature.ReportId;
-            Report = signature.Report;
+            //Report = signature.Report;
         }
     }
 }

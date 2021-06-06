@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import moment from 'moment'
 import { Formik, FormikProps } from 'formik'
-import { Datepicker, Layout } from '@ui-kitten/components'
+import { Datepicker, Text, Layout } from '@ui-kitten/components'
 import { Alert, StyleSheet, View } from 'react-native'
 import { CalendarIcon } from '../Icons'
 import { useOrientation } from '../../hooks/helpers'
@@ -56,16 +56,44 @@ const ReportForm = () => {
               <View style={{ alignSelf: 'center', flex: 1 }}>
                 <AutoSave debounceMs={300} />
               </View>
-              <Datepicker
-                style={[{ flex: flexType === 'row' ? 3 : 1 }, styles.inputMargin]}
-                label='Date'
-                caption='Select the report date'
-                placeholder='Pick Date'
-                date={values.date as Date | undefined}
-                max={new Date()}
-                onSelect={(e) => setFieldValue('date', e)}
-                accessoryRight={CalendarIcon} />
-              <AddressAutocomplete values={values} errors={errors} flexType={flexType} onSelect={(e: AddressSelectedResult) => { console.log({e}); setFieldValue('address', e.formattedAddress); setFieldValue('license.number', e.licenseNumber) }} />
+              <View style={{ flexDirection: 'row', flex: 1 }}>
+                <View style={{ flex: 1 }}>
+                  <Datepicker
+                    style={{ flex: 1 }}
+                    label='Report Date'
+                    placeholder='Pick Date'
+                    date={values.date as Date | undefined}
+                    max={new Date()}
+                    onSelect={(e) => setFieldValue('date', e)}
+                    accessoryRight={CalendarIcon} />
+                  <AddressAutocomplete values={values} errors={errors} flexType={flexType} onSelect={(e: AddressSelectedResult) => { console.log({ e }); setFieldValue('address', e.formattedAddress); setFieldValue('license.number', e.licenseNumber) }} />
+                </View>
+                {values.license &&
+                  <View style={{ flex: 1, marginHorizontal: 10 }}>
+                    <Text category='h5'>License</Text>
+                    <Text category='h6' style={{ flex: 1 }}>Company:
+                      <Text category='s1'> {values.license?.name!}</Text>
+                    </Text>
+                    <Text category='h6'>
+                      Validity
+                      <Text category='s1'> {moment(values.license?.validity?.start!).format('DD-MM-YYYY')} - {moment(values.license?.validity?.end!).format('DD-MM-YYYY')}</Text>
+                    </Text>
+                    <Text category='h6'>Number:
+                      <Text category='s1'> {values.license?.number!}</Text>
+                    </Text>
+                    <Text category='h6'>Amp:
+                      <Text category='s1'> {values.license?.amp!}</Text>
+                      <Text category='h6'>Kva:
+                        <Text category='s1'> {values.license?.kva!}</Text>
+                        <Text category='h6'>  Volt:
+                          <Text category='s1'> {values.license?.volt!}</Text>
+                        </Text>
+                      </Text>
+                    </Text>
+                  </View>
+                }
+
+              </View>
               <Checklists onCheckListUpdated={updateCheckList} onCheckListItemUpdated={updateCheckListItem} />
             </>
           )}

@@ -142,7 +142,7 @@ namespace Inspections.API.Features.Users
 
         // DELETE: api/Users/5
         [HttpDelete("{userName}", Name ="DeleteUser")]
-        public async Task<ActionResult<User>> DeleteUser(string userName = null)
+        public async Task<ActionResult<User>> DeleteUser(string? userName)
         {
             var user = _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
             if (user == null)

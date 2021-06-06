@@ -13,7 +13,7 @@ namespace Inspections.API.Features.Checklists.Handlers
 {
     public class AddCheckListItemParamCommandHandler : IRequestHandler<AddCheckListItemParamCommand, bool>
     {
-        private const string DUPLCATED_PARAMS_MESSAGE = "Cant add duplicated params";
+        //private const string DUPLCATED_PARAMS_MESSAGE = "Cant add duplicated params";
         private readonly ICheckListsRepository _checkListsRepository;
 
         public AddCheckListItemParamCommandHandler(ICheckListsRepository checkListsRepository)
@@ -29,24 +29,24 @@ namespace Inspections.API.Features.Checklists.Handlers
             var checkList = await _checkListsRepository.GetByIdAsync(request.IdCheckList).ConfigureAwait(false);
             var checklistItem = await _checkListsRepository.GetItemByIdAsync(request.IdCheckListItem).ConfigureAwait(false);
 
-            foreach (var param in request.CheckListParams)
-            {
-                if (checklistItem.TextParams.Count > 0)
-                {
-                    if (checklistItem.TextParams.Any(p => p.Key == param.Key))
-                        throw new InvalidOperationException(DUPLCATED_PARAMS_MESSAGE);
-                }
+            //foreach (var param in request.CheckListParams)
+            //{
+            //    //if (checklistItem.TextParams.Count > 0)
+            //    //{
+            //    //    if (checklistItem.TextParams.Any(p => p.Key == param.Key))
+            //    //        throw new InvalidOperationException(DUPLCATED_PARAMS_MESSAGE);
+            //    //}
 
-                var newParam = new CheckListParam
-                (
-                    null,
-                    request.IdCheckListItem,
-                    param.Key,
-                    param.Value,
-                    param.Type
-                );
-                checklistItem.TextParams.Add(newParam);
-            }
+            //    var newParam = new CheckListParam
+            //    (
+            //        null,
+            //        request.IdCheckListItem,
+            //        param.Key,
+            //        param.Value,
+            //        param.Type
+            //    );
+            //    //checklistItem.TextParams.Add(newParam);
+            //}
 
             checkList.AddCheckItems(checklistItem);
 

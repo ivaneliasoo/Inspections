@@ -27,18 +27,18 @@ namespace Inspections.API.Features.Checklists.Handlers
             if (checklist.Completed)
                 return false;
 
-            foreach (var param in request.ChecklistParams)
-            {
-                var newParam = new CheckListParam
-                (
-                    request.IdCheckList,
-                    null,
-                    param.Key,
-                    param.Value,
-                    param.Type
-                );
-                checklist.AddCheckListParams(newParam);
-            }
+            //foreach (var param in request.ChecklistParams)
+            //{
+            //    var newParam = new CheckListParam
+            //    (
+            //        request.IdCheckList,
+            //        null,
+            //        param.Key,
+            //        param.Value,
+            //        param.Type
+            //    );
+            //    checklist.AddCheckListParams(newParam);
+            //}
 
             await _checkListsRepository.UpdateAsync(checklist).ConfigureAwait(false);
 

@@ -32,14 +32,15 @@ namespace Inspections.API.Features.Addresses.Models
         }
 
         public int Id { get; set; }
-        public string AddressLine { get; set; }
-        public string AddressLine2 { get; set; }
-        public string Unit { get; set; }
-        public string Country { get; set; }
-        public string PostalCode { get; set; }
+        public string AddressLine { get; set; } = default!;
+        public string? AddressLine2 { get; set; }
+        public string Unit { get; set; } = default!;
+        public string Country { get; set; } = default!;
+        public string PostalCode { get; set; } = default!;
         public int LicenseId { get; set; }
-        public string Number { get; set; }
+        public string Number { get; set; } = default!;
+        public string Name { get; set; } = default!;
         public DateTimeRange Validity { get; set; }
-        public string FormatedAddress { get; set; }
+        public string FormatedAddress { get; set; } = default!;
     }
 }

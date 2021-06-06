@@ -9,7 +9,7 @@ namespace Inspections.Core.Interfaces
 {
     public interface IReportsRepository : IAsyncRepository<Report>
     {
-        Task<IEnumerable<Report>> GetAll(string filter, bool? closed, bool myReports = true);
+        Task<IEnumerable<Report>> GetAll(string? filter, bool? closed, bool myReports = true);
         Task<dynamic> GetByIdAsync(int id, bool projected);
     }
 }

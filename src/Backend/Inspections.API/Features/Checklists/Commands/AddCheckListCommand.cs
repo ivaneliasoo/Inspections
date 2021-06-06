@@ -14,13 +14,13 @@ namespace Inspections.API.Features.Checklists.Commands
     public class AddCheckListCommand : IRequest<bool>
     {
         [DataMember]
-        public string Text { get; set; }
+        public string Text { get; set; } = default!;
         [DataMember]
         public List<CheckListParamDTO> TextParams { get; set; }
         [DataMember]
         public List<CheckListItemDTO> Items { get; set; }
         [DataMember]
-        public string Annotation { get; set; }
+        public string? Annotation { get; set; }
         public bool IsConfiguration { get; set; }
 
         private AddCheckListCommand() { }

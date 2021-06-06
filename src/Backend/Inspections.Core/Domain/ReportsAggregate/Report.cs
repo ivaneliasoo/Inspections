@@ -12,8 +12,8 @@ namespace Inspections.Core.Domain.ReportsAggregate
         public string Name { get; private set; } = default!;
         public string Address { get; private set; } = default!;
 
-        public int? EMALicenseId { get; set; } = default!;
-        public EMALicense? License { get; private set; } = default!;
+        public int? EMALicenseId { get; set; }
+        public EMALicense? License { get; private set; }
         public DateTimeOffset Date { get; private set; } = default!;
         public bool IsClosed { get; private set; } = default!;
 
@@ -21,15 +21,15 @@ namespace Inspections.Core.Domain.ReportsAggregate
         public string FormName { get; private set; } = default!;
         public string? RemarksLabelText { get; private set; }
         public string? OperationalReadings { get; set; }
-        private readonly List<Signature> signatures = new List<Signature>();
+        private readonly List<Signature> signatures = new();
         public IReadOnlyCollection<Signature> Signatures => signatures;
-        private readonly List<Note> notes = new List<Note>();
+        private readonly List<Note> notes = new();
         public IReadOnlyCollection<Note> Notes => notes;
 
-        private readonly List<CheckList> checkList = new List<CheckList>();
+        private readonly List<CheckList> checkList = new();
         public IReadOnlyCollection<CheckList> CheckList => checkList;
 
-        private readonly List<PhotoRecord> photoRecords = new List<PhotoRecord>();
+        private readonly List<PhotoRecord> photoRecords = new();
 
         internal Report()
         {
@@ -76,11 +76,12 @@ namespace Inspections.Core.Domain.ReportsAggregate
             notes.Add(note);
         }
 
-        private void CheckIfClosed()
-        {
-            if (IsClosed)
-                throw new InvalidOperationException("Report is Closed. You Can't edit Closed Reports");
-        }
+        //I still believe this is a must, but han pin wants to allow editing after report has been closed
+        //private void CheckIfClosed()
+        //{
+        //    if (IsClosed)
+        //        throw new InvalidOperationException("Report is Closed. You Can't edit Closed Reports");
+        //}
 
         public void AddNote(IEnumerable<Note> note)
         {

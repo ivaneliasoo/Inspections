@@ -32,5 +32,5 @@ export const AutoSave = ({ debounceMs }: any) => {
   } else if (lastSaved !== null) {
     result = `${lastSaved}`;
   }
-  return <><Text>{result}</Text></>;
+  return <><Text style={{color: 'green'}}>{result}</Text></>;
 };

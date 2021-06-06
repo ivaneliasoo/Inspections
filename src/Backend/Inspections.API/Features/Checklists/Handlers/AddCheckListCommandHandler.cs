@@ -26,7 +26,7 @@ namespace Inspections.API.Features.Checklists.Handlers
             Guard.Against.Null(request, nameof(request));
 
             var checkList = new CheckList(request.Text,
-                                          CheckListMappingHelper.MapParams(request.TextParams),
+                                          //CheckListMappingHelper.MapParams(request.TextParams),
                                           request.Annotation,
                                           request.IsConfiguration);
             checkList.AddCheckItems(CheckListMappingHelper.MapItems(request.Items));

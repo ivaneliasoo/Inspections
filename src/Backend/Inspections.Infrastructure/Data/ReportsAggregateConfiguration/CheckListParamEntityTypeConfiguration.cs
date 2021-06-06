@@ -16,14 +16,14 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.Type).IsRequired();
             builder.Ignore(p => p.DomainEvents);
 
-            builder.HasOne(pt => pt.CheckList)
-                .WithMany(p => p.TextParams)
-                .OnDelete(DeleteBehavior.NoAction)
-                .HasForeignKey(pt => pt.CheckListId).IsRequired(false);
-            builder.HasOne(pt => pt.CheckListItem)
-                .WithMany(t => t.TextParams)
-                .OnDelete(DeleteBehavior.NoAction)
-                .HasForeignKey(pt => pt.CheckListItemId).IsRequired(false);
+            //builder.HasOne(pt => pt.CheckList)
+            //    .WithMany(p => p.TextParams)
+            //    .OnDelete(DeleteBehavior.NoAction)
+            //    .HasForeignKey(pt => pt.CheckListId).IsRequired(false);
+            //builder.HasOne(pt => pt.CheckListItem)
+            //    .WithMany(t => t.TextParams)
+            //    .OnDelete(DeleteBehavior.NoAction)
+            //    .HasForeignKey(pt => pt.CheckListItemId).IsRequired(false);
 
         }
     }

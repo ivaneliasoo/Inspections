@@ -33,12 +33,12 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             var checks = _context.Set<CheckList>()
                 .Where(s => request.ChecksDefinition.Contains(s.Id)) //TODO: Create Method in repository
                 .Include(p => p.Checks)
-                    .ThenInclude(p => p.TextParams)
-                .Include(p => p.TextParams)
+                //    .ThenInclude(p => p.TextParams)
+                //.Include(p => p.TextParams)
                 .ToList();
 
             var signatures = _context.Signatures.Where(s => request.SignatureDefinitions.Contains(s.Id))
-                 .Include(p => p.Report)
+                 //.Include(p => p.Report)
                 .Include(p => p.Responsable)
                 .ToList();//TODO: Create Method in repository
 

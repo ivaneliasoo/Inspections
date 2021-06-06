@@ -9,9 +9,9 @@ namespace Inspections.API.Features.Users.Models
 {
     public class UserDTO
     {
-        public string UserName { get; set; }
-        public string Name { get; set; }
-        public string LastName { get; set; }
+        public string UserName { get; set; } = default!;
+        public string Name { get; set; } = default!;
+        public string LastName { get; set; } = default!;
         public int? LastEditedReport { get; set; }
         public bool IsAdmin { get; set; }
         public UserDTO()

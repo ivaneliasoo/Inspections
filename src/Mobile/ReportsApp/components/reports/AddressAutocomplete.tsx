@@ -14,7 +14,7 @@ export interface AddressSelectedResult {
 }
 
 export const AddressAutocomplete = ({ values, errors, flexType, onSelect }: any) => {
-  const { getAddressList, addresses } = useAddresses()
+  const { addresses } = useAddresses()
 
   const reanderOption = (item: AddressDTO, index: number) => {
     return (<SelectItem
@@ -36,12 +36,6 @@ export const AddressAutocomplete = ({ values, errors, flexType, onSelect }: any)
       >
         {addresses.map(reanderOption)}
       </Select>
-      <Input
-        style={[{ flex: flexType === 'row' ? 2 : 1 }, styles.inputMargin]}
-        disabled
-        label='License'
-        value={values.license?.number!}
-        caption='Selected Address License Number' />
     </>
   )
 }

@@ -10,11 +10,8 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
 {
     public class ReportEntityTypeConfiguration : IEntityTypeConfiguration<Report>
     {
-        private readonly IUserNameResolver _userNameResolver;
-
-        public ReportEntityTypeConfiguration(IUserNameResolver userNameResolver)
+        public ReportEntityTypeConfiguration()
         {
-            this._userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
         }
 
         public void Configure(EntityTypeBuilder<Report> builder)

@@ -41,9 +41,9 @@ namespace Inspections.Infrastructure.Repositories
                 .Include(p => p.PhotoRecords);
 
             if (closed.HasValue && closed.Value)
-                return await query.AsNoTracking().Where(r => (r.IsClosed) && (myReports ? EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName) : true) && EF.Functions.Like(r.Name, $"%{filter}%")).OrderByDescending(r => r.Date).ToListAsync();
+                return await query.AsNoTracking().Where(r => (r.IsClosed) && (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)) && EF.Functions.Like(r.Name, $"%{filter}%")).OrderByDescending(r => r.Date).ToListAsync();
 
-            return await query.AsNoTracking().Where(r => (myReports ? EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName) : true) && EF.Functions.Like(r.Name, $"%{filter}%")).OrderByDescending(r => r.Date).ToListAsync();
+            return await query.AsNoTracking().Where(r => (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)) && EF.Functions.Like(r.Name, $"%{filter}%")).OrderByDescending(r => r.Date).ToListAsync();
         }
 
         public Task DeleteAsync(Report entity)
@@ -85,7 +85,8 @@ namespace Inspections.Infrastructure.Repositories
                         report.License.Name,
                         report.License.KVA,
                         report.License.Volt,
-                        report.License.Amp
+                        report.License.Amp,
+                        report.License.Validity
                     }:null,
                     report.Title,
                     report.FormName,

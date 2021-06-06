@@ -45,8 +45,8 @@ namespace Inspections.API.Features.Users
 
     public class LoginModel
     {
-        public string username { get; set; }
-        public string password { get; set; }
+        public string username { get; set; } = default!;
+        public string password { get; set; } = default!;
     }
 
 }

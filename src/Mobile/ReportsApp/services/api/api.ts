@@ -1017,6 +1017,12 @@ export interface License {
     /**
      * 
      * @type {string}
+     * @memberof LicenseDTO
+     */
+     name?: string | null;
+    /**
+     * 
+     * @type {string}
      * @memberof License
      */
     number?: string | null;

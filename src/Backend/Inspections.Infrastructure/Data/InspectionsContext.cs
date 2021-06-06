@@ -1,4 +1,5 @@
-﻿using Inspections.Core;
+﻿#nullable disable
+using Inspections.Core;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
@@ -70,7 +71,7 @@ namespace Inspections.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new AddressEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new EMALicenseEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfigurationEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ReportEntityTypeConfiguration(_userNameResolver));
+            modelBuilder.ApplyConfiguration(new ReportEntityTypeConfiguration());
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(e => !e.IsOwned()))
             {
