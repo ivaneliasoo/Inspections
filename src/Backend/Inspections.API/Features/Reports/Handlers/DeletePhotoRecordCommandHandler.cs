@@ -33,10 +33,14 @@ namespace Inspections.API.Features.Reports.Handlers
 
             try
             {
+                if (report is null) return false;
                 var photo = report.PhotoRecords.Where(n => n.Id == request.Id).FirstOrDefault();
-                _storageHelper.DeleteFile(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, photo.FileName.Replace("/ReportsImages/","", StringComparison.InvariantCulture)));
-                _storageHelper.DeleteFile(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, photo.FileNameResized.Replace("/ReportsImages/", "", StringComparison.InvariantCulture)));
-                report.RemovePhoto(photo);
+                if (photo is not null)
+                {
+                    _storageHelper.DeleteFile(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, photo.FileName.Replace("/ReportsImages/", "", StringComparison.InvariantCulture)));
+                    _storageHelper.DeleteFile(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, photo.FileNameResized.Replace("/ReportsImages/", "", StringComparison.InvariantCulture)));
+                    report.RemovePhoto(photo);
+                }
                 await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
 
                 return true;

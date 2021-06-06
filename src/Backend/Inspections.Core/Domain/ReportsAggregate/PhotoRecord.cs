@@ -10,12 +10,12 @@ namespace Inspections.Core.Domain.ReportsAggregate
     public class PhotoRecord : Entity<int>
     {
         public int ReportId { get; private set; }
-        public string FileName { get; private set; }
-        public string FileNameResized { get; private set; }
-        public string Label { get; set; }
+        public string FileName { get; private set; } = default!;
+        public string FileNameResized { get; private set; } = default!;
+        public string? Label { get; set; }
         private PhotoRecord() { }
 
-        public PhotoRecord(int reportId, string path, string pathResized, string label)
+        public PhotoRecord(int reportId, string path, string pathResized, string? label)
         {
             ReportId = reportId;
             Label = label;

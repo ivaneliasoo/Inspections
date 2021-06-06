@@ -76,9 +76,6 @@ namespace Inspections.Infrastructure.Data
                 if (entityType is ResumenReportConfiguration)
                     continue;
 
-                if (entityType is License)
-                    continue;
-
                 if (entityType is Core.Domain.EMALicense)
                     continue;
 

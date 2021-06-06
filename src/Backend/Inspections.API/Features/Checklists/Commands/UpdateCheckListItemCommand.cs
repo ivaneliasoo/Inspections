@@ -32,10 +32,10 @@ namespace Inspections.API.Features.Checklists.Commands
 
         public int Id { get; set; }
         public int CheckListId { get; set; }
-        public string Text { get; set; }
+        public string Text { get; set; } = default!;
         public CheckValue Checked { get; set; }
         public bool Editable { get; set; }
         public bool Required { get; set; }
-        public string Remarks { get; set; }
+        public string? Remarks { get; set; }
     }
 }

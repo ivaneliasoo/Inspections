@@ -9,7 +9,7 @@ namespace Inspections.Core.Domain
     public class Address : Entity<int>
     {
         public string AddressLine { get; set; } = default!;
-        public string AddressLine2 { get; set; } = default!;
+        public string? AddressLine2 { get; set; }
         public string Unit { get; set; } = default!;
         public string Country { get; set; } = default!; 
         public string PostalCode { get; set; } = default!; 

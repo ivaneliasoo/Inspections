@@ -15,7 +15,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
     public class InspectionsSeed
     {
         public static async Task SeedAsync(InspectionsContext context, ILoggerFactory logger
-            , int? retriesNumber = 0)
+            , int retriesNumber = 0)
         {
 
             if (!context.Database.IsInMemory())
@@ -24,7 +24,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
             }
 
             var log = logger.CreateLogger<InspectionsSeed>();
-            int retries = retriesNumber.Value;
+            int retries = retriesNumber;
             try
             {
                 log.LogInformation($"Initializing data {nameof(InspectionsContext)}");
@@ -50,7 +50,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
             }
             catch (Exception ex)
             {
-                if (retries < retriesNumber.Value)
+                if (retries < retriesNumber)
                 {
                     retries++;
 

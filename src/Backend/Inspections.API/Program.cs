@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Inspections.API
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1052:Static holder types should be Static or NotInheritable", Justification = "<Pending>")]
     public class Program
     {
         private const string DATABASE_ERROR_MESSAGE = "can't seed, error connecting to database";

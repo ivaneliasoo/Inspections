@@ -43,11 +43,11 @@ namespace Inspections.API.Features.Licenses.Models
         }
 
         public int LicenseId { get; set; }
-        public string Number { get; set; }
-        public string Name { get; set; }
-        public string PersonInCharge { get; set; }
-        public string Contact { get; set; }
-        public string Email { get; set; }
+        public string Number { get; set; } = default!;
+        public string Name { get; set; } = default!;
+        public string? PersonInCharge { get; set; }
+        public string? Contact { get; set; }
+        public string? Email { get; set; }
         public decimal Amp { get; set; }
         public decimal Volt { get; set; }
         public decimal KVA { get; set; }

@@ -26,10 +26,10 @@ namespace Inspections.API.Features.Checklists.Handlers
             Guard.Against.Null(request, nameof(request));
 
             var checkList = new CheckList(request.Text,
-                                          //CheckListMappingHelper.MapParams(request.TextParams),
                                           request.Annotation,
                                           request.IsConfiguration);
-            checkList.AddCheckItems(CheckListMappingHelper.MapItems(request.Items));
+            if(request.Items is not null)
+                checkList.AddCheckItems(CheckListMappingHelper.MapItems(request.Items));
 
             var result = await _checkListsRepository.AddAsync(checkList).ConfigureAwait(false);
 

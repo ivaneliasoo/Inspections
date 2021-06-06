@@ -41,7 +41,6 @@ namespace Inspections.Infrastructure.Repositories
         {
             return await _context.Set<Signature>()
                 .Where(s => s.Id == id)
-                //.Include(p => p.Report)
                 .Include(p=>p.Responsable)
                 .OrderBy(s=>s.Order)
                 .FirstOrDefaultAsync();

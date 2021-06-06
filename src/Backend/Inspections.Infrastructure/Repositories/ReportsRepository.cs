@@ -35,7 +35,7 @@ namespace Inspections.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task<IEnumerable<Report>> GetAll(string filter, bool? closed, bool myReports)
+        public async Task<IEnumerable<Report>> GetAll(string? filter, bool? closed, bool myReports)
         {
             var query = _context.Reports
                 .Include(p => p.PhotoRecords);
@@ -60,14 +60,6 @@ namespace Inspections.Infrastructure.Repositories
         public async Task<Report> GetByIdAsync(int id)
         {
             return await _context.Reports
-               //.Include(p => p.CheckList)
-               // .ThenInclude(p => p.Checks)
-               //     .ThenInclude(p => p.TextParams)
-               //.Include(p => p.Signatures)
-               // .ThenInclude(p => p.Responsable)
-               //.Include(p => p.Notes)
-               //.Include(p => p.PhotoRecords)
-               //.Include(p => p.License)
                .AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
         }
 

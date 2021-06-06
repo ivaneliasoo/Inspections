@@ -11,7 +11,6 @@ namespace Inspections.Core.Domain.CheckListAggregate
         public bool Editable { get; set; }
         public bool Required { get; set; }
         public string? Remarks { get; set; }
-        //public List<CheckListParam> TextParams { get; set; } = new List<CheckListParam>();
 
         private CheckListItem() { } //Required by EF
 
@@ -23,7 +22,6 @@ namespace Inspections.Core.Domain.CheckListAggregate
             Editable = editable;
             Required = required;
             Remarks = remarks;
-            //TextParams = textParams;
         }
     }
 }

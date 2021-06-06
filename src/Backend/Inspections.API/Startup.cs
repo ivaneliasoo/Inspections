@@ -85,12 +85,9 @@ namespace Inspections.API
                     {
                         var accessToken = context.Request.Query["access_token"];
                         var path = context.HttpContext.Request.Path;
-                        if (path.Value is not null)
+                        if (!string.IsNullOrEmpty(accessToken) && path.Value!.Contains("-hub", StringComparison.OrdinalIgnoreCase))
                         {
-                            if (!string.IsNullOrEmpty(accessToken) && path.Value.Contains("-hub", StringComparison.OrdinalIgnoreCase))
-                            {
-                                context.Token = accessToken;
-                            }
+                            context.Token = accessToken;
                         }
                         return Task.CompletedTask;
                     }

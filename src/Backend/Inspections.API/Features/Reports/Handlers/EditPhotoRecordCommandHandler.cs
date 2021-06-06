@@ -19,15 +19,19 @@ namespace Inspections.API.Features.Reports.Handlers
             this._reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
         }
 
-        public async  Task<bool> Handle(EditPhotoRecordCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(EditPhotoRecordCommand request, CancellationToken cancellationToken)
         {
             Guard.Against.Null(request, nameof(request));
             var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
 
             var photo = report.PhotoRecords.Where(n => n.Id == request.Id).FirstOrDefault();
-            report.RemovePhoto(photo);
-            photo.Label = request.Label?.ToUpperInvariant();
-            report.AddPhoto(photo);
+            if (photo is not null)
+            {
+                report.RemovePhoto(photo);
+                photo.Label = request.Label?.ToUpperInvariant();
+                report.AddPhoto(photo);
+
+            }
             await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
             return true;
         }

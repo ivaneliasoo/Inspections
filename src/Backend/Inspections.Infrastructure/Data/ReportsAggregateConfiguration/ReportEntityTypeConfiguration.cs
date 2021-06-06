@@ -20,18 +20,6 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.ToTable("Reports", InspectionsContext.DEFAULT_SCHEMA);
             builder.Ignore(p => p.DomainEvents);
             builder.HasKey(p => p.Id);
-            //builder.OwnsOne(p => p.License, ir =>
-            //{
-            //    ir.Property(p => p.Number).IsRequired();
-            //    ir.OwnsOne(p => p.Validity, l =>
-            //    {
-            //        l.Property(p => p.Start).IsRequired();
-            //        l.Property(p => p.End).IsRequired();
-            //    });
-            //    ir.Property(p => p.Amp).IsRequired().HasDefaultValue(0);
-            //    ir.Property(p => p.Volt).IsRequired().HasDefaultValue(0);
-            //    ir.Property(p => p.Kva).IsRequired().HasDefaultValue(0);
-            //});
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.Address).IsRequired();
             builder.Property(p => p.Date).IsRequired();

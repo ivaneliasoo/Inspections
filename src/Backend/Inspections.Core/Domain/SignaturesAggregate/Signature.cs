@@ -10,11 +10,11 @@ namespace Inspections.Core.Domain.SignaturesAggregate
     public class Signature : Entity<int>, IAggregateRoot
     {
         public string Title { get; set; } = default!;
-        public string Annotation { get; set; } = "";
+        public string? Annotation { get; set; }
         public Responsable Responsable { get; set; } = new Responsable();
-        public string ResponsableName => Responsable.Name;
-        public string Designation { get; set; } = "";
-        public string Remarks { get; set; } = "";
+        public string? ResponsableName => Responsable.Name;
+        public string? Designation { get; set; }
+        public string? Remarks { get; set; }
         public DateTimeOffset Date { get; set; }
         public bool Principal { get; set; }
         public bool IsConfiguration { get; set; }
@@ -38,7 +38,8 @@ namespace Inspections.Core.Domain.SignaturesAggregate
 
         public Signature PreparteForNewReportConfiguration()
         {
-            var newSignature = this.MemberwiseClone() as Signature;
+            var newSignature = (Signature)this.MemberwiseClone();
+            if (newSignature is null) throw new Exception("error trying to add signatures to the report");
             newSignature.Id = 0;
             newSignature.ReportId = null;
             newSignature.ReportConfigurationId = 0;

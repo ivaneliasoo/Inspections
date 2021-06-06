@@ -16,17 +16,16 @@ namespace Inspections.Core.Domain.CheckListAggregate
         public Report? Report { get; set; }
         public int? ReportConfigurationId { get; set; }
         public ReportConfiguration ReportConfiguration { get; set; } = default!;
-        public string Text { get; private set; }
+        public string Text { get; private set; } = default!;
         public string? Annotation { get; private set; }
         public bool IsConfiguration { get; set; }
         public bool Completed => !_checks.Any(c => c.Checked == CheckValue.None);
         public bool @Checked => _checks.Any(c => c.Checked != CheckValue.None);
         private readonly List<CheckListItem> _checks = new();
 
-        public CheckList(string text, string annotation, bool isConfiguration)
+        public CheckList(string text, string? annotation, bool isConfiguration)
         {
             Text = text;
-            //TextParams = textParams;
             Annotation = annotation;
             IsConfiguration = isConfiguration;
             ReportId = null;
@@ -36,7 +35,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
 
         public IReadOnlyList<CheckListItem> Checks => _checks.AsReadOnly();
 
-        public void Edit(string text, string annotation, bool isConfiguration)
+        public void Edit(string text, string? annotation, bool isConfiguration)
         {
             
             Text = text;
@@ -73,20 +72,6 @@ namespace Inspections.Core.Domain.CheckListAggregate
             _checks.Remove(checkListItem);
         }
 
-        //public void AddCheckListParams(CheckListParam checkListParam)
-        //{
-        //    Guard.Against.Null(checkListParam, nameof(checkListParam));
-            
-        //    TextParams.Add(checkListParam);
-        //}
-
-        //public void AddCheckListParams(IEnumerable<CheckListParam> checkListParams)
-        //{
-        //    Guard.Against.Null(checkListParams, nameof(checkListParams));
-            
-        //    TextParams.AddRange(checkListParams);
-        //}
-
         public CheckList CloneForReport()
         {
             var newCheckList = new CheckList(this.Text, this.Annotation, false)
@@ -96,11 +81,6 @@ namespace Inspections.Core.Domain.CheckListAggregate
 
             foreach (var check in Checks)
             {
-                //var parameters = new List<CheckListParam>();
-                //foreach (var param in check.TextParams)
-                //{
-                //    parameters.Add(new CheckListParam(null, 0, param.Key, param.Value, param.Type));
-                //}
                 newCheckList.AddCheckItems(new CheckListItem(0, check.Text, CheckValue.None,check.Editable, check.Required, check.Remarks));
             }
             return newCheckList;
@@ -116,11 +96,6 @@ namespace Inspections.Core.Domain.CheckListAggregate
 
             foreach (var check in Checks)
             {
-                //var parameters = new List<CheckListParam>();
-                //foreach (var param in check.TextParams)
-                //{
-                //    parameters.Add(new CheckListParam(null, 0, param.Key, param.Value, param.Type));
-                //}
                 newCheckList.AddCheckItems(new CheckListItem(0, check.Text, check.Checked, check.Editable, check.Required, check.Remarks));
             }
             return newCheckList;

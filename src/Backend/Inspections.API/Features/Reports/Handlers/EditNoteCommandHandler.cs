@@ -25,11 +25,16 @@ namespace Inspections.API.Features.Reports.Handlers
             var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
 
             var note = report.Notes.Where(n => n.Id == request.Id).FirstOrDefault();
-            report.RemoveNote(note);
+            if (note is not null)
+            {
+                report.RemoveNote(note);
 
-            note.Text = request.Text;
-            note.Checked = request.Checked;
-            report.AddNote(note);
+                note.Text = request.Text;
+                note.Checked = request.Checked;
+
+                report.AddNote(note);
+            }
+                
             await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
             return true;
         }

@@ -9,8 +9,8 @@ namespace Inspections.Core.QueryModels
     {
         public int Id { get; set; }
         public int Type { get; set; }
-        public string Title { get; set; }
-        public string FormName { get; set; }
+        public string Title { get; set; } = default!;
+        public string FormName { get; set; } = default!;
         public string? RemarksLabelText { get; set; }
         public int DefinedCheckLists { get; set; }
         public int DefinedSignatures { get; set; }
