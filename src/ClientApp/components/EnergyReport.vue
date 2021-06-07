@@ -688,9 +688,9 @@
   </v-container>
 </template>
 
-
+// TODO: Migrar A typesscript, pasar la configuracion de echart a un plugin
 <script>
-import axios from "axios";
+
 import Papa from "papaparse";
 
 import pdfMake from "pdfmake/build/pdfmake";
@@ -962,29 +962,23 @@ export default {
       this.userMessage = "";
       this.alert = false;
     },
-    url(op) {
-      var host = window.location.host;
-      if (host.indexOf(":") > -1) {
-        host = host.split(":")[0];
-      }
-      const port = "8090";
-      const url = `http://${host}:${port}/api/${op}`;
-      return url;
+    endpoint(op) {
+      return `/energyreport/${op}`;
     },
     readTemplates() {
       const self = this;
       return new Promise(function(resolve) {
-        axios.get(self.url("category"))
+        this.$axios.$get(self.endpoint("category"))
           .then(response => {
-            resolve(response.data);
+            resolve(response);
           })
       })
     },
     initialize() {
       const self = this;
-      axios.get(this.url("category"))
+      this.$axios.$get(this.endpoint("category"))
         .then(response => {
-          self.templates = response.data;
+          self.templates = response;
           for (var i=0; i<10; i++) {
             var chartRef = this.$refs["line"+(i+1)];
             this.lineCharts[i] = echarts.init(chartRef, undefined, {width: 800, height: 380});
@@ -993,9 +987,9 @@ export default {
           }
         })
       .then(
-        axios.get(this.url("background"))
+        this.$axios.$get(this.endpoint("background"))
           .then(response => {
-            self.background = response.data;
+            self.background = response;
           })
       )
     },
@@ -1013,8 +1007,8 @@ export default {
         "Accept": "text/plain"
       };
       const str = JSON.stringify(this.templates);
-      axios({
-        url: this.url("category"),
+      this.$axios({
+        endpoint: this.endpoint("category"),
         method: "post",
         data: str,
         headers: configHeaders

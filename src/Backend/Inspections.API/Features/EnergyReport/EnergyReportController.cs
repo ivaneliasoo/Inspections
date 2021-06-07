@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inspections.API.Features.Energy
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EnergyReportController : ControllerBase
