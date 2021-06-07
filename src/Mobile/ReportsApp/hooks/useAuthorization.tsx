@@ -22,7 +22,8 @@ export const useAuthorization = () => {
   const userInfo = async (token: string) => {
     try {
       const userToken = await AsyncStorage.getItem('userToken')
-      const usersApi = new UsersApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
+      
+      const usersApi = new UsersApi({ accessToken: token ?? userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
       const resp = await usersApi.getActiveUser()
       return resp.data || {}
     } catch (error) {

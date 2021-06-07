@@ -32,6 +32,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
             newSignature.ReportConfigurationId = null;
             newSignature.Date = DateTime.Now;
             newSignature.IsConfiguration = false;
+            newSignature.Responsable = new Responsable { Name = "" };
 
             return newSignature;
         }

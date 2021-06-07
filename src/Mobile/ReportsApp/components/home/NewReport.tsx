@@ -22,7 +22,6 @@ type NewReportProps = {
   onCreate: any;
 }
 export const NewReport = ({ isOpen, onClose, onCreate }: NewReportProps) => {
-  const navigation = useNavigation()
   const [isBusy, setIsBusy] = useState(false)
   const [templates, setTemplates] = useState<ResumenReportConfiguration[]>([])
 
