@@ -1,23 +1,12 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-    </v-app-bar>
-    <v-main>
-      <EnergyReport/>
-    </v-main>
-  </v-app>
+  <EnergyReport />
 </template>
 
 <script>
-import EnergyReport from '~/components/EnergyReport.vue';
+import EnergyReport from "~/components/EnergyReport.vue";
 
 export default {
-  name: 'App',
-
+  layout: "default",
   components: {
     EnergyReport,
   },
