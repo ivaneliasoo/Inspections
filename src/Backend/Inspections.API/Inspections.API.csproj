@@ -53,6 +53,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="cse-logo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="MediaUpload\img\Reports\Readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
