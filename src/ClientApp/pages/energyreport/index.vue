@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import EnergyReport from './components/EnergyReport';
+import EnergyReport from '~/components/EnergyReport.vue';
 
 export default {
   name: 'App',

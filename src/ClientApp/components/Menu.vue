@@ -56,7 +56,7 @@ export default class Menu extends Vue {
     {
       name: 'Energy Report',
       parentName: '',
-      route: 'http://3.133.113.179:8080/',
+      route: '/energyreport',
       icon: 'mdi-graph'
     },
     {

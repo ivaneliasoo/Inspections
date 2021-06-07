@@ -705,15 +705,15 @@ import 'echarts/lib/component/grid';
 import 'echarts/lib/component/legend';
 import { MarkLineComponent } from 'echarts/components';
 import {lineChartOptions, sepLineChartOptions, histogramOptions, barChartOptions, minMax}
-    from '../assets/js/charts.js';
+    from '../composables/charts.js';
 
 import * as d3 from "d3";
 //import 'blueimp-md5';
 
-import colors from '../assets/js/entity.js'
-import document from '../assets/js/document.js';
+import colors from '../composables/entity.js'
+import document from '../composables/document.js';
 import { getColumns, getCalcColumns, checkTemplate }
-    from '../assets/js/categories.js';
+    from '../composables/categories.js';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 echarts.use([MarkLineComponent]);
@@ -963,12 +963,12 @@ export default {
       this.alert = false;
     },
     endpoint(op) {
-      return `/energyreport/${op}`;
+      return `/api/energyreport/${op}`;
     },
     readTemplates() {
       const self = this;
       return new Promise(function(resolve) {
-        this.$axios.$get(self.endpoint("category"))
+        self.$axios.$get(self.endpoint("category"))
           .then(response => {
             resolve(response);
           })
@@ -976,7 +976,7 @@ export default {
     },
     initialize() {
       const self = this;
-      this.$axios.$get(this.endpoint("category"))
+      self.$axios.$get(this.endpoint("category"))
         .then(response => {
           self.templates = response;
           for (var i=0; i<10; i++) {
@@ -987,7 +987,7 @@ export default {
           }
         })
       .then(
-        this.$axios.$get(this.endpoint("background"))
+        self.$axios.$get(this.endpoint("background"))
           .then(response => {
             self.background = response;
           })

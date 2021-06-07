@@ -16,7 +16,7 @@ namespace Inspections.API.Features.Energy
     [ApiController]
     public class EnergyReportController : ControllerBase
     {
-        [HttpPost("categories")]
+        [HttpPost("category")]
         public async Task<IActionResult> UpdateCategories()
         {
             var deserializedContent = await JsonSerializer.DeserializeAsync<object>(Request.Body);
@@ -27,7 +27,7 @@ namespace Inspections.API.Features.Energy
             return NoContent();
         }
 
-        [HttpGet("categories")]
+        [HttpGet("category")]
         public async Task<IActionResult> Categories()
         {
             using var reader = System.IO.File.OpenText(CategoriesFilePath);

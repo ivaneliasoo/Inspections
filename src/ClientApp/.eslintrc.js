@@ -10,8 +10,8 @@ module.exports = {
   ],
   rules: {
     'semi': [2, 'never'],
-    'vue/comment-directive': ['error', {
-      'reportUnusedDisableDirectives': false
+    'vue/valid-v-slot': ['error', {
+      allowModifiers: true
     }]
   }
 }
