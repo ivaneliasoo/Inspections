@@ -6,6 +6,8 @@ import {ThemeContext} from './contexts/ThemeContext';
 import {AuthProvider} from './contexts/AuthContext';
 import {AppNavigator} from './navigations/AppNavigator';
 import { ReportsProvider } from './contexts/ReportsContext';
+import FlashMessage from 'react-native-flash-message';
+
 
 export default () => {
   const [theme, setTheme] = React.useState('light');
@@ -23,6 +25,7 @@ export default () => {
           <AuthProvider>
             <ReportsProvider>
               <AppNavigator />
+              <FlashMessage position="top" />
             </ReportsProvider>
           </AuthProvider>
         </ApplicationProvider>

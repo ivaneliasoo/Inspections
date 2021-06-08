@@ -1,21 +1,53 @@
 import React, { ReactElement, useRef } from 'react';
 import { View, Image } from 'react-native';
 import { KeyboardAvoidingView } from './KeyboardAvoidingView'
-import { Icon, Button, Input, Text } from '@ui-kitten/components';
+import { Icon, Button, Input, Text, useTheme } from '@ui-kitten/components';
 import { ImageOverlay } from './ImageOverlay'
 import { StyleSheet } from 'react-native';
 import { AuthContext } from '../contexts/AuthContext';
 import { PasswordIcon, PersonIcon } from './Icons';
 import { API_HOST } from '../services/api/api-accesor';
+import { showMessage, hideMessage } from 'react-native-flash-message'
 
 
 const LoginIcon = (props: any) => <Icon name="log-in-outline" {...props} />;
 
 const Login = () => {
+  const theme = useTheme()
   const [user, setUser] = React.useState<string>('');
   const passwordInput = useRef(null)
   const [password, setPassword] = React.useState<string>('');
   const authCtx = React.useContext(AuthContext)
+
+  const logIn = async () => {
+    try {
+      await authCtx.signIn({ user, password })
+    } catch (error: any) {
+      if (error && error.response) {
+        showMessage({
+          message: 'invalid username or password',
+          animated: true,
+          autoHide: true,
+          backgroundColor: theme['color-danger-700'],
+          duration: 3000,
+          position: 'bottom'
+        })
+      } else {
+        showMessage({
+          message: 'invalid username or password',
+          animated: true,
+          autoHide: true,
+          backgroundColor: theme['color-danger-700'],
+          duration: 3000,
+          position: 'bottom'
+        })
+      }
+    }
+  }
+
+  const formIsValid = React.useMemo(() => user && password, [user, password])
+
+
   return (
     <KeyboardAvoidingView>
       <ImageOverlay style={styles.container} source={require('../assets/images/LoginBackground.jpg')}>
@@ -36,11 +68,22 @@ const Login = () => {
             autoCapitalize='none'
           />
           <Input ref={passwordInput}
-          placeholder="enter your Password" 
-          accessoryLeft={PasswordIcon} 
-          status='control' 
-          secureTextEntry={true} label="Password" returnKeyType={'done'} value={password} onSubmitEditing={(e) => authCtx.signIn({ user, password })} onChangeText={setPassword} autoCapitalize='none' />
-          <Button style={styles.evaButton} status='primary' size='large' accessoryRight={LoginIcon} onPress={(e) => authCtx.signIn({ user, password })}>Sign In</Button>
+            placeholder="enter your Password"
+            accessoryLeft={PasswordIcon}
+            status='control'
+            secureTextEntry={true}
+            label="Password"
+            returnKeyType={'done'}
+            value={password}
+            onSubmitEditing={logIn}
+            onChangeText={setPassword}
+            autoCapitalize='none' />
+          <Button style={styles.evaButton}
+            disabled={!formIsValid}
+            status='primary'
+            size='large'
+            accessoryRight={LoginIcon} o
+            nPress={logIn}>Sign In</Button>
           <Text category='c1'>{API_HOST}</Text>
         </View>
       </ImageOverlay>
