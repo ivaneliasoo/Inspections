@@ -28,7 +28,7 @@ const Login = () => {
           message: 'invalid username or password',
           animated: true,
           autoHide: true,
-          backgroundColor: theme['color-danger-700'],
+          backgroundColor: theme['color-danger-500'],
           duration: 3000,
           position: 'bottom'
         })
@@ -37,7 +37,7 @@ const Login = () => {
           message: 'invalid username or password',
           animated: true,
           autoHide: true,
-          backgroundColor: theme['color-danger-700'],
+          backgroundColor: theme['color-danger-500'],
           duration: 3000,
           position: 'bottom'
         })
@@ -82,8 +82,8 @@ const Login = () => {
             disabled={!formIsValid}
             status='primary'
             size='large'
-            accessoryRight={LoginIcon} o
-            nPress={logIn}>Sign In</Button>
+            accessoryRight={LoginIcon}
+            onPress={logIn}>Sign In</Button>
           <Text category='c1'>{API_HOST}</Text>
         </View>
       </ImageOverlay>
