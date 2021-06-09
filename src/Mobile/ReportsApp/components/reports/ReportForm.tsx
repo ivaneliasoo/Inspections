@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import moment from 'moment'
 import { Formik, FormikProps } from 'formik'
-import { Datepicker, Text, Layout } from '@ui-kitten/components'
+import { Datepicker, Text, Layout, Card } from '@ui-kitten/components'
 import { Alert, StyleSheet, View } from 'react-native'
 import { CalendarIcon } from '../Icons'
 import { useOrientation } from '../../hooks/helpers'
@@ -92,13 +92,17 @@ const ReportForm = () => {
                     </Text>
                   </View>
                 }
-
               </View>
-              <Checklists onCheckListUpdated={updateCheckList} onCheckListItemUpdated={updateCheckListItem} />
             </>
           )}
         </Formik >
       </Layout>
+      <Card
+        style={{ margin: 3 }}
+        header={() => <Text style={{ marginHorizontal: 10, marginTop: 10 }} appearance="hint" category="h6">Checks Legend {reportData?.checkList![0].annotation!}</Text>}
+      >
+        <Checklists checkLists={reportData?.checkList} onCheckListUpdated={updateCheckList} onCheckListItemUpdated={updateCheckListItem} />
+      </Card>
     </ScrollView>
   )
 }

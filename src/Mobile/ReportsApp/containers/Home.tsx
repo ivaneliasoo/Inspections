@@ -17,7 +17,7 @@ export const Home = ({ navigation }: any) => {
   const cardOptions: any[] = [
     {
       name: 'new',
-      text: 'New Report',
+      text: 'Create a New Report',
       helpText: 'Creates a configured and empty report',
       icon: 'plus-outline',
       color: 'accent',
@@ -26,7 +26,7 @@ export const Home = ({ navigation }: any) => {
     },
     {
       name: 'pending',
-      text: 'Edit/View Pending Reports',
+      text: 'Continue existing Report',
       helpText: '',
       icon: 'edit-outline',
       color: 'accent',
