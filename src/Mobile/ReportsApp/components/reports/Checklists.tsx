@@ -28,9 +28,9 @@ const CheckListItemCheck = ({ item, index }) => {
   const persistedValue = item.checked! >= 3 ? 2 : item.checked ?? 2
   const [showRemark, setShowRemarks] = useState(false)
 
-  const RightActions = (props) => {
+  const RightActions = (props: any) => {
     return <>
-      <Icon name={checkItemIcon[persistedValue].name} {...props} fill={checkItemIcon[persistedValue].color} style={styles.lineIcon} />
+      <Icon style={styles.icon} name={checkItemIcon[persistedValue].name} {...props} fill={checkItemIcon[persistedValue].color} style={styles.lineIcon} />
     </>
   }
 
@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
     height: 40,
   },
   lineIcon: {
-    width: 35,
-    height: 35
+    width: 40,
+    height: 40
   },
   checkListLoading: {
     flex: 1,
