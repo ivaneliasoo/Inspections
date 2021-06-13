@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Text, Icon, Input, Card, List, ListItem, Button } from '@ui-kitten/components'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { CheckList, CheckListItem, CheckValue } from '../../services/api'
+import { useContext } from 'react';
+import { ReportsContext } from '../../contexts/ReportsContext';
 
 const checkItemIcon = [
   { name: 'close-outline', color: 'red' },
@@ -131,11 +133,13 @@ export interface ChecklistsProps {
   onCheckListItemUpdated: () => void;
 }
 const Checklists = ({ checkLists = [], onCheckListUpdated, onCheckListItemUpdated }: any) => {
+  const { reportsState: reportData } = useContext(ReportsContext)
   return (
     <View>
       {checkLists && checkLists.map((checkList: CheckList, index: number) => {
         return (
           <CheckListGroup item={checkList} index={index} key={index} onChange={(checked) => {
+            
             onCheckListUpdated({ reportId: checkList.reportId, checkListId: checkList.id, newValue: checked })
           }}
             onCheckUpdated={(payload: CheckListItem) => {

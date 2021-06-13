@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { Report } from "services/api";
 import { ReportsFilterPayload, reportsReducer } from './reportsReducer';
+import { CheckList } from '../services/api/api';
 
 export interface ReportsState {
   reports?: Report[];
@@ -15,6 +16,7 @@ export interface ReportsContextProps {
   setFilter: (filter: ReportsFilterPayload) => void,
   getAll: (reports: Report[]) => void,
   setWorkingReport: (payload: Report) => void,
+  updateCheckList: (payload: CheckList) => void
 }
 const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '', workingReport: undefined! }
 
@@ -44,12 +46,21 @@ export const ReportsContext = createContext({} as ReportsContextProps);
     })
   }
 
+  const updateCheckList = (payload: CheckList) => {
+    dispatch({
+      type: 'UPDATE_CHECKLIST',
+      payload
+    })
+    console.log(reportsState.workingReport)
+  }
+
   return (
     <ReportsContext.Provider value={{
       reportsState,
       setFilter,
       getAll,
-      setWorkingReport
+      setWorkingReport,
+      updateCheckList
     }}>
       {children}
     </ReportsContext.Provider>
