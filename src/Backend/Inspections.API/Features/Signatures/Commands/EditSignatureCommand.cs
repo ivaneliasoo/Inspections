@@ -9,8 +9,8 @@ namespace Inspections.API.Features.Signatures.Commands
         public EditSignatureCommand(int id, 
                                    string title,
                                    string annotation,
-                                   ResponsableType responsableType,
-                                   string responsableName,
+                                   ResponsibleType responsableType,
+                                   string responsibleName,
                                    string designation,
                                    string remarks,
                                    DateTimeOffset date,
@@ -21,13 +21,13 @@ namespace Inspections.API.Features.Signatures.Commands
             Id = id;
             Title = title;
             Annotation = annotation;
-            ResponsableType = responsableType;
-            ResponsableName = responsableName;
+            ResponsibleType = responsableType;
+            ResponsibleName = responsibleName;
             Designation = designation;
             Remarks = remarks;
             Date = date;
             Principal = principal;
-            DrawedSign = drawedSign;
+            DrawnSign = drawedSign;
             Order = order;
         }
 
@@ -36,13 +36,13 @@ namespace Inspections.API.Features.Signatures.Commands
         public int Id { get; set; }
         public string Title { get; set; } = default!;
         public string? Annotation { get; set; }
-        public ResponsableType ResponsableType { get; set; }
-        public string ResponsableName { get; set; } = default!;
+        public ResponsibleType ResponsibleType { get; set; }
+        public string ResponsibleName { get; set; } = default!;
         public string? Designation { get; set; }
         public string? Remarks { get; set; }
         public DateTimeOffset Date { get; set; }
         public bool Principal { get; set; }
-        public string? DrawedSign { get; set; }
+        public string? DrawnSign { get; set; }
         public short Order { get; }
     }
 }

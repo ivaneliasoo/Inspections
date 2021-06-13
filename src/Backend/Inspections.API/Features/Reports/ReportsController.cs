@@ -72,6 +72,7 @@ namespace Inspections.API.Features.Inspections
         public async Task<IActionResult> GetReport(int id)
         {
             var result = await _reportsRepository.GetByIdAsync(id, true).ConfigureAwait(false);
+
             if (result is null)
                 return NoContent();
 

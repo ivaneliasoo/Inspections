@@ -67,9 +67,9 @@ const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
     <>
     <Input 
       placeholder='type a remark' 
-      value={check.remark!} 
-      onChangeText={(text) => { setCheck({...check, remarks: text}) }} 
-      onSubmitEditing={() => setShowRemarks(prev => !prev)}
+      value={check.remarks!} 
+      onChangeText={(text) => { setCheck({...check, remarks: text}); }} 
+      onSubmitEditing={() => {setShowRemarks(prev => !prev); onPress();}}
       accessoryRight={() => <Icon name='close-outline' fill='black' style={styles.icon} />} />
     </>
     : <ListItem

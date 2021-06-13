@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { Report } from "services/api";
 import { ReportsFilterPayload, reportsReducer } from './reportsReducer';
-import { CheckList } from '../services/api/api';
+import { CheckList, Signature } from '../services/api/api';
 
 export interface ReportsState {
   reports?: Report[];
@@ -16,7 +16,9 @@ export interface ReportsContextProps {
   setFilter: (filter: ReportsFilterPayload) => void,
   getAll: (reports: Report[]) => void,
   setWorkingReport: (payload: Report) => void,
-  updateCheckList: (payload: CheckList) => void
+  updateCheckList: (payload: CheckList) => void,
+  updateSignature: (payload: { signature: Signature, index: number }) => void,
+  clearWorkingReport: () => void
 }
 const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '', workingReport: undefined! }
 
@@ -46,6 +48,13 @@ export const ReportsContext = createContext({} as ReportsContextProps);
     })
   }
 
+  const clearWorkingReport = () => {
+    dispatch({
+      type: 'CLEAR_WORKING_REPORT',
+    })
+  }
+
+
   const updateCheckList = (payload: CheckList) => {
     dispatch({
       type: 'UPDATE_CHECKLIST',
@@ -54,13 +63,22 @@ export const ReportsContext = createContext({} as ReportsContextProps);
     console.log(reportsState.workingReport)
   }
 
+  const updateSignature = (payload: { signature: Signature, index: number }) => {
+    dispatch({
+      type: 'UPDATE_DRAWNSIGNATURE',
+      payload
+    })
+  }
+
   return (
     <ReportsContext.Provider value={{
       reportsState,
       setFilter,
       getAll,
       setWorkingReport,
-      updateCheckList
+      updateCheckList,
+      updateSignature,
+      clearWorkingReport
     }}>
       {children}
     </ReportsContext.Provider>

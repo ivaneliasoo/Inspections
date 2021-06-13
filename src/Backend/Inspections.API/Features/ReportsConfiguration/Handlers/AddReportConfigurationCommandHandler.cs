@@ -36,7 +36,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
                 .ToList();
 
             var signatures = _context.Signatures.Where(s => request.SignatureDefinitions.Contains(s.Id))
-                .Include(p => p.Responsable)
+                .Include(p => p.Responsible)
                 .ToList();//TODO: Create Method in repository
 
             var repoConfig = new ReportConfiguration()

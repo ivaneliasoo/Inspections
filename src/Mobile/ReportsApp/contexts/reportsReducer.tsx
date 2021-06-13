@@ -1,5 +1,6 @@
 import { Report, CheckList } from 'services/api';
 import { ReportsState } from './ReportsContext';
+import { Signature } from '../services/api/api';
 
 export interface ReportsFilterPayload {
   myReports: boolean;
@@ -10,8 +11,10 @@ export interface ReportsFilterPayload {
 type ReportsAction =
   | { type: 'SET_REPORTS'; payload: { reports: any[]; }; }
   | { type: 'SET_WORKING_REPORT', report: Report }
+  | { type: 'CLEAR_WORKING_REPORT' }
   | { type: 'SET_FILTER'; payload: ReportsFilterPayload }
-  | { type: 'UPDATE_CHECKLIST'; payload: CheckList };
+  | { type: 'UPDATE_CHECKLIST'; payload: CheckList }
+  | { type: 'UPDATE_DRAWNSIGNATURE'; payload: { signature: Signature, index: number } };
 
 export const reportsReducer = (prevState: ReportsState, action: ReportsAction) => {
   switch (action.type) {
@@ -23,6 +26,23 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
     }
     case 'SET_WORKING_REPORT': {
       return { ...prevState, workingReport: action.report };
+    }
+    case 'CLEAR_WORKING_REPORT': {
+      return { ...prevState, workingReport: {} };
+    }
+    case 'UPDATE_DRAWNSIGNATURE': {
+      let signature = {};
+      if (prevState.workingReport?.signatures) {
+        signature = action.payload.signature || {}
+        prevState.workingReport.signatures.splice(action.payload.index, 1, signature)
+      }
+      return {
+        ...prevState,
+        workingReport: {
+          ...prevState.workingReport,
+          signatures: [...prevState.workingReport?.signatures!]
+        }
+      }
     }
     case 'UPDATE_CHECKLIST': {
       const index = prevState.workingReport!.checkList?.findIndex(ck => ck.id === action.payload.id)

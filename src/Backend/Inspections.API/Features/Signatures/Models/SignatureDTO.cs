@@ -13,7 +13,7 @@ namespace Inspections.API.Features.Signatures.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string? Annotation { get; set; }
-        public ResponsableType ResponsableType { get; set; }
+        public ResponsibleType ResponsableType { get; set; }
         public string? ResponsableName { get; set; } = default!; 
         public string? Designation { get; set; }
         public string? Remarks { get; set; }
@@ -34,10 +34,10 @@ namespace Inspections.API.Features.Signatures.Models
             Remarks = signature.Remarks;
             Date = signature.Date;
             Principal = signature.Principal;
-            if (!signature.IsConfiguration && signature.Responsable != null)
+            if (!signature.IsConfiguration && signature.Responsible != null)
             {
-                ResponsableType = signature.Responsable.Type;
-                ResponsableName = signature.Responsable.Name;
+                ResponsableType = signature.Responsible.Type;
+                ResponsableName = signature.Responsible.Name;
             }
             Order = signature.Order;
             ReportConfigurationId = signature.ReportConfigurationId;

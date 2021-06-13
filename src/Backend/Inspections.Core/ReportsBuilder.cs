@@ -13,7 +13,7 @@ namespace Inspections.Core
     {
         private Report _report;
 
-        public ReportsBuilder(ReportConfiguration configuration)
+        public ReportsBuilder(ReportConfiguration configuration, string userName)
         {
             Guard.Against.Null(configuration, nameof(configuration));
 
@@ -22,7 +22,7 @@ namespace Inspections.Core
             _report = new Report(configuration.Title, configuration.FormName, configuration.RemarksLabelText ?? "Remarks");
 
             _report.AddCheckList(configuration.ChecksDefinition);
-            _report.AddSignature(configuration.SignatureDefinitions);
+            _report.AddSignature(configuration.SignatureDefinitions, userName);
         }
 
         internal ReportConfiguration Configuration { get; private set; }

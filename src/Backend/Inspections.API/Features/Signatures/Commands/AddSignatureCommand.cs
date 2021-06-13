@@ -11,8 +11,8 @@ namespace Inspections.API.Features.Signatures.Commands
     {
         public AddSignatureCommand(string title,
                                    string annotation,
-                                   ResponsableType responsableType,
-                                   string responsableName,
+                                   ResponsibleType responsibleType,
+                                   string responsibleName,
                                    string designation,
                                    string remarks,
                                    DateTimeOffset date,
@@ -23,8 +23,8 @@ namespace Inspections.API.Features.Signatures.Commands
         {
             Title = title;
             Annotation = annotation;
-            ResponsableType = responsableType;
-            ResponsableName = responsableName;
+            ResponsableType = responsibleType;
+            ResponsibleName = responsibleName;
             Designation = designation;
             Remarks = remarks;
             Date = date;
@@ -38,8 +38,8 @@ namespace Inspections.API.Features.Signatures.Commands
 
         public string Title { get; set; } = default!;
         public string? Annotation { get; set; }
-        public ResponsableType ResponsableType { get; set; }
-        public string ResponsableName { get; set; } = default!;
+        public ResponsibleType ResponsableType { get; set; }
+        public string ResponsibleName { get; set; } = default!;
         public string? Designation { get; set; }
         public string? Remarks { get; set; }
         public DateTimeOffset Date { get; set; }

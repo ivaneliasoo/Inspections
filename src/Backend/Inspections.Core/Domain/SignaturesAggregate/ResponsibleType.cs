@@ -1,6 +1,6 @@
 ﻿namespace Inspections.Core.Domain.SignaturesAggregate
 {
-    public enum ResponsableType
+    public enum ResponsibleType
     {
         Supervisor,
         Inspector,

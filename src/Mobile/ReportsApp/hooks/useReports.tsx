@@ -3,13 +3,13 @@ import { ReportsContext } from '../contexts/ReportsContext';
 import { API_HOST, API_KEY } from '../config/config';
 import { Configuration, ReportsApi, CheckListsApiFactory } from '../services/api';
 import { AuthContext } from '../contexts/AuthContext';
-import { CheckListItem, Report, UpdateCheckListItemCommand, UpdateReportCommand } from '../services/api/api';
+import { CheckListItem, Report, UpdateCheckListItemCommand, UpdateReportCommand, SignaturesApi, Signature } from '../services/api/api';
 import moment from 'moment';
 
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
-  const { getAll, setFilter, setWorkingReport, reportsState } = useContext(ReportsContext)
+  const { getAll, setFilter, setWorkingReport, updateSignature, clearWorkingReport, reportsState } = useContext(ReportsContext)
 
   const configuration = new Configuration({
     accessToken: userToken!,
@@ -19,6 +19,7 @@ export const useReports = () => {
 
   const checkListsApi = CheckListsApiFactory(configuration)
   const reportsApi = new ReportsApi(configuration)
+  const signaturesApi = new SignaturesApi(configuration)
 
   const getReports = async () => {
     try {
@@ -61,7 +62,6 @@ export const useReports = () => {
   }
 
   const updateCheckList = async (payload: { reportId: number; checkListId: number; newValue: number | undefined }) => {
-    console.log({ payload })
     await reportsApi.bulkUpdateChecks(payload.reportId, payload.checkListId, payload.newValue)
   }
 
@@ -76,6 +76,24 @@ export const useReports = () => {
       text: payload.text!
     }
     await checkListsApi.updateChecklistItem(payload.checkListId ?? -1, payload.id ?? -1, command)
+  }
+
+  const saveSignature = async (s: { signature: Signature, index: number }) => {
+    console.log({signature: JSON.stringify(s.signature)})
+    await signaturesApi.signaturesIdPut(Number(s.signature.id), {
+      id: s.signature.id,
+      title: s.signature.title,
+      annotation: s.signature.annotation,
+      responsableType: s.signature.responsable?.type,
+      responsableName: s.signature.responsable?.name,
+      designation: s.signature.designation,
+      remarks: s.signature.remarks,
+      date: s.signature.date,
+      principal: s.signature.principal,
+      drawnSign: s.signature.drawnSign
+    }).then(() => {
+      updateSignature(s)
+    })
   }
 
   const saveReport = async (updateCmd: UpdateReportCommand) => {
@@ -97,6 +115,8 @@ export const useReports = () => {
     reports: reportsState.reports || [],
     workingRerport: reportsState.workingReport,
     updateCheckList,
-    updateCheckListItem
+    updateCheckListItem,
+    saveSignature,
+    clearWorkingReport
   }
 }

@@ -7,6 +7,9 @@ import { ReportForm } from '../components/reports/ReportForm';
 import { OperationalReading } from '../components/reports/OperationalReading';
 import { CameraScreen } from '../containers/CameraScreen';
 import { useReports } from '../hooks/useReports';
+import { Signatures } from '../components/reports/Signatures';
+import { ReportsContext } from '../contexts/ReportsContext';
+import { useContext } from 'react';
 
 type DetailsScreenNavigationProp = StackNavigationProp<any, any>
 
@@ -17,8 +20,9 @@ interface Props {
   state: any;
 }
 export const Details = ({ route, navigation, state }: Props) => {
-
+  const { clearWorkingReport } = useContext(ReportsContext)
   const navigateBack = () => {
+    clearWorkingReport()
     navigation.goBack();
   };
 
@@ -54,9 +58,9 @@ export const Details = ({ route, navigation, state }: Props) => {
           <Tab title="Report Detail">
             <ReportForm />
           </Tab>
-          {/* <Tab title="Signatures">
+          <Tab title="Signatures">
               <Signatures />
-            </Tab> */}
+          </Tab>
         </TabView>
         : <Spinner size='large' />}
     </>

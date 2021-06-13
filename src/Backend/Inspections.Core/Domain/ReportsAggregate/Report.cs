@@ -129,12 +129,12 @@ namespace Inspections.Core.Domain.ReportsAggregate
             this.checkList.Remove(checkList);
         }
 
-        internal void AddSignature(IEnumerable<Signature> signature)
+        internal void AddSignature(IEnumerable<Signature> signature, string userName = "")
         {
             //CheckIfClosed();
             foreach (var sign in signature)
             {
-                signatures.Add(sign.PreparteForNewReport());
+                signatures.Add(sign.PreparteForNewReport(userName));
             }
         }
 

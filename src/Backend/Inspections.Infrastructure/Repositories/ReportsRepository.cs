@@ -60,6 +60,8 @@ namespace Inspections.Infrastructure.Repositories
         public async Task<Report> GetByIdAsync(int id)
         {
             return await _context.Reports
+                .Include("CheckList")
+                .Include("Signatures")
                .AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
         }
 
@@ -95,10 +97,10 @@ namespace Inspections.Infrastructure.Repositories
                         s.Remarks,
                         Responsable = new
                         {
-                            s.Responsable.Name,
-                            s.Responsable.Type
+                            s.Responsible.Name,
+                            s.Responsible.Type
                         },
-                        s.ResponsableName,
+                        s.ResponsibleName,
                         s.Title,
                         s.Order
                     }),

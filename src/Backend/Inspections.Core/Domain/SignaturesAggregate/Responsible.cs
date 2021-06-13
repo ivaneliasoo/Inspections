@@ -2,9 +2,9 @@
 
 namespace Inspections.Core.Domain.SignaturesAggregate
 {
-    public class Responsable : ValueObject
+    public class Responsible : ValueObject
     {
-        public ResponsableType Type { get; set; }
+        public ResponsibleType Type { get; set; }
         public string? Name { get; set; }
     }
 

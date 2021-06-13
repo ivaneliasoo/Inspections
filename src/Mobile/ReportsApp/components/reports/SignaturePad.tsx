@@ -1,9 +1,9 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import SignatureCapture from 'react-native-signature-capture'
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
-import { createRef } from 'react'
-import { useNavigation, useNavigationState } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StyleSheet, View } from 'react-native'
+import { createRef } from 'react';
+import { useNavigationState } from '@react-navigation/native'
+import { useReports } from '../../hooks/useReports';
 
 /**
  *
@@ -12,22 +12,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
  */
 const SignaturePad = ({ route, navigation, saved }: any) => {
   const params  = useNavigationState(state => state.routes[state.index].params)
+
+  const { saveSignature, workingReport } = useReports()
   const sign = createRef()
   
-  const saveSign = () => {
-    sign.current.saveImage();
-  }
-
-  const resetSign = () => {
-    sign.current.resetImage();
-  }
-
-  const _onSaveEvent = (result) => {
-    //result.encoded - for the base64 encoded png
-    //result.pathName - for the file path name
-    params.onGoBack({...result, index: params.index})
+  const _onSaveEvent = async (result) => {
+    const signature = {...workingReport?.signatures!.find(s=>s.id = params!.id) }
+    signature!.drawnSign = `data:image/png;base64,${result.encoded}`
+    await saveSignature({ signature, index: params!.index })
     navigation.goBack()
-
   }
 
   return (

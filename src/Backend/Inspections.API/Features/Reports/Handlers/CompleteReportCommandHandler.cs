@@ -26,7 +26,7 @@ namespace Inspections.API.Features.Reports.Handlers
 
             var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
 
-            if (!report.Completed || !report.Signatures.Any(s => s.ResponsableName?.Length > 0 && s.DrawnSign?.Length > 0))
+            if (!report.Completed || !report.Signatures.Any(s => s.ResponsibleName?.Length > 0 && s.DrawnSign?.Length > 0))
             {
                 throw new InvalidOperationException("Can't close a report that has pending checks or principal signature is empty. Please verify.");
             }

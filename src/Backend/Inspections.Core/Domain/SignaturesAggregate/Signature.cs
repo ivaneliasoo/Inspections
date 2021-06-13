@@ -11,8 +11,8 @@ namespace Inspections.Core.Domain.SignaturesAggregate
     {
         public string Title { get; set; } = default!;
         public string? Annotation { get; set; }
-        public Responsable Responsable { get; set; } = new Responsable();
-        public string? ResponsableName => Responsable.Name;
+        public Responsible Responsible { get; set; } = new Responsible();
+        public string? ResponsibleName => Responsible.Name;
         public string? Designation { get; set; }
         public string? Remarks { get; set; }
         public DateTimeOffset Date { get; set; }
@@ -23,7 +23,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
         public string? DrawnSign { get; set; }
         public short Order { get; set; }
 
-        public Signature PreparteForNewReport()
+        public Signature PreparteForNewReport(string userName)
         {
             Signature newSignature = (Signature)this.MemberwiseClone();
             if (newSignature is null) throw new Exception("error trying to add signatures to the report");
@@ -32,7 +32,17 @@ namespace Inspections.Core.Domain.SignaturesAggregate
             newSignature.ReportConfigurationId = null;
             newSignature.Date = DateTime.Now;
             newSignature.IsConfiguration = false;
-            newSignature.Responsable = new Responsable { Name = "" };
+
+            if (newSignature.Principal)
+                newSignature.Responsible = new Responsible { Name = userName, Type = ResponsibleType.Inspector };
+            else
+            {
+                ResponsibleType type = default!;
+                if (newSignature.Title.Contains("LEW"))
+                    type = ResponsibleType.LEW;
+
+                newSignature.Responsible = new Responsible { Name = "", Type = type };
+            }
 
             return newSignature;
         }

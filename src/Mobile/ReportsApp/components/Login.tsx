@@ -7,7 +7,7 @@ import { StyleSheet } from 'react-native';
 import { AuthContext } from '../contexts/AuthContext';
 import { PasswordIcon, PersonIcon } from './Icons';
 import { API_HOST } from '../services/api/api-accesor';
-import { showMessage, hideMessage } from 'react-native-flash-message'
+import { showMessage } from 'react-native-flash-message'
 
 
 const LoginIcon = (props: any) => <Icon name="log-in-outline" {...props} />;
