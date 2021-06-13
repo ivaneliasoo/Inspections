@@ -61,6 +61,7 @@ export const useReports = () => {
   }
 
   const updateCheckList = async (payload: { reportId: number; checkListId: number; newValue: number | undefined }) => {
+    console.log({ payload })
     await reportsApi.bulkUpdateChecks(payload.reportId, payload.checkListId, payload.newValue)
   }
 

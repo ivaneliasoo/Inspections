@@ -15,7 +15,7 @@ const checkItemIcon = [
 const computeCheckListValue = (checkList: CheckList) => {
   const totalAcceptable = checkList.checks!.filter(ci => ci.checked === CheckValue.Acceptable).length
   const totalNotAcceptable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAcceptable).length
-  const totalNotAplicable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAplicable).length
+  const totalNotAplicable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAplicable || ci.checked === CheckValue.None).length
   const total = checkList.checks!.length
 
   if (total === totalAcceptable) return CheckValue.Acceptable
@@ -24,19 +24,38 @@ const computeCheckListValue = (checkList: CheckList) => {
   else return CheckValue.NotAplicable
 }
 
-const CheckListItemCheck = ({ item, index }) => {
-  const persistedValue = item.checked! >= 3 ? 2 : item.checked ?? 2
+const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
   const [showRemark, setShowRemarks] = useState(false)
+  const [check, setCheck] = useState(item)
+  
+  let tempCheckValue = 0
+  const onPress = () => {
+    if (check.checked > 2){
+      tempCheckValue = 2
+    }
+    else if (check.checked === 2) {
+      tempCheckValue = 1
+    }
+    else if (check.checked === 1) {
+      tempCheckValue = 0
+    }
+    else if (check.checked === 0) {
+      tempCheckValue = 2
+    }
+    
+    setCheck((prev: any) => { prev.checked = tempCheckValue; return prev})
+    onCheckUpdated({...check, checked: tempCheckValue})
+  }
 
   const RightActions = (props: any) => {
     return <>
-      <Icon style={styles.icon} name={checkItemIcon[persistedValue].name} {...props} fill={checkItemIcon[persistedValue].color} style={styles.lineIcon} />
+      <Icon style={styles.icon} name={checkItemIcon[check.checked ?? 0].name} {...props} fill={checkItemIcon[check.checked ?? 0].color} style={styles.lineIcon} />
     </>
   }
 
   const LeftActions = () => {
     return (
-      <TouchableOpacity onPress={() => setShowRemarks(prev => !prev)}>
+      <TouchableOpacity key={check.id} onPress={() => setShowRemarks(prev => !prev)}>
         <Icon name='message-square-outline' fill='black' style={styles.icon} />
       </TouchableOpacity>
     )
@@ -44,12 +63,17 @@ const CheckListItemCheck = ({ item, index }) => {
 
   return showRemark ?
     <>
-    <Input placeholder='type a remark' value={item.remarks!} accessoryRight={() => <Icon name='close-outline' fill='black' style={styles.icon} />} />
-    <Button onPress={() => setShowRemarks(prev => !prev)}>Save</Button>
+    <Input 
+      placeholder='type a remark' 
+      value={check.remark!} 
+      onChangeText={(text) => { setCheck({...check, remarks: text}) }} 
+      onSubmitEditing={() => setShowRemarks(prev => !prev)}
+      accessoryRight={() => <Icon name='close-outline' fill='black' style={styles.icon} />} />
     </>
     : <ListItem
-      title={() => <Text category='h6'>{`.${index + 1} - ${item.text}`}</Text>}
-      description={() => <Text category='s1' appearance='hint'>{`Remarks: ${item.remarks}`}</Text>}
+      title={() => <Text category='h6'>{`.${index + 1} - ${check.text}`}</Text>}
+      onPress={onPress}
+      description={() => <Text category='s1' appearance='hint'>{`Remarks: ${check.remarks}`}</Text>}
       accessoryRight={RightActions}
       accessoryLeft={LeftActions}
     />
@@ -63,14 +87,26 @@ export interface CheckListItemProps {
 }
 const CheckListGroup = React.memo(({ item, index, onChange, onCheckUpdated, ...props }: CheckListItemProps) => {
   const [checked, setChecked] = useState(computeCheckListValue(item) ?? 3)
+  let tempCheckValue = 0
   const onPress = () => {
-    if (checked >= 2)
-      setChecked(1)
-    else if (checked === 1)
-      setChecked(0)
-    else if (checked === 0)
-      setChecked(2)
-    onChange(checked)
+    if (checked > 2){
+      tempCheckValue = 2
+    }
+    else if (checked === 2) {
+      tempCheckValue = 1
+    }
+    else if (checked === 1) {
+      tempCheckValue = 0
+    }
+    else if (checked === 0) {
+      tempCheckValue = 2
+    }
+    
+    setChecked(tempCheckValue)
+    item.checks?.forEach(check =>{
+      check.checked = tempCheckValue
+    })
+    onChange(tempCheckValue)
   }
 
   return (
@@ -83,7 +119,7 @@ const CheckListGroup = React.memo(({ item, index, onChange, onCheckUpdated, ...p
       </>}
     >
       {item && item.checks!.map((checkList, checkIndex) => {
-        return <CheckListItemCheck item={checkList} index={checkIndex} />
+        return <CheckListItemCheck item={checkList} index={checkIndex} onCheckUpdated={onCheckUpdated} />
       })}
     </Card>
   )
@@ -100,7 +136,7 @@ const Checklists = ({ checkLists = [], onCheckListUpdated, onCheckListItemUpdate
       {checkLists && checkLists.map((checkList: CheckList, index: number) => {
         return (
           <CheckListGroup item={checkList} index={index} key={index} onChange={(checked) => {
-            onCheckListUpdated({ reportId: checkList.reportId, checkListId: checkList.id, newValue: checked + 1 > 2 ? 0 : checked + 1 })
+            onCheckListUpdated({ reportId: checkList.reportId, checkListId: checkList.id, newValue: checked })
           }}
             onCheckUpdated={(payload: CheckListItem) => {
               onCheckListItemUpdated(payload)

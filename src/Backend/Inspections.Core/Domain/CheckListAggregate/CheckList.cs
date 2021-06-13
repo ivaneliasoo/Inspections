@@ -81,7 +81,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
 
             foreach (var check in Checks)
             {
-                newCheckList.AddCheckItems(new CheckListItem(0, check.Text, CheckValue.None,check.Editable, check.Required, check.Remarks));
+                newCheckList.AddCheckItems(new CheckListItem(0, check.Text, CheckValue.NotApplicable,check.Editable, check.Required, check.Remarks));
             }
             return newCheckList;
         }

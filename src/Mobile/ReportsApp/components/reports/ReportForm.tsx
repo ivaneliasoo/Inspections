@@ -101,7 +101,7 @@ const ReportForm = () => {
         style={{ margin: 3 }}
         header={() => <Text style={{ marginHorizontal: 10, marginTop: 10 }} appearance="hint" category="h6">Checks Legend {reportData?.checkList![0].annotation!}</Text>}
       >
-        <Checklists checkLists={reportData?.checkList} onCheckListUpdated={updateCheckList} onCheckListItemUpdated={updateCheckListItem} />
+        <Checklists checkLists={reportData?.checkList} onCheckListUpdated={(item: any) => updateCheckList({...item, reportId: reportData?.id})} onCheckListItemUpdated={updateCheckListItem} />
       </Card>
     </ScrollView>
   )

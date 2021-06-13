@@ -29,8 +29,6 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.Order).IsRequired();
 
             builder.Ignore(p => p.DomainEvents);
-
         }
     }
-
 }

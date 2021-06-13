@@ -771,7 +771,7 @@ export enum CheckValue {
     NotAcceptable = 0,
     Acceptable = 1,
     NotAplicable = 2,
-    Required = 3
+    None = 3
 }
 
 /**
