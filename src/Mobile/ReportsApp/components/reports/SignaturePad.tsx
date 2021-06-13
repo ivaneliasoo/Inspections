@@ -17,7 +17,7 @@ const SignaturePad = ({ route, navigation, saved }: any) => {
   const sign = createRef()
   
   const _onSaveEvent = async (result) => {
-    const signature = {...workingReport?.signatures!.find(s=>s.id = params!.id) }
+    const signature = workingReport?.signatures!.find(s=>s.id === params!.id)
     signature!.drawnSign = `data:image/png;base64,${result.encoded}`
     await saveSignature({ signature, index: params!.index })
     navigation.goBack()

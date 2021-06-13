@@ -95,7 +95,7 @@ namespace Inspections.Infrastructure.Repositories
                         s.Id,
                         s.Principal,
                         s.Remarks,
-                        Responsable = new
+                        Responsible = new
                         {
                             s.Responsible.Name,
                             s.Responsible.Type

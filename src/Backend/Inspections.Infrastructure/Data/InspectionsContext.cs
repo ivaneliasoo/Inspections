@@ -110,7 +110,7 @@ namespace Inspections.Infrastructure.Data
             foreach (var entity in ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
-                if (entity.CurrentValues.EntityType.DisplayName() == "Responsable")
+                if (entity.CurrentValues.EntityType.DisplayName() == "Responsible")
                     continue;
 
                 if (entity.CurrentValues.EntityType.DisplayName() == "License")

@@ -86,7 +86,7 @@ const Signatures = () => {
                 <Input label='Designation' value={item.designation!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].designation`, e)} />
                 <Input label='Remarks' multiline value={item.remarks!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].remarks`, e)} />
                 <View style={{ flex: 2, flexDirection: 'row' }}>
-                  {item && item.drawnSign && item.drawnSign!.length > 0 && <Image style={{ flex: 1, alignSelf: 'center', borderColor: 'black', width: 150, height: 100, resizeMode: 'stretch' }} source={{ uri: item.drawnSign! }} />}
+                  {item.drawnSign === '' ? <Text style={styles.noSignatureText}>Not signed yet</Text> : <Image style={styles.imageSignature} source={{ uri: item.drawnSign! ?? '' }}/>}
                   <View style={{ flex: 1, flexDirection: 'row' }}>
                     <Button style={{ flex: 1, margin: 10, marginTop: 20 }} status='warning' size='small' appearance='outline' onPress={() => navigation.navigate('ModalSignatures', { index: signIndex, existentSign: item.drawnSign, id: item.id })} accessoryLeft={EditSignatureIcon} />
                     <Button disabled={!item.drawnSign} style={{ flex: 1, margin: 10, marginTop: 20 }} status='danger' size='small' appearance='outline' onPress={() => setFieldValue(`signatures[${signIndex}].drawnSign`, '')} accessoryLeft={CrossIcon} />
@@ -110,4 +110,6 @@ export { Signatures }
 const styles = StyleSheet.create({
   card: { padding: 0, marginHorizontal: 5, marginVertical: 2 },
   modalBackdrop: { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
+  noSignatureText: {flex: 1, alignContent: 'center', alignSelf: 'center'},
+  imageSignature: { flex: 1, alignContent: 'center', alignSelf: 'center', borderColor: 'black', width: 150, height: 100, resizeMode: 'stretch' }
 })
