@@ -245,16 +245,16 @@ export interface AddSignatureCommand {
     annotation?: string | null;
     /**
      * 
-     * @type {ResponsableType}
+     * @type {ResponsibleType}
      * @memberof AddSignatureCommand
      */
-    responsableType?: ResponsableType;
+    responsibleType?: ResponsibleType;
     /**
      * 
      * @type {string}
      * @memberof AddSignatureCommand
      */
-    responsableName?: string | null;
+    responsibleName?: string | null;
     /**
      * 
      * @type {string}
@@ -967,16 +967,16 @@ export interface EditSignatureCommand {
     annotation?: string | null;
     /**
      * 
-     * @type {ResponsableType}
+     * @type {ResponsibleType}
      * @memberof EditSignatureCommand
      */
-    responsableType?: ResponsableType;
+    responsibleType?: ResponsibleType;
     /**
      * 
      * @type {string}
      * @memberof EditSignatureCommand
      */
-    responsableName?: string | null;
+    responsibleName?: string | null;
     /**
      * 
      * @type {string}
@@ -1493,19 +1493,19 @@ export enum ReportType {
 /**
  * 
  * @export
- * @interface Responsable
+ * @interface Responsible
  */
-export interface Responsable {
+export interface Responsible {
     /**
      * 
-     * @type {ResponsableType}
-     * @memberof Responsable
+     * @type {ResponsibleType}
+     * @memberof Responsible
      */
-    type?: ResponsableType;
+    type?: ResponsibleType;
     /**
      * 
      * @type {string}
-     * @memberof Responsable
+     * @memberof Responsible
      */
     name?: string | null;
 }
@@ -1514,7 +1514,7 @@ export interface Responsable {
  * @export
  * @enum {string}
  */
-export enum ResponsableType {
+export enum ResponsibleType {
     Supervisor = 0,
     Inspector = 1,
     Witness = 2,
@@ -1603,16 +1603,16 @@ export interface Signature {
     annotation?: string | null;
     /**
      * 
-     * @type {Responsable}
+     * @type {Responsible}
      * @memberof Signature
      */
-    responsable?: Responsable;
+    responsible?: Responsible;
     /**
      * 
      * @type {string}
      * @memberof Signature
      */
-    responsableName?: string | null;
+    responsibleName?: string | null;
     /**
      * 
      * @type {string}
@@ -1712,16 +1712,16 @@ export interface SignatureDTO {
     annotation?: string | null;
     /**
      * 
-     * @type {ResponsableType}
+     * @type {ResponsibleType}
      * @memberof SignatureDTO
      */
-    responsableType?: ResponsableType;
+    responsibleType?: ResponsibleType;
     /**
      * 
      * @type {string}
      * @memberof SignatureDTO
      */
-    responsableName?: string | null;
+    responsibleName?: string | null;
     /**
      * 
      * @type {string}

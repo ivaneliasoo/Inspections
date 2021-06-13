@@ -71,10 +71,10 @@ const Signatures = () => {
                 />
                 <Select
                   placeholder='please select...'
-                  value={['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'][item?.responsable?.type ?? 0]}
+                  value={['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'][item?.responsible?.type ?? 0]}
                   label='Representation Type'
-                  onSelect={(e) => { setFieldValue(`signatures[${signIndex}].responsable.type`, e.row) }}
-                  status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsable && errors.signatures[signIndex].responsable.type ? 'danger' : 'basic'}
+                  onSelect={(e) => { setFieldValue(`signatures[${signIndex}].responsible.type`, e.row) }}
+                  status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsible && errors.signatures[signIndex].responsible.type ? 'danger' : 'basic'}
                 >
                   {['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'].map((responsible, index) =>
                     <SelectItem
@@ -82,7 +82,7 @@ const Signatures = () => {
                       title={responsible}
                     ></SelectItem>)}
                 </Select>
-                <Input label='Name' value={item.responsable!.name!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].responsable.name`, e)} status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsable && errors.signatures[signIndex].responsable.name ? 'danger' : 'basic'} />
+                <Input label='Name' value={item.responsible!.name!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].responsible.name`, e)} status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsible && errors.signatures[signIndex].responsible.name ? 'danger' : 'basic'} />
                 <Input label='Designation' value={item.designation!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].designation`, e)} />
                 <Input label='Remarks' multiline value={item.remarks!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].remarks`, e)} />
                 <View style={{ flex: 2, flexDirection: 'row' }}>
