@@ -26,7 +26,6 @@ class CameraScreen extends PureComponent {
             buttonNegative: 'Cancel',
           }}
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
-            console.log(barcodes);
           }}
         />
         <View style={styles.shooter}>
@@ -42,7 +41,6 @@ class CameraScreen extends PureComponent {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
-      console.log(data.uri);
     }
   };
 }

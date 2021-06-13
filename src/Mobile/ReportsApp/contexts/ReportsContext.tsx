@@ -60,7 +60,6 @@ export const ReportsContext = createContext({} as ReportsContextProps);
       type: 'UPDATE_CHECKLIST',
       payload
     })
-    console.log(reportsState.workingReport)
   }
 
   const updateSignature = (payload: { signature: Signature, index: number }) => {

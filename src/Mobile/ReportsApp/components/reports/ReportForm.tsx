@@ -66,7 +66,7 @@ const ReportForm = () => {
                     max={new Date()}
                     onSelect={(e) => setFieldValue('date', e)}
                     accessoryRight={CalendarIcon} />
-                  <AddressAutocomplete values={values} errors={errors} flexType={flexType} onSelect={(e: AddressSelectedResult) => { console.log({ e }); setFieldValue('address', e.formattedAddress); setFieldValue('license.number', e.licenseNumber) }} />
+                  <AddressAutocomplete values={values} errors={errors} flexType={flexType} onSelect={(e: AddressSelectedResult) => { setFieldValue('address', e.formattedAddress); setFieldValue('license.number', e.licenseNumber) }} />
                 </View>
                 {values.license &&
                   <View style={{ flex: 1, marginHorizontal: 10 }}>

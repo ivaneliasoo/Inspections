@@ -79,7 +79,6 @@ export const useReports = () => {
   }
 
   const saveSignature = async (s: { signature: Signature, index: number }) => {
-    console.log({signature: JSON.stringify(s.signature)})
     await signaturesApi.signaturesIdPut(Number(s.signature.id), {
       id: s.signature.id,
       title: s.signature.title,
