@@ -45,6 +45,10 @@ namespace Inspections.API.Features.Addresses
                     PostalCode = a.PostalCode,
                     LicenseId = a.LicenseId,
                     Number = a.License.Number,
+                    Name = a.License.Name,
+                    Amp = a.License.Amp,
+                    KVA = a.License.KVA,
+                    Volt = a.License.Volt,
                     Validity = a.License.Validity,
                     FormatedAddress = a.ToString()
                 })

@@ -48,6 +48,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
             foreach (var check in Checks)
             {
                 check.Checked = checkValue;
+                check.Touched = true;
             }
         }
 

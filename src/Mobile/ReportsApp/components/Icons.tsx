@@ -16,3 +16,4 @@ export const CalendarIcon = (props: any) => (<Icon name='calendar-outline' {...p
 export const CheckIcon = (props: any) => (<Icon name='checkmark-outline' {...props}/>)
 export const ChevronDownIcon = (props: any) => (<Icon name='chevron-down-outline' {...props}/>)
 export const EditSignatureIcon = (props: any) => (<Icon name='edit-2-outline' {...props}/>)
+export const Camera = (props: any) => (<Icon name='camera-outline' {...props}/>)

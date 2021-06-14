@@ -64,6 +64,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
             Name = name;
             Address = address;
             License = license;
+            EMALicenseId = license.Id;
             Date = date;
         }
 

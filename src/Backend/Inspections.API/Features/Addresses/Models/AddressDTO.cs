@@ -40,6 +40,9 @@ namespace Inspections.API.Features.Addresses.Models
         public int LicenseId { get; set; }
         public string Number { get; set; } = default!;
         public string Name { get; set; } = default!;
+        public decimal Amp { get; set; }
+        public decimal Volt { get; set; }
+        public decimal KVA { get; set; }
         public DateTimeRange Validity { get; set; } = default!;
         public string FormatedAddress { get; set; } = default!;
     }

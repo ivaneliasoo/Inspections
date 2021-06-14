@@ -52,8 +52,8 @@ export const Home = ({ navigation }: any) => {
           if (!option.action) navigation.navigate(option.path)
           else option.action.call()
         }}>
-          <Text category="h1">{option.text}</Text>
-          <Text category="s1">{option.helpText}</Text>
+          <Text category="h5">{option.text}</Text>
+          <Text category="h6">{option.helpText}</Text>
           <Icon name={option.icon} style={{ width: 48, height: 48 }} />
         </Card>
       })}
