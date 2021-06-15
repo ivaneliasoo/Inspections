@@ -4,6 +4,8 @@ import { API_HOST, API_KEY } from '../config/config';
 import { Configuration, ReportsApi, CheckListsApiFactory } from '../services/api';
 import { AuthContext } from '../contexts/AuthContext';
 import { CheckListItemQueryResult, ReportQueryResult, UpdateCheckListItemCommand, UpdateReportCommand, SignaturesApi, SignatureQueryResult } from '../services/api';
+import { UpdateOperationalReadingsCommand } from '../services/api/api';
+import moment from 'moment';
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
@@ -31,7 +33,8 @@ export const useReports = () => {
 
   const getReportById = async (id: number) => {
     const result: ReportQueryResult = (await reportsApi.reportsIdGet(id)).data as unknown as ReportQueryResult
-    result.date = new Date()
+    if (!result.date) result.date = new Date()
+    else result.date = moment(result.date).toDate()
     setWorkingReport(result)
   }
 
@@ -93,6 +96,10 @@ export const useReports = () => {
     })
   }
 
+  const saveOperationalreadings = async (or: UpdateOperationalReadingsCommand) =>{
+    await reportsApi.updateOperationalReadings(or.reportId!, or)
+  }
+
   const saveReport = async (updateCmd: UpdateReportCommand) => {
     if (updateCmd && updateCmd.id) {
       await reportsApi.reportsIdPut(updateCmd.id.toString(), updateCmd)
@@ -113,6 +120,7 @@ export const useReports = () => {
     updateCheckList,
     updateCheckListItem,
     saveSignature,
-    clearWorkingReport
+    clearWorkingReport,
+    saveOperationalreadings
   }
 }

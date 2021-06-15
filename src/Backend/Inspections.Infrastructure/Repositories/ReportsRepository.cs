@@ -69,7 +69,8 @@ namespace Inspections.Infrastructure.Repositories
             return await _context.Reports
                 .Include("CheckList")
                 .Include("Signatures")
-               .AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
+                .Include("PhotoRecords")
+               .SingleOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task<ReportQueryResult> GetByIdAsync(int id, bool projected)
@@ -89,6 +90,18 @@ namespace Inspections.Infrastructure.Repositories
         public async Task UpdateAsync(Report entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
+            if(entity.OperationalReadings is not null)
+                _context.Entry(entity.OperationalReadings).State = EntityState.Modified;
+            if (entity.PhotoRecords is not null)
+            {
+                foreach (var photo in entity.PhotoRecords)
+                {
+                    if(photo.Id == 0)
+                        _context.Entry(photo).State = EntityState.Added;
+                    else
+                        _context.Entry(photo).State = EntityState.Modified;
+                }
+            }
             await _context.SaveChangesAsync();
         }
     }

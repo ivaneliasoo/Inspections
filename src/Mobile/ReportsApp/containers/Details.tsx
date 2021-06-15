@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Divider, Icon, Layout, TopNavigation, TopNavigationAction, useTheme } from '@ui-kitten/components';
-import { BackIcon } from '../components/Icons';
+import { Divider, Icon, TopNavigation, TopNavigationAction, useTheme } from '@ui-kitten/components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { ReportForm } from '../components/reports/ReportForm';

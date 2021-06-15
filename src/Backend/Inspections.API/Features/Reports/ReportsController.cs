@@ -135,7 +135,7 @@ namespace Inspections.API.Features.Inspections
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> AddPhotoRecord(int id, [FromForm] string label)
+        public async Task<IActionResult> AddPhotoRecord(int id, [FromHeader] string label)
         {
             var request = await Request.ReadFormAsync().ConfigureAwait(false);
 
@@ -254,11 +254,11 @@ namespace Inspections.API.Features.Inspections
             return NoContent();
         }
 
-        [HttpPut("{id:int}/readings", Name = nameof(AddOperationalReadings))]
+        [HttpPut("{id:int}/readings", Name = nameof(UpdateOperationalReadings))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> AddOperationalReadings(int id, [FromBody] UpdateOperationalReadingsCommand operationalReadingsCommand)
+        public async Task<IActionResult> UpdateOperationalReadings(int id, [FromBody] UpdateOperationalReadingsCommand operationalReadingsCommand)
         {
             Guard.Against.Null(operationalReadingsCommand, nameof(operationalReadingsCommand));
             if (id != operationalReadingsCommand.ReportId)

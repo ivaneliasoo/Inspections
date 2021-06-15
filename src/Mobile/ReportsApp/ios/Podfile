@@ -10,6 +10,8 @@ target 'ReportsApp' do
 
   pod 'react-native-signature-capture', :path => '../node_modules/react-native-signature-capture'
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'ReportsAppTests' do
     inherit! :complete
     # Pods for testing
