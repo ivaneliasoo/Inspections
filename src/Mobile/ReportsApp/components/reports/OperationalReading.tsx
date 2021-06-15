@@ -3,31 +3,36 @@ import NumericPicker from '../NumericPicker'
 import { Formik, FormikProps } from 'formik'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
-import { Report } from 'services/api'
+import { ReportQueryResult } from '../../services/api'
 import { ReportsContext } from '../../contexts/ReportsContext';
 import { ParticullarOfInstallation } from './ParticullarOfInstallation'
 import { AutoSave } from '../../components/AutoSave'
 
+const formatPickerValue = (value: number) => {
+  const temp = value.toString().padStart(3, '0')
+  return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2])]
+}
+
 const OperationalReading = () => {
 
-  const { reportsState: { workingReport: reportData, workingOperationalReadings } } = useContext(ReportsContext)
-  const formRef = useRef<FormikProps<any>>(null)
+  const { reportsState: { workingReport: reportData } } = useContext(ReportsContext)
+  const formRef = useRef<FormikProps<ReportQueryResult>>(null)
 
-  useEffect(() => {
-    console.log({ workingOperationalReadings })
-  }, [])
+  // useEffect(() => {
+  //   console.log({ reportData })
+  // }, [])
 
   const isSingleLine = useMemo(() => {
-    return (reportData?.license?.volt <= 230);
-  }, [reportData?.license?.volt])
+    return (reportData?.licenseVolt <= 230);
+  }, [reportData?.licenseVolt])
 
   const isMultiLine = useMemo(() => {
-    return (reportData?.license?.volt === 400);
-  }, [reportData?.license?.volt])
+    return (reportData?.licenseVolt === 400);
+  }, [reportData?.licenseVolt])
 
   return <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
     <ParticullarOfInstallation />
-    <Formik innerRef={formRef} initialValues={workingOperationalReadings!} enableReinitialize onSubmit={() => console.log('saved')}>
+    <Formik innerRef={formRef} initialValues={reportData!} enableReinitialize onSubmit={(e) => console.log({e})}>
       {({ values, setFieldValue }) => (
         <View style={styles.container}>
           <View style={{ alignSelf: 'center' }}>
@@ -36,31 +41,31 @@ const OperationalReading = () => {
           <Text category='h6' style={{ fontWeight: '900' }}>Operational Readings</Text>
           <Text category='s1' appearance='hint'>Voltage</Text>
           <View style={{ margin: 5, marginVertical: 20, justifyContent: !isSingleLine ? 'space-evenly' : 'flex-start', alignContent: 'flex-start', flexDirection: 'row' }}>
-            {(isSingleLine || isMultiLine) && <NumericPicker defaultValue={[2, 3, 0]} preppendLabel="L1-N2" itemSelected={value => setFieldValue('L1N2', value)} />}
-            {isMultiLine && <NumericPicker defaultValue={[2, 3, 0]} preppendLabel="L2-N" itemSelected={value => setFieldValue('L1N2', value)} />}
-            {isMultiLine && <NumericPicker defaultValue={[2, 3, 0]} preppendLabel="L3-N" itemSelected={value => setFieldValue('L1N2', value)} />}
+            {(isSingleLine || isMultiLine) && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsVoltageL1N!)} preppendLabel="L1-N2" itemSelected={value => setFieldValue('operationalReadingsVoltageL1N', value)} />}
+            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsVoltageL2N!)} preppendLabel="L2-N" itemSelected={value => setFieldValue('operationalReadingsVoltageL2N', value)} />}
+            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsVoltageL3N!)} preppendLabel="L3-N" itemSelected={value => setFieldValue('operationalReadingsVoltageL3N', value)} />}
           </View>
           <View style={{ margin: 5, marginVertical: 20, justifyContent: 'space-evenly', alignContent: 'center', flexDirection: 'row' }}>
-            {isMultiLine && <NumericPicker defaultValue={[4, 0, 0]} preppendLabel="L1-L2" itemSelected={value => setFieldValue('L1N2', value)} />}
-            {isMultiLine && <NumericPicker defaultValue={[4, 0, 0]} preppendLabel="L1-L3" itemSelected={value => setFieldValue('L1N2', value)} />}
-            {isMultiLine && <NumericPicker defaultValue={[4, 0, 0]} preppendLabel="L2-L3" itemSelected={value => setFieldValue('L1N2', value)} />}
+            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsVoltageL1L2!)} preppendLabel="L1-L2" itemSelected={value => setFieldValue('operationalReadingsVoltageL1L2', value)} />}
+            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsVoltageL1L3!)} preppendLabel="L1-L3" itemSelected={value => setFieldValue('operationalReadingsVoltageL1L3', value)} />}
+            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsVoltageL2L3!)} preppendLabel="L2-L3" itemSelected={value => setFieldValue('operationalReadingsVoltageL2L3', value)} />}
           </View>
           <Divider />
           <Text category='s1' appearance='hint'>Running Load</Text>
           <View style={{ margin: 5, marginVertical: 20, justifyContent: !isSingleLine ? 'space-evenly' : 'flex-start', alignContent: 'center', flexDirection: 'row' }}>
-            {(isSingleLine || isMultiLine) && <NumericPicker defaultValue={[0, 1, 0]} preppendLabel="L1" appendLabel="A" itemSelected={value => setFieldValue('L1N2', value)} />}
-            {isMultiLine && <NumericPicker defaultValue={[0, 1, 0]} preppendLabel="L1" appendLabel="A" itemSelected={value => setFieldValue('L1N2', value)} />}
-            {isMultiLine && <NumericPicker defaultValue={[0, 1, 0]} preppendLabel="L2" appendLabel="A" itemSelected={value => setFieldValue('L1N2', value)} />}
+            {(isSingleLine || isMultiLine) && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL1!)} preppendLabel="L1" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL1', value)} />}
+            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL2!)} preppendLabel="L1" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL2', value)} />}
+            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL3!)} preppendLabel="L2" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL3', value)} />}
           </View>
           <Divider />
           <Text category='h6'>Main Braker Details</Text>
           <View style={{ flexDirection: 'row', margin: 5, alignContent: 'center', justifyContent: 'center' }}>
-            <NumericPicker defaultValue={[4, 0, 0]} preppendLabel="Main Breaker" appendLabel="A" itemSelected={value => setFieldValue('L1N2', value)} />
+            <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsMainBreakerAmp!)} preppendLabel="Main Breaker" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsMainBreakerAmp', value)} />
             <Select
               style={{ flex: 1, margin: 5 }}
               size='large'
-              value={values.mainBreakerCapacity}
-              onSelect={(e) => { setFieldValue('mainBreakerCapacity', [2, 3, 4][e.row]) }}
+              value={values.operationalReadingsMainBreakerCapacity!}
+              onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerCapacity', [2, 3, 4][e.row]) }}
               placeholder='please select...'
               label='Braking Capacity'
               accessoryRight={() => <Text>Poles</Text>}
@@ -75,7 +80,7 @@ const OperationalReading = () => {
               style={{ flex: 1, margin: 5 }}
               size='large'
               placeholder='please select...'
-              value={values.mainBreakerPoles}
+              value={values.operationalReadingsMainBreakerPoles!}
               onSelect={(e) => { setFieldValue('mainBreakerPoles', [100, 200, 300, 400][e.row]) }}
               label='Poles'
               accessoryRight={() => <Text style={{ justifyContent: 'center' }}>kA</Text>}
@@ -91,33 +96,37 @@ const OperationalReading = () => {
           <Text style={{ flex: 1, margin: 5 }} category='h6'>Over current</Text>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <View >
-              <CheckBox 
-                style={{ flex: 1, margin: 5 }} 
-                checked={values.overCurrentByMainBreaker}
-                onChange={value => setFieldValue('overCurrentByMainBreaker', value)}
+              <CheckBox
+                style={{ flex: 1, margin: 5 }}
+                checked={values.operationalReadingsOverCurrentByMainBreaker!}
+                onChange={value => setFieldValue('operationalReadingsOverCurrentByMainBreaker', value)}
               >
                 By Main Breaker
               </CheckBox>
             </View>
             <Text>OR</Text>
             <View>
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.overCurrentDTLA}
-                onChange={value => setFieldValue('overCurrentDTLA', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentDTLA?.toString()!}
+                onChange={value => setFieldValue('operationalReadingsOverCurrentDTLA', value)}
+                keyboardType='number-pad'
                 accessoryLeft={() => <Text>DTL</Text>}
                 accessoryRight={() => <Text>A</Text>} />
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.overCurrentDTLSec}
-                onChange={value => setFieldValue('overCurrentDTLSec', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentDTLSec?.toString()!}
+                onChange={value => setFieldValue('operationalReadingsOverCurrentDTLSec', value)}
+                keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
                 accessoryRight={() => <Text>sec</Text>} />
             </View>
             <Text>OR</Text>
             <View>
-              <Input style={{ flex: 1, margin: 5 }} size='large'value={values.overCurrentIDMTLA}
-                onChange={value => setFieldValue('overCurrentIDMTLA', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentIDMTLA?.toString()!}
+                onChange={value => setFieldValue('operationalReadingsOverCurrentIDMTLA', value)}
+                keyboardType='number-pad'
                 accessoryLeft={() => <Text>IDTML</Text>}
                 accessoryRight={() => <Text>A</Text>} />
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.overCurrentIDMTLTm}
-                onChange={value => setFieldValue('overCurrentIDMTLTm', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentIDMTLTm?.toString()!}
+                onChange={value => setFieldValue('operationalReadingsOverCurrentIDMTLTm', value)}
+                keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
                 accessoryRight={() => <Text>Tm</Text>} />
             </View>
@@ -130,8 +139,8 @@ const OperationalReading = () => {
                 size='large'
                 placeholder='please select...'
                 label='RccB'
-                value={values.earthFaultMA}
-                onSelect={(e) => { setFieldValue('earthFaultMA', [10, 30, 100, 300][e.row]) }}
+                value={values.operationalReadingsEarthFaultMA!}
+                onSelect={(e) => { setFieldValue('operationalReadingsEarthFaultMA', [10, 30, 100, 300][e.row]) }}
                 accessoryRight={() => <Text style={{ justifyContent: 'center' }}>mA</Text>}
               >
                 {[10, 30, 100, 300].map((responsible, index) =>
@@ -143,23 +152,27 @@ const OperationalReading = () => {
             </View>
             <Text>OR</Text>
             <View>
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.earthFaultELRA}
-                onChange={value => setFieldValue('earthFaultELRA', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultELRA?.toString()!}
+                onChange={value => setFieldValue('operationalReadingsEarthFaultELRA', value)}
+                keyboardType='number-pad'
                 accessoryLeft={() => <Text>ElR</Text>}
                 accessoryRight={() => <Text>A</Text>} />
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.earthFaultELRSec}
-                onChange={value => setFieldValue('earthFaultELRSec', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultELRSec?.toString()!}
+                onChange={value => setFieldValue('operationalReadingsEarthFaultELRSec', value)}
+                keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
                 accessoryRight={() => <Text>sec</Text>} />
             </View>
             <Text>OR</Text>
             <View>
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.earthFaultA}
-                onChange={value => setFieldValue('earthFaultA', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultA?.toString()!}
+                onChange={value => setFieldValue('operationalReadingsEarthFaultA', value)}
+                keyboardType='number-pad'
                 accessoryLeft={() => <Text>E/F</Text>}
                 accessoryRight={() => <Text>A</Text>} />
-              <Input style={{ flex: 1, margin: 5 }} size='large'value={values.earthFaultSec}
-                onChange={value => setFieldValue('earthFaultSec', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultSec?.toString()!}
+                onChange={value => setFieldValue('operationalReadingsEarthFaultSec', value)}
+                keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
                 accessoryRight={() => <Text>sec</Text>} />
             </View>

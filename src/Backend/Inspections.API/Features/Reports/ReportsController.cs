@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Models.Configuration;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces;
+using Inspections.Core.QueryModels;
 using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -39,6 +41,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> Post([FromBody] CreateReportCommand createData)
         {
             var result = await _mediator.Send(createData).ConfigureAwait(false);
@@ -49,6 +54,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> Put([FromBody] UpdateReportCommand udpateData)
         {
             var result = await _mediator.Send(udpateData).ConfigureAwait(false);
@@ -59,6 +67,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> GetAll(string? filter, bool? closed, bool myReports = true)
         {
             var result = await _reportsRepository.GetAll(filter, closed, myReports).ConfigureAwait(false);
@@ -69,6 +80,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpGet("{id:int}")]
+        [ProducesResponseType(typeof(ReportQueryResult), 200)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> GetReport(int id)
         {
             var result = await _reportsRepository.GetByIdAsync(id, true).ConfigureAwait(false);
@@ -80,6 +94,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> DeleteReport(int id)
         {
             var result = await _mediator.Send(new DeleteReportCommand(id)).ConfigureAwait(false);
@@ -90,6 +107,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpGet("{id:int}/photorecord")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public IActionResult GetPhotoRecords(int id)
         {
             var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id)
@@ -112,6 +132,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPost("{id:int}/photorecord")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> AddPhotoRecord(int id, [FromForm] string label)
         {
             var request = await Request.ReadFormAsync().ConfigureAwait(false);
@@ -130,6 +153,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPost("{id:int}/note")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> AddNote(int id, [FromBody] AddNoteCommand note)
         {
             Guard.Against.Null(note, nameof(note));
@@ -144,6 +170,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPut("{id:int}/note/{idNote:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> EditNote(int id, int idNote, [FromBody] EditNoteCommand note)
         {
             Guard.Against.Null(note, nameof(note));
@@ -158,6 +187,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPut("{id:int}/photorecord/{idPhoto:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> EditPhotoRecord(int id, int idPhoto, [FromBody] EditPhotoRecordCommand photo)
         {
             Guard.Against.Null(photo, nameof(photo));
@@ -173,6 +205,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpDelete("{id:int}/photorecord/{idPhoto:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> DeletePhotoRecord(int id, int idPhoto)
         {
             var result = await _mediator.Send(new DeletePhotoRecordCommand(idPhoto, id)).ConfigureAwait(false);
@@ -183,6 +218,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpDelete("{id:int}/note/{idNote:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> DeleteNote(int id, int idNote)
         {
             var result = await _mediator.Send(new DeleteNoteCommand(idNote, id)).ConfigureAwait(false);
@@ -217,6 +255,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPut("{id:int}/readings", Name = nameof(AddOperationalReadings))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> AddOperationalReadings(int id, [FromBody] UpdateOperationalReadingsCommand operationalReadingsCommand)
         {
             Guard.Against.Null(operationalReadingsCommand, nameof(operationalReadingsCommand));

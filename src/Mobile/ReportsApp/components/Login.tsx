@@ -6,7 +6,7 @@ import { ImageOverlay } from './ImageOverlay'
 import { StyleSheet } from 'react-native';
 import { AuthContext } from '../contexts/AuthContext';
 import { PasswordIcon, PersonIcon } from './Icons';
-import { API_HOST } from '../services/api/api-accesor';
+import { API_HOST } from '../services/api';
 import { showMessage } from 'react-native-flash-message'
 
 

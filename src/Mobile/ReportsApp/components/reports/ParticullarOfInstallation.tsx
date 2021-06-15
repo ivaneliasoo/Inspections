@@ -4,7 +4,7 @@ import { AutoSave } from '../AutoSave';
 import React, { useRef } from 'react';
 import { CalendarIcon } from '../Icons';
 import moment from 'moment';
-import { Report, UpdateReportCommand } from '../../services/api';
+import { ReportQueryResult, UpdateReportCommand } from '../../services/api';
 import * as Yup from 'yup';
 import { Datepicker, Text } from '@ui-kitten/components';
 import { useReports } from '../../hooks/useReports';
@@ -15,7 +15,7 @@ export const ParticullarOfInstallation = () => {
   const { orientation } = useOrientation();
   const flexType = orientation === 'landscape' ? 'row' : 'column'
 
-  const formRef = useRef<FormikProps<Report>>(null)
+  const formRef = useRef<FormikProps<ReportQueryResult>>(null)
   const { workingReport: reportData, saveReport, updateCheckList, updateCheckListItem } = useReports()
 
   const handleSubmit = async () => {
@@ -26,8 +26,8 @@ export const ParticullarOfInstallation = () => {
           date: moment(formRef.current.values.date).format('YYYY-MM-DD'),
           name: formRef.current.values.name ?? '',
           id: formRef.current.values.id ?? 0,
-          isClosed: formRef.current.values.isClosed ?? false,
-          licenseNumber: formRef.current.values.license?.number ?? ''
+          isClosed: false, // TODO: Mirar Como pasar isClosed
+          licenseNumber: formRef.current.values.licenseNumber ?? ''
         }
         await saveReport(updateCmd)
           .catch(error => {
@@ -63,33 +63,32 @@ export const ParticullarOfInstallation = () => {
               accessoryRight={CalendarIcon} />
             <AddressAutocomplete
               style={{ flex: 6 }}
-              values={values} errors={errors} flexType={flexType} onSelect={(e: AddressSelectedResult) => { setFieldValue('address', e.formattedAddress); setFieldValue('license.number', e.licenseNumber); }} />
+              values={values} errors={errors} flexType={flexType} onSelect={(e: AddressSelectedResult) => { setFieldValue('address', e.formattedAddress); setFieldValue('licenseNumber', e.licenseNumber); }} />
           </View>
-          {values.license &&
-            <View style={{ marginHorizontal: 10 }}>
-              <Text category='h6'>License</Text>
-              <Text category='s1'>Company:
-                <Text category='s2'> {values.license?.name!}</Text>
+          <View style={{ marginHorizontal: 10 }}>
+            <Text category='h6'>License</Text>
+            <Text category='s1'>Company:
+              <Text category='s2'> {values.licenseName!}</Text>
+            </Text>
+            <Text category='s1'>
+              Validity
+              <Text category='s2'> {moment(values.licenseValidity?.start!).format('DD-MM-YYYY')} - {moment(values.licenseValidity?.end!).format('DD-MM-YYYY')}</Text>
+              <Text category='s1'>  Number:
+                <Text category='s2'> {values.licenseNumber!}</Text>
               </Text>
-              <Text category='s1'>
-                Validity
-                <Text category='s2'> {moment(values.license?.validity?.start!).format('DD-MM-YYYY')} - {moment(values.license?.validity?.end!).format('DD-MM-YYYY')}</Text>
-                <Text category='s1'>  Number:
-                  <Text category='s2'> {values.license?.number!}</Text>
-                </Text>
-              </Text>
-              <Text category='s1'>Appoved Load:
-                <Text category='s1'> Amp:
-                  <Text category='s2'> {values.license?.amp!}</Text>
-                  <Text category='s1'>Kva:
-                    <Text category='s2'> {values.license?.kva!}</Text>
-                    <Text category='s1'>  Volt:
-                      <Text category='s2'> {values.license?.volt!}</Text>
-                    </Text>
+            </Text>
+            <Text category='s1'>Appoved Load:
+              <Text category='s1'> Amp:
+                <Text category='s2'> {values.licenseAmp!}</Text>
+                <Text category='s1'>Kva:
+                  <Text category='s2'> {values.licenseKVA!}</Text>
+                  <Text category='s1'>  Volt:
+                    <Text category='s2'> {values.licenseVolt!}</Text>
                   </Text>
                 </Text>
               </Text>
-            </View>}
+            </Text>
+          </View>
         </View>
       </>
     )}

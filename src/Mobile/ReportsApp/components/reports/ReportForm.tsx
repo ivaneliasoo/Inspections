@@ -8,17 +8,16 @@ import { ParticullarOfInstallation } from './ParticullarOfInstallation'
 
 const ReportForm = () => {
 
-  const { workingReport: reportData, saveReport, updateCheckList, updateCheckListItem } = useReports()
-
+  const { workingReport, updateCheckList, updateCheckListItem  } = useReports()
   return (
     <ScrollView style={{ backgroundColor: 'white'}}>
       <ParticullarOfInstallation />
       <Card
-        header={() => <Text style={styles.header} appearance="hint" category="h5">Checks Legend {reportData?.checkList ? reportData?.checkList![0]?.annotation! : ''}</Text>}
+        header={() => <Text style={styles.header} category="h6">Checks Legend {workingReport?.checkLists ? workingReport?.checkLists[0]?.annotation! : ''}</Text>}
       >
         <Checklists
-          checkLists={reportData?.checkList}
-          onCheckListUpdated={(item: any) => updateCheckList({ ...item, reportId: reportData?.id })}
+          checkLists={workingReport?.checkLists}
+          onCheckListUpdated={(item: any) => updateCheckList({ ...item, reportId: workingReport?.id })}
           onCheckListItemUpdated={updateCheckListItem} />
       </Card>
     </ScrollView>

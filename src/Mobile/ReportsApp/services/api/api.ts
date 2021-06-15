@@ -35,12 +35,6 @@ export interface AddCheckListCommand {
     text?: string | null;
     /**
      * 
-     * @type {Array<CheckListParamDTO>}
-     * @memberof AddCheckListCommand
-     */
-    textParams?: Array<CheckListParamDTO> | null;
-    /**
-     * 
      * @type {Array<CheckListItemDTO>}
      * @memberof AddCheckListCommand
      */
@@ -100,56 +94,6 @@ export interface AddCheckListItemCommand {
      * @memberof AddCheckListItemCommand
      */
     remarks?: string | null;
-    /**
-     * 
-     * @type {Array<CheckListParamDTO>}
-     * @memberof AddCheckListItemCommand
-     */
-    checklistParams?: Array<CheckListParamDTO> | null;
-}
-/**
- * 
- * @export
- * @interface AddCheckListItemParamCommand
- */
-export interface AddCheckListItemParamCommand {
-    /**
-     * 
-     * @type {number}
-     * @memberof AddCheckListItemParamCommand
-     */
-    idCheckList?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AddCheckListItemParamCommand
-     */
-    idCheckListItem?: number;
-    /**
-     * 
-     * @type {Array<CheckListParamDTO>}
-     * @memberof AddCheckListItemParamCommand
-     */
-    checkListParams?: Array<CheckListParamDTO> | null;
-}
-/**
- * 
- * @export
- * @interface AddCheckListParamCommand
- */
-export interface AddCheckListParamCommand {
-    /**
-     * 
-     * @type {number}
-     * @memberof AddCheckListParamCommand
-     */
-    idCheckList?: number;
-    /**
-     * 
-     * @type {Array<CheckListParamDTO>}
-     * @memberof AddCheckListParamCommand
-     */
-    checklistParams?: Array<CheckListParamDTO> | null;
 }
 /**
  * 
@@ -248,7 +192,7 @@ export interface AddSignatureCommand {
      * @type {ResponsibleType}
      * @memberof AddSignatureCommand
      */
-    responsibleType?: ResponsibleType;
+    responsableType?: ResponsibleType;
     /**
      * 
      * @type {string}
@@ -297,6 +241,12 @@ export interface AddSignatureCommand {
      * @memberof AddSignatureCommand
      */
     reportConfigurationId?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof AddSignatureCommand
+     */
+    order?: number;
 }
 /**
  * 
@@ -304,6 +254,18 @@ export interface AddSignatureCommand {
  * @interface Address
  */
 export interface Address {
+    /**
+     * 
+     * @type {number}
+     * @memberof Address
+     */
+    id?: number;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof Address
+     */
+    domainEvents?: Array<object> | null;
     /**
      * 
      * @type {string}
@@ -346,18 +308,6 @@ export interface Address {
      * @memberof Address
      */
     license?: EMALicense;
-    /**
-     * 
-     * @type {number}
-     * @memberof Address
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Address
-     */
-    domainEvents?: Array<object> | null;
 }
 /**
  * 
@@ -415,6 +365,30 @@ export interface AddressDTO {
     number?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof AddressDTO
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof AddressDTO
+     */
+    amp?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AddressDTO
+     */
+    volt?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AddressDTO
+     */
+    kva?: number;
+    /**
+     * 
      * @type {DateTimeRange}
      * @memberof AddressDTO
      */
@@ -456,152 +430,6 @@ export interface ChangePasswordDTO {
      * @memberof ChangePasswordDTO
      */
     newPasswordConfirmation?: string | null;
-}
-/**
- * 
- * @export
- * @interface CheckList
- */
-export interface CheckList {
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckList
-     */
-    reportId?: number | null;
-    /**
-     * 
-     * @type {Report}
-     * @memberof CheckList
-     */
-    report?: Report;
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckList
-     */
-    reportConfigurationId?: number | null;
-    /**
-     * 
-     * @type {ReportConfiguration}
-     * @memberof CheckList
-     */
-    reportConfiguration?: ReportConfiguration;
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckList
-     */
-    text?: string | null;
-    /**
-     * 
-     * @type {Array<CheckListParam>}
-     * @memberof CheckList
-     */
-    textParams?: Array<CheckListParam> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckList
-     */
-    annotation?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckList
-     */
-    isConfiguration?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckList
-     */
-    completed?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckList
-     */
-    checked?: boolean;
-    /**
-     * 
-     * @type {Array<CheckListItem>}
-     * @memberof CheckList
-     */
-    checks?: Array<CheckListItem> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckList
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof CheckList
-     */
-    domainEvents?: Array<object> | null;
-}
-/**
- * 
- * @export
- * @interface CheckListItem
- */
-export interface CheckListItem {
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckListItem
-     */
-    checkListId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckListItem
-     */
-    text?: string | null;
-    /**
-     * 
-     * @type {CheckValue}
-     * @memberof CheckListItem
-     */
-    checked?: CheckValue;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckListItem
-     */
-    editable?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckListItem
-     */
-    required?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckListItem
-     */
-    remarks?: string | null;
-    /**
-     * 
-     * @type {Array<CheckListParam>}
-     * @memberof CheckListItem
-     */
-    textParams?: Array<CheckListParam> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckListItem
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof CheckListItem
-     */
-    domainEvents?: Array<object> | null;
 }
 /**
  * 
@@ -651,127 +479,109 @@ export interface CheckListItemDTO {
      * @memberof CheckListItemDTO
      */
     remarks?: string | null;
-    /**
-     * 
-     * @type {Array<CheckListParamDTO>}
-     * @memberof CheckListItemDTO
-     */
-    textParams?: Array<CheckListParamDTO> | null;
 }
 /**
  * 
  * @export
- * @interface CheckListParam
+ * @interface CheckListItemQueryResult
  */
-export interface CheckListParam {
+export interface CheckListItemQueryResult {
     /**
      * 
      * @type {number}
-     * @memberof CheckListParam
+     * @memberof CheckListItemQueryResult
      */
-    checkListId?: number | null;
+    checkListId?: number;
     /**
      * 
      * @type {number}
-     * @memberof CheckListParam
+     * @memberof CheckListItemQueryResult
      */
-    checkListItemId?: number | null;
+    checked?: number;
     /**
      * 
-     * @type {CheckListItem}
-     * @memberof CheckListParam
+     * @type {boolean}
+     * @memberof CheckListItemQueryResult
      */
-    checkListItem?: CheckListItem;
-    /**
-     * 
-     * @type {CheckList}
-     * @memberof CheckListParam
-     */
-    checkList?: CheckList;
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckListParam
-     */
-    key?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckListParam
-     */
-    value?: string | null;
-    /**
-     * 
-     * @type {CheckListParamType}
-     * @memberof CheckListParam
-     */
-    type?: CheckListParamType;
+    editable?: boolean;
     /**
      * 
      * @type {number}
-     * @memberof CheckListParam
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof CheckListParam
-     */
-    domainEvents?: Array<object> | null;
-}
-/**
- * 
- * @export
- * @interface CheckListParamDTO
- */
-export interface CheckListParamDTO {
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckListParamDTO
+     * @memberof CheckListItemQueryResult
      */
     id?: number;
     /**
      * 
      * @type {string}
-     * @memberof CheckListParamDTO
+     * @memberof CheckListItemQueryResult
      */
-    key?: string | null;
+    remarks?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CheckListItemQueryResult
+     */
+    required?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof CheckListParamDTO
+     * @memberof CheckListItemQueryResult
      */
-    value?: string | null;
-    /**
-     * 
-     * @type {CheckListParamType}
-     * @memberof CheckListParamDTO
-     */
-    type?: CheckListParamType;
+    text?: string | null;
 }
 /**
  * 
  * @export
- * @enum {string}
+ * @interface CheckListQueryResult
  */
-export enum CheckListParamType {
-    NUMBER_0 = 0,
-    NUMBER_1 = 1,
-    NUMBER_2 = 2,
-    NUMBER_3 = 3
+export interface CheckListQueryResult {
+    /**
+     * 
+     * @type {number}
+     * @memberof CheckListQueryResult
+     */
+    id?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CheckListQueryResult
+     */
+    reportId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CheckListQueryResult
+     */
+    text?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CheckListQueryResult
+     */
+    annotation?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CheckListQueryResult
+     */
+    checked?: boolean;
+    /**
+     * 
+     * @type {Array<CheckListItemQueryResult>}
+     * @memberof CheckListQueryResult
+     */
+    checks?: Array<CheckListItemQueryResult> | null;
 }
-
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum CheckValue {
-    NotAcceptable = 0,
-    Acceptable = 1,
-    NotAplicable = 2,
-    None = 3
+    NUMBER_0 = 0,
+    NUMBER_1 = 1,
+    NUMBER_2 = 2,
+    NUMBER_3 = 3
 }
 
 /**
@@ -818,6 +628,18 @@ export interface DateTimeRange {
  * @interface EMALicense
  */
 export interface EMALicense {
+    /**
+     * 
+     * @type {number}
+     * @memberof EMALicense
+     */
+    id?: number;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof EMALicense
+     */
+    domainEvents?: Array<object> | null;
     /**
      * 
      * @type {string}
@@ -872,18 +694,6 @@ export interface EMALicense {
      * @memberof EMALicense
      */
     validity?: DateTimeRange;
-    /**
-     * 
-     * @type {number}
-     * @memberof EMALicense
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof EMALicense
-     */
-    domainEvents?: Array<object> | null;
 }
 /**
  * 
@@ -1007,49 +817,12 @@ export interface EditSignatureCommand {
      * @memberof EditSignatureCommand
      */
     drawnSign?: string | null;
-}
-/**
- * 
- * @export
- * @interface License
- */
-export interface License {
-    /**
-     * 
-     * @type {string}
-     * @memberof LicenseDTO
-     */
-     name?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof License
-     */
-    number?: string | null;
-    /**
-     * 
-     * @type {DateTimeRange}
-     * @memberof License
-     */
-    validity?: DateTimeRange;
     /**
      * 
      * @type {number}
-     * @memberof License
+     * @memberof EditSignatureCommand
      */
-    amp?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof License
-     */
-    volt?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof License
-     */
-    kva?: number;
+    order?: number;
 }
 /**
  * 
@@ -1146,96 +919,10 @@ export interface LoginModel {
 /**
  * 
  * @export
- * @interface Note
- */
-export interface Note {
-    /**
-     * 
-     * @type {number}
-     * @memberof Note
-     */
-    reportId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Note
-     */
-    text?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Note
-     */
-    checked?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Note
-     */
-    needsCheck?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Note
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Note
-     */
-    domainEvents?: Array<object> | null;
-}
-/**
- * 
- * @export
- * @interface PhotoRecord
- */
-export interface PhotoRecord {
-    /**
-     * 
-     * @type {number}
-     * @memberof PhotoRecord
-     */
-    reportId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhotoRecord
-     */
-    fileName?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhotoRecord
-     */
-    fileNameResized?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhotoRecord
-     */
-    label?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PhotoRecord
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof PhotoRecord
-     */
-    domainEvents?: Array<object> | null;
-}
-/**
- * 
- * @export
  * @interface ProblemDetails
  */
 export interface ProblemDetails {
-    [key: string]: object | any;
+    [key: string]: any | any;
 
     /**
      * 
@@ -1267,170 +954,6 @@ export interface ProblemDetails {
      * @memberof ProblemDetails
      */
     instance?: string | null;
-}
-/**
- * 
- * @export
- * @interface Report
- */
-export interface Report {
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    name?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    address?: string | null;
-    /**
-     * 
-     * @type {License}
-     * @memberof Report
-     */
-    license?: License;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    date?: string|Date;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Report
-     */
-    isClosed?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    title?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    formName?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    remarksLabelText?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof Report
-     */
-    operationalReadings?: any | null;
-    /**
-     * 
-     * @type {Array<Signature>}
-     * @memberof Report
-     */
-    signatures?: Array<Signature> | null;
-    /**
-     * 
-     * @type {Array<Note>}
-     * @memberof Report
-     */
-    notes?: Array<Note> | null;
-    /**
-     * 
-     * @type {Array<CheckList>}
-     * @memberof Report
-     */
-    checkList?: Array<CheckList> | null;
-    /**
-     * 
-     * @type {Array<PhotoRecord>}
-     * @memberof Report
-     */
-    photoRecords?: Array<PhotoRecord> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Report
-     */
-    completed?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Report
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Report
-     */
-    domainEvents?: Array<object> | null;
-}
-/**
- * 
- * @export
- * @interface ReportConfiguration
- */
-export interface ReportConfiguration {
-    /**
-     * 
-     * @type {ReportType}
-     * @memberof ReportConfiguration
-     */
-    type?: ReportType;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    title?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    formName?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    remarksLabelText?: string | null;
-    /**
-     * 
-     * @type {Array<CheckList>}
-     * @memberof ReportConfiguration
-     */
-    checksDefinition?: Array<CheckList> | null;
-    /**
-     * 
-     * @type {Array<Signature>}
-     * @memberof ReportConfiguration
-     */
-    signatureDefinitions?: Array<Signature> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ReportConfiguration
-     */
-    inactive?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportConfiguration
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof ReportConfiguration
-     */
-    domainEvents?: Array<object> | null;
 }
 /**
  * 
@@ -1484,6 +1007,241 @@ export interface ReportConfigurationDTO {
 /**
  * 
  * @export
+ * @interface ReportQueryResult
+ */
+export interface ReportQueryResult {
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportQueryResult
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportQueryResult
+     */
+    address?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportQueryResult
+     */
+    date?: string | Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportQueryResult
+     */
+    licenseNumber?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportQueryResult
+     */
+    licenseName?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    licenseKVA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    licenseVolt?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    licenseAmp?: number;
+    /**
+     * 
+     * @type {DateTimeRange}
+     * @memberof ReportQueryResult
+     */
+    licenseValidity?: DateTimeRange;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportQueryResult
+     */
+    title?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportQueryResult
+     */
+    formName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportQueryResult
+     */
+    remarksLabelText?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsVoltageL1N?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsVoltageL2N?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsVoltageL3N?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsVoltageL1L2?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsVoltageL1L3?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsVoltageL2L3?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsRunningLoadL1?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsRunningLoadL2?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsRunningLoadL3?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsMainBreakerAmp?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsMainBreakerPoles?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsMainBreakerCapacity?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsOverCurrentByMainBreaker?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsOverCurrentDTLA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsOverCurrentDTLSec?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsOverCurrentIDMTLA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsOverCurrentIDMTLTm?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsEarthFaultMA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsEarthFaultELRA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsEarthFaultELRSec?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsEarthFaultA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    operationalReadingsEarthFaultSec?: number;
+    /**
+     * 
+     * @type {Array<SignatureQueryResult>}
+     * @memberof ReportQueryResult
+     */
+    signatures?: Array<SignatureQueryResult> | null;
+    /**
+     * 
+     * @type {Array<CheckListQueryResult>}
+     * @memberof ReportQueryResult
+     */
+    checkLists?: Array<CheckListQueryResult> | null;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 export enum ReportType {
@@ -1493,33 +1251,14 @@ export enum ReportType {
 /**
  * 
  * @export
- * @interface Responsible
- */
-export interface Responsible {
-    /**
-     * 
-     * @type {ResponsibleType}
-     * @memberof Responsible
-     */
-    type?: ResponsibleType;
-    /**
-     * 
-     * @type {string}
-     * @memberof Responsible
-     */
-    name?: string | null;
-}
-/**
- * 
- * @export
  * @enum {string}
  */
 export enum ResponsibleType {
-    Supervisor = 0,
-    Inspector = 1,
-    Witness = 2,
-    LEW = 3,
-    Other = 4
+    NUMBER_0 = 0,
+    NUMBER_1 = 1,
+    NUMBER_2 = 2,
+    NUMBER_3 = 3,
+    NUMBER_4 = 4
 }
 
 /**
@@ -1586,109 +1325,6 @@ export interface ResumenReportConfiguration {
 /**
  * 
  * @export
- * @interface Signature
- */
-export interface Signature {
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    title?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    annotation?: string | null;
-    /**
-     * 
-     * @type {Responsible}
-     * @memberof Signature
-     */
-    responsible?: Responsible;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    responsibleName?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    designation?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    remarks?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    date?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Signature
-     */
-    principal?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Signature
-     */
-    isConfiguration?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Signature
-     */
-    reportId?: number | null;
-    /**
-     * 
-     * @type {Report}
-     * @memberof Signature
-     */
-    report?: Report;
-    /**
-     * 
-     * @type {number}
-     * @memberof Signature
-     */
-    reportConfigurationId?: number | null;
-    /**
-     * 
-     * @type {ReportConfiguration}
-     * @memberof Signature
-     */
-    reportConfiguration?: ReportConfiguration;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    drawnSign?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Signature
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Signature
-     */
-    domainEvents?: Array<object> | null;
-}
-/**
- * 
- * @export
  * @interface SignatureDTO
  */
 export interface SignatureDTO {
@@ -1715,13 +1351,13 @@ export interface SignatureDTO {
      * @type {ResponsibleType}
      * @memberof SignatureDTO
      */
-    responsibleType?: ResponsibleType;
+    responsableType?: ResponsibleType;
     /**
      * 
      * @type {string}
      * @memberof SignatureDTO
      */
-    responsibleName?: string | null;
+    responsableName?: string | null;
     /**
      * 
      * @type {string}
@@ -1754,16 +1390,89 @@ export interface SignatureDTO {
     reportId?: number | null;
     /**
      * 
-     * @type {Report}
+     * @type {number}
      * @memberof SignatureDTO
      */
-    report?: Report;
+    reportConfigurationId?: number | null;
     /**
      * 
      * @type {number}
      * @memberof SignatureDTO
      */
-    reportConfigurationId?: number | null;
+    order?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SignatureQueryResult
+ */
+export interface SignatureQueryResult {
+    /**
+     * 
+     * @type {number}
+     * @memberof SignatureQueryResult
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignatureQueryResult
+     */
+    date?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignatureQueryResult
+     */
+    annotation?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignatureQueryResult
+     */
+    designation?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignatureQueryResult
+     */
+    drawnSign?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SignatureQueryResult
+     */
+    principal?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignatureQueryResult
+     */
+    remarks?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof SignatureQueryResult
+     */
+    responsibleType?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignatureQueryResult
+     */
+    responsibleName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignatureQueryResult
+     */
+    title?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof SignatureQueryResult
+     */
+    order?: number;
 }
 /**
  * 
@@ -1848,45 +1557,153 @@ export interface UpdateCheckListItemCommand {
 /**
  * 
  * @export
- * @interface UpdateCheckListParamCommand
+ * @interface UpdateOperationalReadingsCommand
  */
-export interface UpdateCheckListParamCommand {
+export interface UpdateOperationalReadingsCommand {
     /**
      * 
      * @type {number}
-     * @memberof UpdateCheckListParamCommand
-     */
-    idCheckList?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateCheckListParamCommand
-     */
-    idCheckListItem?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateCheckListParamCommand
+     * @memberof UpdateOperationalReadingsCommand
      */
     id?: number;
     /**
      * 
-     * @type {string}
-     * @memberof UpdateCheckListParamCommand
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
      */
-    key?: string | null;
+    reportId?: number;
     /**
      * 
-     * @type {string}
-     * @memberof UpdateCheckListParamCommand
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
      */
-    value?: string | null;
+    voltageL1N?: number;
     /**
      * 
-     * @type {CheckListParamType}
-     * @memberof UpdateCheckListParamCommand
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
      */
-    type?: CheckListParamType;
+    voltageL2N?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    voltageL3N?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    voltageL1L2?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    voltageL1L3?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    voltageL2L3?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    runningLoadL1?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    runningLoadL2?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    runningLoadL3?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    mainBreakerAmp?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    mainBreakerPoles?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    mainBreakerCapacity?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    overCurrentByMainBreaker?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    overCurrentDTLA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    overCurrentDTLSec?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    overCurrentIDMTLA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    overCurrentIDMTLTm?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    earthFaultMA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    earthFaultELRA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    earthFaultELRSec?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    earthFaultA?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    earthFaultSec?: number;
 }
 /**
  * 
@@ -2082,7 +1899,7 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2091,12 +1908,12 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(addressDTO, localVarRequestOptions, configuration)
 
             return {
@@ -2122,7 +1939,7 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2131,10 +1948,10 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2159,7 +1976,7 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2168,10 +1985,10 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2193,7 +2010,7 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2206,10 +2023,10 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
             }
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2235,7 +2052,7 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2244,12 +2061,12 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(addressDTO, localVarRequestOptions, configuration)
 
             return {
@@ -2264,7 +2081,7 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
  * AddressesApi - functional programming interface
  * @export
  */
-export const AddressesApiFp = function (configuration?: Configuration) {
+export const AddressesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AddressesApiAxiosParamCreator(configuration)
     return {
         /**
@@ -2464,7 +2281,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2473,12 +2290,12 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(loginModel, localVarRequestOptions, configuration)
 
             return {
@@ -2493,7 +2310,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
  * AuthApi - functional programming interface
  * @export
  */
-export const AuthApiFp = function (configuration?: Configuration) {
+export const AuthApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthApiAxiosParamCreator(configuration)
     return {
         /**
@@ -2559,51 +2376,6 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
     return {
         /**
          * 
-         * @param {string} id 
-         * @param {string} idItem 
-         * @param {AddCheckListItemParamCommand} [addCheckListItemParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addItemParam: async (id: string, idItem: string, addCheckListItemParamCommand?: AddCheckListItemParamCommand, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('addItemParam', 'id', id)
-            // verify required parameter 'idItem' is not null or undefined
-            assertParamExists('addItemParam', 'idItem', idItem)
-            const localVarPath = `/CheckLists/{id}/items/{idItem}/params`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
-                .replace(`{${"idItem"}}`, encodeURIComponent(String(idItem)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication jwt_auth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-            localVarRequestOptions.data = serializeDataIfNeeded(addCheckListItemParamCommand, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {number} id 
          * @param {AddCheckListItemCommand} [addCheckListItemCommand] 
          * @param {*} [options] Override http request option.
@@ -2621,7 +2393,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2630,54 +2402,13 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(addCheckListItemCommand, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {AddCheckListParamCommand} [addCheckListParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addParams: async (id: string, addCheckListParamCommand?: AddCheckListParamCommand, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('addParams', 'id', id)
-            const localVarPath = `/CheckLists/{id}/params`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication jwt_auth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-            localVarRequestOptions.data = serializeDataIfNeeded(addCheckListParamCommand, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2699,7 +2430,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2708,12 +2439,12 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(addCheckListCommand, localVarRequestOptions, configuration)
 
             return {
@@ -2739,7 +2470,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2748,10 +2479,10 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2780,7 +2511,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2789,97 +2520,10 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idItem 
-         * @param {number} [idParam] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteItemParam: async (id: number, idItem: number, idParam?: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteItemParam', 'id', id)
-            // verify required parameter 'idItem' is not null or undefined
-            assertParamExists('deleteItemParam', 'idItem', idItem)
-            const localVarPath = `/CheckLists/{id}/items/{idItem}/params`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
-                .replace(`{${"idItem"}}`, encodeURIComponent(String(idItem)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication jwt_auth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (idParam !== undefined) {
-                localVarQueryParameter['idParam'] = idParam;
-            }
-
-
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idParam 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteParam: async (id: number, idParam: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteParam', 'id', id)
-            // verify required parameter 'idParam' is not null or undefined
-            assertParamExists('deleteParam', 'idParam', idParam)
-            const localVarPath = `/CheckLists/{id}/params/{idParam}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
-                .replace(`{${"idParam"}}`, encodeURIComponent(String(idParam)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication jwt_auth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2904,7 +2548,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2913,10 +2557,10 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2941,7 +2585,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2966,10 +2610,10 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
             }
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2995,7 +2639,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3004,12 +2648,12 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(updateCheckListCommand, localVarRequestOptions, configuration)
 
             return {
@@ -3040,7 +2684,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3049,108 +2693,13 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(updateCheckListItemCommand, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idItem 
-         * @param {number} [idParam] 
-         * @param {UpdateCheckListParamCommand} [updateCheckListParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateItemParam: async (id: number, idItem: number, idParam?: number, updateCheckListParamCommand?: UpdateCheckListParamCommand, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('updateItemParam', 'id', id)
-            // verify required parameter 'idItem' is not null or undefined
-            assertParamExists('updateItemParam', 'idItem', idItem)
-            const localVarPath = `/CheckLists/{id}/items/{idItem}/params`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
-                .replace(`{${"idItem"}}`, encodeURIComponent(String(idItem)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication jwt_auth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (idParam !== undefined) {
-                localVarQueryParameter['idParam'] = idParam;
-            }
-
-
-
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-            localVarRequestOptions.data = serializeDataIfNeeded(updateCheckListParamCommand, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idParam 
-         * @param {UpdateCheckListParamCommand} [updateCheckListParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateParam: async (id: number, idParam: number, updateCheckListParamCommand?: UpdateCheckListParamCommand, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('updateParam', 'id', id)
-            // verify required parameter 'idParam' is not null or undefined
-            assertParamExists('updateParam', 'idParam', idParam)
-            const localVarPath = `/CheckLists/{id}/params/{idParam}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
-                .replace(`{${"idParam"}}`, encodeURIComponent(String(idParam)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication jwt_auth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-            localVarRequestOptions.data = serializeDataIfNeeded(updateCheckListParamCommand, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3164,21 +2713,9 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
  * CheckListsApi - functional programming interface
  * @export
  */
-export const CheckListsApiFp = function (configuration?: Configuration) {
+export const CheckListsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CheckListsApiAxiosParamCreator(configuration)
     return {
-        /**
-         * 
-         * @param {string} id 
-         * @param {string} idItem 
-         * @param {AddCheckListItemParamCommand} [addCheckListItemParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async addItemParam(id: string, idItem: string, addCheckListItemParamCommand?: AddCheckListItemParamCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addItemParam(id, idItem, addCheckListItemParamCommand, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
         /**
          * 
          * @param {number} id 
@@ -3188,17 +2725,6 @@ export const CheckListsApiFp = function (configuration?: Configuration) {
          */
         async addItemToChecklist(id: number, addCheckListItemCommand?: AddCheckListItemCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addItemToChecklist(id, addCheckListItemCommand, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {AddCheckListParamCommand} [addCheckListParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async addParams(id: string, addCheckListParamCommand?: AddCheckListParamCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addParams(id, addCheckListParamCommand, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3230,29 +2756,6 @@ export const CheckListsApiFp = function (configuration?: Configuration) {
          */
         async deleteChecklistItem(id: number, idItem: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteChecklistItem(id, idItem, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idItem 
-         * @param {number} [idParam] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteItemParam(id: number, idItem: number, idParam?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteItemParam(id, idItem, idParam, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idParam 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteParam(id: number, idParam: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteParam(id, idParam, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3301,31 +2804,6 @@ export const CheckListsApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateChecklistItem(id, idItem, updateCheckListItemCommand, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idItem 
-         * @param {number} [idParam] 
-         * @param {UpdateCheckListParamCommand} [updateCheckListParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateItemParam(id: number, idItem: number, idParam?: number, updateCheckListParamCommand?: UpdateCheckListParamCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateItemParam(id, idItem, idParam, updateCheckListParamCommand, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idParam 
-         * @param {UpdateCheckListParamCommand} [updateCheckListParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateParam(id: number, idParam: number, updateCheckListParamCommand?: UpdateCheckListParamCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateParam(id, idParam, updateCheckListParamCommand, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -3338,17 +2816,6 @@ export const CheckListsApiFactory = function (configuration?: Configuration, bas
     return {
         /**
          * 
-         * @param {string} id 
-         * @param {string} idItem 
-         * @param {AddCheckListItemParamCommand} [addCheckListItemParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addItemParam(id: string, idItem: string, addCheckListItemParamCommand?: AddCheckListItemParamCommand, options?: any): AxiosPromise<void> {
-            return localVarFp.addItemParam(id, idItem, addCheckListItemParamCommand, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {number} id 
          * @param {AddCheckListItemCommand} [addCheckListItemCommand] 
          * @param {*} [options] Override http request option.
@@ -3356,16 +2823,6 @@ export const CheckListsApiFactory = function (configuration?: Configuration, bas
          */
         addItemToChecklist(id: number, addCheckListItemCommand?: AddCheckListItemCommand, options?: any): AxiosPromise<void> {
             return localVarFp.addItemToChecklist(id, addCheckListItemCommand, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {AddCheckListParamCommand} [addCheckListParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addParams(id: string, addCheckListParamCommand?: AddCheckListParamCommand, options?: any): AxiosPromise<void> {
-            return localVarFp.addParams(id, addCheckListParamCommand, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3394,27 +2851,6 @@ export const CheckListsApiFactory = function (configuration?: Configuration, bas
          */
         deleteChecklistItem(id: number, idItem: number, options?: any): AxiosPromise<void> {
             return localVarFp.deleteChecklistItem(id, idItem, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idItem 
-         * @param {number} [idParam] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteItemParam(id: number, idItem: number, idParam?: number, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteItemParam(id, idItem, idParam, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idParam 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteParam(id: number, idParam: number, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteParam(id, idParam, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3458,29 +2894,6 @@ export const CheckListsApiFactory = function (configuration?: Configuration, bas
         updateChecklistItem(id: number, idItem: number, updateCheckListItemCommand?: UpdateCheckListItemCommand, options?: any): AxiosPromise<void> {
             return localVarFp.updateChecklistItem(id, idItem, updateCheckListItemCommand, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idItem 
-         * @param {number} [idParam] 
-         * @param {UpdateCheckListParamCommand} [updateCheckListParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateItemParam(id: number, idItem: number, idParam?: number, updateCheckListParamCommand?: UpdateCheckListParamCommand, options?: any): AxiosPromise<void> {
-            return localVarFp.updateItemParam(id, idItem, idParam, updateCheckListParamCommand, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {number} idParam 
-         * @param {UpdateCheckListParamCommand} [updateCheckListParamCommand] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateParam(id: number, idParam: number, updateCheckListParamCommand?: UpdateCheckListParamCommand, options?: any): AxiosPromise<void> {
-            return localVarFp.updateParam(id, idParam, updateCheckListParamCommand, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -3493,19 +2906,6 @@ export const CheckListsApiFactory = function (configuration?: Configuration, bas
 export class CheckListsApi extends BaseAPI {
     /**
      * 
-     * @param {string} id 
-     * @param {string} idItem 
-     * @param {AddCheckListItemParamCommand} [addCheckListItemParamCommand] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckListsApi
-     */
-    public addItemParam(id: string, idItem: string, addCheckListItemParamCommand?: AddCheckListItemParamCommand, options?: any) {
-        return CheckListsApiFp(this.configuration).addItemParam(id, idItem, addCheckListItemParamCommand, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @param {number} id 
      * @param {AddCheckListItemCommand} [addCheckListItemCommand] 
      * @param {*} [options] Override http request option.
@@ -3514,18 +2914,6 @@ export class CheckListsApi extends BaseAPI {
      */
     public addItemToChecklist(id: number, addCheckListItemCommand?: AddCheckListItemCommand, options?: any) {
         return CheckListsApiFp(this.configuration).addItemToChecklist(id, addCheckListItemCommand, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {AddCheckListParamCommand} [addCheckListParamCommand] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckListsApi
-     */
-    public addParams(id: string, addCheckListParamCommand?: AddCheckListParamCommand, options?: any) {
-        return CheckListsApiFp(this.configuration).addParams(id, addCheckListParamCommand, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3560,31 +2948,6 @@ export class CheckListsApi extends BaseAPI {
      */
     public deleteChecklistItem(id: number, idItem: number, options?: any) {
         return CheckListsApiFp(this.configuration).deleteChecklistItem(id, idItem, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} id 
-     * @param {number} idItem 
-     * @param {number} [idParam] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckListsApi
-     */
-    public deleteItemParam(id: number, idItem: number, idParam?: number, options?: any) {
-        return CheckListsApiFp(this.configuration).deleteItemParam(id, idItem, idParam, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} id 
-     * @param {number} idParam 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckListsApi
-     */
-    public deleteParam(id: number, idParam: number, options?: any) {
-        return CheckListsApiFp(this.configuration).deleteParam(id, idParam, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3636,33 +2999,6 @@ export class CheckListsApi extends BaseAPI {
     public updateChecklistItem(id: number, idItem: number, updateCheckListItemCommand?: UpdateCheckListItemCommand, options?: any) {
         return CheckListsApiFp(this.configuration).updateChecklistItem(id, idItem, updateCheckListItemCommand, options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * 
-     * @param {number} id 
-     * @param {number} idItem 
-     * @param {number} [idParam] 
-     * @param {UpdateCheckListParamCommand} [updateCheckListParamCommand] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckListsApi
-     */
-    public updateItemParam(id: number, idItem: number, idParam?: number, updateCheckListParamCommand?: UpdateCheckListParamCommand, options?: any) {
-        return CheckListsApiFp(this.configuration).updateItemParam(id, idItem, idParam, updateCheckListParamCommand, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} id 
-     * @param {number} idParam 
-     * @param {UpdateCheckListParamCommand} [updateCheckListParamCommand] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckListsApi
-     */
-    public updateParam(id: number, idParam: number, updateCheckListParamCommand?: UpdateCheckListParamCommand, options?: any) {
-        return CheckListsApiFp(this.configuration).updateParam(id, idParam, updateCheckListParamCommand, options).then((request) => request(this.axios, this.basePath));
-    }
 }
 
 
@@ -3687,7 +3023,7 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3696,12 +3032,12 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(licenseDTO, localVarRequestOptions, configuration)
 
             return {
@@ -3727,7 +3063,7 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3736,10 +3072,10 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3764,7 +3100,7 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3773,10 +3109,10 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3797,7 +3133,7 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3806,10 +3142,10 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3830,7 +3166,7 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3839,10 +3175,10 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3868,7 +3204,7 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3877,12 +3213,12 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(licenseDTO, localVarRequestOptions, configuration)
 
             return {
@@ -3897,7 +3233,7 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
  * EMALicensesApi - functional programming interface
  * @export
  */
-export const EMALicensesApiFp = function (configuration?: Configuration) {
+export const EMALicensesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EMALicensesApiAxiosParamCreator(configuration)
     return {
         /**
@@ -3935,7 +3271,7 @@ export const EMALicensesApiFp = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLicenses(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LicenseDTO>>> {
+        async getLicenses(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLicenses(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4001,7 +3337,7 @@ export const EMALicensesApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLicenses(options?: any): AxiosPromise<Array<LicenseDTO>> {
+        getLicenses(options?: any): AxiosPromise<void> {
             return localVarFp.getLicenses(options).then((request) => request(axios, basePath));
         },
         /**
@@ -4100,6 +3436,224 @@ export class EMALicensesApi extends BaseAPI {
 
 
 /**
+ * EnergyReportApi - axios parameter creator
+ * @export
+ */
+export const EnergyReportApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiEnergyReportBackgroundGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/EnergyReport/background`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiEnergyReportCategoryGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/EnergyReport/category`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiEnergyReportCategoryPost: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/EnergyReport/category`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EnergyReportApi - functional programming interface
+ * @export
+ */
+export const EnergyReportApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = EnergyReportApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiEnergyReportBackgroundGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiEnergyReportBackgroundGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiEnergyReportCategoryGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiEnergyReportCategoryGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiEnergyReportCategoryPost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiEnergyReportCategoryPost(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * EnergyReportApi - factory interface
+ * @export
+ */
+export const EnergyReportApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = EnergyReportApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiEnergyReportBackgroundGet(options?: any): AxiosPromise<void> {
+            return localVarFp.apiEnergyReportBackgroundGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiEnergyReportCategoryGet(options?: any): AxiosPromise<void> {
+            return localVarFp.apiEnergyReportCategoryGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiEnergyReportCategoryPost(options?: any): AxiosPromise<void> {
+            return localVarFp.apiEnergyReportCategoryPost(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * EnergyReportApi - object-oriented interface
+ * @export
+ * @class EnergyReportApi
+ * @extends {BaseAPI}
+ */
+export class EnergyReportApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnergyReportApi
+     */
+    public apiEnergyReportBackgroundGet(options?: any) {
+        return EnergyReportApiFp(this.configuration).apiEnergyReportBackgroundGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnergyReportApi
+     */
+    public apiEnergyReportCategoryGet(options?: any) {
+        return EnergyReportApiFp(this.configuration).apiEnergyReportCategoryGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnergyReportApi
+     */
+    public apiEnergyReportCategoryPost(options?: any) {
+        return EnergyReportApiFp(this.configuration).apiEnergyReportCategoryPost(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * ReportConfigurationApi - axios parameter creator
  * @export
  */
@@ -4120,7 +3674,7 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4133,10 +3687,10 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
             }
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4161,7 +3715,7 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4170,10 +3724,10 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4198,7 +3752,7 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4207,10 +3761,10 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4236,7 +3790,7 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4245,12 +3799,12 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(updateReportConfigurationCommand, localVarRequestOptions, configuration)
 
             return {
@@ -4273,7 +3827,7 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4282,12 +3836,12 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(addReportConfigurationCommand, localVarRequestOptions, configuration)
 
             return {
@@ -4302,7 +3856,7 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
  * ReportConfigurationApi - functional programming interface
  * @export
  */
-export const ReportConfigurationApiFp = function (configuration?: Configuration) {
+export const ReportConfigurationApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReportConfigurationApiAxiosParamCreator(configuration)
     return {
         /**
@@ -4488,6 +4042,47 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @param {number} id 
+         * @param {UpdateOperationalReadingsCommand} [updateOperationalReadingsCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addOperationalReadings: async (id: number, updateOperationalReadingsCommand?: UpdateOperationalReadingsCommand, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addOperationalReadings', 'id', id)
+            const localVarPath = `/Reports/{id}/readings`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateOperationalReadingsCommand, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {number} reportId 
          * @param {number} checkListId 
          * @param {number} [newValue] 
@@ -4509,7 +4104,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4522,10 +4117,10 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4550,7 +4145,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4559,10 +4154,10 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4586,7 +4181,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4607,10 +4202,10 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4635,7 +4230,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4644,10 +4239,10 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4672,7 +4267,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4681,10 +4276,10 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4713,7 +4308,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4722,10 +4317,10 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4755,7 +4350,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4764,12 +4359,12 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(editNoteCommand, localVarRequestOptions, configuration)
 
             return {
@@ -4796,7 +4391,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4805,12 +4400,12 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(addNoteCommand, localVarRequestOptions, configuration)
 
             return {
@@ -4836,7 +4431,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4845,10 +4440,10 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4877,7 +4472,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4886,10 +4481,10 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4919,7 +4514,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4928,12 +4523,12 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(editPhotoRecordCommand, localVarRequestOptions, configuration)
 
             return {
@@ -4960,7 +4555,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
             const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
@@ -4970,16 +4565,16 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-            if (label !== undefined) {
+            if (label !== undefined) { 
                 localVarFormParams.append('label', label as any);
             }
-
-
+    
+    
             localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = localVarFormParams;
 
             return {
@@ -5006,7 +4601,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5015,12 +4610,12 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(updateReportCommand, localVarRequestOptions, configuration)
 
             return {
@@ -5043,7 +4638,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5052,12 +4647,12 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(createReportCommand, localVarRequestOptions, configuration)
 
             return {
@@ -5072,9 +4667,20 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
  * ReportsApi - functional programming interface
  * @export
  */
-export const ReportsApiFp = function (configuration?: Configuration) {
+export const ReportsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReportsApiAxiosParamCreator(configuration)
     return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {UpdateOperationalReadingsCommand} [updateOperationalReadingsCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addOperationalReadings(id: number, updateOperationalReadingsCommand?: UpdateOperationalReadingsCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addOperationalReadings(id, updateOperationalReadingsCommand, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * 
          * @param {number} reportId 
@@ -5125,7 +4731,7 @@ export const ReportsApiFp = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async reportsIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async reportsIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportQueryResult>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.reportsIdGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5240,6 +4846,16 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @param {number} id 
+         * @param {UpdateOperationalReadingsCommand} [updateOperationalReadingsCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addOperationalReadings(id: number, updateOperationalReadingsCommand?: UpdateOperationalReadingsCommand, options?: any): AxiosPromise<void> {
+            return localVarFp.addOperationalReadings(id, updateOperationalReadingsCommand, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {number} reportId 
          * @param {number} checkListId 
          * @param {number} [newValue] 
@@ -5284,7 +4900,7 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reportsIdGet(id: number, options?: any): AxiosPromise<void> {
+        reportsIdGet(id: number, options?: any): AxiosPromise<ReportQueryResult> {
             return localVarFp.reportsIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -5387,6 +5003,18 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class ReportsApi extends BaseAPI {
+    /**
+     * 
+     * @param {number} id 
+     * @param {UpdateOperationalReadingsCommand} [updateOperationalReadingsCommand] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public addOperationalReadings(id: number, updateOperationalReadingsCommand?: UpdateOperationalReadingsCommand, options?: any) {
+        return ReportsApiFp(this.configuration).addOperationalReadings(id, updateOperationalReadingsCommand, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {number} reportId 
@@ -5580,7 +5208,7 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5605,10 +5233,10 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
             }
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5633,7 +5261,7 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5642,10 +5270,10 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5670,7 +5298,7 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5679,10 +5307,10 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5708,7 +5336,7 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5717,12 +5345,12 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(editSignatureCommand, localVarRequestOptions, configuration)
 
             return {
@@ -5745,7 +5373,7 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5754,12 +5382,12 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(addSignatureCommand, localVarRequestOptions, configuration)
 
             return {
@@ -5774,7 +5402,7 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
  * SignaturesApi - functional programming interface
  * @export
  */
-export const SignaturesApiFp = function (configuration?: Configuration) {
+export const SignaturesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SignaturesApiAxiosParamCreator(configuration)
     return {
         /**
@@ -5982,7 +5610,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5991,12 +5619,12 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(userDTO, localVarRequestOptions, configuration)
 
             return {
@@ -6024,7 +5652,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -6033,12 +5661,12 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(changePasswordDTO, localVarRequestOptions, configuration)
 
             return {
@@ -6064,7 +5692,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -6073,10 +5701,10 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6097,7 +5725,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -6106,10 +5734,10 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6134,7 +5762,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -6143,10 +5771,10 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6167,7 +5795,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -6176,10 +5804,10 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6205,7 +5833,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -6214,12 +5842,12 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(userDTO, localVarRequestOptions, configuration)
 
             return {
@@ -6234,7 +5862,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
  * UsersApi - functional programming interface
  * @export
  */
-export const UsersApiFp = function (configuration?: Configuration) {
+export const UsersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration)
     return {
         /**

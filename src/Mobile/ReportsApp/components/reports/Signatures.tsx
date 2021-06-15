@@ -1,17 +1,14 @@
 import { Card, Datepicker, Input, Select, SelectItem, Text, Button, useTheme } from '@ui-kitten/components'
 import { CalendarIcon, CrossIcon, EditSignatureIcon } from '../Icons'
 import { Formik, FormikProps } from 'formik'
-import React, { useContext, createRef } from 'react'
-import { Alert, Image, StyleSheet, View } from 'react-native'
-import { Configuration, Report, SignaturesApi } from '../../services/api'
+import React, { createRef } from 'react'
+import { Image, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import { API_CONFIG } from '../../config/config'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AutoSave } from '../../components/AutoSave'
-import { ReportsContext } from '../../contexts/ReportsContext'
 import { showMessage } from 'react-native-flash-message';
 import { useReports } from '../../hooks/useReports';
+import { ReportQueryResult, ResponsibleType } from '../../services/api/api';
 
 
 const Signatures = () => {
@@ -19,9 +16,9 @@ const Signatures = () => {
   const theme = useTheme()
 
   const { workingReport: report, saveSignature } = useReports()
-  const formRef = createRef<FormikProps<Report>>()
+  const formRef = createRef<FormikProps<ReportQueryResult>>()
 
-  const save = async (values: Report) => {
+  const save = async (values: ReportQueryResult) => {
     if (formRef.current) {
       if (formRef.current.isValid && formRef.current.dirty) {
 
@@ -63,7 +60,7 @@ const Signatures = () => {
                 <Datepicker
                   label='Date'
                   placeholder='Pick Date'
-                  date={typeof item.date === 'string' ? new Date() : item.date}
+                  date={typeof item.date === 'string' ? new Date() : item.date!}
                   max={new Date()}
                   onSelect={e => setFieldValue(`signatures[${signIndex}].date`, e)}
                   onBlur={() => handleBlur(`signatures[${signIndex}].date`)}
@@ -71,10 +68,10 @@ const Signatures = () => {
                 />
                 <Select
                   placeholder='please select...'
-                  value={['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'][item?.responsible?.type ?? 0]}
+                  value={['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'][item?.responsibleType ?? 0]}
                   label='Representation Type'
-                  onSelect={(e) => { setFieldValue(`signatures[${signIndex}].responsible.type`, e.row) }}
-                  status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsible && errors.signatures[signIndex].responsible.type ? 'danger' : 'basic'}
+                  onSelect={(e) => { setFieldValue(`signatures[${signIndex}].responsibleType`, e.row) }}
+                  status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex] ? 'danger' : 'basic'}
                 >
                   {['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'].map((responsible, index) =>
                     <SelectItem
@@ -82,11 +79,11 @@ const Signatures = () => {
                       title={responsible}
                     ></SelectItem>)}
                 </Select>
-                <Input label='Name' value={item.responsible!.name!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].responsible.name`, e)} status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsible && errors.signatures[signIndex].responsible.name ? 'danger' : 'basic'} />
+                <Input label='Name' value={item.responsibleName!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].responsibleName`, e)} status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsibleName ? 'danger' : 'basic'} />
                 <Input label='Designation' value={item.designation!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].designation`, e)} />
                 <Input label='Remarks' multiline value={item.remarks!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].remarks`, e)} />
                 <View style={{ flex: 2, flexDirection: 'row' }}>
-                  {item.drawnSign === '' ? <Text style={styles.noSignatureText}>Not signed yet</Text> : <Image style={styles.imageSignature} source={{ uri: item.drawnSign! ?? '' }}/>}
+                  {!item.drawnSign ? <Text style={styles.noSignatureText}>Not signed yet</Text> : <Image style={styles.imageSignature} source={{ uri: item.drawnSign! ?? '' }}/>}
                   <View style={{ flex: 1, flexDirection: 'row' }}>
                     <Button style={{ flex: 1, margin: 10, marginTop: 20 }} status='warning' size='small' appearance='outline' onPress={() => navigation.navigate('ModalSignatures', { index: signIndex, existentSign: item.drawnSign, id: item.id })} accessoryLeft={EditSignatureIcon} />
                     <Button disabled={!item.drawnSign} style={{ flex: 1, margin: 10, marginTop: 20 }} status='danger' size='small' appearance='outline' onPress={() => setFieldValue(`signatures[${signIndex}].drawnSign`, '')} accessoryLeft={CrossIcon} />

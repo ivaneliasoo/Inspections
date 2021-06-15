@@ -1,6 +1,6 @@
-import { Report, CheckList } from 'services/api';
+import { ReportQueryResult, CheckListQueryResult } from '../services/api';
 import { ReportsState } from './ReportsContext';
-import { Signature } from '../services/api/api';
+import { SignatureQueryResult } from '../services/api';
 
 export interface ReportsFilterPayload {
   myReports: boolean;
@@ -10,12 +10,12 @@ export interface ReportsFilterPayload {
 
 type ReportsAction =
   | { type: 'SET_REPORTS'; payload: { reports: any[]; }; }
-  | { type: 'SET_WORKING_REPORT', report: Report }
+  | { type: 'SET_WORKING_REPORT', report: ReportQueryResult }
   | { type: 'CLEAR_WORKING_REPORT' }
   | { type: 'SET_FILTER'; payload: ReportsFilterPayload }
   | { type: 'SET_OPERATIONAL_READINGS'; payload: any }
-  | { type: 'UPDATE_CHECKLIST'; payload: CheckList }
-  | { type: 'UPDATE_DRAWNSIGNATURE'; payload: { signature: Signature, index: number } };
+  | { type: 'UPDATE_CHECKLIST'; payload: CheckListQueryResult }
+  | { type: 'UPDATE_DRAWNSIGNATURE'; payload: { signature: SignatureQueryResult, index: number } };
 
 export const reportsReducer = (prevState: ReportsState, action: ReportsAction) => {
   switch (action.type) {
@@ -23,7 +23,6 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
       return { ...prevState, reports: action.payload.reports };
     }
     case 'SET_OPERATIONAL_READINGS': {
-      console.log('por aqui pase')
       return { ...prevState, workingOperationalReadings: action.payload };
     }
     case 'SET_FILTER': {
@@ -50,12 +49,12 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
       }
     }
     case 'UPDATE_CHECKLIST': {
-      const index = prevState.workingReport!.checkList?.findIndex(ck => ck.id === action.payload.id)
+      const index = prevState.workingReport!.checkLists?.findIndex(ck => ck.id === action.payload.id)
       return {
         ...prevState,
         workingReport: {
           ...prevState.workingReport,
-          checkList: [...prevState.workingReport!.checkList!.slice(0, index), { ...action.payload }, ...prevState.workingReport!.checkList!.slice(index)]
+          checkList: [...prevState.workingReport!.checkLists!.slice(0, index), { ...action.payload }, ...prevState.workingReport!.checkLists!.slice(index)]
         }
       }
     }

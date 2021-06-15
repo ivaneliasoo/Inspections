@@ -17,6 +17,8 @@ namespace Inspections.API.Features.Energy
     public class EnergyReportController : ControllerBase
     {
         [HttpPost("category")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateCategories()
         {
             var deserializedContent = await JsonSerializer.DeserializeAsync<object>(Request.Body);
@@ -28,6 +30,9 @@ namespace Inspections.API.Features.Energy
         }
 
         [HttpGet("category")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> Categories()
         {
             using var reader = System.IO.File.OpenText(CategoriesFilePath);
@@ -43,6 +48,9 @@ namespace Inspections.API.Features.Energy
         private static string LogoPath => Path.Combine(AppContext.BaseDirectory, "cse-logo.svg");
 
         [HttpGet("background")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> Background()
         {
             using var reader = System.IO.File.OpenText(LogoPath);

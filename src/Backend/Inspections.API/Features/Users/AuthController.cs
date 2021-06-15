@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Inspections.API.Features.Users
 {
@@ -28,6 +29,9 @@ namespace Inspections.API.Features.Users
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("token", Name ="Login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public IActionResult CreateToken([FromBody] LoginModel model)
         {
             var user = _context.Users.Where(u => u.UserName == model.username && u.Password == model.password).FirstOrDefault();

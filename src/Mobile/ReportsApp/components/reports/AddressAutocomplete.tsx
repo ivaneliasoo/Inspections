@@ -3,7 +3,7 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react'
 import { useContext } from 'react';
 import { StyleSheet } from 'react-native';
-import { AddressDTO } from 'services/api';
+import { AddressDTO } from '../../services/api';
 import { ReportsContext } from '../../contexts/ReportsContext';
 import { useAddresses } from '../../hooks/useAddresses';
 

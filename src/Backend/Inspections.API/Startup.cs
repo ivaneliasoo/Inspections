@@ -44,6 +44,9 @@ namespace Inspections.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+            
+            var assembly = AppDomain.CurrentDomain.GetAssemblies();
+            services.AddAutoMapper(assembly);
 
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
@@ -97,7 +100,6 @@ namespace Inspections.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Inspections API", Version = "v1" });
-
                 c.AddSecurityDefinition("jwt_auth", new OpenApiSecurityScheme()
                 {
                     Description = "Add Token in Headers",

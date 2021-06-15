@@ -1,4 +1,5 @@
 ﻿using Inspections.Core.Domain.ReportsAggregate;
+using Inspections.Core.QueryModels;
 using Inspections.Shared;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Inspections.Core.Interfaces
     public interface IReportsRepository : IAsyncRepository<Report>
     {
         Task<IEnumerable<Report>> GetAll(string? filter, bool? closed, bool myReports = true);
-        Task<dynamic> GetByIdAsync(int id, bool projected);
+        Task<ReportQueryResult> GetByIdAsync(int id, bool projected);
     }
 }

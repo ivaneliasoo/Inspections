@@ -3,14 +3,11 @@ import { ReportsContext } from '../contexts/ReportsContext';
 import { API_HOST, API_KEY } from '../config/config';
 import { Configuration, ReportsApi, CheckListsApiFactory } from '../services/api';
 import { AuthContext } from '../contexts/AuthContext';
-import { CheckListItem, Report, UpdateCheckListItemCommand, UpdateReportCommand, SignaturesApi, Signature } from '../services/api/api';
-import moment from 'moment';
-import { SegmentedControlIOSComponent } from 'react-native';
-
+import { CheckListItemQueryResult, ReportQueryResult, UpdateCheckListItemCommand, UpdateReportCommand, SignaturesApi, SignatureQueryResult } from '../services/api';
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
-  const { getAll, setFilter, setWorkingReport, setOperationalReadings, updateSignature, clearWorkingReport, reportsState } = useContext(ReportsContext)
+  const { getAll, setFilter, setWorkingReport, updateSignature, clearWorkingReport, reportsState } = useContext(ReportsContext)
 
   const configuration = new Configuration({
     accessToken: userToken!,
@@ -25,7 +22,7 @@ export const useReports = () => {
   const getReports = async () => {
     try {
       const resp = await reportsApi.reportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports)
-      getAll(resp.data as unknown as Report[])
+      getAll(resp.data as unknown as ReportQueryResult[])
     } catch (error) {
       console.log(error)
     } finally {
@@ -33,10 +30,9 @@ export const useReports = () => {
   }
 
   const getReportById = async (id: number) => {
-    const result: Report = (await reportsApi.reportsIdGet(id)).data as unknown as Report
-    result.date = moment(result.date).toDate()
+    const result: ReportQueryResult = (await reportsApi.reportsIdGet(id)).data as unknown as ReportQueryResult
+    result.date = new Date()
     setWorkingReport(result)
-    setOperationalReadings(result.operationalReadings)
   }
 
   const completeReport = async (reportId: number) => {
@@ -67,7 +63,7 @@ export const useReports = () => {
     await reportsApi.bulkUpdateChecks(payload.reportId, payload.checkListId, payload.newValue)
   }
 
-  const updateCheckListItem = async (payload: CheckListItem) => {
+  const updateCheckListItem = async (payload: CheckListItemQueryResult) => {
     const command: UpdateCheckListItemCommand = {
       checkListId: payload.checkListId!,
       checked: payload.checked!,
@@ -80,18 +76,18 @@ export const useReports = () => {
     await checkListsApi.updateChecklistItem(payload.checkListId ?? -1, payload.id ?? -1, command)
   }
 
-  const saveSignature = async (s: { signature: Signature, index: number }) => {
+  const saveSignature = async (s: { signature: SignatureQueryResult, index: number }) => {
     await signaturesApi.signaturesIdPut(Number(s.signature.id), {
-      id: s.signature.id,
-      title: s.signature.title,
-      annotation: s.signature.annotation,
-      responsibleType: s.signature.responsible?.type,
-      responsibleName: s.signature.responsible?.name,
-      designation: s.signature.designation,
-      remarks: s.signature.remarks,
-      date: s.signature.date,
-      principal: s.signature.principal,
-      drawnSign: s.signature.drawnSign
+      id: s.signature.id!,
+      title: s.signature.title!,
+      annotation: s.signature.annotation!,
+      responsibleType: s.signature.responsibleType!,
+      responsibleName: s.signature.responsibleName!,
+      designation: s.signature.designation!,
+      remarks: s.signature.remarks!,
+      date: s.signature.date!,
+      principal: s.signature.principal!,
+      drawnSign: s.signature.drawnSign!
     }).then(() => {
       updateSignature(s)
     })
@@ -114,7 +110,6 @@ export const useReports = () => {
     setWorkingReport,
     workingReport: reportsState.workingReport,
     reports: reportsState.reports || [],
-    workingRerport: reportsState.workingReport,
     updateCheckList,
     updateCheckListItem,
     saveSignature,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Text, Icon, Input, Card, List, ListItem, Button } from '@ui-kitten/components'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { CheckList, CheckListItem, CheckValue } from '../../services/api'
+import { CheckListQueryResult, CheckListItemQueryResult, CheckValue } from '../../services/api'
 
 const checkItemIcon = [
   { name: 'close-outline', color: 'red' },
@@ -12,7 +12,7 @@ const checkItemIcon = [
   { name: 'message-square-outline', color: 'black' }
 ]
 
-const computeCheckListValue = (checkList: CheckList) => {
+const computeCheckListValue = (checkList: CheckListQueryResult) => {
   const totalAcceptable = checkList.checks!.filter(ci => ci.checked === CheckValue.Acceptable).length
   const totalNotAcceptable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAcceptable).length
   const totalNotAplicable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAplicable || ci.checked === CheckValue.None).length
@@ -74,10 +74,10 @@ const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
 }
 
 export interface CheckListItemProps {
-  item: CheckList;
+  item: CheckListQueryResult;
   index: number;
   onChange: (checked: any) => any;
-  onCheckUpdated: (payload: CheckListItem) => any
+  onCheckUpdated: (payload: CheckListItemQueryResult) => any
 }
 const CheckListGroup = React.memo(({ item, index, onChange, onCheckUpdated, ...props }: CheckListItemProps) => {
   const [checked, setChecked] = useState(computeCheckListValue(item) ?? 3)
@@ -120,20 +120,20 @@ const CheckListGroup = React.memo(({ item, index, onChange, onCheckUpdated, ...p
 })
 
 export interface ChecklistsProps {
-  checkLists: CheckList[];
+  checkLists: CheckListQueryResult[];
   onCheckListUpdated: () => void;
   onCheckListItemUpdated: () => void;
 }
 const Checklists = ({ checkLists = [], onCheckListUpdated, onCheckListItemUpdated }: any) => {
   return (
     <View>
-      {checkLists && checkLists.map((checkList: CheckList, index: number) => {
+      {checkLists && checkLists.map((checkList: CheckListQueryResult, index: number) => {
         return (
           <CheckListGroup item={checkList} index={index} key={index} onChange={(checked) => {
 
             onCheckListUpdated({ reportId: checkList.reportId, checkListId: checkList.id, newValue: checked })
           }}
-            onCheckUpdated={(payload: CheckListItem) => {
+            onCheckUpdated={(payload: CheckListItemQueryResult) => {
               onCheckListItemUpdated(payload)
             }}
           />

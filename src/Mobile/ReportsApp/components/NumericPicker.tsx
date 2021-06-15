@@ -9,17 +9,18 @@ type NumericPickerProps = {
   defaultValue: number[];
   preppendLabel?: string;
   appendLabel?: string;
-  itemSelected: (value: number[]) => void
+  itemSelected: (value: number) => void
 }
-const NumericPicker = ({ defaultValue = [0, 0, 0], itemSelected, appendLabel = 'V', preppendLabel = 'L1-N' }: NumericPickerProps) => {
+const NumericPicker = ({ defaultValue = 0, itemSelected, appendLabel = 'V', preppendLabel = 'L1-N' }: NumericPickerProps) => {
   const [selectedItem, setSelectedItem] = useState(defaultValue);
   const [firstDigit, setFirstDigit] = useState(selectedItem[0])
   const [secondDigit, setSecondDigit] = useState(selectedItem[1])
   const [thirdDigit, setThirdDigit] = useState(selectedItem[2])
-  const [itemList, setItemList] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  const [itemList, setItemList] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
   const value = useMemo(() => {
-    return [firstDigit, secondDigit, thirdDigit]
+    console.log([firstDigit, secondDigit, thirdDigit])
+    return parseInt([firstDigit, secondDigit, thirdDigit].join(""))
   }, [firstDigit, secondDigit, thirdDigit])
 
   useEffect(() => {

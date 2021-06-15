@@ -1,6 +1,12 @@
-﻿using Inspections.Core;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Inspections.Core;
+using Inspections.Core.Domain;
+using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
+using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Core.Interfaces;
+using Inspections.Core.QueryModels;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -66,64 +72,18 @@ namespace Inspections.Infrastructure.Repositories
                .AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task<dynamic> GetByIdAsync(int id, bool projected)
+        public async Task<ReportQueryResult> GetByIdAsync(int id, bool projected)
         {
-            return await _context.Reports
-                .Select(report => new
-                {
-                    report.Id,
-                    report.Name,
-                    report.Address,
-                    License = report.License != null ? new
-                    {
-                        report.License.Number,
-                        report.License.Name,
-                        report.License.KVA,
-                        report.License.Volt,
-                        report.License.Amp,
-                        report.License.Validity
-                    }:null,
-                    report.Title,
-                    report.FormName,
-                    report.RemarksLabelText,
-                    report.OperationalReadings,
-                    Signatures = report.Signatures.OrderBy(o => o.Order).Select(s => new
-                    {
-                        s.Date,
-                        s.Annotation,
-                        s.Designation,
-                        s.DrawnSign,
-                        s.Id,
-                        s.Principal,
-                        s.Remarks,
-                        Responsible = new
-                        {
-                            s.Responsible.Name,
-                            s.Responsible.Type
-                        },
-                        s.ResponsibleName,
-                        s.Title,
-                        s.Order
-                    }),
-                    report.Notes,
-                    CheckList = report.CheckList.Select(ch => new
-                    {
-                        ch.Annotation,
-                        ch.Checked,
-                        Checks = ch.Checks.Select(chch => new
-                        {
-                            chch.Checked,
-                            chch.CheckListId,
-                            chch.Editable,
-                            chch.Id,
-                            chch.Remarks,
-                            chch.Required,
-                            chch.Text
-                        }),
-                        ch.Id,
-                        ch.Text
-                    })
-                }).AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Signature, SignatureQueryResult>();
+                cfg.CreateMap<CheckListItem, CheckListItemQueryResult>();
+                cfg.CreateMap<CheckList, CheckListQueryResult>().ForMember(m => m.Checks, opt => opt.MapFrom(src =>src.Checks));
+                cfg.CreateMap<Report, ReportQueryResult>()
+                    .ForMember(m => m.Signatures, opt => opt.MapFrom(src => src.Signatures.OrderBy(ob => ob.Order)))
+                    .ForMember(m => m.CheckLists, opt => opt.MapFrom(src => src.CheckList));
+            });
+            return await _context.Reports.Where(r => r.Id == id).ProjectTo<ReportQueryResult>(config).AsNoTracking().SingleOrDefaultAsync();
         }
 
         public async Task UpdateAsync(Report entity)

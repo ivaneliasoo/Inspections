@@ -27,14 +27,23 @@ namespace Inspections.API.Features.Licenses
 
         // GET: api/EMALicenses
         [HttpGet(Name = "GetLicenses")]
-        public async Task<ActionResult<IEnumerable<LicenseDTO>>> GetLicenses()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> GetLicenses()
         {
             var result = await _context.Licenses.ToListAsync().ConfigureAwait(false);
-            return result.Select(l => new LicenseDTO(l)).ToList();
+            if (!result.Any())
+                return NoContent();
+
+            return Ok(result.Select(l => new LicenseDTO(l)).ToList());
         }
 
         // GET: api/EMALicenses/5
         [HttpGet("{id}", Name = "GetLicense")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<LicenseDTO>> GetEMALicense(int id)
         {
             var eMALicense = await _context.Licenses.FindAsync(id).ConfigureAwait(false);
@@ -51,6 +60,10 @@ namespace Inspections.API.Features.Licenses
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}", Name ="UpdateLicense")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> PutEMALicense(int id, LicenseDTO eMALicense)
         {
             Guard.Against.Null(eMALicense, nameof(eMALicense));
@@ -98,6 +111,8 @@ namespace Inspections.API.Features.Licenses
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost(Name ="AddLicense")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<EMALicense>> PostEMALicense([FromBody] LicenseDTO eMALicense)
         {
             Guard.Against.Null(eMALicense, nameof(eMALicense));
@@ -123,6 +138,9 @@ namespace Inspections.API.Features.Licenses
 
         // DELETE: api/EMALicenses/5
         [HttpDelete("{id}", Name ="DeleteLicense")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<EMALicense>> DeleteEMALicense(int id)
         {
             var eMALicense = await _context.Licenses.FindAsync(id).ConfigureAwait(false);
@@ -138,6 +156,9 @@ namespace Inspections.API.Features.Licenses
         }
 
         [HttpGet("dashboard", Name="GetLicensesDashboard")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<IEnumerable<LicenseDTO>>> GetLicensesDashboard()
         {
             var expiringLicenses = await _context.Licenses
@@ -148,6 +169,9 @@ namespace Inspections.API.Features.Licenses
             var expiredLicenses = await _context.Licenses
                 .Where(l => l.Validity.End <= DateTime.Now.Date)
                 .Select(l => new LicenseDTO(l)).ToListAsync().ConfigureAwait(false);
+
+            if (!expiredLicenses.Any() && !expiringLicenses.Any())
+                return NoContent();
 
             return Ok(new { expiring = expiringLicenses, expired = expiredLicenses });
         }

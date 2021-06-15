@@ -1,26 +1,24 @@
 import React, { createContext, useReducer } from 'react';
-import { Report } from "services/api";
+import { ReportQueryResult } from "../services/api";
 import { ReportsFilterPayload, reportsReducer } from './reportsReducer';
-import { CheckList, Signature } from '../services/api/api';
+import { CheckListQueryResult, SignatureQueryResult } from '../services/api';
 
 export interface ReportsState {
-  reports?: Report[];
+  reports?: ReportQueryResult[];
   myReports: boolean;
   isClosed: boolean;
   filter: string;
-  workingReport?: Report;
-  workingOperationalReadings?: any;
+  workingReport?: ReportQueryResult;
 }
 
 export interface ReportsContextProps {
   reportsState: ReportsState,
   setFilter: (filter: ReportsFilterPayload) => void,
-  getAll: (reports: Report[]) => void,
-  setWorkingReport: (payload: Report) => void,
-  updateCheckList: (payload: CheckList) => void,
-  updateSignature: (payload: { signature: Signature, index: number }) => void,
+  getAll: (reports: ReportQueryResult[]) => void,
+  setWorkingReport: (payload: ReportQueryResult) => void,
+  updateCheckList: (payload: CheckListQueryResult) => void,
+  updateSignature: (payload: { signature: SignatureQueryResult, index: number }) => void,
   clearWorkingReport: () => void,
-  setOperationalReadings: (payload: any) => void
 }
 const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '', workingReport: undefined! }
 
@@ -36,14 +34,14 @@ export const ReportsContext = createContext({} as ReportsContextProps);
     })
   }
 
-  const getAll = (reports: Report[]) => {
+  const getAll = (reports: ReportQueryResult[]) => {
     dispatch({
       type: 'SET_REPORTS',
       payload: { reports }
     })
   }
 
-  const setWorkingReport = (payload: Report) => {
+  const setWorkingReport = (payload: ReportQueryResult) => {
     dispatch({
       type: 'SET_WORKING_REPORT',
       report: payload
@@ -57,23 +55,16 @@ export const ReportsContext = createContext({} as ReportsContextProps);
   }
 
 
-  const updateCheckList = (payload: CheckList) => {
+  const updateCheckList = (payload: CheckListQueryResult) => {
     dispatch({
       type: 'UPDATE_CHECKLIST',
       payload
     })
   }
 
-  const updateSignature = (payload: { signature: Signature, index: number }) => {
+  const updateSignature = (payload: { signature: SignatureQueryResult, index: number }) => {
     dispatch({
       type: 'UPDATE_DRAWNSIGNATURE',
-      payload
-    })
-  }
-
-  const setOperationalReadings = (payload: any) => {
-    dispatch({
-      type: 'SET_OPERATIONAL_READINGS',
       payload
     })
   }
@@ -87,7 +78,6 @@ export const ReportsContext = createContext({} as ReportsContextProps);
       updateCheckList,
       updateSignature,
       clearWorkingReport,
-      setOperationalReadings
     }}>
       {children}
     </ReportsContext.Provider>

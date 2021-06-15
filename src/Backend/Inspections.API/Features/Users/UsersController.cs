@@ -34,6 +34,9 @@ namespace Inspections.API.Features.Users
 
         // GET: api/Users/username
         [HttpGet("{userName}", Name ="GetUserByUserName")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<UserDTO>> GetUserByUserName(string userName)
         {
             var user = await _context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync().ConfigureAwait(false);
@@ -48,6 +51,10 @@ namespace Inspections.API.Features.Users
 
         // GET: api/Users/username
         [HttpGet("active", Name ="GetActiveUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<UserDTO>> GetActiveUser()
         {
             var userName = HttpContext?.User?.Identity?.Name;
@@ -67,6 +74,10 @@ namespace Inspections.API.Features.Users
 
         // PUT: api/Users/demo
         [HttpPut("{userName}", Name ="UpdateUser")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> PutUser(string userName, [FromBody] UserDTO user)
         {
             Guard.Against.Null(user, nameof(user));
@@ -108,6 +119,9 @@ namespace Inspections.API.Features.Users
 
         // POST: api/Users
         [HttpPost(Name ="AddUser")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<User>> PostUser([FromBody] UserDTO user)
         {
             Guard.Against.Null(user, nameof(user));
@@ -142,6 +156,9 @@ namespace Inspections.API.Features.Users
 
         // DELETE: api/Users/5
         [HttpDelete("{userName}", Name ="DeleteUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<User>> DeleteUser(string? userName)
         {
             var user = _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
@@ -163,6 +180,9 @@ namespace Inspections.API.Features.Users
         /// <param name="passwordDTO"></param>
         /// <returns></returns>
         [HttpPatch("{userName}", Name ="ChangePassword")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> ChangePassword(string userName, ChangePasswordDTO passwordDTO)
         {
             Guard.Against.Null(passwordDTO, nameof(passwordDTO));
