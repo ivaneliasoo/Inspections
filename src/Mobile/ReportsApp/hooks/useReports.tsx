@@ -5,11 +5,12 @@ import { Configuration, ReportsApi, CheckListsApiFactory } from '../services/api
 import { AuthContext } from '../contexts/AuthContext';
 import { CheckListItem, Report, UpdateCheckListItemCommand, UpdateReportCommand, SignaturesApi, Signature } from '../services/api/api';
 import moment from 'moment';
+import { SegmentedControlIOSComponent } from 'react-native';
 
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
-  const { getAll, setFilter, setWorkingReport, updateSignature, clearWorkingReport, reportsState } = useContext(ReportsContext)
+  const { getAll, setFilter, setWorkingReport, setOperationalReadings, updateSignature, clearWorkingReport, reportsState } = useContext(ReportsContext)
 
   const configuration = new Configuration({
     accessToken: userToken!,
@@ -35,6 +36,7 @@ export const useReports = () => {
     const result: Report = (await reportsApi.reportsIdGet(id)).data as unknown as Report
     result.date = moment(result.date).toDate()
     setWorkingReport(result)
+    setOperationalReadings(result.operationalReadings)
   }
 
   const completeReport = async (reportId: number) => {

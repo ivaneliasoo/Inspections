@@ -1,4 +1,5 @@
-﻿using Inspections.Core.Domain.CheckListAggregate;
+﻿using Ardalis.GuardClauses;
+using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Shared;
 using System;
@@ -14,13 +15,14 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public int? EMALicenseId { get; set; }
         public EMALicense? License { get; private set; }
+        public int? OperationalReadingsId { get; private set; }
+        public OperationalReadings? OperationalReadings { get; private set; }
         public DateTimeOffset Date { get; private set; } = default!;
         public bool IsClosed { get; private set; } = default!;
 
         public string Title { get; private set; } = default!;
         public string FormName { get; private set; } = default!;
         public string? RemarksLabelText { get; private set; }
-        public string? OperationalReadings { get; set; }
         private readonly List<Signature> signatures = new();
         public IReadOnlyCollection<Signature> Signatures => signatures;
         private readonly List<Note> notes = new();
@@ -48,6 +50,12 @@ namespace Inspections.Core.Domain.ReportsAggregate
         {
             //CheckIfClosed();
             Name = name;
+        }
+
+        public void AddOperationalReadings(OperationalReadings operationalReadings)
+        {
+            Guard.Against.Null(operationalReadings, nameof(operationalReadings));
+            OperationalReadings = operationalReadings;
         }
 
         public Report(string title, string formName, string remarksLabelText)

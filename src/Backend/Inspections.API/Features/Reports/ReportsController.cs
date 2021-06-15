@@ -216,5 +216,18 @@ namespace Inspections.API.Features.Inspections
             return NoContent();
         }
 
+        [HttpPut("{id:int}/readings", Name = nameof(AddOperationalReadings))]
+        public async Task<IActionResult> AddOperationalReadings(int id, [FromBody] UpdateOperationalReadingsCommand operationalReadingsCommand)
+        {
+            Guard.Against.Null(operationalReadingsCommand, nameof(operationalReadingsCommand));
+            if (id != operationalReadingsCommand.ReportId)
+                return BadRequest();
+
+            var result = await _mediator.Send(operationalReadingsCommand).ConfigureAwait(false);
+            if (result)
+                return Ok(result);
+
+            return BadRequest();
+        }
     }
 }

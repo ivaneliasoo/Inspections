@@ -14,7 +14,7 @@ import { Alert, View } from 'react-native';
 export const ParticullarOfInstallation = () => {
   const { orientation } = useOrientation();
   const flexType = orientation === 'landscape' ? 'row' : 'column'
-  
+
   const formRef = useRef<FormikProps<Report>>(null)
   const { workingReport: reportData, saveReport, updateCheckList, updateCheckListItem } = useReports()
 
@@ -43,24 +43,27 @@ export const ParticullarOfInstallation = () => {
     address: Yup.string().required('Required. Please Select an Address'),
     date: Yup.date().required('Required. Please Select a date')
   })
-  
+
   return <Formik innerRef={formRef} validateOnMount validationSchema={reportValidationSchema} initialValues={reportData!} enableReinitialize onSubmit={handleSubmit}>
     {({ values, errors, setFieldValue }) => (
       <>
         <View style={{ alignSelf: 'center' }}>
           <AutoSave debounceMs={300} />
         </View>
-        <View>
+        <View style={{ marginHorizontal: 10 }}>
           <Text category='h6'>Particular of Installation: </Text>
           <View>
             <Datepicker
+              style={{ flex: 6 }}
               label='Report Date'
               placeholder='Pick Date'
               date={values.date as Date | undefined}
               max={new Date()}
               onSelect={(e) => setFieldValue('date', e)}
               accessoryRight={CalendarIcon} />
-            <AddressAutocomplete values={values} errors={errors} flexType={flexType} onSelect={(e: AddressSelectedResult) => { setFieldValue('address', e.formattedAddress); setFieldValue('license.number', e.licenseNumber); } } />
+            <AddressAutocomplete
+              style={{ flex: 6 }}
+              values={values} errors={errors} flexType={flexType} onSelect={(e: AddressSelectedResult) => { setFieldValue('address', e.formattedAddress); setFieldValue('license.number', e.licenseNumber); }} />
           </View>
           {values.license &&
             <View style={{ marginHorizontal: 10 }}>

@@ -13,6 +13,7 @@ type ReportsAction =
   | { type: 'SET_WORKING_REPORT', report: Report }
   | { type: 'CLEAR_WORKING_REPORT' }
   | { type: 'SET_FILTER'; payload: ReportsFilterPayload }
+  | { type: 'SET_OPERATIONAL_READINGS'; payload: any }
   | { type: 'UPDATE_CHECKLIST'; payload: CheckList }
   | { type: 'UPDATE_DRAWNSIGNATURE'; payload: { signature: Signature, index: number } };
 
@@ -20,6 +21,10 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
   switch (action.type) {
     case 'SET_REPORTS': {
       return { ...prevState, reports: action.payload.reports };
+    }
+    case 'SET_OPERATIONAL_READINGS': {
+      console.log('por aqui pase')
+      return { ...prevState, workingOperationalReadings: action.payload };
     }
     case 'SET_FILTER': {
       return { ...prevState, ...action.payload };

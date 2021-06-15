@@ -44,7 +44,7 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Report> Reports { get; set; }
         public DbSet<CheckList> CheckLists { get; set; }
         public DbSet<CheckListItem> CheckListItems { get; set; }
-        public DbSet<Note> Notes { get; set; }
+        public DbSet<Note> Notes { get; set; }  
         public DbSet<PhotoRecord> Photos { get; set; }
         public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
         public DbSet<Signature> Signatures { get; set; }
@@ -52,6 +52,7 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Core.Domain.User> Users { get; set; }
         public DbSet<Core.Domain.Address> Addresses { get; set; }
         public DbSet<Core.Domain.EMALicense> Licenses { get; set; }
+        public DbSet<OperationalReadings> OperationalReadings { get; set; }
 
 
         //Queries

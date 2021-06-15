@@ -4,13 +4,15 @@ import { StyleSheet } from 'react-native'
 import { Checklists } from './Checklists'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useReports } from '../../hooks/useReports';
+import { ParticullarOfInstallation } from './ParticullarOfInstallation'
 
 const ReportForm = () => {
 
   const { workingReport: reportData, saveReport, updateCheckList, updateCheckListItem } = useReports()
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: 'white'}}>
+      <ParticullarOfInstallation />
       <Card
         header={() => <Text style={styles.header} appearance="hint" category="h5">Checks Legend {reportData?.checkList ? reportData?.checkList![0]?.annotation! : ''}</Text>}
       >

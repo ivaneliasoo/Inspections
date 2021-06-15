@@ -11,7 +11,6 @@ import { Signatures } from '../components/reports/Signatures';
 import { ReportsContext } from '../contexts/ReportsContext';
 import { useContext } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { ParticullarOfInstallation } from '../components/reports/ParticullarOfInstallation';
 
 type DetailsScreenNavigationProp = StackNavigationProp<any, any>
 
@@ -52,7 +51,6 @@ export const Details = ({ route, navigation }: Props) => {
       <Divider />
       {workingReport && !loading ?
         <View style={styles.container}>
-          <ParticullarOfInstallation />
           <Navigator tabBarPosition='bottom' initialRouteName="Report" lazy={true} title='Editing Report' options={{ showIcon: true }}>
             <Screen name='Camera' component={CameraScreen} options={{ tabBarIcon: () => <Icon name="camera-outline" size={26} /> }} />
             <Screen name='OperationalReadings' component={OperationalReading} options={{ title: 'Readings' }} />

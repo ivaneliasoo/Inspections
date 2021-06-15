@@ -49,6 +49,7 @@ namespace Inspections.Infrastructure.Repositories
         public Task DeleteAsync(Report entity)
         {
             _context.CheckLists.RemoveRange(entity.CheckList);
+            _context.OperationalReadings.RemoveRange(entity.OperationalReadings);
             _context.Signatures.RemoveRange(entity.Signatures);
             _context.SaveChanges();
             _context.Reports.Remove(entity);

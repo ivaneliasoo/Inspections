@@ -9,6 +9,7 @@ export interface ReportsState {
   isClosed: boolean;
   filter: string;
   workingReport?: Report;
+  workingOperationalReadings?: any;
 }
 
 export interface ReportsContextProps {
@@ -18,7 +19,8 @@ export interface ReportsContextProps {
   setWorkingReport: (payload: Report) => void,
   updateCheckList: (payload: CheckList) => void,
   updateSignature: (payload: { signature: Signature, index: number }) => void,
-  clearWorkingReport: () => void
+  clearWorkingReport: () => void,
+  setOperationalReadings: (payload: any) => void
 }
 const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '', workingReport: undefined! }
 
@@ -69,6 +71,13 @@ export const ReportsContext = createContext({} as ReportsContextProps);
     })
   }
 
+  const setOperationalReadings = (payload: any) => {
+    dispatch({
+      type: 'SET_OPERATIONAL_READINGS',
+      payload
+    })
+  }
+
   return (
     <ReportsContext.Provider value={{
       reportsState,
@@ -77,7 +86,8 @@ export const ReportsContext = createContext({} as ReportsContextProps);
       setWorkingReport,
       updateCheckList,
       updateSignature,
-      clearWorkingReport
+      clearWorkingReport,
+      setOperationalReadings
     }}>
       {children}
     </ReportsContext.Provider>

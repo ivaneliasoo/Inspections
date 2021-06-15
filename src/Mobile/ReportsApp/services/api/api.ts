@@ -1324,10 +1324,10 @@ export interface Report {
     remarksLabelText?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {any}
      * @memberof Report
      */
-    operationalReadings?: string | null;
+    operationalReadings?: any | null;
     /**
      * 
      * @type {Array<Signature>}

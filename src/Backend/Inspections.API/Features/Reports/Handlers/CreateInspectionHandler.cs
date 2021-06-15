@@ -31,6 +31,7 @@ namespace Inspections.API.Features.Inspections.Handlers
 
             IReportsBuilder _reportsBuilder = new ReportsBuilder(cfg, _userNameResolver.FullName);
             var newReport = _reportsBuilder
+                .WithOperationalReadings()
                 .WithDefaultNotes(true)
                 .WithName(reportName)
                 .Build();
