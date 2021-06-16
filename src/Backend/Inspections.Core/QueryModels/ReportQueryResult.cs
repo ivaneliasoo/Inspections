@@ -14,12 +14,12 @@ namespace Inspections.Core.QueryModels
         public string Name { get; set; } = default!;
         public string Address { get; set; } = default!;
         public DateTimeOffset Date { get; set; }
-        public string LicenseNumber { get; set; } = default!;
-        public string LicenseName { get; set; } = default!;
-        public decimal LicenseKVA { get; set; }
-        public decimal LicenseVolt { get; set; }
-        public decimal LicenseAmp { get; set; }
-        public DateTimeRange LicenseValidity { get; set; } = default!;
+        public string? LicenseNumber { get; set; } = default!;
+        public string? LicenseName { get; set; } = default!;
+        public decimal? LicenseKVA { get; set; }
+        public decimal? LicenseVolt { get; set; }
+        public decimal? LicenseAmp { get; set; }
+        public DateTimeRange ?LicenseValidity { get; set; } = default!;
         public string Title { get; set; } = default!;
         public string FormName { get; set; } = default!;
         public string? RemarksLabelText { get; set; }

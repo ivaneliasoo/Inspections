@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="etc\nginx\conf.d\elasticbeanstalk\proxy.conf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="FluentValidation" Version="10.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
@@ -49,9 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="etc\nginx\conf.d\proxy.conf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="etc\nginx\conf.d\elasticbeanstalk\proxy.conf" />
   </ItemGroup>
 
   <ItemGroup>

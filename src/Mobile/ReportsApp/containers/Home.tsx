@@ -1,13 +1,14 @@
 import { useContext } from 'react';
-import { Card, Icon, Layout, Text } from '@ui-kitten/components'
+import { Card, Icon, Layout, Text, TopNavigation, TopNavigationAction, useTheme } from '@ui-kitten/components'
 import { NewReport } from '../components/home/NewReport'
 import React, { useState } from 'react'
-import { StyleSheet } from 'react-native'
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { AuthContext } from '../contexts/AuthContext';
 
 export const Home = ({ navigation }: any) => {
   const [isCreatingReport, setIsCreatingReport] = useState(false)
   const { authState } = useContext(AuthContext)
+  const theme = useTheme()
 
   const navigateToDetails = (reportId: any) => {
     setIsCreatingReport(false)
@@ -27,16 +28,16 @@ export const Home = ({ navigation }: any) => {
     {
       name: 'pending',
       text: 'Continue existing Report',
-      helpText: '',
+      helpText: 'allows editing incompletes reports',
       icon: 'edit-outline',
       color: 'accent',
       path: 'MyReports'
     },
     {
       name: 'completed',
-      text: 'View Completed Reports',
-      helpText: '',
-      icon: 'edit-outline',
+      text: 'View',
+      helpText: 'Visualize Completed Reports',
+      icon: 'eye-outline',
       color: 'accent',
       path: 'MyReports'
     }
@@ -45,18 +46,28 @@ export const Home = ({ navigation }: any) => {
 
   return (
     <Layout style={styles.container}>
-      <Text category="h4">Welcome, {authState.userInfo.lastName} {authState.userInfo.name}.</Text>
+      <TopNavigation title={`Welcome, ${authState.userInfo.lastName} ${authState.userInfo.name}.`} alignment='center' accessoryLeft={() =>
+         <TopNavigationAction onPress={() => navigation.openDrawer()} icon={(props) => <Icon name='menu-outline' style={{ width: 50, height: 50 }} {...props} />} />} />
       <NewReport isOpen={isCreatingReport} onClose={() => setIsCreatingReport(false)} onCreate={navigateToDetails} />
-      {cardOptions.map(option => {
-        return <Card key={option.name} style={styles.card} onPress={() => {
-          if (!option.action) navigation.navigate(option.path)
-          else option.action.call()
-        }}>
-          <Text category="h5">{option.text}</Text>
-          <Text category="h6">{option.helpText}</Text>
-          <Icon name={option.icon} style={{ width: 48, height: 48 }} />
-        </Card>
-      })}
+      <ScrollView>
+        {cardOptions.map(option => {
+          return <Card key={option.name} style={styles.card} onPress={() => {
+            if (!option.action) navigation.navigate(option.path)
+            else option.action.call()
+          }}>
+            <Text category="h5" style={{ alignSelf: 'center' }}>{option.text}</Text>
+            <TouchableOpacity style={[styles.button, { backgroundColor: theme['color-primary-500'], alignSelf: 'center' }]}
+              onPress={() => {
+                if (!option.action) navigation.navigate(option.path)
+                else option.action.call()
+              }}  
+            >
+              {option.icon && <Icon name={option.icon} fill='#ffffff' style={{ width: 46, height: 46 }} />}
+            </TouchableOpacity>
+            <Text category="s1" appearance='hint' style={{ alignSelf: 'center', marginTop: 10 }}>{option.helpText}</Text>
+          </Card>
+        })}
+      </ScrollView>
     </Layout>
   )
 }
@@ -66,6 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
+    padding: 15,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -74,6 +86,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 3,
-    alignItems: 'center', margin: 10
-  }
-})
+    alignItems: 'stretch', 
+    margin: 10,
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 2,
+    margin: 2,
+    width: 80,
+    height: 80,
+    elevation: 10,
+    borderRadius: 200
+  },
+});

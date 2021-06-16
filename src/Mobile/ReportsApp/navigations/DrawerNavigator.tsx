@@ -5,6 +5,8 @@ import { HomeNavigator } from './HomeNavigator';
 import { AuthContext } from '../contexts/AuthContext';
 import { Authentication } from '../containers/Authentication';
 import { MyReports } from '../containers/MyReports';
+import {Avatar} from '@ui-kitten/components'
+import { ImageBackground } from 'react-native';
 
 
 const { Navigator, Screen } = createDrawerNavigator()
@@ -15,9 +17,15 @@ export const DrawerNavigator = () => {
 
   const DrawerContent = ({ navigation, state }: any) => (
     <Drawer
+      header={()=> <ImageBackground style={{
+        height: 128,
+        flexDirection: 'row',
+        alignItems: 'center',
+      }} resizeMode='cover' source={require('../assets/images/LoginBackground.jpg')}/>}
       selectedIndex={new IndexPath(state.index)}
       onSelect={index => index.row !== 2 ? navigation.navigate(state.routeNames[index.row]) : null}>
-      <DrawerItem title='Main' />
+      <DrawerItem style={{ alignSelf: 'center' }} title={`${authState.userInfo.lastName} ${authState.userInfo.name}.`} accessoryLeft={() => <Avatar size='giant' source={{uri: 'https://demos.telerik.com/kendo-ui/content/web/Customers/ANTON.jpg'}} />} />
+      <DrawerItem title='Main'  />
       <DrawerItem title='My Reports' />
       <DrawerItem title='Logout' onPress={() => signOut()} />
     </Drawer>
