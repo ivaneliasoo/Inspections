@@ -41,31 +41,26 @@ export const usePhotoRecords = () => {
     uploadOptions.headers = { ...uploadOptions.headers, label }
     console.log({ uploadOptions })
     Upload.startUpload(uploadOptions).then((uploadId) => {
-      Upload.addListener('progress', uploadId, (data) => {
-        showMessage({
-          message: 'Photo Upload has been enqueued',
-          autoHide: true,
-          backgroundColor: theme['color-info-500']
-        })
-      })
+      // Upload.addListener('progress', uploadId, (data) => {
+      //   showMessage({
+      //     message: 'Photo Upload has been enqueued',
+      //     autoHide: true,
+      //     backgroundColor: theme['color-info-500']
+      //   })
+      // })
       Upload.addListener('error', uploadId, (data) => {
         showMessage({
-          message: 'Photo Upload has been enqueued',
+          message: 'An Error has ocurred while trying uploading file',
           autoHide: true,
           backgroundColor: theme['color-error-500']
         })
       })
       Upload.addListener('cancelled', uploadId, (data) => {
-        showMessage({
-          message: 'Photo Upload has been enqueued',
-          autoHide: true,
-          backgroundColor: theme['color-warning-500']
-        })
       })
       Upload.addListener('completed', uploadId, (data) => {
         // data includes responseCode: number and responseBody: Object
         showMessage({
-          message: 'Photo Upload has been enqueued',
+          message: 'PhotoRecord Uploaded Successfully',
           autoHide: true,
           backgroundColor: theme['color-success-500']
         })

@@ -53,20 +53,6 @@ export const CameraScreen = () => {
   };
   return (
     <>
-      <PhotoLabeler showLabeler={showLabeler} lastPhoto={lastPhoto} label={lastLabel} onLabelChanged={(label) => {
-        setLastLabel(label)
-      }}
-        onClose={() => setShowLabeler(false)}
-        onSave={() => {
-          EnqueuePhotoUpload(27, lastPhoto, lastLabel)
-          setShowLabeler(false)
-          showMessage({
-            message: 'Photo Upload has been enqueued',
-            autoHide: true,
-            color: theme['color-success-500']
-          })
-        }}
-      />
       <View style={styles.container}>
         {!isFocused ? null : hasCameraPermission() ? <>
           <RNCamera
@@ -87,13 +73,27 @@ export const CameraScreen = () => {
               buttonPositive: 'Ok',
               buttonNegative: 'Cancel',
             }} />
-            <View style={styles.shooter}>
+          <View style={styles.shooter}>
             <TouchableOpacity onPress={takePicture} style={styles.capture}>
               <Text style={styles.shooterText}> Shot</Text>
             </TouchableOpacity>
           </View>
         </> : <Text>Camera and Record Audio permission not consented</Text>
         }
+        <PhotoLabeler showLabeler={showLabeler} lastPhoto={lastPhoto} label={lastLabel} onLabelChanged={(label) => {
+          setLastLabel(label)
+        }}
+          onClose={() => setShowLabeler(false)}
+          onSave={() => {
+            EnqueuePhotoUpload(27, lastPhoto, lastLabel)
+            setShowLabeler(false)
+            showMessage({
+              message: 'Photo Upload has been enqueued',
+              autoHide: true,
+              color: theme['color-success-500']
+            })
+          }}
+        />
       </View>
     </>
   );
