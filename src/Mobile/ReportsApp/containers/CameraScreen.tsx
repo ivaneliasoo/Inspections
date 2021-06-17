@@ -1,22 +1,23 @@
 import { useIsFocused } from '@react-navigation/core';
 import React, { useRef, useState } from 'react';
-import { PermissionsAndroid, StyleSheet, TouchableOpacity, View, Image, Alert, ImageBackground } from 'react-native';
+import { PermissionsAndroid, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import CameraRoll from '@react-native-community/cameraroll';
-import { Card, Text, Input, Modal, useTheme } from '@ui-kitten/components';
-import { CheckIcon, CrossIcon } from '../components/Icons';
+import { Text, useTheme } from '@ui-kitten/components';
+import PhotoLabeler from '../components/photorecords/PhotoLabeler';
+import { showMessage } from 'react-native-flash-message';
 import { usePhotoRecords } from '../hooks/usePhotoRecords';
-import { showMessage } from 'react-native-flash-message'
 
 export const CameraScreen = () => {
   const cameraRef = useRef<RNCamera>()
-  const [lastPhoto, setLastPhoto] = useState('')
   const [lastLabel, setLastLabel] = useState('')
+  const [lastPhoto, setLastPhoto] = useState('')
+  const theme = useTheme()
+  const { EnqueuePhotoUpload } = usePhotoRecords()
   const [showLabeler, setShowLabeler] = useState(false)
 
   const isFocused = useIsFocused()
-  const theme = useTheme()
-  const { EnqueuePhotoUpload } = usePhotoRecords()
+
 
   const hasCameraPermission = async () => {
     const camera = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)
@@ -48,61 +49,53 @@ export const CameraScreen = () => {
         album: 'CSE Inspections',
         type: 'photo'
       })
-      //photoLabelerSheet.current?.setModalVisible()
     }
   };
   return (
-    <View style={styles.container}>
-      {!isFocused ? null : hasCameraPermission() ? <>
-        <RNCamera
-          ref={cameraRef}
-          style={styles.preview}
-          type={RNCamera.Constants.Type.back}
-          onTap={requestStoragePermission}
-          flashMode={RNCamera.Constants.FlashMode.on}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use your camera',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          androidRecordAudioPermissionOptions={{
-            title: 'Permission to use audio recording',
-            message: 'We need your permission to use your audio',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }} /><View style={styles.shooter}>
-          <TouchableOpacity onPress={takePicture} style={styles.capture}>
-            <Text style={styles.shooterText}> Shot</Text>
-          </TouchableOpacity>
-        </View>
-      </> : <Text>Camera and Record Audio permission not consented</Text>
-      }
-      <Modal visible={showLabeler}>
-        <Card style={{ flex: 1 }}
-          header={() => <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10 }}><Text appearance='hint' category='h6'>Photo Labeling</Text><CrossIcon fill={'black'} style={{ width: 24, height: 24 }} /></View>}
-          footer={() => <View style={{ flex: 4, flexDirection: 'row' }}>
-            <Input style={{ flex: 3, marginVertical: 5, marginHorizontal: 5 }} caption='Write a label to identify the image'
-              onChangeText={(e) => setLastLabel(e)}
-              value={lastLabel} />
-            <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 5, marginHorizontal: 5 }} onPress={() => {
-              EnqueuePhotoUpload(27, lastPhoto, lastLabel)
-              setShowLabeler(false)
-              showMessage({
-                message: 'Photo Upload has been enqueued',
-                autoHide: true,
-                color: theme['color-success-500']
-              })
-            }}>
-              <CheckIcon fill={'green'} style={{ width: 24, height: 24 }} />
-              <Text>Save</Text>
+    <>
+      <PhotoLabeler showLabeler={showLabeler} lastPhoto={lastPhoto} label={lastLabel} onLabelChanged={(label) => {
+        setLastLabel(label)
+      }}
+        onClose={() => setShowLabeler(false)}
+        onSave={() => {
+          EnqueuePhotoUpload(27, lastPhoto, lastLabel)
+          setShowLabeler(false)
+          showMessage({
+            message: 'Photo Upload has been enqueued',
+            autoHide: true,
+            color: theme['color-success-500']
+          })
+        }}
+      />
+      <View style={styles.container}>
+        {!isFocused ? null : hasCameraPermission() ? <>
+          <RNCamera
+            ref={cameraRef}
+            style={styles.preview}
+            type={RNCamera.Constants.Type.back}
+            onTap={requestStoragePermission}
+            flashMode={RNCamera.Constants.FlashMode.on}
+            androidCameraPermissionOptions={{
+              title: 'Permission to use camera',
+              message: 'We need your permission to use your camera',
+              buttonPositive: 'Ok',
+              buttonNegative: 'Cancel',
+            }}
+            androidRecordAudioPermissionOptions={{
+              title: 'Permission to use audio recording',
+              message: 'We need your permission to use your audio',
+              buttonPositive: 'Ok',
+              buttonNegative: 'Cancel',
+            }} />
+            <View style={styles.shooter}>
+            <TouchableOpacity onPress={takePicture} style={styles.capture}>
+              <Text style={styles.shooterText}> Shot</Text>
             </TouchableOpacity>
-          </View>}
-        >
-          <ImageBackground style={{ width: 250, height: 150 }} resizeMode='cover' source={{ uri: lastPhoto }} />
-        </Card>
-      </Modal>
-    </View>
+          </View>
+        </> : <Text>Camera and Record Audio permission not consented</Text>
+        }
+      </View>
+    </>
   );
 }
 
