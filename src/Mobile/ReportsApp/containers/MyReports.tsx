@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import moment from 'moment';
 import { Animated, Alert, View, StyleSheet, Button } from 'react-native';
-import { Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction } from '@ui-kitten/components';
-import { ClosedIcon, SearchIcon, NotClosedIcon } from '../components/Icons'
+import { Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction, useTheme } from '@ui-kitten/components';
+import { ClosedIcon, SearchIcon, NotClosedIcon, Camera, EditSignatureIcon } from '../components/Icons';
 import { OptionsMenu } from '../components/home/OptionsMenu'
 import { BackIcon } from '../components/Icons'
 import { RectButton, Swipeable } from 'react-native-gesture-handler';
 import Empty from '../assets/images/empty.svg'
 import { useReports } from '../hooks/useReports';
+import { Badge } from '../components/Badge';
 
 const renderLeftActions = () => {
   return (
@@ -46,6 +47,20 @@ const renderItemFooter = (footerProps: any, item: any) => (
   <Layout {...footerProps} style={styles.cardFooter}>
     {item.isClosed ? <ClosedIcon fill={'green'} style={styles.footerIcon} /> : <NotClosedIcon fill={'orange'} style={styles.footerIcon} />}
     <Text>{item.isClosed ? 'Completed' : 'Incomplete'}</Text>
+    <View style={{ flexDirection: 'row', }}>
+      <Badge color='grey' count={item.photosCount}>
+        <Camera fill={'blue'} style={styles.footerIcon}/>
+      </Badge>
+      <Badge color='info' count={item.signaturesCount}>
+        <EditSignatureIcon fill={'blue'} style={styles.footerIcon}/>
+      </Badge>
+      <Badge color='info' count={item.notesCount}>
+        <Camera fill={'blue'} style={styles.footerIcon}/>
+      </Badge>
+      <Badge color='info' count={item.CompletedCheckLists}>
+        <Camera fill={'blue'} style={styles.footerIcon}/>
+      </Badge>
+    </View>
   </Layout>
 );
 
@@ -103,10 +118,16 @@ export const MyReports = ({ navigation }: any) => {
         }}
         renderLeftActions={!item.isClosed ? renderLeftActions : () => null} renderRightActions={!item.isClosed ? renderRightActions : () => null}>
 
-        <Card key={item.index} style={styles.card} onPress={navigateDetails} status={item.isClosed ? 'success' : 'warning'}
+        <Card
+          key={item.index}
+          style={styles.card}
+          onPress={navigateDetails}
+          status={item.isClosed ? 'success' : 'info'}
+          header={() => <Text category='h5' >{`${item.licenseName} - ${item.licenseNumber ?? 'Not specified'} Validity: ${moment(item.licenseValidityStart).format('DD-MM-YYYY')} - ${moment(item.licenseValidityEnd).format('DD-MM-YYYY')}`} </Text>}
           footer={footerProps => renderItemFooter(footerProps, item)} >
-          <Text category='s1'>{`${moment(item.date).format('DD/MM/YYYY HH:mm')} License ${item.license?.number ?? 'Not specified'}`}</Text>
-          <Text category='s2'>{item.address === '' ? 'address not specified' : item.address}</Text>
+          <Text category='s1'>{`Report Name: ${item.name}`}</Text>
+          <Text category='s1'>{`Date: ${moment(item.date).format('DD/MM/YYYY')}`}</Text>
+          <Text category='s1'>{item.address === '' ? 'address not specified' : `Address: ${item.address}`}</Text>
         </Card>
       </Swipeable>
     );
@@ -125,23 +146,13 @@ export const MyReports = ({ navigation }: any) => {
       <Divider />
       <Layout style={styles.cardList}>
         <Input style={styles.inpustSearch} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilterText} onEndEditing={handleGetReports} />
-        {/* <Select
-          placeholder='type to search an address'
-          value={}
-          label='Sort By' 
-          onSelect={(e) => { setFieldValue('address', addresses[e.row].formatedAddress); setFieldValue('license.number', addresses[e.row].number)}}
-          status={errors.address ? 'danger':'basic'}
-          caption={errors.address}
-        >
-          {[].map(reanderOption)}
-        </Select> */}
         {reports.length > 0 ?
-          <List data={reports} renderItem={renderReport} onRefresh={handleGetReports} refreshing={refreshing} />
+          <List style={{ marginHorizontal: 10, marginVertical: 10 }} data={reports} renderItem={renderReport} onRefresh={handleGetReports} refreshing={refreshing} />
           :
           <View style={styles.noDataLayout}>
             <Empty height={200} width={300} />
             <Text status='warning' category='h1'>No results</Text>
-            <Text status='info' category='s2'>try again later or try with a new search</Text>
+            <Text status='info' category='s2'>brrr. its cold in here</Text>
             <Button title="Try Again" onPress={handleGetReports} />
           </View>}
       </Layout>
@@ -156,7 +167,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'stretch',
   },
-  card: { padding: 0, marginHorizontal: 5, marginVertical: 2 },
+  card: { 
+    padding: 0, 
+    marginHorizontal: 5, 
+    marginVertical: 2,
+    elevation: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+  },
   cardFooter: { flexDirection: 'row', justifyContent: 'space-between', margin: 5 },
   cardList: { flex: 1, justifyContent: 'flex-start' },
   inpustSearch: { paddingHorizontal: 15 },

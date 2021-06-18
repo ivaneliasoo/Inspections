@@ -22,9 +22,11 @@ export interface PhotoLabelerFooterProps {
   onSave: () => void;
 }
 const PhotoLabelerFooter = ({ onLabelChanged, label, onSave }: PhotoLabelerFooterProps) => (
-  <View style={{ flex: 4, flexDirection: 'row' }}>
+  <View style={{ flex: 1, flexDirection: 'row' }}>
     <Input style={{ flex: 3, marginVertical: 5, marginHorizontal: 5 }}
       maxLength={20}
+      label='Photo Record Label'
+      caption={`${label.length} / 20`}
       onChangeText={onLabelChanged}
       value={label} />
     <TouchableOpacity
@@ -48,11 +50,11 @@ export interface PhotoLabelerProps {
 
 const PhotoLabeler = ({ showLabeler, lastPhoto, label, onLabelChanged, onSave, onClose }: PhotoLabelerProps) => {
   return (
-    <Modal visible={showLabeler}>
+    <Modal visible={showLabeler} style={{width: '50%'}}>
       <Card style={{ flex: 1 }}
         header={() => <PhotoLabelerHeader onClose={onClose} />}
       >
-        <ImageBackground style={{ width: '100%', height: 150 }} resizeMode='stretch' source={{ uri: lastPhoto }} />
+        <ImageBackground style={{ width: '100%', height: 250 }} resizeMode='cover' source={{ uri: lastPhoto }} />
         <PhotoLabelerFooter onSave={onSave} label={label} onLabelChanged={onLabelChanged} />
       </Card>
     </Modal>

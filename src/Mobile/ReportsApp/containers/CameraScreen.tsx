@@ -7,9 +7,12 @@ import { Text, useTheme } from '@ui-kitten/components';
 import PhotoLabeler from '../components/photorecords/PhotoLabeler';
 import { showMessage } from 'react-native-flash-message';
 import { usePhotoRecords } from '../hooks/usePhotoRecords';
+import { useContext } from 'react';
+import { ReportsContext } from '../contexts/ReportsContext';
 
 export const CameraScreen = () => {
   const cameraRef = useRef<RNCamera>()
+  const { reportsState: { workingReport }} = useContext(ReportsContext);
   const [lastLabel, setLastLabel] = useState('')
   const [lastPhoto, setLastPhoto] = useState('')
   const theme = useTheme()
@@ -75,7 +78,7 @@ export const CameraScreen = () => {
             }} />
           <View style={styles.shooter}>
             <TouchableOpacity onPress={takePicture} style={styles.capture}>
-              <Text style={styles.shooterText}> Shot</Text>
+              <Text style={styles.shooterText}>SNAP</Text>
             </TouchableOpacity>
           </View>
         </> : <Text>Camera and Record Audio permission not consented</Text>
@@ -85,7 +88,7 @@ export const CameraScreen = () => {
         }}
           onClose={() => setShowLabeler(false)}
           onSave={() => {
-            EnqueuePhotoUpload(27, lastPhoto, lastLabel)
+            EnqueuePhotoUpload(workingReport!.id!, lastPhoto, lastLabel)
             setShowLabeler(false)
             showMessage({
               message: 'Photo Upload has been enqueued',

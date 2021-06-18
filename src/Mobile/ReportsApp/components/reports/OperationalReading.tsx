@@ -9,6 +9,7 @@ import { ParticullarOfInstallation } from './ParticullarOfInstallation'
 import { AutoSave } from '../../components/AutoSave'
 import { UpdateOperationalReadingsCommand } from '../../services/api/api';
 import { useReports } from '../../hooks/useReports';
+import { showMessage } from 'react-native-flash-message';
 
 const formatPickerValue = (value: number) => {
   const temp = value.toString().padStart(3, '0')
@@ -53,10 +54,10 @@ const OperationalReading = () => {
         }
         await saveOperationalreadings(updateCmd)
           .catch(error => {
-            Alert.alert('Datos Inválidos', error.response.message)
+            showMessage('Bad Request', error.response.message)
           })
       } else {
-        Alert.alert('Datos Inválidos', `report contains invalid fields: ${Object.keys(formRef.current.errors).map(field => field)}`)
+        Alert.alert('Bad Request', `report contains invalid fields: ${Object.keys(formRef.current.errors).map(field => field)}`)
       }
     }
   }
@@ -70,7 +71,7 @@ const OperationalReading = () => {
   }, [reportData?.licenseVolt])
 
   return <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
-    <ParticullarOfInstallation />
+    {/* <ParticullarOfInstallation /> */}
     <Formik innerRef={formRef} initialValues={reportData!} enableReinitialize onSubmit={saveReadings}>
       {({ values, setFieldValue }) => (
         <View style={styles.container}>
@@ -120,7 +121,7 @@ const OperationalReading = () => {
               size='large'
               placeholder='please select...'
               value={values.operationalReadingsMainBreakerPoles!}
-              onSelect={(e) => { setFieldValue('mainBreakerPoles', [100, 200, 300, 400][e.row]) }}
+              onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerPoles', [100, 200, 300, 400][e.row]) }}
               label='Poles'
               accessoryRight={() => <Text style={{ justifyContent: 'center' }}>kA</Text>}
             >
@@ -145,26 +146,26 @@ const OperationalReading = () => {
             </View>
             <Text>OR</Text>
             <View>
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentDTLA!}
-                onChange={value => setFieldValue('operationalReadingsOverCurrentDTLA', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentDTLA!.toString()}
+                onChangeText={value => setFieldValue('operationalReadingsOverCurrentDTLA', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>DTL</Text>}
                 accessoryRight={() => <Text>A</Text>} />
               <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentDTLSec!}
-                onChange={value => setFieldValue('operationalReadingsOverCurrentDTLSec', value)}
+                onChangeText={value => setFieldValue('operationalReadingsOverCurrentDTLSec', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
                 accessoryRight={() => <Text>sec</Text>} />
             </View>
             <Text>OR</Text>
             <View>
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentIDMTLA!}
-                onChange={value => setFieldValue('operationalReadingsOverCurrentIDMTLA', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentIDMTLA!.toString()}
+                onChangeText={value => setFieldValue('operationalReadingsOverCurrentIDMTLA', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>IDTML</Text>}
                 accessoryRight={() => <Text>A</Text>} />
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentIDMTLTm!}
-                onChange={value => setFieldValue('operationalReadingsOverCurrentIDMTLTm', value)}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentIDMTLTm!.toString()}
+                onChangeText={value => setFieldValue('operationalReadingsOverCurrentIDMTLTm', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
                 accessoryRight={() => <Text>Tm</Text>} />
@@ -192,12 +193,12 @@ const OperationalReading = () => {
             <Text>OR</Text>
             <View>
               <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultELRA}
-                onChange={value => setFieldValue('operationalReadingsEarthFaultELRA', value)}
+                onChangeText={value => setFieldValue('operationalReadingsEarthFaultELRA', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>ElR</Text>}
                 accessoryRight={() => <Text>A</Text>} />
               <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultELRSec}
-                onChange={value => setFieldValue('operationalReadingsEarthFaultELRSec', value)}
+                onChangeText={value => setFieldValue('operationalReadingsEarthFaultELRSec', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
                 accessoryRight={() => <Text>sec</Text>} />
@@ -205,12 +206,12 @@ const OperationalReading = () => {
             <Text>OR</Text>
             <View>
               <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultA}
-                onBlur={value => setFieldValue('operationalReadingsEarthFaultA', value)}
+                onChangeText={value => setFieldValue('operationalReadingsEarthFaultA', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>E/F</Text>}
                 accessoryRight={() => <Text>A</Text>} />
               <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultSec}
-                onBlur={value => setFieldValue('operationalReadingsEarthFaultSec', value)}
+                onChangeText={value => setFieldValue('operationalReadingsEarthFaultSec', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
                 accessoryRight={() => <Text>sec</Text>} />

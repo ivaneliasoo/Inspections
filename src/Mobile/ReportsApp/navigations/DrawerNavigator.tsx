@@ -25,8 +25,8 @@ export const DrawerNavigator = () => {
       selectedIndex={new IndexPath(state.index)}
       onSelect={index => index.row !== 2 ? navigation.navigate(state.routeNames[index.row]) : null}>
       <DrawerItem style={{ alignSelf: 'center' }} title={`${authState.userInfo.lastName} ${authState.userInfo.name}.`} accessoryLeft={() => <Avatar size='giant' source={{uri: 'https://demos.telerik.com/kendo-ui/content/web/Customers/ANTON.jpg'}} />} />
-      <DrawerItem title='Main'  />
-      <DrawerItem title='My Reports' />
+      <DrawerItem title='Home' onPress={() => navigation.navigate('Home')} />
+      <DrawerItem title='MyReports' onPress={() => navigation.navigate('MyReports')} />
       <DrawerItem title='Logout' onPress={() => signOut()} />
     </Drawer>
   );
