@@ -43,8 +43,8 @@ const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
       tempCheckValue = 2
     }
 
-    setCheck((prev: any) => { prev.checked = tempCheckValue; return prev })
-    onCheckUpdated({ ...check, checked: tempCheckValue })
+    setCheck((prev: any) => { prev.checked = tempCheckValue, prev.touched = true; return prev })
+    onCheckUpdated({...check, checked: tempCheckValue, touched: true })
   }
 
   const RightActions = (props: any) => {

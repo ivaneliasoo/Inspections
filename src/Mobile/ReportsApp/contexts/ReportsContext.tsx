@@ -8,6 +8,8 @@ export interface ReportsState {
   myReports: boolean;
   isClosed: boolean;
   filter: string;
+  descendingSort: boolean;
+  orderBy: string;
   workingReport?: ReportQueryResult;
 }
 
@@ -20,7 +22,7 @@ export interface ReportsContextProps {
   updateSignature: (payload: { signature: SignatureQueryResult, index: number }) => void,
   clearWorkingReport: () => void,
 }
-const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '', workingReport: undefined! }
+const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '', descendingSort: true, orderBy: 'date', workingReport: undefined! }
 
 export const ReportsContext = createContext({} as ReportsContextProps);
   const ReportsProvider = ({ children }: any) => {

@@ -59,7 +59,17 @@ export const useReports = () => {
   }
 
   const setFilterText = (text: string) => {
-    setFilter({ filter: text, myReports: reportsState.myReports, isClosed: reportsState.isClosed })
+    setFilter({ filter: text, myReports: reportsState.myReports, isClosed: reportsState.isClosed, descendingSort: true, orderBy: 'date' })
+  }
+
+  const setSorting = async (descending: boolean, sortBy: string) => {
+    setFilter({ filter: reportsState.filter, myReports: reportsState.myReports, isClosed: reportsState.isClosed, descendingSort: descending, orderBy: sortBy })
+    await getReports()
+  }
+
+  const setOptions = async (isClosed: boolean, myReports: boolean) => {
+    setFilter({ filter: reportsState.filter, myReports, isClosed, descendingSort: reportsState.descendingSort, orderBy: reportsState.orderBy })
+    await getReports()
   }
 
   const updateCheckList = async (payload: { reportId: number; checkListId: number; newValue: number | undefined }) => {
@@ -103,6 +113,7 @@ export const useReports = () => {
   const saveReport = async (updateCmd: UpdateReportCommand) => {
     if (updateCmd && updateCmd.id) {
       await reportsApi.reportsIdPut(updateCmd.id.toString(), updateCmd)
+      getReportById(updateCmd.id)
     }
   }
 
@@ -114,6 +125,7 @@ export const useReports = () => {
     saveReport,
     filter: reportsState.filter,
     setFilterText,
+    setFilter,
     setWorkingReport,
     workingReport: reportsState.workingReport,
     reports: reportsState.reports || [],
@@ -121,6 +133,9 @@ export const useReports = () => {
     updateCheckListItem,
     saveSignature,
     clearWorkingReport,
-    saveOperationalreadings
+    saveOperationalreadings,
+    setSorting,
+    setOptions,
+    reportsState
   }
 }

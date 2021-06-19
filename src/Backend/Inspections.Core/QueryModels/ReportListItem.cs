@@ -7,6 +7,7 @@ namespace Inspections.Core.QueryModels
 {
     public class ReportListItem
     {
+        public int Id { get; set; }
         public string Name { get; private set; } = default!;
         public string Address { get; private set; } = default!;
         public DateTimeOffset Date { get; set; }

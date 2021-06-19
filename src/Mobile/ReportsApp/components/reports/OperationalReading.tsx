@@ -1,17 +1,16 @@
-import { CheckBox, Divider, Input, Layout, Select, SelectItem, Text } from '@ui-kitten/components'
+import { CheckBox, Divider, Input, Select, SelectItem, Text } from '@ui-kitten/components'
 import NumericPicker from '../NumericPicker'
 import { Formik, FormikProps } from 'formik'
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { Alert, ScrollView, StyleSheet, View } from 'react-native'
 import { ReportQueryResult } from '../../services/api'
-import { ReportsContext } from '../../contexts/ReportsContext';
-import { ParticullarOfInstallation } from './ParticullarOfInstallation'
 import { AutoSave } from '../../components/AutoSave'
 import { UpdateOperationalReadingsCommand } from '../../services/api/api';
 import { useReports } from '../../hooks/useReports';
 import { showMessage } from 'react-native-flash-message';
 
 const formatPickerValue = (value: number) => {
+  if (!value) return [0,0,0]
   const temp = value.toString().padStart(3, '0')
   return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2])]
 }
@@ -146,12 +145,12 @@ const OperationalReading = () => {
             </View>
             <Text>OR</Text>
             <View>
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentDTLA!.toString()}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values?.operationalReadingsOverCurrentDTLA?.toString() ?? ''}
                 onChangeText={value => setFieldValue('operationalReadingsOverCurrentDTLA', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>DTL</Text>}
                 accessoryRight={() => <Text>A</Text>} />
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentDTLSec!}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values?.operationalReadingsOverCurrentDTLSec?.toString()  ?? ''}
                 onChangeText={value => setFieldValue('operationalReadingsOverCurrentDTLSec', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
@@ -159,12 +158,12 @@ const OperationalReading = () => {
             </View>
             <Text>OR</Text>
             <View>
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentIDMTLA!.toString()}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values?.operationalReadingsOverCurrentIDMTLA?.toString()  ?? ''}
                 onChangeText={value => setFieldValue('operationalReadingsOverCurrentIDMTLA', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>IDTML</Text>}
                 accessoryRight={() => <Text>A</Text>} />
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsOverCurrentIDMTLTm!.toString()}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values?.operationalReadingsOverCurrentIDMTLTm?.toString()  ?? ''}
                 onChangeText={value => setFieldValue('operationalReadingsOverCurrentIDMTLTm', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
@@ -192,12 +191,12 @@ const OperationalReading = () => {
             </View>
             <Text>OR</Text>
             <View>
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultELRA}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultELRA?.toString() ?? ''}
                 onChangeText={value => setFieldValue('operationalReadingsEarthFaultELRA', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>ElR</Text>}
                 accessoryRight={() => <Text>A</Text>} />
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultELRSec}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultELRSec?.toString() ?? ''}
                 onChangeText={value => setFieldValue('operationalReadingsEarthFaultELRSec', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}
@@ -205,12 +204,12 @@ const OperationalReading = () => {
             </View>
             <Text>OR</Text>
             <View>
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultA}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultA?.toString() ?? ''}
                 onChangeText={value => setFieldValue('operationalReadingsEarthFaultA', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>E/F</Text>}
                 accessoryRight={() => <Text>A</Text>} />
-              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultSec}
+              <Input style={{ flex: 1, margin: 5 }} size='large' value={values.operationalReadingsEarthFaultSec?.toString() ?? ''}
                 onChangeText={value => setFieldValue('operationalReadingsEarthFaultSec', value)}
                 keyboardType='number-pad'
                 accessoryLeft={() => <Text>@</Text>}

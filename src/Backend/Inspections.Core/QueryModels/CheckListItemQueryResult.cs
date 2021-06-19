@@ -9,5 +9,6 @@
         public string? Remarks { get; set; }
         public bool Required { get; set; }
         public string Text { get; set; } = default!;
+        public bool Touched { get; set; }
     }
 }

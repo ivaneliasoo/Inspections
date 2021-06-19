@@ -17,3 +17,6 @@ export const CheckIcon = (props: any) => (<Icon name='checkmark-outline' {...pro
 export const ChevronDownIcon = (props: any) => (<Icon name='chevron-down-outline' {...props}/>)
 export const EditSignatureIcon = (props: any) => (<Icon name='edit-2-outline' {...props}/>)
 export const Camera = (props: any) => (<Icon name='camera-outline' {...props}/>)
+export const AlertTriangle = (props: any) => (<Icon name='alert-triangle-outline' {...props}/>)
+export const Printer = (props: any) => (<Icon name='printer-outline' {...props}/>)
+export const ImageIcon = (props: any) => (<Icon name='image-outline' {...props}/>)

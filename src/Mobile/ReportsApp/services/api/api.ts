@@ -578,10 +578,10 @@ export interface CheckListQueryResult {
  * @enum {string}
  */
 export enum CheckValue {
-    NUMBER_0 = 0,
-    NUMBER_1 = 1,
-    NUMBER_2 = 2,
-    NUMBER_3 = 3
+    NotAcceptable = 0,
+    Acceptable = 1,
+    NotAplicable = 2,
+    None = 3
 }
 
 /**
@@ -1051,19 +1051,19 @@ export interface ReportQueryResult {
      * @type {number}
      * @memberof ReportQueryResult
      */
-    licenseKVA?: number;
+    licenseKVA?: number | null;
     /**
      * 
      * @type {number}
      * @memberof ReportQueryResult
      */
-    licenseVolt?: number;
+    licenseVolt?: number | null;
     /**
      * 
      * @type {number}
      * @memberof ReportQueryResult
      */
-    licenseAmp?: number;
+    licenseAmp?: number | null;
     /**
      * 
      * @type {DateTimeRange}
@@ -4517,24 +4517,20 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication jwt_auth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
-            if (label !== undefined) { 
-                localVarFormParams.append('label', label as any);
+            if (label !== undefined && label !== null) {
+                localVarHeaderParameter['label'] = String(label);
             }
-    
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+
+
     
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),

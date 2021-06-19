@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import moment from 'moment';
-import { Animated, Alert, View, StyleSheet, Button } from 'react-native';
-import { Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction, useTheme } from '@ui-kitten/components';
-import { ClosedIcon, SearchIcon, NotClosedIcon, Camera, EditSignatureIcon } from '../components/Icons';
+import { Animated, Alert, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction, Toggle, Select, SelectItem } from '@ui-kitten/components';
+import { SearchIcon, Camera, EditSignatureIcon, CheckIcon, AlertTriangle, Printer, ImageIcon } from '../components/Icons';
 import { OptionsMenu } from '../components/home/OptionsMenu'
 import { BackIcon } from '../components/Icons'
 import { RectButton, Swipeable } from 'react-native-gesture-handler';
@@ -45,21 +45,23 @@ const renderRightActions = (_progress: any, dragX: any) => {
 
 const renderItemFooter = (footerProps: any, item: any) => (
   <Layout {...footerProps} style={styles.cardFooter}>
-    {item.isClosed ? <ClosedIcon fill={'green'} style={styles.footerIcon} /> : <NotClosedIcon fill={'orange'} style={styles.footerIcon} />}
-    <Text>{item.isClosed ? 'Completed' : 'Incomplete'}</Text>
-    <View style={{ flexDirection: 'row', }}>
+    <View style={{ flexDirection: 'row' }}>
       <Badge color='grey' count={item.photosCount}>
-        <Camera fill={'blue'} style={styles.footerIcon}/>
+        <Camera fill={'blue'} style={styles.footerIcon} />
       </Badge>
       <Badge color='info' count={item.signaturesCount}>
-        <EditSignatureIcon fill={'blue'} style={styles.footerIcon}/>
+        <EditSignatureIcon fill={'blue'} style={styles.footerIcon} />
       </Badge>
       <Badge color='info' count={item.notesCount}>
-        <Camera fill={'blue'} style={styles.footerIcon}/>
+        <Camera fill={'blue'} style={styles.footerIcon} />
       </Badge>
       <Badge color='info' count={item.CompletedCheckLists}>
-        <Camera fill={'blue'} style={styles.footerIcon}/>
+        <Camera fill={'blue'} style={styles.footerIcon} />
       </Badge>
+    </View>
+    <View style={{ flexDirection: 'row', alignContent: 'center' }}>
+      {item.isClosed ? <CheckIcon fill={'green'} style={styles.footerIcon} /> : <AlertTriangle fill={'orange'} style={styles.footerIcon} />}
+      <Text>Report is {item.isClosed ? 'Completed' : 'Incomplete'}</Text>
     </View>
   </Layout>
 );
@@ -68,7 +70,7 @@ export const MyReports = ({ navigation }: any) => {
   const swipe = useRef<Swipeable>(null)
   const [refreshing, setRefreshing] = useState(false)
 
-  const { getReports, deleteReport, completeReport, reports, filter, setFilterText } = useReports()
+  const { getReports, deleteReport, completeReport, reports, setSorting, filter, setFilterText, reportsState: { descendingSort, orderBy } } = useReports()
 
   const handleGetReports = async () => {
     setRefreshing(true)
@@ -118,17 +120,26 @@ export const MyReports = ({ navigation }: any) => {
         }}
         renderLeftActions={!item.isClosed ? renderLeftActions : () => null} renderRightActions={!item.isClosed ? renderRightActions : () => null}>
 
-        <Card
-          key={item.index}
-          style={styles.card}
-          onPress={navigateDetails}
-          status={item.isClosed ? 'success' : 'info'}
-          header={() => <Text category='h5' >{`${item.licenseName} - ${item.licenseNumber ?? 'Not specified'} Validity: ${moment(item.licenseValidityStart).format('DD-MM-YYYY')} - ${moment(item.licenseValidityEnd).format('DD-MM-YYYY')}`} </Text>}
-          footer={footerProps => renderItemFooter(footerProps, item)} >
-          <Text category='s1'>{`Report Name: ${item.name}`}</Text>
-          <Text category='s1'>{`Date: ${moment(item.date).format('DD/MM/YYYY')}`}</Text>
-          <Text category='s1'>{item.address === '' ? 'address not specified' : `Address: ${item.address}`}</Text>
-        </Card>
+        <View style={{ flexDirection: 'row', borderBottomRightRadius: 20, borderTopRightRadius: 20, shadowColor: "#000", shadowOffset: { width: 0, height: 1, }, shadowOpacity: 0.83, shadowRadius: 20 }}>
+          <Card
+            key={item.index}
+            style={styles.card}
+            onPress={navigateDetails}
+            status={item.isClosed ? 'success' : 'info'}
+            header={() => <Text category='s1' >{`${item.licenseName} - ${item.licenseNumber ?? 'Not specified'} Validity: ${moment(item.licenseValidityStart).format('DD-MM-YYYY')} - ${moment(item.licenseValidityEnd).format('DD-MM-YYYY')}`} </Text>}
+            footer={footerProps => renderItemFooter(footerProps, item)} >
+            <Text category='s2'>{`Report Name: ${item.name}`}</Text>
+            <Text category='s2'>{`Date: ${moment(item.date).format('DD/MM/YYYY')}`}</Text>
+          </Card>
+          <View style={{ flexDirection: 'column', backgroundColor: 'lightgrey', elevation: 8, marginVertical: 2, position: 'relative', marginLeft: -8, width: '15%', justifyContent: 'space-around', alignItems: 'center', borderBottomRightRadius: 20, borderTopRightRadius: 20 }}>
+            <TouchableOpacity>
+              <Printer fill={'black'} style={{ width: 36, height: 36 }} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <ImageIcon fill={'black'} style={{ width: 36, height: 36 }} />
+            </TouchableOpacity>
+          </View>
+        </View>
       </Swipeable>
     );
   };
@@ -146,6 +157,25 @@ export const MyReports = ({ navigation }: any) => {
       <Divider />
       <Layout style={styles.cardList}>
         <Input style={styles.inpustSearch} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilterText} onEndEditing={handleGetReports} />
+        <View style={{ marginVertical: 20, marginHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Select
+            style={{minWidth: 200}}
+            size='large'
+            placeholder='select an item to sort by...'
+            label='Sort By'
+            value={orderBy}
+            onSelect={(e) => { setRefreshing(true); setSorting(descendingSort, ['date', 'name', 'address', 'company'][e.row]); setRefreshing(false); }}
+          >
+            {['date', 'name', 'address', 'company'].map((column, index) =>
+              <SelectItem
+                key={index}
+                title={column}
+              ></SelectItem>)}
+          </Select>
+          <Toggle checked={descendingSort} onChange={() => { setRefreshing(true); setSorting(!descendingSort, orderBy); setRefreshing(false); }}>
+            Descending
+          </Toggle>
+        </View>
         {reports.length > 0 ?
           <List style={{ marginHorizontal: 10, marginVertical: 10 }} data={reports} renderItem={renderReport} onRefresh={handleGetReports} refreshing={refreshing} />
           :
@@ -167,15 +197,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'stretch',
   },
-  card: { 
-    padding: 0, 
-    marginHorizontal: 5, 
+  card: {
+    padding: 0,
+    marginHorizontal: 5,
     marginVertical: 2,
     elevation: 5,
     paddingHorizontal: 5,
     paddingVertical: 5,
+    width: '85%',
+    maxWidth: '85%'
   },
-  cardFooter: { flexDirection: 'row', justifyContent: 'space-between', margin: 5 },
+  cardFooter: { flexDirection: 'row', justifyContent: 'space-between', margin: 5, alignContent: 'center', alignItems: 'center', flexWrap: 'wrap' },
   cardList: { flex: 1, justifyContent: 'flex-start' },
   inpustSearch: { paddingHorizontal: 15 },
   noDataLayout: { flex: 1, justifyContent: 'center', alignItems: 'center' },

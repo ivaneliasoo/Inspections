@@ -4,11 +4,14 @@ import { NewReport } from '../components/home/NewReport'
 import React, { useState } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { AuthContext } from '../contexts/AuthContext';
+import { useReports } from '../hooks/useReports';
+import { ReportsState } from '../contexts/ReportsContext';
 
 export const Home = ({ navigation }: any) => {
   const [isCreatingReport, setIsCreatingReport] = useState(false)
   const { authState } = useContext(AuthContext)
   const theme = useTheme()
+  const { setOptions, getReports } = useReports()
 
   const navigateToDetails = (reportId: any) => {
     setIsCreatingReport(false)
@@ -47,20 +50,25 @@ export const Home = ({ navigation }: any) => {
   return (
     <Layout style={styles.container}>
       <TopNavigation title={`Welcome, ${authState.userInfo.lastName} ${authState.userInfo.name}.`} alignment='center' accessoryLeft={() =>
-         <TopNavigationAction onPress={() => navigation.openDrawer()} icon={(props) => <Icon name='menu-outline' style={{ width: 50, height: 50 }} {...props} />} />} />
+        <TopNavigationAction onPress={() => navigation.openDrawer()} icon={(props) => <Icon name='menu-outline' style={{ width: 50, height: 50 }} {...props} />} />} />
       <NewReport isOpen={isCreatingReport} onClose={() => setIsCreatingReport(false)} onCreate={navigateToDetails} />
       <ScrollView>
         {cardOptions.map(option => {
           return <Card key={option.name} style={styles.card} onPress={() => {
-            if (!option.action) navigation.navigate(option.path)
+            if (!option.action) {
+              setOptions(option.name === 'completed', true)
+              navigation.navigate(option.path)
+            }
             else option.action.call()
           }}>
             <Text category="h5" style={{ alignSelf: 'center' }}>{option.text}</Text>
             <TouchableOpacity style={[styles.button, { backgroundColor: theme['color-primary-500'], alignSelf: 'center' }]}
               onPress={() => {
-                if (!option.action) navigation.navigate(option.path)
-                else option.action.call()
-              }}  
+                if (!option.action) {
+                  setOptions(option.name === 'completed', true)
+                  navigation.navigate(option.path)
+                } else { option.action.call() }
+              }}
             >
               {option.icon && <Icon name={option.icon} fill='#ffffff' style={{ width: 46, height: 46 }} />}
             </TouchableOpacity>
@@ -86,7 +94,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 3,
-    alignItems: 'stretch', 
+    alignItems: 'stretch',
     margin: 10,
   },
   button: {

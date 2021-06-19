@@ -6,6 +6,8 @@ export interface ReportsFilterPayload {
   myReports: boolean;
   isClosed: boolean;
   filter: string;
+  descendingSort: boolean;
+  orderBy: string;
 }
 
 type ReportsAction =
