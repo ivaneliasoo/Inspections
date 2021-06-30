@@ -9,6 +9,7 @@ import { showMessage } from 'react-native-flash-message';
 import { usePhotoRecords } from '../hooks/usePhotoRecords';
 import { useContext } from 'react';
 import { ReportsContext } from '../contexts/ReportsContext';
+import { SyncIcon } from '../components/Icons';
 
 export const CameraScreen = () => {
   const cameraRef = useRef<RNCamera>()
@@ -18,6 +19,7 @@ export const CameraScreen = () => {
   const theme = useTheme()
   const { EnqueuePhotoUpload } = usePhotoRecords()
   const [showLabeler, setShowLabeler] = useState(false)
+  const [cameraType, setCameraType] = useState(RNCamera.Constants.Type.front)
 
   const isFocused = useIsFocused()
 
@@ -61,7 +63,7 @@ export const CameraScreen = () => {
           <RNCamera
             ref={cameraRef}
             style={styles.preview}
-            type={RNCamera.Constants.Type.back}
+            type={cameraType}
             onTap={requestStoragePermission}
             flashMode={RNCamera.Constants.FlashMode.on}
             androidCameraPermissionOptions={{
@@ -79,6 +81,14 @@ export const CameraScreen = () => {
           <View style={styles.shooter}>
             <TouchableOpacity onPress={takePicture} style={styles.capture}>
               <Text style={styles.shooterText}>SNAP</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              if (!cameraType == RNCamera.Constants.Type.front)
+                setCameraType(RNCamera.Constants.Type.front)
+              else 
+                setCameraType(RNCamera.Constants.Type.back)
+            }}>
+              <SyncIcon fill={'white'} style={{ width: 36, height: 36 }}/>
             </TouchableOpacity>
           </View>
         </> : <Text>Camera and Record Audio permission not consented</Text>
