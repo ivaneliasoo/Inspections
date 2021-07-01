@@ -99,7 +99,8 @@ export default {
         tokenType: 'bearer',
         autoFetchUser: true
       }
-    }
+    },
+    plugins: ['~/plugins/api-client']
   },
   /*
      ** vuetify module configuration

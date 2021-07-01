@@ -32,12 +32,12 @@ namespace Inspections.API.Features.Inspections.Handlers
             IReportsBuilder _reportsBuilder = new ReportsBuilder(cfg, _userNameResolver.FullName);
             var newReport = _reportsBuilder
                 .WithOperationalReadings()
-                .WithDefaultNotes(true)
+                .WithDefaultNotes(false)
                 .WithName(reportName)
                 .Build();
 
             var result = await _reportsRepository.AddAsync(newReport).ConfigureAwait(false);
-            return result.Id;                              ;
+            return result.Id;
         }
     }
 }

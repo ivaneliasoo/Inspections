@@ -29,6 +29,7 @@ namespace Inspections.Infrastructure.Repositories
         private readonly MapperConfiguration config = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<Signature, SignatureQueryResult>();
+            cfg.CreateMap<Note, NoteQueryResult>();
             cfg.CreateMap<CheckListItem, CheckListItemQueryResult>();
             cfg.CreateMap<CheckList, CheckListQueryResult>().ForMember(m => m.Checks, opt => opt.MapFrom(src => src.Checks));
             cfg.CreateMap<Report, ReportQueryResult>()
@@ -98,6 +99,7 @@ namespace Inspections.Infrastructure.Repositories
                         .Include("CheckList")
                         .Include("Signatures")
                         .Include("PhotoRecords")
+                        .Include("Notes")
                        .SingleOrDefaultAsync(r => r.Id == id);
             }
             catch (Exception ex)

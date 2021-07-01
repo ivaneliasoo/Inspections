@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -127,7 +128,15 @@ namespace Inspections.API.Features.Inspections
 
         private static string ToBase64String(string fileName)
         {
-            byte[] fileBytes = System.IO.File.ReadAllBytes(fileName);
+            byte[] fileBytes = Array.Empty<byte>();
+            try
+            {
+                fileBytes = System.IO.File.ReadAllBytes(fileName);
+            }
+            catch (IOException ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
             return "data:image/png;base64," + Convert.ToBase64String(fileBytes);
         }
 
@@ -135,7 +144,7 @@ namespace Inspections.API.Features.Inspections
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> AddPhotoRecord(int id, [FromHeader] string label)
+        public async Task<IActionResult> AddPhotoRecord(int id, [FromHeader] string? label)
         {
             var request = await Request.ReadFormAsync().ConfigureAwait(false);
 

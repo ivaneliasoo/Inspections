@@ -3,16 +3,12 @@
 </template>
 
 <script>
-import EnergyReport from "~/components/EnergyReport.vue";
+import EnergyReport from '~/components/EnergyReport.vue'
 
 export default {
-  layout: "default",
   components: {
-    EnergyReport,
+    EnergyReport
   },
-
-  data: () => ({
-    //
-  }),
-};
+  layout: 'default'
+}
 </script>

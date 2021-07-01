@@ -44,11 +44,14 @@ namespace Inspections.API.Features.Reports.Handlers
             {
                 var report = await _reportsRepository.GetByIdAsync(request!.ReportId).ConfigureAwait(false);
 
+                bool isLabelInHeader = request.Label?.Length > 0;
+
                 int createdFilesCount = 0;
                 foreach (var file in request!.FormFiles)
                 {
-                    var name = file.FileName;
-                    var label = request.Label.ToUpperInvariant();
+                    var nameAndLabel = !isLabelInHeader ? file.FileName.Split('|', StringSplitOptions.RemoveEmptyEntries) : null;
+                    var name = nameAndLabel is null ? file.FileName : nameAndLabel[0];
+                    var label = nameAndLabel is null ? request.Label.ToUpperInvariant() : nameAndLabel[1]; 
                     var filePath = await _fileUploadService.UploadAttachments(file, request!.ReportId.ToString(CultureInfo.InvariantCulture),fileName: name).ConfigureAwait(false);
                     report.AddPhoto(new PhotoRecord(request.ReportId, $"/ReportsImages/{report.Id}/{Path.GetFileName(filePath)}", $"/ReportsImages/{report.Id}/{Path.GetFileNameWithoutExtension(filePath)}small{Path.GetExtension(filePath)}", label));
                     savedFilesPaths[createdFilesCount] = filePath;

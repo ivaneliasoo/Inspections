@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-data-iterator
       key="id"
-      :items="currentReport.photoRecords"
+      :items="photos"
       :footer-props="{ itemsPerPageAllText: 'todos',
                        showFirstLastPage: true,
                        itemsPerPageText: 'Photos by page',
@@ -66,19 +66,21 @@
     </v-data-iterator>
     <v-dialog v-model="showCarousel">
       <v-carousel v-model="currentPhoto" height="80%">
-        <v-carousel-item v-for="(photo, index) in currentReport.photoRecords" :key="index" :src="`${hostName}${photo.fileName}`" />
+        <v-carousel-item v-for="(photo, index) in photos" :key="index" :src="`${hostName}${photo.fileName}`" />
       </v-carousel>
     </v-dialog>
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model } from 'vue-property-decorator'
-import { Report, DeletePhotoRecordCommand, PhotoRecord, EditPhotoRecordCommand } from '~/types'
+import { Component, Vue, Model, Inject } from 'vue-property-decorator'
+import { DeletePhotoRecordCommand, PhotoRecord, EditPhotoRecordCommand } from '~/types'
 
 @Component
 export default class PhotoRecordManager extends Vue {
-  @Model('input') currentReport: Report | undefined;
+  @Model('input') photos: PhotoRecord[] | undefined;
+
+  @Inject() readonly reportId!: number
   showCarousel: boolean = false
   currentPhoto: number = 0;
   showLabelEdit: number[] = [];
@@ -86,15 +88,15 @@ export default class PhotoRecordManager extends Vue {
 
   itemsPerPage: number = 8
 
-  async removePhoto (id: number) {
+  removePhoto (id: number) {
     const delPhoto: DeletePhotoRecordCommand = {
-      reportId: this.currentReport!.id,
+      reportId: this.photos!.id!,
       id
     }
     this.$axios
       .delete(`reports/${delPhoto.reportId}/photorecord/${delPhoto.id}`)
       .then(() => {
-        this.currentReport!.photoRecords = this.currentReport!.photoRecords.filter(
+        this.photos = this.photos!.filter(
           p => p.id !== id
         )
       })

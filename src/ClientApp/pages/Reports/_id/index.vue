@@ -24,7 +24,6 @@
                   v-model="currentReport.date"
                   name="date"
                   type="number"
-                  label="License"
                   :error-messages="errors"
                   :max="new Date().toISOString()"
                 />
@@ -62,14 +61,14 @@
                 />
               </ValidationProvider>
             </v-col>
-            <v-col v-if="currentReport.license" cols="12" md="3">
+            <v-col cols="12" md="3">
               <ValidationProvider
                 v-slot="{ errors }"
                 rules="required"
                 immediate
               >
                 <v-text-field
-                  v-model="currentReport.license.number"
+                  v-model="currentReport.licenseNumber"
                   readonly
                   :error-messages="errors"
                   label="License"
@@ -151,7 +150,7 @@
               "
               top
             >
-              <template v-slot:activator="{ on }">
+              <template #activator="{ on }">
                 <v-icon
                   :color="
                     !IsCompleted ||
@@ -176,6 +175,10 @@
             Photo Record
             <v-icon> mdi-folder-multiple-image </v-icon>
           </v-tab>
+          <v-tab href="#operationalReadings">
+            Operational Readings
+            <v-icon> mdi-order-bool-descending </v-icon>
+          </v-tab>
         </v-tabs>
         <v-tabs-items v-model="tabs" touchless>
           <v-tab-item key="checklists" value="checklists">
@@ -187,13 +190,15 @@
                 >
                   <span
                     class="font-weight-black"
-                  >Check List States: New (
+                  >Check List States:
+                    <!-- New (
                     <v-icon
                       :color="!IsCompleted ? 'white' : getCheckIconColor(3)"
                     >
                       mdi-{{ getCheckIcon(3) }}
                     </v-icon>
-                    ) Not Acceptable (
+                    )  -->
+                    Not Acceptable (
                     <v-icon
                       :color="!IsCompleted ? 'white' : getCheckIconColor(0)"
                     >
@@ -227,10 +232,10 @@
                 <v-expansion-panel-content>
                   <v-list subheader two-line flat dense>
                     <v-list-item
-                      v-for="(item, checkListIndex) in currentReport.checkList"
+                      v-for="(item, checkListIndex) in currentReport.checkLists"
                       :key="item.id"
                     >
-                      <template v-slot:default>
+                      <template #default>
                         <v-list-item-content class="text-left">
                           <v-list-item-title>
                             <v-row justify="start" align="center" dense>
@@ -245,7 +250,7 @@
                                 <span
                                   v-if="
                                     item.checks.filter(
-                                      (c) => c.required && c.checked == 3
+                                      (c) => c.required && c.checked === 3
                                     ).length == 0
                                   "
                                 >
@@ -278,9 +283,9 @@
                                     :color="
                                       item.checks.length !==
                                         item.checks.filter(
-                                          (c) => c.checked == 1
+                                          (c) => c.checked === 1
                                         ).length &&
-                                        item.checks.filter((c) => c.checked == 1)
+                                        item.checks.filter((c) => c.checked === 1)
                                           .length > 0
                                         ? getCheckIconColor(2)
                                         : getCheckIconColor(
@@ -292,20 +297,20 @@
                                       `mdi-${
                                         item.checks.length !==
                                         item.checks.filter(
-                                          (c) => c.checked == 1
+                                          (c) => c.checked === 1
                                         ).length &&
                                         item.checks.filter(
-                                          (c) => c.checked == 1
+                                          (c) => c.checked === 1
                                         ).length > 0
                                           ? "minus"
                                           : item.checks.length ===
                                             item.checks.filter(
-                                              (c) => c.checked == 2
+                                              (c) => c.checked === 2
                                             ).length
                                             ? "minus"
                                             : item.checks.length ===
                                               item.checks.filter(
-                                                (c) => c.checked == 0
+                                                (c) => c.checked === 0
                                               ).length
                                               ? "close"
                                               : getCheckIcon(1)
@@ -323,7 +328,7 @@
                                   ) in item.checks"
                                   :key="checkItem.id"
                                 >
-                                  <template v-slot:default="{}">
+                                  <template #default="{}">
                                     <v-list-item-title :title="checkItem.text">
                                       <v-row
                                         dense
@@ -408,7 +413,7 @@
                                                     "
                                                     @click.stop.prevent=""
                                                   >
-                                                    <template v-slot:append="">
+                                                    <template #append="">
                                                       <v-chip
                                                         v-if="
                                                           checkItem.checked == 3
@@ -598,6 +603,9 @@
           <v-tab-item key="photos" value="photos">
             <PhotoRecords v-model="currentReport" @uploaded="saveAndLoad()" />
           </v-tab-item>
+          <v-tab-item key="operationalReadings" value="operationalReadings">
+            <PhotoRecords v-model="currentReport" @uploaded="saveAndLoad()" />
+          </v-tab-item>
         </v-tabs-items>
       </v-col>
     </v-row>
@@ -607,7 +615,7 @@
       no-text="close"
       @no="errorsDialog = false"
     >
-      <template v-slot:title="{}">
+      <template #title="{}">
         Report Errors
       </template>
       <h2>The Report has been saved! but we've found some errors:</h2>
@@ -646,7 +654,7 @@
     >
       Changes has been saved
 
-      <template v-slot:action="{ attrs }">
+      <template #action="{ attrs }">
         <v-btn dark text v-bind="attrs" @click="savedNotification = false">
           Close
         </v-btn>
@@ -656,26 +664,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, mixins } from 'nuxt-property-decorator'
+import { Component, Watch, mixins, Provide } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import InnerPageMixin from '@/mixins/innerpage'
 import { PrintHelper } from '@/Helpers'
 import { AddressesState } from '@/store/addresses'
-import {
-  Report,
-  EMALicenseType,
-  Note,
-  Signature,
-  ResponsableType,
-  EMALicense,
-  DeleteNoteCommand,
-  AddNoteCommand,
-  EditNoteCommand,
-  CheckListItem,
-  UpdateCheckListItemCommand,
-  CheckValue,
-  AddressDTO
-} from '@/types'
+import { AddNoteCommand, AddressDTO, CheckListItemQueryResult, NoteQueryResult, ReportQueryResult, EditSignatureCommand, UpdateReportCommand, CheckValue, EditNoteCommand, UpdateCheckListItemCommand } from '@/services/api'
+import { useNotifications } from '@/composables/use-notifications'
+
+const { notify } = useNotifications()
 
 @Component({
   components: {
@@ -695,7 +692,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   checkListCalls: Promise<unknown>[] = [];
 
-  search: string = '';
+  search: string | null | undefined = '';
   isDirty: boolean = false;
   searchingAddresses: boolean = false;
   openedPanels: number[] = [0, 1];
@@ -706,16 +703,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
   showUpdateCheck: { parentIndex: number; currentIndex: number }[] = [];
   tabs: any = 0;
   dialogClose: boolean = false;
-  currentReport: Report = {} as Report;
-  emaTypes: any = Object.keys(EMALicenseType)
-    .map((key: any) => {
-      if (!isNaN(Number(key.toString()))) {
-        return
-      }
-
-      return { id: EMALicenseType[key], text: key }
-    })
-    .filter(i => i !== undefined);
+  currentReport: ReportQueryResult = {} as ReportQueryResult;
+  @Provide('reportId') reportId = this.currentReport!.id
 
   hostName: string = this.$axios!.defaults!.baseURL!.replace('/api', '');
   signaturesChanges: boolean = false;
@@ -749,20 +738,20 @@ export default class EditReport extends mixins(InnerPageMixin) {
     await this.$axios
       .$post(`reports/${this.$route.params.id}/note`, newNote)
       .then((resp) => {
-        this.currentReport.notes.push({ id: resp, ...newNote })
+        this.currentReport.notes!.push({ id: resp, ...newNote })
       })
       .catch(err => alert(err))
   }
 
   async removeNote (id: number) {
-    const delNote: DeleteNoteCommand = {
+    const delNote = {
       reportId: this.currentReport.id,
       id
     }
     await this.$axios
       .delete(`reports/${delNote.reportId}/note/${delNote.id}`)
       .then(() => {
-        this.currentReport.notes = this.currentReport.notes.filter(
+        this.currentReport.notes = this.currentReport.notes!.filter(
           n => n.id !== id
         )
       })
@@ -781,7 +770,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   getCheckIcon (value: CheckValue) {
     switch (value) {
-      case CheckValue.NotAcceptable:
+      case CheckValue.NotAcceptableFalse:
         return 'close'
       case CheckValue.Acceptable:
         return 'check'
@@ -796,7 +785,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   getCheckIconColor (value: CheckValue) {
     switch (value) {
-      case CheckValue.NotAcceptable:
+      case CheckValue.NotAcceptableFalse:
         return 'error'
       case CheckValue.Acceptable:
         return 'success'
@@ -811,25 +800,25 @@ export default class EditReport extends mixins(InnerPageMixin) {
     return CheckValue[id]
   }
 
-  saveNote (note: Note) {
+  saveNote (note: NoteQueryResult) {
     const data: EditNoteCommand = {
       reportId: parseInt(this.$route.params.id),
-      id: note.id,
-      text: note.text,
-      checked: note.checked
+      id: note.id!,
+      text: note.text!,
+      checked: note.checked!
     }
     this.$axios.put(`reports/${data.reportId}/note/${note.id}`, data)
   }
 
-  async saveCheckItem (checkItem: CheckListItem) {
+  async saveCheckItem (checkItem: CheckListItemQueryResult) {
     const command: UpdateCheckListItemCommand = {
-      id: checkItem.id,
-      checkListId: checkItem.checkListId,
-      text: checkItem.text,
-      required: checkItem.required,
+      id: checkItem.id!,
+      checkListId: checkItem.checkListId!,
+      text: checkItem.text!,
+      required: checkItem.required!,
       checked: parseInt(checkItem.checked as any),
-      editable: checkItem.editable,
-      remarks: checkItem.remarks
+      editable: checkItem.editable!,
+      remarks: checkItem.remarks!
     }
     await this.$axios.put(
       `checklists/${command.checkListId}/items/${checkItem.id}`,
@@ -838,44 +827,41 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   async saveReportChanges () {
-    await Promise.all(this.checkListCalls)
+    this.savingNewReport = true
+    const update: UpdateReportCommand = {
+      id: this.currentReport.id,
+      name: this.currentReport.name,
+      address: this.currentReport.address ?? this.search,
+      date: this.currentReport.date,
+      licenseNumber: this.currentReport.licenseNumber,
+      isClosed: this.currentReport.isClosed
+    }
+    await this.$axios.put(`reports/${this.$route.params.id}`, update).then(() => {
+      this.$store.dispatch('hasPendingChanges', false)
+      this.currentReport.signatures!.forEach((signature) => {
+        const command: EditSignatureCommand = {
+          id: signature.id,
+          title: signature.title,
+          annotation: signature.annotation,
+          responsibleType: signature.responsibleType!,
+          responsibleName: signature.responsibleName,
+          designation: signature.designation,
+          remarks: signature.remarks,
+          date: signature.date,
+          principal: signature.principal,
+          drawnSign: signature.drawnSign
+        }
+        this.$axios.$put(`signatures/${signature.id}`, command)
+      })
+      this.savedNotification = true
+    })
 
-    // this.savingNewReport = true
-    // const update: UpdateReportCommand = {
-    //   id: this.currentReport.id,
-    //   name: this.currentReport.name,
-    //   address: this.currentReport.address ?? this.search,
-    //   date: this.currentReport.date,
-    //   licenseType: this.currentReport.license.licenseType,
-    //   licenseNumber: this.currentReport.license.number,
-    //   isClosed: this.currentReport.isClosed
-    // }
-    // await this.$axios.put(`reports/${this.$route.params.id}`, update).then(() => {
-    //   this.$store.dispatch('hasPendingChanges', false)
-    //   this.currentReport.signatures.forEach((signature) => {
-    //     const command: EditSignatureCommand = {
-    //       id: signature.id,
-    //       title: signature.title,
-    //       annotation: signature.annotation,
-    //       responsableType: signature.responsable.type,
-    //       responsableName: signature.responsable.name,
-    //       designation: signature.designation,
-    //       remarks: signature.remarks,
-    //       date: signature.date,
-    //       principal: signature.principal,
-    //       drawedSign: signature.drawedSign
-    //     }
-    //     this.$axios.$put(`signatures/${signature.id}`, command)
-    //   })
-    //   this.savedNotification = true
-    // })
-
-    // this.savingNewReport = false
-    // this.shouldShowRequired = true
+    this.savingNewReport = false
+    this.shouldShowRequired = true
   }
 
   @Watch('currentReport', { deep: false })
-  onReportChanged (value: Report, oldValue: Report) {
+  onReportChanged (value: ReportQueryResult, oldValue: ReportQueryResult) {
     if (value !== oldValue && oldValue !== undefined) {
       this.$store.dispatch('hasPendingChanges', true)
     }
@@ -893,31 +879,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
       { root: true }
     )
 
-    result.signatures.map((signature: Signature) => {
-      if (
-        signature.responsable === null ||
-        signature.responsable === undefined
-      ) {
-        signature.responsable = { type: 0, name: '' }
-      } else {
-        signature.responsable = {
-          type: (ResponsableType[
-            signature.responsable.type
-          ] as unknown) as ResponsableType,
-          name: signature.responsable.name
-        }
-      }
-    })
-
-    this.currentReport = Object.assign({}, result)
-    if (!this.currentReport.license) {
-      this.currentReport.license = {} as EMALicense
-    } else {
-      this.currentReport.license.licenseType = (EMALicenseType[
-        this.currentReport.license.licenseType
-      ] as unknown) as EMALicenseType
-    }
-
+    this.currentReport = result
+    this.reportId = this.currentReport.id
     this.search = this.currentReport.address
 
     await this.$store.dispatch(
@@ -936,10 +899,10 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   get IsCompleted () {
-    if (this.currentReport.checkList) {
+    if (this.currentReport.checkLists) {
       return (
-        this.currentReport.checkList.filter(
-          cl => cl.checks.findIndex(c => c.checked === CheckValue.None) >= 0
+        this.currentReport.checkLists.filter(
+          cl => cl.checks!.findIndex(c => !c.touched) >= 0
         ).length === 0
       )
     }
@@ -957,8 +920,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
     return (
       this.currentReport.signatures.findIndex(
         s =>
-          s.responsable.type !== undefined &&
-          s.responsable.name !== '' &&
+          s.responsibleType !== undefined &&
+          s.responsibleName !== '' &&
           s.principal
       ) >= 0
     )
@@ -979,23 +942,29 @@ export default class EditReport extends mixins(InnerPageMixin) {
   get CanCloseReport () {
     return (
       this.IsCompleted &&
-      !this.HasNotesWithPendingChecks &&
+      // !this.HasNotesWithPendingChecks &&
       this.PrincipalSignatureHasAResponsable &&
       this.IsValidForm
     )
   }
 
   checkItemChecks (checkListId: number, value: CheckValue): void {
-    const checkList = this.currentReport.checkList.find(
-      c => c.id === checkListId
-    )
-    if (!checkList) {
-      return
+    try {
+      this.$reportsApi.bulkUpdateChecks(this.currentReport.id!, checkListId, value)
+      const checkList = this.currentReport.checkLists!.find(
+        c => c.id === checkListId
+      )
+      if (!checkList) {
+        return
+      }
+    checkList.checks!.forEach((check) => { check.checked = value })
+    } catch (error) {
+      notify({
+        title: 'Report Details',
+        defaultMessage: 'Error Updating Checklist',
+        error
+      })
     }
-    checkList.checks.forEach((check) => {
-      check.checked = value
-      this.saveCheckItem(check)
-    })
   }
 
   checkListCheckedValue (item: any) {
@@ -1006,14 +975,14 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   setLicenseFromAddress () {
     if (!this.currentReport.address) {
-      this.currentReport!.license.number = ''
+      this.currentReport!.licenseNumber = ''
       return
     }
     const addressData = this.addresses.filter(
       a => a.formatedAddress === this.currentReport.address
     )
     if (addressData) {
-      this.currentReport!.license.number = addressData[0].number ?? ''
+      this.currentReport!.licenseNumber = addressData[0].number ?? ''
     }
   }
 
@@ -1038,7 +1007,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     this.dialogClose = false
     this.currentReport.isClosed = true
     this.dialogPrinting = true
-    await this.printHelper.print(this.currentReport.id)
+    await this.printHelper.print(this.currentReport.id!)
     this.dialogPrinting = false
     this.$router.push('/reports')
   }
@@ -1046,10 +1015,6 @@ export default class EditReport extends mixins(InnerPageMixin) {
   async saveAndLoad () {
     await this.saveReportChanges()
     await this.loadReport()
-  }
-
-  enqueueCheckItem (item: CheckListItem): void {
-    this.checkListCalls.push(this.saveCheckItem(item))
   }
 
   @Watch('search')

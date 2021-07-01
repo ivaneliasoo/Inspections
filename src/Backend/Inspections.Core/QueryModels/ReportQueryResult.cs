@@ -23,6 +23,7 @@ namespace Inspections.Core.QueryModels
         public string Title { get; set; } = default!;
         public string FormName { get; set; } = default!;
         public string? RemarksLabelText { get; set; }
+        public bool IsClosed { get; set; }
         public int OperationalReadingsId { get; set; }
         public short OperationalReadingsVoltageL1N { get; set; }
         public short OperationalReadingsVoltageL2N { get; set; }
@@ -48,5 +49,6 @@ namespace Inspections.Core.QueryModels
         public short OperationalReadingsEarthFaultSec { get; set; }
         public IEnumerable<SignatureQueryResult> Signatures { get; set; } = default!;
         public IEnumerable<CheckListQueryResult> CheckLists { get; set; } = default!;
+        public IEnumerable<NoteQueryResult> Notes { get; set; } = default!;
     }
 }

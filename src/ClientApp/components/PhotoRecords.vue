@@ -83,7 +83,6 @@ export default class PhotoRecords extends Vue {
 
     for (let i = 0; i < this.files.length; i++) {
       const file = this.files[i]
-      // const reduce = require('image-blob-reduce') // reduce from 'image-blob-reduce'
       const blob = await reduce().toBlob(file, { max: 1000 })
       const newFile = new File([blob], file.name)
       this.testurlproc = URL.createObjectURL(newFile)

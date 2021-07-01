@@ -19,7 +19,7 @@
       :headers="headers"
       :loading="loading"
     >
-      <template v-slot:top="{}">
+      <template #top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Inspection Reports</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
@@ -39,11 +39,11 @@
           </v-btn>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template #item.actions="{ item }">
         <v-tooltip top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
-              :disabled="!item.isClosed || !item.photoRecords.length>0"
+              :disabled="!item.isClosed || !item.photosCount>0"
               color="primary"
               class="mr-2"
               v-on="on"
@@ -55,7 +55,7 @@
           <span>Print Inspection Report With Photos</span>
         </v-tooltip>
         <v-tooltip top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
               :disabled="!item.isClosed"
               color="primary"
@@ -69,7 +69,7 @@
           <span>Print Inspections Report without Photos</span>
         </v-tooltip>
         <v-tooltip top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
               color="primary"
               class="mr-2"
@@ -82,7 +82,7 @@
           <span>Edit</span>
         </v-tooltip>
         <v-tooltip top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
               :disabled="item.isClosed"
               color="error"
@@ -95,7 +95,7 @@
           <span>Delete</span>
         </v-tooltip>
         <v-tooltip v-if="$auth.user.isAdmin" top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
               v-if="$auth.user.isAdmin"
               :disabled="item.isClosed"
@@ -109,7 +109,7 @@
           <span>Edit Checklist Configuration for this report</span>
         </v-tooltip>
         <v-tooltip v-if="$auth.user.isAdmin" top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
               v-if="$auth.user.isAdmin"
               :disabled="item.isClosed"
@@ -123,25 +123,25 @@
           <span>Edit Signatures Configuration for this report</span>
         </v-tooltip>
       </template>
-      <template v-slot:item.date="{ item }">
+      <template #item.date="{ item }">
         {{ formatDate(item.date) }}
       </template>
-      <template v-slot:item.photoRecords="{ item }">
+      <template #item.photoRecords="{ item }">
         {{ item.photoRecords.length }}
       </template>
-      <template v-slot:item.notes="{ item }">
+      <template #item.notes="{ item }">
         {{ item.notes.length }}
       </template>
-      <template v-slot:item.checkList="{ item }">
+      <template #item.checkList="{ item }">
         {{ item.checkList.length }}
       </template>
-      <template v-slot:item.signatures="{ item }">
+      <template #item.signatures="{ item }">
         {{ item.signatures.length }}
       </template>
-      <template v-slot:item.completed="{ item }">
+      <template #item.completed="{ item }">
         <v-simple-checkbox v-model="item.completed" disabled />
       </template>
-      <template v-slot:item.isClosed="{ item }">
+      <template #item.isClosed="{ item }">
         <v-simple-checkbox v-model="item.isClosed" disabled />
       </template>
     </v-data-table>
@@ -155,9 +155,9 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import { ReportsState } from 'store/reportstrore'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import InnerPageMixin from '@/mixins/innerpage'
-import { Report } from '~/types'
 import { PrintHelper } from '@/Helpers'
 import CreateReportDialog from '@/components/NewReportDialog.vue'
+import { Report } from '~/types'
 
 @Component({
   components: {
@@ -182,31 +182,31 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
         text: 'Id',
         value: 'id',
         sortable: true,
-        align: 'center',
+        align: 'center'
       },
       {
         text: 'Date',
         value: 'date',
         sortable: true,
-        align: 'center',
+        align: 'center'
       },
       {
         text: 'Report Name',
         value: 'name',
         sortable: true,
-        align: 'left',
+        align: 'left'
       },
       {
         text: 'Completed With Signatures',
         value: 'isClosed',
         sortable: true,
-        align: 'center',
+        align: 'center'
       },
       {
         text: '',
         value: 'actions',
         sortable: false,
-        align: 'center',
+        align: 'center'
       }
     ];
 
@@ -226,7 +226,7 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
       this.printHelper = new PrintHelper(this.$store)
     }
 
-    selectItem (item: Report): void{
+    selectItem (item: Report): void {
       this.selectedItem = item
     }
 
