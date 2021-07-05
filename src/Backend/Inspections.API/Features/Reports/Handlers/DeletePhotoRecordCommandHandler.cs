@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
+using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Models.Configuration;
 using Inspections.Core.Interfaces;
@@ -16,13 +17,13 @@ namespace Inspections.API.Features.Reports.Handlers
     public class DeletePhotoRecordCommandHandler : IRequestHandler<DeletePhotoRecordCommand, bool>
     {
         private readonly IReportsRepository _reportsRepository;
-        private readonly IStorageHelper _storageHelper;
+        private readonly PhotoRecordManager _photoManager;
         private readonly ClientSettings _settings;
 
-        public DeletePhotoRecordCommandHandler(IReportsRepository reportsRepository, IStorageHelper storageHelper, IOptions<ClientSettings> options)
+        public DeletePhotoRecordCommandHandler(IReportsRepository reportsRepository, PhotoRecordManager photoManager, IOptions<ClientSettings> options)
         {
             _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
-            _storageHelper = storageHelper ?? throw new ArgumentNullException(nameof(storageHelper));
+            _photoManager = photoManager ?? throw new ArgumentNullException(nameof(photoManager));
             _settings = options?.Value ?? throw new ArgumentNullException(nameof(options));
         }
         public async Task<bool> Handle(DeletePhotoRecordCommand request, CancellationToken cancellationToken)
@@ -37,8 +38,8 @@ namespace Inspections.API.Features.Reports.Handlers
                 var photo = report.PhotoRecords.Where(n => n.Id == request.Id).FirstOrDefault();
                 if (photo is not null)
                 {
-                    _storageHelper.DeleteFile(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, photo.FileName.Replace("/ReportsImages/", "", StringComparison.InvariantCulture)));
-                    _storageHelper.DeleteFile(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, photo.FileNameResized.Replace("/ReportsImages/", "", StringComparison.InvariantCulture)));
+                    await _photoManager.RemovePhoto(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, photo.FileName.Replace("/ReportsImages/", "", StringComparison.InvariantCulture)));
+                    await _photoManager.RemovePhoto(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, photo.FileNameResized.Replace("/ReportsImages/", "", StringComparison.InvariantCulture)));
                     report.RemovePhoto(photo);
                 }
                 await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);

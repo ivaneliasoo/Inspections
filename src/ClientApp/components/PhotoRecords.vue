@@ -46,8 +46,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model } from 'vue-property-decorator'
-import { Report } from '~/types'
+import { Component, Vue, Model, Inject } from 'vue-property-decorator'
 import reduce from 'image-blob-reduce'
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
@@ -60,6 +59,7 @@ import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
 })
 export default class PhotoRecords extends Vue {
   @Model('input') currentReport: Report | undefined;
+  @Inject('reportId') reportId!: number
   files: File[] = [];
   filesUrls: { url: string, id: number, label: string }[] = [];
 

@@ -13,11 +13,11 @@ namespace Inspections.API.Features.Reports.Commands
         public IFormFileCollection FormFiles { get; }
         public string Label { get; }
 
-        public AddPhotoRecordCommand(int reportId, IFormFileCollection formFiles, string label)
+        public AddPhotoRecordCommand(int reportId, IFormFileCollection formFiles, string? label)
         {
             ReportId = reportId;
             FormFiles = formFiles;
-            Label = label;
+            Label = label ?? "";
         }
     }
 }

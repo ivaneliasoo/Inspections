@@ -139,7 +139,7 @@ const notify: any = ({ title, message, type, notFoundMessage, error }: NotifyPar
     type = 'warning'
   }
 
-  return iziToast[type as string]({ message, title, timeout: 2500, displayMode: 2, resetOnHover: true, position: 'topRight', layout: 2 })
+  return (iziToast as any)[type]({ message, title, timeout: 2500, displayMode: 2, resetOnHover: true, position: 'topRight', layout: 2 })
 }
 
 const useNotifications = () => {

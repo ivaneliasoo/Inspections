@@ -90,7 +90,7 @@ export default class PhotoRecordManager extends Vue {
 
   removePhoto (id: number) {
     const delPhoto: DeletePhotoRecordCommand = {
-      reportId: this.photos!.id!,
+      reportId: this.reportId!,
       id
     }
     this.$axios
