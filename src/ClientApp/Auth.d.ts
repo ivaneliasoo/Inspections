@@ -51,6 +51,7 @@ declare module 'vue/types/vue' {
     $auth: Auth;
     $notificationsHub: any;
     $reportsApi: ReportsApi;
+    $img: any
   }
 }
 

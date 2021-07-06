@@ -42,7 +42,8 @@ export default {
     '@nuxtjs/vuetify',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxt/image'
   ],
   /*
   ** Nuxt.js modules
@@ -114,6 +115,7 @@ export default {
   ** Build configuration
   */
   build: {
-    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth']
+    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth', 'q'],
+    terser: false
   }
 }

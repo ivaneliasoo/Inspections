@@ -19,7 +19,7 @@ export function getColumns (catTemplate) {
   const calcColumns = catTemplate.calcColumns
   for (let i = 0; i < calcColumns.length; i++) {
     const params = calcColumns[i].params
-    for (j = 0; j < params.length; j++) {
+    for (let j = 0; j < params.length; j++) {
       const col = params[j].col
       cols.push({ name: col })
     }
@@ -34,7 +34,7 @@ export function checkTemplate (template, csvCols, templateCols) {
   }
   const calcColumns = {}
   const calcCols = template.calcColumns
-  for (i = 0; i < calcCols.length; i++) {
+  for (let i = 0; i < calcCols.length; i++) {
     calcColumns[calcCols[i].name] = true
   }
   for (let j = 0; j < templateCols.length; j++) {
@@ -56,7 +56,7 @@ export function findCategoryTemplate (templates, cols) {
   for (let i = 0; i < cols.length; i++) {
     columnMap[cols[i]] = true
   }
-  for (i = 0; i < templates.length; i++) {
+  for (let i = 0; i < templates.length; i++) {
     const templateCols = getColumns(templates[i])
     let gotit = true
     for (let j = 0; j < templateCols.length; j++) {
@@ -83,9 +83,9 @@ export function categoryTemplateFrom (aCatTemplate) {
     }
   }
   const calcColumns = catTemplate.calcColumns
-  for (i = 0; i < calcColumns.length; i++) {
+  for (let i = 0; i < calcColumns.length; i++) {
     const params = calcColumns[i].params
-    for (j = 0; j < params.length; j++) {
+    for (let j = 0; j < params.length; j++) {
       params[j].col = ''
     }
   }
