@@ -50,7 +50,7 @@ namespace Inspections.API
             services.AddAutoMapper(assembly);
 
             var options = Configuration.GetAWSOptions();
-            options.Credentials = new EnvironmentVariablesAWSCredentials();
+            //options.Credentials = new EnvironmentVariablesAWSCredentials();
             services.AddDefaultAWSOptions(options);
             services.AddAWSService<IAmazonS3>();
 
