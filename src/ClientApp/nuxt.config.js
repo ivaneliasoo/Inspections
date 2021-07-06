@@ -1,7 +1,8 @@
 require('dotenv').config()
 
 export default {
-  mode: 'spa',
+  ssr: false,
+  target: 'static',
   /*
   ** Headers of the page
   */
@@ -72,8 +73,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'https://inspectionsscb.azurewebsites.net',
-    browserBaseURL: 'https://inspectionsscb.azurewebsites.net'
+    baseURL: 'http://cse-inspectionreport-testing-environment.ap-southeast-1.elasticbeanstalk.com',
+    browserBaseURL: 'http://cse-inspectionreport-testing-environment.ap-southeast-1.elasticbeanstalk.com'
   },
   router: {
     middleware: ['auth']
