@@ -20,6 +20,7 @@
     "@nuxtjs/pwa": "^3.0.2",
     "blueimp-md5": "^2.18.0",
     "d3": "^6.7.0",
+    "canvas": "2.8.0",
     "echarts": "^5.1.0",
     "papaparse": "^5.3.0",
     "vue-echarts": "^6.0.0-rc.4",

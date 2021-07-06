@@ -31,14 +31,17 @@ namespace Inspections.API.Features.Inspections
         private readonly IMediator _mediator;
         private readonly IReportsRepository _reportsRepository;
         private readonly InspectionsContext _context;
-        private readonly IOptions<ClientSettings> storageOptions;
+        private readonly IOptions<ClientSettings> _storageOptions;
+        private readonly PhotoRecordManager _photoRecordManager;
 
-        public ReportsController(IMediator mediator, IReportsRepository reportsRepository, InspectionsContext context, IOptions<ClientSettings> storageOptions)
+        public ReportsController(IMediator mediator, IReportsRepository reportsRepository, InspectionsContext context, IOptions<ClientSettings> storageOptions,
+            PhotoRecordManager photoRecordManager)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            this.storageOptions = storageOptions ?? throw new ArgumentNullException(nameof(storageOptions));
+            _storageOptions = storageOptions ?? throw new ArgumentNullException(nameof(storageOptions));
+            _photoRecordManager = photoRecordManager ?? throw new ArgumentNullException(nameof(photoRecordManager));
         }
 
         [HttpPost]
@@ -113,13 +116,14 @@ namespace Inspections.API.Features.Inspections
         [ProducesDefaultResponseType]
         public IActionResult GetPhotoRecords(int id)
         {
-            var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id)
-                            .Select(p => new
-                            {
-                                p.Label,
-                                p.FileName,
-                                Base64String = ToBase64String($"{Directory.GetCurrentDirectory()}{p.FileNameResized.Replace("ReportsImages", storageOptions.Value.ReportsImagesFolder, StringComparison.InvariantCultureIgnoreCase)}"),
-                            });
+            var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id);
+
+            foreach (var photo in photos)
+            {
+                photo.PhotoUrl = _photoRecordManager.GenerateSafeUrl(photo.FileName);
+                photo.FileNameResized = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
+            }
+
             if (photos != null)
                 return Ok(photos);
 

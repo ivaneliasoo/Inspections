@@ -20,7 +20,7 @@ namespace Inspections.API.ApplicationServices
         {
             _amazonS3 = amazonS3 ?? throw new ArgumentNullException(nameof(amazonS3));
             this.options = options ?? throw new ArgumentNullException(nameof(options));
-            
+
         }
 
         public async Task CreatFolderIfNotExists(string folderPath)
@@ -29,7 +29,7 @@ namespace Inspections.API.ApplicationServices
             GetObjectResponse? obj = default!;
             try
             {
-                 obj = await _amazonS3.GetObjectAsync(options.Value.S3BucketName, key);
+                obj = await _amazonS3.GetObjectAsync(options.Value.S3BucketName, key);
             }
             catch (Exception)
             {
@@ -49,7 +49,7 @@ namespace Inspections.API.ApplicationServices
         {
             var delRequest = new DeleteObjectRequest
             {
-                BucketName=options.Value.S3BucketName,
+                BucketName = options.Value.S3BucketName,
                 Key = filePath
             };
             await _amazonS3.DeleteObjectAsync(delRequest);
@@ -98,17 +98,18 @@ namespace Inspections.API.ApplicationServices
             throw new NotImplementedException("Synchronous Support for saving file isn't implemented. since awsClient only support async");
         }
 
-        public async Task<string> SaveAsync(Stream fileStream, string path, string fileName, bool useUniqueString, string contentType = "")
+        public async Task<StorageItem> SaveAsync(Stream fileStream, string path, string fileName, bool useUniqueString, string contentType = "")
         {
+            string filePath = GenerateFilePath(path, fileName, useUniqueString);
             var uploadObject = new PutObjectRequest
             {
                 BucketName = options.Value.S3BucketName,
-                Key = GenerateFilePath(path, fileName, useUniqueString),
+                Key = filePath,
                 InputStream = fileStream,
                 ContentType = contentType
             };
             var response = await _amazonS3.PutObjectAsync(uploadObject);
-            return response.ETag;
+            return new StorageItem { CloudId = response.ETag, Path = filePath };
         }
     }
 }

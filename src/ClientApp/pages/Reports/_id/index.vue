@@ -601,10 +601,10 @@
             </v-row>
           </v-tab-item>
           <v-tab-item key="photos" value="photos">
-            <PhotoRecords v-model="currentReport" @uploaded="saveAndLoad()" />
+            <PhotoRecords :report-id="currentReport.id" @uploaded="saveAndLoad()" />
           </v-tab-item>
           <v-tab-item key="operationalReadings" value="operationalReadings">
-            <PhotoRecords v-model="currentReport" @uploaded="saveAndLoad()" />
+            <h1>To be defined. Web handling of this part is not defined</h1>
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -664,7 +664,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, mixins, Provide } from 'nuxt-property-decorator'
+import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import InnerPageMixin from '@/mixins/innerpage'
 import { PrintHelper } from '@/Helpers'
@@ -704,7 +704,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
   tabs: any = 0;
   dialogClose: boolean = false;
   currentReport: ReportQueryResult = {} as ReportQueryResult;
-  @Provide('reportId') reportId = this.currentReport!.id
+  // @Provide('reportId') reportId = 0
 
   hostName: string = this.$axios!.defaults!.baseURL!.replace('/api', '');
   signaturesChanges: boolean = false;
@@ -880,7 +880,6 @@ export default class EditReport extends mixins(InnerPageMixin) {
     )
 
     this.currentReport = result
-    this.reportId = this.currentReport.id
     this.search = this.currentReport.address
 
     await this.$store.dispatch(

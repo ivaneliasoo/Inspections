@@ -8,7 +8,7 @@ namespace Inspections.API.ApplicationServices
 {
     public class FileSystemStorageDriver : StorageDriver
     {
-        public async Task<string> SaveAsync(Stream fileStream, string path, string fileName, bool useUniqueString, string contenType = "")
+        public async Task<StorageItem> SaveAsync(Stream fileStream, string path, string fileName, bool useUniqueString, string contenType = "")
         {
             string filePath = GenerateFilePath(path, fileName, useUniqueString);
             await CreatFolderIfNotExists(path);
@@ -17,7 +17,7 @@ namespace Inspections.API.ApplicationServices
             {
                 await fileStream.CopyToAsync(stream).ConfigureAwait(false);
             }
-            return filePath;
+            return new StorageItem { Path = filePath };
         }
 
         public string Save(Stream fileStream, string path, string fileName, bool useUniqueString, string contentType)

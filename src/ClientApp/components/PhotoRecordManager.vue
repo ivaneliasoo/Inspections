@@ -10,7 +10,7 @@
       :items-per-page.sync="itemsPerPage"
       no-results-text="No photos"
     >
-      <template v-slot:default="props">
+      <template #default="props">
         <v-row>
           <v-col
             v-for="photo, index in props.items"
@@ -22,7 +22,7 @@
           >
             <v-card>
               <v-img
-                :src="`${hostName}${photo.fileName}`"
+                :src="`${photo.thumbnailUrl}`"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="200px"
@@ -48,14 +48,14 @@
                 <v-btn
                   v-if="showLabelEdit.findIndex(l => l===index)===-1"
                   icon
-                  @click="editPhotoLabel(index) || !currentReport.isClosed"
+                  @click="editPhotoLabel(index)"
                 >
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
                 <v-btn icon @click="currentPhoto=index; showCarousel=true">
                   <v-icon>mdi-eye</v-icon>
                 </v-btn>
-                <v-btn v-if="!currentReport.isClosed" icon @click="removePhoto(photo.id)">
+                <v-btn icon @click="removePhoto(photo.id)">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </v-card-actions>
@@ -66,21 +66,21 @@
     </v-data-iterator>
     <v-dialog v-model="showCarousel">
       <v-carousel v-model="currentPhoto" height="80%">
-        <v-carousel-item v-for="(photo, index) in photos" :key="index" :src="`${hostName}${photo.fileName}`" />
+        <v-carousel-item v-for="(photo, index) in photos" :key="index" :src="`${photo.photoUrl}`" />
       </v-carousel>
     </v-dialog>
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model, Inject } from 'vue-property-decorator'
+import { Component, Vue, Model, Prop } from 'nuxt-property-decorator'
 import { DeletePhotoRecordCommand, PhotoRecord, EditPhotoRecordCommand } from '~/types'
 
 @Component
 export default class PhotoRecordManager extends Vue {
   @Model('input') photos: PhotoRecord[] | undefined;
 
-  @Inject() readonly reportId!: number
+  @Prop({ required: true, type: Number }) reportId!: number
   showCarousel: boolean = false
   currentPhoto: number = 0;
   showLabelEdit: number[] = [];

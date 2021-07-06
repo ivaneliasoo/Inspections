@@ -11,8 +11,8 @@ namespace Inspections.Core.Domain.ReportsAggregate
     public class PhotoRecord : Entity<int>
     {
         public int ReportId { get; private set; }
-        public string FileName { get; private set; } = default!;
-        public string FileNameResized { get; private set; } = default!;
+        public string FileName { get; set; } = default!;
+        public string FileNameResized { get; set; } = default!;
         public string? Label { get; set; }
 
         public string? PhotoStorageId { get; set; }
@@ -26,8 +26,8 @@ namespace Inspections.Core.Domain.ReportsAggregate
         {
             ReportId = reportId;
             Label = label;
-            FileName = Path.Combine(AppContext.BaseDirectory, reportId.ToString(), path);
-            FileNameResized = Path.Combine(AppContext.BaseDirectory, reportId.ToString(), pathResized);
+            FileName = path;
+            FileNameResized = reportId.ToString();
         }
 
         public void SetMetadata(string photoStorageId, string thumbnailStorageId, string photoUrl, string thumbnailUrl)

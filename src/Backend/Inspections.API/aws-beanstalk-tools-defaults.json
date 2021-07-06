@@ -7,7 +7,7 @@
     "application"    : "csereportsapps-dev",
     "environment"    : "Csereportsappsdev-env",
     "enable-xray"    : false,
-    "enhanced-health-type" : "enhanced",
+    "enhanced-health-type" : "basic",
     "additional-options"   : "",
     "proxy-server"         : "nginx"
 }

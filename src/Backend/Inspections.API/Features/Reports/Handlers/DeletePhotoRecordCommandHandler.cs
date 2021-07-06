@@ -31,15 +31,14 @@ namespace Inspections.API.Features.Reports.Handlers
             Guard.Against.Null(request, nameof(request));
             var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
 
-
             try
             {
                 if (report is null) return false;
                 var photo = report.PhotoRecords.Where(n => n.Id == request.Id).FirstOrDefault();
                 if (photo is not null)
                 {
-                    await _photoManager.RemovePhoto(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, photo.FileName.Replace("/ReportsImages/", "", StringComparison.InvariantCulture)));
-                    await _photoManager.RemovePhoto(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, photo.FileNameResized.Replace("/ReportsImages/", "", StringComparison.InvariantCulture)));
+                    await _photoManager.RemovePhoto(photo.FileName);
+                    await _photoManager.RemovePhoto(photo.FileNameResized);
                     report.RemovePhoto(photo);
                 }
                 await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.S3;
 using Inspections.API.Models.Configuration;
 using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp;
@@ -15,13 +16,15 @@ namespace Inspections.API.ApplicationServices
     {
         private readonly StorageDriver _storage;
         private readonly IOptions<ClientSettings> _options;
+        private readonly IAmazonS3 _amazonS3;
         private readonly string BasePath;
 
 
-        public PhotoRecordManager(StorageDriver storage, IOptions<ClientSettings> options)
+        public PhotoRecordManager(StorageDriver storage, IOptions<ClientSettings> options, IAmazonS3 amazonS3)
         {
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
             _options = options ?? throw new ArgumentNullException(nameof(options));
+            _amazonS3 = amazonS3 ?? throw new ArgumentNullException(nameof(amazonS3));
             BasePath = _options.Value.ReportsImagesFolder.Replace("\\", "/");
         }
 
@@ -43,13 +46,26 @@ namespace Inspections.API.ApplicationServices
 
             var photo = await _storage.SaveAsync(file, GenerateAlbumPath(album), Path.GetFileName(name), true, contentType).ConfigureAwait(false);
             var thumbnail = await AddPhotoThumbnail(tnCopy, GenerateAlbumPath(album), Path.GetFileName(name), contentType).ConfigureAwait(false);
-            if(photo is not null && thumbnail is not null)
-                return new PhotoItemResult { PhotoPath = photo, ThumbnailPath = thumbnail };
+            if (photo is not null && thumbnail is not null)
+                return new PhotoItemResult
+                {
+                    PhotoPath = photo.Path ,
+                    ThumbnailPath = thumbnail.Path,
+                    PhotoStorageId = photo.CloudId,
+                    ThumbnailStorageId = thumbnail.CloudId,
+                    ThumbnailUrl = GenerateSafeUrl(thumbnail.Path),
+                    PhotoUrl = GenerateSafeUrl(thumbnail.Path)
+                };
 
             throw new InvalidDataException("Error while adding photo to storage");
         }
 
-        internal async Task<string> AddPhotoThumbnail(Stream file, string album, string name, string contentType)
+        internal string GenerateSafeUrl(string photoPath)
+        {
+            return _amazonS3.GeneratePreSignedURL(_options.Value.S3BucketName, photoPath, DateTime.Now.AddHours(2), null);
+        }
+
+        internal async Task<StorageItem> AddPhotoThumbnail(Stream file, string album, string name, string contentType)
         {
             file.Position = 0;
             using Image img = await Image.LoadAsync(file).ConfigureAwait(false);
@@ -60,16 +76,16 @@ namespace Inspections.API.ApplicationServices
             return await _storage.SaveAsync(ms, album, Path.GetFileNameWithoutExtension(name) + "small" + Path.GetExtension(name), true, contentType).ConfigureAwait(false);
         }
 
-        public Task RemovePhoto(string name)
+        public async Task RemovePhoto(string name)
         {
-            return Task.CompletedTask;
+            await _storage.DeleteFile(name);
         }
 
-        public Task RemoveAlbum(string name)
+        public async Task RemoveAlbum(string name)
         {
-            return Task.CompletedTask;
+            await _storage.DeleteFolder(name);
         }
-        
+
     }
 
     /// <summary>
@@ -79,11 +95,11 @@ namespace Inspections.API.ApplicationServices
     /// </summary>
     public class PhotoItemResult
     {
-        public string PhotoStorageId { get; set; } = default!;
-        public string ThumbnailStorageId { get; set; } = default!;
+        public string? PhotoStorageId { get; set; } = default!;
+        public string? ThumbnailStorageId { get; set; } = default!;
         public string PhotoPath { get; set; } = default!;
         public string ThumbnailPath { get; set; } = default!;
-        public string PhotoUrl{ get; set; } = default!;
-        public string ThumbnailUrl{ get; set; } = default!;
+        public string? PhotoUrl { get; set; } = default!;
+        public string? ThumbnailUrl { get; set; } = default!;
     }
 }

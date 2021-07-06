@@ -28,6 +28,32 @@ export class PrintHelper {
     return photos
   }
 
+  getImage (url: string) {
+    return new Promise((resolve, reject) => {
+      const img = new Image()
+      img.setAttribute('crossOrigin', 'anonymous')
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.width
+        canvas.height = img.height
+
+        const ctx = canvas.getContext('2d')
+        ctx!.drawImage(img, 0, 0)
+
+        const dataURL = canvas.toDataURL('image/png')
+
+        resolve(dataURL)
+      }
+
+      img.onerror = (error) => {
+        reject(error)
+      }
+
+      img.src = url
+    })
+  }
+
   public async print (reportId: number) {
     const report = await this.getReport(reportId);
 
@@ -558,12 +584,11 @@ export class PrintHelper {
 
   private async splitPhotosBy2 (reportId: number): Promise<any> {
     const photos = await this.getReportPhotos(reportId)
-
     const result: any[] = []
     const tempArray: any[] = []
     for (let index = 0; index < photos.length; index++) {
       const photo = photos[index]
-      tempArray.push({ stack: [{ image: `${photo.base64String}`, width: 220, height: 150, margin: [0, 20, 0, 20] }, { text: `${photo.label}`, alignment: 'left', style: 'photoTag' }] })
+      tempArray.push({ stack: [{ image: `${await this.getImage(photo.photoUrl)}`, width: 220, height: 150, margin: [0, 20, 0, 20] }, { text: `${photo.label}`, alignment: 'left', style: 'photoTag' }] })
       if (index % 2 !== 0) {
         result.push([...tempArray])
         tempArray.length = 0

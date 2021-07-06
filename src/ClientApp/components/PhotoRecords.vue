@@ -39,17 +39,18 @@
         Save Photos
         <v-icon>mdi-upload</v-icon>
       </v-btn>
-      <PhotoRecordManager v-if="files.length===0" v-model="currentReport" />
+      <PhotoRecordManager v-if="files.length===0" v-model="photoRecords" :report-id="reportId" />
       <PhotoRecordPreviewer v-else v-model="filesUrls" :files="files" :progress="percentCompleted" />
     </v-row>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model, Inject } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import reduce from 'image-blob-reduce'
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
+import { Prop } from 'nuxt-property-decorator'
 
 @Component({
   components: {
@@ -58,10 +59,11 @@ import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
   }
 })
 export default class PhotoRecords extends Vue {
-  @Model('input') currentReport: Report | undefined;
-  @Inject('reportId') reportId!: number
+  @Prop({ required: true, type: Number }) reportId!: number
   files: File[] = [];
   filesUrls: { url: string, id: number, label: string }[] = [];
+
+  photoRecords: any[] = []
 
   selectedPhotoComponent: string = 'PhotoRecordManager'
   dialogUploading: boolean = false
@@ -70,9 +72,15 @@ export default class PhotoRecords extends Vue {
   testurl = ''
   testurlproc = ''
 
+  async fetch () {
+    const result: any = await this.$reportsApi.reportsIdPhotorecordGet(this.reportId)
+    if (result.data) {
+      this.photoRecords = result.data as any[]
+    }
+  }
+
   async uploadFiles () {
     const Pthis = this
-    const filesProcessed = 0
     const formData = new FormData()
     this.dialogUploading = true
     const config = {
@@ -102,6 +110,11 @@ export default class PhotoRecords extends Vue {
         this.files = []
       })
 
+    const result: any = await this.$reportsApi.reportsIdPhotorecordGet(this.reportId)
+    if (result.data) {
+      this.photoRecords = result.data as any[]
+    }
+
     this.dialogUploading = false
   }
 
@@ -118,7 +131,7 @@ export default class PhotoRecords extends Vue {
   get source () {
     if (this.filesUrls.length > 0) { return this.filesUrls }
 
-    return this.currentReport!.photoRecords
+    return this.photoRecords
   }
 }
 </script>
