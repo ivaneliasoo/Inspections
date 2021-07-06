@@ -17,7 +17,7 @@ export function getColumns (catTemplate) {
     }
   }
   const calcColumns = catTemplate.calcColumns
-  for (i = 0; i < calcColumns.length; i++) {
+  for (let i = 0; i < calcColumns.length; i++) {
     const params = calcColumns[i].params
     for (j = 0; j < params.length; j++) {
       const col = params[j].col
