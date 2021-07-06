@@ -353,3 +353,11 @@ MigrationBackup/
 /src/Backend/.system
 /src/Backend/Inspections.API/Properties
 /src/Backend/Inspections.API/MediaUpload/img/Reports
+
+#remove when meging dev to main
+/src/Mobile/ReportsApp/.vscode/
+/src/Mobile/ReportsApp/node_modules/
+/src/Mobile/ReportsApp/android/.gradle/
+/src/Mobile/ReportsApp/android/.idea/
+/src/Mobile/ReportsApp/android/app/build/
+/src/Mobile/ReportsApp/android
