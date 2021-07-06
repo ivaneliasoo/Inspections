@@ -29,7 +29,7 @@ namespace Inspections.API.Features.Checklists
             _checkListsQueries = checkListsQueries ?? throw new ArgumentNullException(nameof(checkListsQueries));
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateCheckList")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -41,7 +41,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpPost("{id:int}/items")]
+        [HttpPost("{id:int}/items", Name ="AddItemToChecklist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -57,32 +57,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpPost("{id:int}/params")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> AddCheckListParam([FromBody] AddCheckListParamCommand param)
-        {
-            if (await _mediator.Send(param).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-        [HttpPost("{id:int}/items/{idItem:int}/params")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> AddCheckListItemParam([FromBody] AddCheckListItemParamCommand param)
-        {
-            if (await _mediator.Send(param).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:int}", Name ="UpdateChecklist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -98,7 +73,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpPut("{id:int}/items/{idItem:int}")]
+        [HttpPut("{id:int}/items/{idItem:int}", Name ="UpdateChecklistItem")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -114,39 +89,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpPut("{id:int}/params/{idParam:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateCheckListParam(int id, int idParam, [FromBody] UpdateCheckListParamCommand param)
-        {
-            Guard.Against.Null(param, nameof(param));
-            if (id != param.IdCheckList || idParam != param.Id)
-                return BadRequest();
-
-            if (await _mediator.Send(param).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-        [HttpPut("{id:int}/items/{idItem:int}/params")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateCheckListItemParam(int id, int idItem, int idParam, [FromBody] UpdateCheckListParamCommand param)
-        {
-            Guard.Against.Null(param, nameof(param));
-            if (idParam != param.Id || idItem != param.IdCheckListItem || param.IdCheckList != id)
-                return BadRequest();
-
-            if (await _mediator.Send(param).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id:int}", Name ="DeleteChecklist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -158,7 +101,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpDelete("{id:int}/items/{idItem:int}")]
+        [HttpDelete("{id:int}/items/{idItem:int}", Name ="DeleteChecklistItem")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -170,31 +113,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpDelete("{id:int}/params/{idParam:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> DeleteCheckListParam(int id, int idParam)
-        {
-            if (await _mediator.Send(new DeleteCheckListParamCommand(id, 0, idParam)).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-        [HttpDelete("{id:int}/items/{idItem:int}/params")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> DeleteCheckListItemParam(int id, int idItem, int idParam)
-        {
-            if (await _mediator.Send(new DeleteCheckListParamCommand(id, idItem, idParam)).ConfigureAwait(false))
-                return Ok();
-
-            return BadRequest();
-        }
-
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}", Name ="GetCheckListbyId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -209,7 +128,7 @@ namespace Inspections.API.Features.Checklists
 
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetChecklists")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]

@@ -17,7 +17,7 @@ namespace Inspections.API.Features.Reports.Handlers
 
         public AddNoteCommandHandler(IReportsRepository reportsRepository)
         {
-            this._reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
+           _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
         }
 
         public async Task<int> Handle(AddNoteCommand request, CancellationToken cancellationToken)

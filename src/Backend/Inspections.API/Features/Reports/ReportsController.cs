@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Models.Configuration;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces;
+using Inspections.Core.QueryModels;
 using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -28,17 +31,23 @@ namespace Inspections.API.Features.Inspections
         private readonly IMediator _mediator;
         private readonly IReportsRepository _reportsRepository;
         private readonly InspectionsContext _context;
-        private readonly IOptions<ClientSettings> storageOptions;
+        private readonly IOptions<ClientSettings> _storageOptions;
+        private readonly PhotoRecordManager _photoRecordManager;
 
-        public ReportsController(IMediator mediator, IReportsRepository reportsRepository, InspectionsContext context, IOptions<ClientSettings> storageOptions)
+        public ReportsController(IMediator mediator, IReportsRepository reportsRepository, InspectionsContext context, IOptions<ClientSettings> storageOptions,
+            PhotoRecordManager photoRecordManager)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            this.storageOptions = storageOptions ?? throw new ArgumentNullException(nameof(storageOptions));
+            _storageOptions = storageOptions ?? throw new ArgumentNullException(nameof(storageOptions));
+            _photoRecordManager = photoRecordManager ?? throw new ArgumentNullException(nameof(photoRecordManager));
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> Post([FromBody] CreateReportCommand createData)
         {
             var result = await _mediator.Send(createData).ConfigureAwait(false);
@@ -49,6 +58,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> Put([FromBody] UpdateReportCommand udpateData)
         {
             var result = await _mediator.Send(udpateData).ConfigureAwait(false);
@@ -59,9 +71,12 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string filter, bool? closed)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> GetAll(string? filter, bool? closed, bool myReports = true)
         {
-            var result = await _reportsRepository.GetAll(filter, closed).ConfigureAwait(false);
+            var result = await _reportsRepository.GetAll(filter, closed, myReports).ConfigureAwait(false);
             if (result is null)
                 return NoContent();
 
@@ -69,9 +84,13 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpGet("{id:int}")]
+        [ProducesResponseType(typeof(ReportQueryResult), 200)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> GetReport(int id)
         {
-            var result = await _reportsRepository.GetByIdAsync(id).ConfigureAwait(false);
+            var result = await _reportsRepository.GetByIdAsync(id, true).ConfigureAwait(false);
+
             if (result is null)
                 return NoContent();
 
@@ -79,6 +98,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> DeleteReport(int id)
         {
             var result = await _mediator.Send(new DeleteReportCommand(id)).ConfigureAwait(false);
@@ -89,15 +111,19 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpGet("{id:int}/photorecord")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public IActionResult GetPhotoRecords(int id)
         {
-            var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id)
-                            .Select(p => new
-                            {
-                                p.Label,
-                                p.FileName,
-                                Base64String = ToBase64String($"{Directory.GetCurrentDirectory()}{p.FileNameResized.Replace("ReportsImages", storageOptions.Value.ReportsImagesFolder, StringComparison.InvariantCultureIgnoreCase)}"),
-                            });
+            var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id);
+
+            foreach (var photo in photos)
+            {
+                photo.PhotoUrl = _photoRecordManager.GenerateSafeUrl(photo.FileName);
+                photo.FileNameResized = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
+            }
+
             if (photos != null)
                 return Ok(photos);
 
@@ -106,12 +132,23 @@ namespace Inspections.API.Features.Inspections
 
         private static string ToBase64String(string fileName)
         {
-            byte[] fileBytes = System.IO.File.ReadAllBytes(fileName);
+            byte[] fileBytes = Array.Empty<byte>();
+            try
+            {
+                fileBytes = System.IO.File.ReadAllBytes(fileName);
+            }
+            catch (IOException ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
             return "data:image/png;base64," + Convert.ToBase64String(fileBytes);
         }
 
         [HttpPost("{id:int}/photorecord")]
-        public async Task<IActionResult> AddPhotoRecord(int id, [FromForm] string label)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> AddPhotoRecord(int id, [FromHeader] string? label)
         {
             var request = await Request.ReadFormAsync().ConfigureAwait(false);
 
@@ -129,6 +166,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPost("{id:int}/note")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> AddNote(int id, [FromBody] AddNoteCommand note)
         {
             Guard.Against.Null(note, nameof(note));
@@ -143,6 +183,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPut("{id:int}/note/{idNote:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> EditNote(int id, int idNote, [FromBody] EditNoteCommand note)
         {
             Guard.Against.Null(note, nameof(note));
@@ -157,6 +200,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpPut("{id:int}/photorecord/{idPhoto:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> EditPhotoRecord(int id, int idPhoto, [FromBody] EditPhotoRecordCommand photo)
         {
             Guard.Against.Null(photo, nameof(photo));
@@ -172,6 +218,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpDelete("{id:int}/photorecord/{idPhoto:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> DeletePhotoRecord(int id, int idPhoto)
         {
             var result = await _mediator.Send(new DeletePhotoRecordCommand(idPhoto, id)).ConfigureAwait(false);
@@ -182,6 +231,9 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpDelete("{id:int}/note/{idNote:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> DeleteNote(int id, int idNote)
         {
             var result = await _mediator.Send(new DeleteNoteCommand(idNote, id)).ConfigureAwait(false);
@@ -191,5 +243,45 @@ namespace Inspections.API.Features.Inspections
             return BadRequest();
         }
 
+        [HttpPatch("{reportId:int}/checklists/{checkListId:int}", Name = nameof(BulkUpdateChecks))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<ActionResult<bool>> BulkUpdateChecks(int reportId, int checkListId, int newValue)
+        {
+            var result = await _mediator.Send(new BulkUpdateCheckItemsCommand(reportId, checkListId, newValue)).ConfigureAwait(false);
+            if (!result)
+                return Conflict();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{reportId:int}/complete", Name = nameof(CompleteReport))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<ActionResult<bool>> CompleteReport(int reportId)
+        {
+            var result = await _mediator.Send(new CompleteReportCommand(reportId)).ConfigureAwait(false);
+            if (!result)
+                return Conflict();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id:int}/readings", Name = nameof(UpdateOperationalReadings))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> UpdateOperationalReadings(int id, [FromBody] UpdateOperationalReadingsCommand operationalReadingsCommand)
+        {
+            Guard.Against.Null(operationalReadingsCommand, nameof(operationalReadingsCommand));
+            if (id != operationalReadingsCommand.ReportId)
+                return BadRequest();
+
+            var result = await _mediator.Send(operationalReadingsCommand).ConfigureAwait(false);
+            if (result)
+                return Ok(result);
+
+            return BadRequest();
+        }
     }
 }

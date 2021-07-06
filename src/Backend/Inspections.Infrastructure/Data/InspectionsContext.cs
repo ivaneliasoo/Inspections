@@ -1,4 +1,5 @@
-﻿using Inspections.Core;
+﻿#nullable disable
+using Inspections.Core;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
@@ -43,8 +44,7 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Report> Reports { get; set; }
         public DbSet<CheckList> CheckLists { get; set; }
         public DbSet<CheckListItem> CheckListItems { get; set; }
-        public DbSet<CheckListParam> CheckListParams { get; set; }
-        public DbSet<Note> Notes { get; set; }
+        public DbSet<Note> Notes { get; set; }  
         public DbSet<PhotoRecord> Photos { get; set; }
         public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
         public DbSet<Signature> Signatures { get; set; }
@@ -52,6 +52,7 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Core.Domain.User> Users { get; set; }
         public DbSet<Core.Domain.Address> Addresses { get; set; }
         public DbSet<Core.Domain.EMALicense> Licenses { get; set; }
+        public DbSet<OperationalReadings> OperationalReadings { get; set; }
 
 
         //Queries
@@ -63,21 +64,17 @@ namespace Inspections.Infrastructure.Data
         {
             modelBuilder.ApplyConfiguration(new PhotoRecordEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SignatureEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new CheckListParamEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CheckListItemEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CheckListEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new NotesEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new AddressEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new EMALicenseEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfigurationEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ReportEntityTypeConfiguration(_userNameResolver));
+            modelBuilder.ApplyConfiguration(new ReportEntityTypeConfiguration());
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(e => !e.IsOwned()))
             {
                 if (entityType is ResumenReportConfiguration)
-                    continue;
-
-                if (entityType is License)
                     continue;
 
                 if (entityType is Core.Domain.EMALicense)
@@ -103,8 +100,8 @@ namespace Inspections.Infrastructure.Data
             .Property(p => p.LastName).IsRequired().HasMaxLength(50);
 
 
-            modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToView(null);
-            modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToTable("ResumenCheckList", m=>m.ExcludeFromMigrations());
+            modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey().ToTable("ResumenReportConfiguration", m => m.ExcludeFromMigrations());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -114,7 +111,7 @@ namespace Inspections.Infrastructure.Data
             foreach (var entity in ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
-                if (entity.CurrentValues.EntityType.DisplayName() == "Responsable")
+                if (entity.CurrentValues.EntityType.DisplayName() == "Responsible")
                     continue;
 
                 if (entity.CurrentValues.EntityType.DisplayName() == "License")

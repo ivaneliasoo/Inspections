@@ -6,6 +6,7 @@ export interface UpdateReportConfigurationCommand {
     title: string;
     formName: string;
     remarksLabelText: string;
+    inactive: boolean;
     checksDefinition: number[];
     signatureDefinitions: number[];
 }

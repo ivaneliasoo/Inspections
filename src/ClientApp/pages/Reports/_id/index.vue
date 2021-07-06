@@ -15,11 +15,15 @@
         <ValidationObserver ref="obs" v-slot="{ valid }" tag="form">
           <v-row align="center" justify="space-between">
             <v-col cols="8">
-              <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+              <ValidationProvider
+                v-slot="{ errors }"
+                rules="required"
+                immediate
+              >
                 <DatePickerBase
                   v-model="currentReport.date"
+                  name="date"
                   type="number"
-                  label="License"
                   :error-messages="errors"
                   :max="new Date().toISOString()"
                 />
@@ -32,7 +36,11 @@
           </v-row>
           <v-row align="center" justify="space-between">
             <v-col cols="12" md="9">
-              <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+              <ValidationProvider
+                v-slot="{ errors }"
+                rules="required"
+                immediate
+              >
                 <v-autocomplete
                   v-model="currentReport.address"
                   :error-messages="errors"
@@ -47,15 +55,20 @@
                   prepend-icon="mdi-crosshairs-gps"
                   clearable
                   autocomplete="nope"
+                  name="address"
                   @keypress="isDirty = true"
                   @change="setLicenseFromAddress"
                 />
               </ValidationProvider>
             </v-col>
-            <v-col v-if="currentReport.license" cols="12" md="3">
-              <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+            <v-col cols="12" md="3">
+              <ValidationProvider
+                v-slot="{ errors }"
+                rules="required"
+                immediate
+              >
                 <v-text-field
-                  v-model="currentReport.license.number"
+                  v-model="currentReport.licenseNumber"
                   readonly
                   :error-messages="errors"
                   label="License"
@@ -77,7 +90,10 @@
                 :disabled="!valid || currentReport.isClosed || !CanCloseReport"
                 color="success"
                 class="v-btn--example2"
-                @click="dialogClose = true; currentReport.isClosed=true;"
+                @click="
+                  dialogClose = true;
+                  currentReport.isClosed = true;
+                "
               >
                 <v-icon>mdi-lock</v-icon>
                 Complete Report
@@ -86,7 +102,7 @@
           </v-row>
           <v-fab-transition>
             <v-btn
-              v-if="tabs!=='photos'"
+              v-if="tabs !== 'photos'"
               color="success"
               fab
               fixed
@@ -95,7 +111,15 @@
               right
               :loading="savingNewReport"
               class="v-btn--example2"
-              @click="saveReportChanges().then(CanCloseReport && !currentReport.isClosed ? dialogClose = true: !CanCloseReport ? errorsDialog = true : errorsDialog = false)"
+              @click="
+                saveReportChanges().then(
+                  CanCloseReport && !currentReport.isClosed
+                    ? (dialogClose = true)
+                    : !CanCloseReport
+                      ? (errorsDialog = true)
+                      : (errorsDialog = false)
+                )
+              "
             >
               <v-icon>mdi-content-save</v-icon>
             </v-btn>
@@ -107,15 +131,41 @@
       <v-col cols="12">
         <v-tabs v-model="tabs" centered fixed-tabs icons-and-text>
           <v-tabs-slider />
-          <v-tab href="#checklists" :class="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable > 0 ? 'error--text':'primary--text'">
+          <v-tab
+            href="#checklists"
+            :class="
+              !IsCompleted ||
+                HasNotesWithPendingChecks ||
+                !PrincipalSignatureHasAResponsable > 0
+                ? 'error--text'
+                : 'primary--text'
+            "
+          >
             Report Details
-            <v-tooltip v-if="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable" top>
-              <template v-slot:activator="{ on }">
-                <v-icon :color="!IsCompleted || HasNotesWithPendingChecks || !PrincipalSignatureHasAResponsable ? 'error':''" v-on="on">
+            <v-tooltip
+              v-if="
+                !IsCompleted ||
+                  HasNotesWithPendingChecks ||
+                  !PrincipalSignatureHasAResponsable
+              "
+              top
+            >
+              <template #activator="{ on }">
+                <v-icon
+                  :color="
+                    !IsCompleted ||
+                      HasNotesWithPendingChecks ||
+                      !PrincipalSignatureHasAResponsable
+                      ? 'error'
+                      : ''
+                  "
+                  v-on="on"
+                >
                   mdi-message-bulleted
                 </v-icon>
               </template>
-              <span>You must complete all the required checks, notes and signatures in tab Report Details to proceeded uploading photos</span>
+              <span>You must complete all the required checks, notes and signatures
+                in tab Report Details to proceeded uploading photos</span>
             </v-tooltip>
             <v-icon v-else>
               mdi-message-bulleted
@@ -123,38 +173,47 @@
           </v-tab>
           <v-tab href="#photos">
             Photo Record
-            <v-icon>
-              mdi-folder-multiple-image
-            </v-icon>
+            <v-icon> mdi-folder-multiple-image </v-icon>
+          </v-tab>
+          <v-tab href="#operationalReadings">
+            Operational Readings
+            <v-icon> mdi-order-bool-descending </v-icon>
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="tabs" touchless>
           <v-tab-item key="checklists" value="checklists">
-            <v-expansion-panels
-              multiple
-              focusable
-              :value="openedPanels"
-            >
+            <v-expansion-panels multiple focusable :value="openedPanels">
               <v-expansion-panel>
-                <v-expansion-panel-header :style="!IsCompleted ? 'color: white;':''" :color="!IsCompleted ? 'red':''">
-                  <span class="font-weight-black">Check List
-                    States: New (
-                    <v-icon :color="!IsCompleted ? 'white':getCheckIconColor(3)">
+                <v-expansion-panel-header
+                  :style="!IsCompleted ? 'color: white;' : ''"
+                  :color="!IsCompleted ? 'red' : ''"
+                >
+                  <span
+                    class="font-weight-black"
+                  >Check List States:
+                    <!-- New (
+                    <v-icon
+                      :color="!IsCompleted ? 'white' : getCheckIconColor(3)"
+                    >
                       mdi-{{ getCheckIcon(3) }}
                     </v-icon>
-                    )
+                    )  -->
                     Not Acceptable (
-                    <v-icon :color="!IsCompleted ? 'white':getCheckIconColor(0)">
+                    <v-icon
+                      :color="!IsCompleted ? 'white' : getCheckIconColor(0)"
+                    >
                       mdi-{{ getCheckIcon(0) }}
                     </v-icon>
-                    )
-                    Acceptable (
-                    <v-icon :color="!IsCompleted ? 'white':getCheckIconColor(1)">
+                    ) Acceptable (
+                    <v-icon
+                      :color="!IsCompleted ? 'white' : getCheckIconColor(1)"
+                    >
                       mdi-{{ getCheckIcon(1) }}
                     </v-icon>
-                    )
-                    Not Aplicable (
-                    <span :color="!IsCompleted ? 'white':getCheckIconColor(2)">
+                    ) Not Aplicable (
+                    <span
+                      :color="!IsCompleted ? 'white' : getCheckIconColor(2)"
+                    >
                       {{ getCheckIcon(2) }}
                     </span>
                     )
@@ -164,7 +223,7 @@
                       <v-icon dark>
                         mdi-alert-circle
                       </v-icon>
-                      <span style="color: white;" class="font-weight-accent">
+                      <span style="color: white" class="font-weight-accent">
                         there are items that need to be completed or checked
                       </span>
                     </v-col>
@@ -173,29 +232,90 @@
                 <v-expansion-panel-content>
                   <v-list subheader two-line flat dense>
                     <v-list-item
-                      v-for="(item, checkListIndex) in currentReport.checkList"
+                      v-for="(item, checkListIndex) in currentReport.checkLists"
                       :key="item.id"
                     >
-                      <template v-slot:default>
+                      <template #default>
                         <v-list-item-content class="text-left">
                           <v-list-item-title>
                             <v-row justify="start" align="center" dense>
-                              <v-col cols="10" md="6" class="font-weight-black text-wrap">
+                              <v-col
+                                cols="10"
+                                md="6"
+                                class="font-weight-black text-wrap"
+                              >
                                 <h3>
                                   {{ checkListIndex + 1 }} .- {{ item.text }}
                                 </h3>
-                                <span v-if="item.checks.filter(c => c.required && c.checked==3).length == 0">
-                                  <v-chip x-small color="success">Completed</v-chip>
+                                <span
+                                  v-if="
+                                    item.checks.filter(
+                                      (c) => c.required && c.checked === 3
+                                    ).length == 0
+                                  "
+                                >
+                                  <v-chip
+                                    x-small
+                                    color="success"
+                                  >Completed</v-chip>
                                 </span>
                               </v-col>
-                              <v-col cols="2" md="6" :class="$vuetify.breakpoint.mdAndDown ? 'ml-n5':'ml-n6'">
+                              <v-col
+                                cols="2"
+                                md="6"
+                                :class="
+                                  $vuetify.breakpoint.mdAndDown
+                                    ? 'ml-n5'
+                                    : 'ml-n6'
+                                "
+                              >
                                 <v-btn
                                   icon
                                   text
-                                  @click.stop="item.checked < 2 ? item.checked++:item.checked=0;checkItemChecks(item.id, item.checked);"
+                                  @click.stop="
+                                    item.checked < 2
+                                      ? item.checked++
+                                      : (item.checked = 0);
+                                    checkItemChecks(item.id, item.checked);
+                                  "
                                 >
-                                  <v-icon :color="item.checks.length !== item.checks.filter(c => c.checked == 1).length && item.checks.filter(c => c.checked == 1).length > 0 ? getCheckIconColor(2): getCheckIconColor(item.checks[0].checked)">
-                                    {{ `mdi-${item.checks.length !== item.checks.filter(c => c.checked == 1).length && item.checks.filter(c => c.checked == 1).length > 0 ? 'minus': item.checks.length === item.checks.filter(c => c.checked == 2).length ? 'minus' : item.checks.length === item.checks.filter(c => c.checked == 0).length ? 'close':getCheckIcon(1) }` }}
+                                  <v-icon
+                                    :color="
+                                      item.checks.length !==
+                                        item.checks.filter(
+                                          (c) => c.checked === 1
+                                        ).length &&
+                                        item.checks.filter((c) => c.checked === 1)
+                                          .length > 0
+                                        ? getCheckIconColor(2)
+                                        : getCheckIconColor(
+                                          item.checks[0].checked
+                                        )
+                                    "
+                                  >
+                                    {{
+                                      `mdi-${
+                                        item.checks.length !==
+                                        item.checks.filter(
+                                          (c) => c.checked === 1
+                                        ).length &&
+                                        item.checks.filter(
+                                          (c) => c.checked === 1
+                                        ).length > 0
+                                          ? "minus"
+                                          : item.checks.length ===
+                                            item.checks.filter(
+                                              (c) => c.checked === 2
+                                            ).length
+                                            ? "minus"
+                                            : item.checks.length ===
+                                              item.checks.filter(
+                                                (c) => c.checked === 0
+                                              ).length
+                                              ? "close"
+                                              : getCheckIcon(1)
+                                      }`
+                                    }}
                                   </v-icon>
                                 </v-btn>
                               </v-col>
@@ -203,39 +323,109 @@
                             <v-row dense>
                               <v-col cols="12">
                                 <v-list-item
-                                  v-for="(checkItem, checkListItemIndex) in item.checks"
+                                  v-for="(
+                                    checkItem, checkListItemIndex
+                                  ) in item.checks"
                                   :key="checkItem.id"
                                 >
-                                  <template v-slot:default="{ }">
+                                  <template #default="{}">
                                     <v-list-item-title :title="checkItem.text">
-                                      <v-row dense align="center" justify="space-between">
+                                      <v-row
+                                        dense
+                                        align="center"
+                                        justify="space-between"
+                                      >
                                         <v-col cols="10">
                                           <v-row
-                                            style="cursor: pointer;"
+                                            style="cursor: pointer"
                                             dense
                                             align="center"
                                             justify="space-between"
                                             :class="{ ml_5: true }"
-                                            @click.stop="checkItem.checked < 2 ? checkItem.checked++:checkItem.checked=0;saveCheckItem(checkItem);"
+                                            @click.stop="
+                                              checkItem.checked < 2
+                                                ? checkItem.checked++
+                                                : (checkItem.checked = 0);
+                                              saveCheckItem(checkItem);
+                                            "
                                           >
                                             <v-col
                                               cols="12"
                                               md="7"
                                               class="text-wrap"
                                             >
-                                              <v-row justify="space-around" align="center" dense>
-                                                <v-col cols="1" :class="['text-right', checkItem.checked == 3 && shouldShowRequired ? 'error--text' : '']">
-                                                  <h3>{{ checkListIndex + 1 }}.{{ checkListItemIndex + 1 }} </h3>
+                                              <v-row
+                                                justify="space-around"
+                                                align="center"
+                                                dense
+                                              >
+                                                <v-col
+                                                  cols="1"
+                                                  :class="[
+                                                    'text-right',
+                                                    checkItem.checked == 3 &&
+                                                      shouldShowRequired
+                                                      ? 'error--text'
+                                                      : '',
+                                                  ]"
+                                                >
+                                                  <h3>
+                                                    {{ checkListIndex + 1 }}.{{
+                                                      checkListItemIndex + 1
+                                                    }}
+                                                  </h3>
                                                 </v-col>
-                                                <v-col cols="10" :class="['text-left', checkItem.checked == 3 && shouldShowRequired ? 'error--text' : '']">
-                                                  <h3 v-if="!checkItem.editable">
-                                                    .-{{ checkItem.text }} <v-chip v-if="!checkItem.editable && checkItem.checked == 3" class="text-uppercase" :color="shouldShowRequired ? 'error':''" x-small>
+                                                <v-col
+                                                  cols="10"
+                                                  :class="[
+                                                    'text-left',
+                                                    checkItem.checked == 3 &&
+                                                      shouldShowRequired
+                                                      ? 'error--text'
+                                                      : '',
+                                                  ]"
+                                                >
+                                                  <h3
+                                                    v-if="!checkItem.editable"
+                                                  >
+                                                    .-{{ checkItem.text }}
+                                                    <v-chip
+                                                      v-if="
+                                                        !checkItem.editable &&
+                                                          checkItem.checked == 3
+                                                      "
+                                                      class="text-uppercase"
+                                                      :color="
+                                                        shouldShowRequired
+                                                          ? 'error'
+                                                          : ''
+                                                      "
+                                                      x-small
+                                                    >
                                                       required
                                                     </v-chip>
                                                   </h3>
-                                                  <v-text-field v-else v-model="checkItem.text" @blur="saveCheckItem(checkItem)" @click.stop.prevent="">
-                                                    <template v-slot:append="">
-                                                      <v-chip v-if="checkItem.checked == 3" x-small class="text-uppercase" :color="shouldShowRequired ? 'error':''">
+                                                  <v-text-field
+                                                    v-else
+                                                    v-model="checkItem.text"
+                                                    @blur="
+                                                      saveCheckItem(checkItem)
+                                                    "
+                                                    @click.stop.prevent=""
+                                                  >
+                                                    <template #append="">
+                                                      <v-chip
+                                                        v-if="
+                                                          checkItem.checked == 3
+                                                        "
+                                                        x-small
+                                                        class="text-uppercase"
+                                                        :color="
+                                                          shouldShowRequired
+                                                            ? 'error'
+                                                            : ''
+                                                        "
+                                                      >
                                                         required
                                                       </v-chip>
                                                     </template>
@@ -244,22 +434,36 @@
                                               </v-row>
                                             </v-col>
                                             <v-col cols="2" md="1">
-                                              <v-btn
-                                                icon
-                                                text
-                                              >
-                                                <v-icon v-if="checkItem.checked != 2" :color="getCheckIconColor(checkItem.checked)">
-                                                  {{ `mdi-${getCheckIcon(checkItem.checked)}` }}
+                                              <v-btn icon text>
+                                                <v-icon
+                                                  v-if="checkItem.checked != 2"
+                                                  :color="
+                                                    getCheckIconColor(
+                                                      checkItem.checked
+                                                    )
+                                                  "
+                                                >
+                                                  {{
+                                                    `mdi-${getCheckIcon(
+                                                      checkItem.checked
+                                                    )}`
+                                                  }}
                                                 </v-icon>
                                                 <span v-else>
-                                                  {{ getCheckIcon(checkItem.checked) }}
+                                                  {{
+                                                    getCheckIcon(
+                                                      checkItem.checked
+                                                    )
+                                                  }}
                                                 </span>
                                               </v-btn>
                                             </v-col>
                                             <v-col cols="10" md="4">
                                               <v-text-field
                                                 v-model="checkItem.remarks"
-                                                :label="currentReport.remarksLabelText"
+                                                :label="
+                                                  currentReport.remarksLabelText
+                                                "
                                                 @blur="saveCheckItem(checkItem)"
                                                 @click.stop.prevent=""
                                               />
@@ -268,10 +472,29 @@
                                         </v-col>
                                         <v-col cols="2">
                                           <v-btn
-                                            v-if="showUpdateCheck.findIndex(l => l.currentIndex===checkListItemIndex && l.parentIndex === checkListIndex)>=0"
+                                            v-if="
+                                              showUpdateCheck.findIndex(
+                                                (l) =>
+                                                  l.currentIndex ===
+                                                  checkListItemIndex &&
+                                                  l.parentIndex ===
+                                                  checkListIndex
+                                              ) >= 0
+                                            "
                                             color="amber"
                                             icon
-                                            @click="showUpdateCheck.splice(showUpdateCheck.findIndex(l => l.currentIndex===checkListItemIndex && l.parentIndex === checkListIndex),1)"
+                                            @click="
+                                              showUpdateCheck.splice(
+                                                showUpdateCheck.findIndex(
+                                                  (l) =>
+                                                    l.currentIndex ===
+                                                    checkListItemIndex &&
+                                                    l.parentIndex ===
+                                                    checkListIndex
+                                                ),
+                                                1
+                                              )
+                                            "
                                           >
                                             <v-icon>mdi-check</v-icon>
                                           </v-btn>
@@ -290,14 +513,17 @@
                 </v-expansion-panel-content>
               </v-expansion-panel>
               <v-expansion-panel>
-                <v-expansion-panel-header :style="HasNotesWithPendingChecks ? 'color: white;':''" :color="HasNotesWithPendingChecks ? 'red':''">
+                <v-expansion-panel-header
+                  :style="HasNotesWithPendingChecks ? 'color: white;' : ''"
+                  :color="HasNotesWithPendingChecks ? 'red' : ''"
+                >
                   <span class="font-weight-black">Notes</span>
                   <v-row v-if="HasNotesWithPendingChecks" dense>
                     <v-col>
                       <v-icon dark>
                         mdi-alert-circle
                       </v-icon>
-                      <span style="color: white;" class="font-weight-accent">
+                      <span style="color: white" class="font-weight-accent">
                         there are items that need to be completed or checked
                       </span>
                     </v-col>
@@ -321,7 +547,10 @@
                       </v-btn>
                     </v-col>
                   </v-row>
-                  <div v-for="(note, index) in currentReport.notes" :key="index">
+                  <div
+                    v-for="(note, index) in currentReport.notes"
+                    :key="index"
+                  >
                     <v-row dense align="center" justify="space-around">
                       <v-col cols="1">
                         <v-btn
@@ -339,10 +568,18 @@
                         </v-btn>
                       </v-col>
                       <v-col cols="8">
-                        <v-text-field v-model="note.text" label="Note" @blur="saveNote(note)" />
+                        <v-text-field
+                          v-model="note.text"
+                          label="Note"
+                          @blur="saveNote(note)"
+                        />
                       </v-col>
                       <v-col cols="2">
-                        <v-checkbox v-model="note.checked" :label="note.needsCheck ? '(Check Required)':''" @change="saveNote(note)" />
+                        <v-checkbox
+                          v-model="note.checked"
+                          :label="note.needsCheck ? '(Check Required)' : ''"
+                          @change="saveNote(note)"
+                        />
                       </v-col>
                       <v-col />
                     </v-row>
@@ -356,42 +593,55 @@
                 <h2 class="text-left">
                   Signatures
                 </h2>
-                <SignaturesForm v-model="currentReport.signatures" :is-closed="false" />
+                <SignaturesForm
+                  v-model="currentReport.signatures"
+                  :is-closed="false"
+                />
               </v-col>
             </v-row>
           </v-tab-item>
           <v-tab-item key="photos" value="photos">
-            <PhotoRecords v-model="currentReport" @uploaded="saveAndLoad()" />
+            <PhotoRecords :report-id="currentReport.id" @uploaded="saveAndLoad()" />
+          </v-tab-item>
+          <v-tab-item key="operationalReadings" value="operationalReadings">
+            <h1>To be defined. Web handling of this part is not defined</h1>
           </v-tab-item>
         </v-tabs-items>
       </v-col>
     </v-row>
-    <message-dialog v-model="errorsDialog" :actions="['no']" no-text="close" @no="errorsDialog = false">
-      <template v-slot:title="{}">
+    <message-dialog
+      v-model="errorsDialog"
+      :actions="['no']"
+      no-text="close"
+      @no="errorsDialog = false"
+    >
+      <template #title="{}">
         Report Errors
       </template>
-      <h2>The Report has been saved! but we've found some errors: </h2><br>
-      <span v-if="!IsCompleted" class="subtitle-1 error--text font-weight-black">- Please, Complete and check all the required item in the checklist</span><br>
-      <span v-if="HasNotesWithPendingChecks" class="subtitle-1 error--text font-weight-black">- There are notes that you need to check. verify if it needs to be checked and filled</span><br>
-      <span v-if="!PrincipalSignatureHasAResponsable" class="subtitle-1 error--text font-weight-black">- The Principal Signature must have an responsable name and type</span>
-    </message-dialog>
-    <v-dialog
-      v-model="dialogPrinting"
-      hide-overlay
-      persistent
-      width="300"
-    >
-      <v-card
-        color="primary"
-        dark
+      <h2>The Report has been saved! but we've found some errors:</h2>
+      <br>
+      <span
+        v-if="!IsCompleted"
+        class="subtitle-1 error--text font-weight-black"
       >
+        - Please, Complete and check all the required item in the
+        checklist</span><br>
+      <span
+        v-if="HasNotesWithPendingChecks"
+        class="subtitle-1 error--text font-weight-black"
+      >
+        - There are notes that you need to check. verify if it needs to be
+        checked and filled</span><br>
+      <span
+        v-if="!PrincipalSignatureHasAResponsable"
+        class="subtitle-1 error--text font-weight-black"
+      >- The Principal Signature must have an responsable name and type</span>
+    </message-dialog>
+    <v-dialog v-model="dialogPrinting" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
         <v-card-text>
           Processing and Downloading pdf report
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          />
+          <v-progress-linear indeterminate color="white" class="mb-0" />
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -404,13 +654,8 @@
     >
       Changes has been saved
 
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          dark
-          text
-          v-bind="attrs"
-          @click="savedNotification = false"
-        >
+      <template #action="{ attrs }">
+        <v-btn dark text v-bind="attrs" @click="savedNotification = false">
           Close
         </v-btn>
       </template>
@@ -424,20 +669,10 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import InnerPageMixin from '@/mixins/innerpage'
 import { PrintHelper } from '@/Helpers'
 import { AddressesState } from '@/store/addresses'
-import {
-  Report,
-  EMALicenseType,
-  Note,
-  Signature,
-  ResponsableType,
-  EMALicense,
-  DeleteNoteCommand,
-  AddNoteCommand,
-  UpdateReportCommand,
-  EditNoteCommand,
-  EditSignatureCommand, CheckListItem, UpdateCheckListItemCommand, CheckValue,
-  AddressDTO
-} from '@/types'
+import { AddNoteCommand, AddressDTO, CheckListItemQueryResult, NoteQueryResult, ReportQueryResult, EditSignatureCommand, UpdateReportCommand, CheckValue, EditNoteCommand, UpdateCheckListItemCommand } from '@/services/api'
+import { useNotifications } from '@/composables/use-notifications'
+
+const { notify } = useNotifications()
 
 @Component({
   components: {
@@ -447,36 +682,32 @@ import {
 })
 export default class EditReport extends mixins(InnerPageMixin) {
   $refs!: {
-    obs: InstanceType<typeof ValidationObserver>
-  }
+    obs: InstanceType<typeof ValidationObserver>;
+  };
 
-  errorsDialog: boolean = false
-  dialogPrinting: boolean = false
-  savedNotification: boolean = false
-  shouldShowRequired: boolean = false
+  errorsDialog: boolean = false;
+  dialogPrinting: boolean = false;
+  savedNotification: boolean = false;
+  shouldShowRequired: boolean = false;
 
-  search: string = ''
-  isDirty: boolean = false
-  searchingAddresses: boolean = false
-  openedPanels: number[] = [0, 1]
-  printHelper!: PrintHelper
-  savingNewReport: boolean = false
-  currentPhoto: number = 0
-  showLabelEdit:number[] = []
-  showUpdateCheck: { parentIndex:number, currentIndex:number }[] =[]
+  checkListCalls: Promise<unknown>[] = [];
+
+  search: string | null | undefined = '';
+  isDirty: boolean = false;
+  searchingAddresses: boolean = false;
+  openedPanels: number[] = [0, 1];
+  printHelper!: PrintHelper;
+  savingNewReport: boolean = false;
+  currentPhoto: number = 0;
+  showLabelEdit: number[] = [];
+  showUpdateCheck: { parentIndex: number; currentIndex: number }[] = [];
   tabs: any = 0;
   dialogClose: boolean = false;
-  currentReport: Report = {} as Report;
-  emaTypes: any = Object.keys(EMALicenseType)
-    .map((key: any) => {
-      if (!isNaN(Number(key.toString()))) { return }
+  currentReport: ReportQueryResult = {} as ReportQueryResult;
+  // @Provide('reportId') reportId = 0
 
-      return { id: EMALicenseType[key], text: key }
-    })
-    .filter(i => i !== undefined)
-
-  hostName: string= this.$axios!.defaults!.baseURL!.replace('/api', '')
-  signaturesChanges: boolean = false
+  hostName: string = this.$axios!.defaults!.baseURL!.replace('/api', '');
+  signaturesChanges: boolean = false;
 
   get hasPendingChanges () {
     return this.$store.state.showFabSaveButton
@@ -487,9 +718,12 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   get addresses (): AddressDTO[] {
-    const dbAddressses = (this.$store.state.addresses as AddressesState).addressList
+    const dbAddressses = (this.$store.state.addresses as AddressesState)
+      .addressList
 
-    if (dbAddressses.length > 0) { return dbAddressses }
+    if (dbAddressses.length > 0) {
+      return dbAddressses
+    }
 
     return this.localAddress
   }
@@ -501,25 +735,32 @@ export default class EditReport extends mixins(InnerPageMixin) {
       checked: false,
       needsCheck: false
     }
-    await this.$axios.$post(`reports/${this.$route.params.id}/note`, newNote).then((resp) => {
-      this.currentReport.notes.push({ id: resp, ...newNote })
-    })
+    await this.$axios
+      .$post(`reports/${this.$route.params.id}/note`, newNote)
+      .then((resp) => {
+        this.currentReport.notes!.push({ id: resp, ...newNote })
+      })
       .catch(err => alert(err))
   }
 
   async removeNote (id: number) {
-    const delNote:DeleteNoteCommand = {
+    const delNote = {
       reportId: this.currentReport.id,
       id
     }
-    await this.$axios.delete(`reports/${delNote.reportId}/note/${delNote.id}`).then(() => {
-      this.currentReport.notes = this.currentReport.notes.filter(n => n.id !== id)
-    })
+    await this.$axios
+      .delete(`reports/${delNote.reportId}/note/${delNote.id}`)
+      .then(() => {
+        this.currentReport.notes = this.currentReport.notes!.filter(
+          n => n.id !== id
+        )
+      })
   }
 
-  editCheck (parentIndex: number, currentIndex:number) {
-    const index = this.showUpdateCheck.findIndex(l => l.parentIndex === parentIndex &&
-                                                  l.currentIndex === currentIndex)
+  editCheck (parentIndex: number, currentIndex: number) {
+    const index = this.showUpdateCheck.findIndex(
+      l => l.parentIndex === parentIndex && l.currentIndex === currentIndex
+    )
     if (index >= 0) {
       this.showUpdateCheck.splice(index, 1)
       return
@@ -529,7 +770,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   getCheckIcon (value: CheckValue) {
     switch (value) {
-      case CheckValue.NotAcceptable:
+      case CheckValue.NotAcceptableFalse:
         return 'close'
       case CheckValue.Acceptable:
         return 'check'
@@ -544,7 +785,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   getCheckIconColor (value: CheckValue) {
     switch (value) {
-      case CheckValue.NotAcceptable:
+      case CheckValue.NotAcceptableFalse:
         return 'error'
       case CheckValue.Acceptable:
         return 'success'
@@ -559,27 +800,30 @@ export default class EditReport extends mixins(InnerPageMixin) {
     return CheckValue[id]
   }
 
-  saveNote (note: Note) {
+  saveNote (note: NoteQueryResult) {
     const data: EditNoteCommand = {
       reportId: parseInt(this.$route.params.id),
-      id: note.id,
-      text: note.text,
-      checked: note.checked
+      id: note.id!,
+      text: note.text!,
+      checked: note.checked!
     }
     this.$axios.put(`reports/${data.reportId}/note/${note.id}`, data)
   }
 
-  saveCheckItem (checkItem: CheckListItem) {
+  async saveCheckItem (checkItem: CheckListItemQueryResult) {
     const command: UpdateCheckListItemCommand = {
-      id: checkItem.id,
-      checkListId: checkItem.checkListId,
-      text: checkItem.text,
-      required: checkItem.required,
+      id: checkItem.id!,
+      checkListId: checkItem.checkListId!,
+      text: checkItem.text!,
+      required: checkItem.required!,
       checked: parseInt(checkItem.checked as any),
-      editable: checkItem.editable,
-      remarks: checkItem.remarks
+      editable: checkItem.editable!,
+      remarks: checkItem.remarks!
     }
-    this.$axios.put(`checklists/${command.checkListId}/items/${checkItem.id}`, command)
+    await this.$axios.put(
+      `checklists/${command.checkListId}/items/${checkItem.id}`,
+      command
+    )
   }
 
   async saveReportChanges () {
@@ -589,36 +833,38 @@ export default class EditReport extends mixins(InnerPageMixin) {
       name: this.currentReport.name,
       address: this.currentReport.address ?? this.search,
       date: this.currentReport.date,
-      licenseType: this.currentReport.license.licenseType,
-      licenseNumber: this.currentReport.license.number,
+      licenseNumber: this.currentReport.licenseNumber,
       isClosed: this.currentReport.isClosed
     }
     await this.$axios.put(`reports/${this.$route.params.id}`, update).then(() => {
       this.$store.dispatch('hasPendingChanges', false)
-      this.currentReport.signatures.forEach((signature) => {
+      this.currentReport.signatures!.forEach((signature) => {
         const command: EditSignatureCommand = {
           id: signature.id,
           title: signature.title,
           annotation: signature.annotation,
-          responsableType: signature.responsable.type,
-          responsableName: signature.responsable.name,
+          responsibleType: signature.responsibleType!,
+          responsibleName: signature.responsibleName,
           designation: signature.designation,
           remarks: signature.remarks,
           date: signature.date,
           principal: signature.principal,
-          drawedSign: signature.drawedSign
+          drawnSign: signature.drawnSign
         }
         this.$axios.$put(`signatures/${signature.id}`, command)
       })
       this.savedNotification = true
     })
+
     this.savingNewReport = false
     this.shouldShowRequired = true
   }
 
   @Watch('currentReport', { deep: false })
-  onReportChanged (value: Report, oldValue: Report) {
-    if (value !== oldValue && oldValue !== undefined) { this.$store.dispatch('hasPendingChanges', true) }
+  onReportChanged (value: ReportQueryResult, oldValue: ReportQueryResult) {
+    if (value !== oldValue && oldValue !== undefined) {
+      this.$store.dispatch('hasPendingChanges', true)
+    }
   }
 
   async fetch () {
@@ -633,21 +879,17 @@ export default class EditReport extends mixins(InnerPageMixin) {
       { root: true }
     )
 
-    result.signatures.map((signature: Signature) => {
-      if (signature.responsable === null || signature.responsable === undefined) { signature.responsable = { type: 0, name: '' } } else {
-        signature.responsable = {
-          type: ResponsableType[signature.responsable.type] as unknown as ResponsableType,
-          name: signature.responsable.name
-        }
-      }
-    })
-
-    this.currentReport = Object.assign({}, result)
-    if (!this.currentReport.license) { this.currentReport.license = { } as EMALicense } else { this.currentReport.license.licenseType = EMALicenseType[this.currentReport.license.licenseType] as unknown as EMALicenseType }
-
+    this.currentReport = result
     this.search = this.currentReport.address
 
-    await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: this.$route.params.id }, { root: true })
+    await this.$store.dispatch(
+      'users/setUserLastEditedReport',
+      {
+        userName: this.$auth.user.userName,
+        lastEditedReport: this.$route.params.id
+      },
+      { root: true }
+    )
     await this.$auth.fetchUser()
   }
 
@@ -656,49 +898,91 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   get IsCompleted () {
-    if (this.currentReport.checkList) {
-      return this.currentReport.checkList.filter(cl => cl.checks.findIndex(c => c.checked === CheckValue.None) >= 0).length === 0
+    if (this.currentReport.checkLists) {
+      return (
+        this.currentReport.checkLists.filter(
+          cl => cl.checks!.findIndex(c => !c.touched) >= 0
+        ).length === 0
+      )
     }
 
     return false
   }
 
   get PrincipalSignatureHasAResponsable () {
-    if (!this.currentReport) { return true }
-    if (!this.currentReport!.signatures) { return true }
-    return this.currentReport.signatures.findIndex(s => s.responsable.type !== undefined && s.responsable.name !== '' && s.principal) >= 0
+    if (!this.currentReport) {
+      return true
+    }
+    if (!this.currentReport!.signatures) {
+      return true
+    }
+    return (
+      this.currentReport.signatures.findIndex(
+        s =>
+          s.responsibleType !== undefined &&
+          s.responsibleName !== '' &&
+          s.principal
+      ) >= 0
+    )
   }
 
   get HasNotesWithPendingChecks () {
-    if (!this.currentReport) { return false }
-    if (!this.currentReport!.notes) { return false }
-    return this.currentReport.notes.findIndex(n => n.needsCheck && !n.checked) >= 0
+    if (!this.currentReport) {
+      return false
+    }
+    if (!this.currentReport!.notes) {
+      return false
+    }
+    return (
+      this.currentReport.notes.findIndex(n => n.needsCheck && !n.checked) >= 0
+    )
   }
 
   get CanCloseReport () {
-    return this.IsCompleted && !this.HasNotesWithPendingChecks && this.PrincipalSignatureHasAResponsable && this.IsValidForm
+    return (
+      this.IsCompleted &&
+      // !this.HasNotesWithPendingChecks &&
+      this.PrincipalSignatureHasAResponsable &&
+      this.IsValidForm
+    )
   }
 
   checkItemChecks (checkListId: number, value: CheckValue): void {
-    const checkList = this.currentReport.checkList.find(c => c.id === checkListId)
-    if (!checkList) { return }
-    checkList.checks.forEach((check) => {
-      check.checked = value
-      this.saveCheckItem(check)
-    })
+    try {
+      this.$reportsApi.bulkUpdateChecks(this.currentReport.id!, checkListId, value)
+      const checkList = this.currentReport.checkLists!.find(
+        c => c.id === checkListId
+      )
+      if (!checkList) {
+        return
+      }
+    checkList.checks!.forEach((check) => { check.checked = value })
+    } catch (error) {
+      notify({
+        title: 'Report Details',
+        defaultMessage: 'Error Updating Checklist',
+        error
+      })
+    }
   }
 
   checkListCheckedValue (item: any) {
-    return item.checks.length === item.checks.filter((c:any) => c.checked).length
+    return (
+      item.checks.length === item.checks.filter((c: any) => c.checked).length
+    )
   }
 
   setLicenseFromAddress () {
     if (!this.currentReport.address) {
-      this.currentReport!.license.number = ''
+      this.currentReport!.licenseNumber = ''
       return
     }
-    const addressData = this.addresses.filter(a => a.formatedAddress === this.currentReport.address)
-    if (addressData) { this.currentReport!.license.number = addressData[0].number ?? '' }
+    const addressData = this.addresses.filter(
+      a => a.formatedAddress === this.currentReport.address
+    )
+    if (addressData) {
+      this.currentReport!.licenseNumber = addressData[0].number ?? ''
+    }
   }
 
   mounted () {
@@ -707,7 +991,11 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   async getSuggestedAddresses (filter: string) {
-    await this.$store.dispatch('addresses/getAddresses', { filter }, { root: true })
+    await this.$store.dispatch(
+      'addresses/getAddresses',
+      { filter },
+      { root: true }
+    )
     this.searchingAddresses = false
     this.isDirty = false
   }
@@ -718,7 +1006,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     this.dialogClose = false
     this.currentReport.isClosed = true
     this.dialogPrinting = true
-    await this.printHelper.print(this.currentReport.id)
+    await this.printHelper.print(this.currentReport.id!)
     this.dialogPrinting = false
     this.$router.push('/reports')
   }
@@ -730,9 +1018,13 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   @Watch('search')
   onSearchChanged (value: string) {
-    if (!value || !this.isDirty) { return }
+    if (!value || !this.isDirty) {
+      return
+    }
 
-    if (this.searchingAddresses) { return }
+    if (this.searchingAddresses) {
+      return
+    }
 
     if (value.length >= 3) {
       this.searchingAddresses = true
@@ -745,8 +1037,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
 <style scoped>
 .v-btn--example2 {
-    bottom: 0;
-    /* position: absolute; */
-    margin: 0 62px 16px 16px;
-  }
+  bottom: 0;
+  /* position: absolute; */
+  margin: 0 62px 16px 16px;
+}
 </style>

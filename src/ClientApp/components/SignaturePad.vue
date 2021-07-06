@@ -24,7 +24,6 @@
   </div>
 </template>
 <script>
-import { required } from 'vee-validate/dist/rules';
 export default {
   name: 'SignaturePad',
   props: {
@@ -35,13 +34,6 @@ export default {
     },
     savedData: {
       type: String
-    }
-  },
-  watch: {
-    value: {
-      handler(newvalue) {
-        console.log(newvalue)
-      }
     }
   },
   mounted() {
@@ -55,7 +47,7 @@ export default {
   methods: {
     undo() {
       this.$refs.signaturePad.undoSignature();
-      
+
     },
     save() {
       const { isEmpty, data } = this.$refs.signaturePad.saveSignature();

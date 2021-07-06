@@ -6,4 +6,5 @@ export interface ReportConfigurationDTO {
     title: string;
     formName: string;
     remarksLabelText: string;
+    inactive: boolean;
 }

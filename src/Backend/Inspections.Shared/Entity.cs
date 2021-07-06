@@ -80,7 +80,7 @@ namespace Inspections.Shared
         public static bool operator ==(Entity<T> left, Entity<T> right)
         {
             if (Equals(left, null))
-                return Equals(right, null) ? true : false;
+                return Equals(right, null);
             else
                 return left.Equals(right);
         }

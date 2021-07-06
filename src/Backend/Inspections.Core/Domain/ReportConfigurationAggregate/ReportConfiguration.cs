@@ -10,10 +10,11 @@ namespace Inspections.Core.Domain.ReportConfigurationAggregate
     public class ReportConfiguration : Entity<int>, IAggregateRoot
     {
         public ReportType Type { get; set; }
-        public string Title { get; set; }
-        public string FormName { get; set; }
-        public string RemarksLabelText { get; set; }
-        public List<CheckList> ChecksDefinition { get; set; }
-        public List<Signature> SignatureDefinitions { get; set; }
+        public string Title { get; set; } = default!;
+        public string FormName { get; set; } = default!;
+        public string RemarksLabelText { get; set; } = default!;
+        public List<CheckList> ChecksDefinition { get; set; } = default!;
+        public List<Signature> SignatureDefinitions { get; set; } = default!;
+        public bool Inactive { get; set; }
     }
 }

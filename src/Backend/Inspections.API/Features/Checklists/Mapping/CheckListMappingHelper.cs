@@ -9,24 +9,6 @@ namespace Inspections.API.Features.Checklists.Mapping
 {
     internal static class CheckListMappingHelper
     {
-        internal static List<CheckListParam> MapParams(List<CheckListParamDTO> checklistParams)
-        {
-            List<CheckListParam> result = new List<CheckListParam>();
-            foreach (var param in checklistParams)
-            {
-                var newParam = new CheckListParam
-                (
-                    null,
-                    0,
-                    param.Key,
-                    param.Value,
-                    param.Type
-                );
-                result.Add(newParam);
-            }
-            return result;
-        }
-
         internal static List<CheckListItem> MapItems(List<CheckListItemDTO> checklistItems)
         {
             List<CheckListItem> result = new List<CheckListItem>();
@@ -39,8 +21,7 @@ namespace Inspections.API.Features.Checklists.Mapping
                    item.Checked,
                    item.Editable,
                    item.Required,
-                   item.Remarks,
-                   MapParams(item.TextParams)
+                   item.Remarks
                 );
                 result.Add(newItem);
             }

@@ -15,7 +15,7 @@ namespace Inspections.API
 {
     public class Program
     {
-        private const string DATABASE_ERROR_MESSAGE = "ocurrio un error cargando datos a la base de datos";
+        private const string DATABASE_ERROR_MESSAGE = "can't seed, error connecting to database";
 
         public static void Main(string[] args)
         {
@@ -36,7 +36,6 @@ namespace Inspections.API
                     var logger = loggerFactory.CreateLogger<Program>();
                     logger.LogError(ex, DATABASE_ERROR_MESSAGE);
                 }
-
             }
 
            host.Run();
@@ -46,7 +45,11 @@ namespace Inspections.API
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+#if DEBUG
+                    .UseUrls("http://0.0.0.0:5000")
+#endif
+                    .UseStartup<Startup>();
                 });
     }
 }

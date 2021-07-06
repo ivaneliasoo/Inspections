@@ -1,18 +1,19 @@
 <template>
   <div>
     <v-menu v-model="menu1" :disabled="disabled" :close-on-content-click="false" max-width="290" offset-y>
-      <template v-slot:activator="{ on }">
+      <template #activator="{ on }">
         <v-text-field
           v-model="fechaComputed"
           :label="titulo"
           readonly
           :clearable="!disabled"
           :prepend-icon="showIcon ? 'event' : ''"
+          autocomplete="nope"
           v-on="on"
           @input="emitEvent(fechaPickerModel)"
           @click:clear="limpiar()"
         >
-          <template v-slot:append-outer="">
+          <template #append-outer="">
             <slot name="append-outer" />
           </template>
         </v-text-field>
@@ -45,29 +46,30 @@ export default class DatePickerBase extends Vue {
 
   menu1:Boolean = false
 
-  get fechaPickerModel() {
-    if (this.value)
+  get fechaPickerModel (): string | null {
+    if (this.value) {
       return this.fDateToYMD(this.value)
-    else
-      return this.value === '' ? null : this.$emit('input', this.fechaHoy)
+    } else {
+      this.$emit('input', this.fechaHoy)
+      return null
+    }
   }
 
-  set fechaPickerModel(valor) {
-    if (valor !== '')
-      this.$emit('input', this.fDateToYMD(valor))
+  set fechaPickerModel (valor) {
+    if (valor !== '') { this.$emit('input', this.fDateToYMD(valor)) }
 
     this.$emit('input', valor)
   }
 
-  get fechaHoy() {
+  get fechaHoy () {
     return this.fDateToYMD(new Date())
   }
 
-  get fechaComputed() {
+  get fechaComputed () {
     return (this.fechaPickerModel !== null && this.fechaPickerModel !== undefined) ? this.fDateToDMY(this.fechaPickerModel) : ''
   }
 
-  emitEvent(valor:any) {
+  emitEvent (valor:any) {
     this.$emit('input', valor ?? '')
   }
 
@@ -75,11 +77,11 @@ export default class DatePickerBase extends Vue {
     return moment(dateValue).format('DD/MM/YYYY')
   }
 
-  fDateToYMD(dateValue:any) {
+  fDateToYMD (dateValue:any) {
     return moment(dateValue).format('YYYY-MM-DD')
   }
 
-  limpiar() {
+  limpiar () {
     this.$emit('input', '')
   }
 }

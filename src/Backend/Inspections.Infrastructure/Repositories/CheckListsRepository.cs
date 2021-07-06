@@ -41,8 +41,6 @@ namespace Inspections.Infrastructure.Repositories
         {
             return await _context.Set<CheckList>()
                 .Include(p=>p.Checks)
-                    .ThenInclude(p=>p.TextParams)
-                .Include(p=>p.TextParams)
                 .Where(c=>c.Id == id).SingleOrDefaultAsync();
         }
 

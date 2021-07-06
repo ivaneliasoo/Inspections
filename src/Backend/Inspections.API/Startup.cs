@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Amazon.S3;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Users.Services;
 using Inspections.API.Models.Configuration;
@@ -12,7 +13,6 @@ using Inspections.Core;
 using Inspections.Core.Interfaces;
 using Inspections.Core.Interfaces.Queries;
 using Inspections.Infrastructure.Data;
-using Inspections.Infrastructure.Helpers;
 using Inspections.Infrastructure.Queries;
 using Inspections.Infrastructure.Repositories;
 using MediatR;
@@ -44,6 +44,11 @@ namespace Inspections.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+            
+            var assembly = AppDomain.CurrentDomain.GetAssemblies();
+            services.AddAutoMapper(assembly);
+
+            services.AddAWSService<IAmazonS3>();
 
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
@@ -85,8 +90,7 @@ namespace Inspections.API
                     {
                         var accessToken = context.Request.Query["access_token"];
                         var path = context.HttpContext.Request.Path;
-                        if (!string.IsNullOrEmpty(accessToken) &&
-                            path.Value.Contains("-hub", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrEmpty(accessToken) && path.Value!.Contains("-hub", StringComparison.OrdinalIgnoreCase))
                         {
                             context.Token = accessToken;
                         }
@@ -98,7 +102,6 @@ namespace Inspections.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Inspections API", Version = "v1" });
-
                 c.AddSecurityDefinition("jwt_auth", new OpenApiSecurityScheme()
                 {
                     Description = "Add Token in Headers",
@@ -135,8 +138,8 @@ namespace Inspections.API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserNameResolver, UserNameResolver>();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped(typeof(FileUploadService));
-            services.AddSingleton<IStorageHelper>(sh => new StorageHelper(Configuration.GetSection("ClientSettings:TempFolder").Value));
+            services.AddScoped(typeof(PhotoRecordManager));
+            services.AddSingleton<StorageDriver, S3StorageDriver>();
 
             services.AddScoped<ICheckListsRepository, CheckListsRepository>();
             services.AddScoped<IReportConfigurationsRepository, ReportsConfigurationsRepository>();
@@ -203,7 +206,7 @@ namespace Inspections.API
 
         private void ConfigurarDbContextInSqlDb(IServiceCollection services)
         {
-            ILoggerFactory logger = LoggerFactory.Create((c) => { c.AddConsole(); });
+            var logger = LoggerFactory.Create(c => c.AddConsole());
             string cn = Configuration.GetConnectionString("Inspections");
             services.AddDbContext<InspectionsContext>(c =>
             c.UseLoggerFactory(logger).UseNpgsql(cn).EnableSensitiveDataLogging());
@@ -214,7 +217,7 @@ namespace Inspections.API
         {
             bool result = false;
 
-            var _userName = context.Principal.Identity.Name;
+            var _userName = context.Principal?.Identity?.Name;
 
             if (!string.IsNullOrWhiteSpace(_userName))
             {

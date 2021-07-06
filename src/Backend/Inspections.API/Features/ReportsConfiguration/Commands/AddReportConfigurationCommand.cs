@@ -26,10 +26,10 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
         private AddReportConfigurationCommand() { }
 
         public ReportType Type { get; set; }
-        public string Title { get; set; }
-        public string FormName { get; set; }
-        public string RemarksLabelText { get; set; }
-        public List<int> ChecksDefinition { get; set; }
-        public List<int> SignatureDefinitions { get; set; }
+        public string Title { get; set; } = default!;
+        public string FormName { get; set; } = default!;
+        public string RemarksLabelText { get; set; } = default!;
+        public List<int> ChecksDefinition { get; } = default!;
+        public List<int> SignatureDefinitions { get; } = default!;
     }
 }

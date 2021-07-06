@@ -23,17 +23,15 @@ namespace Inspections.API.Features.Reports.Handlers
 {
     public class AddPhotoRecordCommandHandler : IRequestHandler<AddPhotoRecordCommand, bool>
     {
-        private readonly FileUploadService _fileUploadService;
+        private readonly PhotoRecordManager _photoManager;
         private readonly IReportsRepository _reportsRepository;
-        private readonly IStorageHelper _storageHelper;
 
-        public AddPhotoRecordCommandHandler(FileUploadService fileUploadService
+        public AddPhotoRecordCommandHandler(PhotoRecordManager photoManager
             , IReportsRepository reportsRepository
-            , IStorageHelper storageHelper)
+            , PhotoRecordManager storageHelper)
         {
-            _fileUploadService = fileUploadService ?? throw new ArgumentNullException(nameof(fileUploadService));
+            _photoManager = photoManager ?? throw new ArgumentNullException(nameof(photoManager));
             _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
-            _storageHelper = storageHelper ?? throw new ArgumentNullException(nameof(storageHelper));
         }
 
         public async Task<bool> Handle(AddPhotoRecordCommand request, CancellationToken cancellationToken)
@@ -44,14 +42,19 @@ namespace Inspections.API.Features.Reports.Handlers
             {
                 var report = await _reportsRepository.GetByIdAsync(request!.ReportId).ConfigureAwait(false);
 
+                bool isLabelInHeader = request.Label?.Length > 0;
+
                 int createdFilesCount = 0;
                 foreach (var file in request!.FormFiles)
                 {
-                    var splitedName = file.FileName.Split("|");
-                    var label = splitedName[1]?.ToUpperInvariant();
-                    var filePath = await _fileUploadService.UploadAttachments(file, request!.ReportId.ToString(CultureInfo.InvariantCulture),fileName: splitedName[0]).ConfigureAwait(false);
-                    report.AddPhoto(new PhotoRecord(request.ReportId, $"/ReportsImages/{report.Id}/{Path.GetFileName(filePath)}", $"/ReportsImages/{report.Id}/{Path.GetFileNameWithoutExtension(filePath)}small{Path.GetExtension(filePath)}", label));
-                    savedFilesPaths[createdFilesCount] = filePath;
+                    var nameAndLabel = !isLabelInHeader ? file.FileName.Split('|', StringSplitOptions.RemoveEmptyEntries) : null;
+                    var name = nameAndLabel is null ? file.FileName : nameAndLabel[0];
+                    var label = nameAndLabel is null ? request.Label!.ToUpperInvariant() : nameAndLabel.Length > 1 ? nameAndLabel[1] : ""; 
+                    var filePath = await _photoManager.AddPhoto(file.OpenReadStream(), request!.ReportId.ToString(CultureInfo.InvariantCulture), name, file.ContentType).ConfigureAwait(false);
+                    var photo = new PhotoRecord(request.ReportId, filePath.PhotoPath, filePath.ThumbnailPath, label);
+                    photo.SetMetadata(filePath.PhotoStorageId!, filePath.ThumbnailStorageId!, filePath.PhotoUrl!, filePath.ThumbnailUrl!);
+                    report.AddPhoto(photo);
+                    savedFilesPaths[createdFilesCount] = filePath.PhotoPath;
                     createdFilesCount++;
                 }
                 await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
@@ -62,12 +65,10 @@ namespace Inspections.API.Features.Reports.Handlers
                 foreach (var filePath in savedFilesPaths)
                 {
                     if (!string.IsNullOrWhiteSpace(filePath))
-                        _storageHelper.DeleteFile(filePath);
+                        await _photoManager.RemovePhoto(filePath).ConfigureAwait(false);
                 }
                 return false;
             }
         }
-
-        
     }
 }

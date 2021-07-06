@@ -1,3 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .tablet-text td, .tablet-text th {
   font-size: 1.5rem !important;
 }
+
+/**
+ * Temporary fix for breaking change in Vuetify v-grid
+ * (see : https://github.com/vuetifyjs/vuetify/issues/11408)
+ * TODO - remove this after migration
+ */
+ /* .row:not([class*="my-"]):not([class*="ma-"]):not([class*="mt-"]):not([class*="mb-"]) {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+} */

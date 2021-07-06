@@ -29,17 +29,10 @@ namespace Inspections.Infrastructure.Queries
                 SELECT ""Id"",
                         ""Text"",
                         ""Annotation"",
-                        COALESCE(""Params"".TotalParams, 0) ""TotalParams"",
                         COALESCE(""Items"".TotalItems, 0) ""TotalItems"",
                         ""LastEdit"",
                         ""LastEditUser""
                     FROM ""Inspections"".""CheckLists"" ""cl""
-                        LEFT JOIN(
-                                            SELECT ""CheckListId"", COUNT(""Key"") AS TotalParams
-                        FROM ""Inspections"".""CheckListParams""
-                        GROUP BY ""CheckListId""
-                                        ) ""Params""
-                        ON ""cl"".""Id"" = ""Params"".""CheckListId""
                         LEFT JOIN(
                                             SELECT ""CheckListId"", COUNT(""Id"") AS TotalItems
                         FROM ""Inspections"".""CheckListItems""

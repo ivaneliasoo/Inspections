@@ -18,10 +18,10 @@
           <v-col v-if="!signature.title.includes('LEW')" cols="6" xl="2">
             <v-select
               :id="`type${index}`"
-              v-model="signature.responsable.type"
+              v-model="signature.responsableType"
               :name="`type${index}`"
               :readonly="isClosed"
-              :items="responsableTypes"
+              :items="responsibleTypes"
               label="Representation Type"
             />
           </v-col>
@@ -34,7 +34,6 @@
                 :error-messages="errors[0]"
                 :readonly="isClosed"
                 label="Name"
-                @blur="signature.responsable.name = signature.responsableName"
               />
             </ValidationProvider>
           </v-col>
@@ -84,8 +83,8 @@
 <script lang="ts">
 import { Component, Vue, Model, Prop } from 'vue-property-decorator'
 import { ValidationProvider } from 'vee-validate'
-import { SignatureDTO } from '~/types/Signatures/ViewModels/SignatureDTO'
-import { ResponsableType } from '@/types'
+import { ResponsibleType } from '@/services/api'
+import { SignatureQueryResult } from '~/services/api'
 
   @Component({
     components: {
@@ -93,25 +92,25 @@ import { ResponsableType } from '@/types'
     }
   })
 export default class SignaturesForm extends Vue {
-    @Model('input') signaturesModel: SignatureDTO[] | undefined
+    @Model('input') signaturesModel: SignatureQueryResult[] | undefined
     @Prop({ required: true, type: Boolean, default: () => false }) isClosed: boolean | undefined
 
     get signatures () {
       return this.signaturesModel
     }
 
-    viewSign (index: number, item: SignatureDTO) {
+    viewSign (index: number, item: SignatureQueryResult) {
       item.viewSign = !item.viewSign
-      item.drawedSign = item.drawedSign
+      // item.drawnSign = item.drawnSign
       if (this.signaturesModel) { this.signaturesModel.splice(index, 1, item) }
       this.$emit('input', this.signaturesModel)
     }
 
-    responsableTypes: any = Object.keys(ResponsableType)
+    responsibleTypes: any = Object.keys(ResponsibleType)
       .map((key: any) => {
-        if (!isNaN(Number(key.toString()))) { return }
+        if (!isNaN(Number(key.toString()))) { return undefined }
 
-        return { id: ResponsableType[key], text: key }
+        return { id: ResponsibleType[key], text: key }
       })
       .filter(i => i !== undefined)
 }

@@ -31,9 +31,11 @@
                 <v-form id="signin-form" action="" @submit.prevent="userLogin">
                   <v-card-text>
                     <v-text-field
+                      id="username"
                       v-model="userName"
                       label="UserName"
                       name="userName"
+                      autocomplete="username"
                       prepend-icon="mdi-account"
                       type="text"
                     />
@@ -42,6 +44,7 @@
                       id="password"
                       v-model="password"
                       label="Password"
+                      autocomplete="current-password"
                       name="password"
                       prepend-icon="mdi-lock"
                       type="password"
