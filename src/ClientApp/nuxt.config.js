@@ -74,8 +74,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://cse-inspectionreport-testing-environment.ap-southeast-1.elasticbeanstalk.com',
-    browserBaseURL: 'http://cse-inspectionreport-testing-environment.ap-southeast-1.elasticbeanstalk.com'
+    baseURL: process.env.BASE_URL || 'https://localhost:5001',
+    browserBaseURL: process.env.BASE_URL || 'https://localhost:5001'
   },
   router: {
     middleware: ['auth']
