@@ -1,8 +1,7 @@
 require('dotenv').config()
 
 export default {
-  ssr: false,
-  target: 'server',
+  target: 'static',
   /*
   ** Headers of the page
   */
