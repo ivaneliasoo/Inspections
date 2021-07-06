@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Amazon.Runtime;
 using Amazon.S3;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Users.Services;
@@ -48,6 +49,9 @@ namespace Inspections.API
             var assembly = AppDomain.CurrentDomain.GetAssemblies();
             services.AddAutoMapper(assembly);
 
+            var options = Configuration.GetAWSOptions();
+            options.Credentials = new EnvironmentVariablesAWSCredentials();
+            services.AddDefaultAWSOptions(options);
             services.AddAWSService<IAmazonS3>();
 
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
