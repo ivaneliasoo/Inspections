@@ -1,6 +1,6 @@
 <template>
   <div class="mx-20">
-    <v-card v-for="(signature, index) in signatures" :key="`signature${index}`" :color="signature.drawedSign? 'teal lighten-5' : ''" class="mx-20">
+    <v-card v-for="(signature, index) in signatures" :key="`signature${index}`" :color="signature.drawnSign? 'teal lighten-5' : ''" class="mx-20">
       <v-card-text>
         <v-row dense>
           <v-col class="text-left">
@@ -9,7 +9,7 @@
             <v-chip v-if="signature.principal">
               Principal Sign
             </v-chip>
-            <v-chip v-if="signature.drawedSign" color="success">
+            <v-chip v-if="signature.drawnSign" color="success">
               Signed
             </v-chip>
           </v-col>
@@ -18,7 +18,7 @@
           <v-col v-if="!signature.title.includes('LEW')" cols="6" xl="2">
             <v-select
               :id="`type${index}`"
-              v-model="signature.responsableType"
+              v-model="signature.responsibleType"
               :name="`type${index}`"
               :readonly="isClosed"
               :items="responsibleTypes"
@@ -29,7 +29,7 @@
             <ValidationProvider v-slot="{ errors }" :rules="signature.principal ? 'required':''" immediate>
               <v-text-field
                 :id="`name${index}`"
-                v-model="signature.responsableName"
+                v-model="signature.responsibleName"
                 :name="`name${index}`"
                 :error-messages="errors[0]"
                 :readonly="isClosed"
@@ -56,9 +56,9 @@
           </v-col>
           <SignaturePad
             v-if="signature.viewSign"
-            v-model="signature.drawedSign"
+            v-model="signature.drawnSign"
             :signature-id="signature.id"
-            :saved-data="signature.drawedSign"
+            :saved-data="signature.drawnSign"
             @input="viewSign(index, signature);"
             @close="viewSign(index, signature);"
           />
