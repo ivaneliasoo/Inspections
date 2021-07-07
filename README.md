@@ -21,7 +21,7 @@ BACKEND
 FRONTEND
 ----------
 - NuxtJS
-- Npm
+- Yarn
 
 Steps to build
 ---
