@@ -8,7 +8,7 @@ Inspection Reports API & Web App
 
 ### Try it!
 - [Test URL Backend](https://inspectionsscb.azurewebsites.net/index.html)
-- [Test URL UI](https://cs7c5b6c6297fa7x4968xaea.z21.web.core.windows.net/)
+- [Test URL UI](http://cseinspectionui-test.s3-website-ap-southeast-1.amazonaws.com/)
 
 - userName: demo
 - password: demo
@@ -21,9 +21,12 @@ BACKEND
 FRONTEND
 ----------
 - NuxtJS
-- Npm
+- Yarn
 
 Steps to build
 ---
-- TODO:
-
+- UI:
+  - `yarn generate`
+  - `yarn start`
+- Backend:
+  - `dotnet run` from api path
