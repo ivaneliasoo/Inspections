@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 export default {
   ssr: false,
   target: 'static',
@@ -40,8 +38,6 @@ export default {
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/vuetify',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
     '@nuxtjs/tailwindcss',
     '@nuxt/image'
   ],
@@ -76,8 +72,14 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: process.env.BASE_URL || 'https://localhost:5001',
-    browserBaseURL: process.env.BASE_URL || 'https://localhost:5001'
+    baseURL: 'https://localhost:5001',
+    browserBaseURL: 'https://localhost:5001'
+  },
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL,
+      browserBaseURL: process.env.BASE_URL
+    }
   },
   router: {
     middleware: ['auth']
