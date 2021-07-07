@@ -592,39 +592,37 @@
                   <v-list-item-title v-text="calcColumn.name" />
                 </v-list-item-content>
               </template>
-              <template>
-                <v-container>
-                  <v-row>
-                    <v-col cols="1" />
-                    <v-col cols="8">
-                      <v-simple-table dense fixed-header>
-                        <template #default>
-                          <thead>
-                            <tr>
-                              <th class="text-left">
-                                Param name
-                              </th>
-                              <th class="text-left">
-                                CSV column
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="(param, j) in calcColumn.params" :key="j">
-                              <td width="120">
-                                {{ param.name }}
-                              </td>
-                              <td width="120">
-                                <v-select v-model="param.col" :items="csvColumns" dense />
-                              </td>
-                            </tr>
-                          </tbody>
-                        </template>
-                      </v-simple-table>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </template>
+              <v-container>
+                <v-row>
+                  <v-col cols="1" />
+                  <v-col cols="8">
+                    <v-simple-table dense fixed-header>
+                      <template #default>
+                        <thead>
+                          <tr>
+                            <th class="text-left">
+                              Param name
+                            </th>
+                            <th class="text-left">
+                              CSV column
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(param, j) in calcColumn.params" :key="j">
+                            <td width="120">
+                              {{ param.name }}
+                            </td>
+                            <td width="120">
+                              <v-select v-model="param.col" :items="csvColumns" dense />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+                  </v-col>
+                </v-row>
+              </v-container>
             </v-list-group>
           </v-list>
         </v-card-text>
