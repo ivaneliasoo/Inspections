@@ -1,4 +1,4 @@
-import { DateTimeRange, LicenseDTO } from "../Licenses";
+import { DateTimeRange } from '../Licenses'
 
 export interface AddressDTO {
   id?: number;

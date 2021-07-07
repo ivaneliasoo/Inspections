@@ -17,7 +17,7 @@
       :headers="headers"
       :class="$device.isTablet ? 'tablet-text':''"
     >
-      <template v-slot:top="{}">
+      <template #top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Addresses</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
@@ -146,9 +146,9 @@
           </v-dialog>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template #item.actions="{ item }">
         <v-tooltip v-if="$auth.user.isAdmin" top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
               color="primary"
               class="mr-2"
@@ -161,7 +161,7 @@
           <span>Edit</span>
         </v-tooltip>
         <v-tooltip v-if="$auth.user.isAdmin" top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
               color="error"
               v-on="on"

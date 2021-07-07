@@ -20,7 +20,7 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn v-if="canGoBack" icon @click.stop="$router.go(-1)">
-          <v-icon>mdi-arrow-left</v-icon>
+        <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-toolbar-title>Reporting</v-toolbar-title>
       <v-spacer />
@@ -53,7 +53,7 @@
           justify="center"
         >
           <v-col class="text-center">
-            <nuxt v-scroll="onScroll"/>
+            <nuxt v-scroll="onScroll" />
           </v-col>
         </v-row>
       </v-container>
@@ -78,17 +78,17 @@ export default class Default extends Vue {
   showScrollUpFab: boolean = false
   fab: boolean = false
 
-  onScroll(e: any) {
-    if (typeof window === 'undefined') return
-      const top = window.pageYOffset ||   e.target.scrollTop || 0
-      this.showScrollUpFab = top > 20
+  onScroll (e: any) {
+    if (typeof window === 'undefined') { return }
+    const top = window.pageYOffset || e.target.scrollTop || 0
+    this.showScrollUpFab = top > 20
   }
 
-  async logout() {
+  async logout () {
     await this.$auth.logout()
   }
 
-  get canGoBack() {
+  get canGoBack () {
     return (this.$store.state as RootState).canGoBack
   }
 }

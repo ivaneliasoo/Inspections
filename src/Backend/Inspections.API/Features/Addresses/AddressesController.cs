@@ -73,7 +73,6 @@ namespace Inspections.API.Features.Addresses
                 return NotFound();
             }
 
-            return address;
         }
 
         // PUT: api/Addresses/5
@@ -87,14 +86,6 @@ namespace Inspections.API.Features.Addresses
             Guard.Against.Null(address, nameof(address));
 
             if (id != address.Id)
-            {
-                return BadRequest();
-            }
-
-            var savedAddress = await _context.Set<Address>().FindAsync(id).ConfigureAwait(false);
-            savedAddress.AddressLine = address.AddressLine;
-            savedAddress.AddressLine2 = address.AddressLine2;
-            savedAddress.Unit = address.Unit;
             savedAddress.Country = address.Country;
             savedAddress.PostalCode = address.PostalCode;
             savedAddress.LicenseId = address.LicenseId;

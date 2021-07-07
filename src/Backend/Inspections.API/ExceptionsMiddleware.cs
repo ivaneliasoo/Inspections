@@ -49,7 +49,9 @@ namespace ZadERP.Api.Middleware
                 await _next(httpContext).ConfigureAwait(false);
                 _logger.LogInformation($"Se ha invocando {httpContext.Request.Path.Value} Metodo: {httpContext.Request.Method} - {DateTime.Now}");
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 var statusCode = ConfigureExceptionTypes(ex);
 

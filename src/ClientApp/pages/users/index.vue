@@ -17,7 +17,7 @@
       :loading="loading"
       :headers="headers"
     >
-      <template v-slot:top="{}">
+      <template #top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Users</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
@@ -31,7 +31,9 @@
             color="primary"
             @click="dialog = true; isNew = true; item = { isAdmin: false }"
           >
-            <v-icon dark>mdi-plus</v-icon>
+            <v-icon dark>
+              mdi-plus
+            </v-icon>
           </v-btn>
           <v-dialog
             v-model="dialog"
@@ -40,7 +42,7 @@
             :fullscreen="$vuetify.breakpoint.smAndDown"
             :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'"
           >
-            <ValidationObserver tag="form" v-slot="{ valid, reset }">
+            <ValidationObserver v-slot="{ valid, reset }" tag="form">
               <v-card>
                 <v-card-title>
                   <span class="headline">Edit User</span>
@@ -49,7 +51,7 @@
                   <v-container>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="6">
-                        <ValidationProvider rules="required" v-slot="{ errors }">
+                        <ValidationProvider v-slot="{ errors }" rules="required">
                           <v-text-field
                             v-model="item.userName"
                             name="title"
@@ -66,9 +68,9 @@
                     <v-row align="center" justify="space-between">
                       <v-col>
                         <ValidationProvider
+                          v-slot="{ errors }"
                           name="pass"
                           rules="required|password:@confirm"
-                          v-slot="{ errors }"
                         >
                           <v-text-field
                             v-model="item.password"
@@ -81,9 +83,9 @@
                       </v-col>
                       <v-col>
                         <ValidationProvider
+                          v-slot="{ errors }"
                           name="confirm"
                           rules="required|password:@pass"
-                          v-slot="{ errors }"
                         >
                           <v-text-field
                             v-model="confirmPassword"
@@ -97,7 +99,7 @@
                     </v-row>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="6">
-                        <ValidationProvider rules="required" v-slot="{ errors }">
+                        <ValidationProvider v-slot="{ errors }" rules="required">
                           <v-text-field
                             v-model="item.name"
                             :error-messages="errors"
@@ -107,7 +109,7 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col cols="12" md="6">
-                        <ValidationProvider rules="required" v-slot="{ errors }">
+                        <ValidationProvider v-slot="{ errors }" rules="required">
                           <v-text-field
                             v-model="item.lastName"
                             :error-messages="errors"
@@ -127,168 +129,174 @@
                     :loading="loading"
                     :disabled="item.report ? item.report.isClosed ? true:false : false && !valid"
                     @click="upsertUser()"
-                  >Save</v-btn>
+                  >
+                    Save
+                  </v-btn>
                   <v-btn
                     color="default"
                     text
                     @click="reset(); item = { principal: false }; dialog = false"
-                  >Cancel</v-btn>
+                  >
+                    Cancel
+                  </v-btn>
                 </v-card-actions>
               </v-card>
             </ValidationObserver>
           </v-dialog>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template #item.actions="{ item }">
         <v-tooltip v-if="$auth.user.isAdmin" top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
-              v-on="on"
               color="primary"
               class="mr-2"
+              v-on="on"
               @click="selectItem(item); isNew = false; dialog = true"
-            >mdi-pencil</v-icon>
+            >
+              mdi-pencil
+            </v-icon>
           </template>
           <span>Edit / Change Password</span>
         </v-tooltip>
         <v-tooltip v-if="$auth.user.isAdmin" top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
-              v-on="on"
               :disabled="item.userName === $auth.user.userName"
               color="error"
+              v-on="on"
               @click="selectItem(item); dialogRemove = true"
-            >mdi-delete</v-icon>
+            >
+              mdi-delete
+            </v-icon>
           </template>
           <span>Delete</span>
         </v-tooltip>
       </template>
-      <template v-slot:item.isAdmin="{ item }">
+      <template #item.isAdmin="{ item }">
         <v-simple-checkbox v-model="item.isAdmin" disabled />
       </template>
     </v-data-table>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, mixins } from "nuxt-property-decorator";
-import { ValidationObserver, ValidationProvider } from "vee-validate";
-import InnerPageMixin from "@/mixins/innerpage";
-import { UserState } from "store/users";
-import { User, ChangePasswordDTO } from "../../types/Users";
+import { Component, mixins } from 'nuxt-property-decorator'
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
+import InnerPageMixin from '@/mixins/innerpage'
+import { UserState } from 'store/users'
+import { User, ChangePasswordDTO } from '../../types/Users'
 
-import { extend } from "vee-validate";
-
-extend("password", {
-  params: ["target"],
-  validate(value, { target }: any) {
-    return value === target;
+extend('password', {
+  params: ['target'],
+  validate (value, { target }: any) {
+    return value === target
   },
-  message: "Password confirmation does not match",
-});
+  message: 'Password confirmation does not match'
+})
 
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-  },
+    ValidationProvider
+  }
 })
 export default class UserAdmin extends mixins(InnerPageMixin) {
   dialog: boolean = false;
   dialogRemove: boolean = false;
   loading: boolean = false;
-  confirmPassword: string = "";
+  confirmPassword: string = '';
   filter: any = {
-    filterText: "",
+    filterText: ''
   };
+
   headers: any[] = [
     {
-      text: "UserName",
-      value: "userName",
+      text: 'UserName',
+      value: 'userName',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "Name",
-      value: "name",
+      text: 'Name',
+      value: 'name',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "Last Name",
-      value: "lastName",
+      text: 'Last Name',
+      value: 'lastName',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "Admin",
-      value: "isAdmin",
+      text: 'Admin',
+      value: 'isAdmin',
       sortable: true,
-      align: "center",
+      align: 'center'
     },
     {
-      text: "",
-      value: "actions",
+      text: '',
+      value: 'actions',
       sortable: false,
-      align: "left",
-    },
+      align: 'left'
+    }
   ];
+
   selectedItem: User = {} as User;
   item: any = { principal: false };
   isNew: boolean = false;
 
-  get users(): User[] {
-    return (this.$store.state.users as UserState).users;
+  get users (): User[] {
+    return (this.$store.state.users as UserState).users
   }
 
-  selectItem(item: User): void {
-    this.selectedItem = item;
+  selectItem (item: User): void {
+    this.selectedItem = item
     this.$store
-      .dispatch("users/getUserByName", this.selectedItem.userName, {
-        root: true,
+      .dispatch('users/getUserByName', this.selectedItem.userName, {
+        root: true
       })
-      .then((resp) => (this.item = resp));
+      .then(resp => (this.item = resp))
   }
 
-  async fetch({ error, $auth, $store}: any) {
-    if (!$auth.user.isAdmin)
-      error({ statusCode: 403, message: "Forbbiden" });
+  async fetch ({ error, $auth, $store }: any) {
+    if (!$auth.user.isAdmin) { error({ statusCode: 403, message: 'Forbbiden' }) }
     this.loading = true
-    await $store.dispatch("users/getUsers", {}, { root: true });
+    await $store.dispatch('users/getUsers', {}, { root: true })
     this.loading = false
   }
 
-  deleteUser() {
+  deleteUser () {
     this.$store
-      .dispatch("users/deleteUser", this.selectedItem.userName, { root: true })
+      .dispatch('users/deleteUser', this.selectedItem.userName, { root: true })
       .then(() => {
-        this.dialog = false;
-      });
+        this.dialog = false
+      })
   }
 
-  async upsertUser() {
-    this.loading = true;
-    if (!this.isNew)
-      await this.$store.dispatch("users/updateUser", this.item, { root: true });
-    else {
-      await this.$store.dispatch("users/createUser", this.item, { root: true });
-      await this.$store.dispatch("users/getUsers", {}, { root: true });
+  async upsertUser () {
+    this.loading = true
+    if (!this.isNew) { await this.$store.dispatch('users/updateUser', this.item, { root: true }) } else {
+      await this.$store.dispatch('users/createUser', this.item, { root: true })
+      await this.$store.dispatch('users/getUsers', {}, { root: true })
     }
 
-    if (this.item.password === this.confirmPassword)
+    if (this.item.password === this.confirmPassword) {
       await this.$store.dispatch(
-        "users/changePassword",
+        'users/changePassword',
         {
           userName: this.item.userName,
-          currentPassword: "",
+          currentPassword: '',
           newPassword: this.item.password,
-          newPasswordConfirmation: this.confirmPassword,
+          newPasswordConfirmation: this.confirmPassword
         } as ChangePasswordDTO,
         { root: true }
-      );
+      )
+    }
 
-    this.dialog = false;
-    this.isNew = true;
-    this.loading = false;
+    this.dialog = false
+    this.isNew = true
+    this.loading = false
   }
 }
 </script>

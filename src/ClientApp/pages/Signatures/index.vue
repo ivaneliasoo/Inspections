@@ -17,7 +17,7 @@
       :loading="loading"
       :headers="headers"
     >
-      <template v-slot:top="{}">
+      <template #top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Signatures</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
@@ -156,7 +156,7 @@
           </v-col>
         </v-row>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template #item.actions="{ item }">
         <v-icon
           small
           color="primary"
@@ -256,7 +256,7 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
       .signaturesList
   }
 
-  selectItem (item: Signature): void{
+  selectItem (item: Signature): void {
     this.selectedItem = item
     this.$store.dispatch('signatures/getSignatureById', this.selectedItem.id, { root: true })
       .then((resp) => { this.item = resp })
