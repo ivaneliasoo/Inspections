@@ -9,10 +9,10 @@
       @yes="removeCheckList(selectedItem)"
     />
     <message-dialog v-model="dialogItems" :actions="[]">
-      <template v-slot:title="{}">
+      <template #title="{}">
         {{ selectedItem.text }} Items
       </template>
-      <template v-slot:subtitle="{}">
+      <template #subtitle="{}">
         <v-list
           subheader
           two-line
@@ -20,7 +20,7 @@
         >
           <v-subheader>Items &amp; Params</v-subheader>
           <v-list-item v-for="item in checkItems" :key="item.id">
-            <template v-slot:default="{ active, toggle }">
+            <template #default="{ active, toggle }">
               <v-list-item-action>
                 <v-checkbox
                   color="primary"
@@ -37,17 +37,32 @@
         </v-list>
       </template>
     </message-dialog>
-    <v-data-table :class="$device.isTablet ? 'tablet-text':''" :items="checks" item-key="id" dense :search="filter.filterText" :headers="headers">
-      <template v-slot:top="{}">
+    <v-data-table
+      :class="$device.isTablet ? 'tablet-text':''"
+      :items="checks"
+      item-key="id"
+      dense
+      :search="filter.filterText"
+      :loading="loading"
+      :headers="headers"
+    >
+      <template #top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>CheckLists</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
           <grid-filter :filter.sync="filter.filterText" />
           <v-spacer />
-          <v-btn class="mx-2" x-small 
-            fab dark color="primary"
-            @click="$router.push({ name: 'CheckLists-id', params: { id: -1 } })">
-              <v-icon dark>mdi-plus</v-icon>
+          <v-btn
+            class="mx-2"
+            x-small
+            fab
+            dark
+            color="primary"
+            @click="$router.push({ name: 'CheckLists-id', params: { id: -1 } })"
+          >
+            <v-icon dark>
+              mdi-plus
+            </v-icon>
           </v-btn>
         </v-toolbar>
         <v-row justify="space-around" class="ml-2 mr-2">
@@ -76,7 +91,7 @@
           </v-col>
         </v-row>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template #item.actions="{ item }">
         <v-icon
           color="primary"
           class="mr-2"
@@ -108,6 +123,7 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
   dialog: Boolean = false
   dialogRemove: boolean = false
   dialogItems: Boolean = false
+  loading: boolean = false
   filter: FilterType = {
     filterText: '',
     inConfigurationOnly: true,
@@ -175,36 +191,46 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
       .currentCheckList.checks
   }
 
-  asyncData({ query }:any) {
-    let filter: FilterType = {
-                                filterText: '',
-                                inConfigurationOnly: query.configurationonly === 'true' ? true:false ?? true,
-                                reportId: query.reportid ? parseInt(query.reportid) : undefined,
-                                reportConfigurationId: query.configurationid ? parseInt(query.configurationid) : undefined
-                              }
+  asyncData ({ query }:any) {
+    const filter: FilterType = {
+      filterText: '',
+      inConfigurationOnly: query.configurationonly === 'true' ? true : false ?? true,
+      reportId: query.reportid ? parseInt(query.reportid) : undefined,
+      reportConfigurationId: query.configurationid ? parseInt(query.configurationid) : undefined
+    }
     return {
       filter
     }
   }
 
   async fetch () {
-    await this.$store.dispatch('reportstrore/getReports', '', { root: true })
-    await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
-    await this.$store.dispatch('checklists/getChecklists', this.filter, { root: true })
+    this.loading = true
+
+    Promise.all([await this.$store.dispatch('reportstrore/getReports', '', { root: true }),
+      await this.$store.dispatch('configurations/getConfigurations', '', { root: true }),
+      await this.$store.dispatch('checklists/getChecklists', this.filter, { root: true })])
+
+    this.loading = false
   }
 
-  selectItem (item: CheckList): void{
+  selectItem (item: CheckList): void {
     this.selectedItem = item
+    this.loading = true
     this.$store.dispatch('checklists/getCheckListItemsById', this.selectedItem.id, { root: false })
+      .finally(() => this.loading = false)
   }
 
   @Watch('filter', { deep: true })
   onFilterChanged (value: FilterType, oldValue: FilterType) {
+    this.loading = true
     this.$store.dispatch('checklists/getChecklists', value, { root: true })
+      .finally(() => { this.loading = false })
   }
 
-  async removeCheckList(item: CheckList) {
+  async removeCheckList (item: CheckList) {
+    this.loading = true
     await this.$store.dispatch('checklists/deleteCheckList', { idCheckList: item.id }, { root: true })
+    this.loading = false
   }
 }
 </script>

@@ -6,7 +6,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 3.1
 
-import Vue, { ComponentOptions } from 'vue'
+import { ReportsApi } from './services/api/api'
 
 export interface Storage {
   setUniversal(key: string, value: any, isJson?: boolean): string;
@@ -50,11 +50,14 @@ declare module 'vue/types/vue' {
   interface Vue {
     $auth: Auth;
     $notificationsHub: any;
+    $reportsApi: ReportsApi;
+    $img: any
   }
 }
 
 declare module '@nuxt/types' {
   interface Context {
     $auth: Auth;
+    $reportsApi: ReportsApi;
   }
 }

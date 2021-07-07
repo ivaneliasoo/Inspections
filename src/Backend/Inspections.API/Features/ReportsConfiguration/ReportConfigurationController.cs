@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Inspections.API.Features.ReportsConfiguration
 {
@@ -33,6 +34,9 @@ namespace Inspections.API.Features.ReportsConfiguration
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> CreateReportConfig([FromBody] AddReportConfigurationCommand report)
         {
             var result = await _mediator.Send(report).ConfigureAwait(false);
@@ -43,6 +47,10 @@ namespace Inspections.API.Features.ReportsConfiguration
         }
 
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateReportConfig(int id, [FromBody] UpdateReportConfigurationCommand report)
         {
             Guard.Against.Null(report, nameof(report));
@@ -57,13 +65,12 @@ namespace Inspections.API.Features.ReportsConfiguration
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteReportConfig(int id, [FromBody] DeleteReportConfigurationCommand report)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> DeleteReportConfig(int id)
         {
-            Guard.Against.Null(report, nameof(report));
-            if (id != report.Id)
-                return BadRequest();
-
-            var result = await _mediator.Send(report).ConfigureAwait(false);
+            var result = await _mediator.Send(new DeleteReportConfigurationCommand(id)).ConfigureAwait(false);
             if (!result)
                 return Conflict();
 
@@ -71,6 +78,9 @@ namespace Inspections.API.Features.ReportsConfiguration
         }
 
         [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<ReportConfigurationDTO>> GetReportConfig(int id)
         {
             var reportConfig = await _reportConfigurationsRepository.GetByIdAsync(id).ConfigureAwait(false);
@@ -82,7 +92,10 @@ namespace Inspections.API.Features.ReportsConfiguration
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ResumenReportConfiguration>> GetReportsConfig(string filter)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public ActionResult<IEnumerable<ResumenReportConfiguration>> GetReportsConfig(string? filter)
         {
             var reportConfig = _reportConfigsQueries.GetByFilter(filter);
 

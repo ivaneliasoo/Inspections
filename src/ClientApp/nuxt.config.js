@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 export default {
   ssr: false,
   target: 'static',
@@ -40,8 +38,8 @@ export default {
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/vuetify',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/tailwindcss',
+    '@nuxt/image'
   ],
   /*
   ** Nuxt.js modules
@@ -53,14 +51,15 @@ export default {
     '@nuxtjs/auth',
     '@nuxtjs/device',
     ['nuxt-compress',
-    {
-      gzip: {
-        cache: true
-      },
-      brotli: {
-        threshold: 10240
+      {
+        gzip: {
+          cache: true
+        },
+        brotli: {
+          threshold: 10240
+        }
       }
-    }]
+    ]
   ],
   pwa: {
     icon: {
@@ -73,8 +72,14 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://cse-inspectionreport-testing-environment.ap-southeast-1.elasticbeanstalk.com',
-    browserBaseURL: 'http://cse-inspectionreport-testing-environment.ap-southeast-1.elasticbeanstalk.com'
+    baseURL: 'https://localhost:5001',
+    browserBaseURL: 'https://localhost:5001'
+  },
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL,
+      browserBaseURL: process.env.BASE_URL
+    }
   },
   router: {
     middleware: ['auth']
@@ -97,7 +102,8 @@ export default {
         tokenType: 'bearer',
         autoFetchUser: true
       }
-    }
+    },
+    plugins: ['~/plugins/api-client']
   },
   /*
      ** vuetify module configuration
@@ -111,12 +117,7 @@ export default {
   ** Build configuration
   */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-    extend (config, ctx) {
-    },
-    // Excepcion para vee-validate (no quitar)
-    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth'],
+    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth', 'q'],
+    terser: false
   }
 }

@@ -17,7 +17,7 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.Remarks).IsRequired(false);
             builder.Property(p => p.Date).IsRequired();
             builder.Property(p => p.Principal).IsRequired();
-            builder.OwnsOne(p => p.Responsable
+            builder.OwnsOne(p => p.Responsible
             , s =>
             {
                 s.Property(p => p.Name).IsRequired();
@@ -26,9 +26,9 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
                 s.Ignore("LastEditUser");
             });
 
-            builder.Ignore(p => p.DomainEvents);
+            builder.Property(p => p.Order).IsRequired();
 
+            builder.Ignore(p => p.DomainEvents);
         }
     }
-
 }

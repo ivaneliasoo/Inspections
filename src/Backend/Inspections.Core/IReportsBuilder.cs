@@ -9,5 +9,6 @@ namespace Inspections.Core
         ReportsBuilder WithDefaultNotes(bool addDefaultNOtes);
         ReportsBuilder AddSignatures(int[] signaturesIds);
         ReportsBuilder WithName(string name);
+        ReportsBuilder WithOperationalReadings();
     }
 }

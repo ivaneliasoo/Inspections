@@ -1,9 +1,14 @@
-﻿namespace Inspections.Core.Domain.CheckListAggregate
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace Inspections.Core.Domain.CheckListAggregate
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum CheckValue
     {
-        False,
-        True,
-        NA
+        NotAcceptableFalse,
+        Acceptable,
+        NotApplicable,
+        None
     }
 }

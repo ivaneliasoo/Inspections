@@ -17,8 +17,11 @@ namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id).UseIdentityColumn();
             builder.Property(p => p.AddressLine).IsRequired();
-            builder.Property(p => p.City).IsRequired();
-            builder.Property(p => p.Province).IsRequired();
+            builder.Property(p => p.Unit);
+            builder.Property(p => p.Country).IsRequired();
+            builder.Property(p => p.PostalCode).IsRequired();
+            builder.Property(p => p.LicenseId).IsRequired();
+            builder.HasOne(p => p.License);
         }
     }
 }

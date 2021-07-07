@@ -1,4 +1,5 @@
-﻿using Inspections.Core.Domain.CheckListAggregate;
+﻿using Ardalis.GuardClauses;
+using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Shared;
 using System;
@@ -9,32 +10,35 @@ namespace Inspections.Core.Domain.ReportsAggregate
 {
     public class Report : Entity<int>, IAggregateRoot
     {
-        public string Name { get; private set; }
-        public string Address { get; private set; }
-        public EMALicense License { get; private set; }
-        public DateTimeOffset Date { get; private set; }
-        public bool IsClosed { get; private set; }
+        public string Name { get; private set; } = default!;
+        public string Address { get; private set; } = default!;
 
-        public string Title { get; private set; }
-        public string FormName { get; private set; }
-        public string RemarksLabelText { get; private set; }
+        public int? EMALicenseId { get; set; }
+        public EMALicense? License { get; private set; }
+        public int? OperationalReadingsId { get; private set; }
+        public OperationalReadings? OperationalReadings { get; private set; }
+        public DateTimeOffset Date { get; private set; } = default!;
+        public bool IsClosed { get; private set; } = default!;
 
-        private readonly List<Signature> signatures = new List<Signature>();
+        public string Title { get; private set; } = default!;
+        public string FormName { get; private set; } = default!;
+        public string? RemarksLabelText { get; private set; }
+        private readonly List<Signature> signatures = new();
         public IReadOnlyCollection<Signature> Signatures => signatures;
-        private readonly List<Note> notes = new List<Note>();
+        private readonly List<Note> notes = new();
         public IReadOnlyCollection<Note> Notes => notes;
 
-        private readonly List<CheckList> checkList = new List<CheckList>();
+        private readonly List<CheckList> checkList = new();
         public IReadOnlyCollection<CheckList> CheckList => checkList;
 
-        private readonly List<PhotoRecord> photoRecords = new List<PhotoRecord>();
+        private readonly List<PhotoRecord> photoRecords = new();
 
         internal Report()
         {
 
         }
 
-        public Report(string name, string address, EMALicense license, DateTimeOffset date)
+        public Report(string name, string address, EMALicense? license, DateTimeOffset date)
         {
             Name = name;
             Address = address;
@@ -44,8 +48,14 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         internal void SetName(string name)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             Name = name;
+        }
+
+        public void AddOperationalReadings(OperationalReadings operationalReadings)
+        {
+            Guard.Against.Null(operationalReadings, nameof(operationalReadings));
+            OperationalReadings = operationalReadings;
         }
 
         public Report(string title, string formName, string remarksLabelText)
@@ -58,10 +68,11 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public void Edit(string name, string address, EMALicense license, DateTimeOffset date)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             Name = name;
             Address = address;
             License = license;
+            EMALicenseId = license.Id;
             Date = date;
         }
 
@@ -70,74 +81,75 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public void AddNote(Note note)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             notes.Add(note);
         }
 
-        private void CheckIfClosed()
-        {
-            if (IsClosed)
-                throw new InvalidOperationException("Report is Closed. You Can't edit Closed Reports");
-        }
+        //I still believe this is a must, but han pin wants to allow editing after report has been closed
+        //private void CheckIfClosed()
+        //{
+        //    if (IsClosed)
+        //        throw new InvalidOperationException("Report is Closed. You Can't edit Closed Reports");
+        //}
 
         public void AddNote(IEnumerable<Note> note)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             notes.AddRange(note);
         }
 
         public void RemoveNote(Note note)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             notes.Remove(note);
         }
 
         public void AddPhoto(PhotoRecord photo)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             photoRecords.Add(photo);
         }
 
         public void AddPhoto(IEnumerable<PhotoRecord> photo)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             photoRecords.AddRange(photo);
         }
 
         public void RemovePhoto(PhotoRecord photo)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             photoRecords.Remove(photo);
         }
 
         internal void AddCheckList(IEnumerable<CheckList> checkList)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             foreach (var check in checkList)
             {
                 this.checkList.Add(check.CloneForReport());
             }
-           
+
         }
 
         internal void RemoveCheckList(CheckList checkList)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             this.checkList.Remove(checkList);
         }
 
-        internal void AddSignature(IEnumerable<Signature> signature)
+        internal void AddSignature(IEnumerable<Signature> signature, string userName = "")
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             foreach (var sign in signature)
             {
-                signatures.Add(sign.PreparteForNewReport());
+                signatures.Add(sign.PreparteForNewReport(userName));
             }
         }
 
         internal void RemoveSignature(Signature signature)
         {
-            CheckIfClosed();
+            //CheckIfClosed();
             signatures.Remove(signature);
         }
 

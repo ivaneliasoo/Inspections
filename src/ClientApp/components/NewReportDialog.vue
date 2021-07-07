@@ -3,7 +3,7 @@
       <template v-slot:title="{}">
         New Report
       </template>
-      <v-row 
+      <v-row
         v-if="creatingReport"
         class="fill-height"
         align-content="center"
@@ -75,7 +75,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 
 @Component({
   components: {
-    ValidationObserver, 
+    ValidationObserver,
     ValidationProvider
   }
 })
@@ -84,11 +84,10 @@ export default class NewReportDialog extends Vue {
   creatingReport: boolean = false
   search: string = ''
   configuration: number = 0
-
   async fetch() {
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
   }
-  
+
   async createReport () {
     this.creatingReport =true
     const reportId = await this.$store.dispatch('reportstrore/createReport', this.selectedConfiguration, { root: true })
@@ -100,7 +99,7 @@ export default class NewReportDialog extends Vue {
     await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: reportId }, { root: true })
     this.creatingReport = false
   }
-  
+
   get configurations (): ReportConfiguration[] {
     return (this.$store.state.configurations as ReportConfigurationState).configurations
   }

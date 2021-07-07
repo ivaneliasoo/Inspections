@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Inspections.Commands;
 using Inspections.Core;
 using Inspections.Core.Interfaces;
@@ -13,12 +14,15 @@ namespace Inspections.API.Features.Inspections.Handlers
     {
         private readonly IReportsRepository _reportsRepository;
         private readonly IReportConfigurationsRepository _reportConfigurationsRepository;
-        
+        private readonly PhotoRecordManager _photoRecordManager;
+        private readonly IUserNameResolver _userNameResolver;
 
-        public CreateInspectionHandler(IReportsRepository reportsRepository, IReportConfigurationsRepository reportConfigurationsRepository)
+        public CreateInspectionHandler(IReportsRepository reportsRepository, IReportConfigurationsRepository reportConfigurationsRepository, PhotoRecordManager photoRecordManager, IUserNameResolver userNameResolver)
         {
             _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
-            this._reportConfigurationsRepository = reportConfigurationsRepository ?? throw new ArgumentNullException(nameof(reportConfigurationsRepository));
+            _reportConfigurationsRepository = reportConfigurationsRepository ?? throw new ArgumentNullException(nameof(reportConfigurationsRepository));
+            _photoRecordManager = photoRecordManager ?? throw new ArgumentNullException(nameof(photoRecordManager));
+            _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
         }
 
         public async Task<int> Handle(CreateReportCommand request, CancellationToken cancellationToken)
@@ -28,14 +32,16 @@ namespace Inspections.API.Features.Inspections.Handlers
 
             var reportName = $"{DateTime.Now:yyyyMMdd}-{cfg.Title}";
 
-            IReportsBuilder _reportsBuilder = new ReportsBuilder(cfg);
+            IReportsBuilder _reportsBuilder = new ReportsBuilder(cfg, _userNameResolver.FullName);
             var newReport = _reportsBuilder
-                .WithDefaultNotes(true)
+                .WithOperationalReadings()
+                .WithDefaultNotes(false)
                 .WithName(reportName)
                 .Build();
 
             var result = await _reportsRepository.AddAsync(newReport).ConfigureAwait(false);
-            return result.Id;                              ;
+            await _photoRecordManager.CreateAlbum(result.Id.ToString());
+            return result.Id;
         }
     }
 }

@@ -34,6 +34,7 @@ namespace Inspections.API.Features.Checklists.Handlers
             item.Required = request.Required;
             item.Editable = request.Editable;
             item.Text = request.Text;
+            item.Touched = true;
             checkList.AddCheckItems(item);
 
             await _checkListsRepository.UpdateAsync(checkList).ConfigureAwait(false);

@@ -1,64 +1,56 @@
 <template>
   <v-card flat>
-    <v-row justify="space-around" align="center">
-      <v-col :cols="files.length>0 ? 10:12">
+    <v-row justify="space-around" align="end">
+      <v-col cols="6" class="text-right">
+        Tap Camera Icon To Add Photos to report
+      </v-col>
+      <v-col :cols="2">
         <v-file-input
-          v-model="files"
-          :disabled="currentReport.isClosed"
+          ref="fileInputElement"
           color="primary accent-4"
           counter
           label="Upload File"
           multiple
+          hide-input
+          messages="Add Photos to Report"
           placeholder="Select your files"
-          prepend-icon="mdi-paperclip"
+          prepend-icon="mdi-camera-plus"
           outlined
           accept="image/*"
           :show-size="1000"
           @change="showPreview($event)"
           @click:clear="filesUrls = []"
-        >
-          <template v-slot:selection="{ index, text }">
-            <v-chip v-if="index < 2" color="primary accent-4" dark label small>{{ text }}</v-chip>
-
-            <span
-              v-else-if="index === 2"
-              class="overline grey--text text--darken-3 mx-2"
-            >+{{ files.length - 2 }} File(s)</span>
-          </template>
-        </v-file-input>
+        />
       </v-col>
-      <v-col v-if="files.length>0" cols="2">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn
-              color="indigo"
-              v-on="on"
-              dark
-              fab
-              elevation="2"
-              :disabled="!files.length>0 || currentReport.isClosed"
-              @click="uploadFiles"
-            >
-              <v-icon>mdi-upload</v-icon>
-            </v-btn>
-          </template>
-          <span>Upload Selected Files</span>
-        </v-tooltip>
-      </v-col>
+      <v-col cols="4" />
     </v-row>
     <v-divider />
     <v-row>
-      <PhotoRecordManager v-if="files.length===0" v-model="currentReport" />
-      <PhotoRecordPreviewer v-else v-model="filesUrls" :files="files" />
+      <v-btn
+        color="indigo"
+        dark
+        block
+        x-large
+        :small="$device.isMobile"
+        elevation="2"
+        :disabled="!files.length>0 || dialogUploading"
+        @click="uploadFiles"
+      >
+        Save Photos
+        <v-icon>mdi-upload</v-icon>
+      </v-btn>
+      <PhotoRecordManager v-if="files.length===0" v-model="photoRecords" :report-id="reportId" />
+      <PhotoRecordPreviewer v-else v-model="filesUrls" :files="files" :progress="percentCompleted" />
     </v-row>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model } from "vue-property-decorator";
-import { Report } from "~/types";
+import { Component, Vue } from 'vue-property-decorator'
+import reduce from 'image-blob-reduce'
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
+import { Prop } from 'nuxt-property-decorator'
 
 @Component({
   components: {
@@ -67,47 +59,79 @@ import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
   }
 })
 export default class PhotoRecords extends Vue {
-  @Model("input") currentReport: Report | undefined;
+  @Prop({ required: true, type: Number }) reportId!: number
   files: File[] = [];
   filesUrls: { url: string, id: number, label: string }[] = [];
 
+  photoRecords: any[] = []
+
   selectedPhotoComponent: string = 'PhotoRecordManager'
+  dialogUploading: boolean = false
+  percentCompleted: number= 0
 
-  uploadFiles() {
-    let formData = new FormData();
+  testurl = ''
+  testurlproc = ''
 
-    this.files.forEach((file: File, index) => {
-      formData.append("files", file, `${file.name}|${this.filesUrls[index].label}`);
-    });
-
-    formData.append("label", "archivos de Prueba");
-
-    const self = this;
-
-    this.$axios
-      .post(`reports/${this.$route.params.id}/photorecord`, formData)
-      .then(() => {
-        this.files = [];
-        this.filesUrls = [];
-        this.$emit('uploaded')
-        this.selectedPhotoComponent = "PhotoRecordManager"
-      });
+  async fetch () {
+    const result: any = await this.$reportsApi.reportsIdPhotorecordGet(this.reportId)
+    if (result.data) {
+      this.photoRecords = result.data as any[]
+    }
   }
 
-  showPreview() {
-    this.files.forEach((file, index)=> {
-      var url = URL.createObjectURL(file)
-      this.filesUrls.push({ url, id: index, label: ''})
+  async uploadFiles () {
+    const Pthis = this
+    const formData = new FormData()
+    this.dialogUploading = true
+    const config = {
+      onUploadProgress (progressEvent: any) {
+        Pthis.percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+      }
+    }
+
+    for (let i = 0; i < this.files.length; i++) {
+      const file = this.files[i]
+      const blob = await reduce().toBlob(file, { max: 1000 })
+      const newFile = new File([blob], file.name)
+      this.testurlproc = URL.createObjectURL(newFile)
+      formData.append('files', newFile, `${file.name}|${this.filesUrls[i].label}`)
+    }
+
+    formData.append('label', 'archivos de Prueba')
+
+    await this.$axios
+      .post(`reports/${this.$route.params.id}/photorecord`, formData, config)
+      .then(() => {
+        this.files = []
+        this.filesUrls = []
+        this.$emit('uploaded')
+        this.selectedPhotoComponent = 'PhotoRecordManager'
+        this.percentCompleted = 0
+        this.files = []
+      })
+
+    const result: any = await this.$reportsApi.reportsIdPhotorecordGet(this.reportId)
+    if (result.data) {
+      this.photoRecords = result.data as any[]
+    }
+
+    this.dialogUploading = false
+  }
+
+  showPreview (filesAdded: File[]) {
+    filesAdded.forEach((file, index) => {
+      this.files.push(file)
+      const url = URL.createObjectURL(file)
+      this.filesUrls.push({ url, id: index, label: '' })
     })
 
-    this.selectedPhotoComponent = "PhotoRecordPreviewer"
+    this.selectedPhotoComponent = 'PhotoRecordPreviewer'
   }
 
-  get source() {
-    if(this.filesUrls.length>0)
-      return this.filesUrls
-    
-    return this.currentReport!.photoRecords
+  get source () {
+    if (this.filesUrls.length > 0) { return this.filesUrls }
+
+    return this.photoRecords
   }
 }
 </script>

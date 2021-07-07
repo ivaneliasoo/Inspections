@@ -3,8 +3,8 @@ using System;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Inspections.Infrastructure.Data.Migrations
 {
@@ -15,9 +15,53 @@ namespace Inspections.Infrastructure.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
+                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.Entity("Inspections.Core.Domain.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("AddressLine")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("AddressLine2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int>("LicenseId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LicenseId");
+
+                    b.ToTable("Addresses", "Inspections");
+                });
 
             modelBuilder.Entity("Inspections.Core.Domain.Address", b =>
                 {
@@ -60,34 +104,32 @@ namespace Inspections.Infrastructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Annotation")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsConfiguration")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastEditUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<int?>("ReportConfigurationId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("ReportId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -95,296 +137,418 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("CheckLists","Inspections");
+                    b.ToTable("CheckLists", "Inspections");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckListItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("CheckListId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Checked")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("Editable")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastEditUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Required")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Touched")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CheckListId");
 
-                    b.ToTable("CheckListItems","Inspections");
+                    b.ToTable("CheckListItems", "Inspections");
                 });
 
-            modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckListParam", b =>
+            modelBuilder.Entity("Inspections.Core.Domain.EMALicense", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("CheckListId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Amp")
+                        .HasColumnType("numeric");
 
-                    b.Property<int?>("CheckListItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Key")
+                    b.Property<string>("Contact")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("KVA")
+                        .HasColumnType("numeric");
 
                     b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastEditUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PersonInCharge")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Volt")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CheckListId");
-
-                    b.HasIndex("CheckListItemId");
-
-                    b.ToTable("CheckListParams","Inspections");
+                    b.ToTable("Licenses");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("FormName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Inactive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastEditUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("RemarksLabelText")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Type")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ReportsConfiguration","Inspections");
+                    b.ToTable("ReportsConfiguration", "Inspections");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.Note", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<bool>("Checked")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastEditUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<bool>("NeedsCheck")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("ReportId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("Notes","Inspections");
+                    b.ToTable("Notes", "Inspections");
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.OperationalReadings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<short>("EarthFaultA")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("EarthFaultELRA")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("EarthFaultELRSec")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("EarthFaultMA")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("EarthFaultSec")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<short>("MainBreakerAmp")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("MainBreakerCapacity")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("MainBreakerPoles")
+                        .HasColumnType("smallint");
+
+                    b.Property<bool>("OverCurrentByMainBreaker")
+                        .HasColumnType("boolean");
+
+                    b.Property<short>("OverCurrentDTLA")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("OverCurrentDTLSec")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("OverCurrentIDMTLA")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("OverCurrentIDMTLTm")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("RunningLoadL1")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("RunningLoadL2")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("RunningLoadL3")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("VoltageL1L2")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("VoltageL1L3")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("VoltageL1N")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("VoltageL2L3")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("VoltageL2N")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("VoltageL3N")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OperationalReadings");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.PhotoRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("FileName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("FileNameResized")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Label")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastEditUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("PhotoStorageId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhotoUrl")
+                        .HasColumnType("text");
 
                     b.Property<int>("ReportId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ThumbnailStorageId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("Photos","Inspections");
+                    b.ToTable("Photos", "Inspections");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.Report", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("Date")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("EMALicenseId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("FormName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsClosed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastEditUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<int?>("OperationalReadingsId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("RemarksLabelText")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Reports","Inspections");
+                    b.HasIndex("EMALicenseId");
+
+                    b.HasIndex("OperationalReadingsId");
+
+                    b.ToTable("Reports", "Inspections");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.SignaturesAggregate.Signature", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Annotation")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("Date")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Designation")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("DrawnSign")
+                        .HasColumnType("text");
 
                     b.Property<string>("DrawedSign")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsConfiguration")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastEditUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<short>("Order")
+                        .HasColumnType("smallint");
 
                     b.Property<bool>("Principal")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("ReportConfigurationId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("ReportId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -392,45 +556,125 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("Signatures","Inspections");
+                    b.ToTable("Signatures", "Inspections");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.User", b =>
                 {
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastEditUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<int?>("LastEditedReport")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("UserName");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Inspections.Core.QueryModels.ResumenCheckList", b =>
+                {
+                    b.Property<string>("Annotation")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TotalItems")
+                        .HasColumnType("integer");
+
+                    b.ToTable("ResumenCheckList", t => t.ExcludeFromMigrations());
+                });
+
+            modelBuilder.Entity("Inspections.Core.QueryModels.ResumenReportConfiguration", b =>
+                {
+                    b.Property<int>("DefinedCheckLists")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DefinedSignatures")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("FormName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Inactive")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("RemarksLabelText")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UsedByReports")
+                        .HasColumnType("integer");
+
+                    b.ToTable("ResumenReportConfiguration", t => t.ExcludeFromMigrations());
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.Address", b =>
+                {
+                    b.HasOne("Inspections.Core.Domain.EMALicense", "License")
+                        .WithMany()
+                        .HasForeignKey("LicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("License");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckList", b =>
@@ -442,6 +686,10 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.HasOne("Inspections.Core.Domain.ReportsAggregate.Report", "Report")
                         .WithMany("CheckList")
                         .HasForeignKey("ReportId");
+
+                    b.Navigation("Report");
+
+                    b.Navigation("ReportConfiguration");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckListItem", b =>
@@ -453,17 +701,31 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckListParam", b =>
+            modelBuilder.Entity("Inspections.Core.Domain.EMALicense", b =>
                 {
-                    b.HasOne("Inspections.Core.Domain.CheckListAggregate.CheckList", "CheckList")
-                        .WithMany("TextParams")
-                        .HasForeignKey("CheckListId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                    b.OwnsOne("Inspections.Shared.DateTimeRange", "Validity", b1 =>
+                        {
+                            b1.Property<int>("EMALicenseId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.HasOne("Inspections.Core.Domain.CheckListAggregate.CheckListItem", "CheckListItem")
-                        .WithMany("TextParams")
-                        .HasForeignKey("CheckListItemId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                            b1.Property<DateTime>("End")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.Property<DateTime>("Start")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("EMALicenseId");
+
+                            b1.ToTable("Licenses");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EMALicenseId");
+                        });
+
+                    b.Navigation("Validity")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.Note", b =>
@@ -486,73 +748,42 @@ namespace Inspections.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.Report", b =>
                 {
-                    b.OwnsOne("Inspections.Core.Domain.ReportsAggregate.EMALicense", "License", b1 =>
-                        {
-                            b1.Property<int>("ReportId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.HasOne("Inspections.Core.Domain.EMALicense", "License")
+                        .WithMany()
+                        .HasForeignKey("EMALicenseId");
 
-                            b1.Property<int>("LicenseType")
-                                .HasColumnType("int");
+                    b.HasOne("Inspections.Core.Domain.ReportsAggregate.OperationalReadings", "OperationalReadings")
+                        .WithMany()
+                        .HasForeignKey("OperationalReadingsId");
 
-                            b1.Property<string>("Number")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                    b.Navigation("License");
 
-                            b1.HasKey("ReportId");
-
-                            b1.ToTable("Reports");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ReportId");
-
-                            b1.OwnsOne("Inspections.Shared.DateTimeRange", "Validity", b2 =>
-                                {
-                                    b2.Property<int>("EMALicenseReportId")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("int")
-                                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                                    b2.Property<DateTime>("End")
-                                        .HasColumnType("datetime2");
-
-                                    b2.Property<DateTime>("Start")
-                                        .HasColumnType("datetime2");
-
-                                    b2.HasKey("EMALicenseReportId");
-
-                                    b2.ToTable("Reports");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("EMALicenseReportId");
-                                });
-                        });
+                    b.Navigation("OperationalReadings");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.SignaturesAggregate.Signature", b =>
                 {
-                    b.HasOne("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", "ReportConfiguration")
+                    b.HasOne("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", null)
                         .WithMany("SignatureDefinitions")
                         .HasForeignKey("ReportConfigurationId");
 
-                    b.HasOne("Inspections.Core.Domain.ReportsAggregate.Report", "Report")
+                    b.HasOne("Inspections.Core.Domain.ReportsAggregate.Report", null)
                         .WithMany("Signatures")
                         .HasForeignKey("ReportId");
 
-                    b.OwnsOne("Inspections.Core.Domain.SignaturesAggregate.Responsable", "Responsable", b1 =>
+                    b.OwnsOne("Inspections.Core.Domain.SignaturesAggregate.Responsible", "Responsible", b1 =>
                         {
                             b1.Property<int>("SignatureId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("text");
 
                             b1.Property<int>("Type")
-                                .HasColumnType("int");
+                                .HasColumnType("integer");
 
                             b1.HasKey("SignatureId");
 
@@ -561,6 +792,32 @@ namespace Inspections.Infrastructure.Data.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("SignatureId");
                         });
+
+                    b.Navigation("Responsible")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckList", b =>
+                {
+                    b.Navigation("Checks");
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", b =>
+                {
+                    b.Navigation("ChecksDefinition");
+
+                    b.Navigation("SignatureDefinitions");
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.Report", b =>
+                {
+                    b.Navigation("CheckList");
+
+                    b.Navigation("Notes");
+
+                    b.Navigation("PhotoRecords");
+
+                    b.Navigation("Signatures");
                 });
 #pragma warning restore 612, 618
         }

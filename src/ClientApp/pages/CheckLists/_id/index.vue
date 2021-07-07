@@ -9,7 +9,7 @@
       :description="selectedItemData.text"
       @yes="removeItem"
     />
-    <message-dialog v-model="dialogNew" 
+    <message-dialog v-model="dialogNew"
     :actions="['yes', 'cancel']"
     yes-text="Save"
     @yes="addItem"
@@ -87,7 +87,7 @@
           <v-subheader>
             Select an item to view/edit
             <v-spacer />
-            <v-btn class="mx-2" x-small 
+            <v-btn class="mx-2" x-small
             fab dark color="primary"
             @click="dialogNew = true">
               <v-icon dark>mdi-plus</v-icon>
@@ -189,6 +189,7 @@ import InnerPageMixin from "@/mixins/innerpage";
   }
 })
 export default class AddEditCheckList extends mixins(InnerPageMixin) {
+  [x: string]: any;
   $refs!: {
       obsNew: InstanceType<typeof ValidationObserver>
   }
@@ -198,7 +199,7 @@ export default class AddEditCheckList extends mixins(InnerPageMixin) {
   selectedItemData: CheckListItem | null = null
   newItemData: CheckListItem | null = { textParams: [] as CheckListParam[]} as CheckListItem
   currentCheckList: CheckList = {} as CheckList
-  
+
 
   headers: any = [
     {
@@ -268,7 +269,7 @@ export default class AddEditCheckList extends mixins(InnerPageMixin) {
     };
 
     const isValid = await this.$refs.obsNew.validate()
-    
+
     if(!isValid) return;
 
     await this.$store.dispatch("checklists/createCheckListItem", command, {
@@ -312,7 +313,7 @@ export default class AddEditCheckList extends mixins(InnerPageMixin) {
     else
       await this.$store.dispatch("checklists/createCheckList", addCommand, {
         root: false
-      }).then(resp => { 
+      }).then(resp => {
         this.$router.push({ name: 'CheckLists' })
       });
   }

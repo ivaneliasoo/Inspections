@@ -5,6 +5,7 @@ export interface AddReportConfigurationCommand {
     title: string;
     formName: string;
     remarksLabelText: string;
+    inactive: boolean;
     checksDefinition: number[];
     signatureDefinitions: number[];
 }

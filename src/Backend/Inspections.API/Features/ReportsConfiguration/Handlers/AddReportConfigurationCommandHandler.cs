@@ -33,13 +33,10 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             var checks = _context.Set<CheckList>()
                 .Where(s => request.ChecksDefinition.Contains(s.Id)) //TODO: Create Method in repository
                 .Include(p => p.Checks)
-                    .ThenInclude(p => p.TextParams)
-                .Include(p => p.TextParams)
                 .ToList();
 
             var signatures = _context.Signatures.Where(s => request.SignatureDefinitions.Contains(s.Id))
-                 .Include(p => p.Report)
-                .Include(p => p.Responsable)
+                .Include(p => p.Responsible)
                 .ToList();//TODO: Create Method in repository
 
             var repoConfig = new ReportConfiguration()
@@ -50,6 +47,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
                 FormName = request.FormName,
                 ChecksDefinition = PrepareForConfiguration(checks),
                 SignatureDefinitions = PrepareForConfiguration(signatures)
+                
             };
 
             var result = await _reportConfigurationsRepository.AddAsync(repoConfig).ConfigureAwait(false);

@@ -30,9 +30,10 @@ namespace Inspections.API.Features.Signatures.Handlers
             newSignature.Designation = request.Designation;
             newSignature.Date = request.Date;
             newSignature.Principal = request.Principal;
-            newSignature.Responsable = new Responsable() { Name = request.ResponsableName, Type = request.ResponsableType };
+            var determinedResponsableType = request.Title.Contains("LEW", StringComparison.OrdinalIgnoreCase) ? ResponsibleType.LEW : request.ResponsibleType;
+            newSignature.Responsible = new Responsible() { Name = request.ResponsibleName, Type = determinedResponsableType };
             newSignature.IsConfiguration = false;
-            newSignature.DrawedSign = request.DrawedSign;
+            newSignature.DrawnSign = request.DrawnSign;
 
             await _signaturesRepository.UpdateAsync(newSignature).ConfigureAwait(false);
 

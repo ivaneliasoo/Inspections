@@ -36,7 +36,7 @@
               />
             </ValidationProvider>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="10">
             <ValidationProvider rules="required" v-slot="{ errors }">
               <v-text-field
                 id="txtRemarksLabelText"
@@ -46,7 +46,12 @@
               />
             </ValidationProvider>
           </v-col>
-        </v-row> 
+          <v-col cols="2">
+            <v-switch v-model="newConfig.inactive">
+              Inactive
+            </v-switch>
+          </v-col>
+        </v-row>
       <v-row>
           <v-col cols="12" md="6">
               <ValidationProvider rules="required" v-slot="{ errors }">
@@ -106,14 +111,13 @@
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component, mixins } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import InnerPageMixin from '@/mixins/innerpage'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { ReportConfiguration, ReportType, CheckList, FilterType, Signature, AddReportConfigurationCommand } from '@/types'
+import { ReportConfiguration, ReportType, CheckList, FilterType, UpdateReportConfigurationCommand } from '@/types'
 import { CheckListsState } from '@/store/checklists'
 import { SignatureState } from '@/store/signatures'
-import { ReportConfigurationState } from '@/store/configurations'
-import { SignatureDTO } from '../../../types/Signatures/ViewModels/SignatureDTO'
+import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
 
 @Component({
     components: {
@@ -124,7 +128,7 @@ import { SignatureDTO } from '../../../types/Signatures/ViewModels/SignatureDTO'
 export default class AddEditReportConiguration extends mixins(InnerPageMixin){
     defaultType: ReportType = ReportType.Inspection
     newConfig!: ReportConfiguration
-    
+
     get checks (): CheckList[] {
         return (this.$store.state.checklists as CheckListsState)
         .checkLists
@@ -140,22 +144,31 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin){
     }
 
     async saveChanges() {
-        const command: AddReportConfigurationCommand = {
+      const self = this
+        const command: UpdateReportConfigurationCommand = {
+            id: parseInt(self.$route.params.id),
             type: this.newConfig.type,
             title: this.newConfig.title,
             formName: this.newConfig.formName,
             remarksLabelText: this.newConfig.formName,
+            inactive: this.newConfig.inactive,
             checksDefinition: this.newConfig.checksDefinition.flatMap(check => check.id),
             signatureDefinitions: this.newConfig.signatureDefinitions.flatMap(sign => sign.id)
         }
-        await this.$store.dispatch('configurations/createConfiguration', this.newConfig, { root: true })
+        if(parseInt(self.$route.params.id) >0) {
+          await this.$store.dispatch('configurations/updateConfiguration', command, { root: true })
           .then((resp) => {
-            if(parseInt(this.$route.params.id) > 0)
-              this.$store.dispatch('configurations/getConfigurationById', this.$route.params.id, { root: true })
+              this.$store.dispatch('configurations/getConfigurationById', self.$route.params.id, { root: true })
+          })
+        } else {
+          await this.$store.dispatch('configurations/createConfiguration', this.newConfig, { root: true })
+          .then((resp) => {
+            if(parseInt(self.$route.params.id) > 0)
+              this.$store.dispatch('configurations/getConfigurationById', self.$route.params.id, { root: true })
             else
               this.$router.push({ name: 'Configurations-id', params: { id: resp } })
           })
-        
+        }
     }
 
     async asyncData({ store, params }: any) {

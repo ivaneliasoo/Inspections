@@ -2,86 +2,25 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
-      color="indigo"
       expand-on-hover
-      mini-variant
+      :mini-variant="!$device.isMobile"
+      clipped
       app
-      dark
+      overflow
     >
-      <v-list dense>
-        <v-list-item class="px-2">
-          <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/men/85.jpg" />
-          </v-list-item-avatar>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="title">{{$auth.user.userName}}</v-list-item-title>
-            <v-list-item-subtitle>{{ $auth.user.name }} {{ $auth.user.lastName }} {{ $auth.user.isAdmin ? '(admin)':'' }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-        <v-divider />
-        <nuxt-link to="/">
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Home</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </nuxt-link>
-        <nuxt-link to="/">
-          <v-list-item>
-            <!-- <v-list-item-action>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-action> -->
-            <v-list-item-content>
-              <v-list-item-title>LEW Licensing</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </nuxt-link>
-         <nuxt-link to="/">
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon small>mdi-file</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Reporting</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </nuxt-link>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Risk Assessment</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Method of Statement</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Manpower Scheduling</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item v-if="$auth.user.isAdmin">
-            <v-list-item-content @click="$router.push('/master')">
-              <v-list-item-title>Master Setup</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-      </v-list>
+      <Menu />
     </v-navigation-drawer>
 
     <v-app-bar
       app
       color="indigo"
+      clipped-left
+      dense
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn v-if="canGoBack" icon @click.stop="$router.go(-1)">
-          <v-icon>mdi-arrow-left</v-icon>
+        <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-toolbar-title>Reporting</v-toolbar-title>
       <v-spacer />
@@ -114,7 +53,7 @@
           justify="center"
         >
           <v-col class="text-center">
-            <nuxt v-scroll="onScroll"/>
+            <nuxt v-scroll="onScroll" />
           </v-col>
         </v-row>
       </v-container>
@@ -139,17 +78,17 @@ export default class Default extends Vue {
   showScrollUpFab: boolean = false
   fab: boolean = false
 
-  onScroll(e: any) {
-    if (typeof window === 'undefined') return
-      const top = window.pageYOffset ||   e.target.scrollTop || 0
-      this.showScrollUpFab = top > 20
+  onScroll (e: any) {
+    if (typeof window === 'undefined') { return }
+    const top = window.pageYOffset || e.target.scrollTop || 0
+    this.showScrollUpFab = top > 20
   }
 
-  async logout() {
+  async logout () {
     await this.$auth.logout()
   }
 
-  get canGoBack() {
+  get canGoBack () {
     return (this.$store.state as RootState).canGoBack
   }
 }

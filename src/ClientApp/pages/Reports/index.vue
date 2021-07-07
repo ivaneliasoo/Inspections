@@ -10,68 +10,83 @@
       @no="dialogRemove=false"
     />
     <new-report-dialog v-model="dialog" />
-    <v-data-table :class="$device.isTablet ? 'tablet-text':''" :items="reportList" item-key="id" :search="filter" dense :headers="headers">
-      <template v-slot:top="{}">
+    <v-data-table
+      :class="$device.isTablet ? 'tablet-text':''"
+      :items="reportList"
+      item-key="id"
+      :search="filter"
+      dense
+      :headers="headers"
+      :loading="loading"
+    >
+      <template #top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Inspection Reports</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
           <grid-filter :filter.sync="filter" />
           <v-spacer />
-          <v-btn class="mx-2" x-small 
-            fab dark color="primary"
-            @click="dialog = true">
-              <v-icon dark>mdi-plus</v-icon>
+          <v-btn
+            class="mx-2"
+            x-small
+            fab
+            dark
+            color="primary"
+            @click="dialog = true"
+          >
+            <v-icon dark>
+              mdi-plus
+            </v-icon>
           </v-btn>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template #item.actions="{ item }">
         <v-tooltip top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
-              v-on="on"
-              :disabled="!item.isClosed || !item.photoRecords.length>0"
+              :disabled="!item.isClosed || !item.photosCount>0"
               color="primary"
               class="mr-2"
+              v-on="on"
               @click="printHelper.printCompoundedPhotoRecord(item.id)"
             >
               mdi-camera
             </v-icon>
-            </template>
-          <span>Print Report With Photos</span>
+          </template>
+          <span>Print Inspection Report With Photos</span>
         </v-tooltip>
         <v-tooltip top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
-              v-on="on"
               :disabled="!item.isClosed"
               color="primary"
               class="mr-2"
+              v-on="on"
               @click="printHelper.print(item.id)"
             >
               mdi-printer
             </v-icon>
-        </template>
-          <span>Print Report</span>
+          </template>
+          <span>Print Inspections Report without Photos</span>
         </v-tooltip>
         <v-tooltip top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
-              v-on="on"
               color="primary"
               class="mr-2"
+              v-on="on"
               @click="$router.push({ name: 'Reports-id', params: { id: item.id} })"
             >
               mdi-pencil
             </v-icon>
-        </template>
+          </template>
           <span>Edit</span>
         </v-tooltip>
         <v-tooltip top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
-              v-on="on"
               :disabled="item.isClosed"
               color="error"
+              v-on="on"
               @click="selectItem(item); dialogRemove = true"
             >
               mdi-delete
@@ -80,12 +95,12 @@
           <span>Delete</span>
         </v-tooltip>
         <v-tooltip v-if="$auth.user.isAdmin" top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
               v-if="$auth.user.isAdmin"
-              v-on="on"
               :disabled="item.isClosed"
               color="primary"
+              v-on="on"
               @click="$router.push(`/checklists?&configurationonly=false&reportid=${item.id}`)"
             >
               mdi-format-list-checks
@@ -94,12 +109,12 @@
           <span>Edit Checklist Configuration for this report</span>
         </v-tooltip>
         <v-tooltip v-if="$auth.user.isAdmin" top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
               v-if="$auth.user.isAdmin"
-              v-on="on"
               :disabled="item.isClosed"
               color="primary"
+              v-on="on"
               @click="$router.push(`/signatures?&configurationonly=false&reportid=${item.id}`)"
             >
               mdi-draw
@@ -108,25 +123,25 @@
           <span>Edit Signatures Configuration for this report</span>
         </v-tooltip>
       </template>
-      <template v-slot:item.date="{ item }">
+      <template #item.date="{ item }">
         {{ formatDate(item.date) }}
       </template>
-      <template v-slot:item.photoRecords="{ item }">
+      <template #item.photoRecords="{ item }">
         {{ item.photoRecords.length }}
       </template>
-      <template v-slot:item.notes="{ item }">
+      <template #item.notes="{ item }">
         {{ item.notes.length }}
       </template>
-      <template v-slot:item.checkList="{ item }">
+      <template #item.checkList="{ item }">
         {{ item.checkList.length }}
       </template>
-      <template v-slot:item.signatures="{ item }">
+      <template #item.signatures="{ item }">
         {{ item.signatures.length }}
       </template>
-      <template v-slot:item.completed="{ item }">
+      <template #item.completed="{ item }">
         <v-simple-checkbox v-model="item.completed" disabled />
       </template>
-      <template v-slot:item.isClosed="{ item }">
+      <template #item.isClosed="{ item }">
         <v-simple-checkbox v-model="item.isClosed" disabled />
       </template>
     </v-data-table>
@@ -135,14 +150,14 @@
 
 <script lang="ts">
 import moment from 'moment'
-import { Vue, Component, mixins } from 'nuxt-property-decorator'
-import InnerPageMixin from '@/mixins/innerpage'
+import { Component, mixins } from 'nuxt-property-decorator'
 
 import { ReportsState } from 'store/reportstrore'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { Report, CreateReport, ReportConfiguration, EMALicenseType, CheckList, Signature, ResponsableType, CheckValue } from '~/types'
+import InnerPageMixin from '@/mixins/innerpage'
 import { PrintHelper } from '@/Helpers'
 import CreateReportDialog from '@/components/NewReportDialog.vue'
+import { Report } from '~/types'
 
 @Component({
   components: {
@@ -155,47 +170,43 @@ import CreateReportDialog from '@/components/NewReportDialog.vue'
   }
 })
 export default class ReportsPage extends mixins(InnerPageMixin) {
+  loading: boolean = false
   printHelper!: PrintHelper
   dialogRemove: Boolean = false
   dialog: Boolean = false
   selectedItem: Report = {} as Report
   filter: String = ''
-  hostName: string= this.$axios!.defaults!.baseURL!.replace('/api','')
+  hostName: string= this.$axios!.defaults!.baseURL!.replace('/api', '')
     headers: any[] = [
       {
         text: 'Id',
         value: 'id',
         sortable: true,
-        align: 'center',
-        class: 'secundary'
+        align: 'center'
       },
       {
         text: 'Date',
         value: 'date',
         sortable: true,
-        align: 'center',
-        class: 'secundary'
+        align: 'center'
       },
       {
         text: 'Report Name',
         value: 'name',
         sortable: true,
-        align: 'left',
-        class: 'secundary'
+        align: 'left'
       },
       {
         text: 'Completed With Signatures',
         value: 'isClosed',
         sortable: true,
-        align: 'center',
-        class: 'secundary'
+        align: 'center'
       },
       {
         text: '',
         value: 'actions',
         sortable: false,
-        align: 'center',
-        class: 'secundary'
+        align: 'center'
       }
     ];
 
@@ -204,15 +215,18 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
         .reportList
     }
 
-    fetch ({ store, query }: any) {
-      store.dispatch('reportstrore/getReports', { filter: '', closed: query.closed }, { root: true })
+    async fetch () {
+      this.loading = true
+      await this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed }, { root: true })
+
+      this.loading = false
     }
 
-    mounted() {
+    mounted () {
       this.printHelper = new PrintHelper(this.$store)
     }
 
-    selectItem (item: Report): void{
+    selectItem (item: Report): void {
       this.selectedItem = item
     }
 

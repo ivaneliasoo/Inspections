@@ -1,6 +1,6 @@
 import { ActionTree, MutationTree } from 'vuex'
 import { RootState } from 'store'
-import { ReportConfiguration, AddReportConfigurationCommand } from '~/types'
+import { ReportConfiguration, AddReportConfigurationCommand, UpdateReportConfigurationCommand } from '~/types'
 
 export const state = () => ({
   configurations: [] as ReportConfiguration[]
@@ -26,12 +26,12 @@ export const actions: ActionTree<ReportConfigurationState, RootState> = {
   async createConfiguration ({ commit }, payload: AddReportConfigurationCommand) {
     return await this.$axios.$post(`reportconfiguration`, payload )
   },
-  async updateConfiguration ({ commit }, payload: AddReportConfigurationCommand) {
-    return await this.$axios.$put(`reportconfiguration`, payload )
+  async updateConfiguration ({ commit }, payload: UpdateReportConfigurationCommand) {
+    return await this.$axios.$put(`reportconfiguration/${payload.id}`, payload )
   },
   async deleteConfiguration ({ commit }, payload: number) {
-    return await this.$axios.$delete(`ReportConfiguration/${payload ?? 0}`, { data: { id: payload } } )
-      .then(resp => {
+    return await this.$axios.$delete(`reportconfiguration/${payload ?? 0}`)
+      .then(() => {
         commit('REMOVE_CONFIGURATION', payload)
       })
   }

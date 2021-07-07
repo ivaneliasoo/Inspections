@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Z.EntityFramework.Plus;
 
 namespace Inspections.Infrastructure.Repositories
 {
@@ -42,26 +41,15 @@ namespace Inspections.Infrastructure.Repositories
         {
             var result = await _context.ReportConfigurations
                 .Where(s => s.Id == id)
-                .IncludeOptimized(p => p.SignatureDefinitions.Where(s => s.IsConfiguration && s.ReportId == null && s.ReportConfigurationId == id))
-                .IncludeOptimized(p => p.ChecksDefinition.Where(cd => cd.IsConfiguration && cd.ReportId == null && cd.ReportConfigurationId == id))
-                .IncludeOptimized(p => p.ChecksDefinition.Where(cd => cd.IsConfiguration && cd.ReportId == null && cd.ReportConfigurationId == id)
-                .Select(sm => sm.Checks.Where(c => c.Text.Length > 0)))
-                .IncludeOptimized(p => p.ChecksDefinition.Where(cd => cd.IsConfiguration && cd.ReportId == null && cd.ReportConfigurationId == id)
-                .Select(sm => sm.TextParams.Where(c => c.Key.Length > 0)))
                 .SingleOrDefaultAsync();
-            
-            if(result != null)
-            {
-                //EF limitations make me do it this way
-                foreach (var check in result.ChecksDefinition)
-                {
-                    foreach (var checkItem in check.Checks)
-                    {
-                        var checksParams = _context.CheckListParams.Where(clp => clp.CheckListItemId == checkItem.Id).AsEnumerable();
-                        checkItem.TextParams.AddRange(checksParams);
-                    }
-                }
-            }
+
+            var signaturesDef = _context.Signatures.Where(s => s.IsConfiguration && s.ReportId == null && s.ReportConfigurationId == id);
+            var ChecksDef = _context.CheckLists.Where(s => s.IsConfiguration && s.ReportId == null)
+                .Include(c=>c.Checks)
+                .Where(s => s.IsConfiguration && s.ReportId == null && s.ReportConfigurationId == id);
+
+            result.SignatureDefinitions = signaturesDef.ToList();
+            result.ChecksDefinition = ChecksDef.ToList();
 
             return result;
         }

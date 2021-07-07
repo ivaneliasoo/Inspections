@@ -13,7 +13,7 @@ namespace Inspections.Core
     {
         private Report _report;
 
-        public ReportsBuilder(ReportConfiguration configuration)
+        public ReportsBuilder(ReportConfiguration configuration, string userName)
         {
             Guard.Against.Null(configuration, nameof(configuration));
 
@@ -22,10 +22,32 @@ namespace Inspections.Core
             _report = new Report(configuration.Title, configuration.FormName, configuration.RemarksLabelText ?? "Remarks");
 
             _report.AddCheckList(configuration.ChecksDefinition);
-            _report.AddSignature(configuration.SignatureDefinitions);
+            _report.AddSignature(configuration.SignatureDefinitions, userName);
+            
         }
 
         internal ReportConfiguration Configuration { get; private set; }
+
+        public ReportsBuilder WithOperationalReadings()
+        {
+            var or = new OperationalReadings
+            {
+                // TODO: this values should come from configuration
+                VoltageL1N = 230,
+                VoltageL2N = 230,
+                VoltageL3N = 230,
+                VoltageL1L2 = 400,
+                VoltageL1L3 = 400,
+                VoltageL2L3 = 400,
+                RunningLoadL1= 10,
+                RunningLoadL2 = 10,
+                RunningLoadL3 = 10,
+                MainBreakerCapacity = 3
+            };
+
+            _report.AddOperationalReadings(or);
+            return this;
+        }
 
         public ReportsBuilder AddChecklists(int[] checklistsIds)
         {
@@ -37,7 +59,7 @@ namespace Inspections.Core
         public ReportsBuilder AddSignatures(int[] signaturesIds)
         {
             var signatureToAdd = Configuration.SignatureDefinitions.Where(s => signaturesIds.Contains(s.Id))
-                                    .OrderByDescending(s => s.Principal);
+                                    .OrderByDescending(s => s.Order);
             _report.AddSignature(signatureToAdd.AsEnumerable());
 
             return this;
@@ -56,7 +78,7 @@ namespace Inspections.Core
             {
                 Text = "Premise owner to rectify items marked \"not acceptable\"",
                 NeedsCheck = true,
-                Checked = false
+                Checked = true
             };
 
             _report.AddNote(note);

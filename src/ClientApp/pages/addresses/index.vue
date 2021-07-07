@@ -17,9 +17,9 @@
       :headers="headers"
       :class="$device.isTablet ? 'tablet-text':''"
     >
-      <template v-slot:top="{}">
+      <template #top="{}">
         <v-toolbar flat color="white">
-          <v-toolbar-title>Addresss</v-toolbar-title>
+          <v-toolbar-title>Addresses</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
           <grid-filter :filter.sync="filter.filterText" />
           <v-spacer />
@@ -29,9 +29,11 @@
             fab
             dark
             color="primary"
-            @click="dialog = true; isNew = true; item = { id: 0, addressLine2: '' }"
+            @click="dialog = true; isNew = true; item = { id: 0, country: 'Singapore', addressLine2: '' }"
           >
-            <v-icon dark>mdi-plus</v-icon>
+            <v-icon dark>
+              mdi-plus
+            </v-icon>
           </v-btn>
           <v-dialog
             v-model="dialog"
@@ -40,7 +42,7 @@
             :fullscreen="$vuetify.breakpoint.smAndDown"
             :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'"
           >
-            <ValidationObserver tag="form" v-slot="{ valid, reset }">
+            <ValidationObserver v-slot="{ valid, reset }" tag="form">
               <v-card>
                 <v-card-title>
                   <span class="headline">Edit Address</span>
@@ -48,13 +50,27 @@
                 <v-card-text>
                   <v-container>
                     <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="12">
-                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+                      <v-col cols="12" md="6">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                          <v-autocomplete
+                            v-model="item.licenseId"
+                            :items="licenses"
+                            item-text="number"
+                            item-value="licenseId"
+                            :error-messages="errors"
+                            autocomplete="nope"
+                            label="Electrical License"
+                            hint="Select a License From the List"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="6">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
                           <v-textarea
                             v-model="item.addressLine"
                             autocomplete="nope"
                             name="addressLine"
-                            rows="2"
+                            rows="1"
                             :error-messages="errors"
                             label="Address"
                           />
@@ -62,38 +78,46 @@
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
-                      <v-col>
-                          <v-textarea
-                            v-model="item.addressLine2"
-                            autocomplete="nope"
-                            rows="2"
-                            name="addressLine2"
-                            label="Address Additional"
-                          />
+                      <v-col cols="12" md="4">
+                        <v-text-field
+                          v-model="item.unit"
+                          autocomplete="nope"
+                          name="unit"
+                          label="Unit"
+                        />
                       </v-col>
-                      <v-col>
-                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
+                      <v-col cols="12" md="4">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
                           <v-text-field
-                            v-model="item.city"
+                            v-model="item.country"
                             autocomplete="nope"
                             :error-messages="errors"
-                            name="city"
-                            label="City"
+                            name="country"
+                            label="Country"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                          <v-text-field
+                            v-model="item.postalCode"
+                            autocomplete="nope"
+                            :error-messages="errors"
+                            name="postalCode"
+                            label="Postal Code"
                           />
                         </ValidationProvider>
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="12">
-                        <ValidationProvider rules="required" immediate v-slot="{ errors }">
-                          <v-text-field
-                            v-model="item.province"
-                            autocomplete="nope"
-                            :error-messages="errors"
-                            name="province"
-                            label="Province"
-                          />
-                        </ValidationProvider>
+                      <v-col>
+                        <v-textarea
+                          v-model="item.addressLine2"
+                          autocomplete="nope"
+                          rows="2"
+                          name="addressLine2"
+                          label="Other Remark"
+                        />
                       </v-col>
                     </v-row>
                   </v-container>
@@ -106,37 +130,45 @@
                     :loading="loading"
                     :disabled="!valid"
                     @click="upsertAddress()"
-                  >Save</v-btn>
+                  >
+                    Save
+                  </v-btn>
                   <v-btn
                     color="default"
                     text
-                    @click="reset(); item = { id: 0, addressLine2: '' }; dialog = false"
-                  >Cancel</v-btn>
+                    @click="reset(); item = { id: 0, country: 'Singapore', addressLine2: '' }; dialog = false"
+                  >
+                    Cancel
+                  </v-btn>
                 </v-card-actions>
               </v-card>
             </ValidationObserver>
           </v-dialog>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template #item.actions="{ item }">
         <v-tooltip v-if="$auth.user.isAdmin" top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
-              v-on="on"
               color="primary"
               class="mr-2"
+              v-on="on"
               @click="selectItem(item); isNew = false; dialog = true"
-            >mdi-pencil</v-icon>
+            >
+              mdi-pencil
+            </v-icon>
           </template>
           <span>Edit</span>
         </v-tooltip>
         <v-tooltip v-if="$auth.user.isAdmin" top>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-icon
-              v-on="on"
               color="error"
+              v-on="on"
               @click="selectItem(item); dialogRemove = true"
-            >mdi-delete</v-icon>
+            >
+              mdi-delete
+            </v-icon>
           </template>
           <span>Delete</span>
         </v-tooltip>
@@ -145,106 +177,112 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, mixins } from "nuxt-property-decorator";
-import { ValidationObserver, ValidationProvider } from "vee-validate";
-import InnerPageMixin from "@/mixins/innerpage";
-import { AddressesState } from "store/addresses";
-import { AddressDTO } from "@/types/Addresses";
+import { Component, mixins } from 'nuxt-property-decorator'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import { AddressesState } from 'store/addresses'
+import { LicensesState } from 'store/licenses'
+import InnerPageMixin from '@/mixins/innerpage'
+import { AddressDTO } from '@/types/Addresses'
 
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-  },
+    ValidationProvider
+  }
 })
 export default class AddressesAdmin extends mixins(InnerPageMixin) {
   dialog: boolean = false;
   dialogRemove: boolean = false;
   loading: boolean = false;
-  
+
   filter: any = {
-    filterText: "",
+    filterText: ''
   };
+
   headers: any[] = [
     {
-      text: "ID",
-      value: "id",
+      text: 'ID',
+      value: 'id',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "Address",
-      value: "addressLine",
+      text: 'Address',
+      value: 'addressLine',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "Address 2",
-      value: "addressLine2",
+      text: 'Unit',
+      value: 'unit',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "City",
-      value: "city",
+      text: 'Country',
+      value: 'country',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "Province",
-      value: "province",
+      text: 'Postal Code',
+      value: 'postalCode',
       sortable: true,
-      align: "left",
+      align: 'left'
     },
     {
-      text: "",
-      value: "actions",
+      text: '',
+      value: 'actions',
       sortable: false,
-      align: "left",
-    },
+      align: 'left'
+    }
   ];
+
   selectedItem: AddressDTO = {} as AddressDTO;
   item: any = { principal: false };
   isNew: boolean = false;
 
-  get addresses(): AddressDTO[] {
-    return (this.$store.state.addresses as AddressesState).addressList;
+  get addresses (): AddressDTO[] {
+    return (this.$store.state.addresses as AddressesState).addressList
   }
 
-  selectItem(item: AddressDTO): void {
-    this.selectedItem = item;
+  get licenses () {
+    return (this.$store.state.licenses as LicensesState).licensesList
+  }
+
+  selectItem (item: AddressDTO): void {
+    this.selectedItem = item
     this.$store
-      .dispatch("addresses/getAddressById", this.selectedItem.id, {
-        root: true,
+      .dispatch('addresses/getAddressById', this.selectedItem.id, {
+        root: true
       })
-      .then((resp) => (this.item = resp));
+      .then(resp => (this.item = resp))
   }
 
-  async fetch() {
-    if (!this.$auth.user.isAdmin)
-      this.$nuxt.error({ statusCode: 403, message: "Forbbiden" });
-    await this.$store.dispatch("addresses/getAddresses", {}, { root: true });
+  async fetch () {
+    if (!this.$auth.user.isAdmin) { this.$nuxt.error({ statusCode: 403, message: 'Forbidden' }) }
+
+    Promise.all([await this.$store.dispatch('addresses/getAddresses', {}, { root: true }),
+      await this.$store.dispatch('licenses/getLicenses', {}, { root: true })])
   }
 
-  deleteAddress() {
+  deleteAddress () {
     this.$store
-      .dispatch("addresses/deleteAddress", this.selectedItem.id, { root: true })
+      .dispatch('addresses/deleteAddress', this.selectedItem.id, { root: true })
       .then(() => {
-        this.dialog = false;
-      });
+        this.dialog = false
+      })
   }
 
-  async upsertAddress() {
-    this.loading = true;
-    if (!this.isNew)
-      await this.$store.dispatch("addresses/updateAddress", this.item, { root: true });
-    else {
-      await this.$store.dispatch("addresses/createAddress", this.item, { root: true });
-      await this.$store.dispatch("addresses/getAddresses", {}, { root: true });
+  async upsertAddress () {
+    this.loading = true
+    if (!this.isNew) { await this.$store.dispatch('addresses/updateAddress', this.item, { root: true }) } else {
+      await this.$store.dispatch('addresses/createAddress', this.item, { root: true })
+      await this.$store.dispatch('addresses/getAddresses', {}, { root: true })
     }
-    this.dialog = false;
-    this.isNew = true;
-    this.loading = false;
+    this.dialog = false
+    this.isNew = true
+    this.loading = false
   }
 }
 </script>

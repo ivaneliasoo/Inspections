@@ -14,9 +14,10 @@
       item-key="id"
       :headers="headers"
       :class="$device.isTablet ? 'tablet-text':''"
+      :loading="loading"
       dense
     >
-      <template v-slot:top="{}">
+      <template #top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Manage Reports Configurations</v-toolbar-title>
           <v-divider
@@ -26,14 +27,21 @@
           />
           <grid-filter :filter.sync="filter" />
           <v-spacer />
-          <v-btn class="mx-2" x-small 
-            fab dark color="primary"
-            @click="$router.push({ name: 'Configurations-id', params: { id: -1 } })">
-              <v-icon dark>mdi-plus</v-icon>
+          <v-btn
+            class="mx-2"
+            x-small
+            fab
+            dark
+            color="primary"
+            @click="$router.push({ name: 'Configurations-id', params: { id: -1 } })"
+          >
+            <v-icon dark>
+              mdi-plus
+            </v-icon>
           </v-btn>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template #item.actions="{ item }">
         <v-icon
           color="primary"
           class="mr-2"
@@ -48,7 +56,7 @@
           mdi-delete
         </v-icon>
       </template>
-      <template v-slot:item.type="{ item }">
+      <template #item.type="{ item }">
         {{ item.type === 0 ? 'Inspection':'Unkown' }}
       </template>
     </v-data-table>
@@ -56,12 +64,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, mixins } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import InnerPageMixin from '@/mixins/innerpage'
 import { ReportConfigurationState } from 'store/configurations'
-import { ReportConfiguration } from '~/types'
 import GridFilter from '@/components/GridFilter.vue'
-import AlertDialog from '@/components/AlertDialog.vue'
+import { ReportConfiguration } from '~/types'
 
 @Component({
   components: {
@@ -72,6 +79,7 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
   dialogRemove: boolean =false
   selectedItem: ReportConfiguration = {} as ReportConfiguration
   filter: string = ''
+  loading: boolean = false
   headers: any[] = [
     {
       text: 'Id',
@@ -142,14 +150,17 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
     return (this.$store.state.configurations as ReportConfigurationState).configurations
   }
 
-  deleteConfig() {
-    this.$store.dispatch('configurations/deleteConfiguration', this.selectedItem.id, { root: false })
+  async deleteConfig () {
+    await this.$store.dispatch('configurations/deleteConfiguration', this.selectedItem.id, { root: false })
   }
 
-  fetch ({ store, error, $auth }: any) {
-    if(!$auth.user.isAdmin)
-      error({ statusCode: 403, message: 'Forbbiden' })
-    store.dispatch('configurations/getConfigurations', '', { root: true })
+  async fetch () {
+    if (!this.$auth.user.isAdmin) {
+      this.$nuxt.error({ statusCode: 403, message: 'Forbbiden' })
+    }
+    this.loading = true
+    await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
+    this.loading = false
   }
 }
 </script>

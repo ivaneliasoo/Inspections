@@ -1,6 +1,7 @@
 
 export enum CheckValue {
-    False,
-    True,
-    NA
+    NotAcceptable,
+    Acceptable,
+    NotApplicable,
+    None
 }

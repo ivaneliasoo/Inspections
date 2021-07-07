@@ -1,25 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.Features.Inspections.Commands;
-using Inspections.Core.Domain.ReportConfigurationAggregate;
-using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces;
-using Inspections.Shared;
+using Inspections.Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inspections.API.Features.Reports.Handlers
 {
     public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, bool>
     {
         private readonly IReportsRepository _reportsRepository;
+        private readonly InspectionsContext _context;
 
-        public UpdateReportCommandHandler(IReportsRepository reportsRepository)
+        public UpdateReportCommandHandler(IReportsRepository reportsRepository, InspectionsContext context)
         {
             _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task<bool> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
@@ -27,14 +27,13 @@ namespace Inspections.API.Features.Reports.Handlers
             Guard.Against.Null(request, nameof(request));
             var report = await _reportsRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
             var reportName = $"{request.Date:yyyyMMdd}-{report.Title}-{request.LicenseNumber}-{request.Address}";
-            report.Edit(reportName, request.Address, new EMALicense
-            {
-                LicenseType = EMALicenseType.NA, //No Apply
-                Number = request.LicenseNumber,
-                Validity = new DateTimeRange(DateTime.Now, DateTime.Now.AddYears(1))
-            }, request.Date);
+            var license = _context.Licenses.AsNoTracking().Where(l => l.Number == request.LicenseNumber).FirstOrDefault();
+            if (license is null)
+                throw new Exception($"Conflict. can't find License {request.LicenseNumber}");
 
-            if (request.IsClosed)
+            report.Edit(reportName, request.Address, license, request.Date); ;
+
+            if (!report.IsClosed && request.IsClosed)
             {
                 report.Close();
             }

@@ -10,11 +10,8 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
 {
     public class ReportEntityTypeConfiguration : IEntityTypeConfiguration<Report>
     {
-        private readonly IUserNameResolver _userNameResolver;
-
-        public ReportEntityTypeConfiguration(IUserNameResolver userNameResolver)
+        public ReportEntityTypeConfiguration()
         {
-            this._userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
         }
 
         public void Configure(EntityTypeBuilder<Report> builder)
@@ -23,16 +20,6 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.ToTable("Reports", InspectionsContext.DEFAULT_SCHEMA);
             builder.Ignore(p => p.DomainEvents);
             builder.HasKey(p => p.Id);
-            builder.OwnsOne(p => p.License, ir =>
-            {
-                ir.Property(p => p.Number).IsRequired();
-                ir.Property(p => p.LicenseType).IsRequired();
-                ir.OwnsOne(p => p.Validity, l =>
-                {
-                    l.Property(p => p.Start).IsRequired();
-                    l.Property(p => p.End).IsRequired();
-                });
-            });
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.Address).IsRequired();
             builder.Property(p => p.Date).IsRequired();
