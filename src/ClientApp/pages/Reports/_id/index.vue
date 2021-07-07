@@ -666,6 +666,7 @@
 <script lang="ts">
 import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import InnerPageMixin from '@/mixins/innerpage'
 import { PrintHelper } from '@/Helpers'
 import { AddressesState } from '@/store/addresses'
 import { AddNoteCommand, AddressDTO, CheckListItemQueryResult, NoteQueryResult, ReportQueryResult, EditSignatureCommand, UpdateReportCommand, CheckValue, EditNoteCommand, UpdateCheckListItemCommand } from '@/services/api'
@@ -673,17 +674,16 @@ import { useNotifications } from '@/composables/use-notifications'
 
 const { notify } = useNotifications()
 
-
-  savingNewReport: boolean = false
-  currentPhoto: number = 0
-  showLabelEdit:number[] = []
-  showUpdateCheck: { parentIndex:number, currentIndex:number }[] =[]
-  tabs: any = 0;
-  dialogClose: boolean = false;
-  currentReport: Report = {} as Report;
-  emaTypes: any = Object.keys(EMALicenseType)
-    .map((key: any) => {
-      if (!isNaN(Number(key.toString()))) return;
+@Component({
+  components: {
+    ValidationObserver,
+    ValidationProvider
+  }
+})
+export default class EditReport extends mixins(InnerPageMixin) {
+  $refs!: {
+    obs: InstanceType<typeof ValidationObserver>;
+  };
 
   errorsDialog: boolean = false;
   dialogPrinting: boolean = false;
@@ -711,17 +711,6 @@ const { notify } = useNotifications()
 
   get hasPendingChanges () {
     return this.$store.state.showFabSaveButton
-  }
-  get localAddress(): AddressDTO[] {
-    return [{ formatedAddress: this.currentReport.address }]
-  }
-  get addresses(): AddressDTO[] {
-    const dbAddressses = (this.$store.state.addresses as AddressesState).addressList;
-
-    if(dbAddressses.length >0)
-      return dbAddressses
-
-    return this.localAddress
   }
 
   get localAddress (): AddressDTO[] {
