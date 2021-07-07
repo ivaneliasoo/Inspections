@@ -5,7 +5,7 @@
       "src": "nuxt.config.js",
       "use": "@nuxtjs/vercel-builder",
       "config": {
-        "serverFiles": ["yarn.lock","static/**"]
+        "serverFiles": ["package.json","static/**"]
       }
     }
   ],
