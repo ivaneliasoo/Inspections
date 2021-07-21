@@ -2,7 +2,7 @@
 {
     public class StorageItem
     {
-        public string Path { get; set; }
+        public string Path { get; set; } = default!;
         public string? CloudId { get; set; }
     }
 }
