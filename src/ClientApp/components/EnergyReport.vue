@@ -592,7 +592,7 @@
                     </td>
                     <td>
                       {{ template.categories[item.num].title }}
-                      <!-- <v-select dense flat 
+                      <!-- <v-select dense flat
                           :items="template.categories"
                           item-text="title"
                           item-value="title"
@@ -629,7 +629,7 @@
                     </td>
                     <td style="height=20px;">
                       {{ template.categories[item.num].title }}
-                      <!-- <v-select dense flat 
+                      <!-- <v-select dense flat
                           :items="template.categories"
                           item-text="title"
                           item-value="title"
@@ -669,7 +669,7 @@
               label="Include second page"
               v-model="editedPage2.include"
               hide-details
-            ></v-checkbox>                
+            ></v-checkbox>
             <v-text-field
               v-model="editedPage2.title" label="Title"
             ></v-text-field>
@@ -680,37 +680,37 @@
               label="Paragraph 1"
               rows=2
               clearable
-              clear-icon="mdi-close-circle"                  
+              clear-icon="mdi-close-circle"
               v-model="editedPage2.p1"
-            ></v-textarea>                
+            ></v-textarea>
             <v-textarea
               label="Paragraph 2"
               rows=2
               clearable
-              clear-icon="mdi-close-circle"                  
+              clear-icon="mdi-close-circle"
               v-model="editedPage2.p2"
-            ></v-textarea>                
+            ></v-textarea>
             <v-textarea
               label="Paragraph 3"
               rows=2
               clearable
-              clear-icon="mdi-close-circle"                  
+              clear-icon="mdi-close-circle"
               v-model="editedPage2.p3"
-            ></v-textarea>                
+            ></v-textarea>
             <v-textarea
               label="Paragraph 4"
               rows=2
               clearable
-              clear-icon="mdi-close-circle"                  
+              clear-icon="mdi-close-circle"
               v-model="editedPage2.p4"
-            ></v-textarea>                
+            ></v-textarea>
             <v-textarea
               label="Paragraph 5"
               rows=2
               clearable
-              clear-icon="mdi-close-circle"                  
+              clear-icon="mdi-close-circle"
               v-model="editedPage2.p5"
-            ></v-textarea>                
+            ></v-textarea>
           </v-form>
         </v-card-text>
 
@@ -724,7 +724,7 @@
           </v-btn>
           <v-btn color="blue darken-1" text @click="savePage2">
             Save
-          </v-btn>          
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog> -->
@@ -1316,7 +1316,7 @@ export default {
       }
       const str = JSON.stringify(this.templates)
       this.$axios({
-        endpoint: this.endpoint('category'),
+        url: this.endpoint('category'),
         method: 'post',
         data: str,
         headers: configHeaders
