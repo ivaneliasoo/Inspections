@@ -1,13 +1,10 @@
 
-export function minMax(data, col, limits) {
-  for (var i=0; i<data.length; i++) {
-    const value = data[i][col];
-    if (value < limits.min) {
-      limits.min = value;
-    }
-    if (value > limits.max) {
-      limits.max = value;
-    }
+export function minMax(data, limits) {
+  if (data.min < limits.min) {
+    limits.min = data.min;
+  }
+  if (data.max > limits.max) {
+    limits.max = data.max;
   }
   return limits;
 }
@@ -23,7 +20,9 @@ export function timePercent(data, col, limits) {
   return (inCount/data.length)*100;
 }
 
-export function sepLineChartOptions(csvData, category, suffix) {
+let peakLabelPos = ['start', 'middle', 'end'];
+
+export function sepLineChartOptions(csvData, minMaxData, category, suffix, legendOpt) {
 
   const seriesInfo = category.mappings;
   var series = [];
@@ -34,11 +33,14 @@ export function sepLineChartOptions(csvData, category, suffix) {
   var colors = [];
 
   const slen = seriesInfo.length;
+
   for (var i=0; i<slen; i++) {
     const col = category.factor ?
        seriesInfo[i].col + suffix :
        seriesInfo[i].col;
-    legend.push(col);
+
+    const label = legendOpt === "use-param-name" ? seriesInfo[i].param : col;
+    legend.push(label);
 
     colors.push(seriesInfo[i].color);
 
@@ -58,7 +60,9 @@ export function sepLineChartOptions(csvData, category, suffix) {
           if (!date) {
             return "";
           }
-          var str = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+          var str = ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + 
+              ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + 
+              date.getFullYear()
           return str;
         }
       },
@@ -83,12 +87,12 @@ export function sepLineChartOptions(csvData, category, suffix) {
       }
     }    
 
-    var limits = { min: Number.MAX_VALUE, max: Number.MIN_VALUE };
+    let limits = { min: Number.MAX_VALUE, max: Number.MIN_VALUE };
     const chartLimits = category.chartLimits;
     if (chartLimits.enable) {
       limits = { min: parseFloat(chartLimits.ymin), max: parseFloat(chartLimits.ymax) };
     }    
-    minMax(csvData, col, limits);
+    minMax(minMaxData[col], limits);
 
     if (markLine.data.length == 0) {
       markLine.data.push({ yAxis: limits.min, lineStyle: { color: "red", type: 'solid' } }),
@@ -103,21 +107,25 @@ export function sepLineChartOptions(csvData, category, suffix) {
 
     const percentMargin = 0.1;
     const margin = (limits.max - limits.min) * percentMargin;
-  
+
+    const decimals = Math.abs(limits.min) < 1 ? 3 : 2;
+    markLine.precision = decimals;
+    
     yaxis.push({
       name: category.yAxisName ? `[${category.yAxisName}]` : "",
       nameLocation: 'center',
       nameGap: 40,
       type: 'value',
-      min: (limits.min - margin).toFixed(2),
-      max: (limits.max + margin).toFixed(2),
+      min: (limits.min - margin).toFixed(decimals),
+      max: (limits.max + margin).toFixed(decimals),
       show: true,
       gridIndex: i
     })
     series.push({
         xAxisIndex: i,
         yAxisIndex: i,
-        name: col, type: 'line', symbol: 'none', z: slen-i, 
+        // name: col, type: 'line', symbol: 'none', z: slen-i, 
+        name: label, type: 'line', symbol: 'none', z: slen-i, 
         encode: { x: 'index', y: col },
         markLine: markLine
     })
@@ -151,7 +159,7 @@ export function sepLineChartOptions(csvData, category, suffix) {
   }
 }
 
-export function lineChartOptions(csvData, category, suffix) {
+export function lineChartOptions(csvData, minMaxData, category, suffix, legendOpt) {
 
   const seriesInfo = category.mappings;
   var series = [];
@@ -175,6 +183,7 @@ export function lineChartOptions(csvData, category, suffix) {
   }    
 
   var limits = { min: Number.MAX_VALUE, max: Number.MIN_VALUE };
+
   const chartLimits = category.chartLimits;
   if (chartLimits.enable) {
     limits = { min: parseFloat(chartLimits.ymin), max: parseFloat(chartLimits.ymax) };
@@ -185,14 +194,23 @@ export function lineChartOptions(csvData, category, suffix) {
     const col = category.factor ?
        seriesInfo[i].col + suffix :
        seriesInfo[i].col;
-    legend.push(col);
+    const label = legendOpt === "use-param-name" ? seriesInfo[i].param : col;
+    legend.push(label);
     colors.push(seriesInfo[i].color);
 
-    minMax(csvData, col, limits);
+    minMax(minMaxData[col], limits);
+
     series.push({
-        name: col, type: 'line', symbol: 'none', z: slen-i, 
+        // name: col, type: 'line', symbol: 'none', z: slen-i, 
+        name: label, type: 'line', symbol: 'none', z: slen-i, 
         encode: { x: 'index', y: col }
     })
+
+    if (seriesInfo[i].showPeaks) {
+      let idx = minMaxData[col].maxIndex;
+      markLine.data.push({ name: 'col', xAxis: idx, label: {show: false},
+          lineStyle: { color: seriesInfo[i].color, type: 'solid', width: 2 } })
+    }
   }
 
   if (markLine.data.length == 0) {
@@ -204,7 +222,10 @@ export function lineChartOptions(csvData, category, suffix) {
   } else if (markLine.data.length == 4) {
     limits.min = Math.min(limits.min, markLine.data[0].yAxis, markLine.data[2].yAxis)
     limits.max = Math.max(limits.max, markLine.data[1].yAxis, markLine.data[3].yAxis)
-  } 
+  }
+
+  const decimals = Math.abs(limits.min) < 1 ? 3 : 2;
+  markLine.precision = decimals;  
 
   series[0].markLine = markLine;
 
@@ -241,7 +262,9 @@ export function lineChartOptions(csvData, category, suffix) {
           if (!date) {
             return "";
           }
-          var str = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+          var str = ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' +
+              ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + 
+              date.getFullYear()
           return str;
         }
       }
@@ -258,7 +281,7 @@ export function lineChartOptions(csvData, category, suffix) {
   }
 }
 
-export function histogramOptions(category, binValues, binCount) {
+export function histogramOptions(category, binValues, binCount, label) {
   return {
     title: {
       text: category.histogramTitle,
@@ -269,7 +292,7 @@ export function histogramOptions(category, binValues, binCount) {
     },
     color: [ category.histoColor ],
     xAxis: {
-      name: category.yAxisName ? `[${category.yAxisName}]` : "",
+      name: label,
       nameLocation: 'center',
       nameGap: 40,
       type: 'category',

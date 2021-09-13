@@ -18,28 +18,28 @@
                   </v-list-item-content>
                 </v-list-item>
                 <v-list dense flat class="text-left">
-                  <v-list-item @click="newReport">
+                  <v-list-item @click="openReportDialog">
+                    <v-list-item-icon>
+                      <v-icon>mdi-file-pdf-box</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title>Report</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item @click="newTemplate">
                     <v-list-item-icon>
                       <v-icon>mdi-new-box</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>New report</v-list-item-title>
+                      <v-list-item-title>New template</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item @click="loadReport">
+                  <v-list-item @click="loadTemplate">
                     <v-list-item-icon>
                       <v-icon>mdi-open-in-new</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>Load report</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="openCover">
-                    <v-list-item-icon>
-                      <v-icon>mdi-pencil</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title>Edit Cover</v-list-item-title>
+                      <v-list-item-title>Load template</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                   <v-list-item @click="openPage2">
@@ -47,7 +47,7 @@
                       <v-icon>mdi-pencil</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>Edit Page 2</v-list-item-title>
+                      <v-list-item-title>Report Summary</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                   <v-list-item @click="openCalcColumns">
@@ -58,14 +58,14 @@
                       <v-list-item-title>Calculated Columns</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item @click="saveTemplates">
+                  <!-- <v-list-item @click="saveTemplates(true)">
                     <v-list-item-icon>
                       <v-icon>mdi-content-save</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
                       <v-list-item-title>Save Templates</v-list-item-title>
                     </v-list-item-content>
-                  </v-list-item>
+                  </v-list-item> -->
                   <v-list-item @click="doReport">
                     <v-list-item-icon>
                       <v-icon>mdi-view-dashboard</v-icon>
@@ -127,7 +127,7 @@
       </v-col>
     </v-row>
 
-    <v-dialog v-model="dialog" max-width="980px">
+    <v-dialog v-model="dialog" max-width="1000px">
       <v-card>
         <v-card-title>
           <span class="mx-2 headline">{{ formTitle }}</span>
@@ -259,9 +259,6 @@
                             v-model="editedItem.text.reqHeader3"
                           ></v-text-field>
                         </th>
-                        <!-- <th class="my-0 py-0 text-left">
-                          Result
-                        </th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -285,7 +282,6 @@
                           <v-text-field v-model="item.ymax"></v-text-field>
                         </td>
                         <td width="260">
-                          <!-- <v-text-field v-model="item.value1"></v-text-field> -->
                           <v-select
                             dense
                             flat
@@ -295,7 +291,6 @@
                           </v-select>
                         </td>
                         <td width="260">
-                          <!-- <v-text-field v-model="item.value2"></v-text-field> -->
                           <v-select
                             dense
                             flat
@@ -305,7 +300,6 @@
                           </v-select>
                         </td>
                         <td width="260">
-                          <!-- <v-text-field v-model="item.value3"></v-text-field> -->
                           <v-select
                             dense
                             flat
@@ -314,9 +308,6 @@
                           >
                           </v-select>
                         </td>
-                        <!-- <td width="80">
-                          <v-text-field v-model="item.result"></v-text-field>
-                        </td> -->
                       </tr>
                     </tbody>
                   </template>
@@ -441,8 +432,10 @@
                       <template dense v-slot:default>
                         <thead>
                           <tr>
-                            <th class="text-left" width="43%">Columns</th>
-                            <th class="text-left" width="35%">Color</th>
+                            <th class="text-left" width="26%">Parameter</th>
+                            <th class="text-left" width="29%">Column</th>
+                            <th class="text-left" width="8%">Peaks</th>
+                            <th class="text-left" width="20%">Color</th>
                             <th class="text-left"></th>
                             <th class="text-left"></th>
                           </tr>
@@ -454,6 +447,13 @@
                             :key="item.series"
                           >
                             <td>
+                              <v-text-field
+                                dense
+                                v-model="item.param"
+                              >
+                            </v-text-field>
+                            </td>                          
+                            <td>
                               <v-select
                                 dense
                                 flat
@@ -461,6 +461,11 @@
                                 v-model="item.col"
                               >
                               </v-select>
+                            </td>
+                            <td>
+                              <v-checkbox
+                                v-model="item.showPeaks"
+                              ></v-checkbox>
                             </td>
                             <td>
                               <v-select
@@ -489,7 +494,7 @@
                     </v-simple-table>
                   </v-col>
                   <v-col cols="2">
-                    <v-btn @click="addChartColumn"> Add Column </v-btn>
+                    <v-btn small @click="addChartColumn"> Add Column </v-btn>
                   </v-col>
                 </v-row>
               </v-container>
@@ -498,59 +503,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-          <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="showCover" max-width="800px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">Cover</span>
-        </v-card-title>
-        <v-card-text>
-          <v-form>
-            <v-text-field
-              v-model="editedCover.title"
-              label="Title"
-            ></v-text-field>
-            <v-text-field
-              v-model="editedCover.client"
-              label="Client"
-            ></v-text-field>
-            <v-text-field
-              v-model="editedCover.siteLocation"
-              label="Site location"
-            ></v-text-field>
-            <v-text-field
-              v-model="editedCover.separation"
-              label="Separation"
-            ></v-text-field>
-            <v-text-field
-              v-model="editedCover.instrumentUsed"
-              label="Instrument used"
-            ></v-text-field>
-            <v-text-field
-              v-model="editedCover.serialNumber"
-              label="serialNumber"
-            ></v-text-field>
-            <v-text-field
-              v-model="editedCover.reportDate"
-              label="Report date"
-            ></v-text-field>
-            <v-text-field
-              v-model="editedCover.reportAuthor"
-              label="Report author"
-            ></v-text-field>
-          </v-form>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-btn color="blue darken-1" text @click="clearCover"> Clear </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeCover"> Close </v-btn>
-          <v-btn color="blue darken-1" text @click="saveCover"> Save </v-btn>
+          <v-btn @click="close"> Cancel </v-btn>
+          <v-btn @click="save"> Save </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -558,7 +512,7 @@
     <v-dialog v-model="showPage2" max-width="800px">
       <v-card>
         <v-card-title>
-          <span class="headline">Page 2</span>
+          <span class="headline">Report Summary</span>
         </v-card-title>
         <v-card-text>
           <v-form>
@@ -591,13 +545,7 @@
                       {{ item.num }}
                     </td>
                     <td>
-                      {{ template.categories[item.num].title }}
-                      <!-- <v-select dense flat
-                          :items="template.categories"
-                          item-text="title"
-                          item-value="title"
-                          v-model="item.section">
-                      </v-select> -->
+                      {{ requirementTableTitle(item.num) }}
                     </td>
                     <td>
                       <v-text-field
@@ -628,13 +576,7 @@
                       {{ item.num }}
                     </td>
                     <td style="height=20px;">
-                      {{ template.categories[item.num].title }}
-                      <!-- <v-select dense flat
-                          :items="template.categories"
-                          item-text="title"
-                          item-value="title"
-                          v-model="item.section">
-                      </v-select> -->
+                      {{ requirementTableTitle(item.num) }}
                     </td>
                     <td>
                       <v-text-field
@@ -650,84 +592,13 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn color="blue darken-1" text @click="clearPage2"> Clear </v-btn>
+          <v-btn @click="clearPage2"> Clear </v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closePage2"> Close </v-btn>
-          <v-btn color="blue darken-1" text @click="savePage2"> Save </v-btn>
+          <v-btn @click="closePage2"> Close </v-btn>
+          <v-btn @click="savePage2"> Save </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-
-    <!--     <v-dialog v-model="showPage2" max-width="800px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">Page 2</span>
-        </v-card-title>
-        <v-card-text>
-          <v-form>
-            <v-checkbox
-              label="Include second page"
-              v-model="editedPage2.include"
-              hide-details
-            ></v-checkbox>
-            <v-text-field
-              v-model="editedPage2.title" label="Title"
-            ></v-text-field>
-            <v-text-field
-              v-model="editedPage2.subtitle" label="Subtitle"
-            ></v-text-field>
-            <v-textarea
-              label="Paragraph 1"
-              rows=2
-              clearable
-              clear-icon="mdi-close-circle"
-              v-model="editedPage2.p1"
-            ></v-textarea>
-            <v-textarea
-              label="Paragraph 2"
-              rows=2
-              clearable
-              clear-icon="mdi-close-circle"
-              v-model="editedPage2.p2"
-            ></v-textarea>
-            <v-textarea
-              label="Paragraph 3"
-              rows=2
-              clearable
-              clear-icon="mdi-close-circle"
-              v-model="editedPage2.p3"
-            ></v-textarea>
-            <v-textarea
-              label="Paragraph 4"
-              rows=2
-              clearable
-              clear-icon="mdi-close-circle"
-              v-model="editedPage2.p4"
-            ></v-textarea>
-            <v-textarea
-              label="Paragraph 5"
-              rows=2
-              clearable
-              clear-icon="mdi-close-circle"
-              v-model="editedPage2.p5"
-            ></v-textarea>
-          </v-form>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-btn color="blue darken-1" text @click="clearPage2">
-            Clear
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closePage2">
-            Close
-          </v-btn>
-          <v-btn color="blue darken-1" text @click="savePage2">
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog> -->
 
     <v-dialog v-model="showCalcColumns" max-width="800px" height="400px">
       <v-card class="mx-auto">
@@ -790,7 +661,7 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeCalcColumns">
+          <v-btn @click="closeCalcColumns">
             Close
           </v-btn>
         </v-card-actions>
@@ -800,7 +671,7 @@
     <v-dialog v-model="showNewReport" max-width="800px" height="400px">
       <v-card class="mx-auto">
         <v-card-title>
-          <span class="headline">New Report Template</span>
+          <span class="headline">New Template</span>
         </v-card-title>
 
         <v-card-text>
@@ -835,7 +706,7 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeNewReport">
+          <v-btn @click="closeNewTemplate">
             Close
           </v-btn>
         </v-card-actions>
@@ -870,22 +741,255 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeLoadReport">
+          <v-btn @click="closeLoadReport">
             Close
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="alert" max-width="500px">
+    <v-dialog v-model="showNewReportDialog" max-width="600px">
       <v-card>
-        <v-card-title class="text-body-1"></v-card-title>
-        <v-card-text class="header3">{{ userMessage }}</v-card-text>
+        <v-card-title>
+          New Report
+        </v-card-title>
+        <v-card-text>
+          <v-text-field 
+            label="Report name"
+            v-model="newReportName"
+          ></v-text-field>
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeMessage">OK</v-btn>
+          <v-btn @click="showNewReportDialog=false">
+            Cancel
+          </v-btn>
+          <v-btn @click="newReport">
+            OK
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="showDeleteReportDialog" max-width="500px">
+      <v-card class="mx-auto">
+        <v-card-title>
+          <span class="text-body-1"></span>
+          <v-spacer></v-spacer>
+        </v-card-title>
+        <v-card-text class="header3">Delete {{report.name}}?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="deleteReport">Yes</v-btn>
+          <v-btn @click="showDeleteReportDialog=false">No</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog class="report-dialog" v-model="showReportDialog" max-width="900px">
+      <v-card height="83vh">
+        <v-card-title>
+          <span class="headline">Reports</span>
+        </v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col cols="3">
+              <v-list dense>
+                <v-list-item-group
+                  color="primary"
+                  v-model="selectedReport"
+                >
+                  <v-list-item
+                    v-for="(report, index) in templates.reports"
+                    :key="index"
+                    @click="selectReport(index)"
+                  >
+                    <v-list-item-content>
+                      <v-list-item-title v-text="report.name"></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-col>
+            <v-col cols="9">
+              <v-form :disabled="reportTabsDisabled">
+              <v-tabs class="mx-1 pt-0"
+                  v-model="reportTabs">
+                <v-tab> Report info </v-tab>
+                <v-tab> Cover </v-tab>
+
+                <v-tab-item>
+                  <v-row>
+                    <v-col class="mt-4 pt-4 mb-2 pb-2">
+                      <v-text-field
+                        v-model="report.name"
+                        label="Description"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>                  
+                  <v-row >
+                    <v-col class="my-0 py-0">
+                      <v-select                          
+                        label="Select report template"
+                        dense
+                        flat
+                        :items="templatesAsList"
+                        v-model="selectedTemplate"
+                        @change="updateReportTemplate"
+                      >
+                      </v-select>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="mt-2 pt-2 mb-0 pb-0">
+                      <h4>File name: &nbsp; {{report.fileName}}</h4>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="my-0 py-0">
+                      <v-file-input
+                        ref="fileInput"
+                        v-model="inputfile"
+                        accept="text/csv"
+                        label="CSV File"
+                        @change="readCSVFile"
+                      >
+                      </v-file-input>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="mt-3 pt-3 mb-0 pb-0">
+                      <v-select                          
+                        label="Chart Legends"
+                        dense
+                        flat
+                        :items="chartLegendOptions"
+                        v-model="report.chartLegendOption"
+                      >
+                      </v-select>                      
+                    </v-col>
+                  </v-row>                    
+                  <v-row v-for="n in 5" :key="n">
+                    <v-col class="my-1 py-1">
+                      <p style="color:white;">.</p>
+                    </v-col>
+                  </v-row>
+                </v-tab-item>
+
+                <v-tab-item>
+                  <v-container class="report-form">
+                    <v-row>
+                      <v-col class="mt-2 pt-2 mb-0 pb-0">
+                        <v-text-field 
+                          v-model="report.cover.title"
+                          label="Title"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col class="my-0 py-0">
+                        <v-text-field
+                          v-model="report.cover.client"
+                          label="Client"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col class="my-0 py-0">
+                        <v-text-field
+                          v-model="report.cover.siteLocation"
+                          label="Site location"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col class="my-0 py-0">
+                        <v-text-field
+                          v-model="report.cover.separation"
+                          label="Separation"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col class="my-0 py-0">
+                        <v-text-field
+                          v-model="report.cover.instrumentUsed"
+                          label="Instrument used"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col class="my-0 py-0">
+                        <v-text-field
+                          v-model="report.cover.serialNumber"
+                          label="serialNumber"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col class="my-0 py-0">
+                        <v-text-field
+                          v-model="report.cover.reportDate"
+                          label="Report date"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col class="mt-0 pt-0 mb-2 pb-2">
+                        <v-text-field
+                          v-model="report.cover.reportAuthor"
+                          label="Report author"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-tab-item>
+              </v-tabs>
+              </v-form>              
+            </v-col>
+          </v-row>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn @click="deleteReportDialog"> Delete report </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn @click="newReportDialog"> New report </v-btn>
+          <v-btn @click="closeReportDialog"> OK </v-btn>
+          <v-btn @click="cancelReportDialog"> Cancel </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="genReportDialog" max-width="320px" height="240px">
+      <v-card class="mx-auto">
+        <v-card-title>
+          <span class="headline">Generating PDF</span>
+          <v-spacer></v-spacer>
+          <div id="myProgress" ref="myProgress">
+            <div id="myBar" ref="myBar"></div>
+          </div>        
+        </v-card-title>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="alert" max-width="600px">
+      <v-card>
+        <v-card-title class="text-body-1"></v-card-title>
+        <v-card-text>
+          <p class="header3" style="white-space: pre-wrap;">{{ userMessage }}</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="closeMessage">OK</v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="waitDialog" max-width="500px">
+      <v-card>
+        <v-card-title class="text-body-1"></v-card-title>
+        <v-card-text class="header3">{{ waitMessage }}</v-card-text>
       </v-card>
     </v-dialog>
 
@@ -914,9 +1018,26 @@
   </v-container>
 </template>
 
+<style>
+.report-dialog .v-tabs__content
+{
+  height: 80vh;
+}
+
+#myProgress {
+  width: 100%;
+  background-color: lightgrey;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: royalblue;
+}
+</style>
+
 // TODO: Migrar A typesscript, pasar la configuracion de echart a un plugin
 <script>
-import axios from "axios";
 import Papa from "papaparse";
 
 import pdfMake from "pdfmake/build/pdfmake";
@@ -931,8 +1052,9 @@ import 'echarts/lib/component/grid'
 import 'echarts/lib/component/legend'
 import { MarkLineComponent } from 'echarts/components'
 import * as d3 from 'd3'
-import { lineChartOptions, sepLineChartOptions, histogramOptions, barChartOptions, minMax }
+import { lineChartOptions, sepLineChartOptions, histogramOptions, barChartOptions, minMax2 }
   from '../composables/charts.js'
+import { expandData, adjustData, adjustDates } from '../composables/util.js'
 
 // import 'blueimp-md5';
 
@@ -949,18 +1071,51 @@ function copyOf(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const suffix = ' '
+
+function newReport() {
+  return {
+    id: 0,
+    name: "",
+    template: null,
+    chartLegendOption: "use-param-name",
+    cover: {
+      title: "",
+      client: "",
+      siteLocation: "",
+      instrumentUsed: "",
+      serialNumber: "",
+      reportDate: "",
+      reportAuthor: "",
+    },
+  }
+}
 
 export default {
   name: "EnergyReport",
   data: function () {
     return {
       tabs: null,
+      reportTabs: null,
       colors: colors(),
       version: "1.0",
       alert: false,
+      choiceDialog: false,
+      waitDialog: false,
       userMessage: "",
+      waitMessage: "",
       dialog: false,
+      showReportDialog: false,
+      reportTabsDisabled: true,
+      showNewReportDialog: false,
+      showDeleteReportDialog: false,
+      genReportDialog: false,
+      reportProgress: 0,
+      chartGenerator: null,
       inputfile: null,
       newReportDescription: "",
       newBlankReport: false,
@@ -973,9 +1128,25 @@ export default {
       ],
       dateColumn: "Date",
       timeColumn: "Time",
+      rowData: [],
       csvData: [],
       csvColumns: [],
-      templates: [],
+      minMax: {},
+      templates: {},
+      energyData: { 
+        prevTime: 0 
+      },
+      acumEnergyData: {
+        prevTime: 0,
+        acum: 0
+      },
+      chartLegendOptions: [
+        "use-param-name",
+        "use-column-name"
+      ],
+      newReportName: "",
+      selectedReport: -1,
+      report: newReport(),
       emptyTemplate: {
         description: "",
         bins: "",
@@ -995,11 +1166,19 @@ export default {
           title: "",
           subtitle: "",
           requirements: [
-            { num: 1, section: "", remarks: "" },
+            { num: 0, section: "", remarks: "" },
+            { num: 1, section: "", remarks: "" }
+          ],
+          additionalInfo: [
             { num: 2, section: "", remarks: "" },
             { num: 3, section: "", remarks: "" },
+            { num: 4, section: "", remarks: "" },
+            { num: 5, section: "", remarks: "" },
+            { num: 6, section: "", remarks: "" },
+            { num: 7, section: "", remarks: "" },
+            { num: 8, section: "", remarks: "" },
+            { num: 9, section: "", remarks: "" }
           ],
-          additionalInfo: [],
         },
       },
       template: {},
@@ -1126,14 +1305,17 @@ export default {
     },
     histogramColor () {
       // TODO: do not log in production mode
-      console.log(this.editedItem.histoColor)
       return this.editedItem ? this.editedItem.histoColor : ''
     },
     templatesAsList() {
       return Object.keys(this.templates)
-        .filter((key) => key !== "model")
+        .filter((key) => key !== "model" && key !== "reports")
         .map((key) => ({ text: this.templates[key].description, value: key }));
-    },
+      // templates = [];
+      // for (template of Object.keys(this.templates)) {
+      //   if (template != 'model')
+      // }
+    }
   },
   watch: {
     dialog(val) {
@@ -1141,7 +1323,7 @@ export default {
     },
     dialogDelete(val) {
       val || this.closeDelete();
-    },
+    }
   },
   beforeCreate() {
     this.template = this.emptyTemplate;
@@ -1162,16 +1344,16 @@ export default {
 
       return (parseInt(max) + 1).toString();
     },
-    newReport() {
+    newTemplate() {
       this.inputfile = null;
       this.newReportDescription = "";
       this.selectedTemplate = "";
       this.showNewReport = true;
     },
-    closeNewReport() {
+    closeNewTemplate() {
       this.showNewReport = false;
     },
-    loadReport() {
+    loadTemplate() {
       this.readTemplates().then((result) => {
         this.templates = result;
         this.inputfile = null;
@@ -1268,8 +1450,16 @@ export default {
       this.userMessage = "";
       this.alert = false;
     },
+    showWaitMessage(msg) {
+      this.waitMessage = msg;
+      this.waitDialog = true;
+    },
+    closeWaitMessage() {
+      this.waitMessage = "";
+      this.waitDialog = false;
+    },
     endpoint (op) {
-      return `/api/energyreport/${op}`
+      return `http://localhost:5000/api/energyreport/${op}`
     },
     readTemplates() {
       const self = this;
@@ -1285,6 +1475,10 @@ export default {
       self.$axios.$get(this.endpoint('category'))
         .then((response) => {
           self.templates = response
+          if (!self.templates.reports) {
+            self.templates.reports = []
+          }
+
           for (let i = 0; i < 10; i++) {
             let chartRef = this.$refs['line' + (i + 1)]
             this.lineCharts[i] = echarts.init(chartRef, undefined, { width: 800, height: 380 })
@@ -1299,17 +1493,15 @@ export default {
             })
         )
     },
-    saveTemplates () {
-      // TODO: Ise ===  insted of ==
-      if (Object.keys(this.template).length == 0) {
-        this.showMessage('No data available. Please load a template and CSV file')
-        return
-      }
-      // TODO: Ise ===  insted of ==
-      if (this.csvColumns.length == 0) {
-        this.showMessage('No data available. Please create/load a template and CSV file')
-        return
-      }
+    saveTemplates (showMessage) {
+      // if (Object.keys(this.template).length === 0) {
+      //   this.showMessage('No data available. Please load a template and CSV file')
+      //   return
+      // }
+      // if (this.csvColumns.length === 0) {
+      //   this.showMessage('No data available. Please create/load a template and CSV file')
+      //   return
+      // }
       const configHeaders = {
         'content-type': 'text/plain',
         Accept: 'text/plain'
@@ -1322,7 +1514,9 @@ export default {
         headers: configHeaders
       })
         .then(() => {
-          this.showMessage('Templates saved')
+          if (showMessage) {
+            this.showMessage('Templates saved')
+          }
           this.inputfile = null
         })
         .catch((error) => {
@@ -1360,26 +1554,36 @@ export default {
     },
     createLineChart (index) {
       const category = this.template.categories[index]
+      const legendOpt = this.report.chartLegendOption
       const chart = this.lineCharts[index]
       const csvData = this.csvData
+      const minMax = this.minMax
+
+      if (category.separateCharts) {
+        chart.setOption(sepLineChartOptions(csvData, minMax, category, suffix, legendOpt))
+      } else {
+        chart.setOption(lineChartOptions(csvData, minMax, category, suffix, legendOpt))
+      }
+      chart.resize()
+
       const promise = new Promise(function (resolve) {
-        if (category.separateCharts) {
-          chart.setOption(sepLineChartOptions(csvData, category, suffix))
-        } else {
-          chart.setOption(lineChartOptions(csvData, category, suffix))
-        }
-        chart.resize()
         chart.on('finished', function () {
           const image = new Image()
           image.src = chart.getDataURL({
             pixelRation: 2,
             backgroundColor: 'white'
           })
+          // console.log("resolving line chart", index)
           resolve(image.src)
         })
       })
 
       return promise
+    },
+    histoParamName(category) {
+      const mappings = category.mappings;
+      const idx = mappings.findIndex( column => column.col === category.histogram );
+      return idx > -1 ? mappings[idx].param : mappings[idx].col;
     },
     createHistogram (index) {
       const category = this.template.categories[index]
@@ -1392,8 +1596,12 @@ export default {
 
       const data = this.column(this.csvData, colName)
 
-      const limits = { min: 1000000000, max: -1000000000 }
-      minMax(this.csvData, colName, limits)
+      const colMinMax = this.minMax[colName]
+      if (!colMinMax) {
+        console.log("No minMax for", colName)
+        return;
+      }
+      const limits = { min: colMinMax.min, max: colMinMax.max }
 
       const histoGen = d3.bin()
         .domain([limits.min, limits.max])
@@ -1405,23 +1613,27 @@ export default {
       // console.log("Section:", index)
       for (var i = 0; i < bins.length; i++) {
         binCount.push(bins[i].length);
-        // const value = bins[i].length == 0 ? "" : (bins[i].reduce((a, b) => a + b, 0)/bins[i].length).toFixed(2);
         const value =
           limits.min + ((limits.max - limits.min) * i) / bins.length;
-        // console.log(`i: ${value.toFixed(2)}  ${value1} ${bins[i].length}`);
         binValues.push(value.toFixed(2));
       }
 
+      let label = this.report.chartLegendOption === "use-param-name"
+          ? this.histoParamName(category) 
+          : category.histogram;
+      label = category.yAxisName ? `${label} [${category.yAxisName}]` : `${label}`
+      const options = histogramOptions(category, binValues, binCount, label);
+      chart.setOption(options);
+      chart.resize();
+
       const promise = new Promise(function (resolve) {
-        const options = histogramOptions(category, binValues, binCount);
-        chart.setOption(options);
-        chart.resize();
         chart.on("finished", function () {
           var image = new Image();
           image.src = chart.getDataURL({
             pixelRation: 2,
             backgroundColor: "white",
           });
+          // console.log("resolving histogram", index)
           resolve(image.src);
         });
       });
@@ -1435,13 +1647,12 @@ export default {
       const col = category.histogram;
 
       const grp = {};
+      const dtf = Intl.DateTimeFormat('en-SG', { month: 'numeric', day: 'numeric', year: 'numeric' });
       data.forEach((d) => {
         const dt = d["DateTime"];
         if (dt) {
-          const date = dt.toLocaleDateString("en-US", {
-            month: "2-digit",
-            day: "2-digit",
-          });
+          const date = dtf.format(dt);
+          //console.log(date, d[col])
           grp[date] = grp[date] ? grp[date] + d[col] : d[col];
         }
       });
@@ -1451,61 +1662,76 @@ export default {
         groups.push({ day: key, value: grp[key] })
       );
 
+      const options = barChartOptions(category, groups)
+      chart.setOption(options)
+      chart.resize()
+
       const promise = new Promise(function (resolve) {
-        const options = barChartOptions(category, groups)
-        chart.setOption(options)
-        chart.resize()
         chart.on('finished', function () {
           const image = new Image()
           image.src = chart.getDataURL({
             pixelRation: 2,
             backgroundColor: 'white'
           })
+          // console.log("resolving bar chart", index)
           resolve(image.src)
-          resolve(0)
         })
       })
       return promise
     },
     doReport () {
-      // TODO: Use ===  insted of ==
-      if (Object.keys(this.template).length == 0) {
+      if (Object.keys(this.template).length === 0) {
         this.showMessage("No template loaded");
         return;
       }
-      // TODO: Use ===  insted of ==
-      if (this.csvColumns.length == 0 || this.csvData.length == 0) {
+      if (this.csvColumns.length === 0 || this.csvData.length === 0) {
         this.showMessage('No data available. Please load an approriate CSV file')
         return
       }
-      const self = this
-      this.reportFinished = false
       this.genReport()
-      setTimeout(function () {
-        if (!self.reportFinished) {
-          // console.log("Timeout, trying again");
-          self.genReport()
-        }
-      }, 1200)
+    },
+    updateProgress(value) {
+      const progress = this.reportProgress + value;
+      this. reportProgress = progress < 100 ? progress : 100;
+      this.$refs.myBar.style.width = this.reportProgress + "%";
     },
     async genReport() {
       console.log("Generating PDF");
 
+      this.genReportDialog = true;
+      await new Promise(resolve => setTimeout(resolve, 100));
+      this.reportProgress = 0;
+      this.updateProgress(0);
+
+      // Parse the data again to include new sections
+      this.parseData(getColumns(this.template));
+      this.reportProgress = 10;
       const promises = [];
       for (var i = 0; i < this.template.categories.length; i++) {
-        promises.push(this.createLineChart(i));
+        const lineChart = this.createLineChart(i)
+        promises.push(lineChart);
+        this.updateProgress(5);
+        await new Promise(resolve => setTimeout(resolve, 100));
         if (this.template.categories[i].dailyTotals) {
-          promises.push(this.createBarChart(i));
+          const chart = this.createBarChart(i)
+          promises.push(chart);
         } else {
-          promises.push(this.createHistogram(i));
+          const chart = this.createHistogram(i)
+          promises.push(chart);
         }
+        this.updateProgress(5);
+        await new Promise(resolve => setTimeout(resolve, 100));
       }
+
       const charts = await Promise.all(promises);
 
-      this.reportFinished = true;
-      //console.log("All charts created");
+      this.genReportDialog = false;
+      await new Promise(resolve => setTimeout(resolve, 100));
+      this.reportProgress = 0;
+      this.updateProgress(0);
+
       var doc = document(
-        this.template.cover,
+        this.report,
         this.template.page2,
         this.background,
         this.reportPeriod(),
@@ -1513,14 +1739,16 @@ export default {
         charts,
         this.dataInterval(),
         this.csvData,
+        this.minMax,
         suffix
       );
       const pdf = pdfMake.createPdf(doc);
-      pdf.download("energy-report.pdf");
+      pdf.download(this.report.cover.title+".pdf");
       //pdf.open();
-      console.log("PDF created");
+      //console.log("PDF created");
     },
     dateTime(dateStr, timeStr) {
+      // console.log(dateStr, timeStr)
       if (!dateStr || !timeStr) {
         return null;
       }
@@ -1540,7 +1768,10 @@ export default {
       var firstRow = 0;
       for (var i = 0; i < rows.length; i++) {
         const row = rows[i];
-        if (row.length > 5) {
+        const dateIndex = row.findIndex( v => v.toLowerCase() === "date" );
+        const timeIndex = row.findIndex( v => v.toLowerCase() === "time" );
+        const numCols = row.reduce( (accum, value) => accum += value.trim().length > 0 ? 1 : 0, 0 );
+        if (dateIndex > -1 && timeIndex > -1 && numCols > 5) {
           if (firstRow > 0) {
             rawData.data.splice(0, firstRow);
           }
@@ -1555,36 +1786,29 @@ export default {
       this.csvData = [];
       this.csvColumns = [];
     },
-    readFile: function (file) {
-      if (!file) {
-        return;
+    updateMinMax(value, colName, index, minMax) {
+      let colMinMax = minMax[colName];
+      if (!colMinMax) {
+        colMinMax = { colName: colName, maxIndex: -1, min: Number.MAX_VALUE, max: -Number.MAX_VALUE };
+        minMax[colName] = colMinMax;
       }
-      const reader = new FileReader();
-      var self = this;
-      reader.onload = function (e) {
-        console.log("Loading csv file");
-
-        var text = e.target.result;
-
-        const rawData = Papa.parse(text);
-        const allcols = self.headerCols(rawData);
-        if (allcols.length == 0) {
-          this.showMessage("File has no column definitions");
-          return;
+      if (!isNaN(value)) {
+        if (value < colMinMax.min) {
+          colMinMax.min = value;
         }
-
-        self.clearAll();
-        self.template = self.templates[self.selectedTemplate];
-
-        const cols = getColumns(self.template);
-
-        if (!checkTemplate(self.template, allcols, cols)) {
-          self.showMessage("The template is not compatible with the CSV file");
-          return;
+        if (value > colMinMax.max) {
+          colMinMax.maxIndex = index;
+          colMinMax.max = value;
         }
+      }
+    },
+    parseData: function(cols) {
+        const self = this;
 
-        text = Papa.unparse(rawData);
+        self.minMax = {};
+        const calcColumns = self.template.calcColumns;
 
+        const text = Papa.unparse(this.rawData);
         const data = [];
         let index = 0;
         const csvData = Papa.parse(text, {
@@ -1598,26 +1822,38 @@ export default {
             if (!dt) {
               return;
             }
-            var row = { index: index++, DateTime: dt };
-            for (var i = 0; i < cols.length; i++) {
+            var row = { index: index, DateTime: dt };
+            for (let i = 0; i < cols.length; i++) {
               const col = cols[i];
               var colName = col.name;
               if (colName == "Date" || colName == "Time") {
                 continue;
               }
-              var value = parseFloat(parsedRow.data[col.name]);
+              let value = parseFloat(parsedRow.data[col.name]);
               if (col.factor) {
                 colName += suffix;
                 value *= col.factor;
               }
-              // if (col.suffix) {
-              //   colName += col.suffix;
-              // }
               if (!row[colName]) {
-                row[colName] = value;
+                row[colName] = parseFloat(value);
+                // update the min and max values for this column
+                self.updateMinMax(value, colName, index, self.minMax)
               }
             }
+
+            for (let i = 0; i < calcColumns.length; i++) {
+              const column = calcColumns[i].name;
+              const params = calcColumns[i].params;
+              const value = self[column](column, row, index, params);
+              if (!row[column]) {
+                row[column] = parseFloat(value);
+                // update the min and max values for this column
+                self.updateMinMax(value, column, index, self.minMax)
+              }
+            }
+
             data.push(row);
+            index++;
           },
         });
 
@@ -1632,14 +1868,49 @@ export default {
         );
         self.csvData = data;
 
-        const calcColumns = self.template.calcColumns;
         for (var i = 0; i < calcColumns.length; i++) {
           const column = calcColumns[i].name;
-          const params = calcColumns[i].params;
-          self[column](column, params);
           self.csvColumns.push(column);
         }
+
         self.showLoadReport = false;
+    },
+    readFile: function (file) {
+      if (!file) {
+        return;
+      }
+      this.showWaitMessage("Loading CSV file. Please Wait");
+      const reader = new FileReader();
+      var self = this;
+      reader.onload = function (e) {
+        console.log("Loading csv file");
+
+        var text = e.target.result;
+
+        const rawData = Papa.parse(text);
+        const allcols = self.headerCols(rawData);
+        if (allcols.length == 0) {
+          this.showMessage("File has no column definitions");
+          return;
+        }
+
+        self.rawData = rawData;
+
+        self.clearAll();
+        self.template = self.templates[self.selectedTemplate];
+
+        const cols = getColumns(self.template);
+
+        const missingColumns = checkTemplate(self.template, allcols, cols);
+        if (missingColumns.length) {
+          let msg = "This CSV file is missing the following columns present in the template\n\n" +
+              missingColumns.join(", ") +
+              "\n\nYou should edit the template and select alternate columns or select a different file";
+          self.showMessage(msg);
+        }
+
+        self.parseData(cols);
+        self.closeWaitMessage();
       };
       reader.readAsText(file);
     },
@@ -1674,7 +1945,6 @@ export default {
         req.num = i;
         this.editedItem.text.requirements.push(req);
       }
-      console.log("factor:", this.editedItem.factor);
 
       this.dialog = true;
     },
@@ -1684,10 +1954,8 @@ export default {
       var num = 1;
       if (mappings.length > 0) {
         const lastSeries = mappings[mappings.length - 1].series;
-        console.log("lastSeries: ", lastSeries);
         num = parseInt(lastSeries) + 1;
       }
-      console.log("series name: ", num);
       this.editedItem.mappings.push({
         series: num.toString(),
         col: "",
@@ -1705,8 +1973,6 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        console.log("factor:", this.editedItem.factor);
-        console.log("factor?:", this.editedItem.factor ? true : false);
         Object.assign(
           this.template.categories[this.editedIndex],
           this.editedItem
@@ -1714,41 +1980,124 @@ export default {
       } else {
         this.template.categories.push(this.editedItem);
       }
+      this.saveTemplates(false);
       this.close();
     },
-    openCover() {
-      if (
-        this.csvColumns.length == 0 ||
-        Object.keys(this.template).length == 0
-      ) {
-        this.showMessage(
-          "No data available. Please load a template and CSV file"
-        );
+    openReportDialog() {
+      this.reportTabs = "Report info";
+      this.showReportDialog = true;
+    },
+    newReportDialog() {
+      this.newReportName = "";
+      this.showNewReportDialog = true;
+    },
+    deleteReportDialog() {
+      if (this.selectedReport > -1) {
+        this.showDeleteReportDialog = true;
+      }
+    },
+    deleteReport() {
+      if (this.selectedReport === -1) {
         return;
       }
-      this.editedCover = Object.assign({}, this.template.cover);
-      if (!this.editedCover.separation) {
-        this.editedCover.separation = 200;
+      this.templates.reports.splice(this.selectedReport, 1);
+      if (this.templates.reports.length > 0) {
+        this.selectReport(0);
+      }  else {
+        this.selectedReport = -1;
+        this.report = newReport();
+        this.selectedTemplate = null;
+        this.template = {};
+        this.inputfile = null;
+        this.reportTabsDisabled = true;
       }
-      this.showCover = true;
+      this.showDeleteReportDialog = false;
+      this.reportTabs = "Report info";
     },
-    saveCover() {
-      this.template.cover = Object.assign({}, this.editedCover);
-      this.showCover = false;
+    updateReportTemplate() {
+      this.report.template = this.selectedTemplate;
     },
-    clearCover() {
-      this.editedCover = {
-        title: "",
-        client: "",
-        siteLocation: "",
-        instrumentUsed: "",
-        serialNumber: "",
-        reportDate: "",
-        reportAuthor: "",
-      };
+    readCSVFile(file) {
+      this.readFile(file);
+      this.report.fileName = file.name;
     },
-    closeCover() {
-      this.showCover = false;
+    nextReportId() {
+      const reports = this.templates.reports
+      if (reports.length === 0) {
+        return 0
+      }
+      return reports[reports.length-1].id + 1
+    },    
+    newReport() {
+      const report = newReport();
+      report.id = this.nextReportId();
+      report.name = this.newReportName;
+
+      this.templates.reports.push(report);
+      this.report = report;
+      this.selectedReport = this.templates.reports.length-1;
+      this.selectedTemplate = null;
+      this.template = {};
+      this.inputfile = null;
+      this.showNewReportDialog = false;
+      this.reportTabs = "Report info";
+      this.reportTabsDisabled = false;
+    },
+    selectReport(index) {
+      if (this.selectedReport === index) {
+        return;
+      }
+      this.selectedReport = index;
+      this.report = this.templates.reports[index];
+      if (this.report.template) {
+        this.selectedTemplate = this.report.template;
+        this.template = this.templates[this.report.template];
+      } else {
+        this.selectedTemplate = null;
+        this.template = {};
+      }
+      this.inputfile = null;
+      this.reportTabs = "Report info";
+      this.reportTabsDisabled = false;
+    },
+    cancelReportDialog() {
+      this.showReportDialog = false;
+      this.$forceUpdate();
+    },
+    closeReportDialog() {
+      if (this.templates.reports.length > 0 && this.selectedReport > -1) {
+        if (!this.selectedTemplate || !this.inputfile) {
+          this.showMessage("You must select a template and a CSV file");
+          return;
+        }
+      }
+      this.showReportDialog = false;
+      this.saveTemplates();
+      this.$forceUpdate();
+    },
+    loadReport() {
+      const reader = new FileReader();
+      var self = this;
+      reader.onload = function (e) {
+        console.log("Loading report");
+        let str = e.target.result;
+        const report = JSON.stringify(str);
+        this.selectedTemplate = report.template;
+        this.report.cover = report.cover;
+      }
+      reader.readAsText(file);
+    },
+    showCoverForm() {
+      this.coverVisible = true;
+      this.reportVisible = false;
+    },
+    showReportForm() {
+      this.coverVisible = false;
+      this.reportVisible = true;
+    },
+    requirementTableTitle(num) {
+      const cat = this.template.categories[num];
+      return cat ? cat.title : ""
     },
     openPage2() {
       if (
@@ -1765,11 +2114,11 @@ export default {
       } else {
         this.editedPage2 = Object.assign({}, this.emptyTemplate.page2);
       }
-      console.log(JSON.stringify(this.editedPage2));
       this.showPage2 = true;
     },
     savePage2() {
       this.template.page2 = Object.assign({}, this.editedPage2);
+      this.saveTemplates(false);
       this.showPage2 = false;
     },
     clearPage2() {
@@ -1796,73 +2145,97 @@ export default {
     },
     closeCalcColumns() {
       this.showCalcColumns = false;
+      this.saveTemplates(false);
     },
-    VoltageUnbalance(column, params) {
-      for (var i = 0; i < this.csvData.length; i++) {
-        const voltage = Array.from(
-          params,
-          (param) => this.csvData[i][param.col]
-        );
-        const av = voltage.reduce((a, b) => a + b) / voltage.length;
-        const mx = Math.max(...voltage);
-        this.csvData[i][column] = ((mx - av) / av) * 100;
+    VoltageUnbalance(column, row, i, params) {
+      const voltage = Array.from(
+        params,
+        (param) => row[param.col]
+      );
+      const av = voltage.reduce((a, b) => a + b) / voltage.length;
+      const mx = Math.max(...voltage);
+      const value = ((mx - av) / av) * 100;
+      return value;
+    },
+    AcumEnergy(column, row, i, params) {
+      if (i==0) {
+        this.acumEnergyData.prevTime = row.DateTime.getTime();
+        this.acumEnergyData.acum = 0;
+        return 0;
       }
-    },
-    AcumEnergy(column, params) {
-      var prevTime = this.csvData[0].DateTime.getTime();
-      var acum = this.csvData[0][params[0].col];
-      this.csvData[0][column] = 0;
-      for (var i = 1; i < this.csvData.length; i++) {
-        if (!this.csvData[i].DateTime) {
-          continue;
-        }
-        const time = this.csvData[i].DateTime.getTime();
-        const elapsedTime = time - prevTime;
-        const hours = elapsedTime / 3600000;
-        acum += this.csvData[i][params[0].col];
-        const energy = (acum * hours) / 1000;
-        this.csvData[i][column] = energy;
-        prevTime = time;
+      if (!row.DateTime) {
+        return;
       }
+
+      const time = row.DateTime.getTime();
+      const elapsedTime = time - this.acumEnergyData.prevTime;
+      const hours = elapsedTime / 3600000;
+
+      const energy = (row[params[0].col] * hours) / 1000;
+      this.acumEnergyData.acum += energy;
+      this.acumEnergyData.prevTime = time;
+
+      return this.acumEnergyData.acum;
     },
-    Energy(column, params) {
-      for (var i = 0; i < this.csvData.length; i++) {
-        if (!this.csvData[i].DateTime) {
-          continue;
-        }
-        const elapsedTime =
-          i == 0
-            ? (this.csvData[i + 1].DateTime.getTime() -
-                this.csvData[i].DateTime.getTime()) /
-              3600000
-            : (this.csvData[i].DateTime.getTime() -
-                this.csvData[i - 1].DateTime.getTime()) /
-              3600000;
-        this.csvData[i][column] =
-          (this.csvData[i][params[0].col] * elapsedTime) / 1000;
+    Energy(column, row, i, params) {
+      if (i==0) {
+        this.energyData.prevTime = row.DateTime.getTime();
+        return 0;
+      }      
+      if (!row.DateTime) {
+        return;
       }
+      const time = row.DateTime.getTime();
+      const elapsedTime = (time - this.energyData.prevTime) / 3600000;
+      const energy = (row[params[0].col] * elapsedTime) / 1000;
+      this.energyData.prevTime = time;
+      return energy;
     },
-    MinPowerFactor(column, params) {
-      for (var i = 0; i < this.csvData.length; i++) {
+    MinPowerFactor(column, row, i, params) {
+      const result =
+        row[params[0].col] / row[params[1].col];
+      return result;
+    },
+    AvePowerFactor(column, row, i, params) {
+      const result =
+        row[params[0].col] / row[params[1].col];
+      return result;
+    },
+    MaxPowerFactor(column, row, i, params) {
+      const result =
+        row[params[0].col] / row[params[1].col];
+      return result;
+    },
+    MinApparentPower(column, row, i, params) {
         const result =
-          this.csvData[i][params[0].col] / this.csvData[i][params[1].col];
-        this.csvData[i][column] = result;
-      }
+          (row[params[0].col] / row[params[1].col]) / 1000;
+        return result;
     },
-    AvePowerFactor(column, params) {
-      for (var i = 0; i < this.csvData.length; i++) {
+    AveApparentPower(column, row, i, params) {
         const result =
-          this.csvData[i][params[0].col] / this.csvData[i][params[1].col];
-        this.csvData[i][column] = result;
-      }
+          (row[params[0].col] / row[params[1].col]) / 1000;
+        return result;
     },
-    MaxPowerFactor(column, params) {
-      for (var i = 0; i < this.csvData.length; i++) {
+    MaxApparentPower(column, row, i, params) {
         const result =
-          this.csvData[i][params[0].col] / this.csvData[i][params[1].col];
-        this.csvData[i][column] = result;
-      }
+          (row[params[0].col] / row[params[1].col]) / 1000;
+        return result;
     },
+    adjustCsvDates() {
+      const startDate = new Date(2021, 7, 30, 13, 0, 0) 
+      const eData = adjustDates(this.csvData, startDate, this.template.calcColumns)
+      const txt = Papa.unparse(eData)
+      var blob = new Blob([txt],
+          { type: "text/plain;charset=utf-8" });
+      saveAs(blob, "date-adjusted-energy-data.csv");
+    },
+    expandCsvData() {
+      const eData = adjustData(this.csvData, 376, this.template.calcColumns)
+      const txt = Papa.unparse(eData)
+      var blob = new Blob([txt],
+          { type: "text/plain;charset=utf-8" });
+      saveAs(blob, "date-adjusted-energy-data.csv");
+    }
   },
 };
 </script>

@@ -1,7 +1,16 @@
 
 import { minMax, timePercent } from './charts.js';
 
-export default function document(cover, page2, background, period, categories, charts, time, data, suffix) {
+function showPeaks(cat) {
+    for (let column of cat.mappings) {
+        if (column.showPeaks) {
+            return true;
+        }
+    }
+    return false;
+}
+
+export default function document(report, page2, background, period, categories, charts, time, data, minMaxData, suffix) {
     var doc = {
         pageSize: 'LETTER',
         footer: function(currentPage) {
@@ -42,8 +51,10 @@ export default function document(cover, page2, background, period, categories, c
         }
     };
 
+    const cover = report.cover
     const separation = !cover.separation ? 200 : Number(cover.separation);
-    console.log(cover.separation);
+    const dateFormat = Intl.DateTimeFormat('en-SG', { month: 'short', day: 'numeric', year: 'numeric' });
+    const timeFormat = Intl.DateTimeFormat('en-SG', { hour: 'numeric', minute: 'numeric', second: 'numeric' });
 
     doc.content = [
         // Cover page
@@ -96,7 +107,7 @@ export default function document(cover, page2, background, period, categories, c
             },
             {   columns: [
                     { text: 'Report Date:', width: 100, style: 'body2' }, 
-                    { text: cover.reportDate, style: 'body2' }
+                    { text: dateFormat.format(new Date()), style: 'body2' }
                 ],
                 margin: [0,0,0,6]
             },
@@ -220,6 +231,7 @@ export default function document(cover, page2, background, period, categories, c
         }
 
         doc.content.push(genInfo);
+        
         var sectionPass = true;
         if (cat.text.includeRequirements) {
             const reqTable = {
@@ -253,7 +265,8 @@ export default function document(cover, page2, background, period, categories, c
                         if (value && value.trim() !== "") {
                             const limits = { min: Number.MAX_VALUE, max: Number.MIN_VALUE };
                             const col = cat.factor ? value + suffix : value;
-                            minMax(data, col, limits);
+                            // minMax(data, col, limits);
+                            minMax(minMaxData[col], limits);
                             const timePct = timePercent(data, col, reqLimits);
                             if (timePct < parseFloat(req.timePercent)) {
                                 pass = false;
@@ -274,7 +287,8 @@ export default function document(cover, page2, background, period, categories, c
         } 
 
         const re = /[.:]/g
-        const pos = re.exec(title).index + 1
+        const regex = re.exec(title)
+        const pos = regex ? regex.index + 1 : -1
         const str = pos < 0 ? title : title.substring(pos).trim()            
         if (i < 2) {
             summaryReqTable.table.body.push([
@@ -289,6 +303,51 @@ export default function document(cover, page2, background, period, categories, c
                 { text: str, bold: false },
                 { text: page2.additionalInfo[i-2].remarks }
             ])            
+        }
+
+        // Show table with peak values
+        if (showPeaks(cat)) {
+            const peakTable = {
+                margin: [0, 10],
+                style: 'tableBody',
+                table: {
+                    headerRows: 2,
+                    body: []
+                }
+            }
+
+            const headers = ["Peak Values"];
+            peakTable.table.body.push(headers);
+            const peakDates = ["Date"];
+            const peakTime = ["Time"];
+            const peaks = ["Value ["+cat.yAxisName+"]"];
+            peakTable.table.body.push(peakDates);
+            peakTable.table.body.push(peakTime);
+            peakTable.table.body.push(peaks);
+
+            //console.log("minMaxData", JSON.stringify(minMaxData))
+            for (let column of cat.mappings) {
+                if (column.showPeaks) {
+                    const columnLabel = report.chartLegendOption === "use-param-name" ? column.param : column.col;
+                    headers.push({ text: columnLabel, style: 'tableHeader', bold: true });
+                    const minMax = minMaxData[column.col];
+                    const dt = data[minMax.maxIndex].DateTime;
+                    const date = dateFormat.format(dt);
+                    const time = timeFormat.format(dt);
+                    const value = parseFloat(minMax.max).toFixed(2); 
+                    // console.log(column.col, value);
+                    peakDates.push({text: date, color: 'black', bold: false})
+                    peakTime.push({text: time, color: 'black', bold: false})
+                    if (column.col.toLowerCase().includes('max')) {
+                        peaks.push({text: value, color: 'red', bold: true });
+                    } else {
+                        peaks.push({text: value, color: 'black', bold: false });
+                    }
+                    
+                }
+            }
+
+            doc.content.push(peakTable);
         }
 
         doc.content.push({

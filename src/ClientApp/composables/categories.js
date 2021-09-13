@@ -12,7 +12,6 @@ export function getColumns(catTemplate) {
             if (factor) {
                 col["factor"] = factor;
                 col["suffix"] = " ";
-                //}
             }
             cols.push(col);
         }
@@ -37,15 +36,16 @@ export function checkTemplate(template, csvCols, templateCols) {
     const calcCols = template.calcColumns;
     for (i=0; i<calcCols.length; i++) {
         calcColumns[calcCols[i].name] = true;
-    }    
+    }
+    const missingColumns = [];
     for (var j=0; j<templateCols.length; j++) {
         const col = templateCols[j].name;
         if (!columns[col] && !calcColumns[col]) {
             console.log("Column not found: ", templateCols[j].name);
-            return false;
+            missingColumns.push(col);
         }
     }
-    return true;
+    return missingColumns;
 }
 
 export function findCategoryTemplate(templates, cols) {
