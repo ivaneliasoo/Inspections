@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: p@ssword123
+      POSTGRES_USER: appuser
+    ports:
+      - "5432:5432"
+
+  inspections.api:
+    image: ${DOCKER_REGISTRY-}inspectionsapi
+    build:
+      context: .
+      dockerfile: Inspections.API/Dockerfile        
+    ports:
+      - "5001:443"
+      - "5000:80"
+    depends_on: 
+      - db

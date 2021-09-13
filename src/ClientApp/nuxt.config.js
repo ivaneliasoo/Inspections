@@ -71,14 +71,12 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {
-    baseURL: 'https://localhost:5001',
-    browserBaseURL: 'https://localhost:5001'
-  },
+  // axios: {
+  // },
   publicRuntimeConfig: {
     axios: {
-      baseURL: process.env.BASE_URL,
-      browserBaseURL: process.env.BASE_URL
+      baseURL: process.env.BASE_URL || 'https://localhost:5001',
+      browserBaseURL: process.env.BASE_URL || 'https://localhost:5001'
     }
   },
   router: {
