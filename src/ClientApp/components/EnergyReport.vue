@@ -858,7 +858,7 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col class="mt-3 pt-3 mb-0 pb-0">
+                    <v-col class="mt-3 pt-3 mb-5 pb-5">
                       <v-select                          
                         label="Chart Legends"
                         dense
@@ -869,7 +869,7 @@
                       </v-select>                      
                     </v-col>
                   </v-row>                    
-                  <v-row v-for="n in 5" :key="n">
+                  <v-row v-for="n in 4" :key="n">
                     <v-col class="my-1 py-1">
                       <p style="color:white;">.</p>
                     </v-col>
@@ -935,7 +935,7 @@
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col class="mt-0 pt-0 mb-2 pb-2">
+                      <v-col class="mt-0 pt-0 mb-0 pb-0">
                         <v-text-field
                           v-model="report.cover.reportAuthor"
                           label="Report author"
@@ -954,8 +954,8 @@
           <v-btn @click="deleteReportDialog"> Delete report </v-btn>
           <v-spacer></v-spacer>
           <v-btn @click="newReportDialog"> New report </v-btn>
-          <v-btn @click="closeReportDialog"> OK </v-btn>
-          <v-btn @click="cancelReportDialog"> Cancel </v-btn>
+          <v-btn @click="saveReport"> Save </v-btn>
+          <v-btn @click="cancelReportDialog"> Close </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -1516,8 +1516,8 @@ export default {
         .then(() => {
           if (showMessage) {
             this.showMessage('Templates saved')
+            this.inputfile = null
           }
-          this.inputfile = null
         })
         .catch((error) => {
           this.errorMessage = error.message
@@ -1680,6 +1680,10 @@ export default {
       return promise
     },
     doReport () {
+      if (!this.template) {
+        this.showMessage("No template loaded");
+        return;
+      }
       if (Object.keys(this.template).length === 0) {
         this.showMessage("No template loaded");
         return;
@@ -2061,17 +2065,20 @@ export default {
       this.reportTabsDisabled = false;
     },
     cancelReportDialog() {
-      this.showReportDialog = false;
-      this.$forceUpdate();
-    },
-    closeReportDialog() {
       if (this.templates.reports.length > 0 && this.selectedReport > -1) {
         if (!this.selectedTemplate || !this.inputfile) {
-          this.showMessage("You must select a template and a CSV file");
-          return;
+          this.showMessage("To generate PDFs and edit templates, you must select a template and a CSV file");
         }
       }
       this.showReportDialog = false;
+      this.$forceUpdate();
+    },
+    saveReport() {
+      if (this.templates.reports.length > 0 && this.selectedReport > -1) {
+        if (!this.selectedTemplate || !this.inputfile) {
+          this.showMessage("To generate PDFs and edit templates, you must select a template and a CSV file");
+        }
+      }
       this.saveTemplates();
       this.$forceUpdate();
     },

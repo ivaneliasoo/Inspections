@@ -4898,7 +4898,7 @@
       "name": "Report No. 1",
       "template": "1",
       "cover": {
-        "title": "Power Analyzer Report - PDP/PO03/1/F-400A",
+        "title": "Power Analyzer Report - PDP/P03/1/F-400A",
         "client": "Raffles City Shopping Center",
         "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
         "instrumentUsed": "Hioki 3197",
@@ -4907,7 +4907,7 @@
         "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
         "separation": "240"
       },
-      "fileName": "97intvl.csv",
+      "fileName": "100A P03 2 B EM (6 Sept - 13 Sept 2021) PA%231.csv",
       "chartLegendOption": "use-param-name"
     },
     {
@@ -4915,7 +4915,7 @@
       "name": "Report No. 2",
       "template": "4",
       "cover": {
-        "title": "Power Analyzer Report - PDP/PO03/1/F-400A",
+        "title": "Power Analyzer Report - PDP/P03/1/F-400A",
         "client": "Raffles City Shopping Center",
         "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
         "instrumentUsed": "Algodue UPM309",
@@ -4932,7 +4932,7 @@
       "name": "Report No. 3",
       "template": "5",
       "cover": {
-        "title": "Power Analyzer Report - PDP/PO03/1/F-400A",
+        "title": "Power Analyzer Report - PDP/P03/1/F-400A",
         "client": "Raffles City Shopping Center",
         "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
         "instrumentUsed": "Algodue UPM309",
@@ -4941,8 +4941,76 @@
         "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
         "separation": "240"
       },
-      "fileName": "J952V70002_mAM_20210830_105526.csv",
+      "fileName": "100A P03 2 B EM (6 Sept - 13 Sept 2021) PA%231.csv",
       "chartLegendOption": "use-param-name"
+    },
+    {
+      "id": 3,
+      "name": "Report No. 4 13-09-2021",
+      "template": "1",
+      "chartLegendOption": "use-param-name",
+      "cover": {
+        "title": "Power Analyzer Report - PDP/P03/1/F-400A",
+        "client": "Raffles City Shopping Center",
+        "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
+        "instrumentUsed": "Hioki 3197",
+        "serialNumber": "150942373",
+        "reportDate": "",
+        "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
+        "separation": "240"
+      },
+      "fileName": "100A P03 2 B EM (6 Sept - 13 Sept 2021) PA%231.csv"
+    },
+    {
+      "id": 4,
+      "name": "Report No. 5 13-09-2021",
+      "template": "5",
+      "chartLegendOption": "use-param-name",
+      "cover": {
+        "title": "Power Analyzer Report - PDP/P03/1/F-400A",
+        "client": "Raffles City Shopping Center",
+        "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
+        "instrumentUsed": "Algodue UPM309",
+        "serialNumber": "J952V70002",
+        "reportDate": "",
+        "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
+        "separation": "240"
+      },
+      "fileName": "J952V70002_mAM_20210913_111601.csv"
+    },
+    {
+      "id": 5,
+      "name": "Report No. 6 13-09-2021",
+      "template": "5",
+      "chartLegendOption": "use-param-name",
+      "cover": {
+        "title": "Power Analyzer Report - PDP/P03/1/F-400A",
+        "client": "Raffles City Shopping Center",
+        "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
+        "instrumentUsed": "Algodue UPM309",
+        "serialNumber": "J952V70001",
+        "reportDate": "",
+        "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
+        "separation": "240"
+      },
+      "fileName": "J952V70001_mAM_20210913_112447.csv"
+    },
+    {
+      "id": 6,
+      "name": "Report No. 7",
+      "template": "5",
+      "chartLegendOption": "use-param-name",
+      "cover": {
+        "title": "Power Analyzer Report - PDP/P03/1/F-400A",
+        "client": "Raffles City Shopping Center",
+        "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
+        "instrumentUsed": "Algodue UPM309",
+        "serialNumber": "J952V70001",
+        "reportDate": "",
+        "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
+        "separation": "240"
+      },
+      "fileName": "J952V70001_mAM_20210913_112447.csv"
     }
   ]
 }
