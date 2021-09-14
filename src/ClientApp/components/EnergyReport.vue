@@ -1459,8 +1459,7 @@ export default {
       this.waitDialog = false;
     },
     endpoint (op) {
-      //return `/api/energyreport/${op}`;
-      return `http://localhost:5000/api/energyreport/${op}`
+      return `/api/energyreport/${op}`;
     },
     readTemplates() {
       const self = this;
