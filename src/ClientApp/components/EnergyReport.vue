@@ -452,7 +452,7 @@
                                 v-model="item.param"
                               >
                             </v-text-field>
-                            </td>                          
+                            </td>
                             <td>
                               <v-select
                                 dense
@@ -754,7 +754,7 @@
           New Report
         </v-card-title>
         <v-card-text>
-          <v-text-field 
+          <v-text-field
             label="Report name"
             v-model="newReportName"
           ></v-text-field>
@@ -826,10 +826,10 @@
                         label="Description"
                       ></v-text-field>
                     </v-col>
-                  </v-row>                  
+                  </v-row>
                   <v-row >
                     <v-col class="my-0 py-0">
-                      <v-select                          
+                      <v-select
                         label="Select report template"
                         dense
                         flat
@@ -859,16 +859,16 @@
                   </v-row>
                   <v-row>
                     <v-col class="mt-3 pt-3 mb-0 pb-0">
-                      <v-select                          
+                      <v-select
                         label="Chart Legends"
                         dense
                         flat
                         :items="chartLegendOptions"
                         v-model="report.chartLegendOption"
                       >
-                      </v-select>                      
+                      </v-select>
                     </v-col>
-                  </v-row>                    
+                  </v-row>
                   <v-row v-for="n in 5" :key="n">
                     <v-col class="my-1 py-1">
                       <p style="color:white;">.</p>
@@ -880,7 +880,7 @@
                   <v-container class="report-form">
                     <v-row>
                       <v-col class="mt-2 pt-2 mb-0 pb-0">
-                        <v-text-field 
+                        <v-text-field
                           v-model="report.cover.title"
                           label="Title"
                         ></v-text-field>
@@ -945,7 +945,7 @@
                   </v-container>
                 </v-tab-item>
               </v-tabs>
-              </v-form>              
+              </v-form>
             </v-col>
           </v-row>
         </v-card-text>
@@ -967,7 +967,7 @@
           <v-spacer></v-spacer>
           <div id="myProgress" ref="myProgress">
             <div id="myBar" ref="myBar"></div>
-          </div>        
+          </div>
         </v-card-title>
       </v-card>
     </v-dialog>
@@ -1133,8 +1133,8 @@ export default {
       csvColumns: [],
       minMax: {},
       templates: {},
-      energyData: { 
-        prevTime: 0 
+      energyData: {
+        prevTime: 0
       },
       acumEnergyData: {
         prevTime: 0,
@@ -1459,7 +1459,7 @@ export default {
       this.waitDialog = false;
     },
     endpoint (op) {
-      return `http://localhost:5000/api/energyreport/${op}`
+      return `/api/energyreport/${op}`;
     },
     readTemplates() {
       const self = this;
@@ -1619,7 +1619,7 @@ export default {
       }
 
       let label = this.report.chartLegendOption === "use-param-name"
-          ? this.histoParamName(category) 
+          ? this.histoParamName(category)
           : category.histogram;
       label = category.yAxisName ? `${label} [${category.yAxisName}]` : `${label}`
       const options = histogramOptions(category, binValues, binCount, label);
@@ -2027,7 +2027,7 @@ export default {
         return 0
       }
       return reports[reports.length-1].id + 1
-    },    
+    },
     newReport() {
       const report = newReport();
       report.id = this.nextReportId();
@@ -2181,7 +2181,7 @@ export default {
       if (i==0) {
         this.energyData.prevTime = row.DateTime.getTime();
         return 0;
-      }      
+      }
       if (!row.DateTime) {
         return;
       }
@@ -2222,7 +2222,7 @@ export default {
         return result;
     },
     adjustCsvDates() {
-      const startDate = new Date(2021, 7, 30, 13, 0, 0) 
+      const startDate = new Date(2021, 7, 30, 13, 0, 0)
       const eData = adjustDates(this.csvData, startDate, this.template.calcColumns)
       const txt = Papa.unparse(eData)
       var blob = new Blob([txt],
