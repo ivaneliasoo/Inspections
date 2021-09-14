@@ -787,7 +787,7 @@
     </v-dialog>
 
     <v-dialog class="report-dialog" v-model="showReportDialog" max-width="900px">
-      <v-card height="83vh">
+      <v-card>
         <v-card-title>
           <span class="headline">Reports</span>
         </v-card-title>
@@ -1459,7 +1459,8 @@ export default {
       this.waitDialog = false;
     },
     endpoint (op) {
-      return `/api/energyreport/${op}`;
+      //return `/api/energyreport/${op}`;
+      return `http://localhost:5000/api/energyreport/${op}`
     },
     readTemplates() {
       const self = this;
