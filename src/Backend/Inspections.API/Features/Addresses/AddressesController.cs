@@ -82,7 +82,7 @@ namespace Inspections.API.Features.Addresses
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> PutAddress(int id, [FromBody] AddressDTO address)
+        public async Task<IActionResult> PutAddress(int id, [FromBody] NewAddressDTO address)
         {
             Guard.Against.Null(address, nameof(address));
 
@@ -125,19 +125,11 @@ namespace Inspections.API.Features.Addresses
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<Address>> PostAddress([FromBody] AddressDTO address)
+        public async Task<ActionResult<Address>> PostAddress([FromBody] NewAddressDTO address)
         {
             Guard.Against.Null(address, nameof(address));
 
-            var newAddress = new Address()
-            {
-                AddressLine = address.AddressLine,
-                AddressLine2 = address.AddressLine2,
-                Unit = address.Unit,
-                Country = address.Country,
-                PostalCode = address.PostalCode,
-                LicenseId = address.LicenseId
-            };
+            var newAddress = address.ToAddress();
 
             if (AddressDuplicated(newAddress))
                 return BadRequest("Address already exists");
@@ -145,7 +137,7 @@ namespace Inspections.API.Features.Addresses
             _context.Addresses.Add(newAddress);
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
-            return CreatedAtAction("GetAddress", new { id = address.Id }, address);
+            return CreatedAtAction("GetAddress", new { id = address.Id }, new AddressDTO(newAddress));
         }
 
         // DELETE: api/Addresses/5

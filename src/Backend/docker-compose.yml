@@ -3,7 +3,7 @@ version: '3.4'
 services:
   db:
     image: postgres:latest
-    restart: always
+    #restart: always
     environment:
       POSTGRES_PASSWORD: 123456
       POSTGRES_USER: appuser
@@ -16,7 +16,11 @@ services:
       context: .
       dockerfile: Inspections.API/Dockerfile        
     environment:
-      ConnectionStrings__Inspections: Server=db;Port=5432;Database=ReportsApp;User Id=appuser;Password=123456
+      - ConnectionStrings__Inspections=Server=db;Port=5432;Database=ReportsApp;User Id=appuser;Password=123456
+      - ClientSettings__S3BucketName=cse-inspetions-dev-photos
+      - AWS__Region=us-east-2
+    volumes:
+      - ~/.aws/:/root/.aws:ro
     ports:
       #- "5001:443"
       - "5000:80"

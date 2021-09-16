@@ -92,7 +92,7 @@ export default class IndexPage extends Vue {
       helpText: 'Allows to View CLOSED Reports and Photo Records and Export in PDF formats',
       icon: 'mdi-file-chart',
       color: 'accent',
-      path: undefined
+      path: '/reports?closed=true'
     }
   ]
 
