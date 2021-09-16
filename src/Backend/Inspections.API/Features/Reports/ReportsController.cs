@@ -116,7 +116,7 @@ namespace Inspections.API.Features.Inspections
         [ProducesDefaultResponseType]
         public IActionResult GetPhotoRecords(int id)
         {
-            var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id);
+            var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id).ToList();
 
             foreach (var photo in photos)
             {

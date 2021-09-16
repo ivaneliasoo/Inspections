@@ -9,7 +9,8 @@ import { showMessage } from 'react-native-flash-message';
 import { usePhotoRecords } from '../hooks/usePhotoRecords';
 import { useContext } from 'react';
 import { ReportsContext } from '../contexts/ReportsContext';
-import { SyncIcon } from '../components/Icons';
+import { FilmIcon, Camera, SyncIcon } from '../components/Icons';
+import { useNavigation } from '@react-navigation/native';
 
 export const CameraScreen = () => {
   const cameraRef = useRef<RNCamera>()
@@ -22,7 +23,7 @@ export const CameraScreen = () => {
   const [cameraType, setCameraType] = useState(RNCamera.Constants.Type.front)
 
   const isFocused = useIsFocused()
-
+  const navigation = useNavigation()
 
   const hasCameraPermission = async () => {
     const camera = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)
@@ -79,8 +80,14 @@ export const CameraScreen = () => {
               buttonNegative: 'Cancel',
             }} />
           <View style={styles.shooter}>
-            <TouchableOpacity onPress={takePicture} style={styles.capture}>
-              <Text style={styles.shooterText}>SNAP</Text>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate('PhotoRecordGallery')
+            }}>
+              <FilmIcon fill={'white'} style={{ width: 48, height: 48 }}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={takePicture}>
+              {/* <Text style={styles.shooterText}>SNAP</Text> */}
+              <Camera fill={'white'} style={{ width: 48, height: 48 }}/>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
               if (!cameraType == RNCamera.Constants.Type.front)
@@ -88,7 +95,7 @@ export const CameraScreen = () => {
               else 
                 setCameraType(RNCamera.Constants.Type.back)
             }}>
-              <SyncIcon fill={'white'} style={{ width: 36, height: 36 }}/>
+              <SyncIcon fill={'white'} style={{ width: 48, height: 48 }}/>
             </TouchableOpacity>
           </View>
         </> : <Text>Camera and Record Audio permission not consented</Text>
@@ -132,6 +139,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 20,
   },
-  shooter: { flex: 0, flexDirection: 'row', justifyContent: 'center' },
+  shooter: { flex: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   shooterText: { fontSize: 14 }
 });
