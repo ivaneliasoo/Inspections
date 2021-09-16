@@ -75,8 +75,8 @@ export default {
   // },
   publicRuntimeConfig: {
     axios: {
-      baseURL: process.env.BASE_URL || 'https://localhost:5001',
-      browserBaseURL: process.env.BASE_URL || 'https://localhost:5001'
+      baseURL: process.env.BASE_URL || 'http://localhost:5000',
+      browserBaseURL: process.env.BASE_URL || 'http://localhost:5000'
     }
   },
   router: {
