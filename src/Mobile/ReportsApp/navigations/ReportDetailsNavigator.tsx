@@ -5,6 +5,7 @@ import { ReportForm } from '../components/reports/ReportForm';
 import { Signatures } from '../components/reports/Signatures';
 import { CameraScreen } from '../containers/CameraScreen';
 import { Details } from '../containers/Details';
+import PhotoRecordGallery from 'components/photorecords/PhotoRecordGallery';
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
