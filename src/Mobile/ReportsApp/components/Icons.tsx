@@ -22,5 +22,6 @@ export const AlertTriangle = (props: any) => (<Icon name='alert-triangle-outline
 export const Printer = (props: any) => (<Icon name='printer-outline' {...props}/>)
 export const ImageIcon = (props: any) => (<Icon name='image-outline' {...props}/>)
 export const SyncIcon = (props: any) => (<Icon name='sync-outline' {...props}/>)
+export const FlipIcon = (props: any) => (<Icon name='flip-outline' {...props}/>)
 export const FilmIcon = (props: any) => (<Icon name='film-outline' {...props}/>)
 export const TrashIcon = (props: any) => (<Icon name='trash-outline' {...props}/>)
