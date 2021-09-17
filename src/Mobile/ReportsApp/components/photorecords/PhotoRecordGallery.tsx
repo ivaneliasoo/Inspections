@@ -10,18 +10,12 @@ export default function PhotoRecordGallery() {
   const { goBack } = useNavigation()
   const [selectedImage, setSelectedImage] = useState(0)
   const { GetByReportId } = usePhotoRecords()
-  const [images, setImages] = useState([
-    // { source: require('yourApp/image.png'), dimensions: { width: 150, height: 150 } },
-    { source: { uri: 'http://i.imgur.com/XP2BE7q.jpg', label: 'asasdasdasdasdasd' } },
-    { source: { uri: 'http://i.imgur.com/5nltiUd.jpg', label: 'Teasdasdasdst2' } },
-    { source: { uri: 'http://i.imgur.com/6vOahbP.jpg', label: 'Teasdasdast3' } },
-    { source: { uri: 'http://i.imgur.com/kj5VXasdadastG.jpg', label: 'Tedasdasdst4' } }
-  ])
+  const [images, setImages] = useState([])
 
   useEffect(() => {
     GetByReportId(2)
       .then(resp => {
-        const mappedData = resp.map((item, index) => {
+        const mappedData = resp.map(item => {
           return {
             source: {
               id: item.id,
@@ -33,15 +27,16 @@ export default function PhotoRecordGallery() {
             }
           }
         })
-        setImages(mappedData)
+        setImages(mappedData as [])
+        setSelectedImage(mappedData.length - 1)
       })
   }, [])
 
   return (
     <View style={{ flex: 1, flexDirection: 'column' }}>
       <View style={{ flex: 1, zIndex: 2, backgroundColor: 'transparent', position: 'absolute', top: 20, right: 10 }}>
-        <TouchableOpacity onPress={() => goBack()}>
-          <CrossIcon fill={'white'} style={{ width: 48, height: 48 }} />
+        <TouchableOpacity onPress={() => goBack()} style={styles.circle}>
+          <CrossIcon fill={'white'} style={{ width: 36, height: 36 }} />
         </TouchableOpacity>
       </View>
       <Gallery
@@ -52,13 +47,25 @@ export default function PhotoRecordGallery() {
       />
       <View style={{ backgroundColor: 'black', position: 'absolute', bottom: 0, height: '10%', width: '100%', opacity: .7, flex: 1 }}>
         <View style={{ marginVertical: 20, flexDirection: 'row', flex: 1, justifyContent: 'space-around' }}>
-          <EditIcon fill={'white'} style={{ width: 36, height: 36 }} />
-          <TrashIcon fill={'white'} style={{ width: 36, height: 36 }} />
+          <TouchableOpacity onPress={() => goBack()} style={styles.circle}>
+            <EditIcon fill={'white'} style={{ width: 36, height: 36 }} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => goBack()} style={styles.circle}>
+            <TrashIcon fill={'white'} style={{ width: 36, height: 36 }} />
+          </TouchableOpacity>
         </View>
-        <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>{images[selectedImage].source.label}</Text>
+        {/* <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>{images[selectedImage].source.label}</Text> */}
       </View>
     </View>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  circle: {
+    width: 36,
+    height: 36,
+    borderRadius: 100 / 2,
+    // backgroundColor: "lightgrey",
+    opacity: .8
+  },
+})

@@ -49,15 +49,7 @@ export const usePhotoRecords = () => {
     uploadOptions.url = uploadOptions.url.replace('{id}', reportId.toString())
     uploadOptions.path = uploadOptions.path.replace('{file}', path).replace('file://', '')
     uploadOptions.headers = { ...uploadOptions.headers, label }
-    console.log({ uploadOptions })
     Upload.startUpload(uploadOptions).then((uploadId) => {
-      // Upload.addListener('progress', uploadId, (data) => {
-      //   showMessage({
-      //     message: 'Photo Upload has been enqueued',
-      //     autoHide: true,
-      //     backgroundColor: theme['color-info-500']
-      //   })
-      // })
       Upload.addListener('error', uploadId, (data) => {
         showMessage({
           message: 'An Error has ocurred while trying uploading file',

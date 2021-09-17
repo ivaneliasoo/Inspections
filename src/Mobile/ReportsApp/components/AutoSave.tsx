@@ -28,7 +28,7 @@ export const AutoSave = ({ debounceMs }: any) => {
   if (!!formik.isSubmitting) {
     result = "saving...";
   } else if (Object.keys(formik.errors).length > 0) {
-    console.log(`ERROR: ${JSON.stringify(formik.errors)}`);
+    // console.log(`ERROR: ${JSON.stringify(formik.errors)}`);
   } else if (lastSaved !== null) {
     result = `${lastSaved}`;
   }

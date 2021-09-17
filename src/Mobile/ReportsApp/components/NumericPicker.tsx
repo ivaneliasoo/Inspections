@@ -19,7 +19,7 @@ const NumericPicker = ({ defaultValue = 0, itemSelected, appendLabel = 'V', prep
   const [itemList, setItemList] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
   const value = useMemo(() => {
-    console.log([firstDigit, secondDigit, thirdDigit])
+    // console.log([firstDigit, secondDigit, thirdDigit])
     return parseInt([firstDigit, secondDigit, thirdDigit].join(""))
   }, [firstDigit, secondDigit, thirdDigit])
 

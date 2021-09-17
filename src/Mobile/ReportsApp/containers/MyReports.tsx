@@ -98,7 +98,7 @@ export const MyReports = ({ navigation }: any) => {
               },
               {
                 text: 'No',
-                onPress: () => console.log('canceled')
+                // onPress: () => console.log('canceled')
               }
             ]
           );
@@ -113,7 +113,7 @@ export const MyReports = ({ navigation }: any) => {
               },
               {
                 text: 'No',
-                onPress: () => console.log('canceled')
+                // onPress: () => console.log('canceled')
               }
             ]
           );
