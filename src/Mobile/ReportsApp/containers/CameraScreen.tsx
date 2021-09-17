@@ -58,6 +58,21 @@ export const CameraScreen = () => {
       })
     }
   };
+
+  const saveFromGallery = async () => {
+    const options = { mediaType: 'photo', quality: 0.5, base64: false } as ImageLibraryOptions;
+    launchImageLibrary(options, async (resp) => {
+      if (resp && resp.assets) {
+        const data = resp.assets[0] || {} as Asset
+        setLastPhoto(data.uri!)
+        setShowLabeler(true)
+        await CameraRoll.save(data.uri!, {
+          album: 'CSE Inspections',
+          type: 'photo'
+        })
+      }
+    })
+  }
   return (
     <>
       <View style={styles.container}>
@@ -101,20 +116,7 @@ export const CameraScreen = () => {
                 <Camera fill={'white'} style={{ width: 32, height: 32 }} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-              const options = { mediaType: 'photo', quality: 0.5, base64: false } as ImageLibraryOptions;
-              launchImageLibrary(options, async (resp) => {
-                if (resp && resp.assets) {
-                  const data = resp.assets[0] || [] as Asset
-                  setLastPhoto(data.uri)
-                  setShowLabeler(true)
-                  await CameraRoll.save(data.uri, {
-                    album: 'CSE Inspections',
-                    type: 'photo'
-                  })
-                }
-              })
-            }} >
+            <TouchableOpacity onPress={() => saveFromGallery()} >
               <ImageIcon fill={'white'} style={{ width: 32, height: 32 }} />
             </TouchableOpacity>
           </View>
