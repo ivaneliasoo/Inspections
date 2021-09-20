@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.ApplicationServices;
+using Inspections.API.Extensions;
 using Inspections.API.Features.Inspections.Commands;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Models.Configuration;
@@ -18,6 +18,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Playwright;
+using PuppeteerSharp;
+using PuppeteerSharp.Media;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -282,6 +285,51 @@ namespace Inspections.API.Features.Inspections
                 return Ok(result);
 
             return BadRequest();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("testpdf")]
+        public async Task<FileResult> GeneteReport()
+        {
+
+            var browserFetcher = new BrowserFetcher();
+            await browserFetcher.DownloadAsync();
+            // TODO-IVAN: --no-sandbox is an insecure workaround. I'll take a look into this next time
+            await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true, Args = new string[] { "--no-sandbox" } });
+            await using var page = await browser.NewPageAsync();
+
+            await page.GoToAsync("http://localhost:3000/Login");
+
+            await page.WaitForSelectorAsync("#username");
+            await page.ClickAsync("#username");
+
+            await page.TypeAsync("#username", "demo");
+
+            await page.ClickAsync("#password");
+
+            await page.TypeAsync("#password", "123456");
+            await page.WaitForSelectorAsync(".elevation-12 > #signin-form > .v-card__actions > .v-btn > .v-btn__content");
+            await page.ClickAsync(".elevation-12 > #signin-form > .v-card__actions > .v-btn > .v-btn__content");
+            await page.WaitForSelectorAsync("table > .v-data-table-header > tr > .text-center:nth-child(4) > span");
+
+            await page.GoToAsync("http://localhost:3000/Reports/2/print");
+            await page.WaitForSelectorAsync(".logo");
+            var file = await page.PdfDataAsync(new PdfOptions
+            {
+                DisplayHeaderFooter = true,
+                MarginOptions = new MarginOptions { Bottom = "80px", Top="20px", Left="70px", Right="70px" },
+                HeaderTemplate = "",
+                FooterTemplate = $@"<footer style=""padding-left: 20px; opacity: 0.5; font-size: 3.2em; display: flex;margin: 10px, 10px;flex-direction: column;color: grey;font-family: 'Times New Roman', Times, serif;"">
+                                            <div class='' style='font-size: 3.2em; text-align: right;letter-spacing: 2px;'><label class='pageNumber'></label> | Page</div>
+                                            <div class='footer'>
+                                              <p style='line-height: 3px;font-size: 3.2em;'>FORM E1(CSE INTERNAL) INSPECTION REPORT FOR LICENSING LEW SINGLE USER PREMISE- REV #8
+                                              </p><p style='line-height: 3px;font-size: 3.2em;'>ALL RIGHTS RESERVED TO CHENG SENG ELECTRIC CO PTE LTD</p>
+                                            </div>
+                                          </footer>
+                                        ",
+
+            }); ;
+            return File(file, "application/pdf", "prueba.pdf");
         }
     }
 }
