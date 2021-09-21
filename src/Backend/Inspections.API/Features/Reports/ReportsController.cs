@@ -301,8 +301,8 @@ namespace Inspections.API.Features.Inspections
         public async Task<FileResult> Export(ExportDTO exportData)
         {
             Guard.Against.Null(exportData, nameof(exportData)); 
-            var config = _context.ReportConfigurations.FirstOrDefault(c => c.Id.Equals(exportData.reportConfigurationId));
-            var file = await GenerateReport(exportData.loginUrl, exportData.pageUrl, config, exportData.photosPerPage);
+            var config = _context.ReportConfigurations.FirstOrDefault(c => c.Id.Equals(exportData.ReportConfigurationId));
+            var file = await GenerateReport(exportData.LoginUrl, exportData.PageUrl, config, exportData.PhotosPerPage);
             return File(file, "application/pdf", "prueba.pdf");
         }
 
@@ -352,5 +352,5 @@ namespace Inspections.API.Features.Inspections
         }
     }
 
-    public record ExportDTO(string loginUrl, string pageUrl, int photosPerPage = 12, int reportConfigurationId = 1);
+    public record ExportDTO(string LoginUrl, string PageUrl, int PhotosPerPage = 12, int ReportConfigurationId = 1);
 }

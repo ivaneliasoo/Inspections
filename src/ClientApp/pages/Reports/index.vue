@@ -47,7 +47,7 @@
               color="primary"
               class="mr-2"
               v-on="on"
-              @click="generatePdf(item.id, true)"
+              @click="generatePdf(item, true)"
             >
               <!-- @click="printHelper.printCompoundedPhotoRecord(item.id)" -->
               mdi-camera
@@ -62,7 +62,7 @@
               color="primary"
               class="mr-2"
               v-on="on"
-              @click="generatePdf(item.id)"
+              @click="generatePdf(item)"
             >
               <!-- @click="printHelper.print(item.id)" -->
               mdi-printer
@@ -243,12 +243,11 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
         })
     }
 
-    async generatePdf (item: Report, compoundedPhotoRecord: boolean = true) {
+    async generatePdf (item: Report, compoundedPhotoRecord: boolean = true, printPhotos: boolean = true) {
       const printData = {
         loginUrl: `${window.location.protocol}//${window.location.host}/Login`,
-        pageUrl: `${window.location.protocol}//${window.location.host}/reports/${item.id}/print`,
+        pageUrl: `${window.location.protocol}//${window.location.host}/reports/${item.id}?printPhotos=${printPhotos}&compoundedPhotoRecord=${compoundedPhotoRecord}`,
         token: this.$auth.getToken('local').replace('bearer ', ''),
-        compoundedPhotoRecord,
         photosPerPage: 12,
         reportConfigurationId: 1
       }
