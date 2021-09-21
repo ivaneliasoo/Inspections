@@ -132,9 +132,9 @@ namespace Inspections.API.Features.Inspections
             foreach (var photo in photos)
             {
                 photo.PhotoUrl = _photoRecordManager.GenerateSafeUrl(photo.FileName);
-                photo.FileNameResized = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
+                photo.ThumbnailUrl = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
                 photo.PhotoBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileName);
-                photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized);
+                photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized);;
             }
 
             if (photos != null)
@@ -297,11 +297,12 @@ namespace Inspections.API.Features.Inspections
             return BadRequest();
         }
 
-        [HttpPost("export")]
-        public async Task<FileResult> Export(string loginUrl, string pageUrl, string token = "", int photosPerPage = 12, int reportConfigurationId = 1)
+        [HttpPost("export", Name = nameof(Export))]
+        public async Task<FileResult> Export(ExportDTO exportData)
         {
-            var config = _context.ReportConfigurations.FirstOrDefault(c => c.Id.Equals(reportConfigurationId));
-            var file = await GenerateReport(loginUrl, pageUrl, config, photosPerPage);
+            Guard.Against.Null(exportData, nameof(exportData)); 
+            var config = _context.ReportConfigurations.FirstOrDefault(c => c.Id.Equals(exportData.reportConfigurationId));
+            var file = await GenerateReport(exportData.loginUrl, exportData.pageUrl, config, exportData.photosPerPage);
             return File(file, "application/pdf", "prueba.pdf");
         }
 
@@ -350,4 +351,6 @@ namespace Inspections.API.Features.Inspections
             return await page.PdfDataAsync(pdfOptions);
         }
     }
+
+    public record ExportDTO(string loginUrl, string pageUrl, int photosPerPage = 12, int reportConfigurationId = 1);
 }

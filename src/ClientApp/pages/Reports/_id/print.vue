@@ -69,7 +69,7 @@ export default {
       })
 
       if (pagesLength % 2 !== 0) {
-        photoRecordsPages[currentPage].push({ photoBase64: '', label: '' })
+        photoRecordsPages[currentPage].push({ thumbnailBase64: '', label: '' })
       }
       return {
         reportId: id,
