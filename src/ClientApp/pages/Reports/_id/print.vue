@@ -38,16 +38,8 @@
         />
       </article>
     </div>
-    <div v-for="(page, index) in photoRecordsPages" :key="index" style="display: block; border: 2px; " class="page-break-before">
-      <div class="tw-block tw-text-center" style="width: 100%;">
-        <div class="tw-grid tw-grid-cols-4 tw-gap-8">
-          <div v-for="(photo) in page" :key="photo.id" class="tw-border-2 tw-border-indigo-200 tw-max-w-sm tw-min-h-max tw-mx-2 tw-my-2">
-            <img style="width: 180px; top: 0" :src="photo.photoBase64">
-            <span class="tw-font-bold tw-text-center">{{ photo.label }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- TODO-IVAN Hacer Encabezado del Compounded Photo Record -->
+    <PrintingReportsPhotoRecord v-if="printPhotos || isCompoundedPhotoRecord" :items="photoRecordsPages" />
   </div>
 </template>
 
@@ -58,6 +50,9 @@ export default {
   async asyncData ({ route, $axios, $reportsApi }) {
     if (route && route.params && route.params.id) {
       const id = parseInt(route.params.id)
+
+      const printPhotos = route.query && route.query.printPhotos ? route.query.printPhotos === 'true' : false
+      const isCompoundedPhotoRecord = route.query && route.query.compoundedPhotoRecord ? route.query.compoundedPhotoRecord === 'true' : false
       const result = await $axios.$get(`reports/${id}`)
       const photoRecords = await $reportsApi.reportsIdPhotorecordGet(id)
       const pagesLength = Math.ceil(photoRecords.data.length / 12)
@@ -74,8 +69,9 @@ export default {
       return {
         reportId: id,
         reportData: result,
-        photoRecords: photoRecords.data,
-        photoRecordsPages
+        photoRecordsPages,
+        printPhotos,
+        isCompoundedPhotoRecord
       }
     }
   },
@@ -84,8 +80,7 @@ export default {
       reportId: -1,
       reportData: {},
       photoRecords: [],
-      photoRecordsPages: [],
-      currentPage: 0
+      photoRecordsPages: []
     }
   },
   computed: {
@@ -99,7 +94,6 @@ export default {
       if (this.reportData && this.reportData.checkLists) {
         return this.reportData.checkLists.length
       }
-
       return 0
     }
   },
