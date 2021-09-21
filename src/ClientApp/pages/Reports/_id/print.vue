@@ -38,26 +38,16 @@
         />
       </article>
     </div>
-    <div style="display: block; border: 2px; " class="page-break-before">
-      <div class="tw-block tw-text-center">
-        <div class="tw-grid tw-grid-cols-3">
-          <div v-for="(photo, index) in photoRecords" :key="photo.id" class="tw-border-2 tw-border-indigo-200 tw-max-w-sm tw-min-h-max">
-            <img v-if="index <= 5" style="width: 250px; top: 0" :src="photo.photoUrl" alt="">
-            <span v-if="index <= 5" class="tw-font-bold tw-text-center">{{ photo.label }}</span>
+    <div v-for="(page, index) in photoRecordsPages" :key="index" style="display: block; border: 2px; " class="page-break-before">
+      <div class="tw-block tw-text-center" style="width: 100%;">
+        <div class="tw-grid tw-grid-cols-4 tw-gap-8">
+          <div v-for="(photo) in page" :key="photo.id" class="tw-border-2 tw-border-indigo-200 tw-max-w-sm tw-min-h-max tw-mx-2 tw-my-2">
+            <img style="width: 180px; top: 0" :src="photo.photoBase64">
+            <span class="tw-font-bold tw-text-center">{{ photo.label }}</span>
           </div>
         </div>
       </div>
     </div>
-    <!-- <div style="display: block; border: 2px; " class="page-break-before">
-      <div class="tw-block tw-text-center">
-        <div class="tw-grid tw-grid-cols-3">
-          <div v-for="(photo, index) in photoRecords" :key="photo.id" class="tw-border-2 tw-border-indigo-200 tw-max-w-sm tw-min-h-max">
-            <img v-if="index > 5 && index <= 11" style="width: 250px; top: 0" :src="photo.photoUrl" alt="">
-            <span v-if="index > 5 && index <= 11" class="tw-font-bold tw-text-center">{{ photo.label }}</span>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -70,10 +60,22 @@ export default {
       const id = parseInt(route.params.id)
       const result = await $axios.$get(`reports/${id}`)
       const photoRecords = await $reportsApi.reportsIdPhotorecordGet(id)
+      const pagesLength = Math.ceil(photoRecords.data.length / 12)
+      const photoRecordsPages = [[]]
+      let currentPage = 0
+      photoRecords.data.forEach((photo, index) => {
+        if (index > 0 && (index) % 12 === 0) { photoRecordsPages.push([]); currentPage++ }
+        if (photoRecordsPages[currentPage]) { photoRecordsPages[currentPage].push(photo) }
+      })
+
+      if (pagesLength % 2 !== 0) {
+        photoRecordsPages[currentPage].push({ photoBase64: '', label: '' })
+      }
       return {
         reportId: id,
         reportData: result,
-        photoRecords: photoRecords.data
+        photoRecords: photoRecords.data,
+        photoRecordsPages
       }
     }
   },
@@ -81,7 +83,9 @@ export default {
     return {
       reportId: -1,
       reportData: {},
-      photoRecords: []
+      photoRecords: [],
+      photoRecordsPages: [],
+      currentPage: 0
     }
   },
   computed: {

@@ -16,5 +16,10 @@ namespace Inspections.Core.Domain.ReportConfigurationAggregate
         public List<CheckList> ChecksDefinition { get; set; } = default!;
         public List<Signature> SignatureDefinitions { get; set; } = default!;
         public bool Inactive { get; set; }
+        public string Footer { get; set; } = default!;
+        public string MarginTop { get; set; } = default!;
+        public string MarginBottom { get; set; } = default!;
+        public string MarginLeft { get; set; } = default!;
+        public string MarginRight { get; set; } = default!;
     }
 }

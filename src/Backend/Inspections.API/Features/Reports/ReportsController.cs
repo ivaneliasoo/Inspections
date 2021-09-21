@@ -4,11 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Extensions;
 using Inspections.API.Features.Inspections.Commands;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Models.Configuration;
+using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces;
 using Inspections.Core.QueryModels;
@@ -117,14 +120,21 @@ namespace Inspections.API.Features.Inspections
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public IActionResult GetPhotoRecords(int id)
+        public async Task<IActionResult> GetPhotoRecords(int id)
         {
-            var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id).ToList();
+            MapperConfiguration config = new MapperConfiguration(cfg =>
+                                                                     {
+                                                                         cfg.CreateMap<PhotoRecord, PhotoRecordResult>();
+
+                                                                     });
+            var photos = _context.Set<PhotoRecord>().ProjectTo<PhotoRecordResult>(config).Where(p => p.ReportId == id).ToList();
 
             foreach (var photo in photos)
             {
                 photo.PhotoUrl = _photoRecordManager.GenerateSafeUrl(photo.FileName);
                 photo.FileNameResized = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
+                photo.PhotoBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileName);
+                photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized);
             }
 
             if (photos != null)
@@ -287,10 +297,19 @@ namespace Inspections.API.Features.Inspections
             return BadRequest();
         }
 
-        [AllowAnonymous]
-        [HttpPost("testpdf")]
-        public async Task<FileResult> GeneteReport()
+        [HttpPost("export")]
+        public async Task<FileResult> Export(string loginUrl, string pageUrl, string token = "", int photosPerPage = 12, int reportConfigurationId = 1)
         {
+            var config = _context.ReportConfigurations.FirstOrDefault(c => c.Id.Equals(reportConfigurationId));
+            var file = await GenerateReport(loginUrl, pageUrl, config, photosPerPage);
+            return File(file, "application/pdf", "prueba.pdf");
+        }
+
+        private async Task<byte[]> GenerateReport(string loginUrl, string pageUrl, ReportConfiguration config, int photosPerPage)
+        {
+            Guard.Against.Null(loginUrl, nameof(loginUrl));
+            Guard.Against.Null(pageUrl, nameof(pageUrl));
+            Guard.Against.Null(config, nameof(config));
 
             var browserFetcher = new BrowserFetcher();
             await browserFetcher.DownloadAsync();
@@ -298,38 +317,37 @@ namespace Inspections.API.Features.Inspections
             await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true, Args = new string[] { "--no-sandbox" } });
             await using var page = await browser.NewPageAsync();
 
-            await page.GoToAsync("http://localhost:3000/Login");
+            await page.GoToAsync(loginUrl);
 
             await page.WaitForSelectorAsync("#username");
             await page.ClickAsync("#username");
 
-            await page.TypeAsync("#username", "demo");
+            await page.TypeAsync("#username", "pdf");
 
             await page.ClickAsync("#password");
 
-            await page.TypeAsync("#password", "123456");
+            await page.TypeAsync("#password", "@@P@sword");
             await page.WaitForSelectorAsync(".elevation-12 > #signin-form > .v-card__actions > .v-btn > .v-btn__content");
             await page.ClickAsync(".elevation-12 > #signin-form > .v-card__actions > .v-btn > .v-btn__content");
             await page.WaitForSelectorAsync("table > .v-data-table-header > tr > .text-center:nth-child(4) > span");
 
-            await page.GoToAsync("http://localhost:3000/Reports/2/print");
+            await page.GoToAsync($"{pageUrl}?{nameof(photosPerPage)}={photosPerPage}");
             await page.WaitForSelectorAsync(".logo");
-            var file = await page.PdfDataAsync(new PdfOptions
+            var pdfOptions = new PdfOptions
             {
                 DisplayHeaderFooter = true,
-                MarginOptions = new MarginOptions { Bottom = "80px", Top="20px", Left="70px", Right="70px" },
+                MarginOptions = new MarginOptions
+                {
+                    Bottom = config.MarginBottom,
+                    Top = config.MarginTop,
+                    Left = config.MarginLeft,
+                    Right = config.MarginRight
+                },
                 HeaderTemplate = "",
-                FooterTemplate = $@"<footer style=""padding-left: 20px; opacity: 0.5; font-size: 3.2em; display: flex;margin: 10px, 10px;flex-direction: column;color: grey;font-family: 'Times New Roman', Times, serif;"">
-                                            <div class='' style='font-size: 3.2em; text-align: right;letter-spacing: 2px;'><label class='pageNumber'></label> | Page</div>
-                                            <div class='footer'>
-                                              <p style='line-height: 3px;font-size: 3.2em;'>FORM E1(CSE INTERNAL) INSPECTION REPORT FOR LICENSING LEW SINGLE USER PREMISE- REV #8
-                                              </p><p style='line-height: 3px;font-size: 3.2em;'>ALL RIGHTS RESERVED TO CHENG SENG ELECTRIC CO PTE LTD</p>
-                                            </div>
-                                          </footer>
-                                        ",
+                FooterTemplate = config.Footer,
 
-            }); ;
-            return File(file, "application/pdf", "prueba.pdf");
+            };
+            return await page.PdfDataAsync(pdfOptions);
         }
     }
 }

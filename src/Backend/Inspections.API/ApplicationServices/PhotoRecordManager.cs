@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Amazon.S3;
+using Amazon.S3.Model;
 using Inspections.API.Models.Configuration;
 using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp;
@@ -49,7 +50,7 @@ namespace Inspections.API.ApplicationServices
             if (photo is not null && thumbnail is not null)
                 return new PhotoItemResult
                 {
-                    PhotoPath = photo.Path ,
+                    PhotoPath = photo.Path,
                     ThumbnailPath = thumbnail.Path,
                     PhotoStorageId = photo.CloudId,
                     ThumbnailStorageId = thumbnail.CloudId,
@@ -63,6 +64,22 @@ namespace Inspections.API.ApplicationServices
         internal string GenerateSafeUrl(string photoPath)
         {
             return _amazonS3.GeneratePreSignedURL(_options.Value.S3BucketName, photoPath, DateTime.Now.AddHours(2), null);
+        }
+
+        internal async Task<string> GenerateAsBase64(string photoPath)
+        {
+            try
+            {
+                using var fileStream = await _amazonS3.GetObjectStreamAsync(_options.Value.S3BucketName, photoPath, null);
+                using var ms = new MemoryStream();
+                await fileStream.CopyToAsync(ms);
+                var content = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(content);
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
 
         internal async Task<StorageItem> AddPhotoThumbnail(Stream file, string album, string name, string contentType)

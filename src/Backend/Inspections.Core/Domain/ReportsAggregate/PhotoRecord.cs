@@ -48,4 +48,16 @@ namespace Inspections.Core.Domain.ReportsAggregate
             return FileName;
         }
     }
+
+    public class PhotoRecordResult : Entity<int>
+    {
+        public int ReportId { get; private set; }
+        public string FileName { get; set; } = default!;
+        public string FileNameResized { get; set; } = default!;
+        public string? Label { get; set; }
+        public string? PhotoUrl { get; set; } = default!;
+        public string? ThumbnailUrl { get; set; } = default!;
+        public string? PhotoBase64 { get; set; } = default!;
+        public string? ThumbnailBase64 { get; set; } = default!;
+    }
 }
