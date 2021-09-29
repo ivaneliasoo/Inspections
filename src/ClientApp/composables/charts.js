@@ -160,7 +160,6 @@ export function sepLineChartOptions(csvData, minMaxData, category, suffix, legen
 }
 
 export function lineChartOptions(csvData, minMaxData, category, suffix, legendOpt) {
-
   const seriesInfo = category.mappings;
   var series = [];
   var legend = [];

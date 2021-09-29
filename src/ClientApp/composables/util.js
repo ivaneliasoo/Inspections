@@ -1,8 +1,6 @@
 
 const dateFormat = Intl.DateTimeFormat('en-SG', { month: 'numeric', day: 'numeric', year: 'numeric', hourCycle: 'h23' });
 const timeFormat = Intl.DateTimeFormat('en-SG', { hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23' });
-//const dateTimeFormat = Intl.DateTimeFormat('en-SG', { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', 
-//        minute: 'numeric', second: 'numeric', hour12: false });
 
 function excluded(col, exclude) {
     for (let excol of exclude) {

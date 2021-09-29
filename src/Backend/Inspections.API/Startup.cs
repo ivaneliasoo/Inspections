@@ -10,6 +10,7 @@ using Amazon.S3;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Users.Services;
 using Inspections.API.Models.Configuration;
+using Inspections.API.Features.EnergyReport.Models;
 using Inspections.Core;
 using Inspections.Core.Interfaces;
 using Inspections.Core.Interfaces.Queries;
@@ -214,6 +215,9 @@ namespace Inspections.API
             string cn = Configuration.GetConnectionString("Inspections");
             services.AddDbContext<InspectionsContext>(c =>
             c.UseLoggerFactory(logger).UseNpgsql(cn).EnableSensitiveDataLogging());
+
+            services.AddDbContext<EnergyReportContext>(options =>
+                    options.UseNpgsql(Configuration.GetConnectionString("EnergyReport")));
         }
 
         private static bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)

@@ -1,6 +1,6 @@
 {
   "1": {
-    "description": "Report setting 1 - Hioki 3197",
+    "description": "Hioki 3197 PA#1",
     "page2": {
       "include": false,
       "title": "Summary of Results",
@@ -931,1740 +931,8 @@
       }
     ]
   },
-  "3": {
-    "description": "Alogodue Template",
-    "page2": {
-      "include": false,
-      "title": "",
-      "subtitle": "",
-      "requirements": [
-        {
-          "num": 0,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 1,
-          "section": "",
-          "remarks": ""
-        }
-      ],
-      "additionalInfo": [
-        {
-          "num": 2,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 3,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 4,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 5,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 6,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 7,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 8,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 9,
-          "section": "",
-          "remarks": ""
-        }
-      ]
-    },
-    "categories": [
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Frequency",
-        "title": "Section ${s}: Power Frequency",
-        "histogram": "F-AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": true,
-          "ymin": "49",
-          "ymax": "51"
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "F-AVG",
-            "color": "#1CAC78"
-          }
-        ],
-        "text": {
-          "paramName": "Frequency",
-          "paramValue": "50.0Hz",
-          "paramDef": "Mean value of the fundamental frequency measured over 10 seconds",
-          "limitations": "For systems with a synchronous connection to an interconnected system Measured values based on coverage",
-          "incParam": true,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": true,
-          "reqHeader1": "Measured Frequency",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "F-AVG",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": true,
-              "timePercent": "90",
-              "ymin": "49",
-              "ymax": "51"
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "Hz",
-        "histogramTitle": "Frequency distribution",
-        "bins": "20"
-      },
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Voltage",
-        "title": "Section ${ss}: Supply Voltage L-N",
-        "histogram": "V1N-AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": true,
-          "ymin": "227",
-          "ymax": "253"
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "V1N-MIN",
-            "color": "#1F75FE"
-          },
-          {
-            "series": "2",
-            "col": "V1N-AVG",
-            "color": "#EE204D"
-          },
-          {
-            "series": "3",
-            "col": "V1N-MAX",
-            "color": "#FCE883"
-          },
-          {
-            "series": "4",
-            "col": "V2N-MIN",
-            "color": "#87A96B"
-          },
-          {
-            "series": "5",
-            "col": "V2N-AVG",
-            "color": "#1CAC78"
-          },
-          {
-            "series": "6",
-            "col": "V2N-MAX",
-            "color": "#71BC78"
-          },
-          {
-            "series": "7",
-            "col": "V3N-MIN",
-            "color": "#3BB08F"
-          },
-          {
-            "series": "8",
-            "col": "V3N-AVG",
-            "color": "#1DACD6"
-          },
-          {
-            "series": "9",
-            "col": "V3N-MAX",
-            "color": "#EA7E5D"
-          }
-        ],
-        "text": {
-          "paramName": "Nominal Voltage",
-          "paramValue": "230.0V L-N",
-          "paramDef": "${td} minute mean RMS value of the supply voltage (Min, Avg, Max)",
-          "limitations": "For systems with a synchronous connection to an interconnected system Measured values based on coverage",
-          "incParam": true,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": true,
-          "reqHeader1": "Measured L1 Voltage",
-          "reqHeader2": "Measured L2 Voltage",
-          "reqHeader3": "Measured L3 Voltage",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "V1N-AVG",
-              "value2": "V2N-AVG",
-              "value3": "V3N-AVG",
-              "result": "",
-              "include": true,
-              "timePercent": "90",
-              "ymin": "227",
-              "ymax": "252"
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "V",
-        "histogramTitle": "Voltage distribution",
-        "bins": "20"
-      },
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Voltage",
-        "title": "Section ${ss}: Supply Voltage L-L",
-        "histogram": "V1N-AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": true,
-          "ymin": "360",
-          "ymax": "440"
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "V1N-MIN",
-            "color": "#1F75FE"
-          },
-          {
-            "series": "2",
-            "col": "V1N-AVG",
-            "color": "#EE204D"
-          },
-          {
-            "series": "3",
-            "col": "V1N-MAX",
-            "color": "#FCE883"
-          },
-          {
-            "series": "4",
-            "col": "V2N-MIN",
-            "color": "#87A96B"
-          },
-          {
-            "series": "5",
-            "col": "V2N-AVG",
-            "color": "#1CAC78"
-          },
-          {
-            "series": "6",
-            "col": "V2N-MAX",
-            "color": "#71BC78"
-          },
-          {
-            "series": "7",
-            "col": "V3N-MIN",
-            "color": "#3BB08F"
-          },
-          {
-            "series": "8",
-            "col": "V3N-AVG",
-            "color": "#1DACD6"
-          },
-          {
-            "series": "9",
-            "col": "V3N-MAX",
-            "color": "#EA7E5D"
-          }
-        ],
-        "text": {
-          "paramName": "Nominal Voltage",
-          "paramValue": "400.0V L-L",
-          "paramDef": "${td} minute mean RMS value of the supply voltage (Min, Avg, Max)",
-          "limitations": "For systems with a synchronous connection to an interconnected system Measured values based on coverage",
-          "incParam": true,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": true,
-          "reqHeader1": "Measured L1 Voltage",
-          "reqHeader2": "Measured L2 Voltage",
-          "reqHeader3": "Measured L3 Voltage",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "V1N-AVG",
-              "value2": "V2N-AVG",
-              "value3": "V3N-AVG",
-              "result": "",
-              "include": true,
-              "timePercent": "90",
-              "ymin": "360",
-              "ymax": "440"
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "V",
-        "factor": "1.7321",
-        "histogramTitle": "Voltage distribution",
-        "bins": "20"
-      },
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Current",
-        "title": "Section ${s}: Load",
-        "histogram": "A1-AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "A1-MIN",
-            "color": "#1F75FE"
-          },
-          {
-            "series": "2",
-            "col": "A1-AVG",
-            "color": "#EE204D"
-          },
-          {
-            "series": "3",
-            "col": "A1-MAX",
-            "color": "#FCE883"
-          },
-          {
-            "series": "4",
-            "col": "A2-MIN",
-            "color": "#87A96B"
-          },
-          {
-            "series": "5",
-            "col": "A2-AVG",
-            "color": "#71BC78"
-          },
-          {
-            "series": "6",
-            "col": "A2-MAX",
-            "color": "#DD9475"
-          },
-          {
-            "series": "7",
-            "col": "A3-MIN",
-            "color": "#ACE5EE"
-          },
-          {
-            "series": "8",
-            "col": "A3-AVG",
-            "color": "#6699CC"
-          },
-          {
-            "series": "9",
-            "col": "A3-MAX",
-            "color": "#A2A2D0"
-          }
-        ],
-        "text": {
-          "paramName": "Load",
-          "paramValue": "",
-          "paramDef": "15 minute mean RMS value of the Current (Min, Avg, Max)",
-          "limitations": "For systems with a synchronous connection to an interconnected system. Measured values based on coverage",
-          "incParam": true,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "A",
-        "histogramTitle": "Current distribution",
-        "bins": "8"
-      },
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Voltage unbalance",
-        "title": "Section ${s}: Voltage Unbalance",
-        "histogram": "VoltageUnbalance",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "VoltageUnbalance",
-            "color": "#00FFFF"
-          }
-        ],
-        "text": {
-          "paramName": "",
-          "paramValue": "",
-          "paramDef": "${td} minute mean RMS values of the negative sequence ratio u2 (Max)",
-          "limitations": "Under normal operating conditions. Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "%",
-        "histogramTitle": "Unbalance distribution"
-      },
-      {
-        "separateCharts": true,
-        "disabled": false,
-        "chartTitle": "Real Power",
-        "title": "Section ${s}: Real Power",
-        "histogram": "P1-AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "P1-MIN",
-            "color": "#EE204D"
-          },
-          {
-            "series": "2",
-            "col": "P1-AVG",
-            "color": "#1F75FE"
-          },
-          {
-            "series": "3",
-            "col": "P1-MAX",
-            "color": "#1CAC78"
-          }
-        ],
-        "text": {
-          "paramName": "",
-          "paramValue": "",
-          "paramDef": "Sample-by-sample instantaneous voltage times instantaneous current (Min, Avg, Max)",
-          "limitations": "Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "histogramTitle": "Real Power Distribution",
-        "bins": "8",
-        "yAxisName": "kW",
-        "factor": "0.001"
-      },
-      {
-        "separateCharts": true,
-        "disabled": false,
-        "chartTitle": "Apparent Power",
-        "title": "Section ${s}: Apparent Power",
-        "histogram": "AveApparentPower",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "AveApparentPower",
-            "color": "#EE204D"
-          },
-          {
-            "series": "2",
-            "col": "MinApparentPower",
-            "color": "#1F75FE"
-          },
-          {
-            "series": "3",
-            "col": "MaxApparentPower",
-            "color": "#1CAC78"
-          }
-        ],
-        "text": {
-          "paramName": "",
-          "paramValue": "",
-          "paramDef": "RMS voltage times RMS current (Min, Avg, Max)",
-          "limitations": "Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "kW",
-        "histogramTitle": "Apparent Power Distribution",
-        "bins": "8"
-      },
-      {
-        "separateCharts": true,
-        "disabled": false,
-        "chartTitle": "True Power Factor",
-        "title": "Section ${s}: Power Factor",
-        "histogram": "TPF1-AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "TPF1-MIN",
-            "color": "#EE204D"
-          },
-          {
-            "series": "2",
-            "col": "TPF1-AVG",
-            "color": "#1F75FE"
-          },
-          {
-            "series": "3",
-            "col": "TPF1-MAX",
-            "color": "#1CAC78"
-          }
-        ],
-        "text": {
-          "paramName": "",
-          "paramValue": "",
-          "paramDef": "Real Power divided by Apparent Power (Min, Avg, Max)",
-          "limitations": "or systems with a synchronous connection to an interconnected system. Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "histogramTitle": "True Power Factor Distribution",
-        "bins": "20"
-      },
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Energy",
-        "title": "Section ${s}: Energy",
-        "histogram": "Energy",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "AcumEnergy",
-            "color": "#1CAC78"
-          }
-        ],
-        "text": {
-          "paramName": "",
-          "paramValue": "",
-          "paramDef": "Energy in kilowatt hour is most commonly known as a billing unit for energy delivered to consumers by electric utilities.",
-          "limitations": "Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "histogramTitle": "Energy",
-        "yAxisName": "kWH",
-        "bins": "10"
-      }
-    ],
-    "calcColumns": [
-      {
-        "name": "VoltageUnbalance",
-        "params": [
-          {
-            "name": "Voltage1",
-            "col": "V1N-AVG"
-          },
-          {
-            "name": "Voltage2",
-            "col": "V2N-AVG"
-          },
-          {
-            "name": "Voltage3",
-            "col": "V3N-AVG"
-          }
-        ]
-      },
-      {
-        "name": "AvePowerFactor",
-        "params": [
-          {
-            "name": "AveRealPower",
-            "col": ""
-          },
-          {
-            "name": "AveApparentPower",
-            "col": ""
-          }
-        ]
-      },
-      {
-        "name": "MinPowerFactor",
-        "params": [
-          {
-            "name": "MinRealPower",
-            "col": ""
-          },
-          {
-            "name": "MinApparentPower",
-            "col": ""
-          }
-        ]
-      },
-      {
-        "name": "MaxPowerFactor",
-        "params": [
-          {
-            "name": "MaxRealPower",
-            "col": ""
-          },
-          {
-            "name": "MaxApparentPower",
-            "col": ""
-          }
-        ]
-      },
-      {
-        "name": "AveApparentPower",
-        "params": [
-          {
-            "name": "AveRealPower",
-            "col": "P1-AVG"
-          },
-          {
-            "name": "AvePowerFactor",
-            "col": "TPF1-AVG"
-          }
-        ]
-      },
-      {
-        "name": "MinApparentPower",
-        "params": [
-          {
-            "name": "MinRealPower",
-            "col": "P1-MIN"
-          },
-          {
-            "name": "MinPowerFactor",
-            "col": "TPF1-MIN"
-          }
-        ]
-      },
-      {
-        "name": "MaxApparentPower",
-        "params": [
-          {
-            "name": "MaxRealPower",
-            "col": "P1-MAX"
-          },
-          {
-            "name": "MaxPowerFactor",
-            "col": "TPF1-MAX"
-          }
-        ]
-      },
-      {
-        "name": "Energy",
-        "params": [
-          {
-            "name": "Energy",
-            "col": "P1-AVG"
-          }
-        ]
-      },
-      {
-        "name": "AcumEnergy",
-        "params": [
-          {
-            "name": "Energy",
-            "col": "P1-AVG"
-          }
-        ]
-      }
-    ]
-  },
-  "4": {
-    "description": "Alogodue Template - spaces in colum names",
-    "page2": {
-      "include": false,
-      "title": "",
-      "subtitle": "",
-      "requirements": [
-        {
-          "num": 0,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 1,
-          "section": "",
-          "remarks": ""
-        }
-      ],
-      "additionalInfo": [
-        {
-          "num": 2,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 3,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 4,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 5,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 6,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 7,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 8,
-          "section": "",
-          "remarks": ""
-        },
-        {
-          "num": 9,
-          "section": "",
-          "remarks": ""
-        }
-      ]
-    },
-    "categories": [
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Frequency",
-        "title": "Section ${s}: Power Frequency",
-        "histogram": "F AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": true,
-          "ymin": "49.9",
-          "ymax": "50.1"
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "F AVG",
-            "color": "#1CAC78",
-            "param": "Frequency"
-          }
-        ],
-        "text": {
-          "paramName": "Frequency",
-          "paramValue": "50.0Hz",
-          "paramDef": "Mean value of the fundamental frequency measured over 10 seconds",
-          "limitations": "For systems with a synchronous connection to an interconnected system Measured values based on coverage",
-          "incParam": true,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": true,
-          "reqHeader1": "Measured Frequency",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "F AVG",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": true,
-              "timePercent": "90",
-              "ymin": "49.9",
-              "ymax": "50.1"
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "Hz",
-        "histogramTitle": "Frequency distribution",
-        "bins": "20"
-      },
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Voltage",
-        "title": "Section ${ss}: Supply Voltage L-N",
-        "histogram": "V1N AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": true,
-          "ymin": "207",
-          "ymax": "253"
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "V1N AVG",
-            "color": "#1F75FE",
-            "param": "L1"
-          },
-          {
-            "series": "2",
-            "col": "V2N AVG",
-            "color": "#EE204D",
-            "param": "L2"
-          },
-          {
-            "series": "3",
-            "col": "V3N AVG",
-            "color": "#FCE883",
-            "param": "L3"
-          },
-          {
-            "series": "4",
-            "col": "V1N MIN",
-            "color": "#87A96B",
-            "param": "L1 Min"
-          },
-          {
-            "series": "5",
-            "col": "V2N MIN",
-            "color": "#1CAC78",
-            "param": "L2 Min"
-          },
-          {
-            "series": "6",
-            "col": "V3N MIN",
-            "color": "#71BC78",
-            "param": "L3 Min"
-          },
-          {
-            "series": "7",
-            "col": "V1N MAX",
-            "color": "#3BB08F",
-            "param": "L1 Max"
-          },
-          {
-            "series": "8",
-            "col": "V2N MAX",
-            "color": "#1DACD6",
-            "param": "L2 Max"
-          },
-          {
-            "series": "9",
-            "col": "V3N MAX",
-            "color": "#EA7E5D",
-            "param": "L3 Max"
-          }
-        ],
-        "text": {
-          "paramName": "Nominal Voltage",
-          "paramValue": "230.0V L-N",
-          "paramDef": "${td} minute mean RMS value of the supply voltage (Min, Avg, Max)",
-          "limitations": "For systems with a synchronous connection to an interconnected system Measured values based on coverage",
-          "incParam": true,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": true,
-          "reqHeader1": "Measured L1 Voltage",
-          "reqHeader2": "Measured L2 Voltage",
-          "reqHeader3": "Measured L3 Voltage",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "V1N AVG",
-              "value2": "V2N AVG",
-              "value3": "V3N AVG",
-              "result": "",
-              "include": true,
-              "timePercent": "90",
-              "ymin": "207",
-              "ymax": "253"
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "V",
-        "histogramTitle": "Voltage distribution",
-        "bins": "20"
-      },
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Voltage",
-        "title": "Section ${ss}: Supply Voltage L-L",
-        "histogram": "V1N AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": true,
-          "ymin": "358.54",
-          "ymax": "438.22"
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "V1N AVG",
-            "color": "#1F75FE",
-            "param": "L1"
-          },
-          {
-            "series": "2",
-            "col": "V2N AVG",
-            "color": "#EE204D",
-            "param": "L2"
-          },
-          {
-            "series": "3",
-            "col": "V3N AVG",
-            "color": "#FCE883",
-            "param": "L3"
-          },
-          {
-            "series": "4",
-            "col": "V1N MIN",
-            "color": "#87A96B",
-            "param": "L1 Min"
-          },
-          {
-            "series": "5",
-            "col": "V2N MIN",
-            "color": "#1CAC78",
-            "param": "L2 Min"
-          },
-          {
-            "series": "6",
-            "col": "V3N MIN",
-            "color": "#71BC78",
-            "param": "L3 Min"
-          },
-          {
-            "series": "7",
-            "col": "V1N MAX",
-            "color": "#3BB08F",
-            "param": "L1 Max"
-          },
-          {
-            "series": "8",
-            "col": "V2N MAX",
-            "color": "#1DACD6",
-            "param": "L2 Max"
-          },
-          {
-            "series": "9",
-            "col": "V3N MAX",
-            "color": "#EA7E5D",
-            "param": "L3 Max"
-          }
-        ],
-        "text": {
-          "paramName": "Nominal Voltage",
-          "paramValue": "400.0V L-L",
-          "paramDef": "${td} minute mean RMS value of the supply voltage (Min, Avg, Max)",
-          "limitations": "For systems with a synchronous connection to an interconnected system Measured values based on coverage",
-          "incParam": true,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": true,
-          "reqHeader1": "Measured L1 Voltage",
-          "reqHeader2": "Measured L2 Voltage",
-          "reqHeader3": "Measured L3 Voltage",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "V1N AVG",
-              "value2": "V2N AVG",
-              "value3": "V3N AVG",
-              "result": "",
-              "include": true,
-              "timePercent": "90",
-              "ymin": "358.54",
-              "ymax": "438.22"
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "V",
-        "factor": "1.7321",
-        "histogramTitle": "Voltage distribution",
-        "bins": "20"
-      },
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Current",
-        "title": "Section ${s}: Load",
-        "histogram": "A1 AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "A1 AVG",
-            "color": "#1F75FE",
-            "showPeaks": false,
-            "param": "L1"
-          },
-          {
-            "series": "2",
-            "col": "A2 AVG",
-            "color": "#EE204D",
-            "param": "L2"
-          },
-          {
-            "series": "3",
-            "col": "A3 AVG",
-            "color": "#FCE883",
-            "showPeaks": false,
-            "param": "L3"
-          },
-          {
-            "series": "4",
-            "col": "A1 MIN",
-            "color": "#87A96B",
-            "showPeaks": true,
-            "param": "L1 Min"
-          },
-          {
-            "series": "5",
-            "col": "A2 MIN",
-            "color": "#71BC78",
-            "param": "L2 Min",
-            "showPeaks": true
-          },
-          {
-            "series": "6",
-            "col": "A3 MIN",
-            "color": "#DD9475",
-            "showPeaks": true,
-            "param": "L3 Min"
-          },
-          {
-            "series": "7",
-            "col": "A1 MAX",
-            "color": "#ACE5EE",
-            "showPeaks": true,
-            "param": "L1 Max"
-          },
-          {
-            "series": "8",
-            "col": "A2 MAX",
-            "color": "#6699CC",
-            "param": "L2 Max",
-            "showPeaks": true
-          },
-          {
-            "series": "9",
-            "col": "A3 MAX",
-            "color": "#A2A2D0",
-            "showPeaks": true,
-            "param": "L3 Max"
-          }
-        ],
-        "text": {
-          "paramName": "Load",
-          "paramValue": "",
-          "paramDef": "15 minute mean RMS value of the Current (Min, Avg, Max)",
-          "limitations": "For systems with a synchronous connection to an interconnected system. Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "A",
-        "histogramTitle": "Current distribution",
-        "bins": "8"
-      },
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Voltage unbalance",
-        "title": "Section ${s}: Voltage Unbalance",
-        "histogram": "VoltageUnbalance",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "VoltageUnbalance",
-            "color": "#00FFFF",
-            "param": "VoltageUnbalance"
-          }
-        ],
-        "text": {
-          "paramName": "",
-          "paramValue": "",
-          "paramDef": "${td} minute mean RMS values of the negative sequence ratio u2 (Max)",
-          "limitations": "Under normal operating conditions. Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "%",
-        "histogramTitle": "Unbalance distribution"
-      },
-      {
-        "separateCharts": true,
-        "disabled": false,
-        "chartTitle": "Real Power",
-        "title": "Section ${s}: Real Power",
-        "histogram": "P1 AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "P1 MIN",
-            "color": "#EE204D",
-            "param": "Real Power Min"
-          },
-          {
-            "series": "2",
-            "col": "P1 AVG",
-            "color": "#1F75FE",
-            "param": "Real Power Avg"
-          },
-          {
-            "series": "3",
-            "col": "P1 MAX",
-            "color": "#1CAC78",
-            "param": "Real Power Max"
-          }
-        ],
-        "text": {
-          "paramName": "",
-          "paramValue": "",
-          "paramDef": "Sample-by-sample instantaneous voltage times instantaneous current (Min, Avg, Max)",
-          "limitations": "Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "histogramTitle": "Real Power Distribution",
-        "bins": "8",
-        "yAxisName": "kW",
-        "factor": "0.001"
-      },
-      {
-        "separateCharts": true,
-        "disabled": false,
-        "chartTitle": "Apparent Power",
-        "title": "Section ${s}: Apparent Power",
-        "histogram": "AveApparentPower",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "AveApparentPower",
-            "color": "#EE204D",
-            "param": "Apparent Power Avg"
-          },
-          {
-            "series": "2",
-            "col": "MinApparentPower",
-            "color": "#1F75FE",
-            "param": "Apparent Power Min"
-          },
-          {
-            "series": "3",
-            "col": "MaxApparentPower",
-            "color": "#1CAC78",
-            "param": "Apparent Power Max"
-          }
-        ],
-        "text": {
-          "paramName": "",
-          "paramValue": "",
-          "paramDef": "RMS voltage times RMS current (Min, Avg, Max)",
-          "limitations": "Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "yAxisName": "kW",
-        "histogramTitle": "Apparent Power Distribution",
-        "bins": "8"
-      },
-      {
-        "separateCharts": true,
-        "disabled": false,
-        "chartTitle": "True Power Factor",
-        "title": "Section ${s}: Power Factor",
-        "histogram": "TPF1 AVG",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "TPF1 MIN",
-            "color": "#EE204D",
-            "param": "TPF Min"
-          },
-          {
-            "series": "2",
-            "col": "TPF1 AVG",
-            "color": "#1F75FE",
-            "param": "TPF Avg"
-          },
-          {
-            "series": "3",
-            "col": "TPF1 MAX",
-            "color": "#1CAC78",
-            "param": "TPF Max"
-          }
-        ],
-        "text": {
-          "paramName": "",
-          "paramValue": "",
-          "paramDef": "Real Power divided by Apparent Power (Min, Avg, Max)",
-          "limitations": "or systems with a synchronous connection to an interconnected system. Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "histogramTitle": "True Power Factor Distribution",
-        "bins": "20"
-      },
-      {
-        "separateCharts": false,
-        "disabled": false,
-        "chartTitle": "Energy",
-        "title": "Section ${s}: Energy",
-        "histogram": "Energy",
-        "histoColor": "#1F75FE",
-        "chartLimits": {
-          "enable": false,
-          "ymin": 0,
-          "ymax": 0
-        },
-        "mappings": [
-          {
-            "series": "1",
-            "col": "AcumEnergy",
-            "color": "#1CAC78",
-            "param": "Energy"
-          }
-        ],
-        "text": {
-          "paramName": "",
-          "paramValue": "",
-          "paramDef": "Energy in kilowatt hour is most commonly known as a billing unit for energy delivered to consumers by electric utilities.",
-          "limitations": "Measured values based on coverage",
-          "incParam": false,
-          "incParamDef": true,
-          "incLim": true,
-          "includeRequirements": false,
-          "reqHeader1": "",
-          "reqHeader2": "",
-          "reqHeader3": "",
-          "requirements": [
-            {
-              "num": 0,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            },
-            {
-              "num": 1,
-              "requirement": "",
-              "value1": "",
-              "value2": "",
-              "value3": "",
-              "result": "",
-              "include": false
-            }
-          ]
-        },
-        "histogramTitle": "Energy",
-        "yAxisName": "kWH",
-        "bins": "10",
-        "dailyTotals": true
-      }
-    ],
-    "calcColumns": [
-      {
-        "name": "VoltageUnbalance",
-        "params": [
-          {
-            "name": "Voltage1",
-            "col": "V1N AVG"
-          },
-          {
-            "name": "Voltage2",
-            "col": "V2N AVG"
-          },
-          {
-            "name": "Voltage3",
-            "col": "V3N AVG"
-          }
-        ]
-      },
-      {
-        "name": "AvePowerFactor",
-        "params": [
-          {
-            "name": "AveRealPower",
-            "col": ""
-          },
-          {
-            "name": "AveApparentPower",
-            "col": ""
-          }
-        ]
-      },
-      {
-        "name": "MinPowerFactor",
-        "params": [
-          {
-            "name": "MinRealPower",
-            "col": ""
-          },
-          {
-            "name": "MinApparentPower",
-            "col": ""
-          }
-        ]
-      },
-      {
-        "name": "MaxPowerFactor",
-        "params": [
-          {
-            "name": "MaxRealPower",
-            "col": ""
-          },
-          {
-            "name": "MaxApparentPower",
-            "col": ""
-          }
-        ]
-      },
-      {
-        "name": "AveApparentPower",
-        "params": [
-          {
-            "name": "AveRealPower",
-            "col": "P1 AVG"
-          },
-          {
-            "name": "AvePowerFactor",
-            "col": "TPF1 AVG"
-          }
-        ]
-      },
-      {
-        "name": "MinApparentPower",
-        "params": [
-          {
-            "name": "MinRealPower",
-            "col": "P1 MIN"
-          },
-          {
-            "name": "MinPowerFactor",
-            "col": "TPF1 MIN"
-          }
-        ]
-      },
-      {
-        "name": "MaxApparentPower",
-        "params": [
-          {
-            "name": "MaxRealPower",
-            "col": "P1 MAX"
-          },
-          {
-            "name": "MaxPowerFactor",
-            "col": "TPF1 MAX"
-          }
-        ]
-      },
-      {
-        "name": "Energy",
-        "params": [
-          {
-            "name": "Energy",
-            "col": "P1 AVG"
-          }
-        ]
-      },
-      {
-        "name": "AcumEnergy",
-        "params": [
-          {
-            "name": "Energy",
-            "col": "P1 AVG"
-          }
-        ]
-      }
-    ]
-  },
   "5": {
-    "description": "Alogodue Template - spaces in colum names - Power: Psys",
+    "description": "Algodue UPM309 - PA#2",
     "page2": {
       "include": false,
       "title": "",
@@ -3555,7 +1823,7 @@
     ]
   },
   "6": {
-    "description": "Alogodue Template - spaces in colum names - Power factor: TPFsys",
+    "description": "Algodue UPM309 - PA#3",
     "page2": {
       "include": false,
       "title": "",
@@ -3632,7 +1900,8 @@
           {
             "series": "1",
             "col": "F AVG",
-            "color": "#1CAC78"
+            "color": "#1CAC78",
+            "param": "Frequency"
           }
         ],
         "text": {
@@ -3690,48 +1959,57 @@
         "mappings": [
           {
             "series": "1",
-            "col": "V1N MIN",
-            "color": "#1F75FE"
+            "col": "V1N AVG",
+            "color": "#1F75FE",
+            "param": "L1"
           },
           {
             "series": "2",
-            "col": "V1N AVG",
-            "color": "#EE204D"
+            "col": "V2N AVG",
+            "color": "#EE204D",
+            "param": "L2"
           },
           {
             "series": "3",
-            "col": "V1N MAX",
-            "color": "#FCE883"
+            "col": "V3N AVG",
+            "color": "#FCE883",
+            "param": "L3"
           },
           {
             "series": "4",
-            "col": "V2N MIN",
-            "color": "#87A96B"
+            "col": "V1N MIN",
+            "color": "#87A96B",
+            "param": "L1 Min"
           },
           {
             "series": "5",
-            "col": "V2N AVG",
-            "color": "#1CAC78"
+            "col": "V2N MIN",
+            "color": "#1CAC78",
+            "param": "L2 Min"
           },
           {
             "series": "6",
-            "col": "V2N MAX",
-            "color": "#71BC78"
+            "col": "V3N MIN",
+            "color": "#71BC78",
+            "param": "L3 Min"
           },
           {
             "series": "7",
-            "col": "V3N MIN",
-            "color": "#3BB08F"
+            "col": "V1N MAX",
+            "color": "#3BB08F",
+            "param": "L1 Max"
           },
           {
             "series": "8",
-            "col": "V3N AVG",
-            "color": "#1DACD6"
+            "col": "V2N MAX",
+            "color": "#1DACD6",
+            "param": "L2 Max"
           },
           {
             "series": "9",
             "col": "V3N MAX",
-            "color": "#EA7E5D"
+            "color": "#EA7E5D",
+            "param": "L3 Max"
           }
         ],
         "text": {
@@ -3789,48 +2067,57 @@
         "mappings": [
           {
             "series": "1",
-            "col": "V1N MIN",
-            "color": "#1F75FE"
+            "col": "V1N AVG",
+            "color": "#1F75FE",
+            "param": "L1"
           },
           {
             "series": "2",
-            "col": "V1N AVG",
-            "color": "#EE204D"
+            "col": "V2N AVG",
+            "color": "#EE204D",
+            "param": "L2"
           },
           {
             "series": "3",
-            "col": "V1N MAX",
-            "color": "#FCE883"
+            "col": "V3N AVG",
+            "color": "#FCE883",
+            "param": "L3"
           },
           {
             "series": "4",
-            "col": "V2N MIN",
-            "color": "#87A96B"
+            "col": "V1N MIN",
+            "color": "#87A96B",
+            "param": "L1 Min"
           },
           {
             "series": "5",
-            "col": "V2N AVG",
-            "color": "#1CAC78"
+            "col": "V2N MIN",
+            "color": "#1CAC78",
+            "param": "L2 Min"
           },
           {
             "series": "6",
-            "col": "V2N MAX",
-            "color": "#71BC78"
+            "col": "V3N MIN",
+            "color": "#71BC78",
+            "param": "L3 Min"
           },
           {
             "series": "7",
-            "col": "V3N MIN",
-            "color": "#3BB08F"
+            "col": "V1N MAX",
+            "color": "#3BB08F",
+            "param": "L1 Max"
           },
           {
             "series": "8",
-            "col": "V3N AVG",
-            "color": "#1DACD6"
+            "col": "V2N MAX",
+            "color": "#1DACD6",
+            "param": "L2 Max"
           },
           {
             "series": "9",
             "col": "V3N MAX",
-            "color": "#EA7E5D"
+            "color": "#EA7E5D",
+            "param": "L3 Max"
           }
         ],
         "text": {
@@ -3889,54 +2176,65 @@
         "mappings": [
           {
             "series": "1",
-            "col": "A1 MIN",
+            "col": "A1 AVG",
             "color": "#1F75FE",
-            "showPeaks": true
+            "showPeaks": false,
+            "param": "L1"
           },
           {
             "series": "2",
-            "col": "A1 AVG",
-            "color": "#EE204D"
+            "col": "A2 AVG",
+            "color": "#EE204D",
+            "param": "L2"
           },
           {
             "series": "3",
-            "col": "A1 MAX",
+            "col": "A3 AVG",
             "color": "#FCE883",
-            "showPeaks": true
+            "showPeaks": false,
+            "param": "L3"
           },
           {
             "series": "4",
-            "col": "A2 MIN",
+            "col": "A1 MIN",
             "color": "#87A96B",
-            "showPeaks": true
+            "showPeaks": true,
+            "param": "L1 Min"
           },
           {
             "series": "5",
-            "col": "A2 AVG",
-            "color": "#71BC78"
+            "col": "A2 MIN",
+            "color": "#71BC78",
+            "param": "L2 Min",
+            "showPeaks": true
           },
           {
             "series": "6",
-            "col": "A2 MAX",
+            "col": "A3 MIN",
             "color": "#DD9475",
-            "showPeaks": true
+            "showPeaks": true,
+            "param": "L3 Min"
           },
           {
             "series": "7",
-            "col": "A3 MIN",
+            "col": "A1 MAX",
             "color": "#ACE5EE",
-            "showPeaks": true
+            "showPeaks": true,
+            "param": "L1 Max"
           },
           {
             "series": "8",
-            "col": "A3 AVG",
-            "color": "#6699CC"
+            "col": "A2 MAX",
+            "color": "#6699CC",
+            "param": "L2 Max",
+            "showPeaks": true
           },
           {
             "series": "9",
             "col": "A3 MAX",
             "color": "#A2A2D0",
-            "showPeaks": true
+            "showPeaks": true,
+            "param": "L3 Max"
           }
         ],
         "text": {
@@ -3992,7 +2290,8 @@
           {
             "series": "1",
             "col": "VoltageUnbalance",
-            "color": "#00FFFF"
+            "color": "#00FFFF",
+            "param": "VoltageUnbalance"
           }
         ],
         "text": {
@@ -4036,7 +2335,7 @@
         "disabled": false,
         "chartTitle": "Real Power",
         "title": "Section ${s}: Real Power",
-        "histogram": "P1 AVG",
+        "histogram": "Psys AVG",
         "histoColor": "#1F75FE",
         "chartLimits": {
           "enable": false,
@@ -4046,18 +2345,21 @@
         "mappings": [
           {
             "series": "1",
-            "col": "P1 MIN",
-            "color": "#EE204D"
+            "col": "Psys MIN",
+            "color": "#EE204D",
+            "param": "Real Power Min"
           },
           {
             "series": "2",
-            "col": "P1 AVG",
-            "color": "#1F75FE"
+            "col": "Psys AVG",
+            "color": "#1F75FE",
+            "param": "Real Power Avg"
           },
           {
             "series": "3",
-            "col": "P1 MAX",
-            "color": "#1CAC78"
+            "col": "Psys MAX",
+            "color": "#1CAC78",
+            "param": "Real Power Max"
           }
         ],
         "text": {
@@ -4103,7 +2405,7 @@
         "disabled": false,
         "chartTitle": "Apparent Power",
         "title": "Section ${s}: Apparent Power",
-        "histogram": "AveApparentPower",
+        "histogram": "Ssys AVG",
         "histoColor": "#1F75FE",
         "chartLimits": {
           "enable": false,
@@ -4113,18 +2415,21 @@
         "mappings": [
           {
             "series": "1",
-            "col": "AveApparentPower",
-            "color": "#EE204D"
+            "col": "Ssys MIN",
+            "color": "#EE204D",
+            "param": "Apparent Power Min"
           },
           {
             "series": "2",
-            "col": "MinApparentPower",
-            "color": "#1F75FE"
+            "col": "Ssys AVG",
+            "color": "#1F75FE",
+            "param": "Apparent Power Avg"
           },
           {
             "series": "3",
-            "col": "MaxApparentPower",
-            "color": "#1CAC78"
+            "col": "Ssys MAX",
+            "color": "#1CAC78",
+            "param": "Apparent Power Max"
           }
         ],
         "text": {
@@ -4162,7 +2467,8 @@
         },
         "yAxisName": "kW",
         "histogramTitle": "Apparent Power Distribution",
-        "bins": "8"
+        "bins": "8",
+        "factor": "0.001"
       },
       {
         "separateCharts": true,
@@ -4180,17 +2486,20 @@
           {
             "series": "1",
             "col": "TPFsys MIN",
-            "color": "#EE204D"
+            "color": "#EE204D",
+            "param": "TPF Min"
           },
           {
             "series": "2",
             "col": "TPFsys AVG",
-            "color": "#1F75FE"
+            "color": "#1F75FE",
+            "param": "TPF Avg"
           },
           {
             "series": "3",
             "col": "TPFsys MAX",
-            "color": "#1CAC78"
+            "color": "#1CAC78",
+            "param": "TPF Max"
           }
         ],
         "text": {
@@ -4245,7 +2554,8 @@
           {
             "series": "1",
             "col": "AcumEnergy",
-            "color": "#1CAC78"
+            "color": "#1CAC78",
+            "param": "Energy"
           }
         ],
         "text": {
@@ -4283,7 +2593,8 @@
         },
         "histogramTitle": "Energy",
         "yAxisName": "kWH",
-        "bins": "10"
+        "bins": "10",
+        "dailyTotals": true
       }
     ],
     "calcColumns": [
@@ -4348,7 +2659,7 @@
         "params": [
           {
             "name": "AveRealPower",
-            "col": "P1 AVG"
+            "col": "Psys AVG"
           },
           {
             "name": "AvePowerFactor",
@@ -4361,7 +2672,7 @@
         "params": [
           {
             "name": "MinRealPower",
-            "col": "P1 MIN"
+            "col": "Psys MIN"
           },
           {
             "name": "MinPowerFactor",
@@ -4374,7 +2685,7 @@
         "params": [
           {
             "name": "MaxRealPower",
-            "col": "P1 MAX"
+            "col": "Psys MAX"
           },
           {
             "name": "MaxPowerFactor",
@@ -4387,7 +2698,7 @@
         "params": [
           {
             "name": "Energy",
-            "col": "P1 AVG"
+            "col": "Psys AVG"
           }
         ]
       },
@@ -4396,7 +2707,7 @@
         "params": [
           {
             "name": "Energy",
-            "col": "P1 AVG"
+            "col": "Psys AVG"
           }
         ]
       }
@@ -4907,24 +3218,7 @@
         "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
         "separation": "240"
       },
-      "fileName": "100A P03 2 B EM (6 Sept - 13 Sept 2021) PA%231.csv",
-      "chartLegendOption": "use-param-name"
-    },
-    {
-      "id": 1,
-      "name": "Report No. 2",
-      "template": "4",
-      "cover": {
-        "title": "Power Analyzer Report - PDP/P03/1/F-400A",
-        "client": "Raffles City Shopping Center",
-        "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
-        "instrumentUsed": "Algodue UPM309",
-        "serialNumber": "J952V70002",
-        "reportDate": "",
-        "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
-        "separation": "240"
-      },
-      "fileName": "J952V70001_mAM_20000102_191456.csv",
+      "fileName": "97intvl-adjusted.csv",
       "chartLegendOption": "use-param-name"
     },
     {
@@ -5010,7 +3304,62 @@
         "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
         "separation": "240"
       },
-      "fileName": "J952V70001_mAM_20210913_112447.csv"
+      "fileName": "J952V70002_mAM_20000107_232923.csv",
+      "circuit": "PDP/P03/1/F-400A"
+    },
+    {
+      "id": 7,
+      "name": "Report No. 8",
+      "template": "5",
+      "chartLegendOption": "use-param-name",
+      "cover": {
+        "title": "Power Analyzer Report - PDP/P03/DSL7 DSL8 - 125A",
+        "client": "Raffles City Shopping Center",
+        "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
+        "instrumentUsed": "Algodue UPM309",
+        "serialNumber": "J952V70001",
+        "reportDate": "",
+        "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
+        "separation": "200"
+      },
+      "fileName": "J952V70001_mAM_20210920_104231.csv",
+      "circuit": "PDP/P03/DSL7 DSL8 - 125A"
+    },
+    {
+      "id": 8,
+      "name": "Report No. 9",
+      "template": "1",
+      "chartLegendOption": "use-param-name",
+      "cover": {
+        "title": "Power Analyzer Report - PDP/P03/-3/A/TX1 - 4000A",
+        "client": "Raffles City Shopping Center",
+        "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
+        "instrumentUsed": "Hioki 3197",
+        "serialNumber": "150942373",
+        "reportDate": "",
+        "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
+        "separation": "200"
+      },
+      "fileName": "4000A P03 -3 A TX1 ( 13 Sept - 20 Sept 2021) PA%252525231.csv",
+      "circuit": "PDP/P03/-3/A/TX1 - 4000A"
+    },
+    {
+      "id": 9,
+      "name": "Report No. 10 28-09-2021",
+      "template": "1",
+      "chartLegendOption": "use-param-name",
+      "cover": {
+        "title": "Power Analyzer Report - PDP/P03/-3/A/TX1 - 4000A",
+        "client": "Raffles City Shopping Center",
+        "siteLocation": "252 North Bridge Rd, Singapore 179103 - PD SwitchRoom",
+        "instrumentUsed": "Hioki 3197",
+        "serialNumber": "150942373",
+        "reportDate": "",
+        "reportAuthor": "Cheng Seng Electric Co Pte Ltd",
+        "separation": "240"
+      },
+      "fileName": "4000A P03 -3 A TX2 (20 Sept - 27 Sept 2021) PA%25231.csv",
+      "circuit": "PDP/P03/-3/A/TX2 - 4000A"
     }
   ]
 }

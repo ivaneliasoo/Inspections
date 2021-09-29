@@ -58,20 +58,20 @@
                       <v-list-item-title>Calculated Columns</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <!-- <v-list-item @click="saveTemplates(true)">
-                    <v-list-item-icon>
-                      <v-icon>mdi-content-save</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title>Save Templates</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item> -->
                   <v-list-item @click="doReport">
                     <v-list-item-icon>
                       <v-icon>mdi-view-dashboard</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
                       <v-list-item-title>Generate Report</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item @click="openCurrentTableDialog">
+                    <v-list-item-icon>
+                      <v-icon>mdi-view-dashboard</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title>Generate Current Table</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                 </v-list>
@@ -93,10 +93,12 @@
                   </template>
                   <template #top>
                     <v-toolbar flat>
-                      <v-toolbar-title class="title">
-                        Sections
-                      </v-toolbar-title>
-                      <v-divider class="mx-4" inset vertical />
+                      <div class="text-body-2">
+                        <v-icon small @click="editTemplateName" v-show="template.description">
+                          mdi-pencil
+                        </v-icon>
+                        {{template.description}}
+                      </div>
                       <v-spacer />
                       <v-btn small @click="newItem">
                         New Section
@@ -748,6 +750,26 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog v-model="templateNameDialog" max-width="600px">
+      <v-card>
+        <v-card-title>
+          Template name
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            label="Template Name"
+            v-model="description"
+          ></v-text-field>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="saveTemplateName">
+            Ok
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-dialog v-model="showNewReportDialog" max-width="600px">
       <v-card>
         <v-card-title>
@@ -858,7 +880,15 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col class="mt-3 pt-3 mb-5 pb-5">
+                    <v-col class="my-0 py-0">
+                      <v-text-field
+                        v-model="report.circuit"
+                        label="Circuit"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="mt-3 pt-3 mb-3 pb-3">
                       <v-select                          
                         label="Chart Legends"
                         dense
@@ -869,7 +899,7 @@
                       </v-select>
                     </v-col>
                   </v-row>                    
-                  <v-row v-for="n in 4" :key="n">
+                  <v-row v-for="n in 3" :key="n">
                     <v-col class="my-1 py-1">
                       <p style="color:white;">.</p>
                     </v-col>
@@ -972,6 +1002,51 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog v-model="currentTableDialog.show" max-width="720px">
+      <v-card>
+        <v-card-title>
+          <span class="mx-2 headline">Generate Current Table</span>
+        </v-card-title>
+        <v-card-text>
+          <v-row class="my-0 py-n0">
+            <v-col>
+              <div id="flatpickr" class="mt-2 pt-1 mb-2 pb-2 rounded text-body-2"
+                style="padding: 3px; box-shadow: 1px 3px lightgrey;">
+                <flat-pickr
+                    v-model="currentTableDialog.startDate"
+                    :config="dateConfig"
+                    class="calendar"
+                    placeholder="Start date"
+                    name="startDate"/>
+              </div>
+            </v-col>
+          </v-row>
+          <v-row class="my-0 py-n0">
+            <v-col>
+              <div id="flatpickr" class="mt-2 pt-1 mb-0 pb-0 rounded text-body-2"
+                style="padding: 3px; box-shadow: 1px 3px lightgrey;">
+                <flat-pickr
+                    v-model="currentTableDialog.endDate"
+                    :config="dateConfig"
+                    class="calendar"
+                    placeholder="End date"
+                    name="endtDate"/>
+              </div>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeCurrentTableDialog">
+            Close
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="genCurrentTable">
+            Generate
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>    
+
     <v-dialog v-model="alert" max-width="600px">
       <v-card>
         <v-card-title class="text-body-1"></v-card-title>
@@ -1019,6 +1094,10 @@
 </template>
 
 <style>
+.v-input {
+  font-size: 1.0em;
+}
+
 .report-dialog .v-tabs__content
 {
   height: 80vh;
@@ -1043,6 +1122,10 @@ import Papa from "papaparse";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 
+import flatPickr from 'vue-flatpickr-component';
+import 'flatpickr/dist/flatpickr.css';
+import 'flatpickr/dist/themes/material_blue.css';
+
 import * as echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/chart/line'
@@ -1054,12 +1137,11 @@ import { MarkLineComponent } from 'echarts/components'
 import * as d3 from 'd3'
 import { lineChartOptions, sepLineChartOptions, histogramOptions, barChartOptions, minMax2 }
   from '../composables/charts.js'
-import { expandData, adjustData, adjustDates } from '../composables/util.js'
-
-// import 'blueimp-md5';
+import { adjustData, adjustDates } from '../composables/util.js'
 
 import colors from '../composables/entity.js'
 import document from '../composables/document.js'
+import currentTable from '../composables/currentTable.js'
 import { getColumns, getCalcColumns, checkTemplate }
   from '../composables/categories.js'
 
@@ -1097,6 +1179,9 @@ function newReport() {
 
 export default {
   name: "EnergyReport",
+  components: {
+      flatPickr
+  },  
   data: function () {
     return {
       tabs: null,
@@ -1121,6 +1206,17 @@ export default {
       newBlankReport: false,
       selectedTemplate: null,
       description: "",
+      templateNameDialog: false,
+      dateConfig: {
+          altFormat: 'D, M j, Y',
+          altInput: true,
+          dateFormat: 'Y-m-d'
+      },
+      currentTableDialog: {
+        show: false,
+        startDate: "",
+        endDate: ""
+      },
       columnDefs: [
         { text: "Num", value: "rank", width: "15%" },
         { text: "Title", value: "title", width: "62%" },
@@ -1311,10 +1407,6 @@ export default {
       return Object.keys(this.templates)
         .filter((key) => key !== "model" && key !== "reports")
         .map((key) => ({ text: this.templates[key].description, value: key }));
-      // templates = [];
-      // for (template of Object.keys(this.templates)) {
-      //   if (template != 'model')
-      // }
     }
   },
   watch: {
@@ -1459,7 +1551,8 @@ export default {
       this.waitDialog = false;
     },
     endpoint (op) {
-      return `/api/energyreport/${op}`;
+      //return `/api/energyreport/${op}`;
+      return `http://localhost:5000/api/energyreport/${op}`
     },
     readTemplates() {
       const self = this;
@@ -1679,6 +1772,75 @@ export default {
       })
       return promise
     },
+    createCurrentTable(circuit) {
+      const catIndex = this.template.categories.findIndex(cat => cat.chartTitle === "Current");
+      if (catIndex === -1) {
+        return;
+      }
+      const category = this.template.categories[catIndex];
+      // ISO 8601: yyy-mm-dd
+      const dtf = new Intl.DateTimeFormat('sv-SE', {year: 'numeric', month: '2-digit', day: '2-digit'});
+      const dtf2 = Intl.DateTimeFormat('en-SG', { month: '2-digit', day: '2-digit', year: 'numeric' });
+      var data = this.csvData;
+      const params = {};
+      for (const mapping of category.mappings) {
+        params[mapping.param] = mapping.col;
+      }
+      const paramNames = Object.keys(params);
+      
+      const current = {};
+      const currentTable = {id: 0, circuit: circuit, startDate: null, endDate: null, currentData: []};
+      for (const row of data) {
+        const dt = row["DateTime"];
+        if (dt) {
+          const date = dtf.format(dt);
+
+          if (!current[date]) {
+            current[date] = { date: dtf2.format(dt) };
+          }
+
+          for (const param of paramNames) {
+            current[date][param] = current[date][param] ? 
+              Math.max(current[date][param], row[params[param]]) : 
+              row[params[param]];
+          }
+        }
+      }
+
+      const currentData = [];
+      for (const date of Object.keys(current).sort()) {
+        if (!currentTable.startDate || date < currentTable.startDate) {
+          currentTable.startDate = date;
+        }
+        if (!currentTable.endDate || date > currentTable.endDate) {
+          currentTable.endDate = date;
+        }
+        currentData.push(current[date]);
+      }
+      currentTable.currentData = JSON.stringify(currentData);
+      //currentTable.currentData = currentData;
+
+      //console.log(JSON.stringify(currentTable));
+
+      return currentTable;
+    },
+    saveCurrentTable(currentTable) {
+      console.log("currentTable", JSON.stringify(currentTable));
+      this.$axios({
+        url: this.endpoint('current-table'),
+        method: 'post',
+        data: currentTable,
+        // headers: configHeaders
+      })
+        .then(() => {
+          console.log("current table saved")
+        })
+        .catch((error) => {
+          this.errorMessage = error.message
+          // TODO: Do not log in production mode
+          console.error('There was an error! ', error)
+        })
+    },
     doReport () {
       if (!this.template) {
         this.showMessage("No template loaded");
@@ -1692,7 +1854,9 @@ export default {
         this.showMessage('No data available. Please load an approriate CSV file')
         return
       }
-      this.genReport()
+      this.genReport();
+      const currentTable = this.createCurrentTable(this.report.circuit);
+      this.saveCurrentTable(currentTable);
     },
     updateProgress(value) {
       const progress = this.reportProgress + value;
@@ -1750,6 +1914,28 @@ export default {
       pdf.download(this.report.cover.title+".pdf");
       //pdf.open();
       //console.log("PDF created");
+    },
+    genCurrentTable() {
+      const self = this
+      const path = `current-table/${this.currentTableDialog.startDate}/${this.currentTableDialog.endDate}`
+      self.$axios.$get(this.endpoint(path))
+        .then((response) => {
+          console.log("response", JSON.stringify(response));
+          const tbl = response;
+          for (const ct of tbl) {
+            console.log(ct.id, ct.circuit, ct.startDate, ct.endDate);
+            const cd = JSON.parse(ct.currentData);
+            for (const row of cd) {
+              console.log(row.date, row.L1, row.L2, row.L3);
+            }
+          }
+
+          var doc = currentTable(tbl);
+          const pdf = pdfMake.createPdf(doc);
+          pdf.download(`Current table, ${this.currentTableDialog.startDate} to ${this.currentTableDialog.endDate}.pdf`);
+
+          self.closeCurrentTableDialog();
+        })
     },
     dateTime(dateStr, timeStr) {
       // console.log(dateStr, timeStr)
@@ -1987,6 +2173,14 @@ export default {
       this.saveTemplates(false);
       this.close();
     },
+    openCurrentTableDialog() {
+      this.currentTableDialog.startDate = "";
+      this.currentTableDialog.endDate = "";
+      this.currentTableDialog.show = true;
+    },
+    closeCurrentTableDialog() {
+      this.currentTableDialog.show = false;
+    },
     openReportDialog() {
       this.reportTabs = "Report info";
       this.showReportDialog = true;
@@ -2093,6 +2287,18 @@ export default {
         this.report.cover = report.cover;
       }
       reader.readAsText(file);
+    },
+    editTemplateName() {
+      this.description = this.template.description;
+      this.templateNameDialog=true;
+    },
+    saveTemplateName() {
+      if (this.description !== this.template.description) {
+        console.log("saving template name");
+        this.template.description = this.description;
+        this.saveTemplates();
+      }
+      this.templateNameDialog=false;
     },
     showCoverForm() {
       this.coverVisible = true;

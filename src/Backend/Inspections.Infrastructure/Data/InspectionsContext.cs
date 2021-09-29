@@ -27,14 +27,16 @@ namespace Inspections.Infrastructure.Data
         private readonly IUserNameResolver _userNameResolver;
 
 
-        public InspectionsContext(DbContextOptions options)
+        //public InspectionsContext(DbContextOptions options)
+        public InspectionsContext(DbContextOptions<InspectionsContext> options)
             : base(options)
         {
 
         }
 
 
-        public InspectionsContext(DbContextOptions options, IMediator mediator, IUserNameResolver userNameResolver) : base(options)
+        //public InspectionsContext(DbContextOptions options, IMediator mediator, IUserNameResolver userNameResolver) : base(options)
+        public InspectionsContext(DbContextOptions<InspectionsContext> options, IMediator mediator, IUserNameResolver userNameResolver) : base(options)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
