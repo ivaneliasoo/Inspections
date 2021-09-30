@@ -216,8 +216,10 @@ namespace Inspections.API
             services.AddDbContext<InspectionsContext>(c =>
             c.UseLoggerFactory(logger).UseNpgsql(cn).EnableSensitiveDataLogging());
 
+            // services.AddDbContext<EnergyReportContext>(options =>
+            //         options.UseNpgsql(Configuration.GetConnectionString("EnergyReport")));
             services.AddDbContext<EnergyReportContext>(options =>
-                    options.UseNpgsql(Configuration.GetConnectionString("EnergyReport")));
+                    options.UseNpgsql(Configuration.GetConnectionString("Inspections")));
         }
 
         private static bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)

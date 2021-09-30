@@ -100,10 +100,8 @@ namespace Inspections.API.Features.EnergyReport
                 c.endDate == currentTable.endDate).FirstOrDefaultAsync();
 
             if (prev == null) {
-                Console.WriteLine("prev IS null, adding");
                 _context.Add(currentTable);
             } else {
-                Console.WriteLine("prev is NOT null, updating");
                 _context.Update(prev);
             }
 

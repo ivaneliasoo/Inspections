@@ -1551,8 +1551,8 @@ export default {
       this.waitDialog = false;
     },
     endpoint (op) {
-      //return `/api/energyreport/${op}`;
-      return `http://localhost:5000/api/energyreport/${op}`
+      //return `http://localhost:5000/api/energyreport/${op}`
+      return `/api/energyreport/${op}`;
     },
     readTemplates() {
       const self = this;
@@ -1587,14 +1587,6 @@ export default {
         )
     },
     saveTemplates (showMessage) {
-      // if (Object.keys(this.template).length === 0) {
-      //   this.showMessage('No data available. Please load a template and CSV file')
-      //   return
-      // }
-      // if (this.csvColumns.length === 0) {
-      //   this.showMessage('No data available. Please create/load a template and CSV file')
-      //   return
-      // }
       const configHeaders = {
         'content-type': 'text/plain',
         Accept: 'text/plain'
@@ -1818,9 +1810,6 @@ export default {
         currentData.push(current[date]);
       }
       currentTable.currentData = JSON.stringify(currentData);
-      //currentTable.currentData = currentData;
-
-      //console.log(JSON.stringify(currentTable));
 
       return currentTable;
     },
