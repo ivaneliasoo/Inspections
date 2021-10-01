@@ -48,6 +48,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Inspections.Infrastructure\Inspections.Infrastructure.csproj" />
+    <ProjectReference Include="..\Inspections.Core\Inspections.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

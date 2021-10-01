@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Inspections.API.Features.EnergyReport.Models;
+using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data;
 
 namespace Inspections.API.Features.EnergyReport
@@ -20,9 +20,9 @@ namespace Inspections.API.Features.EnergyReport
     public class EnergyReportController : ControllerBase
     {
         // private readonly InspectionsContext _context;
-        private readonly EnergyReportContext _context;
+        private readonly InspectionsContext _context;
 
-        public EnergyReportController(EnergyReportContext context)
+        public EnergyReportController(InspectionsContext context)
         {
             _context = context;
         }        

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json;
 
-namespace Inspections.API.Features.EnergyReport.Models
+namespace Inspections.Core.Domain
 {
     [Table("current")]
     public class CurrentTable

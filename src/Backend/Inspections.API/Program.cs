@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Inspections.API.Features.EnergyReport.Models;
 
 namespace Inspections.API
 {
@@ -29,7 +28,6 @@ namespace Inspections.API
 
                 try
                 {
-                    services.GetRequiredService<EnergyReportContext>();
                     var inspectionsContext = services.GetRequiredService<InspectionsContext>();
                     //InspectionsSeed.SeedAsync(inspectionsContext, loggerFactory).Wait();
                 }
