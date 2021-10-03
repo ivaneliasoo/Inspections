@@ -54,6 +54,7 @@
 
   <ItemGroup>
     <Folder Include="MediaUpload\img\Reports\1\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>

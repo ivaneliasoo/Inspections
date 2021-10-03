@@ -30,7 +30,7 @@ using PuppeteerSharp.Media;
 namespace Inspections.API.Features.Inspections
 {
     [Authorize]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ReportsController : ControllerBase
     {

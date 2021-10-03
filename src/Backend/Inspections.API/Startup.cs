@@ -45,7 +45,7 @@ namespace Inspections.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
-            
+
             var assembly = AppDomain.CurrentDomain.GetAssemblies();
             services.AddAutoMapper(assembly);
 
@@ -166,15 +166,17 @@ namespace Inspections.API
 
             app.UseHttpsRedirection();
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), Configuration.GetValue<string>("ClientSettings:ReportsImagesFolder"))),
-                RequestPath = "/ReportsImages",
-                OnPrepareResponse = ctx =>
-                {
-                    ctx.Context.Response.Headers["Access-Control-Allow-Origin"] = "*";
-                }
-            });
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), Configuration.GetValue<string>("ClientSettings:ReportsImagesFolder"))),
+            //    RequestPath = "/ReportsImages",
+            //    OnPrepareResponse = ctx =>
+            //    {
+            //        ctx.Context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+            //    }
+            //});
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

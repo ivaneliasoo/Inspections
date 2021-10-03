@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Inspections.API.Features.Addresses
 {
     [Authorize]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AddressesController : ControllerBase
     {
