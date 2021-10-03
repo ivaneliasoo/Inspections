@@ -75,12 +75,9 @@ export default {
   // },
   publicRuntimeConfig: {
     axios: {
-      baseURL: process.env.BASE_URL || 'http://localhost:5000',
-      browserBaseURL: process.env.BASE_URL || 'http://localhost:5000'
+      baseURL: process.env.BASE_URL || 'http://localhost:5000/api',
+      browserBaseURL: process.env.BASE_URL || 'http://localhost:5000/api'
     }
-  },
-  router: {
-    middleware: ['auth']
   },
   auth: {
     redirect: {
@@ -88,7 +85,11 @@ export default {
       logout: '/Login',
       home: '/Reports'
     },
-    cookie: true,
+    cookie: {
+      options: {
+        sameSite: 'lax'
+      }
+    },
     strategies: {
       local: {
         endpoints: {
@@ -102,6 +103,9 @@ export default {
       }
     },
     plugins: ['~/plugins/api-client']
+  },
+  router: {
+    middleware: ['auth']
   },
   /*
      ** vuetify module configuration

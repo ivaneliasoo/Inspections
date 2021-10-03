@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Inspections.API.Features.Licenses
 {
     [Authorize]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class EMALicensesController : ControllerBase
     {
