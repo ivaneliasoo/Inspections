@@ -301,7 +301,7 @@ namespace Inspections.API.Features.Inspections
         public async Task<FileResult> Export(ExportDTO exportData)
         {
             Guard.Against.Null(exportData, nameof(exportData)); 
-            var config = _context.ReportConfigurations.FirstOrDefault(c => c.Id.Equals(exportData.ReportConfigurationId));
+            var config = _context.Set<ReportConfiguration>().FirstOrDefault(c => c.Id == exportData.ReportConfigurationId);
             var file = await GenerateReport(exportData.LoginUrl, exportData.PageUrl, config, exportData.PhotosPerPage);
             return File(file, "application/pdf", "prueba.pdf");
         }
@@ -333,7 +333,7 @@ namespace Inspections.API.Features.Inspections
             await page.WaitForSelectorAsync("table > .v-data-table-header > tr > .text-center:nth-child(4) > span");
 
             await page.GoToAsync($"{pageUrl}?{nameof(photosPerPage)}={photosPerPage}");
-            await page.WaitForSelectorAsync(".logo");
+            await page.WaitForSelectorAsync(".title");
             var pdfOptions = new PdfOptions
             {
                 DisplayHeaderFooter = true,

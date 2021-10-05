@@ -245,8 +245,8 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
 
     async generatePdf (item: Report, compoundedPhotoRecord: boolean = true, printPhotos: boolean = true) {
       const printData = {
-        loginUrl: `${window.location.protocol}//${window.location.host}/Login`,
-        pageUrl: `${window.location.protocol}//${window.location.host}/reports/${item.id}?printPhotos=${printPhotos}&compoundedPhotoRecord=${compoundedPhotoRecord}`,
+        loginUrl: `${window.location.protocol}//${window.location.host}${this.$router.options.base || 'client'}Login`,
+        pageUrl: `${window.location.protocol}//${window.location.host}${this.$router.options.base || 'client'}reports/${item.id}/print?printPhotos=${printPhotos}&compoundedPhotoRecord=${compoundedPhotoRecord}`,
         token: this.$auth.getToken('local').replace('bearer ', ''),
         photosPerPage: 12,
         reportConfigurationId: 1

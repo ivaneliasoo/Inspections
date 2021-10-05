@@ -15,6 +15,11 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.RemarksLabelText).IsRequired(false);
             builder.Property(p => p.FormName).IsRequired();
             builder.Property(p => p.Inactive).IsRequired().HasDefaultValue(false);
+            builder.Property(p => p.Footer).IsRequired();
+            builder.Property(p => p.MarginTop).IsRequired();
+            builder.Property(p => p.MarginBottom).IsRequired();
+            builder.Property(p => p.MarginLeft).IsRequired();
+            builder.Property(p => p.MarginRight).IsRequired();
 
             builder.Ignore(p => p.DomainEvents);
         }
