@@ -1,7 +1,7 @@
 
 {
     "region" : "us-east-2",
-    "configuration" : "Debug",
+    "configuration" : "Release",
     "framework"     : "net5.0",
     "self-contained" : false,
     "application"    : "csereportsapps-dev",
