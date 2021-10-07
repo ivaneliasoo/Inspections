@@ -1,14 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Inspections.API.ApplicationServices;
+using Inspections.API.Extensions;
 using Inspections.API.Features.Inspections.Commands;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Models.Configuration;
+using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces;
 using Inspections.Core.QueryModels;
@@ -18,13 +21,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Playwright;
+using PuppeteerSharp;
+using PuppeteerSharp.Media;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Inspections.API.Features.Inspections
 {
     [Authorize]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ReportsController : ControllerBase
     {
@@ -114,14 +120,21 @@ namespace Inspections.API.Features.Inspections
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public IActionResult GetPhotoRecords(int id)
+        public async Task<IActionResult> GetPhotoRecords(int id)
         {
-            var photos = _context.Set<PhotoRecord>().Where(p => p.ReportId == id);
+            MapperConfiguration config = new MapperConfiguration(cfg =>
+                                                                     {
+                                                                         cfg.CreateMap<PhotoRecord, PhotoRecordResult>();
+
+                                                                     });
+            var photos = _context.Set<PhotoRecord>().ProjectTo<PhotoRecordResult>(config).Where(p => p.ReportId == id).ToList();
 
             foreach (var photo in photos)
             {
                 photo.PhotoUrl = _photoRecordManager.GenerateSafeUrl(photo.FileName);
-                photo.FileNameResized = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
+                photo.ThumbnailUrl = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
+                photo.PhotoBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileName);
+                photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized);;
             }
 
             if (photos != null)
@@ -283,5 +296,61 @@ namespace Inspections.API.Features.Inspections
 
             return BadRequest();
         }
+
+        [HttpPost("export", Name = nameof(Export))]
+        public async Task<FileResult> Export(ExportDTO exportData)
+        {
+            Guard.Against.Null(exportData, nameof(exportData)); 
+            var config = _context.Set<ReportConfiguration>().FirstOrDefault(c => c.Id == exportData.ReportConfigurationId);
+            var file = await GenerateReport(exportData.LoginUrl, exportData.PageUrl, config, exportData.PhotosPerPage);
+            return File(file, "application/pdf", "prueba.pdf");
+        }
+
+        private async Task<byte[]> GenerateReport(string loginUrl, string pageUrl, ReportConfiguration config, int photosPerPage)
+        {
+            Guard.Against.Null(loginUrl, nameof(loginUrl));
+            Guard.Against.Null(pageUrl, nameof(pageUrl));
+            Guard.Against.Null(config, nameof(config));
+
+            var browserFetcher = new BrowserFetcher();
+            await browserFetcher.DownloadAsync();
+            // TODO-IVAN: --no-sandbox is an insecure workaround. I'll take a look into this next time
+            await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true, Args = new string[] { "--no-sandbox" } });
+            await using var page = await browser.NewPageAsync();
+
+            await page.GoToAsync(loginUrl);
+
+            await page.WaitForSelectorAsync("#username");
+            await page.ClickAsync("#username");
+
+            await page.TypeAsync("#username", "pdf");
+
+            await page.ClickAsync("#password");
+
+            await page.TypeAsync("#password", "@@P@sword");
+            await page.WaitForSelectorAsync(".elevation-12 > #signin-form > .v-card__actions > .v-btn > .v-btn__content");
+            await page.ClickAsync(".elevation-12 > #signin-form > .v-card__actions > .v-btn > .v-btn__content");
+            await page.WaitForSelectorAsync("table > .v-data-table-header > tr > .text-center:nth-child(4) > span");
+
+            await page.GoToAsync($"{pageUrl}?{nameof(photosPerPage)}={photosPerPage}");
+            await page.WaitForSelectorAsync(".title");
+            var pdfOptions = new PdfOptions
+            {
+                DisplayHeaderFooter = true,
+                MarginOptions = new MarginOptions
+                {
+                    Bottom = config.MarginBottom,
+                    Top = config.MarginTop,
+                    Left = config.MarginLeft,
+                    Right = config.MarginRight
+                },
+                HeaderTemplate = "",
+                FooterTemplate = config.Footer,
+
+            };
+            return await page.PdfDataAsync(pdfOptions);
+        }
     }
+
+    public record ExportDTO(string LoginUrl, string PageUrl, int PhotosPerPage = 12, int ReportConfigurationId = 1);
 }

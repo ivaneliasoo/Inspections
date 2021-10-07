@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Http;
 namespace Inspections.API.Features.ReportsConfiguration
 {
     [Authorize]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ReportConfigurationController : ControllerBase
     {

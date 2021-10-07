@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inspections.API.Features.Signatures
 {
     [Authorize]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class SignaturesController : ControllerBase
     {
@@ -94,7 +94,7 @@ namespace Inspections.API.Features.Signatures
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<IEnumerable<SignatureDTO>>> GetSignatures(string filter, int? reportConfigurationId, int? reportId, bool? inConfigurationOnly = null)
+        public async Task<ActionResult<IEnumerable<SignatureDTO>>> GetSignatures(string? filter, int? reportConfigurationId, int? reportId, bool? inConfigurationOnly = null)
         {
             var signatures = await _signaturesQueries.GetAllAsync(filter, inConfigurationOnly, reportConfigurationId, reportId).ConfigureAwait(false);
 

@@ -25,7 +25,7 @@ const Signatures = () => {
         values.signatures?.forEach(async (s, i) => {
           await saveSignature({ signature: s, index: i })
             .catch(error => {
-              console.log({error})
+              // console.log({error})
               showMessage({
                 message: 'error while saving signature',
                 description: error.response?.data?.message ?? '',

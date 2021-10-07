@@ -29,9 +29,27 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
             {
                 log.LogInformation($"Initializing data {nameof(InspectionsContext)}");
 
-                if (!context.Users.Any())
+                if (!context.Users.Any(u => u.UserName == "demo"))
                 {
-                    context.Users.Add(new User() { UserName = "demo", Password = "demo", Name = "demo", LastName = "user", IsAdmin = true });
+                    context.Users.Add(new User() { UserName = "demo", Password = "demo", Name = "demo", LastName = "User", IsAdmin = true });
+                }
+
+                if (!context.Users.Any(u => u.UserName == "developer"))
+                {
+                    context.Users.Add(new User() { UserName = "developer", Password = "developer@@P@sword", Name = "Developer", LastName = "User", IsAdmin = true });
+                }
+
+                if (!context.Users.Any(u => u.UserName == "pdf"))
+                {
+                    context.Users.Add(new User()
+                    {
+                        UserName = "pdf",
+                        Password = "@@P@sword",
+                        Name = "PDFs",
+                        LastName = "User",
+                        IsAdmin = false,
+                        LastEditedReport = null
+                    });
                 }
 
                 if (!context.ReportConfigurations.Any())
@@ -40,9 +58,21 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                     {
                         ChecksDefinition = AddCheckLists().ToList(),
                         SignatureDefinitions = AddSignatures().ToList(),
-                        FormName = "CSE EI(R1) FORM",
+                        FormName = "CSE EI(R8) FORM",
                         Title = "Inspection Report",
-                        Type = ReportType.Inspection
+                        Type = ReportType.Inspection,
+                        Footer = $@"<footer style=""padding-left: 20px; opacity: 0.5; font-size: 3.2em; display: flex;margin: 10px, 10px;flex-direction: column;color: grey;font-family: 'Times New Roman', Times, serif;"">
+                                            <div class='' style='font-size: 3.2em; text-align: right;letter-spacing: 2px;'><label class='pageNumber'></label> | Page</div>
+                                            <div class='footer'>
+                                              <p style='line-height: 3px;font-size: 3.2em;'>FORM E1(CSE INTERNAL) INSPECTION REPORT FOR LICENSING LEW SINGLE USER PREMISE- REV #8
+                                              </p><p style='line-height: 3px;font-size: 3.2em;'>ALL RIGHTS RESERVED TO CHENG SENG ELECTRIC CO PTE LTD</p>
+                                            </div>
+                                          </footer>
+                                        ",
+                        MarginBottom = "80px",
+                        MarginTop = "20px",
+                        MarginLeft = "70px",
+                        MarginRight = "70px"
                     });
                 }
 
@@ -70,7 +100,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                     IsConfiguration = true,
                     Annotation = "",
                     Principal = true,
-                    Order = 1 
+                    Order = 1
                 },
              new Signature
             {

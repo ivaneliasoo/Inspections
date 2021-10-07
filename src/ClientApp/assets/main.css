@@ -11,7 +11,7 @@
  * (see : https://github.com/vuetifyjs/vuetify/issues/11408)
  * TODO - remove this after migration
  */
- /* .row:not([class*="my-"]):not([class*="ma-"]):not([class*="mt-"]):not([class*="mb-"]) {
+ .row:not([class*="my-"]):not([class*="ma-"]):not([class*="mt-"]):not([class*="mb-"]) {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
-} */
+}

@@ -63,43 +63,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.ToTable("Addresses", "Inspections");
                 });
 
-            modelBuilder.Entity("Inspections.Core.Domain.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("Npgsql:IdentityIncrement", 1)
-                        .HasAnnotation("Npgsql:IdentitySeed", 1)
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("AddressLine")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AddressLine2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("LastEditUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Addresses","Inspections");
-                });
-
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckList", b =>
                 {
                     b.Property<int>("Id")
@@ -184,6 +147,45 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.ToTable("CheckListItems", "Inspections");
                 });
 
+            modelBuilder.Entity("Inspections.Core.Domain.CurrentTable", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("circuit")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("currentData")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("current_data");
+
+                    b.Property<string>("endDate")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("end_date");
+
+                    b.Property<string>("startDate")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("start_date");
+
+                    b.HasKey("id");
+
+                    b.ToTable("current");
+                });
+
             modelBuilder.Entity("Inspections.Core.Domain.EMALicense", b =>
                 {
                     b.Property<int>("Id")
@@ -240,6 +242,10 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("Footer")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("FormName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -256,6 +262,22 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
+
+                    b.Property<string>("MarginBottom")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MarginLeft")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MarginRight")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MarginTop")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("RemarksLabelText")
                         .HasColumnType("text");
@@ -516,9 +538,6 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.Property<string>("DrawnSign")
                         .HasColumnType("text");
-
-                    b.Property<string>("DrawedSign")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsConfiguration")
                         .HasColumnType("boolean");

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import moment from 'moment';
-import { Animated, Alert, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
-import { Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction, Toggle, Select, SelectItem } from '@ui-kitten/components';
+import { Animated, Alert, View, StyleSheet } from 'react-native';
+import { Divider, TopNavigation, Layout, Input, List, Text, Card, TopNavigationAction, Toggle, Select, SelectItem, Button } from '@ui-kitten/components';
 import { SearchIcon, Camera, EditSignatureIcon, CheckIcon, AlertTriangle, Printer, ImageIcon } from '../components/Icons';
 import { OptionsMenu } from '../components/home/OptionsMenu'
 import { BackIcon } from '../components/Icons'
@@ -98,7 +98,7 @@ export const MyReports = ({ navigation }: any) => {
               },
               {
                 text: 'No',
-                onPress: () => console.log('canceled')
+                // onPress: () => console.log('canceled')
               }
             ]
           );
@@ -113,14 +113,23 @@ export const MyReports = ({ navigation }: any) => {
               },
               {
                 text: 'No',
-                onPress: () => console.log('canceled')
+                // onPress: () => console.log('canceled')
               }
             ]
           );
         }}
         renderLeftActions={!item.isClosed ? renderLeftActions : () => null} renderRightActions={!item.isClosed ? renderRightActions : () => null}>
 
-        <View style={{ flexDirection: 'row', borderBottomRightRadius: 20, borderTopRightRadius: 20, shadowColor: "#000", shadowOffset: { width: 0, height: 1, }, shadowOpacity: 0.83, shadowRadius: 20 }}>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          borderBottomRightRadius: 20,
+          borderTopRightRadius: 20,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 1, },
+          shadowOpacity: 0.83,
+          shadowRadius: 20
+        }}>
           <Card
             key={item.index}
             style={styles.card}
@@ -128,17 +137,28 @@ export const MyReports = ({ navigation }: any) => {
             status={item.isClosed ? 'success' : 'info'}
             header={() => <Text category='s1' >{`${item.licenseName} - ${item.licenseNumber ?? 'Not specified'} Validity: ${moment(item.licenseValidityStart).format('DD-MM-YYYY')} - ${moment(item.licenseValidityEnd).format('DD-MM-YYYY')}`} </Text>}
             footer={footerProps => renderItemFooter(footerProps, item)} >
-            <Text category='s2'>{`Report Name: ${item.name}`}</Text>
-            <Text category='s2'>{`Date: ${moment(item.date).format('DD/MM/YYYY')}`}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <View>
+                <Text category='s2'>{`Report Name: ${item.name}`}</Text>
+                <Text category='s2'>{`Date: ${moment(item.date).format('DD/MM/YYYY')}`}</Text>
+              </View>
+              <View style={{
+                justifyContent: 'space-around',
+                alignItems: 'center',
+              }}>
+                <Button
+                  style={{margin: 5}}
+                  appearance='outline'
+                  accessoryLeft={Printer}
+                />
+                <Button
+                style={{margin: 5}}
+                  appearance='outline'
+                  accessoryLeft={ImageIcon}
+                />
+              </View>
+            </View>
           </Card>
-          <View style={{ flexDirection: 'column', backgroundColor: 'lightgrey', elevation: 8, marginVertical: 2, position: 'relative', marginLeft: -8, width: '15%', justifyContent: 'space-around', alignItems: 'center', borderBottomRightRadius: 20, borderTopRightRadius: 20 }}>
-            <TouchableOpacity>
-              <Printer fill={'black'} style={{ width: 36, height: 36 }} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <ImageIcon fill={'black'} style={{ width: 36, height: 36 }} />
-            </TouchableOpacity>
-          </View>
         </View>
       </Swipeable>
     );
@@ -159,7 +179,7 @@ export const MyReports = ({ navigation }: any) => {
         <Input style={styles.inpustSearch} status="info" accessoryLeft={SearchIcon} value={filter} onChangeText={setFilterText} onEndEditing={handleGetReports} />
         <View style={{ marginVertical: 20, marginHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
           <Select
-            style={{minWidth: 200}}
+            style={{ minWidth: 200 }}
             size='large'
             placeholder='select an item to sort by...'
             label='Sort By'
@@ -183,7 +203,7 @@ export const MyReports = ({ navigation }: any) => {
             <Empty height={200} width={300} />
             <Text status='warning' category='h1'>No results</Text>
             <Text status='info' category='s2'>brrr. its cold in here</Text>
-            <Button title="Try Again" onPress={handleGetReports} />
+            <Button onPress={handleGetReports}>Try Again</Button>
           </View>}
       </Layout>
     </>
@@ -199,13 +219,11 @@ const styles = StyleSheet.create({
   },
   card: {
     padding: 0,
-    marginHorizontal: 5,
     marginVertical: 2,
     elevation: 5,
     paddingHorizontal: 5,
     paddingVertical: 5,
-    width: '85%',
-    maxWidth: '85%'
+    width: '100%',
   },
   cardFooter: { flexDirection: 'row', justifyContent: 'space-between', margin: 5, alignContent: 'center', alignItems: 'center', flexWrap: 'wrap' },
   cardList: { flex: 1, justifyContent: 'flex-start' },

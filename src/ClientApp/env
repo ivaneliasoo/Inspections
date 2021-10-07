@@ -1,4 +1,0 @@
-BASE_URL_LOCAL=http://localhost:3000
-BASE_URL_DEV_JESUS=http://csereportsappsdev-env.eba-3cvspemt.us-east-2.elasticbeanstalk.com
-BASE_URL=http://cseinspectionreport-env.eba-wgpmsrsb.ap-southeast-1.elasticbeanstalk.com
-BASE_URL_PROD_HANPIN=http://cseinspectionreport-env.eba-wgpmsrsb.ap-southeast-1.elasticbeanstalk.com

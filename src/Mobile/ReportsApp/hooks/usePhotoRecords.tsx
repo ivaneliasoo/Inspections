@@ -4,9 +4,19 @@ import Upload, { UploadOptions } from 'react-native-background-upload'
 import { API_HOST, API_KEY } from '../config/config';
 import { showMessage } from 'react-native-flash-message';
 import { useTheme } from '@ui-kitten/components';
+import { Configuration, ReportsApi } from '../services/api';
 
 export const usePhotoRecords = () => {
   const { authState: { userToken } } = useContext(AuthContext)
+
+  const configuration = new Configuration({
+    accessToken: userToken!,
+    basePath: API_HOST,
+    apiKey: API_KEY
+  })
+
+  const reportsApi = new ReportsApi(configuration)
+  
   const theme = useTheme()
   const uploadOptions: UploadOptions = {
     url: `${API_HOST}/Reports/{id}/photorecord`,
@@ -39,15 +49,7 @@ export const usePhotoRecords = () => {
     uploadOptions.url = uploadOptions.url.replace('{id}', reportId.toString())
     uploadOptions.path = uploadOptions.path.replace('{file}', path).replace('file://', '')
     uploadOptions.headers = { ...uploadOptions.headers, label }
-    console.log({ uploadOptions })
     Upload.startUpload(uploadOptions).then((uploadId) => {
-      // Upload.addListener('progress', uploadId, (data) => {
-      //   showMessage({
-      //     message: 'Photo Upload has been enqueued',
-      //     autoHide: true,
-      //     backgroundColor: theme['color-info-500']
-      //   })
-      // })
       Upload.addListener('error', uploadId, (data) => {
         showMessage({
           message: 'An Error has ocurred while trying uploading file',
@@ -69,7 +71,14 @@ export const usePhotoRecords = () => {
       console.log('Upload error!', err)
     })
   }
+
+  const GetByReportId = async (id: number): Promise<any[]>  => {
+    const result = await reportsApi.reportsIdPhotorecordGet(id)
+    return result.data as unknown as any[]
+  }
+
   return {
-    EnqueuePhotoUpload
+    EnqueuePhotoUpload,
+    GetByReportId
   }
 }

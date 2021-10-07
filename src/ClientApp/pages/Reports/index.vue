@@ -43,12 +43,13 @@
         <v-tooltip top>
           <template #activator="{ on }">
             <v-icon
-              :disabled="!item.isClosed || !item.photosCount>0"
+              :disabled="!item.isClosed || !(item.photosCount > 0)"
               color="primary"
               class="mr-2"
               v-on="on"
-              @click="printHelper.printCompoundedPhotoRecord(item.id)"
+              @click="generatePdf(item, true)"
             >
+              <!-- @click="printHelper.printCompoundedPhotoRecord(item.id)" -->
               mdi-camera
             </v-icon>
           </template>
@@ -61,8 +62,9 @@
               color="primary"
               class="mr-2"
               v-on="on"
-              @click="printHelper.print(item.id)"
+              @click="generatePdf(item)"
             >
+              <!-- @click="printHelper.print(item.id)" -->
               mdi-printer
             </v-icon>
           </template>
@@ -239,6 +241,26 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
         .then(() => {
           this.dialogRemove = false
         })
+    }
+
+    async generatePdf (item: Report, compoundedPhotoRecord: boolean = true, printPhotos: boolean = true) {
+      const printData = {
+        loginUrl: `${window.location.protocol}//${window.location.host}${this.$router.options.base || 'client'}Login`,
+        pageUrl: `${window.location.protocol}//${window.location.host}${this.$router.options.base || 'client'}reports/${item.id}/print?printPhotos=${printPhotos}&compoundedPhotoRecord=${compoundedPhotoRecord}`,
+        token: this.$auth.getToken('local').replace('bearer ', ''),
+        photosPerPage: 12,
+        reportConfigurationId: 1
+      }
+      const file = await this.$axios.$post('reports/export', printData, { responseType: 'blob' })
+      this.downloadFile(file, compoundedPhotoRecord ? `compunded_photo_record_${item.name}` : `report_${item.name}`)
+    }
+
+    downloadFile (blob: Blob, name:any): void {
+      const link = document.createElement('a')
+      link.target = '_blank'
+      link.href = window.URL.createObjectURL(blob)
+      link.download = `${name}`
+      link.click()
     }
 }
 </script>

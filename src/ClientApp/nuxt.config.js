@@ -1,6 +1,5 @@
 export default {
   ssr: false,
-  target: 'static',
   /*
   ** Headers of the page
   */
@@ -12,7 +11,7 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/client/favicon.ico' }
     ]
   },
   /*
@@ -39,17 +38,8 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/vuetify',
     '@nuxtjs/tailwindcss',
-    '@nuxt/image'
-  ],
-  /*
-  ** Nuxt.js modules
-  */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa',
+    '@nuxt/image',
     '@nuxtjs/auth',
-    '@nuxtjs/device',
     ['nuxt-compress',
       {
         gzip: {
@@ -61,6 +51,15 @@ export default {
       }
     ]
   ],
+  /*
+  ** Nuxt.js modules
+  */
+  modules: [
+    // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa',
+    '@nuxtjs/device'
+  ],
   pwa: {
     icon: {
       /* icon options */
@@ -71,18 +70,13 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {
-    baseURL: 'https://localhost:5001',
-    browserBaseURL: 'https://localhost:5001'
-  },
+  // axios: {
+  // },
   publicRuntimeConfig: {
     axios: {
-      baseURL: process.env.BASE_URL,
-      browserBaseURL: process.env.BASE_URL
+      baseURL: `${process.env.BASE_URL}/api` || 'http://localhost:5000/api',
+      browserBaseURL: `${process.env.BASE_URL}/api` || 'http://localhost:5000/api'
     }
-  },
-  router: {
-    middleware: ['auth']
   },
   auth: {
     redirect: {
@@ -90,7 +84,11 @@ export default {
       logout: '/Login',
       home: '/Reports'
     },
-    cookie: true,
+    cookie: {
+      options: {
+        sameSite: 'lax'
+      }
+    },
     strategies: {
       local: {
         endpoints: {
@@ -104,6 +102,10 @@ export default {
       }
     },
     plugins: ['~/plugins/api-client']
+  },
+  router: {
+    middleware: ['auth'],
+    base: '/client/'
   },
   /*
      ** vuetify module configuration

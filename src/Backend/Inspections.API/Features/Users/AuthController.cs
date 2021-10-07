@@ -11,7 +11,7 @@ namespace Inspections.API.Features.Users
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly InspectionsContext _context;
