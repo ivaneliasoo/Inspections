@@ -21,7 +21,7 @@ jobs:
         run: dotnet restore
         working-directory: ${{env.working_directory}}
       - name: Build
-        run: dotnet build --no-restore --config Release
+        run: dotnet build --no-restore --configuration Release
         working-directory: ${{env.working_directory}}
   
   build-client:
