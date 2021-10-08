@@ -224,33 +224,37 @@
     <h4 class="tw-font-semibold">Earth Fault</h4>
     <div class="tw-flex tw-flex-wrap tw-justify-between tw-items-center">
       <v-simple-checkbox
-        v-model="report.operationalReadingsOverCurrentDirectActingEnabled"
+        v-model="report.operationalReadingsEarthFaultRoobEnabled"
       ></v-simple-checkbox>
       <div
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
-        <v-text-field
-          :readonly="!report.operationalReadingsOverCurrentDirectActingEnabled"
-          label="Direct Acting"
-        />
+        <v-select
+          :readonly="!report.operationalReadingsEarthFaultRoobEnabled"
+          label="RooB"
+        >
+          <template #append>
+            <span>mA</span>
+          </template>
+        </v-select>
       </div>
       <v-simple-checkbox
-        v-model="report.operationalReadingsOverCurrentDTLEnabled"
+        v-model="report.operationalReadingsEarthFaultEIREnabled"
       ></v-simple-checkbox>
       <div
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
         <v-text-field
-          :readonly="!report.operationalReadingsOverCurrentDTLEnabled"
+          :readonly="!report.operationalReadingsEarthFaultEIREnabled"
           readonly
-          label="DTL"
+          label="EIR"
         >
           <template #append>
             <span>A</span>
           </template>
         </v-text-field>
         <v-text-field
-          :readonly="!report.operationalReadingsOverCurrentDTLEnabled"
+          :readonly="!report.operationalReadingsEarthFaultEIREnabled"
           label="@"
         >
           <template #append>
@@ -259,21 +263,21 @@
         </v-text-field>
       </div>
       <v-simple-checkbox
-        v-model="report.operationalReadingsOverCurrentIDTMLEnabled"
+        v-model="report.operationalReadingsEarthFaultEFEnabled"
       ></v-simple-checkbox>
       <div
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
         <v-text-field
-          :readonly="!report.operationalReadingsOverCurrentIDTMLEnabled"
-          label="IDTML"
+          :readonly="!report.operationalReadingsEarthFaultEFEnabled"
+          label="E/F"
         >
           <template #append>
             <span>A</span>
           </template>
         </v-text-field>
         <v-text-field
-          :readonly="!report.operationalReadingsOverCurrentIDTMLEnabled"
+          :readonly="!report.operationalReadingsEarthFaultEFEnabled"
           label="@"
         >
           <template #append>
