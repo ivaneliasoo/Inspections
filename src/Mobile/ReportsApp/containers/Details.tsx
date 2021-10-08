@@ -54,7 +54,7 @@ export const Details = ({ route, navigation }: Props) => {
             <Screen name='Camera' component={CameraScreen} options={{ tabBarIcon: () => <Icon name="camera-outline" size={26} /> }} />
             <Screen name='OperationalReadings' component={OperationalReading} options={{ title: 'Readings' }} />
             <Screen name='Report' component={ReportForm} />
-            <Screen name='Signs' component={Signatures} />
+            <Screen name='Signature' component={Signatures} />
           </Navigator>
         </View>
 

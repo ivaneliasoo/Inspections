@@ -1,5 +1,6 @@
 import { CheckBox, Divider, Input, Select, SelectItem, Text } from '@ui-kitten/components'
 import NumericPicker from '../NumericPicker'
+import NumericPicker2 from '../NumericPicker2'
 import { Formik, FormikProps } from 'formik'
 import React, { useMemo, useRef } from 'react'
 import { Alert, ScrollView, StyleSheet, View } from 'react-native'
@@ -93,11 +94,11 @@ const OperationalReading = () => {
           <Text category='s1' appearance='hint'>Running Load</Text>
           <View style={{ margin: 5, marginVertical: 20, justifyContent: !isSingleLine ? 'space-evenly' : 'flex-start', alignContent: 'center', flexDirection: 'row' }}>
             {(isSingleLine || isMultiLine) && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL1!)} preppendLabel="L1" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL1', value)} />}
-            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL2!)} preppendLabel="L1" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL2', value)} />}
-            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL3!)} preppendLabel="L2" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL3', value)} />}
+            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL2!)} preppendLabel="L2" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL2', value)} />}
+            {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL3!)} preppendLabel="L3" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL3', value)} />}
           </View>
           <Divider />
-          <Text category='h6'>Main Braker Details</Text>
+          <Text category='h6'>Main Breaker Details</Text>
           <View style={{ flexDirection: 'row', margin: 5, alignContent: 'center', justifyContent: 'center' }}>
             <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsMainBreakerAmp!)} preppendLabel="Main Breaker" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsMainBreakerAmp', value)} />
             <Select
@@ -106,7 +107,7 @@ const OperationalReading = () => {
               value={values.operationalReadingsMainBreakerCapacity!}
               onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerCapacity', [2, 3, 4][e.row]) }}
               placeholder='please select...'
-              label='Braking Capacity'
+              label='Poles Capacity'
               accessoryRight={() => <Text>Poles</Text>}
             >
               {[2, 3, 4].map((responsible, index) =>
@@ -121,7 +122,7 @@ const OperationalReading = () => {
               placeholder='please select...'
               value={values.operationalReadingsMainBreakerPoles!}
               onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerPoles', [100, 200, 300, 400][e.row]) }}
-              label='Poles'
+              label='Breaking Capacity (lsc)'
               accessoryRight={() => <Text style={{ justifyContent: 'center' }}>kA</Text>}
             >
               {[100, 200, 300, 400].map((responsible, index) =>
@@ -140,8 +141,9 @@ const OperationalReading = () => {
                 checked={values.operationalReadingsOverCurrentByMainBreaker!}
                 onChange={value => setFieldValue('operationalReadingsOverCurrentByMainBreaker', value)}
               >
-                By Main Breaker
+                Direct Acting
               </CheckBox>
+              <NumericPicker2 defaultValue={formatPickerValue(values.operationalReadingsDirectActing!)} preppendLabel="" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL3', value)} />
             </View>
             <Text>OR</Text>
             <View>

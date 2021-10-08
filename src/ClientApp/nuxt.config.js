@@ -36,6 +36,7 @@ export default {
   */
   buildModules: [
     '@nuxt/typescript-build',
+    '@nuxtjs/composition-api/module',
     '@nuxtjs/vuetify',
     '@nuxtjs/tailwindcss',
     '@nuxt/image',
