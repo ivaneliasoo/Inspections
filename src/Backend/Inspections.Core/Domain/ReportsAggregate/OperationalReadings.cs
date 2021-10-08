@@ -33,19 +33,10 @@ namespace Inspections.Core.Domain.ReportsAggregate
         public bool OverCurrentDirectActingEnabled { get; set; }
         public bool OverCurrentDirectActing { get; set; }
         public bool OverCurrentDTLEnabled { get; set; }
-        public bool OverCurrentDTL { get; set; }
-        public bool OverCurrentDTLAt { get; set; }
         public bool OverCurrentIDTMLEnabled { get; set; }
-        public bool OverCurrentIDTML { get; set; }
-        public bool OverCurrentIDTMLAt { get; set; }
         public bool EarthFaultRoobEnabled { get; set; }
-        public bool EarthFaultRoob { get; set; }
         public bool EarthFaultEIREnabled { get; set; }
-        public bool EarthFaultEIR { get; set; }
-        public bool EarthFaultEIRAt { get; set; }
         public bool EarthFaultEFEnabled { get; set; }
-        public bool EarthFaultEF { get; set; }
-        public bool EarthFaultEFAt { get; set; }
 
         public OperationalReadings()
         {
