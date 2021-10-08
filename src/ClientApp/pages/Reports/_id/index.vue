@@ -10,6 +10,46 @@
       @yes="closeReport"
       @no="currentReport.isClosed = true"
     />
+    <v-row v-if="loadingReport">
+      <v-col
+        cols="12"
+        md="4"
+      >
+        <v-skeleton-loader
+          type="card-avatar, article, actions"
+        />
+
+        <v-skeleton-loader
+          type="date-picker"
+        />
+      </v-col>
+
+      <v-col
+        cols="12"
+        md="4"
+      >
+        <v-skeleton-loader
+          type="article, actions"
+        />
+
+        <v-skeleton-loader
+          type="table-heading, list-item-two-line, image, table-tfoot"
+        />
+      </v-col>
+
+      <v-col
+        cols="12"
+        md="4"
+      >
+        <v-skeleton-loader
+          type="list-item-avatar, divider, list-item-three-line, card-heading, image, actions"
+        />
+
+        <v-skeleton-loader
+          type="list-item-avatar-three-line, image, article"
+        />
+      </v-col>
+    </v-row>
     <v-row>
       <v-col>
         <ValidationObserver ref="obs" v-slot="{ valid }" tag="form">
@@ -604,7 +644,7 @@
             <PhotoRecords :report-id="currentReport.id" @uploaded="saveAndLoad()" />
           </v-tab-item>
           <v-tab-item key="operationalReadings" value="operationalReadings">
-            <h1>To be defined. Web handling of this part is not defined</h1>
+            <OperationalReadings :report-data="currentReport" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -671,6 +711,7 @@ import { PrintHelper } from '@/Helpers'
 import { AddressesState } from '@/store/addresses'
 import { AddNoteCommand, AddressDTO, CheckListItemQueryResult, NoteQueryResult, ReportQueryResult, EditSignatureCommand, UpdateReportCommand, CheckValue, EditNoteCommand, UpdateCheckListItemCommand } from '@/services/api'
 import { useNotifications } from '@/composables/use-notifications'
+import OperationalReadings from '~/components/OperationalReadings.vue'
 
 const { notify } = useNotifications()
 
@@ -685,6 +726,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     obs: InstanceType<typeof ValidationObserver>;
   };
 
+  loadingReport: boolean = false;
   errorsDialog: boolean = false;
   dialogPrinting: boolean = false;
   savedNotification: boolean = false;
@@ -868,8 +910,19 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   async fetch () {
-    await this.loadReport()
-    await this.getSuggestedAddresses('')
+    try {
+      this.loadingReport = true
+      await Promise.all(
+        [
+          this.loadReport(),
+          this.getSuggestedAddresses('')
+        ]
+      )
+    } catch (error) {
+      console.error(error)
+    } finally {
+      this.loadingReport = false
+    }
   }
 
   async loadReport () {

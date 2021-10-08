@@ -52,12 +52,6 @@ const renderItemFooter = (footerProps: any, item: any) => (
       <Badge color='info' count={item.signaturesCount}>
         <EditSignatureIcon fill={'blue'} style={styles.footerIcon} />
       </Badge>
-      <Badge color='info' count={item.notesCount}>
-        <Camera fill={'blue'} style={styles.footerIcon} />
-      </Badge>
-      <Badge color='info' count={item.CompletedCheckLists}>
-        <Camera fill={'blue'} style={styles.footerIcon} />
-      </Badge>
     </View>
     <View style={{ flexDirection: 'row', alignContent: 'center' }}>
       {item.isClosed ? <CheckIcon fill={'green'} style={styles.footerIcon} /> : <AlertTriangle fill={'orange'} style={styles.footerIcon} />}
