@@ -1334,12 +1334,6 @@ export interface ReportQueryResult {
     operationalReadingsMainBreakerCapacity?: number;
     /**
      *
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentByMainBreaker?: boolean;
-    /**
-     *
      * @type {number}
      * @memberof ReportQueryResult
      */
@@ -1406,10 +1400,10 @@ export interface ReportQueryResult {
     operationalReadingsOverCurrentDirectActingEnabled?: boolean;
     /**
      *
-     * @type {boolean}
+     * @type {number}
      * @memberof ReportQueryResult
      */
-    operationalReadingsOverCurrentDirectActing?: boolean;
+    operationalReadingsOverCurrentDirectActing?: number;
     /**
      *
      * @type {boolean}
@@ -1421,31 +1415,7 @@ export interface ReportQueryResult {
      * @type {boolean}
      * @memberof ReportQueryResult
      */
-    operationalReadingsOverCurrentDTL?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentDTLAt?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
     operationalReadingsOverCurrentIDTMLEnabled?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentIDTML?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentIDTMLAt?: boolean;
     /**
      *
      * @type {boolean}
@@ -1457,43 +1427,13 @@ export interface ReportQueryResult {
      * @type {boolean}
      * @memberof ReportQueryResult
      */
-    operationalReadingsEarthFaultRoob?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
     operationalReadingsEarthFaultEIREnabled?: boolean;
     /**
      *
      * @type {boolean}
      * @memberof ReportQueryResult
      */
-    operationalReadingsEarthFaultEIR?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultEIRAt?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
     operationalReadingsEarthFaultEFEnabled?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultEF?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultEFAt?: boolean;
     /**
      *
      * @type {Array<SignatureQueryResult>}
@@ -1984,6 +1924,54 @@ export interface UpdateOperationalReadingsCommand {
      * @memberof UpdateOperationalReadingsCommand
      */
     earthFaultSec?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    mainBreakerRating?: number;
+    /**
+     *
+     * @type {boolean}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    overCurrentDirectActingEnabled?: boolean;
+    /**
+     *
+     * @type {number}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    overCurrentDirectActing?: number;
+    /**
+     *
+     * @type {boolean}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    overCurrentDTLEnabled?: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    overCurrentIDTMLEnabled?: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    earthFaultRoobEnabled?: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    earthFaultEIREnabled?: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof UpdateOperationalReadingsCommand
+     */
+    earthFaultEFEnabled?: boolean;
 }
 /**
  *

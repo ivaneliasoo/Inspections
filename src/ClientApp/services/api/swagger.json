@@ -5206,9 +5206,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "operationalReadingsOverCurrentByMainBreaker": {
-            "type": "boolean"
-          },
           "operationalReadingsOverCurrentDTLA": {
             "type": "integer",
             "format": "int32"
@@ -5253,48 +5250,22 @@
             "type": "boolean"
           },
           "operationalReadingsOverCurrentDirectActing": {
-            "type": "boolean"
+            "type": "integer",
+            "format": "int32"
           },
           "operationalReadingsOverCurrentDTLEnabled": {
-            "type": "boolean"
-          },
-          "operationalReadingsOverCurrentDTL": {
-            "type": "boolean"
-          },
-          "operationalReadingsOverCurrentDTLAt": {
             "type": "boolean"
           },
           "operationalReadingsOverCurrentIDTMLEnabled": {
             "type": "boolean"
           },
-          "operationalReadingsOverCurrentIDTML": {
-            "type": "boolean"
-          },
-          "operationalReadingsOverCurrentIDTMLAt": {
-            "type": "boolean"
-          },
           "operationalReadingsEarthFaultRoobEnabled": {
-            "type": "boolean"
-          },
-          "operationalReadingsEarthFaultRoob": {
             "type": "boolean"
           },
           "operationalReadingsEarthFaultEIREnabled": {
             "type": "boolean"
           },
-          "operationalReadingsEarthFaultEIR": {
-            "type": "boolean"
-          },
-          "operationalReadingsEarthFaultEIRAt": {
-            "type": "boolean"
-          },
           "operationalReadingsEarthFaultEFEnabled": {
-            "type": "boolean"
-          },
-          "operationalReadingsEarthFaultEF": {
-            "type": "boolean"
-          },
-          "operationalReadingsEarthFaultEFAt": {
             "type": "boolean"
           },
           "signatures": {
@@ -5638,6 +5609,32 @@
           "earthFaultSec": {
             "type": "integer",
             "format": "int32"
+          },
+          "mainBreakerRating": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "overCurrentDirectActingEnabled": {
+            "type": "boolean"
+          },
+          "overCurrentDirectActing": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "overCurrentDTLEnabled": {
+            "type": "boolean"
+          },
+          "overCurrentIDTMLEnabled": {
+            "type": "boolean"
+          },
+          "earthFaultRoobEnabled": {
+            "type": "boolean"
+          },
+          "earthFaultEIREnabled": {
+            "type": "boolean"
+          },
+          "earthFaultEFEnabled": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
