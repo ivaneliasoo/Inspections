@@ -7,7 +7,6 @@
           v-model="report.operationalReadingsVoltageL1N"
           type="number"
           label="L1-N"
-          placeholder="230"
         >
           <template #append>
             <span>V</span>
@@ -19,7 +18,6 @@
           v-model="report.operationalReadingsVoltageL2N"
           type="number"
           label="L2-N"
-          placeholder="230"
         >
           <template #append>
             <span>V</span>
@@ -31,7 +29,6 @@
           v-model="report.operationalReadingsVoltageL3N"
           type="number"
           label="L3-N"
-          placeholder="230"
         >
           <template #append>
             <span>V</span>
@@ -41,7 +38,12 @@
     </div>
     <div class="tw-flex tw-flex-row tw-flex-wrap tw-mx-1 tw-justify-evenly">
       <div class="tw-flex tw-items-center tw-mx-2">
-        <v-text-field type="number" placeholder="400" label="L1-L2">
+        <v-text-field
+          v-model="report.operationalReadingsVoltageL1L2"
+          type="number"
+          placeholder="400"
+          label="L1-L2"
+        >
           <template #append>
             <span>V</span>
           </template>
@@ -52,7 +54,6 @@
           v-model="report.operationalReadingsVoltageL1L3"
           type="number"
           label="L1-L3"
-          placeholder="400"
         >
           <template #append>
             <span>V</span>
@@ -64,7 +65,6 @@
           v-model="report.operationalReadingsVoltageL2L3"
           type="number"
           label="L2-L3"
-          placeholder="400"
         >
           <template #append>
             <span>V</span>
@@ -79,7 +79,6 @@
           v-model="report.operationalReadingsRunningLoadL1"
           type="number"
           label="L1"
-          placeholder="400"
         >
           <template #append>
             <span>A</span>
@@ -91,7 +90,6 @@
           v-model="report.operationalReadingsRunningLoadL2"
           type="number"
           label="L2"
-          placeholder="400"
         >
           <template #append>
             <span>A</span>
@@ -103,7 +101,6 @@
           v-model="report.operationalReadingsRunningLoadL3"
           type="number"
           label="L3"
-          placeholder="400"
         >
           <template #append>
             <span>A</span>
@@ -118,7 +115,6 @@
           v-model="report.operationalReadingsMainBreakerAmp"
           type="number"
           label="Main Breaker"
-          placeholder="400"
         >
           <template #append>
             <span>A</span>
@@ -137,21 +133,19 @@
         </v-select>
       </v-col>
       <v-col>
-        <v-select
+        <v-text-field
           v-model="report.operationalReadingsMainBreakerCapacity"
           placeholder="Breaking Capacity (lsc)"
-          :items="[{ id: 100 }, { id: 200 }, { id: 300 }, { id: 400 }]"
           item-value="id"
           item-text="id"
         >
           <template #append> kA </template>
-        </v-select>
+        </v-text-field>
       </v-col>
       <v-col>
         <v-text-field
           v-model="report.operationalReadingsMainBreakerRating"
           type="number"
-          placeholder="400"
           label="Rating"
         >
           <template #append>
@@ -169,7 +163,7 @@
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
         <v-text-field
-          v-model="report.operationalReadingsRunningLoadL1"
+          v-model="report.operationalReadingsOverCurrentDirectActing"
           type="number"
           :readonly="!report.operationalReadingsOverCurrentDirectActingEnabled"
           label="Direct Acting"
@@ -182,7 +176,7 @@
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
         <v-text-field
-          v-model="report.operationalReadingsRunningLoadL1"
+          v-model="report.operationalReadingsOverCurrentDTLA"
           type="number"
           :readonly="!report.operationalReadingsOverCurrentDTLEnabled"
           readonly
@@ -193,7 +187,7 @@
           </template>
         </v-text-field>
         <v-text-field
-          v-model="report.operationalReadingsRunningLoadL1"
+          v-model="report.operationalReadingsOverCurrentDTLSec"
           type="number"
           :readonly="!report.operationalReadingsOverCurrentDTLEnabled"
           label="@"
@@ -210,7 +204,7 @@
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
         <v-text-field
-          v-model="report.operationalReadingsRunningLoadL1"
+          v-model="report.operationalReadingsOverCurrentIDMTLA"
           type="number"
           :readonly="!report.operationalReadingsOverCurrentIDTMLEnabled"
           label="IDTML"
@@ -220,7 +214,7 @@
           </template>
         </v-text-field>
         <v-text-field
-          v-model="report.operationalReadingsRunningLoadL1"
+          v-model="report.operationalReadingsOverCurrentIDMTLTm"
           type="number"
           :readonly="!report.operationalReadingsOverCurrentIDTMLEnabled"
           label="@"
@@ -240,9 +234,10 @@
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
         <v-select
-          v-model="report.operationalReadingsRunningLoadL1"
+          v-model="report.operationalReadingsEarthFaultMA"
           type="number"
           :readonly="!report.operationalReadingsEarthFaultRoobEnabled"
+          :items=[10,30,100,300]
           label="RooB"
         >
           <template #append>
@@ -257,7 +252,7 @@
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
         <v-text-field
-          v-model="report.operationalReadingsEarthFaultEIR"
+          v-model="report.operationalReadingsEarthFaultELRA"
           type="number"
           :readonly="!report.operationalReadingsEarthFaultEIREnabled"
           readonly
@@ -268,7 +263,7 @@
           </template>
         </v-text-field>
         <v-text-field
-          v-model="report.operationalReadingsEarthFaultEIRAt"
+          v-model="report.operationalReadingsEarthFaultELRSec"
           type="number"
           :readonly="!report.operationalReadingsEarthFaultEIREnabled"
           label="@"
@@ -285,7 +280,7 @@
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
         <v-text-field
-          v-model="report.operationalReadingsEarthFaultEF"
+          v-model="report.operationalReadingsEarthFaultA"
           type="number"
           :readonly="!report.operationalReadingsEarthFaultEFEnabled"
           label="E/F"
@@ -295,7 +290,7 @@
           </template>
         </v-text-field>
         <v-text-field
-          v-model="report.operationalReadingsEarthFaultEFAt"
+          v-model="report.operationalReadingsEarthFaultSec"
           type="number"
           :readonly="!report.operationalReadingsEarthFaultEFEnabled"
           label="@"
@@ -320,7 +315,7 @@ import {
   ReportQueryResult,
   UpdateOperationalReadingsCommand,
 } from "~/services/api";
-import { debounce } from 'lodash'
+import { debounce } from "lodash";
 
 export default defineComponent({
   props: {
@@ -335,78 +330,110 @@ export default defineComponent({
     const { $reportsApi } = useContext();
 
     const updateCommand = ref<UpdateOperationalReadingsCommand>({
-        id: report.value.operationalReadingsId!,
-        reportId: report.value.id!,
-        voltageL1N: report.value.operationalReadingsVoltageL1N!,
-        voltageL2N: report.value.operationalReadingsVoltageL2N!,
-        voltageL3N: report.value.operationalReadingsVoltageL3N!,
-        voltageL1L2: report.value.operationalReadingsVoltageL1L2!,
-        voltageL1L3: report.value.operationalReadingsVoltageL1L3!,
-        voltageL2L3: report.value.operationalReadingsVoltageL2L3!,
-        runningLoadL1: report.value.operationalReadingsRunningLoadL1!,
-        runningLoadL2: report.value.operationalReadingsRunningLoadL2!,
-        runningLoadL3: report.value.operationalReadingsRunningLoadL3!,
-        mainBreakerAmp: report.value.operationalReadingsMainBreakerAmp!,
-        mainBreakerPoles: report.value.operationalReadingsMainBreakerPoles!,
-        mainBreakerCapacity: report.value.operationalReadingsMainBreakerCapacity!,
-        overCurrentByMainBreaker: report.value.operationalReadingsOverCurrentByMainBreaker!,
-        overCurrentDTLA: report.value.operationalReadingsOverCurrentDTLA!,
-        overCurrentDTLSec: report.value.operationalReadingsOverCurrentDTLSec!,
-        overCurrentIDMTLA: report.value.operationalReadingsOverCurrentIDMTLA!,
-        overCurrentIDMTLTm: report.value.operationalReadingsOverCurrentIDMTLTm!,
-        earthFaultMA: report.value.operationalReadingsEarthFaultMA!,
-        earthFaultELRA: report.value.operationalReadingsEarthFaultELRA!,
-        earthFaultELRSec: report.value.operationalReadingsEarthFaultELRSec!,
-        earthFaultA: report.value.operationalReadingsEarthFaultA!,
-        earthFaultSec: report.value.operationalReadingsEarthFaultSec!,
-        mainBreakerRating: report.value.operationalReadingsMainBreakerRating,
-        overCurrentDirectActingEnabled: report.value.operationalReadingsOverCurrentDirectActingEnabled,
-        overCurrentDirectActing: report.value.operationalReadingsOverCurrentDirectActing,
-        overCurrentDTLEnabled: report.value.operationalReadingsOverCurrentDTLEnabled,
-        overCurrentIDTMLEnabled: report.value.operationalReadingsOverCurrentIDTMLEnabled,
-        earthFaultRoobEnabled: report.value.operationalReadingsEarthFaultRoobEnabled,
-        earthFaultEIREnabled: report.value.operationalReadingsEarthFaultEIREnabled,
-        earthFaultEFEnabled: report.value.operationalReadingsEarthFaultEFEnabled,
-    })
+      id: report.value.operationalReadingsId!,
+      reportId: report.value.id!,
+      voltageL1N: report.value.operationalReadingsVoltageL1N!,
+      voltageL2N: report.value.operationalReadingsVoltageL2N!,
+      voltageL3N: report.value.operationalReadingsVoltageL3N!,
+      voltageL1L2: report.value.operationalReadingsVoltageL1L2!,
+      voltageL1L3: report.value.operationalReadingsVoltageL1L3!,
+      voltageL2L3: report.value.operationalReadingsVoltageL2L3!,
+      runningLoadL1: report.value.operationalReadingsRunningLoadL1!,
+      runningLoadL2: report.value.operationalReadingsRunningLoadL2!,
+      runningLoadL3: report.value.operationalReadingsRunningLoadL3!,
+      mainBreakerAmp: report.value.operationalReadingsMainBreakerAmp!,
+      mainBreakerPoles: report.value.operationalReadingsMainBreakerPoles!,
+      mainBreakerCapacity: report.value.operationalReadingsMainBreakerCapacity!,
+      overCurrentDTLA: report.value.operationalReadingsOverCurrentDTLA!,
+      overCurrentDTLSec: report.value.operationalReadingsOverCurrentDTLSec!,
+      overCurrentIDMTLA: report.value.operationalReadingsOverCurrentIDMTLA!,
+      overCurrentIDMTLTm: report.value.operationalReadingsOverCurrentIDMTLTm!,
+      earthFaultMA: report.value.operationalReadingsEarthFaultMA!,
+      earthFaultELRA: report.value.operationalReadingsEarthFaultELRA!,
+      earthFaultELRSec: report.value.operationalReadingsEarthFaultELRSec!,
+      earthFaultA: report.value.operationalReadingsEarthFaultA!,
+      earthFaultSec: report.value.operationalReadingsEarthFaultSec!,
+      mainBreakerRating: report.value.operationalReadingsMainBreakerRating,
+      overCurrentDirectActingEnabled:
+        report.value.operationalReadingsOverCurrentDirectActingEnabled,
+      overCurrentDirectActing:
+        report.value.operationalReadingsOverCurrentDirectActing,
+      overCurrentDTLEnabled:
+        report.value.operationalReadingsOverCurrentDTLEnabled,
+      overCurrentIDTMLEnabled:
+        report.value.operationalReadingsOverCurrentIDTMLEnabled,
+      earthFaultRoobEnabled:
+        report.value.operationalReadingsEarthFaultRoobEnabled,
+      earthFaultEIREnabled:
+        report.value.operationalReadingsEarthFaultEIREnabled,
+      earthFaultEFEnabled: report.value.operationalReadingsEarthFaultEFEnabled,
+    });
 
     const update = debounce(() => {
-      $reportsApi.updateOperationalReadings(updateCommand.value.id!, updateCommand.value);
-    }, 500)
+      $reportsApi.updateOperationalReadings(
+        updateCommand.value.reportId!,
+        updateCommand.value
+      );
+    }, 500);
 
     watch(report.value, (newReport) => {
-
-        updateCommand.value.id = newReport.operationalReadingsId!
-        updateCommand.value.reportId = newReport.id!
-        updateCommand.value.voltageL1N = newReport.operationalReadingsVoltageL1N!
-        updateCommand.value.voltageL2N = newReport.operationalReadingsVoltageL2N!
-        updateCommand.value.voltageL3N = newReport.operationalReadingsVoltageL3N!
-        updateCommand.value.voltageL1L2 = newReport.operationalReadingsVoltageL1L2!
-        updateCommand.value.voltageL1L3 = newReport.operationalReadingsVoltageL1L3!
-        updateCommand.value.voltageL2L3 = newReport.operationalReadingsVoltageL2L3!
-        updateCommand.value.runningLoadL1 = newReport.operationalReadingsRunningLoadL1!
-        updateCommand.value.runningLoadL2 = newReport.operationalReadingsRunningLoadL2!
-        updateCommand.value.runningLoadL3 = newReport.operationalReadingsRunningLoadL3!
-        updateCommand.value.mainBreakerAmp = newReport.operationalReadingsMainBreakerAmp!
-        updateCommand.value.mainBreakerPoles = newReport.operationalReadingsMainBreakerPoles!
-        updateCommand.value.mainBreakerCapacity = newReport.operationalReadingsMainBreakerCapacity!
-        updateCommand.value.overCurrentByMainBreaker = newReport.operationalReadingsOverCurrentByMainBreaker!
-        updateCommand.value.overCurrentDTLA = newReport.operationalReadingsOverCurrentDTLA!
-        updateCommand.value.overCurrentDTLSec = newReport.operationalReadingsOverCurrentDTLSec!
-        updateCommand.value.overCurrentIDMTLA = newReport.operationalReadingsOverCurrentIDMTLA!
-        updateCommand.value.overCurrentIDMTLTm = newReport.operationalReadingsOverCurrentIDMTLTm!
-        updateCommand.value.earthFaultMA = newReport.operationalReadingsEarthFaultMA!
-        updateCommand.value.earthFaultELRA = newReport.operationalReadingsEarthFaultELRA!
-        updateCommand.value.earthFaultELRSec = newReport.operationalReadingsEarthFaultELRSec!
-        updateCommand.value.earthFaultA = newReport.operationalReadingsEarthFaultA!
-        updateCommand.value.earthFaultSec = newReport.operationalReadingsEarthFaultSec!
-        updateCommand.value.mainBreakerRating = newReport.operationalReadingsMainBreakerRating
-        updateCommand.value.overCurrentDirectActingEnabled = newReport.operationalReadingsOverCurrentDirectActingEnabled
-        updateCommand.value.overCurrentDirectActing = newReport.operationalReadingsOverCurrentDirectActing
-        updateCommand.value.overCurrentDTLEnabled = newReport.operationalReadingsOverCurrentDTLEnabled
-        updateCommand.value.overCurrentIDTMLEnabled = newReport.operationalReadingsOverCurrentIDTMLEnabled
-        updateCommand.value.earthFaultRoobEnabled = newReport.operationalReadingsEarthFaultRoobEnabled
-        updateCommand.value.earthFaultEIREnabled = newReport.operationalReadingsEarthFaultEIREnabled
-        updateCommand.value.earthFaultEFEnabled = newReport.operationalReadingsEarthFaultEFEnabled
+      updateCommand.value.id = newReport.operationalReadingsId!;
+      updateCommand.value.reportId = newReport.id!;
+      updateCommand.value.voltageL1N = newReport.operationalReadingsVoltageL1N!;
+      updateCommand.value.voltageL2N = newReport.operationalReadingsVoltageL2N!;
+      updateCommand.value.voltageL3N = newReport.operationalReadingsVoltageL3N!;
+      updateCommand.value.voltageL1L2 =
+        newReport.operationalReadingsVoltageL1L2!;
+      updateCommand.value.voltageL1L3 =
+        newReport.operationalReadingsVoltageL1L3!;
+      updateCommand.value.voltageL2L3 =
+        newReport.operationalReadingsVoltageL2L3!;
+      updateCommand.value.runningLoadL1 =
+        newReport.operationalReadingsRunningLoadL1!;
+      updateCommand.value.runningLoadL2 =
+        newReport.operationalReadingsRunningLoadL2!;
+      updateCommand.value.runningLoadL3 =
+        newReport.operationalReadingsRunningLoadL3!;
+      updateCommand.value.mainBreakerAmp =
+        newReport.operationalReadingsMainBreakerAmp!;
+      updateCommand.value.mainBreakerPoles =
+        newReport.operationalReadingsMainBreakerPoles!;
+      updateCommand.value.mainBreakerCapacity =
+        newReport.operationalReadingsMainBreakerCapacity!;
+      updateCommand.value.overCurrentDTLA =
+        newReport.operationalReadingsOverCurrentDTLA!;
+      updateCommand.value.overCurrentDTLSec =
+        newReport.operationalReadingsOverCurrentDTLSec!;
+      updateCommand.value.overCurrentIDMTLA =
+        newReport.operationalReadingsOverCurrentIDMTLA!;
+      updateCommand.value.overCurrentIDMTLTm =
+        newReport.operationalReadingsOverCurrentIDMTLTm!;
+      updateCommand.value.earthFaultMA =
+        newReport.operationalReadingsEarthFaultMA!;
+      updateCommand.value.earthFaultELRA =
+        newReport.operationalReadingsEarthFaultELRA!;
+      updateCommand.value.earthFaultELRSec =
+        newReport.operationalReadingsEarthFaultELRSec!;
+      updateCommand.value.earthFaultA =
+        newReport.operationalReadingsEarthFaultA!;
+      updateCommand.value.earthFaultSec =
+        newReport.operationalReadingsEarthFaultSec!;
+      updateCommand.value.mainBreakerRating =
+        newReport.operationalReadingsMainBreakerRating;
+      updateCommand.value.overCurrentDirectActingEnabled =
+        newReport.operationalReadingsOverCurrentDirectActingEnabled;
+      updateCommand.value.overCurrentDirectActing =
+        newReport.operationalReadingsOverCurrentDirectActing;
+      updateCommand.value.overCurrentDTLEnabled =
+        newReport.operationalReadingsOverCurrentDTLEnabled;
+      updateCommand.value.overCurrentIDTMLEnabled =
+        newReport.operationalReadingsOverCurrentIDTMLEnabled;
+      updateCommand.value.earthFaultRoobEnabled =
+        newReport.operationalReadingsEarthFaultRoobEnabled;
+      updateCommand.value.earthFaultEIREnabled =
+        newReport.operationalReadingsEarthFaultEIREnabled;
+      updateCommand.value.earthFaultEFEnabled =
+        newReport.operationalReadingsEarthFaultEFEnabled;
 
       update();
     });

@@ -100,6 +100,7 @@ namespace Inspections.Infrastructure.Repositories
                         .Include("Signatures")
                         .Include("PhotoRecords")
                         .Include("Notes")
+                        .Include("OperationalReadings")
                        .SingleOrDefaultAsync(r => r.Id == id);
             }
             catch (Exception ex)

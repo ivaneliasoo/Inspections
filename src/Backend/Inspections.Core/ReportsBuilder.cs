@@ -42,7 +42,8 @@ namespace Inspections.Core
                 RunningLoadL1= 10,
                 RunningLoadL2 = 10,
                 RunningLoadL3 = 10,
-                MainBreakerCapacity = 3
+                MainBreakerCapacity = 0,
+                
             };
 
             _report.AddOperationalReadings(or);

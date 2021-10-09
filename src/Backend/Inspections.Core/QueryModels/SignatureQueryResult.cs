@@ -1,5 +1,5 @@
 ﻿using System;
-using  SignatureResponsibleType = Inspections.Core.Domain.SignaturesAggregate.ResponsibleType;
+using SignatureResponsibleType = Inspections.Core.Domain.SignaturesAggregate.ResponsibleType;
 
 namespace Inspections.Core.QueryModels
 {
@@ -17,5 +17,6 @@ namespace Inspections.Core.QueryModels
         public string? ResponsibleName { get; set; }
         public string Title { get; set; } = default!;
         public short Order { get; set; }
+        public bool ViewSign { get; set; }
     }
 }
