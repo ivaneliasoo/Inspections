@@ -50,7 +50,6 @@ namespace Inspections.API
             services.AddAutoMapper(assembly);
 
             var options = Configuration.GetAWSOptions();
-            //options.Credentials = new EnvironmentVariablesAWSCredentials();
             services.AddDefaultAWSOptions(options);
             services.AddAWSService<IAmazonS3>();
 
@@ -166,15 +165,6 @@ namespace Inspections.API
 
             app.UseHttpsRedirection();
 
-            //app.UseStaticFiles(new StaticFileOptions
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), Configuration.GetValue<string>("ClientSettings:ReportsImagesFolder"))),
-            //    RequestPath = "/ReportsImages",
-            //    OnPrepareResponse = ctx =>
-            //    {
-            //        ctx.Context.Response.Headers["Access-Control-Allow-Origin"] = "*";
-            //    }
-            //});
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
@@ -215,7 +205,7 @@ namespace Inspections.API
             var logger = LoggerFactory.Create(c => c.AddConsole());
             string cn = Configuration.GetConnectionString("Inspections");
             services.AddDbContext<InspectionsContext>(c =>
-            c.UseLoggerFactory(logger).UseNpgsql(cn).EnableSensitiveDataLogging());
+            c.UseLoggerFactory(logger).UseNpgsql(cn));
         }
 
         private static bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)
