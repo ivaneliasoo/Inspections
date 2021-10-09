@@ -22,7 +22,6 @@ namespace Inspections.API.Features.Reports.Commands
         public short MainBreakerAmp { get; init; }
         public short MainBreakerPoles { get; init; }
         public short MainBreakerCapacity { get; init; }
-        public bool OverCurrentByMainBreaker { get; init; }
         public short OverCurrentDTLA { get; init; }
         public short OverCurrentDTLSec { get; init; }
         public short OverCurrentIDMTLA { get; init; }

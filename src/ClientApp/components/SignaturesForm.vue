@@ -15,7 +15,7 @@
           </v-col>
         </v-row>
         <v-row align="center" justify="space-around" dense>
-          <v-col v-if="!signature.title.includes('LEW')" cols="6" xl="2">
+          <v-col v-if="!isLEW(signature)" cols="6" xl="2">
             <v-select
               :id="`type${index}`"
               v-model="signature.responsibleType"
@@ -85,6 +85,7 @@ import { Component, Vue, Model, Prop } from 'vue-property-decorator'
 import { ValidationProvider } from 'vee-validate'
 import { ResponsibleType } from '@/services/api'
 import { SignatureQueryResult } from '~/services/api'
+import { Signature } from '~/types'
 
   @Component({
     components: {
@@ -99,9 +100,12 @@ export default class SignaturesForm extends Vue {
       return this.signaturesModel
     }
 
+    isLEW(signature: SignatureQueryResult) {
+      return signature.title && signature.title.includes('LEW')
+    }
+
     viewSign (index: number, item: SignatureQueryResult) {
       item.viewSign = !item.viewSign
-      // item.drawnSign = item.drawnSign
       if (this.signaturesModel) { this.signaturesModel.splice(index, 1, item) }
       this.$emit('input', this.signaturesModel)
     }

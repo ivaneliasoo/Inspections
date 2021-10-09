@@ -1693,6 +1693,8 @@ export interface SignatureQueryResult {
      * @memberof SignatureQueryResult
      */
     order?: number;
+
+    viewSign: boolean;
 }
 /**
  *
