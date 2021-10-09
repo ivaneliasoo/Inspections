@@ -43,7 +43,7 @@ namespace Inspections.Core
                 RunningLoadL2 = 10,
                 RunningLoadL3 = 10,
                 MainBreakerCapacity = 0,
-                
+                OverCurrentDirectActing = 0,
             };
 
             _report.AddOperationalReadings(or);
