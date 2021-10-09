@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    [Migration("20211008050027_add_new_opre_fields_2")]
-    partial class add_new_opre_fields_2
+    [Migration("20211008135036_add_new_opre_fields")]
+    partial class add_new_opre_fields
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -382,9 +382,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<short>("MainBreakerRating")
                         .HasColumnType("smallint");
 
-                    b.Property<bool>("OverCurrentByMainBreaker")
-                        .HasColumnType("boolean");
-
                     b.Property<short>("OverCurrentDTLA")
                         .HasColumnType("smallint");
 
@@ -394,8 +391,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<short>("OverCurrentDTLSec")
                         .HasColumnType("smallint");
 
-                    b.Property<bool>("OverCurrentDirectActing")
-                        .HasColumnType("boolean");
+                    b.Property<short>("OverCurrentDirectActing")
+                        .HasColumnType("smallint");
 
                     b.Property<bool>("OverCurrentDirectActingEnabled")
                         .HasColumnType("boolean");

@@ -32,6 +32,13 @@ namespace Inspections.API.Features.Reports.Commands
         public short EarthFaultELRSec { get; init; }
         public short EarthFaultA { get; init; }
         public short EarthFaultSec { get; init; }
-
+        public short MainBreakerRating { get; init; }
+        public bool OverCurrentDirectActingEnabled { get; init; }
+        public short OverCurrentDirectActing { get; init; }
+        public bool OverCurrentDTLEnabled { get; init; }
+        public bool OverCurrentIDTMLEnabled { get; init; }
+        public bool EarthFaultRoobEnabled { get; init; }
+        public bool EarthFaultEIREnabled { get; init; }
+        public bool EarthFaultEFEnabled { get; init; }
     }
 }

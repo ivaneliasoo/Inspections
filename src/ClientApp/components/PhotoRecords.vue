@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card class="mx-auto" flat>
     <v-row justify="space-around" align="end">
       <v-col cols="6" class="text-right">
         Tap Camera Icon To Add Photos to report
@@ -33,105 +33,150 @@
         x-large
         :small="$device.isMobile"
         elevation="2"
-        :disabled="!files.length>0 || dialogUploading"
+        :disabled="!files.length > 0 || dialogUploading"
         @click="uploadFiles"
       >
         Save Photos
         <v-icon>mdi-upload</v-icon>
       </v-btn>
-      <PhotoRecordManager v-if="files.length===0" v-model="photoRecords" :report-id="reportId" />
-      <PhotoRecordPreviewer v-else v-model="filesUrls" :files="files" :progress="percentCompleted" />
+      <v-skeleton-loader
+        v-if="loadingPhotos"
+        class="mx-auto"
+        min-width="400"
+        type="card"
+      />
+      <v-skeleton-loader
+        v-if="loadingPhotos"
+        class="mx-auto"
+        min-width="400"
+        type="card"
+      />
+      <v-skeleton-loader
+        v-if="loadingPhotos"
+        class="mx-auto"
+        min-width="400"
+        type="card"
+      />
+      <PhotoRecordManager
+        v-if="files.length === 0 && !loadingPhotos"
+        v-model="photoRecords"
+        :report-id="reportId"
+      />
+      <PhotoRecordPreviewer
+        v-if="!loadingPhotos"
+        v-model="filesUrls"
+        :files="files"
+        :progress="percentCompleted"
+      />
     </v-row>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import reduce from 'image-blob-reduce'
-import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
-import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
-import { Prop } from 'nuxt-property-decorator'
+import { Component, Vue } from "vue-property-decorator";
+import reduce from "image-blob-reduce";
+import PhotoRecordPreviewer from "@/components/PhotoRecordPreviewer.vue";
+import PhotoRecordManager from "@/components/PhotoRecordManager.vue";
+import { Prop } from "nuxt-property-decorator";
 
 @Component({
   components: {
     PhotoRecordPreviewer,
-    PhotoRecordManager
-  }
+    PhotoRecordManager,
+  },
 })
 export default class PhotoRecords extends Vue {
-  @Prop({ required: true, type: Number }) reportId!: number
+  @Prop({ required: true, type: Number }) reportId!: number;
   files: File[] = [];
-  filesUrls: { url: string, id: number, label: string }[] = [];
+  filesUrls: { url: string; id: number; label: string }[] = [];
+  loadingPhotos: boolean = false;
+  photoRecords: any[] = [];
 
-  photoRecords: any[] = []
+  selectedPhotoComponent: string = "PhotoRecordManager";
+  dialogUploading: boolean = false;
+  percentCompleted: number = 0;
 
-  selectedPhotoComponent: string = 'PhotoRecordManager'
-  dialogUploading: boolean = false
-  percentCompleted: number= 0
+  testurl = "";
+  testurlproc = "";
 
-  testurl = ''
-  testurlproc = ''
-
-  async fetch () {
-    const result: any = await this.$reportsApi.reportsIdPhotorecordGet(this.reportId)
-    if (result.data) {
-      this.photoRecords = result.data as any[]
+  async fetch() {
+    try {
+      this.loadingPhotos = true;
+      const result: any = await this.$reportsApi.apiReportsIdPhotorecordGet(
+        this.reportId
+      );
+      if (result.data) {
+        this.photoRecords = result.data as any[];
+      }
+    } catch (error) {
+    } finally {
+      this.loadingPhotos = false;
     }
   }
 
-  async uploadFiles () {
-    const Pthis = this
-    const formData = new FormData()
-    this.dialogUploading = true
+  async uploadFiles() {
+    const Pthis = this;
+    const formData = new FormData();
+    this.dialogUploading = true;
     const config = {
-      onUploadProgress (progressEvent: any) {
-        Pthis.percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-      }
-    }
+      onUploadProgress(progressEvent: any) {
+        Pthis.percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+      },
+    };
 
     for (let i = 0; i < this.files.length; i++) {
-      const file = this.files[i]
-      const blob = await reduce().toBlob(file, { max: 1000 })
-      const newFile = new File([blob], file.name)
-      this.testurlproc = URL.createObjectURL(newFile)
-      formData.append('files', newFile, `${file.name}|${this.filesUrls[i].label}`)
+      const file = this.files[i];
+      const blob = await reduce().toBlob(file, { max: 1000 });
+      const newFile = new File([blob], file.name);
+      this.testurlproc = URL.createObjectURL(newFile);
+      formData.append(
+        "files",
+        newFile,
+        `${file.name}|${this.filesUrls[i].label}`
+      );
     }
 
-    formData.append('label', 'archivos de Prueba')
+    formData.append("label", "archivos de Prueba");
 
     await this.$axios
       .post(`reports/${this.$route.params.id}/photorecord`, formData, config)
       .then(() => {
-        this.files = []
-        this.filesUrls = []
-        this.$emit('uploaded')
-        this.selectedPhotoComponent = 'PhotoRecordManager'
-        this.percentCompleted = 0
-        this.files = []
-      })
+        this.files = [];
+        this.filesUrls = [];
+        this.$emit("uploaded");
+        this.selectedPhotoComponent = "PhotoRecordManager";
+        this.percentCompleted = 0;
+        this.files = [];
+      });
 
-    const result: any = await this.$reportsApi.reportsIdPhotorecordGet(this.reportId)
+    const result: any = await this.$reportsApi.apiReportsIdPhotorecordGet(
+      this.reportId
+    );
     if (result.data) {
-      this.photoRecords = result.data as any[]
+      this.photoRecords = result.data as any[];
     }
 
-    this.dialogUploading = false
+    this.dialogUploading = false;
   }
 
-  showPreview (filesAdded: File[]) {
+  showPreview(filesAdded: File[]) {
     filesAdded.forEach((file, index) => {
-      this.files.push(file)
-      const url = URL.createObjectURL(file)
-      this.filesUrls.push({ url, id: index, label: '' })
-    })
+      this.files.push(file);
+      const url = URL.createObjectURL(file);
+      this.filesUrls.push({ url, id: index, label: "" });
+    });
 
-    this.selectedPhotoComponent = 'PhotoRecordPreviewer'
+    this.selectedPhotoComponent = "PhotoRecordPreviewer";
   }
 
-  get source () {
-    if (this.filesUrls.length > 0) { return this.filesUrls }
+  get source() {
+    if (this.filesUrls.length > 0) {
+      return this.filesUrls;
+    }
 
-    return this.photoRecords
+    return this.photoRecords;
   }
 }
 </script>

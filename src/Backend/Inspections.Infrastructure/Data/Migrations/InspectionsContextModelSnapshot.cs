@@ -380,9 +380,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<short>("MainBreakerRating")
                         .HasColumnType("smallint");
 
-                    b.Property<bool>("OverCurrentByMainBreaker")
-                        .HasColumnType("boolean");
-
                     b.Property<short>("OverCurrentDTLA")
                         .HasColumnType("smallint");
 
@@ -392,8 +389,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<short>("OverCurrentDTLSec")
                         .HasColumnType("smallint");
 
-                    b.Property<bool>("OverCurrentDirectActing")
-                        .HasColumnType("boolean");
+                    b.Property<short>("OverCurrentDirectActing")
+                        .HasColumnType("smallint");
 
                     b.Property<bool>("OverCurrentDirectActingEnabled")
                         .HasColumnType("boolean");
