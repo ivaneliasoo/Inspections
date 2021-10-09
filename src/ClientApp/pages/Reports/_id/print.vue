@@ -54,7 +54,7 @@ export default {
       const printPhotos = route.query && route.query.printPhotos ? route.query.printPhotos === 'true' : false
       const isCompoundedPhotoRecord = route.query && route.query.compoundedPhotoRecord ? route.query.compoundedPhotoRecord === 'true' : false
       const result = await $axios.$get(`reports/${id}`)
-      const photoRecords = await $reportsApi.reportsIdPhotorecordGet(id)
+      const photoRecords = await $reportsApi.apiReportsIdPhotorecordGet(id)
       const pagesLength = Math.ceil(photoRecords.data.length / 12)
       const photoRecordsPages = [[]]
       let currentPage = 0

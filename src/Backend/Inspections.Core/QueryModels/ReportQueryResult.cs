@@ -37,7 +37,6 @@ namespace Inspections.Core.QueryModels
         public short OperationalReadingsMainBreakerAmp { get; set; }
         public short OperationalReadingsMainBreakerPoles { get; set; }
         public short OperationalReadingsMainBreakerCapacity { get; set; }
-        public bool OperationalReadingsOverCurrentByMainBreaker { get; set; }
         public short OperationalReadingsOverCurrentDTLA { get; set; }
         public short OperationalReadingsOverCurrentDTLSec { get; set; }
         public short OperationalReadingsOverCurrentIDMTLA { get; set; }
@@ -49,21 +48,12 @@ namespace Inspections.Core.QueryModels
         public short OperationalReadingsEarthFaultSec { get; set; }
         public short OperationalReadingsMainBreakerRating { get; set; }
         public bool OperationalReadingsOverCurrentDirectActingEnabled { get; set; }
-        public bool OperationalReadingsOverCurrentDirectActing { get; set; }
+        public short OperationalReadingsOverCurrentDirectActing { get; set; }
         public bool OperationalReadingsOverCurrentDTLEnabled { get; set; }
-        public bool OperationalReadingsOverCurrentDTL { get; set; }
-        public bool OperationalReadingsOverCurrentDTLAt { get; set; }
         public bool OperationalReadingsOverCurrentIDTMLEnabled { get; set; }
-        public bool OperationalReadingsOverCurrentIDTML { get; set; }
-        public bool OperationalReadingsOverCurrentIDTMLAt { get; set; }
         public bool OperationalReadingsEarthFaultRoobEnabled { get; set; }
-        public bool OperationalReadingsEarthFaultRoob { get; set; }
         public bool OperationalReadingsEarthFaultEIREnabled { get; set; }
-        public bool OperationalReadingsEarthFaultEIR { get; set; }
-        public bool OperationalReadingsEarthFaultEIRAt { get; set; }
         public bool OperationalReadingsEarthFaultEFEnabled { get; set; }
-        public bool OperationalReadingsEarthFaultEF { get; set; }
-        public bool OperationalReadingsEarthFaultEFAt { get; set; }
         public IEnumerable<SignatureQueryResult> Signatures { get; set; } = default!;
         public IEnumerable<CheckListQueryResult> CheckLists { get; set; } = default!;
         public IEnumerable<NoteQueryResult> Notes { get; set; } = default!;

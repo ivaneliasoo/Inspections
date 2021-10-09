@@ -19,7 +19,6 @@ namespace Inspections.Core.Domain.ReportsAggregate
         public short MainBreakerAmp { get; set; }
         public short MainBreakerPoles { get; set; }
         public short MainBreakerCapacity { get; set; }
-        public bool OverCurrentByMainBreaker { get; set; }
         public short OverCurrentDTLA { get; set; }
         public short OverCurrentDTLSec { get; set; }
         public short OverCurrentIDMTLA { get; set; }
@@ -31,7 +30,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
         public short EarthFaultSec { get; set; }
         public short MainBreakerRating { get; set; }
         public bool OverCurrentDirectActingEnabled { get; set; }
-        public bool OverCurrentDirectActing { get; set; }
+        public short OverCurrentDirectActing { get; set; }
         public bool OverCurrentDTLEnabled { get; set; }
         public bool OverCurrentIDTMLEnabled { get; set; }
         public bool EarthFaultRoobEnabled { get; set; }

@@ -34,7 +34,6 @@ namespace Inspections.API.Features.Reports.Handlers
                 MainBreakerAmp = request.MainBreakerAmp,
                 MainBreakerPoles = request.MainBreakerPoles,
                 MainBreakerCapacity = request.MainBreakerCapacity,
-                OverCurrentByMainBreaker = request.OverCurrentByMainBreaker,
                 OverCurrentDTLA = request.OverCurrentDTLA,
                 OverCurrentDTLSec = request.OverCurrentDTLSec,
                 OverCurrentIDMTLA = request.OverCurrentIDMTLA,
@@ -43,7 +42,15 @@ namespace Inspections.API.Features.Reports.Handlers
                 EarthFaultELRA = request.EarthFaultELRA,
                 EarthFaultELRSec = request.EarthFaultELRSec,
                 EarthFaultA = request.EarthFaultA,
-                EarthFaultSec = request.EarthFaultSec
+                EarthFaultSec = request.EarthFaultSec,
+                MainBreakerRating = request.MainBreakerRating,
+                OverCurrentDirectActingEnabled = request.OverCurrentDirectActingEnabled,
+                OverCurrentDirectActing = request.OverCurrentDirectActing,
+                OverCurrentDTLEnabled = request.OverCurrentDTLEnabled,
+                OverCurrentIDTMLEnabled = request.OverCurrentIDTMLEnabled,
+                EarthFaultRoobEnabled = request.EarthFaultRoobEnabled,
+                EarthFaultEIREnabled = request.EarthFaultEIREnabled,
+                EarthFaultEFEnabled = request.EarthFaultEFEnabled,
             };
 
             var report = await _reportsRepository.GetByIdAsync(request.ReportId);
