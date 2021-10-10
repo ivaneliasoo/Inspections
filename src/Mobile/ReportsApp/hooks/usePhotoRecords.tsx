@@ -23,7 +23,6 @@ export const usePhotoRecords = () => {
     path: '{file}',
     method: 'POST',
     type: 'multipart',
-    maxRetries: 5, // set retry count (Android only). Default 2
     field: 'uploadedPhoto',
     headers: {
       // 'content-type': 'application/json', // Customize content-type
@@ -42,7 +41,7 @@ export const usePhotoRecords = () => {
       onErrorTitle: 'Upload Error',
       onErrorMessage: 'Error uploading PhotoRecord',
     },
-    useUtf8Charset: true
+    //useUtf8Charset: true
   }
 
   const EnqueuePhotoUpload = (reportId: number, path: string, label: string) => {
@@ -73,7 +72,7 @@ export const usePhotoRecords = () => {
   }
 
   const GetByReportId = async (id: number): Promise<any[]>  => {
-    const result = await reportsApi.reportsIdPhotorecordGet(id)
+    const result = await reportsApi.apiReportsIdPhotorecordGet(id)
     return result.data as unknown as any[]
   }
 
