@@ -23,7 +23,7 @@ export const useReports = () => {
 
   const getReports = async () => {
     try {
-      const resp = await reportsApi.reportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports)
+      const resp = await reportsApi.apiReportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports)
       getAll(resp.data as unknown as ReportQueryResult[])
     } catch (error) {
       console.log(error)
@@ -32,7 +32,7 @@ export const useReports = () => {
   }
 
   const getReportById = async (id: number) => {
-    const result: ReportQueryResult = (await reportsApi.reportsIdGet(id)).data as unknown as ReportQueryResult
+    const result: ReportQueryResult = (await reportsApi.apiReportsIdGet(id)).data as unknown as ReportQueryResult
     if (!result.date) result.date = new Date()
     else result.date = moment(result.date).toDate()
     setWorkingReport(result)
@@ -50,7 +50,7 @@ export const useReports = () => {
 
   const deleteReport = async (reportId: number) => {
     try {
-      const result = await reportsApi.reportsIdDelete(reportId).catch(error => console.log(error.response.message))
+      const result = await reportsApi.apiReportsIdDelete(reportId).catch(error => console.log(error.response.message))
       return result
     } catch (error) {
       console.log(error)
@@ -90,7 +90,7 @@ export const useReports = () => {
   }
 
   const saveSignature = async (s: { signature: SignatureQueryResult, index: number }) => {
-    await signaturesApi.signaturesIdPut(Number(s.signature.id), {
+    await signaturesApi.apiSignaturesIdPut(Number(s.signature.id), {
       id: s.signature.id!,
       title: s.signature.title!,
       annotation: s.signature.annotation!,
@@ -112,7 +112,7 @@ export const useReports = () => {
 
   const saveReport = async (updateCmd: UpdateReportCommand) => {
     if (updateCmd && updateCmd.id) {
-      await reportsApi.reportsIdPut(updateCmd.id.toString(), updateCmd)
+      await reportsApi.apiReportsIdPut(updateCmd.id.toString(), updateCmd)
       getReportById(updateCmd.id)
     }
   }

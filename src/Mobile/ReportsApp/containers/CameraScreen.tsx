@@ -1,5 +1,5 @@
 import { useIsFocused } from '@react-navigation/core';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PermissionsAndroid, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import CameraRoll from '@react-native-community/cameraroll';
@@ -30,12 +30,7 @@ export const CameraScreen = () => {
     const camera = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)
     const recordAudio = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO)
     const readExternalStorage = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
-    const writeExternalStorage = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE)
-    return camera && recordAudio && readExternalStorage && writeExternalStorage
-  }
-
-  const requestStoragePermission = async () => {
-    await PermissionsAndroid.request(
+    const writeExternalStorage = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
       {
         title: 'Permission to use your storage',
@@ -44,6 +39,7 @@ export const CameraScreen = () => {
         buttonNegative: 'Cancel',
       }
     )
+    return camera && recordAudio && readExternalStorage && writeExternalStorage
   }
 
   const takePicture = async () => {
@@ -73,15 +69,20 @@ export const CameraScreen = () => {
       }
     })
   }
+
+  useEffect(() => {
+    hasCameraPermission()
+  }, [])
+
   return (
     <>
       <View style={styles.container}>
-        {!isFocused ? null : hasCameraPermission() ? <>
+        {!isFocused ? null : <>
           <RNCamera
-            ref={cameraRef}
+            ref={cameraRef as any}
             style={styles.preview}
             type={cameraType}
-            onTap={requestStoragePermission}
+            // onTap={requestStoragePermission}
             flashMode={RNCamera.Constants.FlashMode.on}
             androidCameraPermissionOptions={{
               title: 'Permission to use camera',
@@ -120,7 +121,7 @@ export const CameraScreen = () => {
               <ImageIcon fill={'white'} style={{ width: 32, height: 32 }} />
             </TouchableOpacity>
           </View>
-        </> : <Text>Camera and Record Audio permission not consented</Text>
+        </>// : <Text>Camera and Record Audio permission not consented</Text>
         }
         <PhotoLabeler showLabeler={showLabeler} lastPhoto={lastPhoto} label={lastLabel} onLabelChanged={(label) => {
           setLastLabel(label)

@@ -1,4 +1,4 @@
-import { CheckBox, Divider, Input, Select, SelectItem, Text } from '@ui-kitten/components'
+import { CheckBox, Divider, Input, Select, SelectItem, SelectProps, Text, IndexPath } from '@ui-kitten/components';
 import NumericPicker from '../NumericPicker'
 import NumericPicker2 from '../NumericPicker2'
 import { Formik, FormikProps } from 'formik'
@@ -41,7 +41,6 @@ const OperationalReading = () => {
           mainBreakerAmp: formRef.current.values.operationalReadingsMainBreakerAmp!,
           mainBreakerPoles: formRef.current.values.operationalReadingsMainBreakerPoles!,
           mainBreakerCapacity: formRef.current.values.operationalReadingsMainBreakerCapacity!,
-          overCurrentByMainBreaker: formRef.current.values.operationalReadingsOverCurrentByMainBreaker!,
           overCurrentDTLA: formRef.current.values.operationalReadingsOverCurrentDTLA!,
           overCurrentDTLSec: formRef.current.values.operationalReadingsOverCurrentDTLSec!,
           overCurrentIDMTLA: formRef.current.values.operationalReadingsOverCurrentIDMTLA!,
@@ -54,7 +53,7 @@ const OperationalReading = () => {
         }
         await saveOperationalreadings(updateCmd)
           .catch(error => {
-            showMessage('Bad Request', error.response.message)
+            showMessage(error.response.message)
           })
       } else {
         Alert.alert('Bad Request', `report contains invalid fields: ${Object.keys(formRef.current.errors).map(field => field)}`)
@@ -63,7 +62,7 @@ const OperationalReading = () => {
   }
 
   const isSingleLine = useMemo(() => {
-    return (reportData?.licenseVolt <= 230);
+    return (reportData?.licenseVolt! <= 230);
   }, [reportData?.licenseVolt])
 
   const isMultiLine = useMemo(() => {
@@ -105,7 +104,7 @@ const OperationalReading = () => {
               style={{ flex: 1, margin: 5 }}
               size='large'
               value={values.operationalReadingsMainBreakerCapacity!}
-              onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerCapacity', [2, 3, 4][e.row]) }}
+              onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerCapacity', [2, 3, 4][(e as IndexPath).row]) }}
               placeholder='please select...'
               label='Poles Capacity'
               accessoryRight={() => <Text>Poles</Text>}
@@ -121,7 +120,7 @@ const OperationalReading = () => {
               size='large'
               placeholder='please select...'
               value={values.operationalReadingsMainBreakerPoles!}
-              onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerPoles', [100, 200, 300, 400][e.row]) }}
+              onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerPoles', [100, 200, 300, 400][(e as IndexPath).row]) }}
               label='Breaking Capacity (lsc)'
               accessoryRight={() => <Text style={{ justifyContent: 'center' }}>kA</Text>}
             >
@@ -138,12 +137,12 @@ const OperationalReading = () => {
             <View >
               <CheckBox
                 style={{ flex: 1, margin: 5 }}
-                checked={values.operationalReadingsOverCurrentByMainBreaker!}
+                checked={values.operationalReadingsOverCurrentDirectActingEnabled!}
                 onChange={value => setFieldValue('operationalReadingsOverCurrentByMainBreaker', value)}
               >
                 Direct Acting
               </CheckBox>
-              <NumericPicker2 defaultValue={formatPickerValue(values.operationalReadingsDirectActing!)} preppendLabel="" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL3', value)} />
+              <NumericPicker2 defaultValue={formatPickerValue(values.operationalReadingsOverCurrentDirectActing!)} preppendLabel="" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL3', value)} />
             </View>
             <Text>OR</Text>
             <View>
@@ -181,7 +180,7 @@ const OperationalReading = () => {
                 placeholder='please select...'
                 label='RccB'
                 value={values.operationalReadingsEarthFaultMA!}
-                onSelect={(e) => { setFieldValue('operationalReadingsEarthFaultMA', [10, 30, 100, 300][e.row]) }}
+                onSelect={(e) => { setFieldValue('operationalReadingsEarthFaultMA', [10, 30, 100, 300][(e as IndexPath).row]) }}
                 accessoryRight={() => <Text style={{ justifyContent: 'center' }}>mA</Text>}
               >
                 {[10, 30, 100, 300].map((responsible, index) =>

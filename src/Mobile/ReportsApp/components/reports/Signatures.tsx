@@ -1,4 +1,4 @@
-import { Card, Datepicker, Input, Select, SelectItem, Text, Button, useTheme } from '@ui-kitten/components'
+import { Card, Datepicker, Input, Select, SelectItem, Text, Button, useTheme, IndexPath } from '@ui-kitten/components'
 import { CalendarIcon, CrossIcon, EditSignatureIcon } from '../Icons'
 import { Formik, FormikProps } from 'formik'
 import React, { createRef } from 'react'
@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import { AutoSave } from '../../components/AutoSave'
 import { showMessage } from 'react-native-flash-message';
 import { useReports } from '../../hooks/useReports';
-import { ReportQueryResult, ResponsibleType } from '../../services/api/api';
+import { ReportQueryResult, ResponsibleType, SignatureQueryResult } from '../../services/api/api';
 
 
 const Signatures = () => {
@@ -70,7 +70,7 @@ const Signatures = () => {
                   placeholder='please select...'
                   value={['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'][item?.responsibleType ?? 0]}
                   label='Representation Type'
-                  onSelect={(e) => { setFieldValue(`signatures[${signIndex}].responsibleType`, e.row) }}
+                  onSelect={(e) => { setFieldValue(`signatures[${signIndex}].responsibleType`, (e as IndexPath).row) }}
                   status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex] ? 'danger' : 'basic'}
                 >
                   {['Supervisor', 'Inspector', 'Witness', 'LEW', 'Other'].map((responsible, index) =>
@@ -79,7 +79,7 @@ const Signatures = () => {
                       title={responsible}
                     ></SelectItem>)}
                 </Select>
-                <Input label='Name' value={item.responsibleName!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].responsibleName`, e)} status={errors && errors.signatures && errors.signatures[signIndex] && errors.signatures[signIndex].responsibleName ? 'danger' : 'basic'} />
+                <Input label='Name' value={item.responsibleName!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].responsibleName`, e)} status={errors && errors.signatures && errors.signatures[signIndex] && (errors.signatures[signIndex] as SignatureQueryResult).responsibleName ? 'danger' : 'basic'} />
                 <Input label='Designation' value={item.designation!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].designation`, e)} />
                 <Input label='Remarks' multiline value={item.remarks!} onChangeText={(e) => setFieldValue(`signatures[${signIndex}].remarks`, e)} />
                 <View style={{ flex: 2, flexDirection: 'row' }}>
