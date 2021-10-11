@@ -44,6 +44,7 @@ namespace Inspections.Core
                 RunningLoadL3 = 10,
                 MainBreakerCapacity = 0,
                 OverCurrentDirectActing = 0,
+                MainBreakerRating = 100,
             };
 
             _report.AddOperationalReadings(or);

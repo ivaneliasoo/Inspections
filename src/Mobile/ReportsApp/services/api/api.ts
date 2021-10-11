@@ -4494,10 +4494,12 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [filter] 
          * @param {boolean} [closed] 
          * @param {boolean} [myReports] 
+         * @param {string} [orderBy] 
+         * @param {boolean} [descending] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiReportsGet: async (filter?: string, closed?: boolean, myReports?: boolean, options: any = {}): Promise<RequestArgs> => {
+        apiReportsGet: async (filter?: string, closed?: boolean, myReports?: boolean, orderBy?: string, descending?: boolean, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Reports`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4524,6 +4526,14 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (myReports !== undefined) {
                 localVarQueryParameter['myReports'] = myReports;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['orderBy'] = orderBy;
+            }
+
+            if (descending !== undefined) {
+                localVarQueryParameter['descending'] = descending;
             }
 
 
@@ -5130,11 +5140,13 @@ export const ReportsApiFp = function(configuration?: Configuration) {
          * @param {string} [filter] 
          * @param {boolean} [closed] 
          * @param {boolean} [myReports] 
+         * @param {string} [orderBy] 
+         * @param {boolean} [descending] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiReportsGet(filter?: string, closed?: boolean, myReports?: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiReportsGet(filter, closed, myReports, options);
+        async apiReportsGet(filter?: string, closed?: boolean, myReports?: boolean, orderBy?: string, descending?: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiReportsGet(filter, closed, myReports, orderBy, descending, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5313,11 +5325,13 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [filter] 
          * @param {boolean} [closed] 
          * @param {boolean} [myReports] 
+         * @param {string} [orderBy] 
+         * @param {boolean} [descending] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiReportsGet(filter?: string, closed?: boolean, myReports?: boolean, options?: any): AxiosPromise<void> {
-            return localVarFp.apiReportsGet(filter, closed, myReports, options).then((request) => request(axios, basePath));
+        apiReportsGet(filter?: string, closed?: boolean, myReports?: boolean, orderBy?: string, descending?: boolean, options?: any): AxiosPromise<void> {
+            return localVarFp.apiReportsGet(filter, closed, myReports, orderBy, descending, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5483,12 +5497,14 @@ export class ReportsApi extends BaseAPI {
      * @param {string} [filter] 
      * @param {boolean} [closed] 
      * @param {boolean} [myReports] 
+     * @param {string} [orderBy] 
+     * @param {boolean} [descending] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReportsApi
      */
-    public apiReportsGet(filter?: string, closed?: boolean, myReports?: boolean, options?: any) {
-        return ReportsApiFp(this.configuration).apiReportsGet(filter, closed, myReports, options).then((request) => request(this.axios, this.basePath));
+    public apiReportsGet(filter?: string, closed?: boolean, myReports?: boolean, orderBy?: string, descending?: boolean, options?: any) {
+        return ReportsApiFp(this.configuration).apiReportsGet(filter, closed, myReports, orderBy, descending, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

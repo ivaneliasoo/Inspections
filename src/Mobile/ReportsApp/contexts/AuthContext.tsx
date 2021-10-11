@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: any) => {
       const userData = await userInfo(token)
       dispatch({ type: 'SIGN_IN', payload: { userInfo: userData, token } });
       await AsyncStorage.setItem('userToken', token)
+      await AsyncStorage.setItem('userInfo', JSON.stringify(userData))
     }
   }
 
@@ -50,7 +51,10 @@ export const AuthProvider = ({ children }: any) => {
       try {
         let userToken = await AsyncStorage.getItem('userToken');
         if(userToken) {
-          const userData = await userInfo(userToken)
+          const user = await AsyncStorage.getItem('userInfo');
+          let userData
+          if(!user) { userData = await userInfo(userToken) }
+          userData = JSON.parse(user!)
           dispatch({ type: 'RESTORE_TOKEN', payload: { userInfo: userData, token: userToken } });
         }
       } catch (e) {

@@ -5,11 +5,11 @@ import { Configuration, ReportsApi, CheckListsApiFactory } from '../services/api
 import { AuthContext } from '../contexts/AuthContext';
 import { CheckListItemQueryResult, ReportQueryResult, UpdateCheckListItemCommand, UpdateReportCommand, SignaturesApi, SignatureQueryResult } from '../services/api';
 import { UpdateOperationalReadingsCommand } from '../services/api/api';
-import moment from 'moment';
+import moment from 'moment';0
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
-  const { getAll, setFilter, setWorkingReport, updateSignature, clearWorkingReport, reportsState } = useContext(ReportsContext)
+  const { getAll, setFilter, setWorkingReport, updateSignature, clearWorkingReport, reportsState, completeReport: complete, removeReport, setRefreshing } = useContext(ReportsContext)
 
   const configuration = new Configuration({
     accessToken: userToken!,
@@ -23,11 +23,13 @@ export const useReports = () => {
 
   const getReports = async () => {
     try {
-      const resp = await reportsApi.apiReportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports)
+      setRefreshing(true)
+      const resp = await reportsApi.apiReportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports,reportsState.orderBy, reportsState.descendingSort)
       getAll(resp.data as unknown as ReportQueryResult[])
     } catch (error) {
       console.log(error)
     } finally {
+      setRefreshing(false)
     }
   }
 
@@ -41,6 +43,7 @@ export const useReports = () => {
   const completeReport = async (reportId: number) => {
     try {
       const result = await reportsApi.completeReport(reportId).catch(error => console.log(error.response.message))
+      complete(reportId)
       return result
     } catch (error) {
       console.log(error)
@@ -51,6 +54,7 @@ export const useReports = () => {
   const deleteReport = async (reportId: number) => {
     try {
       const result = await reportsApi.apiReportsIdDelete(reportId).catch(error => console.log(error.response.message))
+      removeReport(reportId)
       return result
     } catch (error) {
       console.log(error)
@@ -59,17 +63,15 @@ export const useReports = () => {
   }
 
   const setFilterText = (text: string) => {
-    setFilter({ filter: text, myReports: reportsState.myReports, isClosed: reportsState.isClosed, descendingSort: true, orderBy: 'date' })
+    setFilter({ ...reportsState, filter: text })
   }
 
   const setSorting = async (descending: boolean, sortBy: string) => {
-    setFilter({ filter: reportsState.filter, myReports: reportsState.myReports, isClosed: reportsState.isClosed, descendingSort: descending, orderBy: sortBy })
-    await getReports()
+    setFilter({ ...reportsState, descendingSort: descending, orderBy: sortBy })
   }
 
   const setOptions = async (isClosed: boolean, myReports: boolean) => {
-    setFilter({ filter: reportsState.filter, myReports, isClosed, descendingSort: reportsState.descendingSort, orderBy: reportsState.orderBy })
-    await getReports()
+    setFilter({ ...reportsState, filter: reportsState.filter, myReports, isClosed })
   }
 
   const updateCheckList = async (payload: { reportId: number; checkListId: number; newValue: number | undefined }) => {
@@ -136,6 +138,8 @@ export const useReports = () => {
     saveOperationalreadings,
     setSorting,
     setOptions,
-    reportsState
+    reportsState,
+    setRefreshing,
+    refreshing: reportsState.refreshing
   }
 }

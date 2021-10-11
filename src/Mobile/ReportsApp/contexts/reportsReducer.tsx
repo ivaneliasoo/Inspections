@@ -11,7 +11,10 @@ export interface ReportsFilterPayload {
 }
 
 type ReportsAction =
+  | { type: 'SET_REFRESHING'; isRefreshing: boolean; }
   | { type: 'SET_REPORTS'; payload: { reports: any[]; }; }
+  | { type: 'REMOVE_REPORT'; payload: { id: number; }; }
+  | { type: 'COMPLETE_REPORT'; payload: { id: number; }; }
   | { type: 'SET_WORKING_REPORT', report: ReportQueryResult }
   | { type: 'CLEAR_WORKING_REPORT' }
   | { type: 'SET_FILTER'; payload: ReportsFilterPayload }
@@ -21,13 +24,28 @@ type ReportsAction =
 
 export const reportsReducer = (prevState: ReportsState, action: ReportsAction) => {
   switch (action.type) {
+    case 'SET_REFRESHING': {
+      return {...prevState, refreshing: action.isRefreshing}
+    }
+
     case 'SET_REPORTS': {
       return { ...prevState, reports: action.payload.reports };
+    }
+    case 'REMOVE_REPORT': {
+      return { ...prevState, reports: prevState.reports!.filter((r: ReportQueryResult) =>r.id !== action.payload.id) };
+    }
+    case 'COMPLETE_REPORT': {
+      const index = prevState.reports!.findIndex((r: ReportQueryResult) =>r.id === action.payload.id)
+      const report = prevState.reports![index]
+      report.isClosed = true;
+      prevState.reports!.splice(index, 1, report)
+      return { ...prevState, reports: [...prevState.reports!]};
     }
     case 'SET_OPERATIONAL_READINGS': {
       return { ...prevState, workingOperationalReadings: action.payload };
     }
     case 'SET_FILTER': {
+      console.log({ ...prevState, ...action.payload })
       return { ...prevState, ...action.payload };
     }
     case 'SET_WORKING_REPORT': {
