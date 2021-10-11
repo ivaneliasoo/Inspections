@@ -1,9 +1,10 @@
 import { Button, MenuItem, OverflowMenu, Toggle } from "@ui-kitten/components"
 import { DarkIcon, LightIcon, OptionsIcon } from "../Icons"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { ThemeContext } from "../../contexts/ThemeContext"
 import { ReportsContext } from "../../contexts/ReportsContext"
 import { StyleSheet } from "react-native"
+import { useReports } from '../../hooks/useReports';
 
 export interface Props {
   onChanged: (payload: { myReports: boolean; isClosed: boolean; filter?: string }) => void
@@ -12,7 +13,7 @@ export interface Props {
 export const OptionsMenu = ({onChanged}: Props) => {
   const context = useContext(ThemeContext)
   const [showMenu, setShowMenu] = useState(false)
-  const { setFilter, reportsState: { myReports, isClosed, filter } } = useContext(ReportsContext)
+  const { setFilter, getReports, reportsState: { myReports, isClosed, filter, descendingSort, orderBy } } = useReports()
 
   const hide = () => {
     if(showMenu) setShowMenu(false)
@@ -23,13 +24,11 @@ export const OptionsMenu = ({onChanged}: Props) => {
   }
 
   const handleIsClosed = () => {
-    setFilter({ isClosed: !isClosed, myReports, filter}); 
-    onChanged({ myReports, isClosed: !isClosed })
+    setFilter({ isClosed: !isClosed, myReports, filter, descendingSort, orderBy}); 
   }
 
   const handleMyReports = () => {
-    setFilter({ isClosed, myReports: !myReports, filter }); 
-    onChanged({ myReports: !myReports, isClosed })
+    setFilter({ isClosed, myReports: !myReports, filter, descendingSort, orderBy}); 
   }
 
   return (

@@ -80,9 +80,9 @@ namespace Inspections.API.Features.Inspections
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetAll(string? filter, bool? closed, bool myReports = true)
+        public async Task<IActionResult> GetAll(string? filter, bool? closed, bool myReports = true, string orderBy = "date", bool descending = true)
         {
-            var result = await _reportsRepository.GetAll(filter, closed, myReports).ConfigureAwait(false);
+            var result = await _reportsRepository.GetAll(filter, closed, myReports, orderBy, descending).ConfigureAwait(false);
             if (result is null)
                 return NoContent();
 

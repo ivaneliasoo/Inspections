@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,10 +61,33 @@ namespace Inspections.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task<IEnumerable<ReportListItem>> GetAll(string? filter, bool? closed, bool myReports)
+        private IQueryable<Report> ApplyOrdering(IQueryable<Report> query, string orderBy = "date", bool descending = true)
         {
-            var query = _context.Reports
-                .Include(p => p.PhotoRecords);
+            switch (orderBy)
+            {
+                case "date":
+                    if(descending) return query.OrderByDescending(r => r.Date);
+                    return query.OrderBy(r => r.Date);
+                case "company":
+                    if(descending) return query.OrderByDescending(r => r.License!.Name);
+                    return query.OrderBy(r => r.License!.Name);
+                case "name":
+                    if(descending) return query.OrderByDescending(r => r.Name);
+                    return query.OrderBy(r => r.Name);
+                case "address":
+                    if(descending) return query.OrderByDescending(r => r.Address);
+                    return query.OrderBy(r => r.Address);
+                default:
+                    return query;
+            }
+        }
+
+        public async Task<IEnumerable<ReportListItem>> GetAll(string? filter, bool? closed, bool myReports, string orderBy = "date", bool descending = true)
+        {
+            var query = ApplyOrdering(_context.Reports, orderBy, descending);
+
+            query
+            .Include(p => p.PhotoRecords);
 
             if (closed.HasValue && closed.Value)
                 return await query.AsNoTracking().Where(r => (r.IsClosed) && (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)) && EF.Functions.Like(r.Name, $"%{filter}%"))
@@ -72,9 +96,8 @@ namespace Inspections.Infrastructure.Repositories
                     .ToListAsync();
 
             return await query.AsNoTracking()
-                .Where(r => (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)) 
+                .Where(r => (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName))
                 && (EF.Functions.Like(r.Name, $"%{filter}%") || EF.Functions.Like(r.License!.Name, $"%{filter}%")))
-                .OrderByDescending(r => r.Date)
                 .ProjectTo<ReportListItem>(config)
                 .ToListAsync();
         }

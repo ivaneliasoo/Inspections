@@ -28,7 +28,7 @@ const NumericPicker = ({ defaultValue = [0,0,0], itemSelected, appendLabel = 'V'
   }, [firstDigit, secondDigit, thirdDigit])
 
   return (
-    <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginBottom: 10}}>
       <Text style={styles.label}>{preppendLabel}</Text>
       <Text>
         <Picker style={{ width: 30, height: 70 }}

@@ -49,7 +49,7 @@ export const Home = ({ navigation }: any) => {
 
   return (
     <Layout style={styles.container}>
-      <TopNavigation title={`Welcome, ${authState.userInfo.lastName} ${authState.userInfo.name}.`} alignment='center' accessoryLeft={() =>
+      <TopNavigation title={`Welcome, ${authState.userInfo?.lastName} ${authState.userInfo?.name}.`} alignment='center' accessoryLeft={() =>
         <TopNavigationAction onPress={() => navigation.openDrawer()} icon={(props) => <Icon name='menu-outline' style={{ width: 50, height: 50 }} {...props} />} />} />
       <NewReport isOpen={isCreatingReport} onClose={() => setIsCreatingReport(false)} onCreate={navigateToDetails} />
       <ScrollView>
