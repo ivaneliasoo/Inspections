@@ -45,7 +45,6 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
       return { ...prevState, workingOperationalReadings: action.payload };
     }
     case 'SET_FILTER': {
-      console.log({ ...prevState, ...action.payload })
       return { ...prevState, ...action.payload };
     }
     case 'SET_WORKING_REPORT': {

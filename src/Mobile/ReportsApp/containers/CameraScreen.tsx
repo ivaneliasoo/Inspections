@@ -30,7 +30,12 @@ export const CameraScreen = () => {
     const camera = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)
     const recordAudio = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO)
     const readExternalStorage = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
-    const writeExternalStorage = await PermissionsAndroid.request(
+    const writeExternalStorage = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE)
+    return camera && recordAudio && readExternalStorage && writeExternalStorage
+  }
+
+  const requestStoragePermission = async () => {
+    await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
       {
         title: 'Permission to use your storage',
@@ -39,7 +44,6 @@ export const CameraScreen = () => {
         buttonNegative: 'Cancel',
       }
     )
-    return camera && recordAudio && readExternalStorage && writeExternalStorage
   }
 
   const takePicture = async () => {
@@ -72,7 +76,7 @@ export const CameraScreen = () => {
 
   useEffect(() => {
     hasCameraPermission()
-  }, [])
+  })
 
   return (
     <>
@@ -82,7 +86,7 @@ export const CameraScreen = () => {
             ref={cameraRef as any}
             style={styles.preview}
             type={cameraType}
-            // onTap={requestStoragePermission}
+            onTap={requestStoragePermission}
             flashMode={RNCamera.Constants.FlashMode.on}
             androidCameraPermissionOptions={{
               title: 'Permission to use camera',
