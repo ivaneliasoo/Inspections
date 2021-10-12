@@ -19,7 +19,7 @@ export const usePhotoRecords = () => {
   
   const theme = useTheme()
   const uploadOptions: UploadOptions = {
-    url: `${API_HOST}/Reports/{id}/photorecord`,
+    url: `${API_HOST}/api/Reports/{id}/photorecord`,
     path: '{file}',
     method: 'POST',
     type: 'multipart',
@@ -48,6 +48,7 @@ export const usePhotoRecords = () => {
     uploadOptions.url = uploadOptions.url.replace('{id}', reportId.toString())
     uploadOptions.path = uploadOptions.path.replace('{file}', path).replace('file://', '')
     uploadOptions.headers = { ...uploadOptions.headers, label }
+    console.log({uploadOptions})
     Upload.startUpload(uploadOptions).then((uploadId) => {
       Upload.addListener('error', uploadId, (data) => {
         showMessage({
