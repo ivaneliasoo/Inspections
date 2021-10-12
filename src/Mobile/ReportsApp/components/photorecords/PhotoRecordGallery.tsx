@@ -6,15 +6,19 @@ import { Rect } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/core';
 import { usePhotoRecords } from '../../hooks/usePhotoRecords';
 import { FlatList } from 'react-native-gesture-handler';
+import { useReports } from '../../hooks/useReports';
+import { Input } from '@ui-kitten/components';
 
 export default function PhotoRecordGallery() {
   const { goBack } = useNavigation()
+  const { reportsState: { workingReport } } = useReports()
   const [selectedImage, setSelectedImage] = useState(0)
-  const { GetByReportId } = usePhotoRecords()
+  const { GetByReportId, deletePhoto, editLabel } = usePhotoRecords()
   const [images, setImages] = useState([])
+  const [isEditingLabel, setIsEditingLabel] = useState(false)
 
   useEffect(() => {
-    GetByReportId(2)
+    GetByReportId(workingReport?.id ?? 0)
       .then(resp => {
         const mappedData = resp.map(item => {
           return {
@@ -24,7 +28,7 @@ export default function PhotoRecordGallery() {
               uri: item.photoUrl,
               thumbnail: item.thumbnailUrl,
               thumbnailStorageId: item.thumbnailStorageId,
-              label: item.label
+              label: item.label ?? ''
             }
           }
         })
@@ -33,6 +37,12 @@ export default function PhotoRecordGallery() {
       })
   }, [])
 
+  const updateLabel = (id: number, text: string) => {
+    const index = images.findIndex(im => im.source.id === id )
+    const image = images[index]
+    image.source.label = text
+    setImages(images.splice(index, 1, image))
+  }
   return (
     <>
       <View style={{ flex: 1, flexDirection: 'column' }}>
@@ -47,16 +57,16 @@ export default function PhotoRecordGallery() {
           initialPage={selectedImage}
           style={{ backgroundColor: 'grey' }}
           images={images} />
-        <View style={{ backgroundColor: 'black', position: 'absolute', bottom: 0, height: '10%', width: '100%', opacity: .7, flex: 1 }}>
+        <View style={{ backgroundColor: 'black', position: 'absolute', bottom: 0, height: '15%', width: '100%', opacity: .7, flex: 1 }}>
+          {isEditingLabel ? <Input value={images[selectedImage]?.source?.label} onChangeText={e=> updateLabel(images[selectedImage]?.source?.id, e)} onSubmitEditing={() => { editLabel(workingReport?.id!, images[selectedImage]?.source?.id, images[selectedImage]?.source?.label); setIsEditingLabel(false) }} /> : <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>{images[selectedImage]?.source?.label}</Text>}
           <View style={{ marginVertical: 20, flexDirection: 'row', flex: 1, justifyContent: 'space-around' }}>
-            <TouchableOpacity onPress={() => goBack()} style={styles.circle}>
+            <TouchableOpacity onPress={() => setIsEditingLabel(true)} style={styles.circle}>
               <EditIcon fill={'white'} style={{ width: 36, height: 36 }} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => goBack()} style={styles.circle}>
+            <TouchableOpacity onPress={() => deletePhoto(workingReport?.id!, images[selectedImage]?.source?.id)} style={styles.circle}>
               <TrashIcon fill={'white'} style={{ width: 36, height: 36 }} />
             </TouchableOpacity>
           </View>
-          {/* <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>{images[selectedImage].source.label}</Text> */}
         </View>
       </View>
       <View style={{ backgroundColor: 'black' }}>
@@ -102,9 +112,9 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-    // justifyContent: 'space-between',
-    // backgroundColor: 'black',
-    // opacity: .5,
+    justifyContent: 'space-between',
+    backgroundColor: 'black',
+    opacity: .5,
     borderColor: 'white',
     borderRadius: 3,
     shadowColor: '#000',
