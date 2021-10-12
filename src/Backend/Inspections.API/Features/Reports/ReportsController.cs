@@ -304,17 +304,16 @@ namespace Inspections.API.Features.Inspections
         public async Task<FileResult> Export(int id)
         {
             var token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "", StringComparison.InvariantCultureIgnoreCase);
-            var exportData = new ExportDTO("http://localhost:3000/client/Login", $"http://localhost:3000/client/print?id={id}&printPhotos=true&compoundedPhotoRecord=true&token={token}");
+            var exportData = new ExportDTO($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/client/print?id={id}&printPhotos=true&compoundedPhotoRecord=true&token={token}");
 
             Guard.Against.Null(exportData, nameof(exportData));
             var config = _context.Set<ReportConfiguration>().FirstOrDefault(c => c.Id == exportData.ReportConfigurationId);
-            var file = await GenerateReport(exportData.LoginUrl, exportData.PageUrl, config, exportData.PhotosPerPage);
+            var file = await GenerateReport(exportData.PageUrl, config, exportData.PhotosPerPage);
             return File(file, "application/pdf", "prueba.pdf");
         }
 
-        private async Task<byte[]> GenerateReport(string loginUrl, string pageUrl, ReportConfiguration config, int photosPerPage)
+        private async Task<byte[]> GenerateReport(string pageUrl, ReportConfiguration config, int photosPerPage)
         {
-            Guard.Against.Null(loginUrl, nameof(loginUrl));
             Guard.Against.Null(pageUrl, nameof(pageUrl));
             Guard.Against.Null(config, nameof(config));
 
@@ -345,5 +344,5 @@ namespace Inspections.API.Features.Inspections
         }
     }
 
-    public record ExportDTO(string LoginUrl, string PageUrl, int PhotosPerPage = 8, int ReportConfigurationId = 1);
+    public record ExportDTO(string PageUrl, int PhotosPerPage = 8, int ReportConfigurationId = 1);
 }
