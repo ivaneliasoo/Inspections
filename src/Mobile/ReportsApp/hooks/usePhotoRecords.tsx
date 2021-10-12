@@ -77,8 +77,23 @@ export const usePhotoRecords = () => {
     return result.data as unknown as any[]
   }
 
+  const deletePhoto = async (reportId: number, id: number): Promise<any[]>  => {
+    const result = await reportsApi.apiReportsIdPhotorecordIdPhotoDelete(reportId, id)
+    return result.data as unknown as any[]
+  }
+  const editLabel = async (reportId: number, id: number, label: string): Promise<any[]>  => {
+    const result = await reportsApi.apiReportsIdPhotorecordIdPhotoPut(reportId, id, {
+      reportId,
+      id,
+      label
+    })
+    return result.data as unknown as any[]
+  }
+
   return {
     EnqueuePhotoUpload,
-    GetByReportId
+    GetByReportId,
+    deletePhoto,
+    editLabel
   }
 }
