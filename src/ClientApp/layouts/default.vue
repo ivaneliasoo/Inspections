@@ -8,7 +8,7 @@
       app
       overflow
     >
-      <Menu />
+      <Menu v-if="$auth.user" />
     </v-navigation-drawer>
 
     <v-app-bar

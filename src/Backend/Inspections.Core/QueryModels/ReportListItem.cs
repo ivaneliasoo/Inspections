@@ -25,7 +25,7 @@ namespace Inspections.Core.QueryModels
         public int CompletedSignaturesCount { get; set; }
         public bool IsCheckListsCompleted { get; set; }
         public bool HasNotes { get; set; }
-        public int NotesCount { get; set; }
+        public int SignaturesCount { get; set; }
         public bool HasPhotoRecords { get; set; }
         public int PhotosCount { get; set; }
     }

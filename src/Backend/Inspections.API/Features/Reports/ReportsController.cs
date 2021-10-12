@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Net.Http.Headers;
 using Microsoft.Playwright;
 using PuppeteerSharp;
 using PuppeteerSharp.Media;
@@ -39,15 +40,17 @@ namespace Inspections.API.Features.Inspections
         private readonly InspectionsContext _context;
         private readonly IOptions<ClientSettings> _storageOptions;
         private readonly PhotoRecordManager _photoRecordManager;
+        private readonly IAuthorizationService _authorizationService;
 
         public ReportsController(IMediator mediator, IReportsRepository reportsRepository, InspectionsContext context, IOptions<ClientSettings> storageOptions,
-            PhotoRecordManager photoRecordManager)
+            PhotoRecordManager photoRecordManager, IAuthorizationService authorizationService)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _storageOptions = storageOptions ?? throw new ArgumentNullException(nameof(storageOptions));
             _photoRecordManager = photoRecordManager ?? throw new ArgumentNullException(nameof(photoRecordManager));
+            _authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
         }
 
         [HttpPost]
@@ -134,7 +137,7 @@ namespace Inspections.API.Features.Inspections
                 photo.PhotoUrl = _photoRecordManager.GenerateSafeUrl(photo.FileName);
                 photo.ThumbnailUrl = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
                 photo.PhotoBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileName);
-                photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized);;
+                photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized); ;
             }
 
             if (photos != null)
@@ -297,10 +300,13 @@ namespace Inspections.API.Features.Inspections
             return BadRequest();
         }
 
-        [HttpPost("export", Name = nameof(Export))]
-        public async Task<FileResult> Export(ExportDTO exportData)
+        [HttpGet("{id:int}/export", Name = nameof(Export))]
+        public async Task<FileResult> Export(int id)
         {
-            Guard.Against.Null(exportData, nameof(exportData)); 
+            var token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "", StringComparison.InvariantCultureIgnoreCase);
+            var exportData = new ExportDTO("http://localhost:3000/client/Login", $"http://localhost:3000/client/print?id={id}&printPhotos=true&compoundedPhotoRecord=true&token={token}");
+
+            Guard.Against.Null(exportData, nameof(exportData));
             var config = _context.Set<ReportConfiguration>().FirstOrDefault(c => c.Id == exportData.ReportConfigurationId);
             var file = await GenerateReport(exportData.LoginUrl, exportData.PageUrl, config, exportData.PhotosPerPage);
             return File(file, "application/pdf", "prueba.pdf");
@@ -318,22 +324,9 @@ namespace Inspections.API.Features.Inspections
             await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true, Args = new string[] { "--no-sandbox" } });
             await using var page = await browser.NewPageAsync();
 
-            await page.GoToAsync(loginUrl);
+            await page.GoToAsync($"{pageUrl}");
+            await page.WaitForFunctionAsync("() => window.isPrintable === true");
 
-            await page.WaitForSelectorAsync("#username");
-            await page.ClickAsync("#username");
-
-            await page.TypeAsync("#username", "pdf");
-
-            await page.ClickAsync("#password");
-
-            await page.TypeAsync("#password", "@@P@sword");
-            await page.WaitForSelectorAsync(".elevation-12 > #signin-form > .v-card__actions > .v-btn > .v-btn__content");
-            await page.ClickAsync(".elevation-12 > #signin-form > .v-card__actions > .v-btn > .v-btn__content");
-            await page.WaitForSelectorAsync("table > .v-data-table-header > tr > .text-center:nth-child(4) > span");
-
-            await page.GoToAsync($"{pageUrl}?{nameof(photosPerPage)}={photosPerPage}");
-            await page.WaitForSelectorAsync(".title");
             var pdfOptions = new PdfOptions
             {
                 DisplayHeaderFooter = true,
@@ -346,11 +339,11 @@ namespace Inspections.API.Features.Inspections
                 },
                 HeaderTemplate = "",
                 FooterTemplate = config.Footer,
-
             };
+
             return await page.PdfDataAsync(pdfOptions);
         }
     }
 
-    public record ExportDTO(string LoginUrl, string PageUrl, int PhotosPerPage = 12, int ReportConfigurationId = 1);
+    public record ExportDTO(string LoginUrl, string PageUrl, int PhotosPerPage = 8, int ReportConfigurationId = 1);
 }
