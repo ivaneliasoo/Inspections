@@ -42,7 +42,7 @@ namespace Inspections.Infrastructure.Repositories
                 .ForMember(m => m.HasSignatures, opt => opt.MapFrom(src => src.Signatures.Any()))
                 .ForMember(m => m.CompletedSignaturesCount, opt => opt.MapFrom(src => src.Signatures.Count()))
                 .ForMember(m => m.PhotosCount, opt => opt.MapFrom(src => src.PhotoRecords.Count()))
-                .ForMember(m => m.NotesCount, opt => opt.MapFrom(src => src.Signatures.Count()));
+                .ForMember(m => m.SignaturesCount, opt => opt.MapFrom(src => src.Signatures.Where(s=>string.IsNullOrWhiteSpace(s.DrawnSign)).Count()));
         });
 
         public ReportsRepository(InspectionsContext context, ILogger<ReportsRepository> logger
@@ -87,7 +87,8 @@ namespace Inspections.Infrastructure.Repositories
             var query = ApplyOrdering(_context.Reports, orderBy, descending);
 
             query
-            .Include(p => p.PhotoRecords);
+            .Include(p => p.PhotoRecords)
+            .Include(p => p.Signatures);
 
             if (closed.HasValue && closed.Value)
                 return await query.AsNoTracking().Where(r => (r.IsClosed) && (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)) && EF.Functions.Like(r.Name, $"%{filter}%"))
@@ -135,7 +136,7 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<ReportQueryResult> GetByIdAsync(int id, bool projected)
         {
-            return await _context.Reports.Where(r => r.Id == id).ProjectTo<ReportQueryResult>(config).AsNoTracking().SingleOrDefaultAsync();
+            return await _context.Reports.AsNoTracking().Where(r => r.Id == id).ProjectTo<ReportQueryResult>(config).SingleOrDefaultAsync();
         }
 
         public async Task UpdateAsync(Report entity)

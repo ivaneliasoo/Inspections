@@ -1,6 +1,6 @@
 <template>
   <div style="display: block; border: 2px">
-    <div style="display: block;">
+    <div style="display: block;" class="page-break-after">
       <article class="tw-text-justify">
         <PrintingTitle> Particulars Of Instalation </PrintingTitle>
         <span class="text-line tw-font-medium">
@@ -47,19 +47,28 @@
 import moment from 'moment'
 export default {
   layout: 'printlayout',
-  async asyncData ({ route, $axios, $reportsApi }) {
-    if (route && route.params && route.params.id) {
-      const id = parseInt(route.params.id)
+  async asyncData ({ route, $axios }) {
+    if (route && route.query && route.query.id) {
+      const id = parseInt(route.query.id)
+      const token = route.query.token
 
       const printPhotos = route.query && route.query.printPhotos ? route.query.printPhotos === 'true' : false
       const isCompoundedPhotoRecord = route.query && route.query.compoundedPhotoRecord ? route.query.compoundedPhotoRecord === 'true' : false
-      const result = await $axios.$get(`reports/${id}`)
-      const photoRecords = await $reportsApi.apiReportsIdPhotorecordGet(id)
-      const pagesLength = Math.ceil(photoRecords.data.length / 12)
+      const result = await $axios.$get(`reports/${id}`, {
+        headers: {
+          Authorization: `bearer ${token}`
+        }
+      })
+      const photoRecords = await $axios.$get(`reports/${id}/photorecord`, {
+        headers: {
+          Authorization: `bearer ${token}`
+        }
+      })
+      const pagesLength = Math.ceil(photoRecords.length / 8)
       const photoRecordsPages = [[]]
       let currentPage = 0
-      photoRecords.data.forEach((photo, index) => {
-        if (index > 0 && (index) % 12 === 0) { photoRecordsPages.push([]); currentPage++ }
+      photoRecords.forEach((photo, index) => {
+        if (index > 0 && (index) % 8 === 0) { photoRecordsPages.push([]); currentPage++ }
         if (photoRecordsPages[currentPage]) { photoRecordsPages[currentPage].push(photo) }
       })
 
@@ -71,7 +80,8 @@ export default {
         reportData: result,
         photoRecordsPages,
         printPhotos,
-        isCompoundedPhotoRecord
+        isCompoundedPhotoRecord,
+        isPrintable: false
       }
     }
   },
@@ -97,7 +107,10 @@ export default {
       return 0
     }
   },
-  auth: false
+  auth: false,
+  mounted () {
+    window.isPrintable = true
+  }
 }
 </script>
 

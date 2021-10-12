@@ -10,6 +10,7 @@ import Empty from '../assets/images/empty.svg'
 import { useReports } from '../hooks/useReports';
 import { Badge } from '../components/Badge';
 import { ReportsFilter } from '../components/reports/ReportsFilter';
+import { useDownloader } from '../hooks/useDownloader';
 
 const renderLeftActions = () => {
   return (
@@ -47,7 +48,7 @@ const renderRightActions = (_progress: any, dragX: any) => {
 const renderItemFooter = (footerProps: any, item: any) => (
   <Layout {...footerProps} style={styles.cardFooter}>
     <View style={{ flexDirection: 'row' }}>
-      <Badge color='grey' count={item.photosCount}>
+      <Badge color='info' count={item.photosCount}>
         <Camera fill={'blue'} style={styles.footerIcon} />
       </Badge>
       <Badge color='info' count={item.signaturesCount}>
@@ -118,7 +119,7 @@ const SwipeableReport = ({ children, isClosed, id, name, onSwipedLeft, onSwipedR
 };
 
 export const MyReports = ({ navigation }: any) => {
-  const { getReports, reports, deleteReport, completeReport, refreshing, reportsState } = useReports()
+  const { getReports, reports, deleteReport, completeReport, refreshing, reportsState, generatePdf } = useReports()
 
   useEffect(() => {
     getReports()
@@ -127,6 +128,8 @@ export const MyReports = ({ navigation }: any) => {
   useEffect(() => {
     getReports()
   }, [reportsState.filter,reportsState.isClosed, reportsState.orderBy, reportsState.descendingSort, reportsState.myReports])
+  
+  const {downloadPdf} = useDownloader()
 
   const ReportItem = ({ item }: { item: any }) => {
 
@@ -151,12 +154,13 @@ export const MyReports = ({ navigation }: any) => {
             style={styles.card}
             onPress={navigateDetails}
             status={item.isClosed ? 'success' : 'info'}
-            header={() => <Text category='s1' >{`${item.licenseName} - ${item.licenseNumber ?? 'Not specified'} Validity: ${moment(item.licenseValidityStart).format('DD-MM-YYYY')} - ${moment(item.licenseValidityEnd).format('DD-MM-YYYY')}`} </Text>}
+            header={() => <Text category='s1' >{`${item.licenseName} - ${item.licenseNumber ?? 'Not specified'}`} </Text>}
             footer={footerProps => renderItemFooter(footerProps, item)} >
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <View>
                 <Text category='s2'>{`Report Name: ${item.name}`}</Text>
                 <Text category='s2'>{`Date: ${moment(item.date).format('DD/MM/YYYY')}`}</Text>
+                <Text category='s2'>Validity: {moment(item.licenseValidityStart).format('DD-MM-YYYY')} - {moment(item.licenseValidityEnd).format('DD-MM-YYYY')}</Text>
               </View>
               <View style={{
                 justifyContent: 'space-around',
@@ -166,11 +170,13 @@ export const MyReports = ({ navigation }: any) => {
                   style={{ margin: 5 }}
                   appearance='outline'
                   accessoryLeft={Printer}
+                  onPress={() => downloadPdf(item.id)}
                 />
                 <Button
                   style={{ margin: 5 }}
                   appearance='outline'
                   accessoryLeft={ImageIcon}
+                  onPress={() => downloadPdf(item.id)}
                 />
               </View>
             </View>
@@ -201,8 +207,8 @@ export const MyReports = ({ navigation }: any) => {
           <View style={styles.noDataLayout}>
             <Empty height={200} width={300} />
             <Text status='warning' category='h1'>No results</Text>
-            <Text status='info' category='s2'>brrr. its cold in here</Text>
-            <Button onPress={getReports}>Try Again</Button>
+            <Text status='info' category='s2'>brrr. its cold in here. try adding some reports or refresh the list</Text>
+            <Button onPress={getReports}>Refresh</Button>
           </View>}
       </Layout>
     </>

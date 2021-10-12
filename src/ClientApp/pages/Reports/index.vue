@@ -219,7 +219,7 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
 
     async fetch () {
       this.loading = true
-      await this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed }, { root: true })
+      await this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', descending: true }, { root: true })
 
       this.loading = false
     }
@@ -244,14 +244,7 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
     }
 
     async generatePdf (item: Report, compoundedPhotoRecord: boolean = true, printPhotos: boolean = true) {
-      const printData = {
-        loginUrl: `${window.location.protocol}//${window.location.host}${this.$router.options.base || 'client'}Login`,
-        pageUrl: `${window.location.protocol}//${window.location.host}${this.$router.options.base || 'client'}reports/${item.id}/print?printPhotos=${printPhotos}&compoundedPhotoRecord=${compoundedPhotoRecord}`,
-        token: this.$auth.getToken('local').replace('bearer ', ''),
-        photosPerPage: 12,
-        reportConfigurationId: 1
-      }
-      const file = await this.$axios.$post('reports/export', printData, { responseType: 'blob' })
+      const file = await this.$axios.$get(`reports/${item.id}/export`, { responseType: 'blob' })
       this.downloadFile(file, compoundedPhotoRecord ? `compunded_photo_record_${item.name}` : `report_${item.name}`)
     }
 
