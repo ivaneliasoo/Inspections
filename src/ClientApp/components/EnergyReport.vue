@@ -1552,7 +1552,7 @@ export default {
     },
     endpoint (op) {
       //return `http://localhost:5000/api/energyreport/${op}`
-      return `api/energyreport/${op}`;
+      return `/energyreport/${op}`;
     },
     readTemplates() {
       const self = this;
