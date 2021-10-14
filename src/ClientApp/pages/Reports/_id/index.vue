@@ -13,33 +13,6 @@
     <v-row v-if="loadingReport">
       <v-col
         cols="12"
-        md="4"
-      >
-        <v-skeleton-loader
-          type="card-avatar, article, actions"
-        />
-
-        <v-skeleton-loader
-          type="date-picker"
-        />
-      </v-col>
-
-      <v-col
-        cols="12"
-        md="4"
-      >
-        <v-skeleton-loader
-          type="article, actions"
-        />
-
-        <v-skeleton-loader
-          type="table-heading, list-item-two-line, image, table-tfoot"
-        />
-      </v-col>
-
-      <v-col
-        cols="12"
-        md="4"
       >
         <v-skeleton-loader
           type="list-item-avatar, divider, list-item-three-line, card-heading, image, actions"
@@ -152,13 +125,13 @@
               :loading="savingNewReport"
               class="v-btn--example2"
               @click="
-                saveReportChanges().then(
+                saveReportChanges().then(() => {
                   CanCloseReport && !currentReport.isClosed
                     ? (dialogClose = true)
                     : !CanCloseReport
                       ? (errorsDialog = true)
                       : (errorsDialog = false)
-                )
+                })
               "
             >
               <v-icon>mdi-content-save</v-icon>
@@ -176,7 +149,7 @@
             :class="
               !IsCompleted ||
                 HasNotesWithPendingChecks ||
-                !PrincipalSignatureHasAResponsable > 0
+                !PrincipalSignatureHasAResponsable
                 ? 'error--text'
                 : 'primary--text'
             "
@@ -1009,7 +982,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       if (!checkList) {
         return
       }
-    checkList.checks!.forEach((check) => { check.checked = value })
+    checkList.checks!.forEach((check) => { check.checked = value; check.touched = true })
     } catch (error) {
       notify({
         title: 'Report Details',
@@ -1059,7 +1032,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
     this.dialogClose = false
     this.currentReport.isClosed = true
     this.dialogPrinting = true
-    await this.printHelper.print(this.currentReport.id!)
+    // await this.printHelper.print(this.currentReport.id!)
+    await this.generatePdf(this.currentReport)
     this.dialogPrinting = false
     this.$router.push('/reports')
   }
@@ -1067,6 +1041,19 @@ export default class EditReport extends mixins(InnerPageMixin) {
   async saveAndLoad () {
     await this.saveReportChanges()
     await this.loadReport()
+  }
+
+  async generatePdf (item: any, printPhotos: boolean = false) {
+    const file = await this.$axios.$get(`reports/${item.id}/export?printPhotos=${printPhotos}`, { responseType: 'blob' })
+    this.downloadFile(file, printPhotos ? `compunded_photo_record_${item.name}` : `report_${item.name}`)
+  }
+
+  downloadFile (blob: Blob, name:any): void {
+    const link = document.createElement('a')
+    link.target = '_blank'
+    link.href = window.URL.createObjectURL(blob)
+    link.download = `${name}`
+    link.click()
   }
 
   @Watch('search')

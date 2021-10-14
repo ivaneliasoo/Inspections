@@ -243,9 +243,9 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
         })
     }
 
-    async generatePdf (item: Report, compoundedPhotoRecord: boolean = true, printPhotos: boolean = true) {
-      const file = await this.$axios.$get(`reports/${item.id}/export`, { responseType: 'blob' })
-      this.downloadFile(file, compoundedPhotoRecord ? `compunded_photo_record_${item.name}` : `report_${item.name}`)
+    async generatePdf (item: Report, printPhotos: boolean = false) {
+      const file = await this.$axios.$get(`reports/${item.id}/export?printPhotos=${printPhotos}`, { responseType: 'blob' })
+      this.downloadFile(file, printPhotos ? `compunded_photo_record_${item.name}` : `report_${item.name}`)
     }
 
     downloadFile (blob: Blob, name:any): void {
