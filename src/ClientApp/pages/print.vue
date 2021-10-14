@@ -39,7 +39,7 @@
       </article>
     </div>
     <!-- TODO-IVAN Hacer Encabezado del Compounded Photo Record -->
-    <PrintingReportsPhotoRecord v-if="printPhotos || isCompoundedPhotoRecord" :items="photoRecordsPages" />
+    <PrintingReportsPhotoRecord v-if="printPhotos" :items="photoRecordsPages" />
   </div>
 </template>
 

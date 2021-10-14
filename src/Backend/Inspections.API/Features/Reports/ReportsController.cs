@@ -301,10 +301,11 @@ namespace Inspections.API.Features.Inspections
         }
 
         [HttpGet("{id:int}/export", Name = nameof(Export))]
-        public async Task<FileResult> Export(int id)
+        public async Task<FileResult> Export(int id, bool printPhotos)
         {
             var token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "", StringComparison.InvariantCultureIgnoreCase);
-            var exportData = new ExportDTO($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/client/print?id={id}&printPhotos=true&compoundedPhotoRecord=true&token={token}");
+            //var exportData = new ExportDTO($"http://localhost:3000/client/print?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
+            var exportData = new ExportDTO($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/client/print?id={id}&printPhotos={printPhotos}&compoundedPhotoRecord=true&token={token}");
 
             Guard.Against.Null(exportData, nameof(exportData));
             var config = _context.Set<ReportConfiguration>().FirstOrDefault(c => c.Id == exportData.ReportConfigurationId);
