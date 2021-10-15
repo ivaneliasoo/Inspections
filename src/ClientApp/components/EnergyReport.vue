@@ -1814,7 +1814,7 @@ export default {
       return currentTable;
     },
     saveCurrentTable(currentTable) {
-      console.log("currentTable", JSON.stringify(currentTable));
+      //console.log("currentTable", JSON.stringify(currentTable));
       this.$axios({
         url: this.endpoint('current-table'),
         method: 'post',
@@ -1909,15 +1909,8 @@ export default {
       const path = `current-table/${this.currentTableDialog.startDate}/${this.currentTableDialog.endDate}`
       self.$axios.$get(this.endpoint(path))
         .then((response) => {
-          console.log("response", JSON.stringify(response));
+          //console.log("response", JSON.stringify(response));
           const tbl = response;
-          for (const ct of tbl) {
-            console.log(ct.id, ct.circuit, ct.startDate, ct.endDate);
-            const cd = JSON.parse(ct.currentData);
-            for (const row of cd) {
-              console.log(row.date, row.L1, row.L2, row.L3);
-            }
-          }
 
           var doc = currentTable(tbl);
           const pdf = pdfMake.createPdf(doc);
@@ -1932,12 +1925,47 @@ export default {
         return null;
       }
       const da = dateStr.split(/[/.-]/);
-      const ta = timeStr.split(":");
       if (parseInt(da[2]) > 31) {
         const temp = da[0];
         da[0] = da[2];
         da[2] = temp;
       }
+
+      let ta = "";
+      if (timeStr.includes("AM") || timeStr.includes("am") || timeStr.includes("PM") || timeStr.includes("pm")) {
+        const timeArray = timeStr.split(" ");
+        let ma = "";
+        let ts = timeArray[0];
+        if (timeArray.length == 1) {
+          if (ts.includes("AM")) {
+            ma = "AM";
+            ts = timeArray[0].replace("AM", "");
+          } else if (ts.includes("am")) {
+            ma = "AM";
+            ts = timeArray[0].replace("am", "");
+          } else if (ts.includes("PM")) {
+            ma = "PM";
+            ts = timeArray[0].replace("PM", "");
+          } else if (ts.includes("pm")) {
+            ma = "PM";
+            ts = timeArray[0].replace("pm", "");
+          }
+        } else {
+          ts = timeArray[0];
+          ma = timeArray[1].toUpperCase();
+        }
+        ta = ts.split(":");
+        const hour = parseInt(ta[0]);
+        if (ma === "AM" && hour === 12) {
+          ta[0] = 0;
+        }
+        if (ma === "PM" && hour < 12) {
+          ta[0] = parseInt(ta[0]) + 12;
+        }
+      } else {
+        ta = timeStr.split(":");
+      }
+
       const dateTime = new Date(da[0], da[1] - 1, da[2], ta[0], ta[1], ta[2]);
       //return dateTime.getTime();
       return dateTime;
