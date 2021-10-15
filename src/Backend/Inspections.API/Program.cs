@@ -24,12 +24,11 @@ namespace Inspections.API
             {
                 var services = scope.ServiceProvider;
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-                //services.GetRequiredService<InspectionsContext>();
 
                 try
                 {
                     var inspectionsContext = services.GetRequiredService<InspectionsContext>();
-                    //InspectionsSeed.SeedAsync(inspectionsContext, loggerFactory).Wait();
+                    InspectionsSeed.SeedAsync(inspectionsContext, loggerFactory).Wait();
                 }
                 catch (DbException ex)
                 {
@@ -47,7 +46,8 @@ namespace Inspections.API
                 {
                     webBuilder
 #if DEBUG
-                    .UseUrls("http://0.0.0.0:5000")
+                    //.UseUrls("http://0.0.0.0:80", "http://0.0.0.0:5000")
+                    //.UseUrls("https://0.0.0.0:443", "http://0.0.0.0:80", "https://0.0.0.0:5001", "http://0.0.0.0:5000")
 #endif
                     .UseStartup<Startup>();
                 });

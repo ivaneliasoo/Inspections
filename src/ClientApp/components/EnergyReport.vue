@@ -889,7 +889,7 @@
                   </v-row>
                   <v-row>
                     <v-col class="mt-3 pt-3 mb-3 pb-3">
-                      <v-select                          
+                      <v-select
                         label="Chart Legends"
                         dense
                         flat
@@ -898,7 +898,7 @@
                       >
                       </v-select>
                     </v-col>
-                  </v-row>                    
+                  </v-row>
                   <v-row v-for="n in 3" :key="n">
                     <v-col class="my-1 py-1">
                       <p style="color:white;">.</p>
@@ -1045,7 +1045,7 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>    
+    </v-dialog>
 
     <v-dialog v-model="alert" max-width="600px">
       <v-card>
@@ -1181,7 +1181,7 @@ export default {
   name: "EnergyReport",
   components: {
       flatPickr
-  },  
+  },
   data: function () {
     return {
       tabs: null,
@@ -1552,7 +1552,7 @@ export default {
     },
     endpoint (op) {
       //return `http://localhost:5000/api/energyreport/${op}`
-      return `/api/energyreport/${op}`;
+      return `/energyreport/${op}`;
     },
     readTemplates() {
       const self = this;
@@ -1779,7 +1779,7 @@ export default {
         params[mapping.param] = mapping.col;
       }
       const paramNames = Object.keys(params);
-      
+
       const current = {};
       const currentTable = {id: 0, circuit: circuit, startDate: null, endDate: null, currentData: []};
       for (const row of data) {
@@ -1792,8 +1792,8 @@ export default {
           }
 
           for (const param of paramNames) {
-            current[date][param] = current[date][param] ? 
-              Math.max(current[date][param], row[params[param]]) : 
+            current[date][param] = current[date][param] ?
+              Math.max(current[date][param], row[params[param]]) :
               row[params[param]];
           }
         }

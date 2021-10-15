@@ -45,12 +45,11 @@ namespace Inspections.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
-            
+
             var assembly = AppDomain.CurrentDomain.GetAssemblies();
             services.AddAutoMapper(assembly);
 
             var options = Configuration.GetAWSOptions();
-            //options.Credentials = new EnvironmentVariablesAWSCredentials();
             services.AddDefaultAWSOptions(options);
             services.AddAWSService<IAmazonS3>();
 
@@ -166,15 +165,8 @@ namespace Inspections.API
 
             app.UseHttpsRedirection();
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), Configuration.GetValue<string>("ClientSettings:ReportsImagesFolder"))),
-                RequestPath = "/ReportsImages",
-                OnPrepareResponse = ctx =>
-                {
-                    ctx.Context.Response.Headers["Access-Control-Allow-Origin"] = "*";
-                }
-            });
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -213,7 +205,7 @@ namespace Inspections.API
             var logger = LoggerFactory.Create(c => c.AddConsole());
             string cn = Configuration.GetConnectionString("Inspections");
             services.AddDbContext<InspectionsContext>(c =>
-            c.UseLoggerFactory(logger).UseNpgsql(cn).EnableSensitiveDataLogging());
+            c.UseLoggerFactory(logger).UseNpgsql(cn));
         }
 
         private static bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)

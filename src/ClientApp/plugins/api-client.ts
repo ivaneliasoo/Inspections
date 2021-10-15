@@ -6,7 +6,7 @@ const apiClient: Plugin = ({ $auth, $config }, inject) => {
   if (!$auth?.user) { return }
   const config: Configuration = {
     accessToken: `${$auth.getToken('local').replace('bearer ', '')}`,
-    basePath: $config.axios.baseURL,
+    basePath: $config.axios.baseURL.replace('/api', ''),
     isJsonMime: () => false
   }
   const reportsApi = new ReportsApi(config)

@@ -14,7 +14,7 @@ using Ardalis.GuardClauses;
 namespace Inspections.API.Features.Users
 {
     [Authorize]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {

@@ -11,7 +11,7 @@ type NumericPickerProps = {
   appendLabel?: string;
   itemSelected: (value: number) => void
 }
-const NumericPicker = ({ defaultValue = 0, itemSelected, appendLabel = 'V', preppendLabel = 'L1-N' }: NumericPickerProps) => {
+const NumericPicker = ({ defaultValue = [0,0,0], itemSelected, appendLabel = 'V', preppendLabel = 'L1-N' }: NumericPickerProps) => {
   const [selectedItem, setSelectedItem] = useState(defaultValue);
   const [firstDigit, setFirstDigit] = useState(selectedItem[0])
   const [secondDigit, setSecondDigit] = useState(selectedItem[1])
@@ -19,17 +19,16 @@ const NumericPicker = ({ defaultValue = 0, itemSelected, appendLabel = 'V', prep
   const [itemList, setItemList] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
   const value = useMemo(() => {
-    console.log([firstDigit, secondDigit, thirdDigit])
-    return parseInt([firstDigit, secondDigit, thirdDigit].join(""))
+    return [firstDigit, secondDigit, thirdDigit]
   }, [firstDigit, secondDigit, thirdDigit])
 
   useEffect(() => {
     setSelectedItem(value)
-    itemSelected(value)
+    itemSelected(parseInt(value.join("")))
   }, [firstDigit, secondDigit, thirdDigit])
 
   return (
-    <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginBottom: 10}}>
       <Text style={styles.label}>{preppendLabel}</Text>
       <Text>
         <Picker style={{ width: 30, height: 70 }}

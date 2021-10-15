@@ -10,6 +10,19 @@
       @yes="closeReport"
       @no="currentReport.isClosed = true"
     />
+    <v-row v-if="loadingReport">
+      <v-col
+        cols="12"
+      >
+        <v-skeleton-loader
+          type="list-item-avatar, divider, list-item-three-line, card-heading, image, actions"
+        />
+
+        <v-skeleton-loader
+          type="list-item-avatar-three-line, image, article"
+        />
+      </v-col>
+    </v-row>
     <v-row>
       <v-col>
         <ValidationObserver ref="obs" v-slot="{ valid }" tag="form">
@@ -112,13 +125,13 @@
               :loading="savingNewReport"
               class="v-btn--example2"
               @click="
-                saveReportChanges().then(
+                saveReportChanges().then(() => {
                   CanCloseReport && !currentReport.isClosed
                     ? (dialogClose = true)
                     : !CanCloseReport
                       ? (errorsDialog = true)
                       : (errorsDialog = false)
-                )
+                })
               "
             >
               <v-icon>mdi-content-save</v-icon>
@@ -136,7 +149,7 @@
             :class="
               !IsCompleted ||
                 HasNotesWithPendingChecks ||
-                !PrincipalSignatureHasAResponsable > 0
+                !PrincipalSignatureHasAResponsable
                 ? 'error--text'
                 : 'primary--text'
             "
@@ -604,7 +617,7 @@
             <PhotoRecords :report-id="currentReport.id" @uploaded="saveAndLoad()" />
           </v-tab-item>
           <v-tab-item key="operationalReadings" value="operationalReadings">
-            <h1>To be defined. Web handling of this part is not defined</h1>
+            <OperationalReadings :report-data="currentReport" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -671,6 +684,7 @@ import { PrintHelper } from '@/Helpers'
 import { AddressesState } from '@/store/addresses'
 import { AddNoteCommand, AddressDTO, CheckListItemQueryResult, NoteQueryResult, ReportQueryResult, EditSignatureCommand, UpdateReportCommand, CheckValue, EditNoteCommand, UpdateCheckListItemCommand } from '@/services/api'
 import { useNotifications } from '@/composables/use-notifications'
+import OperationalReadings from '~/components/OperationalReadings.vue'
 
 const { notify } = useNotifications()
 
@@ -685,6 +699,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
     obs: InstanceType<typeof ValidationObserver>;
   };
 
+  loadingReport: boolean = false;
   errorsDialog: boolean = false;
   dialogPrinting: boolean = false;
   savedNotification: boolean = false;
@@ -868,8 +883,19 @@ export default class EditReport extends mixins(InnerPageMixin) {
   }
 
   async fetch () {
-    await this.loadReport()
-    await this.getSuggestedAddresses('')
+    try {
+      this.loadingReport = true
+      await Promise.all(
+        [
+          this.loadReport(),
+          this.getSuggestedAddresses('')
+        ]
+      )
+    } catch (error) {
+      console.error(error)
+    } finally {
+      this.loadingReport = false
+    }
   }
 
   async loadReport () {
@@ -956,7 +982,7 @@ export default class EditReport extends mixins(InnerPageMixin) {
       if (!checkList) {
         return
       }
-    checkList.checks!.forEach((check) => { check.checked = value })
+    checkList.checks!.forEach((check) => { check.checked = value; check.touched = true })
     } catch (error) {
       notify({
         title: 'Report Details',
@@ -1006,7 +1032,8 @@ export default class EditReport extends mixins(InnerPageMixin) {
     this.dialogClose = false
     this.currentReport.isClosed = true
     this.dialogPrinting = true
-    await this.printHelper.print(this.currentReport.id!)
+    // await this.printHelper.print(this.currentReport.id!)
+    await this.generatePdf(this.currentReport)
     this.dialogPrinting = false
     this.$router.push('/reports')
   }
@@ -1014,6 +1041,19 @@ export default class EditReport extends mixins(InnerPageMixin) {
   async saveAndLoad () {
     await this.saveReportChanges()
     await this.loadReport()
+  }
+
+  async generatePdf (item: any, printPhotos: boolean = false) {
+    const file = await this.$axios.$get(`reports/${item.id}/export?printPhotos=${printPhotos}`, { responseType: 'blob' })
+    this.downloadFile(file, printPhotos ? `compunded_photo_record_${item.name}` : `report_${item.name}`)
+  }
+
+  downloadFile (blob: Blob, name:any): void {
+    const link = document.createElement('a')
+    link.target = '_blank'
+    link.href = window.URL.createObjectURL(blob)
+    link.download = `${name}`
+    link.click()
   }
 
   @Watch('search')

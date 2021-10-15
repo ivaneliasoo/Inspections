@@ -4,16 +4,25 @@ import Upload, { UploadOptions } from 'react-native-background-upload'
 import { API_HOST, API_KEY } from '../config/config';
 import { showMessage } from 'react-native-flash-message';
 import { useTheme } from '@ui-kitten/components';
+import { Configuration, ReportsApi } from '../services/api';
 
 export const usePhotoRecords = () => {
   const { authState: { userToken } } = useContext(AuthContext)
+
+  const configuration = new Configuration({
+    accessToken: userToken!,
+    basePath: API_HOST,
+    apiKey: API_KEY
+  })
+
+  const reportsApi = new ReportsApi(configuration)
+  
   const theme = useTheme()
   const uploadOptions: UploadOptions = {
-    url: `${API_HOST}/Reports/{id}/photorecord`,
+    url: `${API_HOST}/api/Reports/{id}/photorecord`,
     path: '{file}',
     method: 'POST',
     type: 'multipart',
-    maxRetries: 5, // set retry count (Android only). Default 2
     field: 'uploadedPhoto',
     headers: {
       // 'content-type': 'application/json', // Customize content-type
@@ -32,22 +41,15 @@ export const usePhotoRecords = () => {
       onErrorTitle: 'Upload Error',
       onErrorMessage: 'Error uploading PhotoRecord',
     },
-    useUtf8Charset: true
+    //useUtf8Charset: true
   }
 
   const EnqueuePhotoUpload = (reportId: number, path: string, label: string) => {
     uploadOptions.url = uploadOptions.url.replace('{id}', reportId.toString())
     uploadOptions.path = uploadOptions.path.replace('{file}', path).replace('file://', '')
     uploadOptions.headers = { ...uploadOptions.headers, label }
-    console.log({ uploadOptions })
+    console.log({uploadOptions})
     Upload.startUpload(uploadOptions).then((uploadId) => {
-      // Upload.addListener('progress', uploadId, (data) => {
-      //   showMessage({
-      //     message: 'Photo Upload has been enqueued',
-      //     autoHide: true,
-      //     backgroundColor: theme['color-info-500']
-      //   })
-      // })
       Upload.addListener('error', uploadId, (data) => {
         showMessage({
           message: 'An Error has ocurred while trying uploading file',
@@ -69,7 +71,29 @@ export const usePhotoRecords = () => {
       console.log('Upload error!', err)
     })
   }
+
+  const GetByReportId = async (id: number): Promise<any[]>  => {
+    const result = await reportsApi.apiReportsIdPhotorecordGet(id)
+    return result.data as unknown as any[]
+  }
+
+  const deletePhoto = async (reportId: number, id: number): Promise<any[]>  => {
+    const result = await reportsApi.apiReportsIdPhotorecordIdPhotoDelete(reportId, id)
+    return result.data as unknown as any[]
+  }
+  const editLabel = async (reportId: number, id: number, label: string): Promise<any[]>  => {
+    const result = await reportsApi.apiReportsIdPhotorecordIdPhotoPut(reportId, id, {
+      reportId,
+      id,
+      label
+    })
+    return result.data as unknown as any[]
+  }
+
   return {
-    EnqueuePhotoUpload
+    EnqueuePhotoUpload,
+    GetByReportId,
+    deletePhoto,
+    editLabel
   }
 }

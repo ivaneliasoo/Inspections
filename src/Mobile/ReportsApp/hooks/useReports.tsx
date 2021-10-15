@@ -5,11 +5,11 @@ import { Configuration, ReportsApi, CheckListsApiFactory } from '../services/api
 import { AuthContext } from '../contexts/AuthContext';
 import { CheckListItemQueryResult, ReportQueryResult, UpdateCheckListItemCommand, UpdateReportCommand, SignaturesApi, SignatureQueryResult } from '../services/api';
 import { UpdateOperationalReadingsCommand } from '../services/api/api';
-import moment from 'moment';
+import moment from 'moment';0
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
-  const { getAll, setFilter, setWorkingReport, updateSignature, clearWorkingReport, reportsState } = useContext(ReportsContext)
+  const { getAll, setFilter, setWorkingReport, updateSignature, clearWorkingReport, reportsState, completeReport: complete, removeReport, setRefreshing } = useContext(ReportsContext)
 
   const configuration = new Configuration({
     accessToken: userToken!,
@@ -23,16 +23,18 @@ export const useReports = () => {
 
   const getReports = async () => {
     try {
-      const resp = await reportsApi.reportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports)
+      setRefreshing(true)
+      const resp = await reportsApi.apiReportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports,reportsState.orderBy, reportsState.descendingSort)
       getAll(resp.data as unknown as ReportQueryResult[])
     } catch (error) {
       console.log(error)
     } finally {
+      setRefreshing(false)
     }
   }
 
   const getReportById = async (id: number) => {
-    const result: ReportQueryResult = (await reportsApi.reportsIdGet(id)).data as unknown as ReportQueryResult
+    const result: ReportQueryResult = (await reportsApi.apiReportsIdGet(id)).data as unknown as ReportQueryResult
     if (!result.date) result.date = new Date()
     else result.date = moment(result.date).toDate()
     setWorkingReport(result)
@@ -41,6 +43,7 @@ export const useReports = () => {
   const completeReport = async (reportId: number) => {
     try {
       const result = await reportsApi.completeReport(reportId).catch(error => console.log(error.response.message))
+      complete(reportId)
       return result
     } catch (error) {
       console.log(error)
@@ -50,7 +53,8 @@ export const useReports = () => {
 
   const deleteReport = async (reportId: number) => {
     try {
-      const result = await reportsApi.reportsIdDelete(reportId).catch(error => console.log(error.response.message))
+      const result = await reportsApi.apiReportsIdDelete(reportId).catch(error => console.log(error.response.message))
+      removeReport(reportId)
       return result
     } catch (error) {
       console.log(error)
@@ -59,17 +63,15 @@ export const useReports = () => {
   }
 
   const setFilterText = (text: string) => {
-    setFilter({ filter: text, myReports: reportsState.myReports, isClosed: reportsState.isClosed, descendingSort: true, orderBy: 'date' })
+    setFilter({ ...reportsState, filter: text })
   }
 
   const setSorting = async (descending: boolean, sortBy: string) => {
-    setFilter({ filter: reportsState.filter, myReports: reportsState.myReports, isClosed: reportsState.isClosed, descendingSort: descending, orderBy: sortBy })
-    await getReports()
+    setFilter({ ...reportsState, descendingSort: descending, orderBy: sortBy })
   }
 
   const setOptions = async (isClosed: boolean, myReports: boolean) => {
-    setFilter({ filter: reportsState.filter, myReports, isClosed, descendingSort: reportsState.descendingSort, orderBy: reportsState.orderBy })
-    await getReports()
+    setFilter({ ...reportsState, filter: reportsState.filter, myReports, isClosed })
   }
 
   const updateCheckList = async (payload: { reportId: number; checkListId: number; newValue: number | undefined }) => {
@@ -90,7 +92,7 @@ export const useReports = () => {
   }
 
   const saveSignature = async (s: { signature: SignatureQueryResult, index: number }) => {
-    await signaturesApi.signaturesIdPut(Number(s.signature.id), {
+    await signaturesApi.apiSignaturesIdPut(Number(s.signature.id), {
       id: s.signature.id!,
       title: s.signature.title!,
       annotation: s.signature.annotation!,
@@ -112,9 +114,20 @@ export const useReports = () => {
 
   const saveReport = async (updateCmd: UpdateReportCommand) => {
     if (updateCmd && updateCmd.id) {
-      await reportsApi.reportsIdPut(updateCmd.id.toString(), updateCmd)
+      await reportsApi.apiReportsIdPut(updateCmd.id.toString(), updateCmd)
       getReportById(updateCmd.id)
     }
+  }
+
+  const generatePdf = async (id: number, compoundedPhotoRecord: boolean = true, printPhotos: boolean = true) => {
+    const printData = {
+      loginUrl: `${API_HOST}/client/Login`,
+      pageUrl: `${API_HOST}/client/reports/${id}/print?printPhotos=${printPhotos}&compoundedPhotoRecord=${compoundedPhotoRecord}`,
+      token: userToken,
+      photosPerPage: 12,
+      reportConfigurationId: 1
+    }
+    await reportsApi._export(printData)
   }
 
   return {
@@ -136,6 +149,9 @@ export const useReports = () => {
     saveOperationalreadings,
     setSorting,
     setOptions,
-    reportsState
+    reportsState,
+    setRefreshing,
+    refreshing: reportsState.refreshing,
+    generatePdf
   }
 }

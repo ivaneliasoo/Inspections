@@ -1,6 +1,5 @@
 export default {
   ssr: false,
-  target: 'static',
   /*
   ** Headers of the page
   */
@@ -37,18 +36,12 @@ export default {
   */
   buildModules: [
     '@nuxt/typescript-build',
+    '@nuxtjs/composition-api/module',
     '@nuxtjs/vuetify',
     '@nuxtjs/tailwindcss',
-    '@nuxt/image'
-  ],
-  /*
-  ** Nuxt.js modules
-  */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa',
+    '@nuxt/image',
     '@nuxtjs/auth',
+    '@nuxtjs/pwa',
     '@nuxtjs/device',
     ['nuxt-compress',
       {
@@ -61,6 +54,13 @@ export default {
       }
     ]
   ],
+  /*
+  ** Nuxt.js modules
+  */
+  modules: [
+    // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/axios',
+  ],
   pwa: {
     icon: {
       /* icon options */
@@ -71,18 +71,13 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {
-    baseURL: 'https://localhost:5001',
-    browserBaseURL: 'https://localhost:5001'
-  },
+  // axios: {
+  // },
   publicRuntimeConfig: {
     axios: {
-      baseURL: process.env.BASE_URL,
-      browserBaseURL: process.env.BASE_URL
+      baseURL: `${process.env.BASE_URL}/api` || 'http://localhost:5000/api',
+      browserBaseURL: `${process.env.BASE_URL}/api` || 'http://localhost:5000/api'
     }
-  },
-  router: {
-    middleware: ['auth']
   },
   auth: {
     redirect: {
@@ -90,7 +85,11 @@ export default {
       logout: '/Login',
       home: '/Reports'
     },
-    cookie: true,
+    cookie: {
+      options: {
+        sameSite: 'lax'
+      }
+    },
     strategies: {
       local: {
         endpoints: {
@@ -105,6 +104,10 @@ export default {
     },
     plugins: ['~/plugins/api-client']
   },
+  router: {
+    middleware: ['auth']
+    // base: '/client/'
+  },
   /*
      ** vuetify module configuration
      ** https://github.com/nuxt-community/vuetify-module
@@ -118,6 +121,13 @@ export default {
   */
   build: {
     transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth', 'q'],
-    terser: false
+    terser: false,
+    babel: {
+      plugins: [
+        ['@babel/plugin-proposal-class-properties', { loose: true }],
+        ['@babel/plugin-proposal-private-methods', { loose: true }],
+        ['@babel/plugin-proposal-private-property-in-object', { loose: true }]
+      ]
+    }
   }
 }

@@ -28,7 +28,7 @@ export const NewReport = ({ isOpen, onClose, onCreate }: NewReportProps) => {
   async function createReport(configuration: CreateReportCommand) {
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
     const reportsApi = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
-    const reportId = await reportsApi.reportsPost(configuration)
+    const reportId = await reportsApi.apiReportsPost(configuration)
     return reportId
   }
 
@@ -42,7 +42,7 @@ export const NewReport = ({ isOpen, onClose, onCreate }: NewReportProps) => {
   async function getConfigurationTemplates() {
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
     const reportConfigurationApi = new ReportConfigurationApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
-    const result = await reportConfigurationApi.reportConfigurationGet();
+    const result = await reportConfigurationApi.apiReportConfigurationGet();
     setTemplates(result.data)
     return result.data
   }

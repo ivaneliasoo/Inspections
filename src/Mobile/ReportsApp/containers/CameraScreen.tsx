@@ -1,5 +1,5 @@
 import { useIsFocused } from '@react-navigation/core';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PermissionsAndroid, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import CameraRoll from '@react-native-community/cameraroll';
@@ -9,20 +9,22 @@ import { showMessage } from 'react-native-flash-message';
 import { usePhotoRecords } from '../hooks/usePhotoRecords';
 import { useContext } from 'react';
 import { ReportsContext } from '../contexts/ReportsContext';
-import { SyncIcon } from '../components/Icons';
+import { FilmIcon, Camera, SyncIcon, AddIcon, FlipIcon, ImageIcon } from '../components/Icons';
+import { useNavigation } from '@react-navigation/native';
+import { Asset, ImageLibraryOptions, launchImageLibrary } from 'react-native-image-picker'
 
 export const CameraScreen = () => {
   const cameraRef = useRef<RNCamera>()
-  const { reportsState: { workingReport }} = useContext(ReportsContext);
+  const { reportsState: { workingReport } } = useContext(ReportsContext);
   const [lastLabel, setLastLabel] = useState('')
   const [lastPhoto, setLastPhoto] = useState('')
   const theme = useTheme()
   const { EnqueuePhotoUpload } = usePhotoRecords()
   const [showLabeler, setShowLabeler] = useState(false)
-  const [cameraType, setCameraType] = useState(RNCamera.Constants.Type.front)
+  const [cameraType, setCameraType] = useState(RNCamera.Constants.Type.back)
 
   const isFocused = useIsFocused()
-
+  const navigation = useNavigation()
 
   const hasCameraPermission = async () => {
     const camera = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)
@@ -56,12 +58,32 @@ export const CameraScreen = () => {
       })
     }
   };
+
+  const saveFromGallery = async () => {
+    const options = { mediaType: 'photo', quality: 0.5, base64: false } as ImageLibraryOptions;
+    launchImageLibrary(options, async (resp) => {
+      if (resp && resp.assets) {
+        const data = resp.assets[0] || {} as Asset
+        setLastPhoto(data.uri!)
+        setShowLabeler(true)
+        await CameraRoll.save(data.uri!, {
+          album: 'CSE Inspections',
+          type: 'photo'
+        })
+      }
+    })
+  }
+
+  useEffect(() => {
+    hasCameraPermission()
+  })
+
   return (
     <>
       <View style={styles.container}>
-        {!isFocused ? null : hasCameraPermission() ? <>
+        {!isFocused ? null : <>
           <RNCamera
-            ref={cameraRef}
+            ref={cameraRef as any}
             style={styles.preview}
             type={cameraType}
             onTap={requestStoragePermission}
@@ -78,20 +100,32 @@ export const CameraScreen = () => {
               buttonPositive: 'Ok',
               buttonNegative: 'Cancel',
             }} />
-          <View style={styles.shooter}>
-            <TouchableOpacity onPress={takePicture} style={styles.capture}>
-              <Text style={styles.shooterText}>SNAP</Text>
-            </TouchableOpacity>
+          <View style={styles.header}>
             <TouchableOpacity onPress={() => {
               if (!cameraType == RNCamera.Constants.Type.front)
                 setCameraType(RNCamera.Constants.Type.front)
-              else 
+              else
                 setCameraType(RNCamera.Constants.Type.back)
             }}>
-              <SyncIcon fill={'white'} style={{ width: 36, height: 36 }}/>
+              <FlipIcon fill={'white'} style={{ width: 32, height: 32 }} />
             </TouchableOpacity>
           </View>
-        </> : <Text>Camera and Record Audio permission not consented</Text>
+          <View style={styles.shooter}>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate('PhotoRecordGallery')
+            }}>
+              <FilmIcon fill={'white'} style={{ width: 32, height: 32 }} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={takePicture} style={styles.snapButton}>
+              <View style={styles.centerSnapButton}>
+                <Camera fill={'white'} style={{ width: 32, height: 32 }} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => saveFromGallery()} >
+              <ImageIcon fill={'white'} style={{ width: 32, height: 32 }} />
+            </TouchableOpacity>
+          </View>
+        </>// : <Text>Camera and Record Audio permission not consented</Text>
         }
         <PhotoLabeler showLabeler={showLabeler} lastPhoto={lastPhoto} label={lastLabel} onLabelChanged={(label) => {
           setLastLabel(label)
@@ -113,6 +147,13 @@ export const CameraScreen = () => {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -132,6 +173,30 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 20,
   },
-  shooter: { flex: 0, flexDirection: 'row', justifyContent: 'center' },
-  shooterText: { fontSize: 14 }
+  shooter: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  snapButton: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    borderWidth: 4,
+    borderColor: 'rgba(204, 31, 74, .5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  centerSnapButton: {
+    backgroundColor: '#cc1f4a',
+    width: 60,
+    height: 60,
+    borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });

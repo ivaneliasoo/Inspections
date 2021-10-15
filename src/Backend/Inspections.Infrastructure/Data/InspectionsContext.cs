@@ -26,40 +26,32 @@ namespace Inspections.Infrastructure.Data
         private readonly IMediator _mediator;
         private readonly IUserNameResolver _userNameResolver;
 
-
-        //public InspectionsContext(DbContextOptions options)
         public InspectionsContext(DbContextOptions<InspectionsContext> options)
             : base(options)
         {
 
         }
 
-
-        //public InspectionsContext(DbContextOptions options, IMediator mediator, IUserNameResolver userNameResolver) : base(options)
         public InspectionsContext(DbContextOptions<InspectionsContext> options, IMediator mediator, IUserNameResolver userNameResolver) : base(options)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
-
         }
 
         public DbSet<Report> Reports { get; set; }
         public DbSet<CheckList> CheckLists { get; set; }
         public DbSet<CheckListItem> CheckListItems { get; set; }
-        public DbSet<Note> Notes { get; set; }  
+        public DbSet<Note> Notes { get; set; }
         public DbSet<PhotoRecord> Photos { get; set; }
         public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
         public DbSet<Signature> Signatures { get; set; }
-
         public DbSet<Core.Domain.User> Users { get; set; }
         public DbSet<Core.Domain.Address> Addresses { get; set; }
         public DbSet<Core.Domain.EMALicense> Licenses { get; set; }
         public DbSet<OperationalReadings> OperationalReadings { get; set; }
-        public DbSet<Core.Domain.CurrentTable> CurrentTable { get; set; }        
-
+        public DbSet<Core.Domain.CurrentTable> CurrentTable { get; set; }
 
         //Queries
-
         public DbSet<ResumenCheckList> ResumenCheckLists { get; set; }
         public DbSet<ResumenReportConfiguration> ResumenReportConfigurations { get; set; }
 
@@ -103,7 +95,7 @@ namespace Inspections.Infrastructure.Data
             .Property(p => p.LastName).IsRequired().HasMaxLength(50);
 
 
-            modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToTable("ResumenCheckList", m=>m.ExcludeFromMigrations());
+            modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToTable("ResumenCheckList", m => m.ExcludeFromMigrations());
             modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey().ToTable("ResumenReportConfiguration", m => m.ExcludeFromMigrations());
 
             base.OnModelCreating(modelBuilder);
@@ -125,7 +117,7 @@ namespace Inspections.Infrastructure.Data
 
                 if (entity.CurrentValues.EntityType.DisplayName() == "DateTimeRange")
                     continue;
-                
+
                 if (entity.CurrentValues.EntityType.DisplayName() == "EMALicense.Validity#DateTimeRange")
                     continue;
 

@@ -259,10 +259,10 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
       .then(resp => (this.item = resp))
   }
 
-  async fetch ({ error, $auth, $store }: any) {
+  async fetch ({ error, $auth, store }: any) {
     if (!$auth.user.isAdmin) { error({ statusCode: 403, message: 'Forbbiden' }) }
     this.loading = true
-    await $store.dispatch('users/getUsers', {}, { root: true })
+    await store.dispatch('users/getUsers', {}, { root: true })
     this.loading = false
   }
 

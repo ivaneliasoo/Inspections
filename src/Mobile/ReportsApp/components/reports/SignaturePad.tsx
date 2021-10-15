@@ -11,15 +11,15 @@ import { useReports } from '../../hooks/useReports';
  * @returns
  */
 const SignaturePad = ({ route, navigation, saved }: any) => {
-  const params  = useNavigationState(state => state.routes[state.index].params)
+  const params = useNavigationState(state => state.routes[state.index].params as { id: number, index: number})
 
   const { saveSignature, workingReport } = useReports()
   const sign = createRef()
   
-  const _onSaveEvent = async (result) => {
+  const _onSaveEvent = async (result: any) => {
     const signature = workingReport?.signatures!.find(s=>s.id === params!.id)
     signature!.drawnSign = `data:image/png;base64,${result.encoded}`
-    await saveSignature({ signature, index: params!.index })
+    await saveSignature({ signature: signature!, index: params!.index })
     navigation.goBack()
   }
 

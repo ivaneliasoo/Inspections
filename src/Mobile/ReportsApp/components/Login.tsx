@@ -6,7 +6,7 @@ import { ImageOverlay } from './ImageOverlay'
 import { StyleSheet } from 'react-native';
 import { AuthContext } from '../contexts/AuthContext';
 import { PasswordIcon, PersonIcon } from './Icons';
-import { API_HOST } from '../services/api';
+import { API_HOST } from '../config/config';
 import { showMessage } from 'react-native-flash-message'
 
 
@@ -64,7 +64,7 @@ const Login = () => {
             returnKeyType={'next'}
             value={user}
             onChangeText={setUser}
-            onSubmitEditing={() => passwordInput.current!.focus()}
+            onSubmitEditing={() => (passwordInput.current! as any).focus()}
             autoCapitalize='none'
           />
           <Input ref={passwordInput}

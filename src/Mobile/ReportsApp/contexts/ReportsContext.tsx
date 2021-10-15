@@ -11,24 +11,35 @@ export interface ReportsState {
   descendingSort: boolean;
   orderBy: string;
   workingReport?: ReportQueryResult;
+  refreshing: boolean;
 }
 
 export interface ReportsContextProps {
   reportsState: ReportsState,
+  setRefreshing: (isRefreshing: boolean) => void
   setFilter: (filter: ReportsFilterPayload) => void,
   getAll: (reports: ReportQueryResult[]) => void,
+  removeReport: (id: number) => void,
+  completeReport: (id: number) => void,
   setWorkingReport: (payload: ReportQueryResult) => void,
   updateCheckList: (payload: CheckListQueryResult) => void,
   updateSignature: (payload: { signature: SignatureQueryResult, index: number }) => void,
   clearWorkingReport: () => void,
 }
-const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '', descendingSort: true, orderBy: 'date', workingReport: undefined! }
+const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '', descendingSort: true, orderBy: 'date', workingReport: undefined!, refreshing: false }
 
 export const ReportsContext = createContext({} as ReportsContextProps);
   const ReportsProvider = ({ children }: any) => {
   const [reportsState, dispatch] = useReducer(reportsReducer, initialState)
 
   //Actions
+  const setRefreshing = (isRefreshing: boolean) => {
+    dispatch({
+      type: 'SET_REFRESHING',
+      isRefreshing
+    })
+  }
+
   const setFilter = (payload: ReportsFilterPayload) => {
     dispatch({
       type: 'SET_FILTER',
@@ -40,6 +51,20 @@ export const ReportsContext = createContext({} as ReportsContextProps);
     dispatch({
       type: 'SET_REPORTS',
       payload: { reports }
+    })
+  }
+
+  const removeReport = (id: number) => {
+    dispatch({
+      type: 'REMOVE_REPORT',
+      payload: { id }
+    })
+  }
+
+  const completeReport = (id: number) => {
+    dispatch({
+      type: 'COMPLETE_REPORT',
+      payload: { id }
     })
   }
 
@@ -73,9 +98,12 @@ export const ReportsContext = createContext({} as ReportsContextProps);
 
   return (
     <ReportsContext.Provider value={{
+      setRefreshing,
       reportsState,
       setFilter,
       getAll,
+      completeReport,
+      removeReport,
       setWorkingReport,
       updateCheckList,
       updateSignature,

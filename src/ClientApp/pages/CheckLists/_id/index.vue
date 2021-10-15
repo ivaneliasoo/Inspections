@@ -9,45 +9,46 @@
       :description="selectedItemData.text"
       @yes="removeItem"
     />
-    <message-dialog v-model="dialogNew"
-    :actions="['yes', 'cancel']"
-    yes-text="Save"
-    @yes="addItem"
+    <message-dialog
+      v-model="dialogNew"
+      :actions="['yes', 'cancel']"
+      yes-text="Save"
+      @yes="addItem"
     >
-      <template v-slot:title="">
-          Create CheckList Item
+      <template #title="">
+        Create CheckList Item
       </template>
-      <ValidationObserver tag="form" ref="obsNew">
-          <v-row>
-            <v-col>
-              <ValidationProvider rules="required" v-slot="{errors}">
-                <v-text-field v-model="newItemData.text" label="Text" :error-messages="errors" />
-              </ValidationProvider>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-switch v-model="newItemData.checked" label="Checked by Default" />
-            </v-col>
-            <v-col>
-              <v-switch v-model="newItemData.required" label="Is Required" />
-            </v-col>
-            <v-col>
-              <v-switch v-model="newItemData.editable" label="Editable in the Report" />
-            </v-col>
-          </v-row>
-          <v-row v-if="false">
-            <v-col cols="12">
-              <span class="font-weight-black">Text Params</span>
-              <v-data-table dense :headers="headers" :items="newItemData.textParams"></v-data-table>
-            </v-col>
-          </v-row>
+      <ValidationObserver ref="obsNew" tag="form">
+        <v-row>
+          <v-col>
+            <ValidationProvider v-slot="{errors}" rules="required">
+              <v-text-field v-model="newItemData.text" label="Text" :error-messages="errors" />
+            </ValidationProvider>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-switch v-model="newItemData.checked" label="Checked by Default" />
+          </v-col>
+          <v-col>
+            <v-switch v-model="newItemData.required" label="Is Required" />
+          </v-col>
+          <v-col>
+            <v-switch v-model="newItemData.editable" label="Editable in the Report" />
+          </v-col>
+        </v-row>
+        <!-- <v-row v-if="false">
+          <v-col cols="12">
+            <span class="font-weight-black">Text Params</span>
+            <v-data-table dense :headers="headers" :items="newItemData.textParams" />
+          </v-col>
+        </v-row> -->
       </ValidationObserver>
     </message-dialog>
-    <ValidationObserver tag="form" v-slot="{ valid }">
+    <ValidationObserver v-slot="{ valid }" tag="form">
       <v-row align="center" justify="space-between">
         <v-col cols="12" md="6">
-          <ValidationProvider rules="required" v-slot="{errors}">
+          <ValidationProvider v-slot="{errors}" rules="required">
             <v-text-field
               v-model="currentCheckList.text"
               label="Checklist Name"
@@ -56,7 +57,7 @@
           </ValidationProvider>
         </v-col>
         <v-col cols="12" md="4">
-            <v-text-field v-model="currentCheckList.annotation" label="Annotation" />
+          <v-text-field v-model="currentCheckList.annotation" label="Annotation" />
         </v-col>
         <v-col cols="1">
           <v-checkbox v-model="currentCheckList.isConfiguration" label="Use in Config" />
@@ -76,28 +77,39 @@
             clearable
             label="Select a checklist Item"
             @change="selectedItem = checkList.checks.indexOf(selectedItemData)"
-          ></v-autocomplete>
+          />
         </v-col>
       </v-row>
     </ValidationObserver>
     <v-row>
-      <v-col cols="5" class="text-left" v-if="!$vuetify.breakpoint.smAndDown">
+      <v-col v-if="!$vuetify.breakpoint.smAndDown" cols="5" class="text-left">
         <v-list nav dense>
-          <v-subheader class="text-h6">Checklist Items</v-subheader>
+          <v-subheader class="text-h6">
+            Checklist Items
+          </v-subheader>
           <v-subheader>
             Select an item to view/edit
             <v-spacer />
-            <v-btn class="mx-2" x-small
-            fab dark color="primary"
-            @click="dialogNew = true">
-              <v-icon dark>mdi-plus</v-icon>
+            <v-btn
+              class="mx-2"
+              x-small
+              fab
+              dark
+              color="primary"
+              @click="dialogNew = true"
+            >
+              <v-icon dark>
+                mdi-plus
+              </v-icon>
             </v-btn>
           </v-subheader>
           <v-list-item-group v-model="selectedItem" color="primary">
             <v-list-item v-for="(item, i) in checkList.checks" :key="i">
               <v-list-item-content>
                 <v-list-item-title>
-                  <v-chip v-if="item.required" x-small>required</v-chip>
+                  <v-chip v-if="item.required" x-small>
+                    required
+                  </v-chip>
                   {{ item.text }}
                 </v-list-item-title>
               </v-list-item-content>
@@ -105,13 +117,17 @@
           </v-list-item-group>
         </v-list>
       </v-col>
-      <v-divider vertical v-if="!$vuetify.breakpoint.smAndDown" />
+      <v-divider v-if="!$vuetify.breakpoint.smAndDown" vertical />
       <v-col>
-        <v-card height="100%" v-if="selectedItemData" outlined>
-          <v-card-title class="text-wrap">{{ selectedItemData.text }}</v-card-title>
+        <v-card v-if="selectedItemData" height="100%" outlined>
+          <v-card-title class="text-wrap">
+            {{ selectedItemData.text }}
+          </v-card-title>
           <v-card-subtitle v-if="selectedItemData !== null " class="text-left">
-            Total Params: {{ selectedItemData.textParams.length }}
-            <v-chip x-small v-if="selectedItemData.required">required</v-chip>
+            <!-- Total Params: {{ selectedItemData.textParams.length }} -->
+            <v-chip v-if="selectedItemData.required" x-small>
+              required
+            </v-chip>
 
             <v-btn
               class="mx-2"
@@ -121,14 +137,16 @@
               color="error"
               @click="dialogRemove = true"
             >
-              <v-icon dark>mdi-minus</v-icon>
+              <v-icon dark>
+                mdi-minus
+              </v-icon>
             </v-btn>
           </v-card-subtitle>
-          <ValidationObserver tag="form" v-slot="{ valid }">
+          <ValidationObserver v-slot="{ valid }" tag="form">
             <v-card-text>
               <v-row>
                 <v-col>
-                  <ValidationProvider rules="required" v-slot="{errors}">
+                  <ValidationProvider v-slot="{errors}" rules="required">
                     <v-text-field
                       v-model="selectedItemData.text"
                       label="Text"
@@ -148,12 +166,12 @@
                   <v-switch v-model="newItemData.editable" label="Editable in the Report" />
                 </v-col>
               </v-row>
-              <v-row v-if="false">
+              <!-- <v-row v-if="false">
                 <v-col cols="12">
                   <span class="font-weight-black">Text Params</span>
-                  <v-data-table dense :headers="headers" :items="selectedItemData.textParams"></v-data-table>
+                  <v-data-table dense :headers="headers" :items="selectedItemData.textParams" />
                 </v-col>
-              </v-row>
+              </v-row> -->
             </v-card-text>
             <v-card-actions class="text-right">
               <v-btn :disabled="!valid" color="success" text @click="saveItem">
@@ -167,7 +185,9 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Watch, mixins } from "nuxt-property-decorator";
+import { Vue, Component, Watch, mixins } from 'nuxt-property-decorator'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import InnerPageMixin from '@/mixins/innerpage'
 import {
   CheckListItem,
   CheckList,
@@ -177,10 +197,8 @@ import {
   CheckListParam,
   AddCheckListItemCommand,
   AddCheckListCommand
-} from "~/types";
-import { CheckListsState } from "~/store/checklists";
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import InnerPageMixin from "@/mixins/innerpage";
+} from '~/types'
+import { CheckListsState } from '~/store/checklists'
 
 @Component({
   components: {
@@ -193,110 +211,110 @@ export default class AddEditCheckList extends mixins(InnerPageMixin) {
   $refs!: {
       obsNew: InstanceType<typeof ValidationObserver>
   }
+
   dialogRemove: boolean = false
   dialogNew: boolean = false
   selectedItem: number = -1
   selectedItemData: CheckListItem | null = null
-  newItemData: CheckListItem | null = { textParams: [] as CheckListParam[]} as CheckListItem
+  newItemData: CheckListItem | null = { textParams: [] as CheckListParam[] } as CheckListItem
   currentCheckList: CheckList = {} as CheckList
-
 
   headers: any = [
     {
-      text: "Key",
-      value: "key",
+      text: 'Key',
+      value: 'key',
       sortable: true,
-      align: "center"
+      align: 'center'
     },
     {
-      text: "Value",
-      value: "value",
+      text: 'Value',
+      value: 'value',
       sortable: true,
-      align: "center"
+      align: 'center'
     },
     {
-      text: "Type",
-      value: "type",
+      text: 'Type',
+      value: 'type',
       sortable: true,
-      align: "center"
+      align: 'center'
     }
   ];
 
-  @Watch("selectedItem")
-  onSelectedItemChanged(value: number) {
-    this.selectedItemData = Object.assign({}, this.checkList.checks[value]);
+  @Watch('selectedItem')
+  onSelectedItemChanged (value: number) {
+    this.selectedItemData = Object.assign({}, this.checkList.checks[value])
   }
 
-  get checkList(): CheckList {
-    return (this.$store.state.checklists as CheckListsState).currentCheckList;
+  get checkList (): CheckList {
+    return (this.$store.state.checklists as CheckListsState).currentCheckList
   }
 
-  async fetch() {
-    if(parseInt(this.$route.params.id) > 0) {
+  async fetch () {
+    if (parseInt(this.$route.params.id) > 0) {
       const result = await this.$store.dispatch(
-        "checklists/getCheckListItemsById",
+        'checklists/getCheckListItemsById',
         this.$route.params.id,
         { root: false }
-      );
-      this.currentCheckList = Object.assign({}, result);
+      )
+      this.currentCheckList = Object.assign({}, result)
     }
   }
 
-  async saveItem() {
+  async saveItem () {
     const command: UpdateCheckListItemCommand = {
       id: this.selectedItemData!.id,
       checkListId: this.selectedItemData!.checkListId,
       text: this.selectedItemData!.text,
-      checked: this.selectedItemData!.checked ? 1:0,
+      checked: this.selectedItemData!.checked ? 1 : 0,
       editable: this.selectedItemData!.editable,
       required: this.selectedItemData!.required,
       remarks: this.selectedItemData!.remarks
-    };
-    await this.$store.dispatch("checklists/updateCheckListItem", command, {
+    }
+    await this.$store.dispatch('checklists/updateCheckListItem', command, {
       root: false
-    });
+    })
   }
 
-  async addItem() {
+  async addItem () {
     const command: AddCheckListItemCommand = {
       idCheckList: parseInt(this.$route.params.id),
       text: this.newItemData!.text,
-      checked: this.newItemData!.checked ? 1:0,
+      checked: this.newItemData!.checked ? 1 : 0,
       editable: this.newItemData!.editable,
       required: this.newItemData!.required,
       remarks: this.newItemData!.remarks,
       checklistParams: []
-    };
+    }
 
     const isValid = await this.$refs.obsNew.validate()
 
-    if(!isValid) return;
+    if (!isValid) { return }
 
-    await this.$store.dispatch("checklists/createCheckListItem", command, {
+    await this.$store.dispatch('checklists/createCheckListItem', command, {
       root: false
-    });
+    })
     await this.$fetch()
     this.dialogNew = false
   }
 
-  async removeItem() {
+  async removeItem () {
     const command: DeleteCheckListItem = {
       idCheckListItem: this.selectedItemData!.id,
       idCheckList: parseInt(this.$route.params.id)
-    };
-    this.selectedItem -= 1;
-    await this.$store.dispatch("checklists/deleteCheckListItem", command, {
+    }
+    this.selectedItem -= 1
+    await this.$store.dispatch('checklists/deleteCheckListItem', command, {
       root: false
-    });
+    })
   }
 
-  async saveCheckList() {
+  async saveCheckList () {
     const command: UpdateCheckListCommand = {
       idCheckList: parseInt(this.$route.params.id),
       text: this.currentCheckList.text,
       annotation: this.currentCheckList.annotation,
       isConfiguration: this.currentCheckList.isConfiguration
-    };
+    }
 
     const addCommand: AddCheckListCommand = {
       text: this.currentCheckList.text,
@@ -304,18 +322,19 @@ export default class AddEditCheckList extends mixins(InnerPageMixin) {
       isConfiguration: this.currentCheckList.isConfiguration,
       textParams: [],
       items: []
-    };
+    }
 
-    if(command.idCheckList>0)
-      await this.$store.dispatch("checklists/updateCheckList", command, {
+    if (command.idCheckList > 0) {
+      await this.$store.dispatch('checklists/updateCheckList', command, {
         root: false
-      });
-    else
-      await this.$store.dispatch("checklists/createCheckList", addCommand, {
+      })
+    } else {
+      await this.$store.dispatch('checklists/createCheckList', addCommand, {
         root: false
-      }).then(resp => {
+      }).then((resp) => {
         this.$router.push({ name: 'CheckLists' })
-      });
+      })
+    }
   }
 }
 </script>

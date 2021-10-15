@@ -33,10 +33,12 @@ export const actions: ActionTree<SignatureState, RootState> = {
     commit('REMOVE_SIGNATURE', payload)
   },
   async createSignature ({ commit }, payload) {
+    payload.responsibleName = ''
     await this.$axios.$post(`signatures`, payload)
     commit('ADD_SIGNATURE', payload)
   },
   async updateSignature ({ commit }, payload) {
+    payload.responsibleName = ''
     await this.$axios.$put(`signatures/${payload.id}`, payload)
     commit('UPDATE_SIGNATURE', payload)
   }

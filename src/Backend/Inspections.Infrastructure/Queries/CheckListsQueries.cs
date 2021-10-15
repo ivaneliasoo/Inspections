@@ -20,12 +20,12 @@ namespace Inspections.Infrastructure.Queries
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IEnumerable<ResumenCheckList> GetByFilter(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
+        public async Task<IEnumerable<ResumenCheckList>> GetByFilter(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
         {
             if (inConfigurationOnly == false)
                 inConfigurationOnly = null;
 
-            return _context.ResumenCheckLists.FromSqlRaw(@"
+            return await _context.ResumenCheckLists.FromSqlRaw(@"
                 SELECT ""Id"",
                         ""Text"",
                         ""Annotation"",
@@ -45,7 +45,7 @@ namespace Inspections.Infrastructure.Queries
                         AND (""cl"".""ReportId"" = {1} OR {1} IS NULL)
                         AND (""cl"".""IsConfiguration"" = {2} OR {2} IS NULL)
                         AND (""cl"".""ReportConfigurationId"" = {3} OR {3} IS NULL)
-            ", $"%{filter ?? string.Empty}%", reportId, inConfigurationOnly, reportConfigurationId);
+            ", $"%{filter ?? string.Empty}%", reportId, inConfigurationOnly, reportConfigurationId).ToListAsync();
         }
     }
 }

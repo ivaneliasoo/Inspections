@@ -8,7 +8,7 @@
       app
       overflow
     >
-      <Menu />
+      <Menu v-if="$auth.user" />
     </v-navigation-drawer>
 
     <v-app-bar
@@ -24,7 +24,7 @@
       </v-btn>
       <v-toolbar-title>Reporting</v-toolbar-title>
       <v-spacer />
-      <img src="/Logo.jpeg" height="50px" width="130px">
+      <img src="/Logo.jpeg" height="30px" width="110px">
       <v-btn icon @click="logout">
         <v-icon>mdi-logout</v-icon>
       </v-btn>

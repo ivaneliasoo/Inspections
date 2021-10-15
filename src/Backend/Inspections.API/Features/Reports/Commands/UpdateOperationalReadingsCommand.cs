@@ -22,7 +22,6 @@ namespace Inspections.API.Features.Reports.Commands
         public short MainBreakerAmp { get; init; }
         public short MainBreakerPoles { get; init; }
         public short MainBreakerCapacity { get; init; }
-        public bool OverCurrentByMainBreaker { get; init; }
         public short OverCurrentDTLA { get; init; }
         public short OverCurrentDTLSec { get; init; }
         public short OverCurrentIDMTLA { get; init; }
@@ -32,6 +31,13 @@ namespace Inspections.API.Features.Reports.Commands
         public short EarthFaultELRSec { get; init; }
         public short EarthFaultA { get; init; }
         public short EarthFaultSec { get; init; }
-
+        public short MainBreakerRating { get; init; }
+        public bool OverCurrentDirectActingEnabled { get; init; }
+        public short OverCurrentDirectActing { get; init; }
+        public bool OverCurrentDTLEnabled { get; init; }
+        public bool OverCurrentIDTMLEnabled { get; init; }
+        public bool EarthFaultRoobEnabled { get; init; }
+        public bool EarthFaultEIREnabled { get; init; }
+        public bool EarthFaultEFEnabled { get; init; }
     }
 }

@@ -48,7 +48,6 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         internal void SetName(string name)
         {
-            //CheckIfClosed();
             Name = name;
         }
 
@@ -68,7 +67,6 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public void Edit(string name, string address, EMALicense license, DateTimeOffset date)
         {
-            //CheckIfClosed();
             Name = name;
             Address = address;
             License = license;
@@ -81,50 +79,36 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         public void AddNote(Note note)
         {
-            //CheckIfClosed();
             notes.Add(note);
         }
 
-        //I still believe this is a must, but han pin wants to allow editing after report has been closed
-        //private void CheckIfClosed()
-        //{
-        //    if (IsClosed)
-        //        throw new InvalidOperationException("Report is Closed. You Can't edit Closed Reports");
-        //}
-
         public void AddNote(IEnumerable<Note> note)
         {
-            //CheckIfClosed();
             notes.AddRange(note);
         }
 
         public void RemoveNote(Note note)
         {
-            //CheckIfClosed();
             notes.Remove(note);
         }
 
         public void AddPhoto(PhotoRecord photo)
         {
-            //CheckIfClosed();
             photoRecords.Add(photo);
         }
 
         public void AddPhoto(IEnumerable<PhotoRecord> photo)
         {
-            //CheckIfClosed();
             photoRecords.AddRange(photo);
         }
 
         public void RemovePhoto(PhotoRecord photo)
         {
-            //CheckIfClosed();
             photoRecords.Remove(photo);
         }
 
         internal void AddCheckList(IEnumerable<CheckList> checkList)
         {
-            //CheckIfClosed();
             foreach (var check in checkList)
             {
                 this.checkList.Add(check.CloneForReport());
@@ -134,13 +118,11 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         internal void RemoveCheckList(CheckList checkList)
         {
-            //CheckIfClosed();
             this.checkList.Remove(checkList);
         }
 
         internal void AddSignature(IEnumerable<Signature> signature, string userName = "")
         {
-            //CheckIfClosed();
             foreach (var sign in signature)
             {
                 signatures.Add(sign.PreparteForNewReport(userName));
@@ -149,7 +131,6 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         internal void RemoveSignature(Signature signature)
         {
-            //CheckIfClosed();
             signatures.Remove(signature);
         }
 
@@ -157,7 +138,6 @@ namespace Inspections.Core.Domain.ReportsAggregate
         {
             if (IsClosed)
                 throw new InvalidOperationException("Report is already Closed");
-
 
             IsClosed = true;
         }
