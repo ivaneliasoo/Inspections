@@ -1,28 +1,21 @@
 version: '3.4'
 
 services:
-  db:
-    image: postgres:latest
-    #restart: always
-    environment:
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_USER: appuser
-    ports:
-      - "5432:5432"
-
   inspections.api:
-    image: ${DOCKER_REGISTRY-}inspectionsapi
-    build:
-      context: .
-      dockerfile: Inspections.API/Dockerfile        
+    image: iosoft/scb-backend
     environment:
-      - ConnectionStrings__Inspections=Server=db;Port=5432;Database=ReportsApp;User Id=appuser;Password=123456
+      - ConnectionStrings__Inspections=Server=aa1ma34symakg8u.cxfnhkwyyqmn.us-east-2.rds.amazonaws.com;Port=5432;Database=ReportsDb;User Id=appuser;Password=Smartcode123*;
       - ClientSettings__S3BucketName=cse-inspetions-dev-photos
       - AWS__Region=us-east-2
+      - UIPORT=3000
     volumes:
       - ~/.aws/:/root/.aws:ro
     ports:
-      #- "5001:443"
-      - "5000:80"
-    depends_on: 
-      - db
+      - "80:80"
+    
+  inspections.ui:
+    image: iosoft/scb-frontend
+    environment:
+      - BASE_URL=http://Chensengdev.eba-7qzmqmd2.us-east-2.elasticbeanstalk.com
+    ports:
+      - "3000:3000"

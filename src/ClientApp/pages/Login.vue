@@ -4,7 +4,7 @@
       <v-parallax
         dark
         height="900"
-        src="/client/LoginBackground.jpg"
+        src="/LoginBackground.jpg"
       >
         <v-container
           class="fill-height"
@@ -22,7 +22,7 @@
               <v-card class="elevation-12">
                 <v-row>
                   <v-col cols="12" class="text-center">
-                    <img src="/client/Logo.jpeg" height="70px" width="150px">
+                    <img src="/Logo.jpeg" height="70px" width="150px">
                   </v-col>
                   <v-col cols="12" class="text-center">
                     <h1>Login</h1>

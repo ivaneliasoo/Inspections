@@ -11,7 +11,7 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/client/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
   /*
@@ -41,6 +41,8 @@ export default {
     '@nuxtjs/tailwindcss',
     '@nuxt/image',
     '@nuxtjs/auth',
+    '@nuxtjs/pwa',
+    '@nuxtjs/device',
     ['nuxt-compress',
       {
         gzip: {
@@ -58,8 +60,6 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    '@nuxtjs/device'
   ],
   pwa: {
     icon: {
@@ -105,8 +105,8 @@ export default {
     plugins: ['~/plugins/api-client']
   },
   router: {
-    middleware: ['auth'],
-    base: '/client/'
+    middleware: ['auth']
+    // base: '/client/'
   },
   /*
      ** vuetify module configuration
@@ -121,6 +121,13 @@ export default {
   */
   build: {
     transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth', 'q'],
-    terser: false
+    terser: false,
+    babel: {
+      plugins: [
+        ['@babel/plugin-proposal-class-properties', { loose: true }],
+        ['@babel/plugin-proposal-private-methods', { loose: true }],
+        ['@babel/plugin-proposal-private-property-in-object', { loose: true }]
+      ]
+    }
   }
 }
