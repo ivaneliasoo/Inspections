@@ -22,7 +22,9 @@ export const useDownloader =() => {
             path: `${RNFetchBlob.fs.dirs.DownloadDir}/report.pdf`,
         }
     })
-    .fetch('GET', `${API_HOST}/api/reports/${id}/export/printPhotos=${printPhotos}`)
+    .fetch('GET', `${API_HOST}/api/reports/${id}/export?printPhotos=${printPhotos}`, {
+      Authorization: `Bearer ${userToken}`
+    })
     .then((resp) => {
       // the path of downloaded file
       resp.path()
