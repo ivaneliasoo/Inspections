@@ -176,7 +176,7 @@ export const MyReports = ({ navigation }: any) => {
                   style={{ margin: 5 }}
                   appearance='outline'
                   accessoryLeft={ImageIcon}
-                  onPress={() => downloadPdf(item.id)}
+                  onPress={() => downloadPdf(item.id, true)}
                 />
               </View>
             </View>
