@@ -31,10 +31,14 @@
           v-if="reportData.checkLists"
           :check-lists="reportData.checkLists"
         />
+        <PrintingReportsOperationalReadings
+          :readings="operationalReadings"
+          :last-checks-count="lastChecksCount"
+        />
         <PrintingReportsSignatures
           v-if="reportData.signatures"
           :signatures="reportData.signatures"
-          :last-checks-count="lastChecksCount"
+          :last-checks-count="lastChecksCount + 1"
         />
       </article>
     </div>
@@ -75,13 +79,84 @@ export default {
       if (pagesLength % 2 !== 0) {
         photoRecordsPages[currentPage].push({ thumbnailBase64: '', label: '' })
       }
+
+      let operationalReadings = {}
+      if (result) {
+        const {
+          operationalReadingsId,
+          operationalReadingsVoltageL1N,
+          operationalReadingsVoltageL2N,
+          operationalReadingsVoltageL3N,
+          operationalReadingsVoltageL1L2,
+          operationalReadingsVoltageL1L3,
+          operationalReadingsVoltageL2L3,
+          operationalReadingsRunningLoadL1,
+          operationalReadingsRunningLoadL2,
+          operationalReadingsRunningLoadL3,
+          operationalReadingsMainBreakerAmp,
+          operationalReadingsMainBreakerPoles,
+          operationalReadingsMainBreakerCapacity,
+          operationalReadingsOverCurrentDTLA,
+          operationalReadingsOverCurrentDTLSec,
+          operationalReadingsOverCurrentIDMTLA,
+          operationalReadingsOverCurrentIDMTLTm,
+          operationalReadingsEarthFaultMA,
+          operationalReadingsEarthFaultELRA,
+          operationalReadingsEarthFaultELRSec,
+          operationalReadingsEarthFaultA,
+          operationalReadingsEarthFaultSec,
+          operationalReadingsMainBreakerRating,
+          operationalReadingsOverCurrentDirectActingEnabled,
+          operationalReadingsOverCurrentDirectActing,
+          operationalReadingsOverCurrentDTLEnabled,
+          operationalReadingsOverCurrentIDTMLEnabled,
+          operationalReadingsEarthFaultRoobEnabled,
+          operationalReadingsEarthFaultEIREnabled,
+          operationalReadingsEarthFaultEFEnabled
+        } = result
+
+        operationalReadings = {
+          operationalReadingsId,
+          operationalReadingsVoltageL1N,
+          operationalReadingsVoltageL2N,
+          operationalReadingsVoltageL3N,
+          operationalReadingsVoltageL1L2,
+          operationalReadingsVoltageL1L3,
+          operationalReadingsVoltageL2L3,
+          operationalReadingsRunningLoadL1,
+          operationalReadingsRunningLoadL2,
+          operationalReadingsRunningLoadL3,
+          operationalReadingsMainBreakerAmp,
+          operationalReadingsMainBreakerPoles,
+          operationalReadingsMainBreakerCapacity,
+          operationalReadingsOverCurrentDTLA,
+          operationalReadingsOverCurrentDTLSec,
+          operationalReadingsOverCurrentIDMTLA,
+          operationalReadingsOverCurrentIDMTLTm,
+          operationalReadingsEarthFaultMA,
+          operationalReadingsEarthFaultELRA,
+          operationalReadingsEarthFaultELRSec,
+          operationalReadingsEarthFaultA,
+          operationalReadingsEarthFaultSec,
+          operationalReadingsMainBreakerRating,
+          operationalReadingsOverCurrentDirectActingEnabled,
+          operationalReadingsOverCurrentDirectActing,
+          operationalReadingsOverCurrentDTLEnabled,
+          operationalReadingsOverCurrentIDTMLEnabled,
+          operationalReadingsEarthFaultRoobEnabled,
+          operationalReadingsEarthFaultEIREnabled,
+          operationalReadingsEarthFaultEFEnabled
+        }
+      }
+
       return {
         reportId: id,
         reportData: result,
         photoRecordsPages,
         printPhotos,
         isCompoundedPhotoRecord,
-        isPrintable: false
+        isPrintable: false,
+        operationalReadings
       }
     }
   },

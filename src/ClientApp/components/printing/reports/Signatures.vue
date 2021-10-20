@@ -72,7 +72,7 @@
       </div>
       <div class="tw-flex-col tw-flex-wrap tw-text-left tw--mt-6">
         <ul>
-          <li class="tw-h-2 tw-mb-5">
+          <li class="tw-h-2 tw-mb-5 tw-mt-2">
             <span class="text-line tw-flex-col tw-text-center">{{ 'Remarks:'.padEnd(97 - 'Remarks:'.length, '_')}}</span>
           </li>
           <li>

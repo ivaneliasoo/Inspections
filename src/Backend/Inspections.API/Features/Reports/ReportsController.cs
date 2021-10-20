@@ -10,6 +10,7 @@ using Inspections.API.ApplicationServices;
 using Inspections.API.Extensions;
 using Inspections.API.Features.Inspections.Commands;
 using Inspections.API.Features.Reports.Commands;
+using Inspections.API.Features.Reports.Models;
 using Inspections.API.Models.Configuration;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
@@ -306,44 +307,9 @@ namespace Inspections.API.Features.Inspections
             var token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "", StringComparison.InvariantCultureIgnoreCase);
             //var exportData = new ExportDTO($"http://localhost:3000/client/print?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
             var exportData = new ExportDTO($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Host}:{Environment.GetEnvironmentVariable("UIPORT")}/print?id={id}&printPhotos={printPhotos}&compoundedPhotoRecord=true&token={token}");
-
-            Guard.Against.Null(exportData, nameof(exportData));
-            var config = _context.Set<ReportConfiguration>().FirstOrDefault(c => c.Id == exportData.ReportConfigurationId);
-            var file = await GenerateReport(exportData.PageUrl, config, exportData.PhotosPerPage);
-            return File(file, "application/pdf", "prueba.pdf");
-        }
-
-        private async Task<byte[]> GenerateReport(string pageUrl, ReportConfiguration config, int photosPerPage)
-        {
-            Guard.Against.Null(pageUrl, nameof(pageUrl));
-            Guard.Against.Null(config, nameof(config));
-
-            var browserFetcher = new BrowserFetcher();
-            await browserFetcher.DownloadAsync();
-            // TODO-IVAN: --no-sandbox is an insecure workaround. I'll take a look into this next time
-            await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true, Args = new string[] { "--no-sandbox" } });
-            await using var page = await browser.NewPageAsync();
-
-            await page.GoToAsync($"{pageUrl}");
-            await page.WaitForFunctionAsync("() => window.isPrintable === true");
-
-            var pdfOptions = new PdfOptions
-            {
-                DisplayHeaderFooter = true,
-                MarginOptions = new MarginOptions
-                {
-                    Bottom = config.MarginBottom,
-                    Top = config.MarginTop,
-                    Left = config.MarginLeft,
-                    Right = config.MarginRight
-                },
-                HeaderTemplate = "",
-                FooterTemplate = config.Footer,
-            };
-
-            return await page.PdfDataAsync(pdfOptions);
+            var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData)).ConfigureAwait(false);   
+            return File(fileContent, "application/pdf", "prueba.pdf");
+            
         }
     }
-
-    public record ExportDTO(string PageUrl, int PhotosPerPage = 8, int ReportConfigurationId = 1);
 }
