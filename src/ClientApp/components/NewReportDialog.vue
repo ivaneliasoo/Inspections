@@ -54,7 +54,7 @@
                 <v-card-subtitle>
                   <v-row>
                     <v-col class="text-center">
-                      Creates a new Report With {{ item.title }} Configuration
+                      Creates a new Report With {{ item.title }} {{item.formName}} Configuration
                     </v-col>
                   </v-row>
                 </v-card-subtitle>

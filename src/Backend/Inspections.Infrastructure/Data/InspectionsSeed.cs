@@ -39,20 +39,8 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                     context.Users.Add(new User() { UserName = "developer", Password = "developer@@P@sword", Name = "Developer", LastName = "User", IsAdmin = true });
                 }
 
-                if (!context.Users.Any(u => u.UserName == "pdf"))
-                {
-                    context.Users.Add(new User()
-                    {
-                        UserName = "pdf",
-                        Password = "@@P@sword",
-                        Name = "PDFs",
-                        LastName = "User",
-                        IsAdmin = false,
-                        LastEditedReport = null
-                    });
-                }
 
-                if (!context.ReportConfigurations.Any())
+                if (!context.ReportConfigurations.Any(rc =>rc.FormName == "CSE EI(R8) FORM"))
                 {
                     context.Add(new ReportConfiguration()
                     {
@@ -128,27 +116,19 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                 );
             item1.AddCheckItems(new CheckListItem(0, "Access to MSB / Sub-Board / Distribution-Board",
                 CheckValue.None, false, true, string.Empty));
-
-            var item2 = new CheckList(
-                   "ENVIRONMENT CONDITIONS",
-                   "",
-                   true
-                );
-            item2.AddCheckItems(new CheckListItem(0, "Locking facilities",
+            item1.AddCheckItems(new CheckListItem(0, "Locking facilities",
                 CheckValue.None, false, true, string.Empty));
-            item2.AddCheckItems(new CheckListItem(0, "Roofing or shed condition (for outdoor)",
+            item1.AddCheckItems(new CheckListItem(0, "Roofing or shed condition (for outdoor)",
                 CheckValue.None, false, true, string.Empty));
-            item2.AddCheckItems(new CheckListItem(0, "Lighting",
+            item1.AddCheckItems(new CheckListItem(0, "Lighting",
                 CheckValue.None, false, true, string.Empty));
-            item2.AddCheckItems(new CheckListItem(0, "Ventilation",
+            item1.AddCheckItems(new CheckListItem(0, "Air Ventilation",
                 CheckValue.None, false, true, string.Empty));
-            item2.AddCheckItems(new CheckListItem(0, "Fire extinguisher",
-                CheckValue.None, false, true, string.Empty));
-            item2.AddCheckItems(new CheckListItem(0, "No sign of bird/pest habitation",
+            item1.AddCheckItems(new CheckListItem(0, "No sign of nird/pest habilitation",
                 CheckValue.None, false, true, string.Empty));
 
             var item3 = new CheckList(
-                   "SWITCHROOM REQUIREMENTS",
+                   "SWITCH-ROOM REQUIREMENTS",
                    "",
                    true
                 );
@@ -166,19 +146,13 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                 CheckValue.None, false, true, string.Empty));
 
             var item4 = new CheckList(
-                       "SWITCHBOARD REQUIREMENTS",
+                       "SWITCH-BOARD REQUIREMENTS",
                        "",
                        true
                     );
             item4.AddCheckItems(new CheckListItem(0, "Earth bar c/w proper labeling",
                 CheckValue.None, false, true, string.Empty));
             item4.AddCheckItems(new CheckListItem(0, "Earth pits condition",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Earth pits (R = ___ Ω tested on ___)",
-                CheckValue.None, true, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Earth electrode inspection chamber",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Warning notice",
                 CheckValue.None, false, true, string.Empty));
             item4.AddCheckItems(new CheckListItem(0, "Equipotential bonding of metallic trunking, metal conduits & water / gas pipe.",
                 CheckValue.None, false, true, string.Empty));
@@ -188,32 +162,11 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                 CheckValue.None, false, true, string.Empty));
             item4.AddCheckItems(new CheckListItem(0, "Proper Neutral links sizing",
                 CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Appropriate circuit breakers size & type",
-                CheckValue.None, false, true, string.Empty));
             item4.AddCheckItems(new CheckListItem(0, "Sufficient support & mechanical protection for cables",
                 CheckValue.None, false, true, string.Empty));
             item4.AddCheckItems(new CheckListItem(0, "Labelling of circuits",
                 CheckValue.None, false, true, string.Empty));
             item4.AddCheckItems(new CheckListItem(0, "Sign of Corrosion",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Servicing of Switchboard (Last Done: ___)",
-                CheckValue.None, true, true, string.Empty));
-
-
-            var item5 = new CheckList(
-                       "OPERATIONAL REQUIREMENTS",
-                       "",
-                       true
-                    );
-            item5.AddCheckItems(new CheckListItem(0, "Incoming load         L1: ___A      L2:___A      L3:___A",
-                CheckValue.None, true, true, string.Empty));
-            item5.AddCheckItems(new CheckListItem(0, "Voltage  L1-N:___V   L2-N:___V   L3-N:___V   L-L:___V",
-                CheckValue.None, true, true, string.Empty));
-            item5.AddCheckItems(new CheckListItem(0, "Earth loop impedance (* power disruption)     L-E:___Ω",
-                CheckValue.None, true, true, string.Empty));
-            item5.AddCheckItems(new CheckListItem(0, "Main Breakers’ relay settings   Itrip:___A   t:___s",
-                CheckValue.None, true, true, string.Empty));
-            item5.AddCheckItems(new CheckListItem(0, "Function test of RCD (* power disruption)",
                 CheckValue.None, false, true, string.Empty));
 
             var item6 = new CheckList(
@@ -231,8 +184,10 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                 CheckValue.None, false, true, string.Empty));
             item6.AddCheckItems(new CheckListItem(0, "No unused wires/cables or illegal wiring",
                 CheckValue.None, false, true, string.Empty));
+            item6.AddCheckItems(new CheckListItem(0, "Function test of RCD (* power disruption)",
+                CheckValue.None, false, true, string.Empty));
 
-            return new CheckList[] { item1, item2, item3, item4, item5, item6 };
+            return new CheckList[] { item1, item3, item4, item6 };
         }
     }
 }

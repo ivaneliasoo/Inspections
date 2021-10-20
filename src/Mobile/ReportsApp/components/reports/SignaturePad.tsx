@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SignatureCapture from 'react-native-signature-capture'
 import { StyleSheet, View } from 'react-native'
 import { createRef } from 'react';
@@ -34,7 +34,7 @@ const SignaturePad = ({ route, navigation, saved }: any) => {
         showNativeButtons={true}
         showBorder={false}
         onSaveEvent={_onSaveEvent}
-        backgroundColor="#FFFFFF"
+        backgroundColor="transparent"
         strokeColor="#000000"
         minStrokeWidth={4}
         maxStrokeWidth={4}

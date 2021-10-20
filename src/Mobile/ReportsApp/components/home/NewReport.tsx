@@ -63,7 +63,7 @@ export const NewReport = ({ isOpen, onClose, onCreate }: NewReportProps) => {
                 {templates.map((tmpl: any, index) => (
                   <Card key={index} style={styles.modalCard} onPress={() => callCreateReport(tmpl.id)}>
                     <Text>{tmpl.title}</Text>
-                    <Text> Creates a new Report With {tmpl.title} Configuration</Text>
+                    <Text> Creates a new {tmpl.title} With {tmpl.formName} Configuration</Text>
                   </Card>))}
               </Layout>
             </> : <View style={styles.progress}><Spinner status='info' size='giant' /><Text>Please Wait</Text></View>}

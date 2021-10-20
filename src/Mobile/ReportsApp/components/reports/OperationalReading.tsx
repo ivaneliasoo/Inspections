@@ -50,6 +50,14 @@ const OperationalReading = () => {
           earthFaultELRSec: formRef.current.values.operationalReadingsEarthFaultELRSec!,
           earthFaultA: formRef.current.values.operationalReadingsEarthFaultA!,
           earthFaultSec: formRef.current.values.operationalReadingsEarthFaultSec!,
+          mainBreakerRating: formRef.current.values.operationalReadingsEarthFaultSec!,
+          overCurrentDirectActingEnabled: formRef.current.values.operationalReadingsOverCurrentDirectActingEnabled!,
+          overCurrentDirectActing: formRef.current.values.operationalReadingsOverCurrentDirectActing!,
+          overCurrentDTLEnabled: formRef.current.values.operationalReadingsOverCurrentDTLEnabled!,
+          overCurrentIDTMLEnabled: formRef.current.values.operationalReadingsOverCurrentIDTMLEnabled!,
+          earthFaultRoobEnabled: formRef.current.values.operationalReadingsEarthFaultRoobEnabled!,
+          earthFaultEIREnabled: formRef.current.values.operationalReadingsEarthFaultEIREnabled!,
+          earthFaultEFEnabled: formRef.current.values.operationalReadingsEarthFaultEFEnabled!,
         }
         await saveOperationalreadings(updateCmd)
           .catch(error => {
@@ -104,8 +112,8 @@ const OperationalReading = () => {
             <Select
               style={{ margin: 5 }}
               size='large'
-              value={values.operationalReadingsMainBreakerCapacity!}
-              onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerCapacity', [2, 3, 4][(e as IndexPath).row]) }}
+              value={values.operationalReadingsMainBreakerPoles!}
+              onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerPoles', [2, 3, 4][(e as IndexPath).row]) }}
               placeholder='please select...'
               label='Poles Capacity'
               accessoryRight={() => <Text>Poles</Text>}
@@ -116,7 +124,7 @@ const OperationalReading = () => {
                   title={responsible}
                 ></SelectItem>)}
             </Select>
-            <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsMainBreakerPoles!)} preppendLabel="Breaking Capacity (lsc)" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsMainBreakerPoles', value)} />
+            <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsMainBreakerCapacity!)} preppendLabel="Breaking Capacity (lsc)" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsMainBreakerCapacity', value)} />
           </View>
           <Divider />
           <Text style={{ flex: 1, margin: 5 }} category='h6'>Over current</Text>
