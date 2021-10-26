@@ -684,7 +684,6 @@ import { PrintHelper } from '@/Helpers'
 import { AddressesState } from '@/store/addresses'
 import { AddNoteCommand, AddressDTO, CheckListItemQueryResult, NoteQueryResult, ReportQueryResult, EditSignatureCommand, UpdateReportCommand, CheckValue, EditNoteCommand, UpdateCheckListItemCommand } from '@/services/api'
 import { useNotifications } from '@/composables/use-notifications'
-import OperationalReadings from '~/components/OperationalReadings.vue'
 
 const { notify } = useNotifications()
 

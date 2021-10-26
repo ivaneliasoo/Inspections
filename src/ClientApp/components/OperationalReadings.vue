@@ -179,7 +179,6 @@
           v-model="report.operationalReadingsOverCurrentDTLA"
           type="number"
           :readonly="!report.operationalReadingsOverCurrentDTLEnabled"
-          readonly
           label="DTL"
         >
           <template #append>
@@ -255,7 +254,6 @@
           v-model="report.operationalReadingsEarthFaultELRA"
           type="number"
           :readonly="!report.operationalReadingsEarthFaultEIREnabled"
-          readonly
           label="EIR"
         >
           <template #append>
