@@ -263,7 +263,7 @@
                                 <span
                                   v-if="
                                     item.checks.filter(
-                                      (c) => c.required && c.checked === 3
+                                      (c) => c.required && !c.touched
                                     ).length == 0
                                   "
                                 >
@@ -975,14 +975,16 @@ export default class EditReport extends mixins(InnerPageMixin) {
 
   checkItemChecks (checkListId: number, value: CheckValue): void {
     try {
-      this.$reportsApi.bulkUpdateChecks(this.currentReport.id!, checkListId, value)
-      const checkList = this.currentReport.checkLists!.find(
-        c => c.id === checkListId
-      )
-      if (!checkList) {
-        return
-      }
+      if (this.$reportsApi) {
+        this.$reportsApi.bulkUpdateChecks(this.currentReport.id!, checkListId, value)
+        const checkList = this.currentReport.checkLists!.find(
+          c => c.id === checkListId
+        )
+        if (!checkList) {
+          return
+        }
     checkList.checks!.forEach((check) => { check.checked = value; check.touched = true })
+      }
     } catch (error) {
       notify({
         title: 'Report Details',

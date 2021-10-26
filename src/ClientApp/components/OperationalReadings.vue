@@ -370,10 +370,12 @@ export default defineComponent({
     });
 
     const update = debounce(() => {
-      $reportsApi.updateOperationalReadings(
+      if($reportsApi) {
+        $reportsApi.updateOperationalReadings(
         updateCommand.value.reportId!,
         updateCommand.value
       );
+      }
     }, 500);
 
     watch(report.value, (newReport) => {
