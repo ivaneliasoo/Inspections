@@ -4,9 +4,9 @@ services:
   inspections.api:
     image: iosoft/scb-backend:dev
     environment:
-      - ConnectionStrings__Inspections=Server=aa1ma34symakg8u.cxfnhkwyyqmn.us-east-2.rds.amazonaws.com;Port=5432;Database=ReportsDb;User Id=appuser;Password=Smartcode123*;
-      - ClientSettings__S3BucketName=cse-inspetions-dev-photos
-      - AWS__Region=us-east-2
+      - ConnectionStrings__Inspections=Server=aa1txvky6wbhp2y.cxzbkun1y23x.ap-southeast-1.rds.amazonaws.com;Port=5432;Database=ReportsApp;User Id=appuser;Password=JesusPa55word!
+      - ClientSettings__S3BucketName=cse-inspetions-test-photos
+      - AWS__Region=ap-southeast-1
       - UIPORT=3000
     volumes:
       - ~/.aws/:/root/.aws:ro
@@ -16,6 +16,28 @@ services:
   inspections.ui:
     image: iosoft/scb-frontend:dev
     environment:
-      - BASE_URL=http://Chensengdev.eba-7qzmqmd2.us-east-2.elasticbeanstalk.com
+      - BASE_URL=http://cseinternal-test.ap-southeast-1.elasticbeanstalk.com
     ports:
       - "3000:3000"
+
+# version: '3.4'
+
+# services:
+#   inspections.api:
+#     image: iosoft/scb-backend:dev
+#     environment:
+#       - ConnectionStrings__Inspections=Server=cseinternaldbs.cxzbkun1y23x.ap-southeast-1.rds.amazonaws.com;Port=5432;Database=ReportsApp;User Id=appuser;Password=JesusPa55word!
+#       - ClientSettings__S3BucketName=cse-inspetions-test-photos
+#       - AWS__Region=ap-southeast-1
+#       - UIPORT=3000
+#     volumes:
+#       - ~/.aws/:/root/.aws:ro
+#     ports:
+#       - "80:80"
+    
+#   inspections.ui:
+#     image: iosoft/scb-frontend:dev
+#     environment:
+#       - BASE_URL=http://cseinternal-prod.ap-southeast-1.elasticbeanstalk.com
+#     ports:
+#       - "3000:3000"

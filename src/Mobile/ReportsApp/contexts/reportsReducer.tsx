@@ -20,26 +20,28 @@ type ReportsAction =
   | { type: 'SET_FILTER'; payload: ReportsFilterPayload }
   | { type: 'SET_OPERATIONAL_READINGS'; payload: any }
   | { type: 'UPDATE_CHECKLIST'; payload: CheckListQueryResult }
-  | { type: 'UPDATE_DRAWNSIGNATURE'; payload: { signature: SignatureQueryResult, index: number } };
+  | { type: 'UPDATE_DRAWNSIGNATURE'; payload: { signature: SignatureQueryResult, index: number } }
+  | { type: 'UPDATE_CHECKLIST_ITEMS'; payload: { checklistId: number, newValue: number } }
+  | { type: 'UPDATE_CHECKLIST_ITEM'; payload: { checklistItemId: number, newValue: number } };
 
 export const reportsReducer = (prevState: ReportsState, action: ReportsAction) => {
   switch (action.type) {
     case 'SET_REFRESHING': {
-      return {...prevState, refreshing: action.isRefreshing}
+      return { ...prevState, refreshing: action.isRefreshing }
     }
 
     case 'SET_REPORTS': {
       return { ...prevState, reports: action.payload.reports };
     }
     case 'REMOVE_REPORT': {
-      return { ...prevState, reports: prevState.reports!.filter((r: ReportQueryResult) =>r.id !== action.payload.id) };
+      return { ...prevState, reports: prevState.reports!.filter((r: ReportQueryResult) => r.id !== action.payload.id) };
     }
     case 'COMPLETE_REPORT': {
-      const index = prevState.reports!.findIndex((r: ReportQueryResult) =>r.id === action.payload.id)
+      const index = prevState.reports!.findIndex((r: ReportQueryResult) => r.id === action.payload.id)
       const report = prevState.reports![index]
       report.isClosed = true;
       prevState.reports!.splice(index, 1, report)
-      return { ...prevState, reports: [...prevState.reports!]};
+      return { ...prevState, reports: [...prevState.reports!] };
     }
     case 'SET_OPERATIONAL_READINGS': {
       return { ...prevState, workingOperationalReadings: action.payload };
@@ -48,10 +50,10 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
       return { ...prevState, ...action.payload };
     }
     case 'SET_WORKING_REPORT': {
-      return { ...prevState, workingReport: action.report };
+      return { ...prevState, workingReport: action.report, workingCheckList: action.report.checkLists };
     }
     case 'CLEAR_WORKING_REPORT': {
-      return { ...prevState, workingReport: {} };
+      return { ...prevState, workingReport: {}, workingCheckList: [] };
     }
     case 'UPDATE_DRAWNSIGNATURE': {
       let signature = {};
@@ -68,13 +70,24 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
       }
     }
     case 'UPDATE_CHECKLIST': {
-      const index = prevState.workingReport!.checkLists?.findIndex(ck => ck.id === action.payload.id)
+      const index = prevState.workingCheckList?.findIndex(ck => ck.id === action.payload.id)
       return {
         ...prevState,
-        workingReport: {
-          ...prevState.workingReport,
-          checkList: [...prevState.workingReport!.checkLists!.slice(0, index), { ...action.payload }, ...prevState.workingReport!.checkLists!.slice(index)]
-        }
+        workingCheckList: [...prevState.workingCheckList!.slice(0, index), { ...action.payload }, ...prevState.workingCheckList!.slice(index)]
+      }
+    }
+    case 'UPDATE_CHECKLIST_ITEMS': {
+      const index = prevState.workingCheckList!.findIndex(ck => ck.id === action.payload.checklistId)
+      const checklist = prevState.workingCheckList![index!]
+      checklist.checked = action.payload.newValue as unknown as boolean
+      if (checklist.checks) {
+        checklist.checks.forEach(check => {
+          check.checked = action.payload.newValue
+          check.touched = true
+        })
+      }
+      return {
+        ...prevState,
       }
     }
     default:

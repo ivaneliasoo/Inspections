@@ -156,8 +156,8 @@ export const MyReports = ({ navigation }: any) => {
             status={item.isClosed ? 'success' : 'info'}
             header={() => <Text category='s1' >{`${item.licenseName} - ${item.licenseNumber ?? 'Not specified'}`} </Text>}
             footer={footerProps => renderItemFooter(footerProps, item)} >
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <View>
+            <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <View style={{ flex: 1 }}>
                 <Text category='s2'>{`Report Name: ${item.name}`}</Text>
                 <Text category='s2'>{`Date: ${moment(item.date).format('DD/MM/YYYY')}`}</Text>
                 <Text category='s2'>Validity: {moment(item.licenseValidityStart).format('DD-MM-YYYY')} - {moment(item.licenseValidityEnd).format('DD-MM-YYYY')}</Text>

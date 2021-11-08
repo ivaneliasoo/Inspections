@@ -8,10 +8,11 @@ import { useReports } from '../hooks/useReports';
 import { ReportsState } from '../contexts/ReportsContext';
 
 export const Home = ({ navigation }: any) => {
+  const [isBusy, setIsBusy] = useState(false)
   const [isCreatingReport, setIsCreatingReport] = useState(false)
   const { authState } = useContext(AuthContext)
   const theme = useTheme()
-  const { setOptions, getReports } = useReports()
+  const { setOptions } = useReports()
 
   const navigateToDetails = (reportId: any) => {
     setIsCreatingReport(false)
@@ -51,7 +52,7 @@ export const Home = ({ navigation }: any) => {
     <Layout style={styles.container}>
       <TopNavigation title={`Welcome, ${authState.userInfo?.lastName} ${authState.userInfo?.name}.`} alignment='center' accessoryLeft={() =>
         <TopNavigationAction onPress={() => navigation.openDrawer()} icon={(props) => <Icon name='menu-outline' style={{ width: 50, height: 50 }} {...props} />} />} />
-      <NewReport isOpen={isCreatingReport} onClose={() => setIsCreatingReport(false)} onCreate={navigateToDetails} />
+      <NewReport isBusy={isBusy} isOpen={isCreatingReport} onCreating={(val) => setIsBusy(val)} onClose={() => setIsCreatingReport(false)} onCreate={(id: number) => navigateToDetails(id)} />
       <ScrollView>
         {cardOptions.map(option => {
           return <Card key={option.name} style={styles.card} onPress={() => {

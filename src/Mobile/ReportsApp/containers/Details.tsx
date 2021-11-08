@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Divider, Icon, TopNavigation, TopNavigationAction, useTheme } from '@ui-kitten/components';
+import { Divider, Text, Icon, TopNavigation, TopNavigationAction, useTheme } from '@ui-kitten/components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native';
 import { ReportForm } from '../components/reports/ReportForm';
 import { OperationalReading } from '../components/reports/OperationalReading';
 import { CameraScreen } from '../containers/CameraScreen';
@@ -34,8 +34,25 @@ export const Details = ({ route, navigation }: Props) => {
     <TopNavigationAction icon={(props) => <Icon name='arrow-back-outline' style={{ width: 50, height: 50 }} {...props} />} onPress={navigateBack} />
   );
 
+  const CompleteAction = () => (
+    <TopNavigationAction icon={(props) => <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly'}}><Icon fill='green' name='checkmark-circle-2-outline' style={{ width: 50, height: 50 }} {...props} /><Text category='s1'>Complete Report</Text></View>} onPress={() => {
+      if (workingReport?.isClosed) return;
+        Alert.alert('Complete / Close Report', `You are about to complete the report ${workingReport?.name} (${reportId}). Are you sure?`,
+          [
+            {
+              text: 'Yes',
+              onPress: () => { completeReport(reportId) }
+            },
+            {
+              text: 'No',
+            }
+          ]
+        );
+    }} />
+  );
+
   const { reportId } = route.params
-  const { getReportById, workingReport } = useReports()
+  const { getReportById, workingReport, completeReport } = useReports()
 
   useEffect(() => {
     getReportById(reportId).finally(() => { setLoading(false) })
@@ -46,7 +63,7 @@ export const Details = ({ route, navigation }: Props) => {
 
   return (
     <View style={{backgroundColor:'white', flex: 1}}>
-      <TopNavigation title={`Report  `} alignment='center' accessoryLeft={BackAction} />
+      <TopNavigation title={`Report  `} alignment='center' accessoryRight={CompleteAction} accessoryLeft={BackAction} />
       <Divider />
       {workingReport && !loading ?
         <View style={styles.container}>

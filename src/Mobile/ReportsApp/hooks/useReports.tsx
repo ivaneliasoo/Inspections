@@ -4,12 +4,12 @@ import { API_HOST, API_KEY } from '../config/config';
 import { Configuration, ReportsApi, CheckListsApiFactory } from '../services/api';
 import { AuthContext } from '../contexts/AuthContext';
 import { CheckListItemQueryResult, ReportQueryResult, UpdateCheckListItemCommand, UpdateReportCommand, SignaturesApi, SignatureQueryResult } from '../services/api';
-import { UpdateOperationalReadingsCommand } from '../services/api/api';
-import moment from 'moment';0
+import { CheckListQueryResult, CheckValue, UpdateOperationalReadingsCommand } from '../services/api/api';
+import moment from 'moment'; 0
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
-  const { getAll, setFilter, setWorkingReport, updateSignature, clearWorkingReport, reportsState, completeReport: complete, removeReport, setRefreshing } = useContext(ReportsContext)
+  const { getAll, setFilter, setWorkingReport, updateSignature, updateCheckListItems, clearWorkingReport, reportsState, completeReport: complete, removeReport, setRefreshing } = useContext(ReportsContext)
 
   const configuration = new Configuration({
     accessToken: userToken!,
@@ -24,7 +24,7 @@ export const useReports = () => {
   const getReports = async () => {
     try {
       setRefreshing(true)
-      const resp = await reportsApi.apiReportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports,reportsState.orderBy, reportsState.descendingSort)
+      const resp = await reportsApi.apiReportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports, reportsState.orderBy, reportsState.descendingSort)
       getAll(resp.data as unknown as ReportQueryResult[])
     } catch (error) {
       console.log(error)
@@ -74,7 +74,22 @@ export const useReports = () => {
     setFilter({ ...reportsState, filter: reportsState.filter, myReports, isClosed })
   }
 
-  const updateCheckList = async (payload: { reportId: number; checkListId: number; newValue: number | undefined }) => {
+  const updateCheckList = async (payload: { reportId: number; checkListId: number; newValue: number }) => {
+    let tempCheckValue = 0
+
+    if (payload.newValue > 2) {
+      tempCheckValue = 2
+    }
+    else if (payload.newValue === 2) {
+      tempCheckValue = 1
+    }
+    else if (payload.newValue === 1) {
+      tempCheckValue = 0
+    }
+    else if (payload.newValue === 0) {
+      tempCheckValue = 2
+    }
+    updateCheckListItems({ checklistId: payload.checkListId, newValue: tempCheckValue })
     await reportsApi.bulkUpdateChecks(payload.reportId, payload.checkListId, payload.newValue)
   }
 
@@ -108,7 +123,7 @@ export const useReports = () => {
     })
   }
 
-  const saveOperationalreadings = async (or: UpdateOperationalReadingsCommand) =>{
+  const saveOperationalreadings = async (or: UpdateOperationalReadingsCommand) => {
     await reportsApi.updateOperationalReadings(or.reportId!, or)
   }
 
@@ -141,6 +156,7 @@ export const useReports = () => {
     setFilter,
     setWorkingReport,
     workingReport: reportsState.workingReport,
+    workingCheckList: reportsState.workingCheckList,
     reports: reportsState.reports || [],
     updateCheckList,
     updateCheckListItem,
