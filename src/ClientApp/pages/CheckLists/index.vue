@@ -20,7 +20,7 @@
         >
           <v-subheader>Items &amp; Params</v-subheader>
           <v-list-item v-for="item in checkItems" :key="item.id">
-            <template #default="{ active, toggle }">
+            <template #default="{ toggle }">
               <v-list-item-action>
                 <v-checkbox
                   color="primary"
@@ -111,7 +111,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch, mixins } from 'nuxt-property-decorator'
+import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import { CheckListsState } from 'store/checklists'
 import { ReportConfigurationState } from '@/store/configurations'
 import { ReportsState } from '@/store/reportstrore'
@@ -206,7 +206,7 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
   async fetch () {
     this.loading = true
 
-    Promise.all([await this.$store.dispatch('reportstrore/getReports', '', { root: true }),
+    Promise.all([await this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: false, descending: true }, { root: true }),
       await this.$store.dispatch('configurations/getConfigurations', '', { root: true }),
       await this.$store.dispatch('checklists/getChecklists', this.filter, { root: true })])
 
@@ -214,14 +214,17 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
   }
 
   selectItem (item: CheckList): void {
-    this.selectedItem = item
-    this.loading = true
-    this.$store.dispatch('checklists/getCheckListItemsById', this.selectedItem.id, { root: false })
-      .finally(() => this.loading = false)
+    try {
+      this.selectedItem = item
+      this.loading = true
+      this.$store.dispatch('checklists/getCheckListItemsById', this.selectedItem.id, { root: false })
+    } catch (error) {
+      this.loading = false
+    }
   }
 
   @Watch('filter', { deep: true })
-  onFilterChanged (value: FilterType, oldValue: FilterType) {
+  onFilterChanged (value: FilterType) {
     this.loading = true
     this.$store.dispatch('checklists/getChecklists', value, { root: true })
       .finally(() => { this.loading = false })
