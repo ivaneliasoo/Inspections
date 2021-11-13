@@ -28,7 +28,7 @@ export interface ReportsContextProps {
   clearWorkingReport: () => void,
   updateCheckListItems: (payload: { checklistId: number, newValue: number }) => void,
 }
-const initialState: ReportsState = { reports: [], myReports: true, isClosed: false, filter: '', descendingSort: true, orderBy: 'date', workingReport: undefined!, workingCheckList: undefined!, refreshing: false }
+const initialState: ReportsState = { reports: [], myReports: false, isClosed: false, filter: '', descendingSort: true, orderBy: 'date', workingReport: undefined!, workingCheckList: undefined!, refreshing: false }
 
 export const ReportsContext = createContext({} as ReportsContextProps);
 const ReportsProvider = ({ children }: any) => {

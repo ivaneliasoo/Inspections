@@ -180,7 +180,7 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
   dialog: Boolean = false
   selectedItem: Report = {} as Report
   filter: String = ''
-  showOnlyMyReports: Boolean = true
+  showOnlyMyReports: Boolean = false
   hostName: string= this.$axios!.defaults!.baseURL!.replace('/api', '')
     headers: any[] = [
       {

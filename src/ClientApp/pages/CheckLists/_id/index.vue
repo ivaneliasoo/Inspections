@@ -324,16 +324,19 @@ export default class AddEditCheckList extends mixins(InnerPageMixin) {
       items: []
     }
 
-    if (command.idCheckList > 0) {
-      await this.$store.dispatch('checklists/updateCheckList', command, {
-        root: false
-      })
-    } else {
-      await this.$store.dispatch('checklists/createCheckList', addCommand, {
-        root: false
-      }).then((resp) => {
-        this.$router.push({ name: 'CheckLists' })
-      })
+    try {
+      if (command.idCheckList > 0) {
+        await this.$store.dispatch('checklists/updateCheckList', command, {
+          root: false
+        })
+      } else {
+        await this.$store.dispatch('checklists/createCheckList', addCommand, {
+          root: false
+        })
+      }
+    } catch (error) {
+    } finally {
+      this.$router.push({ name: 'CheckLists' })
     }
   }
 }
