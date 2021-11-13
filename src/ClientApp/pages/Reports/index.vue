@@ -27,6 +27,7 @@
           <v-switch v-model="showOnlyMyReports" class="tw-mx-4" messages="Show only my reports" dense @change="$fetch()" />
           <v-spacer />
           <v-btn
+            v-if="!$route.query.closed"
             class="mx-2"
             x-small
             fab
