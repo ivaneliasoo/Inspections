@@ -92,7 +92,7 @@ export default class NewReportDialog extends Vue {
     this.creatingReport =true
     const reportId = await this.$store.dispatch('reportstrore/createReport', this.selectedConfiguration, { root: true })
       .then((resp) => {
-        this.$store.dispatch('reportstrore/getReports', '', { root: true })
+        this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: true, descending: true }, { root: true })
         this.$emit('input', false)
         this.$emit('report-created', resp)
       })
