@@ -53,7 +53,7 @@ namespace Inspections.API
             services.AddDefaultAWSOptions(options);
             services.AddAWSService<IAmazonS3>();
 
-            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddControllers();
             services.AddCors();
             services.AddAuthentication(options =>
             {
