@@ -2,10 +2,11 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
 class InnerPageMixin extends Vue {
-  created() {
+  created () {
     this.$store.dispatch('allowToGoBack', true, { root: true })
   }
-  destroyed() {
+
+  destroyed () {
     this.$store.dispatch('allowToGoBack', false, { root: true })
   }
 }
