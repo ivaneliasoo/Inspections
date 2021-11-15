@@ -43,6 +43,7 @@ export default {
     '@nuxtjs/auth',
     '@nuxtjs/pwa',
     '@nuxtjs/device',
+    '@vueuse/core/nuxt',
     ['nuxt-compress',
       {
         gzip: {
