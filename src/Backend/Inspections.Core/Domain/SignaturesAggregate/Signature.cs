@@ -55,6 +55,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
             newSignature.ReportId = null;
             newSignature.ReportConfigurationId = 0;
             newSignature.IsConfiguration = true;
+            newSignature.Responsible =  new Responsible { Name = string.Empty, Type = ResponsibleType.Inspector };
 
             return newSignature;
         }

@@ -95,9 +95,7 @@
               />
               <v-btn
                 v-else
-                :disabled="
-                  !valid || currentReport.isClosed || !CanCloseReport
-                "
+                :disabled="!valid || currentReport.isClosed || !CanCloseReport"
                 color="success"
                 class="v-btn--example2"
                 @click="
@@ -120,7 +118,7 @@
           <v-tab
             href="#checklists"
             :class="
-              !IsCompleted ||
+              !IsCheckListsCompleted ||
                 HasNotesWithPendingChecks ||
                 !PrincipalSignatureHasAResponsable
                 ? 'error--text'
@@ -130,7 +128,7 @@
             Report Details
             <v-tooltip
               v-if="
-                !IsCompleted ||
+                !IsCheckListsCompleted ||
                   HasNotesWithPendingChecks ||
                   !PrincipalSignatureHasAResponsable
               "
@@ -139,7 +137,7 @@
               <template #activator="{ on }">
                 <v-icon
                   :color="
-                    !IsCompleted ||
+                    !IsCheckListsCompleted ||
                       HasNotesWithPendingChecks ||
                       !PrincipalSignatureHasAResponsable
                       ? 'error'
@@ -161,7 +159,7 @@
             Photo Record
             <v-icon> mdi-folder-multiple-image </v-icon>
           </v-tab>
-          <v-tab href="#operationalReadings">
+          <v-tab href="#operationalReadings" eager>
             Operational Readings
             <v-icon> mdi-order-bool-descending </v-icon>
           </v-tab>
@@ -175,32 +173,30 @@
             >
               <v-expansion-panel>
                 <v-expansion-panel-header
-                  :style="!IsCompleted ? 'color: white;' : ''"
-                  :color="!IsCompleted ? 'red' : ''"
+                  :style="!IsCheckListsCompleted ? 'color: white;' : ''"
+                  :color="!IsCheckListsCompleted ? 'red' : ''"
                 >
-                  <span
-                    class="font-weight-black"
-                  >Check List States: Not Acceptable (
+                  <span class="font-weight-black">Check List States: Not Acceptable (
                     <v-icon
-                      :color="!IsCompleted ? 'white' : getCheckIconColor(0)"
+                      :color="!IsCheckListsCompleted ? 'white' : getCheckIconColor(0)"
                     >
                       mdi-{{ getCheckIcon(0) }}
                     </v-icon>
                     ) Acceptable (
                     <v-icon
-                      :color="!IsCompleted ? 'white' : getCheckIconColor(1)"
+                      :color="!IsCheckListsCompleted ? 'white' : getCheckIconColor(1)"
                     >
                       mdi-{{ getCheckIcon(1) }}
                     </v-icon>
                     ) Not Aplicable (
                     <span
-                      :color="!IsCompleted ? 'white' : getCheckIconColor(2)"
+                      :color="!IsCheckListsCompleted ? 'white' : getCheckIconColor(2)"
                     >
                       {{ getCheckIcon(2) }}
                     </span>
                     )
                   </span>
-                  <v-row v-if="!IsCompleted" dense>
+                  <v-row v-if="!IsCheckListsCompleted" dense>
                     <v-col>
                       <v-icon dark>
                         mdi-alert-circle
@@ -444,8 +440,7 @@
                                               <v-text-field
                                                 v-model="checkItem.remarks"
                                                 :label="
-                                                  currentReport
-                                                    .remarksLabelText
+                                                  currentReport.remarksLabelText
                                                 "
                                                 @blur="saveCheckItem(checkItem)"
                                                 @click.stop.prevent=""
@@ -578,10 +573,12 @@
                 <h2 class="text-left">
                   Signatures
                 </h2>
-                <SignaturesForm
-                  v-model="currentReport.signatures"
-                  :is-closed="false"
-                />
+                <ValidationObserver ref="obsSignatures">
+                  <SignaturesForm
+                    v-model="signatures"
+                    :can-edit="currentReport.isClosed"
+                  />
+                </ValidationObserver>
               </v-col>
             </v-row>
           </v-tab-item>
@@ -592,7 +589,7 @@
             />
           </v-tab-item>
           <v-tab-item key="operationalReadings" value="operationalReadings">
-            <OperationalReadings :report-data="currentReport" />
+            <OperationalReadings v-model="currentReport" :is-multiline="isMultiLine" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -609,7 +606,7 @@
       <h2>The Report has been saved! but we've found some errors:</h2>
       <br>
       <span
-        v-if="!IsCompleted"
+        v-if="!IsCheckListsCompleted"
         class="subtitle-1 error--text font-weight-black"
       >
         - Please, Complete and check all the required item in the
@@ -638,26 +635,6 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-snackbar
-      v-model="pageOptions.savedNotification"
-      top
-      centered
-      color="success"
-      :timeout="3000"
-    >
-      Changes has been saved
-
-      <template #action="{ attrs }">
-        <v-btn
-          dark
-          text
-          v-bind="attrs"
-          @click="pageOptions.savedNotification = false"
-        >
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
   </div>
 </template>
 
@@ -670,10 +647,8 @@ import {
   onMounted,
   ref,
   reactive,
-  useRouter,
   useRoute,
-  useFetch,
-  Ref
+  useFetch
 } from '@nuxtjs/composition-api'
 import { debouncedWatch } from '@vueuse/core'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
@@ -681,7 +656,6 @@ import {
   AddNoteCommand,
   AddressDTO,
   CheckListItemQueryResult,
-  SignatureQueryResult,
   ReportQueryResult,
   EditSignatureCommand,
   UpdateReportCommand,
@@ -689,8 +663,8 @@ import {
   EditNoteCommand,
   UpdateCheckListItemCommand,
   CheckListQueryResult,
-  NoteQueryResult,
-  ResponsibleType
+  SignatureQueryResult,
+  NoteQueryResult
 } from '@/services/api'
 import { useNotifications } from '~/composables/use-notifications'
 import useGoBack from '~/composables/useGoBack'
@@ -704,16 +678,18 @@ export default defineComponent({
   },
   setup () {
     useGoBack()
+    const obs = ref<InstanceType<typeof ValidationObserver> | null>(null)
+    const obsSignatures = ref<InstanceType<typeof ValidationObserver> | null>(null)
+
     const { notify } = useNotifications()
-    const router = useRouter()
     const route = useRoute()
     const { store, $auth, $axios, $reportsApi } = useContext()
     const id = computed(() => route.value.params.id)
-    const obs = ref<InstanceType<typeof ValidationObserver>>()
 
     onMounted(() => {
-      if (obs.value) {
+      if (obs.value && obsSignatures.value) {
         obs.value!.validate()
+        obsSignatures.value!.validate()
       }
     })
 
@@ -721,7 +697,6 @@ export default defineComponent({
       loadingReport: false,
       errorsDialog: false,
       dialogPrinting: false,
-      savedNotification: false,
       shouldShowRequired: false,
       isDirty: false,
       searchingAddresses: false,
@@ -737,12 +712,17 @@ export default defineComponent({
     })
 
     const currentReport = ref<ReportQueryResult>({} as ReportQueryResult)
+    const signatures = computed(() => (currentReport.value.signatures || []))
 
     const { fetch } = useFetch(async () => {
       try {
-        currentReport.value = await store.dispatch('reportstrore/getReportById', id.value, {
-          root: true
-        })
+        currentReport.value = await store.dispatch(
+          'reportstrore/getReportById',
+          id.value,
+          {
+            root: true
+          }
+        )
         await getSuggestedAddresses('')
         await store.dispatch(
           'users/setUserLastEditedReport',
@@ -754,7 +734,7 @@ export default defineComponent({
         )
         await $auth.fetchUser()
       } catch (error) {
-        console.error(error)
+        notify({ error })
       }
     })
 
@@ -791,7 +771,15 @@ export default defineComponent({
       return obs.value!.flags.valid
     })
 
-    const IsCompleted = computed(() => {
+    const formHasChanged = computed(() => {
+      return obs.value!.flags.dirty
+    })
+
+    const formHasSignaturesChanged = computed(() => {
+      return obsSignatures.value?.flags.dirty
+    })
+
+    const IsCheckListsCompleted = computed(() => {
       if (currentReport.value.checkLists) {
         return (
           currentReport.value.checkLists.filter(
@@ -837,11 +825,15 @@ export default defineComponent({
 
     const CanCloseReport = computed(() => {
       return (
-        IsCompleted &&
+        !IsCheckListsCompleted &&
         // !this.HasNotesWithPendingChecks &&
         PrincipalSignatureHasAResponsable &&
         IsValidForm
       )
+    })
+
+    const isMultiLine = computed(() => {
+      return currentReport.value.licenseVolt! >= 400
     })
 
     watch(
@@ -864,14 +856,77 @@ export default defineComponent({
     debouncedWatch(
       currentReport,
       async (newValue: ReportQueryResult) => {
-        if (!newValue) {
+        if (!IsValidForm.value || !formHasChanged.value) {
           return
         }
         try {
+          if (pageOptions.loadingReport) {
+            return
+          }
           await saveReportChanges(newValue)
-          notify({ title: 'asdasd', message: 'asdas dasdasd ', type: 'success' })
+          notify({
+            title: 'Reports',
+            message: 'Changes has been saved',
+            type: 'success'
+          })
         } catch (error) {
-          notify({ title: 'asdasd', message: 'asdas dasdasd ', type: 'error', error })
+          notify({
+            title: 'Reports',
+            message: 'Error while saving the report',
+            type: 'error',
+            error
+          })
+        } finally {
+          pageOptions.savingNewReport = false
+          pageOptions.shouldShowRequired = true
+        }
+      },
+      {
+        debounce: 1000,
+        deep: true
+      }
+    )
+
+    debouncedWatch(
+      signatures,
+      (newValue: any) => {
+        if (!formHasSignaturesChanged.value) {
+          return
+        }
+        try {
+          if (pageOptions.loadingReport) {
+            return
+          }
+          newValue!.forEach(async (signature: any) => {
+            const command: EditSignatureCommand = {
+              id: signature.id,
+              title: signature.title,
+              annotation: signature.annotation,
+              responsibleType: signature.responsibleType!,
+              responsibleName: signature.responsibleName,
+              designation: signature.designation,
+              remarks: signature.remarks,
+              date: signature.date,
+              principal: signature.principal,
+              drawnSign: signature.drawnSign
+            }
+            await $axios.$put(`signatures/${signature.id}`, command)
+          })
+          notify({
+            title: 'Signatures',
+            message: 'Changes has been saved',
+            type: 'success'
+          })
+        } catch (error) {
+          notify({
+            title: 'Reports',
+            message: 'Error while saving the report',
+            type: 'error',
+            error
+          })
+        } finally {
+          pageOptions.savingNewReport = false
+          pageOptions.shouldShowRequired = true
         }
       },
       {
@@ -903,8 +958,9 @@ export default defineComponent({
       await $axios
         .delete(`reports/${delNote.reportId}/note/${delNote.id}`)
         .then(() => {
-          currentReport.value.notes =
-            currentReport.value.notes!.filter(n => n.id !== delNote.id)
+          currentReport.value.notes = currentReport.value.notes!.filter(
+            n => n.id !== delNote.id
+          )
         })
     }
 
@@ -967,34 +1023,13 @@ export default defineComponent({
       const update: UpdateReportCommand = {
         id: currentReport.id,
         name: currentReport.name,
-        address:
-          currentReport.address ?? pageOptions.search,
+        address: currentReport.address ?? pageOptions.search,
         date: currentReport.date,
         licenseNumber: currentReport.licenseNumber,
         isClosed: currentReport.isClosed
       }
-      await $axios.put(`reports/${route.value.params.id}`, update).then(() => {
-        store.dispatch('hasPendingChanges', false)
-        currentReport.signatures!.forEach((signature) => {
-          const command: EditSignatureCommand = {
-            id: signature.id,
-            title: signature.title,
-            annotation: signature.annotation,
-            responsibleType: signature.responsibleType!,
-            responsibleName: signature.responsibleName,
-            designation: signature.designation,
-            remarks: signature.remarks,
-            date: signature.date,
-            principal: signature.principal,
-            drawnSign: signature.drawnSign
-          }
-          $axios.$put(`signatures/${signature.id}`, command)
-        })
-        pageOptions.savedNotification = true
-      })
-
-      pageOptions.savingNewReport = false
-      pageOptions.shouldShowRequired = true
+      await $axios.put(`reports/${route.value.params.id}`, update)
+      store.dispatch('hasPendingChanges', false)
     }
 
     const checkItemChecks = (checkListId: number, value: CheckValue): void => {
@@ -1034,8 +1069,12 @@ export default defineComponent({
         a => a.formatedAddress === currentReport.value.address
       )
       if (addressData) {
-        currentReport.value.licenseNumber =
-          addressData[0].number ?? ''
+        currentReport.value.licenseNumber = addressData[0].number
+        currentReport.value.licenseVolt = addressData[0].volt
+        currentReport.value.licenseAmp = addressData[0].amp
+        currentReport.value.licenseValidity = addressData[0].validity
+        currentReport.value.licenseName = addressData[0].name
+        currentReport.value.licenseKVA = addressData[0].kva
       }
     }
 
@@ -1047,7 +1086,7 @@ export default defineComponent({
       pageOptions.dialogPrinting = true
       await generatePdf(currentReport)
       pageOptions.dialogPrinting = false
-      router.push('/reports')
+      // router.push('/reports')
     }
 
     const saveAndLoad = async () => {
@@ -1082,8 +1121,9 @@ export default defineComponent({
       addresses,
       CanCloseReport,
       HasNotesWithPendingChecks,
-      IsCompleted,
+      IsCheckListsCompleted,
       PrincipalSignatureHasAResponsable,
+      isMultiLine,
       saveAndLoad,
       closeReport,
       setLicenseFromAddress,
@@ -1094,7 +1134,10 @@ export default defineComponent({
       getCheckIcon,
       removeNote,
       addNote,
-      saveReportChanges
+      saveReportChanges,
+      obs,
+      obsSignatures,
+      signatures
     }
   }
 })

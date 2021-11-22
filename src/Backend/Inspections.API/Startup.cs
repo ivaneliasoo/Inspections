@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.S3;
@@ -53,7 +54,8 @@ namespace Inspections.API
             services.AddDefaultAWSOptions(options);
             services.AddAWSService<IAmazonS3>();
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddCors();
             services.AddAuthentication(options =>
             {

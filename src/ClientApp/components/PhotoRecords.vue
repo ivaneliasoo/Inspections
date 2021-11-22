@@ -18,7 +18,7 @@
           outlined
           accept="image/*"
           :show-size="1000"
-          @change="showPreview($event)"
+          @change="showPreview($event); uploadFiles()"
           @click:clear="filesUrls = []"
         />
       </v-col>
@@ -26,19 +26,6 @@
     </v-row>
     <v-divider />
     <v-row>
-      <v-btn
-        color="indigo"
-        dark
-        block
-        x-large
-        :small="$device.isMobile"
-        elevation="2"
-        :disabled="!files.length > 0 || dialogUploading"
-        @click="uploadFiles"
-      >
-        Save Photos
-        <v-icon>mdi-upload</v-icon>
-      </v-btn>
       <v-skeleton-loader
         v-if="loadingPhotos"
         class="mx-auto"

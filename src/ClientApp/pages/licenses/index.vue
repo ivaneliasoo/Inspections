@@ -1,12 +1,13 @@
 <template>
   <div>
     <alert-dialog
+      v-if="selectedLicense"
       v-model="dialogRemove"
       title="Remove Licenses"
       message="This operation will remove this License. If Proceed, you no longer get it Available again"
-      :code="selectedItem.id"
-      :description="selectedItem.title"
-      @yes="deleteLicense();"
+      :code="selectedLicense.id"
+      :description="selectedLicense.title"
+      @yes="deleteLicense()"
     />
     <v-data-table
       :items="Licenses"
@@ -15,7 +16,7 @@
       dense
       :loading="loading"
       :headers="headers"
-      :class="$device.isTablet ? 'tablet-text':''"
+      :class="$device.isTablet ? 'tablet-text' : ''"
     >
       <template #top="{}">
         <v-toolbar flat color="white">
@@ -29,7 +30,11 @@
             fab
             dark
             color="primary"
-            @click="dialog = true; isNew = true; item = { licenseId: 0, validity: {start: '', end: '' } }"
+            @click="
+              dialog = true;
+              isNew = true;
+              license = { licenseId: 0, validity: { start: '', end: '' } };
+            "
           >
             <v-icon dark>
               mdi-plus
@@ -51,9 +56,13 @@
                   <v-container>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="4">
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                        >
                           <v-text-field
-                            v-model.number="item.licenseId"
+                            v-model.number="license.licenseId"
                             readonly
                             autocomplete="nope"
                             name="LicenseId"
@@ -63,9 +72,13 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col cols="12" md="4">
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                        >
                           <v-text-field
-                            v-model="item.name"
+                            v-model="license.name"
                             autocomplete="nope"
                             :error-messages="errors"
                             name="name"
@@ -74,9 +87,13 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col cols="12" md="4">
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                        >
                           <v-text-field
-                            v-model="item.number"
+                            v-model="license.number"
                             autocomplete="nope"
                             :error-messages="errors"
                             name="licenseNumber"
@@ -87,9 +104,13 @@
                     </v-row>
                     <v-row align="center" justify="space-between">
                       <v-col>
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                        >
                           <v-text-field
-                            v-model="item.personInCharge"
+                            v-model="license.personInCharge"
                             autocomplete="nope"
                             :error-messages="errors"
                             name="personInCharge"
@@ -98,9 +119,13 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col>
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                        >
                           <v-text-field
-                            v-model="item.contact"
+                            v-model="license.contact"
                             autocomplete="nope"
                             :error-messages="errors"
                             name="contact"
@@ -109,9 +134,13 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col>
-                        <ValidationProvider v-slot="{ errors }" rules="required|email" immediate>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required|email"
+                          immediate
+                        >
                           <v-text-field
-                            v-model="item.email"
+                            v-model="license.email"
                             autocomplete="nope"
                             :error-messages="errors"
                             name="email"
@@ -122,9 +151,14 @@
                     </v-row>
                     <v-row align="center" justify="space-between">
                       <v-col>
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate vid="validFrom">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                          vid="validFrom"
+                        >
                           <DatePickerBase
-                            v-model="item.validityStart"
+                            v-model="license.validityStart"
                             type="number"
                             label="License"
                             titulo="Valid From"
@@ -134,9 +168,13 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col cols="12" md="6">
-                        <ValidationProvider v-slot="{ errors }" rules="required|precedesDate:validFrom" immediate>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required|precedesDate:validFrom"
+                          immediate
+                        >
                           <DatePickerBase
-                            v-model="item.validityEnd"
+                            v-model="license.validityEnd"
                             type="number"
                             label="License"
                             titulo="Valid To"
@@ -149,9 +187,13 @@
                     <span class="subtitle-text">Approval Load: </span>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="4">
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                        >
                           <v-text-field
-                            v-model.number="item.amp"
+                            v-model.number="license.amp"
                             autocomplete="nope"
                             :error-messages="errors"
                             type="number"
@@ -161,9 +203,13 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col cols="12" md="4">
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                        >
                           <v-text-field
-                            v-model.number="item.volt"
+                            v-model.number="license.volt"
                             autocomplete="nope"
                             :error-messages="errors"
                             type="number"
@@ -173,9 +219,13 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col cols="12" md="4">
-                        <ValidationProvider v-slot="{ errors }" rules="required" immediate>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                        >
                           <v-text-field
-                            v-model.number="item.kva"
+                            v-model.number="license.kva"
                             autocomplete="nope"
                             :error-messages="errors"
                             type="number"
@@ -201,7 +251,11 @@
                   <v-btn
                     color="default"
                     text
-                    @click="reset(); item = { id: 0 }; dialog = false"
+                    @click="
+                      reset();
+                      license = { id: 0 };
+                      dialog = false;
+                    "
                   >
                     Cancel
                   </v-btn>
@@ -218,7 +272,11 @@
               color="primary"
               class="mr-2"
               v-on="on"
-              @click="selectItem(item); isNew = false; dialog = true"
+              @click="
+                selectLicense(item);
+                isNew = false;
+                dialog = true;
+              "
             >
               mdi-pencil
             </v-icon>
@@ -230,7 +288,10 @@
             <v-icon
               color="error"
               v-on="on"
-              @click="selectItem(item); dialogRemove = true"
+              @click="
+                selectLicense(item);
+                dialogRemove = true;
+              "
             >
               mdi-delete
             </v-icon>
@@ -248,13 +309,14 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, mixins } from 'nuxt-property-decorator'
+import { ref, computed, defineComponent, useStore, useFetch, useContext, useRoute } from '@nuxtjs/composition-api'
+// import { Component, mixins } from 'nuxt-property-decorator'
 import { email } from 'vee-validate/dist/rules'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
-import { LicensesState } from 'store/licenses'
 import { DateTime } from 'luxon'
-import InnerPageMixin from '@/mixins/innerpage'
+import { LicensesState } from 'store/licenses'
 import { LicenseDTO } from '@/types/Licenses'
+import useGoBack from '~/composables/useGoBack'
 
 extend('precedesDate', {
   validate: (dateTo, { dateFrom }: any) => {
@@ -266,109 +328,125 @@ extend('precedesDate', {
 
 extend('email', { ...email })
 
-@Component({
+export default defineComponent({
+  name: 'LicensesIndex',
   components: {
     ValidationObserver,
     ValidationProvider
+  },
+  setup () {
+    useGoBack()
+    const store = useStore()
+    const route = useRoute()
+    const { $auth, error } = useContext()
+    const headers = ref([
+      {
+        text: 'ID',
+        value: 'licenseId',
+        sortable: true,
+        align: 'left'
+      },
+      {
+        text: 'License',
+        value: 'number',
+        sortable: true,
+        align: 'left'
+      },
+      {
+        text: 'Valid From',
+        value: 'validityStart',
+        sortable: true,
+        align: 'left'
+      },
+      {
+        text: 'Valid To',
+        value: 'validityEnd',
+        sortable: true,
+        align: 'left'
+      },
+      {
+        text: '',
+        value: 'actions',
+        sortable: false,
+        align: 'left'
+      }
+    ])
+    const isNew = ref<boolean>(false)
+    const dialog = ref<boolean>(false)
+    const dialogRemove = ref<boolean>(false)
+    const license = ref({ licenseId: 0, validityStart: '', validityEnd: '' } as LicenseDTO)
+    const selectedLicense = ref({} as LicenseDTO)
+    const loading = ref<boolean>(false)
+    const startVisible = ref(false)
+    const endVisible = ref(false)
+    const filter = ref({
+      filterText: ''
+    })
+
+    const Licenses = computed((): LicenseDTO[] => {
+      return ((store.state as any).licenses as LicensesState).licensesList
+    })
+
+    const selectLicense = (item: LicenseDTO): void => {
+      selectedLicense.value = item
+      store.dispatch('licenses/getLicenseById', selectedLicense.value.licenseId, { root: true })
+        .then(resp => (license.value = resp))
+    }
+
+    useFetch(async () => {
+      if (!$auth.user.isAdmin) { error({ statusCode: 403, message: 'Forbidden' }) }
+      await store.dispatch('licenses/getLicenses', {}, { root: true })
+
+      if (route.value.query.id) {
+        store
+          .dispatch('licenses/getLicenseById', route.value.query.id, {
+            root: true
+          })
+          .then(resp => (license.value = resp))
+        isNew.value = false
+        dialog.value = true
+      }
+    })
+
+    const deleteLicense = () => {
+      store
+        .dispatch('licenses/deleteLicense', selectedLicense.value.licenseId, { root: true })
+        .then(() => {
+          dialog.value = false
+        })
+    }
+
+    const upsertLicense = async () => {
+      loading.value = true
+      if (!isNew.value) { await store.dispatch('licenses/updateLicense', license.value, { root: true }) } else {
+        await store.dispatch('licenses/createLicense', license.value, { root: true })
+        await store.dispatch('licenses/getLicenses', {}, { root: true })
+      }
+      dialog.value = false
+      isNew.value = true
+      loading.value = false
+    }
+
+    const parseDate = (date: string) => {
+      return DateTime.fromISO(date).toLocaleString()
+    }
+    return {
+      headers,
+      dialog,
+      dialogRemove,
+      isNew,
+      loading,
+      startVisible,
+      endVisible,
+      filter,
+      license,
+      Licenses,
+      selectedLicense,
+      parseDate,
+      upsertLicense,
+      deleteLicense,
+      selectLicense
+    }
   }
 })
-export default class LicensesAdmin extends mixins(InnerPageMixin) {
-  dialog: boolean = false;
-  dialogRemove: boolean = false;
-  loading: boolean = false;
-  startVisible: boolean = false;
-  endVisible: boolean = false;
-
-  filter: any = {
-    filterText: ''
-  };
-
-  headers: any[] = [
-    {
-      text: 'ID',
-      value: 'licenseId',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'License',
-      value: 'number',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'Valid From',
-      value: 'validityStart',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'Valid To',
-      value: 'validityEnd',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: '',
-      value: 'actions',
-      sortable: false,
-      align: 'left'
-    }
-  ];
-
-  selectedItem: LicenseDTO = {} as LicenseDTO;
-  item: LicenseDTO = { licenseId: 0, validityStart: '', validityEnd: '' } as LicenseDTO;
-  isNew: boolean = false;
-
-  get Licenses (): LicenseDTO[] {
-    return (this.$store.state.licenses as LicensesState).licensesList
-  }
-
-  selectItem (item: LicenseDTO): void {
-    this.selectedItem = item
-    this.$store
-      .dispatch('licenses/getLicenseById', this.selectedItem.licenseId, {
-        root: true
-      })
-      .then(resp => (this.item = resp))
-  }
-
-  async fetch () {
-    if (!this.$auth.user.isAdmin) { this.$nuxt.error({ statusCode: 403, message: 'Forbidden' }) }
-    await this.$store.dispatch('licenses/getLicenses', {}, { root: true })
-
-    if (this.$route.query.id) {
-      this.$store
-        .dispatch('licenses/getLicenseById', this.$route.query.id, {
-          root: true
-        })
-        .then(resp => (this.item = resp))
-      this.isNew = false
-      this.dialog = true
-    }
-  }
-
-  deleteLicense () {
-    this.$store
-      .dispatch('licenses/deleteLicense', this.selectedItem.licenseId, { root: true })
-      .then(() => {
-        this.dialog = false
-      })
-  }
-
-  async upsertLicense () {
-    this.loading = true
-    if (!this.isNew) { await this.$store.dispatch('licenses/updateLicense', this.item, { root: true }) } else {
-      await this.$store.dispatch('licenses/createLicense', this.item, { root: true })
-      await this.$store.dispatch('licenses/getLicenses', {}, { root: true })
-    }
-    this.dialog = false
-    this.isNew = true
-    this.loading = false
-  }
-
-  parseDate (date: string) {
-    return DateTime.fromISO(date).toLocaleString()
-  }
-}
 </script>

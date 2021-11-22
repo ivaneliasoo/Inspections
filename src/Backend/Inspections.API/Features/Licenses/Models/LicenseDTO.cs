@@ -37,7 +37,7 @@ namespace Inspections.API.Features.Licenses.Models
             ValidityEnd = eMALicense.Validity.End;
         }
 
-        internal LicenseDTO()
+        public LicenseDTO()
         {
 
         }
