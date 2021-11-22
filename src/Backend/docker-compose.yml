@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   inspections.api:
-    image: iosoft/scb-backend:dev
+    image: iosoft/scb-backend:test
     environment:
       - ConnectionStrings__Inspections=Server=aa1txvky6wbhp2y.cxzbkun1y23x.ap-southeast-1.rds.amazonaws.com;Port=5432;Database=ReportsApp;User Id=appuser;Password=JesusPa55word!
       - ClientSettings__S3BucketName=cse-inspetions-test-photos
@@ -14,7 +14,7 @@ services:
       - "80:80"
     
   inspections.ui:
-    image: iosoft/scb-frontend:dev
+    image: iosoft/scb-frontend:test
     environment:
       - BASE_URL=http://cseinternal-test.ap-southeast-1.elasticbeanstalk.com
     ports:

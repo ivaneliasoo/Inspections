@@ -52,21 +52,20 @@ namespace Inspections.API.ApplicationServices
             using var ms = new MemoryStream();
             img.SaveAsJpeg(ms);
             ms.Position = 0;
-            //var photo = await _storage.SaveAsync(ms, GenerateAlbumPath(album), Path.GetFileName(name), true, contentType).ConfigureAwait(false);
-            //var thumbnail = await AddPhotoThumbnail(tnCopy, GenerateAlbumPath(album), Path.GetFileName(name), contentType).ConfigureAwait(false);
-            //if (photo is not null && thumbnail is not null)
-            //    return new PhotoItemResult
-            //    {
-            //        PhotoPath = photo.Path,
-            //        ThumbnailPath = thumbnail.Path,
-            //        PhotoStorageId = photo.CloudId,
-            //        ThumbnailStorageId = thumbnail.CloudId,
-            //        ThumbnailUrl = GenerateSafeUrl(thumbnail.Path),
-            //        PhotoUrl = GenerateSafeUrl(thumbnail.Path)
-            //    };
+            var photo = await _storage.SaveAsync(ms, GenerateAlbumPath(album), Path.GetFileName(name), true, contentType).ConfigureAwait(false);
+            var thumbnail = await AddPhotoThumbnail(tnCopy, GenerateAlbumPath(album), Path.GetFileName(name), contentType).ConfigureAwait(false);
+            if (photo is not null && thumbnail is not null)
+                return new PhotoItemResult
+                {
+                    PhotoPath = photo.Path,
+                    ThumbnailPath = thumbnail.Path,
+                    PhotoStorageId = photo.CloudId,
+                    ThumbnailStorageId = thumbnail.CloudId,
+                    ThumbnailUrl = GenerateSafeUrl(thumbnail.Path),
+                    PhotoUrl = GenerateSafeUrl(thumbnail.Path)
+                };
 
-            //throw new InvalidDataException("Error while adding photo to storage");
-            return null;
+            throw new InvalidDataException("Error while adding photo to storage");
         }
 
         internal string GenerateSafeUrl(string photoPath)
