@@ -43,7 +43,7 @@
               >
                 <v-text-field
                   :id="`name${index}`"
-                  v-model="signature.responsibleType"
+                  v-model="signature.responsibleName"
                   :name="`name${index}`"
                   :error-messages="errors[0]"
                   :readonly="canEdit"

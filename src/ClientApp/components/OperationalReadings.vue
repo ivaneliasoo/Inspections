@@ -305,17 +305,11 @@
 <script lang="ts">
 import {
   defineComponent,
-  useContext,
-  watch,
-  ref,
 } from "@nuxtjs/composition-api";
 import {
   ReportQueryResult,
-  UpdateOperationalReadingsCommand,
 } from "~/services/api";
-import { debouncedWatch, useVModel } from "@vueuse/core";
-import { computed } from "@nuxtjs/composition-api";
-import { debounce } from 'lodash';
+import { useVModel } from "@vueuse/core";
 
 export default defineComponent({
   props: {
@@ -330,121 +324,6 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const report = useVModel(props, 'value', emit)
-
-    const { $reportsApi } = useContext();
-
-    const updateCommand = ref<UpdateOperationalReadingsCommand>({
-      id: report.value.operationalReadingsId!,
-      reportId: report.value.id!,
-      voltageL1N: report.value.operationalReadingsVoltageL1N!,
-      voltageL2N: report.value.operationalReadingsVoltageL2N!,
-      voltageL3N: report.value.operationalReadingsVoltageL3N!,
-      voltageL1L2: report.value.operationalReadingsVoltageL1L2!,
-      voltageL1L3: report.value.operationalReadingsVoltageL1L3!,
-      voltageL2L3: report.value.operationalReadingsVoltageL2L3!,
-      runningLoadL1: report.value.operationalReadingsRunningLoadL1!,
-      runningLoadL2: report.value.operationalReadingsRunningLoadL2!,
-      runningLoadL3: report.value.operationalReadingsRunningLoadL3!,
-      mainBreakerAmp: report.value.operationalReadingsMainBreakerAmp!,
-      mainBreakerPoles: report.value.operationalReadingsMainBreakerPoles!,
-      mainBreakerCapacity: report.value.operationalReadingsMainBreakerCapacity!,
-      overCurrentDTLA: report.value.operationalReadingsOverCurrentDTLA!,
-      overCurrentDTLSec: report.value.operationalReadingsOverCurrentDTLSec!,
-      overCurrentIDMTLA: report.value.operationalReadingsOverCurrentIDMTLA!,
-      overCurrentIDMTLTm: report.value.operationalReadingsOverCurrentIDMTLTm!,
-      earthFaultMA: report.value.operationalReadingsEarthFaultMA!,
-      earthFaultELRA: report.value.operationalReadingsEarthFaultELRA!,
-      earthFaultELRSec: report.value.operationalReadingsEarthFaultELRSec!,
-      earthFaultA: report.value.operationalReadingsEarthFaultA!,
-      earthFaultSec: report.value.operationalReadingsEarthFaultSec!,
-      mainBreakerRating: report.value.operationalReadingsMainBreakerRating,
-      overCurrentDirectActingEnabled:
-        report.value.operationalReadingsOverCurrentDirectActingEnabled,
-      overCurrentDirectActing:
-        report.value.operationalReadingsOverCurrentDirectActing,
-      overCurrentDTLEnabled:
-        report.value.operationalReadingsOverCurrentDTLEnabled,
-      overCurrentIDTMLEnabled:
-        report.value.operationalReadingsOverCurrentIDTMLEnabled,
-      earthFaultRoobEnabled:
-        report.value.operationalReadingsEarthFaultRoobEnabled,
-      earthFaultEIREnabled:
-        report.value.operationalReadingsEarthFaultEIREnabled,
-      earthFaultEFEnabled: report.value.operationalReadingsEarthFaultEFEnabled,
-    });
-
-    const mapToUpdateCommand = (newReport: ReportQueryResult) => {
-        updateCommand.value.id=newReport.operationalReadingsId!;
-        updateCommand.value.reportId=newReport.id!;
-        updateCommand.value.voltageL1N=newReport.operationalReadingsVoltageL1N!;
-        updateCommand.value.voltageL2N=newReport.operationalReadingsVoltageL2N!;
-        updateCommand.value.voltageL3N=newReport.operationalReadingsVoltageL3N!;
-        updateCommand.value.voltageL1L2=
-          newReport.operationalReadingsVoltageL1L2!;
-        updateCommand.value.voltageL1L3=
-          newReport.operationalReadingsVoltageL1L3!;
-        updateCommand.value.voltageL2L3=
-          newReport.operationalReadingsVoltageL2L3!;
-        updateCommand.value.runningLoadL1=
-          newReport.operationalReadingsRunningLoadL1!;
-        updateCommand.value.runningLoadL2=
-          newReport.operationalReadingsRunningLoadL2!;
-        updateCommand.value.runningLoadL3=
-          newReport.operationalReadingsRunningLoadL3!;
-        updateCommand.value.mainBreakerAmp=
-          newReport.operationalReadingsMainBreakerAmp!;
-        updateCommand.value.mainBreakerPoles=
-          newReport.operationalReadingsMainBreakerPoles!;
-        updateCommand.value.mainBreakerCapacity=
-          newReport.operationalReadingsMainBreakerCapacity!;
-        updateCommand.value.overCurrentDTLA=
-          newReport.operationalReadingsOverCurrentDTLA!;
-        updateCommand.value.overCurrentDTLSec=
-          newReport.operationalReadingsOverCurrentDTLSec!;
-        updateCommand.value.overCurrentIDMTLA=
-          newReport.operationalReadingsOverCurrentIDMTLA!;
-        updateCommand.value.overCurrentIDMTLTm=
-          newReport.operationalReadingsOverCurrentIDMTLTm!;
-        updateCommand.value.earthFaultMA=
-          newReport.operationalReadingsEarthFaultMA!;
-        updateCommand.value.earthFaultELRA=
-          newReport.operationalReadingsEarthFaultELRA!;
-        updateCommand.value.earthFaultELRSec=
-          newReport.operationalReadingsEarthFaultELRSec!;
-        updateCommand.value.earthFaultA=
-          newReport.operationalReadingsEarthFaultA!;
-        updateCommand.value.earthFaultSec=
-          newReport.operationalReadingsEarthFaultSec!;
-        updateCommand.value.mainBreakerRating=
-          newReport.operationalReadingsMainBreakerRating;
-        updateCommand.value.overCurrentDirectActingEnabled=
-          newReport.operationalReadingsOverCurrentDirectActingEnabled;
-        updateCommand.value.overCurrentDirectActing=
-          newReport.operationalReadingsOverCurrentDirectActing;
-        updateCommand.value.overCurrentDTLEnabled=
-          newReport.operationalReadingsOverCurrentDTLEnabled;
-        updateCommand.value.overCurrentIDTMLEnabled=
-          newReport.operationalReadingsOverCurrentIDTMLEnabled;
-        updateCommand.value.earthFaultRoobEnabled=
-          newReport.operationalReadingsEarthFaultRoobEnabled;
-        updateCommand.value.earthFaultEIREnabled=
-          newReport.operationalReadingsEarthFaultEIREnabled;
-        updateCommand.value.earthFaultEFEnabled=
-          newReport.operationalReadingsEarthFaultEFEnabled;
-      }
-
-    debouncedWatch(
-      report,
-      async (newReport) => {
-      mapToUpdateCommand(newReport);
-      if ($reportsApi) {
-        await $reportsApi.updateOperationalReadings(
-          updateCommand.value.reportId!,
-          updateCommand.value
-        );
-      }
-    }, { deep: false, debounce: 1000 });
-
     return {
       report
     };
