@@ -110,7 +110,7 @@ const OperationalReading = () => {
             <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsMainBreakerAmp!)} preppendLabel="Main Breaker" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsMainBreakerAmp', value)} />
             <NumericPicker2 defaultValue={formatPickerValue(values.operationalReadingsMainBreakerRating!)} preppendLabel="Rating" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsMainBreakerRating', value)} />
             <Select
-              style={{ margin: 5 }}
+              style={{ margin: 5, width: '25%' }}
               size='large'
               value={values.operationalReadingsMainBreakerPoles!}
               onSelect={(e) => { setFieldValue('operationalReadingsMainBreakerPoles', [2, 3, 4][(e as IndexPath).row]) }}
