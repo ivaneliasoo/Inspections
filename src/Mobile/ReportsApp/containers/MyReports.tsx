@@ -11,6 +11,7 @@ import { useReports } from '../hooks/useReports';
 import { Badge } from '../components/Badge';
 import { ReportsFilter } from '../components/reports/ReportsFilter';
 import { useDownloader } from '../hooks/useDownloader';
+import { showMessage } from 'react-native-flash-message';
 
 const renderLeftActions = () => {
   return (
@@ -120,6 +121,7 @@ const SwipeableReport = ({ children, isClosed, id, name, onSwipedLeft, onSwipedR
 
 export const MyReports = ({ navigation }: any) => {
   const { getReports, reports, deleteReport, completeReport, refreshing, reportsState, generatePdf } = useReports()
+  const [printing, setPrinting] = useState(false)
 
   useEffect(() => {
     getReports()
@@ -132,6 +134,7 @@ export const MyReports = ({ navigation }: any) => {
   const {downloadPdf} = useDownloader()
 
   const ReportItem = ({ item }: { item: any }) => {
+    
 
     const navigateDetails = () => {
       navigation.navigate('Details', { reportId: item.id, title: item.title });
@@ -158,7 +161,7 @@ export const MyReports = ({ navigation }: any) => {
             footer={footerProps => renderItemFooter(footerProps, item)} >
             <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <View style={{ flex: 1 }}>
-                <Text category='s2'>{`Report Name: ${item.name}`}</Text>
+                <Text category='s2'>{`Report Name: ${item.name} ${printing}`}</Text>
                 <Text category='s2'>{`Date: ${moment(item.date).format('DD/MM/YYYY')}`}</Text>
                 <Text category='s2'>Validity: {moment(item.licenseValidityStart).format('DD-MM-YYYY')} - {moment(item.licenseValidityEnd).format('DD-MM-YYYY')}</Text>
               </View>
@@ -167,16 +170,44 @@ export const MyReports = ({ navigation }: any) => {
                 alignItems: 'center',
               }}>
                 <Button
+                  disabled={printing}
                   style={{ margin: 5 }}
                   appearance='outline'
                   accessoryLeft={Printer}
-                  onPress={() => downloadPdf(item.id)}
+                  onPress={() => {
+                    try {
+                      setPrinting(true); 
+                      downloadPdf(item.id)  
+                    } catch (error: any) {
+                      showMessage({
+                        message: 'Error downloading PDF',
+                        description: error?.message,
+                        animated: true,
+                      })
+                    } finally {
+                      setPrinting(false);
+                    }
+                  }}
                 />
                 <Button
+                  disabled={printing}
                   style={{ margin: 5 }}
                   appearance='outline'
                   accessoryLeft={ImageIcon}
-                  onPress={() => downloadPdf(item.id, true)}
+                  onPress={() => { 
+                    try {
+                      setPrinting(true); 
+                      downloadPdf(item.id, true)  
+                    } catch (error: any) {
+                      showMessage({
+                        message: 'Error downloading PDF',
+                        description: error?.message,
+                        animated: true,
+                      })
+                    } finally {
+                      setPrinting(false);
+                    }
+                  }}
                 />
               </View>
             </View>

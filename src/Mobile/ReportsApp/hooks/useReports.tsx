@@ -9,7 +9,7 @@ import moment from 'moment'; 0
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
-  const { getAll, setFilter, setWorkingReport, updateSignature, updateCheckListItems, clearWorkingReport, reportsState, completeReport: complete, removeReport, setRefreshing } = useContext(ReportsContext)
+  const { getAll, setFilter, setWorkingReport, setWorkingChecks, updateSignature, updateCheckListItems, clearWorkingReport, reportsState, completeReport: complete, removeReport, setRefreshing } = useContext(ReportsContext)
 
   const configuration = new Configuration({
     accessToken: userToken!,
@@ -25,7 +25,7 @@ export const useReports = () => {
     try {
       setRefreshing(true)
       const resp = await reportsApi.apiReportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports, reportsState.orderBy, reportsState.descendingSort)
-      getAll(resp.data as unknown as ReportQueryResult[])
+      getAll({ reports: resp.data as unknown as ReportQueryResult[] })
     } catch (error) {
       console.log(error)
     } finally {
@@ -37,7 +37,8 @@ export const useReports = () => {
     const result: ReportQueryResult = (await reportsApi.apiReportsIdGet(id)).data as unknown as ReportQueryResult
     if (!result.date) result.date = new Date()
     else result.date = moment(result.date).toDate()
-    setWorkingReport(result)
+    setWorkingReport({ report: result })
+    setWorkingChecks({ checklists: result.checkLists! })
   }
 
   const completeReport = async (reportId: number) => {
@@ -135,14 +136,14 @@ export const useReports = () => {
   }
 
   const generatePdf = async (id: number, compoundedPhotoRecord: boolean = true, printPhotos: boolean = true) => {
-    const printData = {
-      loginUrl: `${API_HOST}/client/Login`,
-      pageUrl: `${API_HOST}/client/reports/${id}/print?printPhotos=${printPhotos}&compoundedPhotoRecord=${compoundedPhotoRecord}`,
-      token: userToken,
-      photosPerPage: 12,
-      reportConfigurationId: 1
-    }
-    await reportsApi._export(printData)
+    // const printData = {
+    //   loginUrl: `${API_HOST}/client/Login`,
+    //   pageUrl: `${API_HOST}/client/reports/${id}/print?printPhotos=${printPhotos}&compoundedPhotoRecord=${compoundedPhotoRecord}`,
+    //   token: userToken,
+    //   photosPerPage: 12,
+    //   reportConfigurationId: 1
+    // }
+    await reportsApi._export(id, true)
   }
 
   return {

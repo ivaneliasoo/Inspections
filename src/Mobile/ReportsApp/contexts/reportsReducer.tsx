@@ -1,6 +1,5 @@
-import { ReportQueryResult, CheckListQueryResult } from '../services/api';
+import { ReportQueryResult, CheckListQueryResult, SignatureQueryResult } from '../services/api';
 import { ReportsState } from './ReportsContext';
-import { SignatureQueryResult } from '../services/api';
 
 export interface ReportsFilterPayload {
   myReports: boolean;
@@ -12,10 +11,11 @@ export interface ReportsFilterPayload {
 
 type ReportsAction =
   | { type: 'SET_REFRESHING'; isRefreshing: boolean; }
-  | { type: 'SET_REPORTS'; payload: { reports: any[]; }; }
+  | { type: 'SET_REPORTS'; payload: { reports: ReportQueryResult[]; }; }
   | { type: 'REMOVE_REPORT'; payload: { id: number; }; }
   | { type: 'COMPLETE_REPORT'; payload: { id: number; }; }
-  | { type: 'SET_WORKING_REPORT', report: ReportQueryResult }
+  | { type: 'SET_WORKING_REPORT', payload: { report: ReportQueryResult } }
+  | { type: 'SET_WORKING_CHECKS', payload: { checklists: CheckListQueryResult[] }}
   | { type: 'CLEAR_WORKING_REPORT' }
   | { type: 'SET_FILTER'; payload: ReportsFilterPayload }
   | { type: 'SET_OPERATIONAL_READINGS'; payload: any }
@@ -50,7 +50,10 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
       return { ...prevState, ...action.payload };
     }
     case 'SET_WORKING_REPORT': {
-      return { ...prevState, workingReport: action.report, workingCheckList: action.report.checkLists };
+      return { ...prevState, workingReport: action.payload.report };
+    }
+    case 'SET_WORKING_CHECKS': {
+      return { ...prevState, workingCheckList: action.payload.checklists };
     }
     case 'CLEAR_WORKING_REPORT': {
       return { ...prevState, workingReport: {}, workingCheckList: [] };
