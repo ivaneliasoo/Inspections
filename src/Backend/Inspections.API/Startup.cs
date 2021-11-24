@@ -55,7 +55,10 @@ namespace Inspections.API
             services.AddAWSService<IAmazonS3>();
 
             services.AddControllers()
-                .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+                .AddJsonOptions(opt =>{ 
+                    opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    opt.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                    });
             services.AddCors();
             services.AddAuthentication(options =>
             {
