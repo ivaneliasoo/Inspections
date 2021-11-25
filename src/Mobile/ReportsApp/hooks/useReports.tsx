@@ -136,13 +136,6 @@ export const useReports = () => {
   }
 
   const generatePdf = async (id: number, compoundedPhotoRecord: boolean = true, printPhotos: boolean = true) => {
-    // const printData = {
-    //   loginUrl: `${API_HOST}/client/Login`,
-    //   pageUrl: `${API_HOST}/client/reports/${id}/print?printPhotos=${printPhotos}&compoundedPhotoRecord=${compoundedPhotoRecord}`,
-    //   token: userToken,
-    //   photosPerPage: 12,
-    //   reportConfigurationId: 1
-    // }
     await reportsApi._export(id, true)
   }
 

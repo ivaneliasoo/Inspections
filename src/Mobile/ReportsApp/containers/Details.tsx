@@ -62,10 +62,10 @@ export const Details = ({ route, navigation }: Props) => {
       disabled={!hasOneSignatureAtLeast || checkListWithoutTouch || current.isClosed} 
       icon={(props) => <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
                         <Icon fill={!hasOneSignatureAtLeast || checkListWithoutTouch || current.isClosed ? 'grey' : 'green'}
-                              name={!hasOneSignatureAtLeast || checkListWithoutTouch || current.isClosed?
+                              name={current.isClosed?
                                 'checkmark-outline'
                               : 'checkmark-circle-2-outline'} style={{ width: 50, height: 50 }} {...props} />
-                        <Text category='s1'>{!hasOneSignatureAtLeast || checkListWithoutTouch || current.isClosed ? 'The Report is Completed' : 'Complete Report'}</Text></View>} onPress={() => {
+                        <Text category='s1'>{current.isClosed ? 'The Report is Completed' : 'Complete Report'}</Text></View>} onPress={() => {
 
         if (workingReport?.isClosed) return;
         Alert.alert('Complete / Close Report', `You are about to complete the report ${workingReport?.name} (${reportId}). Are you sure?`,

@@ -161,7 +161,7 @@ export const MyReports = ({ navigation }: any) => {
             footer={footerProps => renderItemFooter(footerProps, item)} >
             <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <View style={{ flex: 1 }}>
-                <Text category='s2'>{`Report Name: ${item.name} ${printing}`}</Text>
+                <Text category='s2'>{`Report Name: ${item.name}`}</Text>
                 <Text category='s2'>{`Date: ${moment(item.date).format('DD/MM/YYYY')}`}</Text>
                 <Text category='s2'>Validity: {moment(item.licenseValidityStart).format('DD-MM-YYYY')} - {moment(item.licenseValidityEnd).format('DD-MM-YYYY')}</Text>
               </View>
@@ -174,10 +174,10 @@ export const MyReports = ({ navigation }: any) => {
                   style={{ margin: 5 }}
                   appearance='outline'
                   accessoryLeft={Printer}
-                  onPress={() => {
+                  onPress={async () => {
                     try {
                       setPrinting(true); 
-                      downloadPdf(item.id)  
+                      await downloadPdf(item.id)  
                     } catch (error: any) {
                       showMessage({
                         message: 'Error downloading PDF',
@@ -194,10 +194,10 @@ export const MyReports = ({ navigation }: any) => {
                   style={{ margin: 5 }}
                   appearance='outline'
                   accessoryLeft={ImageIcon}
-                  onPress={() => { 
+                  onPress={async () => { 
                     try {
                       setPrinting(true); 
-                      downloadPdf(item.id, true)  
+                      await downloadPdf(item.id, true)  
                     } catch (error: any) {
                       showMessage({
                         message: 'Error downloading PDF',
