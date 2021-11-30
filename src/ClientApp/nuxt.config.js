@@ -1,5 +1,8 @@
 export default {
   ssr: false,
+  server: {
+    host: '0.0.0.0'
+  },
   /*
   ** Headers of the page
   */
@@ -44,6 +47,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/device',
     '@vueuse/core/nuxt',
+    '@braid/vue-formulate/nuxt',
     ['nuxt-compress',
       {
         gzip: {

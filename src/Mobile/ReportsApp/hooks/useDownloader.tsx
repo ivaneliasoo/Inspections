@@ -5,29 +5,29 @@ import { API_HOST } from '../config/config';
 
 export const useDownloader =() => {
   const {authState: {userToken}} = useContext(AuthContext)
+  const android = RNFetchBlob.android
 
   const downloadPdf = (id: number, printPhotos: boolean = false) => {
     RNFetchBlob
     .config({
-        fileCache: true,
-        indicator: true,
-        overwrite: true,
         addAndroidDownloads : {
-            title: 'report.pdf',
             useDownloadManager : true,
-            notification : true,
-            mime : 'application/pdf',
+            title: `report_${id}_${Date.now()}.pdf`,
             description : 'Genereating and Downloading the report.',
+            mime : 'application/pdf',
+            notification : true,
             mediaScannable: true,
-            path: `${RNFetchBlob.fs.dirs.DownloadDir}/report.pdf`,
+            path: `${RNFetchBlob.fs.dirs.DownloadDir}/report_${id}_${Date.now()}.pdf`,
         }
     })
     .fetch('GET', `${API_HOST}/api/reports/${id}/export?printPhotos=${printPhotos}`, {
       Authorization: `Bearer ${userToken}`
     })
     .then((resp) => {
-      // the path of downloaded file
-      resp.path()
+      setTimeout(() => {
+        console.log(resp.path())
+        android.actionViewIntent(resp.path(), 'application/pdf')
+      }, 5000);
     })
     .catch(err => console.log(err))
   }

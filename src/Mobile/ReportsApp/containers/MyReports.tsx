@@ -11,6 +11,7 @@ import { useReports } from '../hooks/useReports';
 import { Badge } from '../components/Badge';
 import { ReportsFilter } from '../components/reports/ReportsFilter';
 import { useDownloader } from '../hooks/useDownloader';
+import { showMessage } from 'react-native-flash-message';
 
 const renderLeftActions = () => {
   return (
@@ -120,6 +121,7 @@ const SwipeableReport = ({ children, isClosed, id, name, onSwipedLeft, onSwipedR
 
 export const MyReports = ({ navigation }: any) => {
   const { getReports, reports, deleteReport, completeReport, refreshing, reportsState, generatePdf } = useReports()
+  const [printing, setPrinting] = useState(false)
 
   useEffect(() => {
     getReports()
@@ -132,6 +134,7 @@ export const MyReports = ({ navigation }: any) => {
   const {downloadPdf} = useDownloader()
 
   const ReportItem = ({ item }: { item: any }) => {
+    
 
     const navigateDetails = () => {
       navigation.navigate('Details', { reportId: item.id, title: item.title });
@@ -167,16 +170,44 @@ export const MyReports = ({ navigation }: any) => {
                 alignItems: 'center',
               }}>
                 <Button
+                  disabled={printing}
                   style={{ margin: 5 }}
                   appearance='outline'
                   accessoryLeft={Printer}
-                  onPress={() => downloadPdf(item.id)}
+                  onPress={async () => {
+                    try {
+                      setPrinting(true); 
+                      await downloadPdf(item.id)  
+                    } catch (error: any) {
+                      showMessage({
+                        message: 'Error downloading PDF',
+                        description: error?.message,
+                        animated: true,
+                      })
+                    } finally {
+                      setPrinting(false);
+                    }
+                  }}
                 />
                 <Button
+                  disabled={printing}
                   style={{ margin: 5 }}
                   appearance='outline'
                   accessoryLeft={ImageIcon}
-                  onPress={() => downloadPdf(item.id, true)}
+                  onPress={async () => { 
+                    try {
+                      setPrinting(true); 
+                      await downloadPdf(item.id, true)  
+                    } catch (error: any) {
+                      showMessage({
+                        message: 'Error downloading PDF',
+                        description: error?.message,
+                        animated: true,
+                      })
+                    } finally {
+                      setPrinting(false);
+                    }
+                  }}
                 />
               </View>
             </View>

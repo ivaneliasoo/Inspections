@@ -871,37 +871,6 @@ export interface EditSignatureCommand {
 /**
  * 
  * @export
- * @interface ExportDTO
- */
-export interface ExportDTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof ExportDTO
-     */
-    loginUrl?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExportDTO
-     */
-    pageUrl?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ExportDTO
-     */
-    photosPerPage?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ExportDTO
-     */
-    reportConfigurationId?: number;
-}
-/**
- * 
- * @export
  * @interface LicenseDTO
  */
 export interface LicenseDTO {
@@ -4454,12 +4423,16 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
-         * @param {ExportDTO} [exportDTO] 
+         * @param {number} id 
+         * @param {boolean} [printPhotos] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        _export: async (exportDTO?: ExportDTO, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/Reports/export`;
+        _export: async (id: number, printPhotos?: boolean, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('_export', 'id', id)
+            const localVarPath = `/api/Reports/{id}/export`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4467,7 +4440,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4475,14 +4448,15 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (printPhotos !== undefined) {
+                localVarQueryParameter['printPhotos'] = printPhotos;
+            }
+
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(exportDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5127,12 +5101,13 @@ export const ReportsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {ExportDTO} [exportDTO] 
+         * @param {number} id 
+         * @param {boolean} [printPhotos] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async _export(exportDTO?: ExportDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator._export(exportDTO, options);
+        async _export(id: number, printPhotos?: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator._export(id, printPhotos, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5313,12 +5288,13 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
-         * @param {ExportDTO} [exportDTO] 
+         * @param {number} id 
+         * @param {boolean} [printPhotos] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        _export(exportDTO?: ExportDTO, options?: any): AxiosPromise<void> {
-            return localVarFp._export(exportDTO, options).then((request) => request(axios, basePath));
+        _export(id: number, printPhotos?: boolean, options?: any): AxiosPromise<void> {
+            return localVarFp._export(id, printPhotos, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5483,13 +5459,14 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
 export class ReportsApi extends BaseAPI {
     /**
      * 
-     * @param {ExportDTO} [exportDTO] 
+     * @param {number} id 
+     * @param {boolean} [printPhotos] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReportsApi
      */
-    public _export(exportDTO?: ExportDTO, options?: any) {
-        return ReportsApiFp(this.configuration)._export(exportDTO, options).then((request) => request(this.axios, this.basePath));
+    public _export(id: number, printPhotos?: boolean, options?: any) {
+        return ReportsApiFp(this.configuration)._export(id, printPhotos, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -26,15 +26,15 @@ namespace Inspections.API.Features.Users
         /// <summary>
         /// Generates a JWT token for use in api call
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="loginModel"></param>
         /// <returns></returns>
         [HttpPost("token", Name ="Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public IActionResult CreateToken([FromBody] LoginModel model)
+        public IActionResult CreateToken([FromBody] LoginModel loginModel)
         {
-            var user = _context.Users.Where(u => u.UserName == model.username && u.Password == model.password).FirstOrDefault();
+            var user = _context.Users.Where(u => u.UserName == loginModel.username && u.Password == loginModel.password).FirstOrDefault();
 
             if (user == null)
             {

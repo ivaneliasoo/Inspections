@@ -10,7 +10,7 @@ export interface ReportsState {
   filter: string;
   descendingSort: boolean;
   orderBy: string;
-  workingReport?: ReportQueryResult;
+  workingReport: ReportQueryResult;
   workingCheckList?: CheckListQueryResult[];
   refreshing: boolean;
 }
@@ -19,16 +19,27 @@ export interface ReportsContextProps {
   reportsState: ReportsState,
   setRefreshing: (isRefreshing: boolean) => void
   setFilter: (filter: ReportsFilterPayload) => void,
-  getAll: (reports: ReportQueryResult[]) => void,
+  getAll: (payload: { reports: ReportQueryResult[] }) => void,
   removeReport: (id: number) => void,
   completeReport: (id: number) => void,
-  setWorkingReport: (payload: ReportQueryResult) => void,
-  updateCheckList: (payload: CheckListQueryResult) => void,
+  setWorkingReport: (payload:  { report: ReportQueryResult }) => void,
+  setWorkingChecks: (payload: { checklists: CheckListQueryResult[] }) => void,
+  updateCheckList: (payload: any) => void,
   updateSignature: (payload: { signature: SignatureQueryResult, index: number }) => void,
   clearWorkingReport: () => void,
   updateCheckListItems: (payload: { checklistId: number, newValue: number }) => void,
 }
-const initialState: ReportsState = { reports: [], myReports: false, isClosed: false, filter: '', descendingSort: true, orderBy: 'date', workingReport: undefined!, workingCheckList: undefined!, refreshing: false }
+const initialState: ReportsState = {
+  reports: [],
+  myReports: false, 
+  isClosed: false, 
+  filter: '', 
+  descendingSort: true, 
+  orderBy: 'date', 
+  workingReport: {} as ReportQueryResult, 
+  workingCheckList: [] as CheckListQueryResult[],
+  refreshing: false
+} as ReportsState
 
 export const ReportsContext = createContext({} as ReportsContextProps);
 const ReportsProvider = ({ children }: any) => {
@@ -49,10 +60,10 @@ const ReportsProvider = ({ children }: any) => {
     })
   }
 
-  const getAll = (reports: ReportQueryResult[]) => {
+  const getAll = (payload: { reports: ReportQueryResult[] }) => {
     dispatch({
       type: 'SET_REPORTS',
-      payload: { reports }
+      payload
     })
   }
 
@@ -70,10 +81,17 @@ const ReportsProvider = ({ children }: any) => {
     })
   }
 
-  const setWorkingReport = (payload: ReportQueryResult) => {
+  const setWorkingReport = (payload: { report: ReportQueryResult }) => {
     dispatch({
       type: 'SET_WORKING_REPORT',
-      report: payload
+      payload
+    })
+  }
+
+  const setWorkingChecks = (payload: { checklists: CheckListQueryResult[] }) => {
+    dispatch({
+      type: 'SET_WORKING_CHECKS',
+      payload
     })
   }
 
@@ -107,13 +125,14 @@ const ReportsProvider = ({ children }: any) => {
 
   return (
     <ReportsContext.Provider value={{
-      setRefreshing,
       reportsState,
+      setRefreshing,
       setFilter,
       getAll,
       completeReport,
       removeReport,
       setWorkingReport,
+      setWorkingChecks,
       updateCheckList,
       updateSignature,
       clearWorkingReport,
