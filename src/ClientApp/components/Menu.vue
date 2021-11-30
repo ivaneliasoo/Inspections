@@ -60,6 +60,12 @@ export default class Menu extends Vue {
       icon: 'mdi-graph'
     },
     {
+      name: 'Job Planner',
+      parentName: '',
+      route: '/jobplanner',
+      icon: 'mdi-calendar'
+    },
+    {
       name: "Risk Assessment",
       parentName: "",
       route: "",

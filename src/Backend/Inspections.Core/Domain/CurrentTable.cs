@@ -21,6 +21,12 @@ namespace Inspections.Core.Domain
         [Column("current_data", TypeName = "jsonb")]
         public string currentData { get; set; }
 
+        // [Column("lastedit")]
+        public DateTimeOffset LastEdit { get; set; }
+        
+        // [Column("lastedituser")]
+        public string LastEditUser { get; set; }
+
         public override string ToString() {
             return $"{id} {circuit} {startDate} {endDate} {currentData}";
         }
@@ -31,6 +37,8 @@ namespace Inspections.Core.Domain
             startDate = "";
             endDate = "";
             currentData = "";
+            LastEdit = new DateTimeOffset();
+            LastEditUser = "";
         }        
     }
 }

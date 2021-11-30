@@ -31,6 +31,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ZadERP.Api.Middleware;
+using Inspections.Core.Domain;
 
 namespace Inspections.API
 {
@@ -55,7 +56,12 @@ namespace Inspections.API
             services.AddAWSService<IAmazonS3>();
 
             services.AddControllers()
-                .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+                .AddJsonOptions(opt => 
+                {
+                    opt.JsonSerializerOptions.Converters.Add(new JsonDateConverter());
+			        opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
+                //.AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddCors();
             services.AddAuthentication(options =>
             {

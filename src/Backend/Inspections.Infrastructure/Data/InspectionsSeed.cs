@@ -6,6 +6,7 @@ using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -62,6 +63,37 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                         MarginLeft = "70px",
                         MarginRight = "70px"
                     });
+                }
+
+                var templateId = 1;
+                if (!context.Template.Any(t => t.id == templateId)) {
+                    log.LogInformation("No template found in the database, copying template from file categories.json");
+
+                    var CategoriesFilePath = Path.Combine(AppContext.BaseDirectory, "categories.json");
+                    var reader = System.IO.File.OpenText(CategoriesFilePath);
+                    var categories = reader.ReadToEnd();
+
+                    Template t = new Template();
+                    t.id = templateId;
+                    t.templateDef = categories;
+
+                    context.Add(t);
+                }
+
+                if (!context.Team.Any()) {
+                    var teams = new List<Team> {
+                        new Team { foreman = "Kim", position = 1, teamMembers = "[]", lastUpdate = DateTime.Now },
+                        new Team { foreman = "Gan", position = 2, teamMembers = "[]", lastUpdate = DateTime.Now },
+                        new Team { foreman = "Liton", position = 3, teamMembers = "[]", lastUpdate = DateTime.Now },
+                        new Team { foreman = "Lee", position = 4, teamMembers = "[]", lastUpdate = DateTime.Now },
+                        new Team { foreman = "Hin", position = 5, teamMembers = "[]", lastUpdate = DateTime.Now },
+                        new Team { foreman = "Boomi", position = 6, teamMembers = "[]", lastUpdate = DateTime.Now },
+                        new Team { foreman = "Mani", position = 7, teamMembers = "[]", lastUpdate = DateTime.Now },
+                        new Team { foreman = "Hui", position = 8, teamMembers = "[]", lastUpdate = DateTime.Now },
+                        new Team { foreman = "Store", position = 100, teamMembers = "[]", lastUpdate = DateTime.Now },
+                        new Team { foreman = "On leave", position = 101, teamMembers = "[]", lastUpdate = DateTime.Now }
+                    };
+                    context.AddRange(teams);
                 }
 
                 await context.SaveChangesAsync();

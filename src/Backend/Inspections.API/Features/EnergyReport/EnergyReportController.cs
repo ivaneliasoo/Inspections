@@ -32,13 +32,78 @@ namespace Inspections.API.Features.EnergyReport
         [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateCategories()
         {
-            var deserializedContent = await JsonSerializer.DeserializeAsync<object>(Request.Body);
+            //var categories = await JsonSerializer.DeserializeAsync<object>(Request.Body);
 
-            using var fileStream = System.IO.File.Create(CategoriesFilePath);
-            await JsonSerializer.SerializeAsync(fileStream, deserializedContent, typeof(object), new JsonSerializerOptions { WriteIndented = true });
+            if (!this.Request.Body.CanSeek)
+            {
+                this.Request.EnableBuffering();
+            }
+
+            this.Request.Body.Position = 0;
+            var reader = new StreamReader(this.Request.Body, Encoding.UTF8);
+            var categories = await reader.ReadToEndAsync().ConfigureAwait(false);
+            this.Request.Body.Position = 0;
+
+            Template t = new Template();
+            t.id = 1;
+            t.templateDef = categories;
+
+            var prev = await _context.Template.Where(t => t.id == 1)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (prev == null) {
+                _context.Add(t);
+            } else {
+                t.templateDef = categories;
+                _context.Update(t);
+            }
+
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        // [HttpPost("category")]
+        // [ProducesResponseType(StatusCodes.Status204NoContent)]
+        // [ProducesDefaultResponseType]
+        // public async Task<IActionResult> UpdateCategories()
+        // {
+        //     var deserializedContent = await JsonSerializer.DeserializeAsync<object>(Request.Body);
+
+        //     using var fileStream = System.IO.File.Create(CategoriesFilePath);
+        //     await JsonSerializer.SerializeAsync(fileStream, deserializedContent, typeof(object), new JsonSerializerOptions { WriteIndented = true });
+
+        //     return NoContent();
+        // }
+
+        [HttpPost("category/migrate")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> migrateCategories()
+        {
+            Console.WriteLine("Se ha invocado migrateCategories");
+            
+            string? categories = CategoriesFromFile();
+
+            Template t = new Template();
+            t.id = 1;
+            t.templateDef = categories;
+
+            var prev = await _context.Template.Where(t => t.id == 1)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (prev == null) {
+                Console.WriteLine("*** No template found in the database, copying template from file categories.json");
+                _context.Add(t);
+                await _context.SaveChangesAsync();
+            }
+
+            Console.WriteLine("Se ha ejecutado migrateCategories");
 
             return NoContent();
         }
+
 
         [HttpGet("category")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -52,7 +117,19 @@ namespace Inspections.API.Features.EnergyReport
             if (string.IsNullOrWhiteSpace(fileContent))
                 return NotFound();
 
-            return Ok(fileContent);
+            var results = await _context.Template.Where(t => t.id == 1)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            return Ok(results.templateDef);
+        }
+
+        public string CategoriesFromFile()
+        {
+            var reader = System.IO.File.OpenText(CategoriesFilePath);
+            var fileContent = reader.ReadToEnd();
+
+            return fileContent;
         }
 
         private static string CategoriesFilePath => Path.Combine(AppContext.BaseDirectory, "categories.json");
@@ -80,22 +157,38 @@ namespace Inspections.API.Features.EnergyReport
             // all entities in InspectionsContext has 2 shadow properties: LastEdit, LastEditUser.
             // this propoerties are used for audit (or that was the original intention haha).
             // in the future this properties can be skiped in the entity's OnModelCreating override
-            var results = await _context.CurrentTable
-                .FromSqlRaw(@"SELECT id, circuit, start_date, end_date, current_data, ""LastEdit"", ""LastEditUser""
-                    FROM current WHERE start_date = {0} AND end_date = {1}", startDate, endDate)
-                    // trancking entities is an expensive task so adds AsNoTracking() to speed up
-                .AsNoTracking().ToListAsync();
+            // var results = await _context.CurrentTable
+            //     .FromSqlRaw(@"SELECT id, circuit, start_date, end_date, current_data, ""LastEdit"", ""LastEditUser""
+            //         FROM current WHERE start_date = {0} AND end_date = {1}", startDate, endDate)
+            //     .AsNoTracking().ToListAsync();
+
+            var results = await _context.CurrentTable.Where(c => 
+                c.startDate == startDate && 
+                // trancking entities is an expensive task so adds AsNoTracking() to speed up
+                c.endDate == endDate)
+                    .AsNoTracking()
+                    .ToListAsync();
 
             return Ok(results);
         }
 
         // POST: api/current-table
         [HttpPost("current-table")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> SetCurrentTable(CurrentTable currentTable)
+        public async Task<IActionResult> SetCurrentTable()
         {
+            if (!this.Request.Body.CanSeek)
+            {
+                this.Request.EnableBuffering();
+            }
+
+            this.Request.Body.Position = 0;
+            var reader = new StreamReader(this.Request.Body, Encoding.UTF8);
+            var body = await reader.ReadToEndAsync().ConfigureAwait(false);
+
+            this.Request.Body.Position = 0;
+            var options = new JsonSerializerOptions();
+            CurrentTable? currentTable = JsonSerializer.Deserialize<CurrentTable>(body, options);
+           
             if (currentTable == null) {
                 return BadRequest();
             }
@@ -103,20 +196,18 @@ namespace Inspections.API.Features.EnergyReport
             var prev = await _context.CurrentTable.Where(c => 
                 c.circuit == currentTable.circuit && 
                 c.startDate == currentTable.startDate && 
-                c.endDate == currentTable.endDate)
                 // trancking entities is an expensive task so adds AsNoTracking() to speed up
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
+                c.endDate == currentTable.endDate)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync();
 
             if (prev == null) {
                 _context.Add(currentTable);
-            } else {
-                _context.Update(prev);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return NoContent();
-        }
+        }        
 
     }
 }

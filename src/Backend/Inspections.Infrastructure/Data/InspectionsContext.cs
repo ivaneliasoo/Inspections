@@ -5,6 +5,7 @@ using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Core.QueryModels;
+using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguration;
 using Inspections.Infrastructure.Data.ReportsAggregateConfiguration;
 using Inspections.Shared;
@@ -50,6 +51,11 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Core.Domain.EMALicense> Licenses { get; set; }
         public DbSet<OperationalReadings> OperationalReadings { get; set; }
         public DbSet<Core.Domain.CurrentTable> CurrentTable { get; set; }
+        public DbSet<Core.Domain.Template> Template { get; set; }
+
+        public DbSet<Core.Domain.SchedJob> SchedJob { get; set; }
+        public DbSet<Core.Domain.Job> Job { get; set; }
+        public DbSet<Core.Domain.Team> Team { get; set; }
 
         //Queries
         public DbSet<ResumenCheckList> ResumenCheckLists { get; set; }
@@ -97,6 +103,9 @@ namespace Inspections.Infrastructure.Data
 
             modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToTable("ResumenCheckList", m => m.ExcludeFromMigrations());
             modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey().ToTable("ResumenReportConfiguration", m => m.ExcludeFromMigrations());
+
+            modelBuilder.Entity<SchedJob>()
+                .HasKey(sj => new { sj.team, sj.date });
 
             base.OnModelCreating(modelBuilder);
         }
