@@ -85,7 +85,7 @@ export default defineComponent({
       }
     ]
 
-    const handleSubmit = (values) => {
+    const handleSubmit = (values: any) => {
       console.log(values)
     }
 
@@ -99,5 +99,5 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-@import '../../../node_modules/@braid/vue-formulate/themes/snow/snow.scss';
+// @import '../../../node_modules/@braid/vue-formulate/themes/snow/snow.scss';
 </style>

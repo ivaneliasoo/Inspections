@@ -104,7 +104,7 @@
                       <col style="width:8%;">
                       <col style="width:76%;">
                       <col style="width:16%;">
-                    </colgroup>                  
+                    </colgroup>
                     <thead class="text-caption">
                       <tr>
                         <th>
@@ -123,7 +123,7 @@
                           draggable="true"
                           @dragover="dragoverHandler($event)"
                           @dragstart="dragstartHandler($event, index)"
-                          @drop="dropHandler($event, index)"                      
+                          @drop="dropHandler($event, index)"
                       >
                         <td style="border: 1px solid lightgray;">
                           {{index+1}}
@@ -264,8 +264,8 @@
                   </v-col>
                 </v-row>
 
-                <v-simple-table 
-                  class="my-0 py-0 simple-table" 
+                <v-simple-table
+                  class="my-0 py-0 simple-table"
                   style="max-width: 100%; overflow-x: hidden;"
                   dense fixed-header>
                     <thead>
@@ -300,9 +300,9 @@
                         :key="item.num"
                       >
                         <td style="border: 2px solid lightgray;">
-                          <v-checkbox 
+                          <v-checkbox
                             flat solo hide-details
-                            class="ma-0 pa-0" 
+                            class="ma-0 pa-0"
                             v-model="item.include"></v-checkbox>
                         </td>
                         <td style="border: 2px solid lightgray;">
@@ -312,19 +312,19 @@
                           ></v-text-field>
                         </td>
                         <td style="border: 2px solid lightgray;">
-                          <v-text-field 
+                          <v-text-field
                             flat solo hide-details
                             v-model="item.ymin"></v-text-field>
                         </td>
                         <td style="border: 2px solid lightgray;">
-                          <v-text-field 
+                          <v-text-field
                             flat solo hide-details
                             v-model="item.ymax"></v-text-field>
                         </td>
                         <td style="border: 2px solid lightgray;">
                           <v-select
                             dense flat solo hide-details
-                            class="ma-0 pa-0" 
+                            class="ma-0 pa-0"
                             :items="csvColumns"
                             v-model="item.value1"
                           >
@@ -333,7 +333,7 @@
                         <td style="border: 2px solid lightgray;">
                           <v-select
                             dense flat solo hide-details
-                            class="ma-0 pa-0" 
+                            class="ma-0 pa-0"
                             :items="csvColumns"
                             v-model="item.value2"
                           >
@@ -342,7 +342,7 @@
                         <td style="border: 2px solid lightgray;">
                           <v-select
                             dense flat solo hide-details
-                            class="ma-0 pa-0" 
+                            class="ma-0 pa-0"
                             :items="csvColumns"
                             v-model="item.value3"
                           >
@@ -467,7 +467,7 @@
                 </v-row>
                 <v-row justify="start">
                   <v-col cols="10">
-                    <v-simple-table class="simple-table" 
+                    <v-simple-table class="simple-table"
                       dense fixed-header height="270">
                       <thead>
                         <tr>
@@ -564,7 +564,7 @@
               v-model="editedPage2.subtitle"
               label="Subtitle"
             ></v-text-field>
-            <v-simple-table class="my-0 py-0 simple-table" 
+            <v-simple-table class="my-0 py-0 simple-table"
               style="max-width: 100%; overflow-x: hidden;"
               dense fixed-header>
               <thead class="my-0 py-0">
@@ -588,7 +588,7 @@
                   <td style="border: 1px solid lightgray;">
                     <input class="text-caption table-input" type="text" size="40"
                       v-model="item.remarks"
-                    >                          
+                    >
                   </td>
                 </tr>
                 <tr
@@ -604,9 +604,9 @@
                   <td style="border: 1px solid lightgray;">
                     <input class="text-caption table-input" type="text" size="40"
                       v-model="item.remarks"
-                    >                      
+                    >
                   </td>
-                </tr>                  
+                </tr>
               </tbody>
             </v-simple-table>
           </v-form>
@@ -1110,7 +1110,7 @@
   </v-container>
 </template>
 
-<style>
+<style scoped>
 .simple-table {
   border-collapse: collapse;
   border-style: hidden;
@@ -1620,7 +1620,7 @@ export default {
       const configHeaders = {
         'content-type': 'text/plain',
         Accept: 'text/plain'
-      }      
+      }
       this.$axios({
         url: this.endpoint('category/migrate'),
         method: 'post',
@@ -1635,7 +1635,7 @@ export default {
           this.errorMessage = error.message
           // TODO: Do not log in production mode
           console.error('There was an error when migrating templates from file to database! ', error)
-        })      
+        })
     },
     saveTemplates (showMessage) {
       const configHeaders = {
@@ -2248,14 +2248,14 @@ export default {
     dragoverHandler(event) {
       event.preventDefault();
       event.dataTransfer.dropEffect = "move"
-    },    
+    },
     dropHandler(event, index) {
       event.preventDefault();
       const data = JSON.parse(event.dataTransfer.getData("application/json"));
       const target = this.template.categories[data.section];
       this.template.categories.splice(data.section, 1);
       this.template.categories.splice(index, 0, target);
-      this.saveTemplates(false);      
+      this.saveTemplates(false);
     },
     openCurrentTableDialog() {
       this.currentTableDialog.startDate = "";

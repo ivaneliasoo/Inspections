@@ -8,7 +8,7 @@
         fixed
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn 
+          <v-btn
             icon
             v-bind="attrs"
             v-on="on"
@@ -37,7 +37,7 @@
               Manpower forecast
             </v-list-item-title>
           </v-list-item>
-          <v-divider></v-divider>                
+          <v-divider></v-divider>
           <v-list-item>
             <v-list-item-title @click="save">
               Save
@@ -54,7 +54,7 @@
           <v-col class="mt-0 pt-0 mb-n4 pb-n4 " cols=7>
             <div class="text-h6" style="text-align: bottomz; display: inline">
               Job Schedule Projection
-            </div>                
+            </div>
           </v-col>
           <v-col class="text-right mt-0 pt-0 mb-n4 pb-n4" cols=2>
             <div id="flatpickr" class="rounded text-body-2"
@@ -75,14 +75,14 @@
             &nbsp; &nbsp;
             <v-btn small @click="nextWeek">
               Next Week
-            </v-btn>            
+            </v-btn>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
             <div style="height: 780px; overflow-y: scroll;">
               <table
-                id="job-sched" 
+                id="job-sched"
                 class="my-0 py-0 job-sched">
                   <colgroup>
                     <col style="width:8%;">
@@ -106,7 +106,7 @@
                       </td>
                       <td v-for="(team, teamIndex) in teams" :key="team.id"
                             class="text-left draggable"
-                            draggable="true" 
+                            draggable="true"
                             data-source="scheduled-job"
                             @click="onTableCellClick($event, day.jobs[team.id])"
                             @drop="dropHandler($event, index, teamIndex)"
@@ -134,7 +134,7 @@
                           </label><br>
                           {{ day.jobs[team.id].job1 }}
                         </div>
-                      </td>                      
+                      </td>
                     </tr>
                   </tbody>
               </table>
@@ -152,9 +152,9 @@
         </v-row>
         <v-row>
           <v-col>
-            <div style="height: 330px; width: 90%; overflow-y: auto;">                  
+            <div style="height: 330px; width: 90%; overflow-y: auto;">
               <table
-                id="confirmed-jobs" 
+                id="confirmed-jobs"
                 class="my-0 py-0 job-table">
                   <thead v-on:click="openJobTable('confirmed')">
                     <tr>
@@ -164,7 +164,7 @@
                   </thead>
                   <tbody v-on:click="openJobTable('confirmed')">
                     <tr v-for="(job, index) in confirmedJobs" :key="index" :style="background(job.priority)">
-                      <td class="text-caption text-left draggable" 
+                      <td class="text-caption text-left draggable"
                           style="width:80%;"
                           draggable="true"
                           data-source="confirmed-job"
@@ -192,11 +192,11 @@
               </div>
           </v-col>
         </v-row>
-        <v-row class="my-0 py-0"> 
+        <v-row class="my-0 py-0">
           <v-col>
-            <div style="height: 330px; width: 90%; overflow-y: auto;">                  
-              <table 
-                id="upcoming-jobs" 
+            <div style="height: 330px; width: 90%; overflow-y: auto;">
+              <table
+                id="upcoming-jobs"
                 class="my-0 py-0 job-table">
                   <thead v-on:click="openJobTable('upcoming')">
                     <tr>
@@ -206,7 +206,7 @@
                   </thead>
                   <tbody v-on:click="openJobTable('upcoming')">
                     <tr v-for="(job, index) in upcomingJobs" :key="index" :style="background(job.priority)">
-                      <td class="text-caption text-left draggable" 
+                      <td class="text-caption text-left draggable"
                           style="width:80%"
                           draggable="true"
                           data-source="upcoming-job"
@@ -231,7 +231,7 @@
           <v-col>
             <p justify="end" class="my-0 py-0 text-caption">Version {{ version }}</p>
           </v-col>
-        </v-row>              
+        </v-row>
       </v-col>
     </v-row>
 
@@ -246,8 +246,8 @@
           <v-container>
             <v-row>
               <v-col>
-                <v-simple-table 
-                  id="simple-job-table" 
+                <v-simple-table
+                  id="simple-job-table"
                   class="simple-job-table"
                   fixed-header
                   height="600px">
@@ -266,7 +266,7 @@
                           <input type="checkbox" v-model="job.checked">
                         </td>
                         <td>
-                          <textarea class="text-caption textarea" rows="2" cols="45" 
+                          <textarea class="text-caption textarea" rows="2" cols="45"
                             v-model="job.scope" @change="addToJobs(job)">
                           </textarea>
                         </td>
@@ -362,7 +362,7 @@
                           </label>
                         </v-col>
                       </v-row>
-                      <v-row class="my-n4 py-0">                     
+                      <v-row class="my-n4 py-0">
                         <v-col>
                           <v-textarea
                             rows=3
@@ -377,7 +377,7 @@
                             Afternoon
                           </label>
                         </v-col>
-                      </v-row>                          
+                      </v-row>
                       <v-row class="my-0 py-0">
                         <v-col>
                           <v-textarea
@@ -395,7 +395,7 @@
                             {{ jobInfo.shiftLabel() }}
                           </v-label>
                         </v-col>
-                      </v-row>                           
+                      </v-row>
                       <v-row class="my-0 py-0">
                         <v-col>
                           <v-textarea class="my-0 py-0"
@@ -449,7 +449,7 @@
           <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=7>
             <div class="text-h6" style="text-align: bottomz; display: inline">
               Job Projection Overview
-            </div>                
+            </div>
           </v-col>
         </v-row>
         <v-row>
@@ -467,7 +467,7 @@
                           <td style="width 20%">
                             <v-btn icon small @click="addJob(id)">
                               <v-icon>mdi-plus</v-icon>
-                            </v-btn>                            
+                            </v-btn>
                           </td>
                         </tr>
                       </table>
@@ -485,10 +485,10 @@
                       <table class="job-projection">
                         <colgroup span = "10">
                             <col v-for="n in 10" width="10" :key="n">
-                        </colgroup>                        
+                        </colgroup>
                         <tr style="height: 40%; border-botton-style: hidden;">
                           <td colspan="2" style="border-right-style: hidden;">
-                            <v-btn 
+                            <v-btn
                               class="mx-2"
                               fab
                               dark
@@ -513,20 +513,20 @@
                             <input class="text-caption table-input" type="text" placeholder="Comments"
                               @change="$forceUpdate()"
                               v-model="jobItem.comments" :style="jobProjectionCommentsStyle(jobItem.comments)"
-                            >                            
+                            >
                           </td>
                           <td colspan="5" rowspan="2">
-                            <textarea v-if="id==='inProgress'" 
+                            <textarea v-if="id==='inProgress'"
                               class="text-caption textarea" rows="2" placeholder="Teams"
                               v-model="jobItem.teams" style="color: blue; width:100%;">
                             </textarea>
-                          </td>                          
+                          </td>
                         </tr>
                         <tr style="height: 20%; border-top-style: hidden;">
                           <td colspan="5" style="border-right-style: hidden;">
                             <input class="text-caption table-input" type="text" placeholder="Value"
                               v-model="jobItem.value" style="display:table-cell; width:100%"
-                            >                            
+                            >
                           </td>
                         </tr>
                         <tr style="height: 20%">
@@ -534,7 +534,7 @@
                             <input class="text-caption table-input" type="text" size="8" placeholder="Team count"
                               style="text-align: center;"
                               v-model="jobItem.teamCount"
-                            >                            
+                            >
                           </td>
                           <td class="text-center" colspan="2">
                             <input class="text-caption table-input" type="text" size="6" placeholder="Days"
@@ -594,14 +594,14 @@
             &nbsp; &nbsp;
             <v-btn small @click="nextWeek">
               Next week
-            </v-btn>            
+            </v-btn>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
             <div style="height: 780px; overflow-y: scroll;">
               <table
-                id="manpower" 
+                id="manpower"
                 class="my-0 py-0 job-sched">
                   <colgroup>
                     <col style="width:4%;">
@@ -610,11 +610,11 @@
                   </colgroup>
                   <thead>
                       <tr>
-                        <th colspan="3" class="font-weight-bold" 
+                        <th colspan="3" class="font-weight-bold"
                                 style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
                             Manpower Planning Guide
                         </th>
-                        <th :colspan="teams.length-1" class="font-weight-bold" 
+                        <th :colspan="teams.length-1" class="font-weight-bold"
                                 style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
                         </th>
                       </tr>
@@ -629,8 +629,8 @@
                         <td class="text-caption text-center font-weight-bold foreman">
                             Manpower: {{ day.manPowerTotals().manPower }}
                         </td>
-                        <td v-for="team in teams" :key="team.id" 
-                            @click="editTeam(team, day.jobs[team.id])" 
+                        <td v-for="team in teams" :key="team.id"
+                            @click="editTeam(team, day.jobs[team.id])"
                             class="text-caption text-center font-weight-bold foreman"
                             style="background-color: rgb(180,198,231)">
                             {{team.foreman}}
@@ -640,8 +640,8 @@
                         <td class="text-caption text-center font-weight-bold foreman">
                             On leave: {{ day.manPowerTotals().onLeave }}
                         </td>
-                        <td v-for="team in teams" :key="team.id" 
-                            @click="editTeam(team, day.jobs[team.id])" 
+                        <td v-for="team in teams" :key="team.id"
+                            @click="editTeam(team, day.jobs[team.id])"
                             class="text-caption text-center font-weight-bold">
                             {{team.vehicle}}
                         </td>
@@ -736,13 +736,13 @@
                   &nbsp; &nbsp;
                   <v-btn class="mt-0 pt-0 mb-n4 pb-n4" small @click="newTeam">
                     New Team
-                  </v-btn>    
+                  </v-btn>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col>
-                  <v-simple-table 
-                    id="team-memmbers" 
+                  <v-simple-table
+                    id="team-memmbers"
                     class="simple-job-table"
                     fixed-header
                     height="440px">
@@ -783,7 +783,7 @@
           &nbsp; &nbsp;
           <v-btn class="mb-2 pt-2" small @click="saveTeam">
             Save
-          </v-btn>    
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -796,7 +796,7 @@
           <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=7>
             <div class="text-h6" style="text-align: bottomz; display: inline">
               4 Day Schedule and Man Power Forecast
-            </div>                
+            </div>
           </v-col>
           <v-col class="text-right mt-0 pt-0 mb-n4 pb-n4 " cols=2>
             <div id="flatpickr" class="rounded text-body-2"
@@ -817,14 +817,14 @@
             &nbsp; &nbsp;
             <v-btn small @click="nextDayWindow">
               Next
-            </v-btn>            
+            </v-btn>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
             <div style="height: 780px; overflow-y: scroll;">
               <table
-                id="manpower-forecast" 
+                id="manpower-forecast"
                 class="my-0 py-0 job-sched">
                   <colgroup>
                     <col style="width:4%;">
@@ -833,11 +833,11 @@
                   </colgroup>
                   <thead>
                       <tr>
-                        <th colspan="3" class="font-weight-bold" 
+                        <th colspan="3" class="font-weight-bold"
                                 style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
                             Manpower Planning Guide
                         </th>
-                        <th :colspan="teams.length-1" class="font-weight-bold" 
+                        <th :colspan="teams.length-1" class="font-weight-bold"
                                 style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
                         </th>
                       </tr>
@@ -852,7 +852,7 @@
                         <td class="text-caption text-center font-weight-bold foreman">
                             Manpower: {{ day.manPowerTotals().manPower }}
                         </td>
-                        <td v-for="team in teams" :key="team.id" 
+                        <td v-for="team in teams" :key="team.id"
                             class="text-caption text-center font-weight-bold foreman">
                             {{team.foreman}}
                         </td>
@@ -861,7 +861,7 @@
                         <td class="text-caption text-center font-weight-bold foreman">
                             On leave: {{ day.manPowerTotals().onLeave }}
                         </td>
-                        <td v-for="team in teams" :key="team.id" 
+                        <td v-for="team in teams" :key="team.id"
                             class="text-caption text-center font-weight-bold">
                             {{team.vehicle}}
                         </td>
@@ -917,9 +917,9 @@
 
   </div>
 </template>
-             
-<style>
-html { 
+
+<style scoped>
+html {
   overflow-y: auto;
 }
 
@@ -937,7 +937,7 @@ html {
   position: sticky;
   top: 0;
   z-index: 1;
-  box-shadow: inset 1px 1px #000, 0 1px #000;    
+  box-shadow: inset 1px 1px #000, 0 1px #000;
 }
 
 #job-sched .date {
@@ -967,7 +967,7 @@ html {
   position: sticky;
   top: 0;
   z-index: 1;
-  box-shadow: inset 1px 1px #000, 0 1px #000;  
+  box-shadow: inset 1px 1px #000, 0 1px #000;
   padding: 6px 4px 6px 4px;
 }
 
@@ -978,9 +978,9 @@ html {
 }
 
 .job-projection {
-  width: 100%; 
-  height: 130px; 
-  border-collapse: collapse; 
+  width: 100%;
+  height: 130px;
+  border-collapse: collapse;
   border: 1px solid black;
 }
 
@@ -1004,7 +1004,7 @@ html {
   border-collapse: collapse;
 }
 
-.simple-job-table th, td {
+.simple-job-table th, .simple-job-table td {
   border: 2px solid #000;
   padding: 4px 4px 4px 4px;
 }
@@ -1028,28 +1028,28 @@ html {
   resize: none;
 }
 
-.textarea:focus { 
+.textarea:focus {
   outline: none;
 }
 
 .shift {
-  height: 100px; 
-  border: 1px solid black; 
+  height: 100px;
+  border: 1px solid black;
   border-radius: 10px;
   margin: 0px;
   padding: 8px;
 }
 
 .calendar {
-  border: none; 
-  outline: none;  
+  border: none;
+  outline: none;
 }
 </style>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
-import flatPickr from 'vue-flatpickr-component';  
+import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import 'flatpickr/dist/themes/material_blue.css';
 
@@ -1098,7 +1098,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
       changeJobDialog2: false,
       jobDialog: { open: false, startDate: "", endDate: "" },
       jobTableDialog: { open: false, option: "", title: "", change: false },
-      teamDialog: { open: false, oper: "", title: "", maxTeamMembers: 8, team: {}, checked: [], 
+      teamDialog: { open: false, oper: "", title: "", maxTeamMembers: 8, team: {}, checked: [],
           teamMembers: [], editedTeam: {}, schedJob: {} },
       workerDialog: false,
       dailyPlanDialog: false,
@@ -1165,26 +1165,26 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
       jobProjectionTable() {
         this.refreshJobProjectionTable;
         const jpt = {
-          inProgress: { 
-            title: "Confirmed jobs/in progress", 
+          inProgress: {
+            title: "Confirmed jobs/in progress",
             jobs: this.jobs
               .filter( job => job.id > -1 && job.status === JobStatus.inProgress )
               .sort( (a, b) => a.priority - b.priority )
           },
-          onHold: { 
-            title: "Confirmed but on hold jobs", 
+          onHold: {
+            title: "Confirmed but on hold jobs",
             jobs: this.jobs
               .filter( job => job.id > -1 && job.status === JobStatus.onHold )
               .sort( (a, b) => a.priority - b.priority )
           },
-          highChance: { 
-            title: "High chance jobs", 
+          highChance: {
+            title: "High chance jobs",
             jobs: this.jobs
               .filter( job => job.id > -1 && job.status === JobStatus.highChance )
               .sort( (a, b) => a.priority - b.priority )
           },
-          standBy: { 
-            title: "Stand-by jobs", 
+          standBy: {
+            title: "Stand-by jobs",
             jobs: this.jobs
               .filter( job => job.id > -1 && job.status === JobStatus.standBy )
               .sort( (a, b) => a.priority - b.priority )
@@ -1237,7 +1237,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         this.teams.forEach( team => {
           if (!day.jobs[team.id]) {
             day.jobs[team.id] = new SchedJob({id: 0, team: team.id,
-                date: sday, shift: Shift.unasigned, 
+                date: sday, shift: Shift.unasigned,
                 job1: "", job2: "", teamMembers : ["-"] });
           }
         });
@@ -1247,11 +1247,11 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         this.getSchedData();
       },
       endpoint() {
-        //return `http://localhost:5000/api/jobschedule`
+        // return `http://localhost:5000/api/jobschedule`
         return '/jobschedule';
       },
       getSchedData() {
-        axios({
+        this.$axios({
           url: this.endpoint(),
           method: "GET",
           crossDomain: true
@@ -1334,7 +1334,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         let sj = day.jobs[teamId];
         if (!sj) {
           sj = new SchedJob({id: 0, team: teamId,
-              date: day.date, shift: Shift.unasigned, 
+              date: day.date, shift: Shift.unasigned,
               job1: "", job2: "", teamMembers : ["-"] });
         }
         return sj;
@@ -1421,7 +1421,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
       dayStyle(strDate) {
         const date = string2date(strDate)
         return `vertical-align: middle; background-color: ${dayColors[date.getDay()]};`
-      },      
+      },
       dayColor(date) {
         return `background-color: ${dayColors[string2date(date).getDay()]};`;
       },
@@ -1451,9 +1451,9 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
           for (const sj of this.deletedSchedJobs) {
             sj.id = -1;
             schedJobs[sj.getPk()] = sj;
-          }        
+          }
         }
-        return Object.values(schedJobs);       
+        return Object.values(schedJobs);
       },
       save() {
         console.log("Saving data");
@@ -1470,7 +1470,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
 
         var self = this;
 
-        axios({
+        this.$axios({
           url: this.endpoint(),
           method: "PUT",
           data: data,
@@ -1487,8 +1487,8 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         if (!this.selection) {
           return;
         }
-        this.copyData = new Clipboard(this.teams[this.selection.col-1].id, 
-            this.jobSchedule[this.selection.startRow-1].date, 
+        this.copyData = new Clipboard(this.teams[this.selection.col-1].id,
+            this.jobSchedule[this.selection.startRow-1].date,
             this.selection.endRow-this.selection.startRow+1);
       },
       paste() {
@@ -1502,18 +1502,18 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         if (foreman == "On leave") {
           return;
         }
-        
+
         const source = {
-          startDate: this.copyData.startDate, 
-          numRows: this.copyData.numRows, 
+          startDate: this.copyData.startDate,
+          numRows: this.copyData.numRows,
           team: this.copyData.team
         }
         const target = {
           startDate: this.jobSchedule[this.selection.startRow-1].date,
           numRows: -1,
           team: team
-        }        
-        
+        }
+
         this.copySchedJobs(source, target, false)
 
         this.unselect();
@@ -1549,12 +1549,12 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
 
         if (currSchedJob.shift == Shift.unasigned) {
           const shift = foreman === "Store" ? Shift.unasigned : Shift.day;
-          const schedJob = new SchedJob({id: 0, team: teamId, 
+          const schedJob = new SchedJob({id: 0, team: teamId,
               date: date, shift: shift, job1: job.scope, job2: job.scope });
           this.copyOneToOne(schedJob, -1, date, teamId, true)
         }
 
-        this.$forceUpdate();        
+        this.$forceUpdate();
       },
       dropHandler(event, dayIndex, teamIndex) {
         event.preventDefault();
@@ -1566,7 +1566,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         }
 
         this.dropScheduledJob(srcData, dayIndex, teamIndex);
-      },      
+      },
       dropScheduledJob(srcData, targetIndex, teamIndex) {
         const teamId = this.teams[teamIndex].id;
         const foreman = this.teams[teamIndex].foreman;
@@ -1589,8 +1589,8 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         let sourceData, targetData;
         if (!this.selection) {
           sourceData = {
-            startDate: srcDate, 
-            numRows: 1, 
+            startDate: srcDate,
+            numRows: 1,
             team: this.teams[srcData.teamIndex].id
           }
           targetData = {
@@ -1600,8 +1600,8 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
           }
         } else {
           sourceData = {
-            startDate: this.jobSchedule[this.selection.startRow-1].date, 
-            numRows: this.selection.endRow-this.selection.startRow+1, 
+            startDate: this.jobSchedule[this.selection.startRow-1].date,
+            numRows: this.selection.endRow-this.selection.startRow+1,
             team: this.teams[srcData.teamIndex].id
           }
           targetData = {
@@ -1777,9 +1777,9 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         }
       },
       teamMemberDragstart(ev) {
-        const data = { dayIndex: ev.target.getAttribute("data-day-index"), 
+        const data = { dayIndex: ev.target.getAttribute("data-day-index"),
             team: ev.target.getAttribute("data-team"), teamMember: ev.target.getAttribute("data-team-member")};
-        ev.dataTransfer.setData("application/json", JSON.stringify(data));        
+        ev.dataTransfer.setData("application/json", JSON.stringify(data));
       },
       dropTeamMember(event, targetJob) {
         event.preventDefault();
@@ -1861,7 +1861,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
       // },
       onTableCellSingleClick(event, job) {
         if (job.shift == Shift.unasigned) {
-          this.unselect();          
+          this.unselect();
         }
 
         const td = this.findAncestor(event.target, "TD");
@@ -1923,7 +1923,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
       getForeman(teamId) {
         const idx = this.teams.findIndex( team => team.id === teamId );
         return idx > -1 ? this.teams[idx].foreman : "";
-      },      
+      },
       openSchedJobDialog(job) {
         this.editedJob = job;
         this.jobInfo = new SchedJob(job);
@@ -1935,7 +1935,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
       getDayIndex(date) {
         const jobSchedule = this.jobSchedule;
         return jobSchedule.findIndex( day => day.date === date );
-      },      
+      },
       saveSchedJob() {
         let idx1 = this.editedJob.startDate < this.jobDialog.startDate ? this.getDayIndex(this.editedJob.startDate) : -1;
         let idx2 = this.editedJob.endDate < this.jobDialog.startDate ? this.getDayIndex(this.editedJob.endDate) :
@@ -2000,7 +2000,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
 
           this.jobScheduleCount++;
         }
-        
+
         this.jobScheduleCount++;
         this.jobDialog.open = false;
       },
@@ -2221,7 +2221,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
             checked[i] = false;
             teamMembers.splice(i, 1);
           }
-        }        
+        }
       },
       closeTeam() {
         this.teamDialog.open = false;
