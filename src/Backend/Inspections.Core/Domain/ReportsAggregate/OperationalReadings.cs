@@ -37,6 +37,8 @@ namespace Inspections.Core.Domain.ReportsAggregate
         public bool EarthFaultEIREnabled { get; set; }
         public bool EarthFaultEFEnabled { get; set; }
 
+        public string AdditionalFields { get; set; } = default!;
+
         public OperationalReadings()
         {
 

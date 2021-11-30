@@ -47,6 +47,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/device',
     '@vueuse/core/nuxt',
+    '@braid/vue-formulate/nuxt',
     ['nuxt-compress',
       {
         gzip: {
