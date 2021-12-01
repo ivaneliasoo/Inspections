@@ -80,7 +80,7 @@
         </v-row>
         <v-row>
           <v-col>
-            <div style="height: 780px; overflow-y: scroll;">
+            <div style="height: 80vh; overflow-y: scroll">
               <table
                 id="job-sched"
                 class="my-0 py-0 job-sched">
@@ -97,7 +97,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(day, index) in jobSchedule" :key="index">
+                    <tr v-for="(day, index) in jobSchedule" :key="index" style="height: 0px;">
                       <td class="text-caption text-left font-weight-bold date" :style="dayColor(day.date)">
                         <div style="text-align: center;">
                           {{dayOfWeek(day.date)}}<br>
@@ -443,7 +443,7 @@
   </v-container>
 
   <v-container v-show="jobProjectionVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
-    <v-row>
+    <v-row style="margin-right: 8px;">
       <v-col>
         <v-row>
           <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=7>
@@ -454,8 +454,8 @@
         </v-row>
         <v-row>
           <v-col v-for="(jobList, id) in jobProjectionTable" :key="id">
-            <div style="height: 55px; overflow-y: scroll;">
-              <table style="border: blank; width: 100%;">
+            <div style="height: 40px;">
+              <table style="border: blank; height: 100%; width: 100%;">
                 <tbody>
                   <tr>
                     <td class="text-center font-weight-bold" style="font-size: 11pt; border-style: none">
@@ -478,7 +478,7 @@
             </div>
 
             <div style="height: 680px; overflow-y: scroll;">
-              <table style="border: blank; width: 100%;">
+              <table style="width: 100%; border-collapse: separate; border: blank; border-spacing: 0 15px;">
                 <tbody>
                   <tr v-for="(jobItem, jobId) in jobList.jobs" :key="jobId">
                     <td class="text-left" style="border-style: none;">
@@ -925,7 +925,8 @@ html {
 
 .job-sched {
   width: 99%;
-  height: 99%;
+  /* height: 99%; */
+  height: 80vh;
   overflow-x: hidden;
   overflow-y: auto;
   border-collapse: collapse;
@@ -1005,7 +1006,7 @@ html {
 }
 
 .simple-job-table th, .simple-job-table td {
-  border: 2px solid #000;
+  border: 2px solid lightgray;
   padding: 2px 2px 2px 2px;
 }
 
@@ -1456,7 +1457,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         return Object.values(schedJobs);
       },
       save() {
-        console.log("Saving data");
+        // console.log("Saving data");
         const schedJobs = this.getSchedJobs(true);
 
         const isBlank = (job) => (!job.id && !job.scope && !job.salesPerson && !job.priority && !job.value)
