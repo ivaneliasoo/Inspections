@@ -931,7 +931,7 @@ html {
   border-collapse: collapse;
 }
 
-#job-sched th {
+.job-sched th {
   background-color: rgb(217,225,242);
   padding: 6px 4px 6px 4px;
   position: sticky;
@@ -940,17 +940,17 @@ html {
   box-shadow: inset 1px 1px #000, 0 1px #000;
 }
 
-#job-sched .date {
+.job-sched .date {
   vertical-align: middle;
 }
 
-#job-sched td {
+.job-sched td {
   vertical-align: top;
   border: 1px solid #000;
   padding: 5px 2px 0px 5px;
 }
 
-#job-sched .selected {
+.job-sched .selected {
   border: 3px solid red;
 }
 
@@ -1006,7 +1006,7 @@ html {
 
 .simple-job-table th, .simple-job-table td {
   border: 2px solid #000;
-  padding: 4px 4px 4px 4px;
+  padding: 2px 2px 2px 2px;
 }
 
 .table-input {
@@ -1247,7 +1247,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         this.getSchedData();
       },
       endpoint() {
-        // return `http://localhost:5000/api/jobschedule`
+        //return `http://localhost:5000/api/jobschedule`
         return '/jobschedule';
       },
       getSchedData() {
