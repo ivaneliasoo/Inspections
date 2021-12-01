@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Inspections.Core.Domain.PrintSectionsAggregate;
+using System.Reflection;
 
 namespace Inspections.Infrastructure.Data
 {
@@ -65,15 +66,7 @@ namespace Inspections.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new PhotoRecordEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new SignatureEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new CheckListItemEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new CheckListEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new NotesEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new AddressEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new EMALicenseEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ReportConfigurationEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ReportEntityTypeConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(e => !e.IsOwned()))
             {
