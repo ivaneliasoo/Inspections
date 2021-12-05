@@ -25,44 +25,28 @@
             </v-col>
         </v-col>
       </v-row>
-      <h2 v-if="!creatingReport">Please, Select a Configuration to Create a New Report</h2>
-      <v-data-iterator
-        v-if="!creatingReport"
-        :items="configurations"
-        :search="search"
-        :disable-pagination="configurations.length<=3"
-        :hide-default-footer="configurations.length<=3"
-      >
-        <template v-slot:default="props">
-          <v-row>
-            <v-col
-              v-for="item in props.items"
-              :key="item.id"
-              cols="12"
-              sm="6"
-              md="4"
-              lg="3"
-            >
-              <v-card ripple @click="configuration = item.id; createReport()">
-                <v-card-title class="text-center">
-                  <v-row>
-                    <v-col class="text-center">
-                      {{ item.title }}
-                    </v-col>
-                  </v-row>
-                </v-card-title>
-                <v-card-subtitle>
-                  <v-row>
-                    <v-col class="text-center">
-                      Creates a new Report With {{ item.title }} {{item.formName}} Configuration
-                    </v-col>
-                  </v-row>
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-          </v-row>
-        </template>
-      </v-data-iterator>
+      <v-row>
+        <v-select
+          v-model="configuration"
+          :items="configurations"
+          :label="!creatingReport ? 'Please, Select a Configuration to Create a New Report':'Selected Configuration'"
+          item-value="id"
+          item-text="title"
+          @change="createReport()"
+        >
+        <template #item="{ item }">
+           <div two-line>
+              <v-list-item-content>
+                <v-list-item-title>  {{ item.title }}</v-list-item-title>
+                <v-list-item-subtitle>Creates a new Report With {{ item.title }} {{item.formName}} Configuration</v-list-item-subtitle>
+              </v-list-item-content>
+            </div>
+          </template>
+          <template #selection="{ item }">
+            {{ item.title }} - {{ item.formName }}
+          </template>
+        </v-select>
+      </v-row>
     </message-dialog>
 </template>
 
