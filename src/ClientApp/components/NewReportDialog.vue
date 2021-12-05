@@ -86,7 +86,16 @@ export default class NewReportDialog extends Vue {
   }
 
   get configurations (): ReportConfiguration[] {
-    return (this.$store.state.configurations as ReportConfigurationState).configurations
+    let arrayConfigurations :ReportConfiguration[];
+    arrayConfigurations = (this.$store.state.configurations as ReportConfigurationState).configurations;
+
+    if(arrayConfigurations.length == 1){
+       this.creatingReport =true
+       this.configuration = arrayConfigurations[0].id;
+       this.createReport();
+    }
+
+    return (arrayConfigurations)
   }
 
   get selectedConfiguration() {
