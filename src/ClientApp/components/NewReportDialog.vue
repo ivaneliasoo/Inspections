@@ -32,6 +32,7 @@
           :label="!creatingReport ? 'Please, Select a Configuration to Create a New Report':'Selected Configuration'"
           item-value="id"
           item-text="title"
+          :readonly="creatingReport"
           @change="createReport()"
         >
         <template #item="{ item }">
