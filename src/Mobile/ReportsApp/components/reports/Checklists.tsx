@@ -26,8 +26,9 @@ const computeCheckListValue = (checkList: CheckListQueryResult) => {
 
 const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
   const [showRemark, setShowRemarks] = useState(false)
+  const [remark, setRemark] = useState(item.remarks)
   const onPress = () => {
-    onCheckUpdated({...item, checked: item.checked, touched: true })
+    onCheckUpdated({...item, checked: item.checked, touched: true, remarks: remark})
   }
 
   const RightActions = (props: any) => {
@@ -43,15 +44,15 @@ const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
       <Input
         key={`remark-input-${item.id}`}
         placeholder='type a remark'
-        value={item.remarks!}
-        // onChangeText={(text) => { setCheck({ ...item, remarks: text }); }}
+        value={remark!}
+        onChangeText={(text) => { setRemark(text) }}
         onSubmitEditing={() => { setShowRemarks(prev => !prev); onPress(); }}
         accessoryRight={() => <TouchableOpacity onPress={() => { setShowRemarks(prev => !prev); onPress(); }}><Icon name='close-outline' fill='black' style={styles.icon} /></TouchableOpacity>} />
     : <ListItem
       key={`text-${item.id}`}
       title={() => <Text category='h6' status={!item.touched ? 'danger':''}>{`.${index + 1} - ${item.text}`}</Text>}
       onPress={onPress}
-      description={() => <Text category='s1' appearance='hint'>{`Remarks: ${item.remarks}`}</Text>}
+      description={() => <Text category='s1' appearance='hint'>{`Remarks: ${remark}`}</Text>}
       accessoryRight={RightActions}
     />
 }

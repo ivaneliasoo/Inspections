@@ -15,14 +15,14 @@ type ReportsAction =
   | { type: 'REMOVE_REPORT'; payload: { id: number; }; }
   | { type: 'COMPLETE_REPORT'; payload: { id: number; }; }
   | { type: 'SET_WORKING_REPORT', payload: { report: ReportQueryResult } }
-  | { type: 'SET_WORKING_CHECKS', payload: { checklists: CheckListQueryResult[] }}
+  | { type: 'SET_WORKING_CHECKS', payload: { checklists: CheckListQueryResult[] } }
   | { type: 'CLEAR_WORKING_REPORT' }
   | { type: 'SET_FILTER'; payload: ReportsFilterPayload }
   | { type: 'SET_OPERATIONAL_READINGS'; payload: any }
   | { type: 'UPDATE_CHECKLIST'; payload: CheckListQueryResult }
   | { type: 'UPDATE_DRAWNSIGNATURE'; payload: { signature: SignatureQueryResult, index: number } }
   | { type: 'UPDATE_CHECKLIST_ITEMS'; payload: { checklistId: number, newValue: number } }
-  | { type: 'UPDATE_CHECKLIST_ITEM'; payload: { checklistItemId: number, newValue: number } };
+  | { type: 'UPDATE_CHECKLIST_ITEM'; payload: { checkListId: number; checklistItemId: number, newValue: number, remarks: string } };
 
 export const reportsReducer = (prevState: ReportsState, action: ReportsAction) => {
   switch (action.type) {
@@ -87,6 +87,23 @@ export const reportsReducer = (prevState: ReportsState, action: ReportsAction) =
         checklist.checks.forEach(check => {
           check.checked = action.payload.newValue
           check.touched = true
+        })
+      }
+      return {
+        ...prevState,
+      }
+    }
+    case 'UPDATE_CHECKLIST_ITEM': {
+      const index = prevState.workingCheckList!.findIndex(ck => ck.id === action.payload.checkListId)
+      const checklist = prevState.workingCheckList![index!]
+      checklist.checked = action.payload.newValue as unknown as boolean
+      if (checklist.checks) {
+        checklist.checks.forEach(check => {
+          if (action.payload.checklistItemId === check.id) {
+            if (check.remarks === action.payload.remarks) { check.checked = action.payload.newValue }
+            check.touched = true
+            check.remarks = action.payload.remarks
+          }
         })
       }
       return {

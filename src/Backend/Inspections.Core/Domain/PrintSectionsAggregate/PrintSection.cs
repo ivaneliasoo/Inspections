@@ -2,7 +2,7 @@
 
 namespace Inspections.Core.Domain.PrintSectionsAggregate
 {
-    public class PrintSection : Entity<int>
+    public class PrintSection : Entity<int>, IAggregateRoot
     {
         public string Code { get; set; } = default!;
         public string Content { get; set; } = default!;

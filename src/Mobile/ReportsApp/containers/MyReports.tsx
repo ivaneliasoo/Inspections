@@ -94,6 +94,7 @@ const SwipeableReport = ({ children, isClosed, id, name, onSwipedLeft, onSwipedR
             },
             {
               text: 'No',
+              onPress: () => { closeSwipe() }
             }
           ]
         );
@@ -108,6 +109,7 @@ const SwipeableReport = ({ children, isClosed, id, name, onSwipedLeft, onSwipedR
             },
             {
               text: 'No',
+              onPress: () => { closeSwipe() }
             }
           ]
         );

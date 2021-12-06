@@ -21,6 +21,6 @@ namespace Inspections.Core.Domain.ReportConfigurationAggregate
         public string MarginBottom { get; set; } = default!;
         public string MarginLeft { get; set; } = default!;
         public string MarginRight { get; set; } = default!;
-        public string AdditionalFileds { get; set; } =default!;
+        public string? AdditionalFileds { get; set; } =default!;
     }
 }
