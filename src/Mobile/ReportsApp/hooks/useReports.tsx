@@ -24,7 +24,6 @@ export const useReports = () => {
   const getReports = async () => {
     try {
       setRefreshing(true)
-      console.log({filter: reportsState.filter, closed: reportsState.isClosed, onlymine: reportsState.myReports, order: reportsState.orderBy, isDescending: reportsState.descendingSort})
       const resp = await reportsApi.apiReportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports, reportsState.orderBy, reportsState.descendingSort)
       getAll({ reports: resp.data as unknown as ReportQueryResult[] })
     } catch (error) {
