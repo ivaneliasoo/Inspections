@@ -1248,8 +1248,8 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         this.getSchedData();
       },
       endpoint() {
-        return `http://localhost:5000/api/jobschedule`
-        //return '/jobschedule';
+        //return `http://localhost:5000/api/jobschedule`
+        return '/jobschedule';
       },
       getSchedData() {
         this.$axios({
