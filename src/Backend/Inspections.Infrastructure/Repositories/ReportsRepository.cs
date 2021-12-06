@@ -90,8 +90,8 @@ namespace Inspections.Infrastructure.Repositories
             .Include(p => p.PhotoRecords)
             .Include(p => p.Signatures);
 
-            if (closed.HasValue && closed.Value)
-                return await query.AsNoTracking().Where(r => (r.IsClosed) && (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)) && EF.Functions.Like(r.Name, $"%{filter}%"))
+            if (closed.HasValue)
+                return await query.AsNoTracking().Where(r => (r.IsClosed== closed.Value) && (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)) && EF.Functions.Like(r.Name, $"%{filter}%"))
                     .OrderByDescending(r => r.Date)
                     .ProjectTo<ReportListItem>(config)
                     .ToListAsync();
