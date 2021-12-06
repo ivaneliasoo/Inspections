@@ -52,4 +52,5 @@ namespace Inspections.API
                     .UseStartup<Startup>();
                 });
     }
+    // "Inspections": "Server=127.0.0.1;Port=5432;Database=ReportsApp;User Id=appuser;Password=123456"
 }

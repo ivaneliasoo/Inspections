@@ -1248,8 +1248,8 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         this.getSchedData();
       },
       endpoint() {
-        //return `http://localhost:5000/api/jobschedule`
-        return '/jobschedule';
+        return `http://localhost:5000/api/jobschedule`
+        //return '/jobschedule';
       },
       getSchedData() {
         this.$axios({
@@ -1553,6 +1553,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
           const schedJob = new SchedJob({id: 0, team: teamId,
               date: date, shift: shift, job1: job.scope, job2: job.scope });
           this.copyOneToOne(schedJob, -1, date, teamId, true)
+          job.status = foreman === "Store" ? JobStatus.onHold : JobStatus.inProgress;
         }
 
         this.$forceUpdate();
