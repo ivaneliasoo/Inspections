@@ -28,6 +28,7 @@ export interface ReportsContextProps {
   updateSignature: (payload: { signature: SignatureQueryResult, index: number }) => void,
   clearWorkingReport: () => void,
   updateCheckListItems: (payload: { checklistId: number, newValue: number }) => void,
+  updateCheckListItem: (payload: { checkListId: number, checklistItemId: number, newValue: number, remarks: string }) => void,
 }
 const initialState: ReportsState = {
   reports: [],
@@ -115,6 +116,13 @@ const ReportsProvider = ({ children }: any) => {
       payload
     })
   }
+  // UPDATE_CHECKLIST_ITEM
+  const updateCheckListItem = (payload: { checkListId: number; checklistItemId: number; newValue: number; remarks: string }) => {
+    dispatch({
+      type: 'UPDATE_CHECKLIST_ITEM',
+      payload
+    })
+  }
 
   const updateSignature = (payload: { signature: SignatureQueryResult, index: number }) => {
     dispatch({
@@ -137,6 +145,7 @@ const ReportsProvider = ({ children }: any) => {
       updateSignature,
       clearWorkingReport,
       updateCheckListItems,
+      updateCheckListItem,
     }}>
       {children}
     </ReportsContext.Provider>

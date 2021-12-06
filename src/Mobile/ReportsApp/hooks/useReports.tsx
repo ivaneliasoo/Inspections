@@ -4,12 +4,12 @@ import { API_HOST, API_KEY } from '../config/config';
 import { Configuration, ReportsApi, CheckListsApiFactory } from '../services/api';
 import { AuthContext } from '../contexts/AuthContext';
 import { CheckListItemQueryResult, ReportQueryResult, UpdateCheckListItemCommand, UpdateReportCommand, SignaturesApi, SignatureQueryResult } from '../services/api';
-import { CheckListQueryResult, CheckValue, UpdateOperationalReadingsCommand } from '../services/api/api';
+import { UpdateOperationalReadingsCommand } from '../services/api/api';
 import moment from 'moment'; 0
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
-  const { getAll, setFilter, setWorkingReport, setWorkingChecks, updateSignature, updateCheckListItems, clearWorkingReport, reportsState, completeReport: complete, removeReport, setRefreshing } = useContext(ReportsContext)
+  const { getAll, setFilter, setWorkingReport, setWorkingChecks, updateSignature, updateCheckListItems, updateCheckListItem: updCheckItem, clearWorkingReport, reportsState, completeReport: complete, removeReport, setRefreshing } = useContext(ReportsContext)
 
   const configuration = new Configuration({
     accessToken: userToken!,
@@ -24,6 +24,7 @@ export const useReports = () => {
   const getReports = async () => {
     try {
       setRefreshing(true)
+      console.log({filter: reportsState.filter, closed: reportsState.isClosed, onlymine: reportsState.myReports, order: reportsState.orderBy, isDescending: reportsState.descendingSort})
       const resp = await reportsApi.apiReportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports, reportsState.orderBy, reportsState.descendingSort)
       getAll({ reports: resp.data as unknown as ReportQueryResult[] })
     } catch (error) {
@@ -91,19 +92,36 @@ export const useReports = () => {
       tempCheckValue = 2
     }
     updateCheckListItems({ checklistId: payload.checkListId, newValue: tempCheckValue })
-    await reportsApi.bulkUpdateChecks(payload.reportId, payload.checkListId, payload.newValue)
+    await reportsApi.bulkUpdateChecks(payload.reportId, payload.checkListId, tempCheckValue)
   }
 
   const updateCheckListItem = async (payload: CheckListItemQueryResult) => {
+    let tempCheckValue = 0
+
+    if (payload.checked! > 2) {
+      tempCheckValue = 2
+    }
+    else if (payload.checked === 2) {
+      tempCheckValue = 1
+    }
+    else if (payload.checked === 1) {
+      tempCheckValue = 0
+    }
+    else if (payload.checked === 0) {
+      tempCheckValue = 2
+    }
+
     const command: UpdateCheckListItemCommand = {
       checkListId: payload.checkListId!,
-      checked: payload.checked!,
+      checked: tempCheckValue!,
       editable: payload.editable!,
       id: payload.id!,
       remarks: payload.remarks!,
       required: payload.required!,
       text: payload.text!
     }
+
+    updCheckItem({ checkListId: payload.checkListId!, checklistItemId: payload.id!, newValue: tempCheckValue, remarks: payload.remarks! })
     await checkListsApi.updateChecklistItem(payload.checkListId ?? -1, payload.id ?? -1, command)
   }
 
