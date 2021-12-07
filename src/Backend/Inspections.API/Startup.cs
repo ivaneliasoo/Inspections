@@ -156,11 +156,12 @@ namespace Inspections.API
             services.AddScoped<IReportConfigurationsRepository, ReportsConfigurationsRepository>();
             services.AddScoped<IReportsRepository, ReportsRepository>();
             services.AddScoped<ISignaturesRepository, SignaturesRepository>();
+            services.AddScoped<IPrintSectionRepository, PrintSectionRepository>();
 
             services.AddScoped<ICheckListsQueries, CheckListsQueries>();
             services.AddScoped<ISignaturesQueries, SignaturesQueries>();
             services.AddScoped<IReportConfigurationsQueries, ReportConfigurationsQueries>();
-
+            services.AddScoped<IPrintSectionsQueries, PrintSectionsQueries>();
             ConfigurarDbContextInSqlDb(services);
         }
 
