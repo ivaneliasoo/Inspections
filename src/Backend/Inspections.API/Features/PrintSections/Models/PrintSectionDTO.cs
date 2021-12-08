@@ -8,6 +8,7 @@ namespace Inspections.API.Features.PrintSections.Models
     {
         public int Id { get; set; }
         public string Code { get; set; } = default!;
+        public string Description { get; set; } = default!;
         public string Content { get; set; } = default!;
         public bool IsMainReport { get; set; }
         public PrintSectionStatus Status { get; set; }
@@ -18,6 +19,7 @@ namespace Inspections.API.Features.PrintSections.Models
 
             Id = printSection.Id;
             Code = printSection.Code;
+            Description = printSection.Description;
             Content = printSection.Content;
             IsMainReport = printSection.IsMainReport;
             Status = printSection.Status;

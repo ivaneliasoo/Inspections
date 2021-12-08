@@ -9,11 +9,13 @@ namespace Inspections.API.Features.PrintSections.Commands
     {
         public AddPrintSectionCommand(string code,
                                       string content,
+                                      string description,
                                       bool isMainReport,
                                       PrintSectionStatus status)
         {
             Code = code;
             Content = content;
+            Description = description;
             IsMainReport = isMainReport;
             Status = status;
 
@@ -23,6 +25,7 @@ namespace Inspections.API.Features.PrintSections.Commands
 
         public string Code { get; set; } = default!;
         public string Content { get; set; } = default!;
+        public string Description { get; set; } = default!;
         public bool IsMainReport { get; set; }
         public PrintSectionStatus Status { get; set; }
 

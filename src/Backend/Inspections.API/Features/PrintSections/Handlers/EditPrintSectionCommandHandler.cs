@@ -28,6 +28,7 @@ namespace Inspections.API.Features.PrintSections.Handlers
             var editPrintSection = await _printSectionRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
             {
                 editPrintSection.Code = request.Code;
+                editPrintSection.Description = request.Description;
                 editPrintSection.Content = request.Content;
                 editPrintSection.IsMainReport = request.IsMainReport;
                 editPrintSection.Status = request.Status;

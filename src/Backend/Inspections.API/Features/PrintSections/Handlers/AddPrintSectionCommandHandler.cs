@@ -26,6 +26,7 @@ namespace Inspections.API.Features.PrintSections.Handlers
             {
                 Code = request.Code,
                 Content = request.Content,
+                Description = request.Description,
                 IsMainReport = request.IsMainReport,
                 Status = request.Status,
             };
