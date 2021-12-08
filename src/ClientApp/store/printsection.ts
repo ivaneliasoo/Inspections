@@ -20,8 +20,8 @@ export const mutations: MutationTree<PrintSectionState> = {
 
 export const actions: ActionTree<PrintSectionState, RootState> = {
   async getPrintSections ({ commit }, payload) {
-    const sign = await this.$axios.$get('printsection', { params: payload })
-    commit('SET_PRINT_SECTION_LIST', sign)
+    const printSect = await this.$axios.$get('printsection', { params: payload })
+    commit('SET_PRINT_SECTION_LIST', printSect)
   },
 
   async getPrintSectionById (payload) {

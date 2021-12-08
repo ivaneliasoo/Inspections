@@ -13,9 +13,9 @@ export const mutations: MutationTree<SignatureState> = {
   REMOVE_SIGNATURE: (state, value: number) => (state.signaturesList = state.signaturesList.filter(s=>s.id !== value)),
   ADD_SIGNATURE: (state, value: SignatureDTO) => (state.signaturesList.splice(0,0,value)),
   UPDATE_SIGNATURE: (state, value: SignatureDTO) => {
-    const index = state.signaturesList.findIndex(s=>s.id === value.id)
-    state.signaturesList.splice(index,1,value)
-   }
+    const index = state.signaturesList.findIndex(s => s.id === value.id)
+    state.signaturesList.splice(index, 1, value)
+  }
 }
 
 export const actions: ActionTree<SignatureState, RootState> = {
@@ -34,7 +34,7 @@ export const actions: ActionTree<SignatureState, RootState> = {
   },
   async createSignature ({ commit }, payload) {
     payload.responsibleName = ''
-    await this.$axios.$post(`signatures`, payload)
+    await this.$axios.$post('signatures', payload)
     commit('ADD_SIGNATURE', payload)
   },
   async updateSignature ({ commit }, payload) {

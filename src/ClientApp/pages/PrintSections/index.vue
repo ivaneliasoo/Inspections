@@ -12,7 +12,7 @@
       :class="$device.isTablet ? 'tablet-text':''"
       :items="printSections"
       item-key="id"
-      :search="filter.filterText"
+      :search="filter"
       dense
       :loading="loading"
       :headers="headers"
@@ -21,7 +21,7 @@
         <v-toolbar flat color="white">
           <v-toolbar-title>Print Sections</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
-          <grid-filter :filter.sync="filter.filterText" />
+          <grid-filter :filter.sync="filter" />
           <v-spacer />
           <v-btn
             class="mx-2"
@@ -124,7 +124,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { PrintSectionState } from 'store/printsection'
 import InnerPageMixin from '@/mixins/innerpage'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
-import { FilterType, PrintSection } from '~/types'
+import { PrintSection } from '~/types'
 
 @Component({
   components: {
@@ -136,12 +136,7 @@ export default class PrintSectionsPage extends mixins(InnerPageMixin) {
   dialog: boolean = false
   dialogRemove: boolean = false
   loading: boolean = false
-  filter: FilterType = {
-    filterText: '',
-    inConfigurationOnly: undefined,
-    reportId: undefined,
-    reportConfigurationId: undefined
-  }
+  filter: String = ''
 
   headers: any[] = [
     {
@@ -173,24 +168,19 @@ export default class PrintSectionsPage extends mixins(InnerPageMixin) {
   selectedItem: PrintSection = {} as PrintSection
   item: any = { principal: false }
 
-  get printsections (): PrintSectionDTO[] {
-    return (this.$store.state.printsections as PrintSectionState)
+  get printSections (): PrintSectionDTO[] {
+    return (this.$store.state.printsection as PrintSectionState)
       .printSectionsList
   }
 
   selectItem (item: PrintSection): void {
     this.selectedItem = item
-    this.$store.dispatch('printsections/getPrintSectionById', this.selectedItem.id, { root: true })
+    this.$store.dispatch('printsection/getPrintSectionById', this.selectedItem.id, { root: true })
       .then((resp) => { this.item = resp })
   }
 
   asyncData () {
-    const filter: FilterType = {
-      filterText: '',
-      inConfigurationOnly: undefined,
-      reportId: undefined,
-      reportConfigurationId: undefined
-    }
+    const filter: String = ''
     return {
       filter
     }
@@ -198,27 +188,27 @@ export default class PrintSectionsPage extends mixins(InnerPageMixin) {
 
   async fetch () {
     this.loading = true
-    await Promise.all([this.$store.dispatch('printsections/getPrintSections', this.filter, { root: true })])
+    await Promise.all([this.$store.dispatch('printsection/getPrintSections', this.filter, { root: true })])
     this.loading = false
   }
 
   @Watch('filter', { deep: true })
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async onFilterChanged (value: FilterType) {
-    await this.$store.dispatch('printsections/getPrintSections', value, { root: true })
+  async onFilterChanged (value: String) {
+    await this.$store.dispatch('printsection/getPrintSections', value, { root: true })
   }
 
   deletePrintSection () {
-    this.$store.dispatch('printsections/deletePrintSection', this.selectedItem.id, { root: true })
+    this.$store.dispatch('printsection/deletePrintSection', this.selectedItem.id, { root: true })
       .then(() => {
         this.dialog = false
       })
   }
 
   async upsertPrintSection () {
-    if (this.item.id > 0) { await this.$store.dispatch('printsections/updatePrintSection', this.item, { root: true }) } else {
-      await this.$store.dispatch('printsections/createPrintSection', this.item, { root: true })
-      await this.$store.dispatch('printsections/getPrintSections', {}, { root: true })
+    if (this.item.id > 0) { await this.$store.dispatch('printsection/updatePrintSection', this.item, { root: true }) } else {
+      await this.$store.dispatch('printsection/createPrintSection', this.item, { root: true })
+      await this.$store.dispatch('printsection/getPrintSections', {}, { root: true })
     }
     this.dialog = false
   }

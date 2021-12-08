@@ -17,14 +17,14 @@ namespace Inspections.API.Features.PrintSections
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class PrintSectionsController : ControllerBase
+    public class PrintSectionController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly IPrintSectionRepository _printSectionsRepository;
         private readonly IPrintSectionsQueries _printSectionsQueries;
 
 
-        public PrintSectionsController(IMediator mediator
+        public PrintSectionController(IMediator mediator
             , IPrintSectionRepository printSectionsRepository
             , IPrintSectionsQueries printSectionsQueries)
         {
