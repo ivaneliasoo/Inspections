@@ -1,121 +1,136 @@
 <template>
-  <div>
-    <alert-dialog
-      v-model="dialogRemove"
-      title="Remove Reports"
-      message="This operation will remove this print section and all data related"
-      :code="selectedItem.id"
-      :description="selectedItem.code"
-      @yes="deletePrintSection();"
-    />
-    <v-data-table
-      :class="$device.isTablet ? 'tablet-text':''"
-      :items="printSections"
-      item-key="id"
-      :search="filter"
-      dense
-      :loading="loading"
-      :headers="headers"
-    >
-      <template #top="{}">
-        <v-toolbar flat color="white">
+  <v-row>
+    <v-col cols="12" md="8" sm="12" class="mb-2">
+      <h1 class="font-weight-bold mb-3">
+        Print Section Detail
+      </h1>
+
+      <v-card>
+        <v-tabs
+          color="deep-indigo accent-4"
+          left
+        >
+          <v-tab>Beginner Mode</v-tab>
+          <v-tab>Advanced Mode</v-tab>
+          <v-tab-item />
+          <v-tab-item>
+            <v-container fluid>
+              <v-row class="pl-4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
+                  <v-text-field
+                    v-model="selectedItem.code"
+                    type="text"
+                    label="Code"
+                  />
+                </v-col>
+              </v-row>
+              <v-row class="pl-4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="12"
+                >
+                  <v-text-field
+                    v-model="selectedItem.description"
+                    type="text"
+                    label="Description"
+                  />
+                </v-col>
+              </v-row>
+              <v-row class="pl-4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="12"
+                >
+                  <v-textarea
+                    v-model="selectedItem.content"
+                    type="text"
+                    label="Content"
+                  />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-tab-item>
+        </v-tabs>
+      </v-card>
+    </v-col>
+    <v-col cols="12" md="4" sm="12" class="mt-8">
+      <v-card>
+        <v-toolbar
+          color="indigo"
+          dark
+        >
           <v-toolbar-title>Print Sections</v-toolbar-title>
-          <v-divider class="mx-4" inset vertical />
-          <grid-filter :filter.sync="filter" />
+
           <v-spacer />
-          <v-btn
-            class="mx-2"
-            x-small
-            fab
-            dark
-            color="primary"
-            @click="item = { principal: false }; dialog = true"
-          >
-            <v-icon dark>
-              mdi-plus
-            </v-icon>
+          <v-col cols="12" md="6" sm="12" class="mt-3">
+            <v-text-field
+              v-model="filter"
+              type="text"
+            />
+          </v-col>
+          <v-btn icon>
+            <v-icon>mdi-magnify</v-icon>
           </v-btn>
-          <v-dialog
-            v-model="dialog"
-            persistent
-            scrollable
-            :fullscreen="$vuetify.breakpoint.smAndDown"
-            :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'"
-          >
-            <ValidationObserver v-slot="{ reset }" tag="form">
-              <v-card>
-                <v-card-title>
-                  <span class="headline">Edit Print Section</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="6">
-                        <ValidationProvider v-slot="{ errors }" rules="required">
-                          <v-text-field
-                            v-model="item.code"
-                            name="code"
-                            :error-messages="errors"
-                            label="Code"
-                          />
-                        </ValidationProvider>
-                      </v-col>
-                      <v-col cols="12" md="6">
-                        <v-text-field
-                          v-model="item.content"
-                          name="content"
-                          label="Content"
-                        />
-                      </v-col>
-                    </v-row>
-                    <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="4">
-                        <v-checkbox
-                          v-model="item.isMainReport"
-                          name="isMainReport"
-                          label="Is Main Report"
-                        />
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer />
-                  <v-btn
-                    color="success"
-                    text
-                    @click="upsertPrintSection()"
-                  >
-                    Save
-                  </v-btn>
-                  <v-btn color="default" text @click="reset(); item = { isMainReport: false }; dialog = false">
-                    Cancel
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </ValidationObserver>
-          </v-dialog>
+          <v-btn icon>
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
         </v-toolbar>
-      </template>
-      <template #item.actions="{ item }">
-        <v-icon
-          small
-          color="primary"
-          class="mr-2"
-          @click="selectItem(item); dialog = true"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-          small
-          color="error"
-          @click="selectItem(item); dialogRemove = true"
-        >
-          mdi-delete
-        </v-icon>
-      </template>
-    </v-data-table>
-  </div>
+        <v-list two-line>
+          <v-list-item-group
+            active-class="indigo--text"
+          >
+            <template v-for="(item, index) in printSections">
+              <v-list-item :key="item.code">
+                <v-list-item-content @click="selectedItem = item">
+                  <v-list-item-subtitle
+                    class="text--primary text-left"
+                    v-text="item.code"
+                  />
+                  <v-list-item-subtitle class="text-left" v-text="item.description" />
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-list-item-action-text v-text="'Is Main Report'" />
+                  <v-icon
+                    v-if="!item.isMainReport"
+                    class="mr-6"
+                    color="grey lighten-1"
+                  >
+                    mdi-key-star
+                  </v-icon>
+                  <v-icon
+                    v-else
+                    class="mr-6"
+                    color="green darken-3"
+                  >
+                    mdi-key-star
+                  </v-icon>
+                </v-list-item-action>
+                <v-list-item-action>
+                  <v-list-item-action-text v-text="'Embed'" />
+                  <v-icon
+                    color="default darken-3"
+                  >
+                    mdi-gesture-tap
+                  </v-icon>
+                </v-list-item-action>
+              </v-list-item>
+
+              <v-divider
+                v-if="index < printSections.length - 1"
+                :key="item.id"
+              />
+            </template>
+          </v-list-item-group>
+        </v-list>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
@@ -125,11 +140,13 @@ import { PrintSectionState } from 'store/printsection'
 import InnerPageMixin from '@/mixins/innerpage'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 import { PrintSection } from '~/types'
+import EnergyReport from '~/components/EnergyReport.vue'
 
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
+    EnergyReport
   }
 })
 export default class PrintSectionsPage extends mixins(InnerPageMixin) {
@@ -137,33 +154,6 @@ export default class PrintSectionsPage extends mixins(InnerPageMixin) {
   dialogRemove: boolean = false
   loading: boolean = false
   filter: String = ''
-
-  headers: any[] = [
-    {
-      text: 'Id',
-      value: 'id',
-      sortable: true,
-      align: 'center'
-    },
-    {
-      text: 'Code',
-      value: 'code',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'Principal',
-      value: 'isMainReport',
-      sortable: true,
-      align: 'center'
-    },
-    {
-      text: '',
-      value: 'actions',
-      sortable: false,
-      align: 'center'
-    }
-  ]
 
   selectedItem: PrintSection = {} as PrintSection
   item: any = { principal: false }
