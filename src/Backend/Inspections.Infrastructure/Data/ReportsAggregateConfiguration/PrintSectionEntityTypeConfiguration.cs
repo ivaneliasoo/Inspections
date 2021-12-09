@@ -10,14 +10,15 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
     //     {
     //         builder.Ignore(p => p.DomainEvents);
 
-    //         builder.ToTable("PrintSections", InspectionsContext.DEFAULT_SCHEMA);
-    //         builder.HasKey(p => p.Id);
-    //         builder.Property(p => p.Id).UseIdentityColumn();
-    //         builder.Property(p => p.Code).IsRequired();
-    //         builder.Property(p => p.Content).IsRequired();
-    //         builder.Property(p => p.IsMainReport).HasDefaultValue(false);
-    //         builder.Property(p => p.Status).IsRequired().HasDefaultValue(PrintSectionStatus.Active);
-    //     }
-    // }
+//             builder.ToTable("PrintSections", InspectionsContext.DEFAULT_SCHEMA);
+//             builder.HasKey(p => p.Id);
+//             builder.Property(p => p.Id).UseIdentityColumn();
+//             builder.Property(p => p.Code).IsRequired();
+//             builder.Property(p => p.Description).IsRequired();
+//             builder.Property(p => p.Content).IsRequired();
+//             builder.Property(p => p.IsMainReport).HasDefaultValue(false);
+//             builder.Property(p => p.Status).IsRequired().HasDefaultValue(PrintSectionStatus.Active);
+//         }
+//     }
 
 }
