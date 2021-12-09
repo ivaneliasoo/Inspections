@@ -13,7 +13,9 @@
           <v-tab>Beginner Mode</v-tab>
           <v-tab>Advanced Mode</v-tab>
           <v-tab-item>
-            <ckeditor v-model="options.dataCKEditor" :editor="options.editor" />
+            <v-card height="500">
+              <ckeditor v-model="options.dataCKEditor" :editor="options.editor" />
+            </v-card>
           </v-tab-item>
           <v-tab-item>
             <v-container fluid>
@@ -62,7 +64,7 @@
       </v-card>
     </v-col>
     <v-col cols="12" md="4" sm="12" class="mt-8">
-      <v-card>
+      <v-card height="555">
         <v-toolbar
           color="indigo"
           dark
@@ -136,85 +138,97 @@
 </template>
 
 <script lang="ts">
+import { ref, defineComponent, reactive, computed, useStore, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
 import Vue from 'vue'
-import { Component, Watch, mixins } from 'nuxt-property-decorator'
-import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PrintSectionState } from 'store/printsection'
-import InnerPageMixin from '@/mixins/innerpage'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 import { PrintSection } from '~/types'
 Vue.use(CKEditor)
 
-@Component({
-  components: {
-    ValidationObserver,
-    ValidationProvider,
-    CKEditor
+export default defineComponent({
+  setup () {
+    const store = useStore()
+    const route = useRoute()
+    const dialogRemove = ref<boolean>(false)
+    const loading = ref<boolean>(false)
+    const filter: String = ''
+    const selectedItem: PrintSection = {} as PrintSection
+    const item = ref({ id: 0, code: '', description: '', content: '', isMainReport: true, status: 0 } as PrintSectionDTO)
+    const options = reactive({
+      dataCKEditor: '',
+      editor: ClassicEditor
+    })
+
+    const printSections = computed((): PrintSectionDTO[] => {
+      return ((store.state as any).licenses as PrintSectionState).printSectionsList
+    })
+
+    const getPrintSections = async (filter: string) => {
+      await store.dispatch(
+        'printsection/getPrintSections',
+        { filter },
+        { root: true }
+      )
+    }
+
+    const deletePrintSection = () => {
+      store
+        .dispatch('printsection/deletePrintSection', selectedItem.id, { root: true })
+        .then(() => {
+        })
+    }
+
+    useFetch(async () => {
+      await store.dispatch('printsection/getPrintSections', { filter }, { root: true })
+
+      if (route.value.query.id) {
+        store
+          .dispatch('printsection/getPrintSectionsById', route.value.query.id, {
+            root: true
+          })
+          .then(resp => (item.value = resp))
+      }
+    })
+
+    const upsertPrintSection = async () => {
+      loading.value = true
+      if (item.value.id > 0) { await store.dispatch('printsection/updatePrintSection', selectedItem.id, { root: true }) } else {
+        await store.dispatch('printsection/createPrintSection', item, { root: true })
+        await store.dispatch('printsection/getPrintSections', filter, { root: true })
+      }
+      loading.value = false
+    }
+
+    watch(
+      () => '',
+      async (newValue: string) => {
+        if (!newValue) {
+          return
+        }
+
+        if (newValue.length >= 3) {
+          await getPrintSections(newValue)
+        }
+      }
+    )
+
+    return {
+      options,
+      dialogRemove,
+      loading,
+      filter,
+      selectedItem,
+      item,
+      printSections,
+      deletePrintSection,
+      upsertPrintSection,
+      getPrintSections
+    }
   }
 })
-
-export default class PrintSectionsPage extends mixins(InnerPageMixin) {
-  dialog: boolean = false
-  dialogRemove: boolean = false
-  loading: boolean = false
-  filter: String = ''
-  options: any = {
-    dataCKEditor: '',
-    editor: ClassicEditor
-  }
-
-  selectedItem: PrintSection = {} as PrintSection
-  item: any = { principal: false }
-
-  get printSections (): PrintSectionDTO[] {
-    return (this.$store.state.printsection as PrintSectionState)
-      .printSectionsList
-  }
-
-  selectItem (item: PrintSection): void {
-    this.selectedItem = item
-    this.$store.dispatch('printsection/getPrintSectionById', this.selectedItem.id, { root: true })
-      .then((resp) => { this.item = resp })
-  }
-
-  asyncData () {
-    const filter: String = ''
-    return {
-      filter
-    }
-  }
-
-  async fetch () {
-    this.loading = true
-    await Promise.all([this.$store.dispatch('printsection/getPrintSections', this.filter, { root: true })])
-    this.loading = false
-  }
-
-  @Watch('filter', { deep: true })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async onFilterChanged (value: String) {
-    await this.$store.dispatch('printsection/getPrintSections', value, { root: true })
-  }
-
-  deletePrintSection () {
-    this.$store.dispatch('printsection/deletePrintSection', this.selectedItem.id, { root: true })
-      .then(() => {
-        this.dialog = false
-      })
-  }
-
-  async upsertPrintSection () {
-    if (this.item.id > 0) { await this.$store.dispatch('printsection/updatePrintSection', this.item, { root: true }) } else {
-      await this.$store.dispatch('printsection/createPrintSection', this.item, { root: true })
-      await this.$store.dispatch('printsection/getPrintSections', {}, { root: true })
-    }
-    this.dialog = false
-  }
-}
 </script>
-
 <style>
 
 </style>
