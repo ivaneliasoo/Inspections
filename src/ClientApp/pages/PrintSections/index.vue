@@ -12,7 +12,9 @@
         >
           <v-tab>Beginner Mode</v-tab>
           <v-tab>Advanced Mode</v-tab>
-          <v-tab-item />
+          <v-tab-item>
+            <ckeditor v-model="options.dataCKEditor" :editor="options.editor" />
+          </v-tab-item>
           <v-tab-item>
             <v-container fluid>
               <v-row class="pl-4">
@@ -134,26 +136,34 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue'
 import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import CKEditor from '@ckeditor/ckeditor5-vue2';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PrintSectionState } from 'store/printsection'
 import InnerPageMixin from '@/mixins/innerpage'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 import { PrintSection } from '~/types'
-import EnergyReport from '~/components/EnergyReport.vue'
+Vue.use(CKEditor)
 
 @Component({
   components: {
     ValidationObserver,
     ValidationProvider,
-    EnergyReport
+    CKEditor
   }
 })
+
 export default class PrintSectionsPage extends mixins(InnerPageMixin) {
   dialog: boolean = false
   dialogRemove: boolean = false
   loading: boolean = false
   filter: String = ''
+  options: any = {
+    dataCKEditor: '',
+    editor: ClassicEditor
+  }
 
   selectedItem: PrintSection = {} as PrintSection
   item: any = { principal: false }
