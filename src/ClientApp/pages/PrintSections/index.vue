@@ -163,6 +163,7 @@ import { PrintSectionState } from '~/store/printsection'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 Vue.use(CKEditor)
 export default defineComponent({
+  name: 'PrintSectionDetail',
   components: {
     draggable
   },
