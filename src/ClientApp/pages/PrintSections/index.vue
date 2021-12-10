@@ -4,7 +4,6 @@
       <h1 class="font-weight-bold mb-3">
         Print Section Detail
       </h1>
-
       <v-card>
         <v-tabs
           color="deep-indigo accent-4"
@@ -78,7 +77,7 @@
               type="text"
             />
           </v-col>
-          <v-btn icon>
+          <v-btn icon @click="getPrintSections(filter)">
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
           <v-btn icon>
@@ -142,7 +141,7 @@ import { ref, defineComponent, reactive, computed, useStore, useFetch, useRoute,
 import Vue from 'vue'
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { PrintSectionState } from 'store/printsection'
+import { PrintSectionState } from '~/store/printsection'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 import { PrintSection } from '~/types'
 Vue.use(CKEditor)
@@ -154,15 +153,15 @@ export default defineComponent({
     const dialogRemove = ref<boolean>(false)
     const loading = ref<boolean>(false)
     const filter: String = ''
-    const selectedItem: PrintSection = {} as PrintSection
-    const item = ref({ id: 0, code: '', description: '', content: '', isMainReport: true, status: 0 } as PrintSectionDTO)
+    const selectedItem = ref({} as PrintSection)
+    const printSection = ref({ id: 0, code: '', description: '', content: '', isMainReport: true, status: 0 } as PrintSectionDTO)
     const options = reactive({
       dataCKEditor: '',
       editor: ClassicEditor
     })
 
     const printSections = computed((): PrintSectionDTO[] => {
-      return ((store.state as any).licenses as PrintSectionState).printSectionsList
+      return ((store.state as any).printsection as PrintSectionState).printSectionsList
     })
 
     const getPrintSections = async (filter: string) => {
@@ -175,7 +174,7 @@ export default defineComponent({
 
     const deletePrintSection = () => {
       store
-        .dispatch('printsection/deletePrintSection', selectedItem.id, { root: true })
+        .dispatch('printsection/deletePrintSection', selectedItem.value.id, { root: true })
         .then(() => {
         })
     }
@@ -188,14 +187,14 @@ export default defineComponent({
           .dispatch('printsection/getPrintSectionsById', route.value.query.id, {
             root: true
           })
-          .then(resp => (item.value = resp))
+          .then(resp => (printSection.value = resp))
       }
     })
 
     const upsertPrintSection = async () => {
       loading.value = true
-      if (item.value.id > 0) { await store.dispatch('printsection/updatePrintSection', selectedItem.id, { root: true }) } else {
-        await store.dispatch('printsection/createPrintSection', item, { root: true })
+      if (printSection.value.id > 0) { await store.dispatch('printsection/updatePrintSection', selectedItem.value.id, { root: true }) } else {
+        await store.dispatch('printsection/createPrintSection', printSection, { root: true })
         await store.dispatch('printsection/getPrintSections', filter, { root: true })
       }
       loading.value = false
@@ -220,7 +219,7 @@ export default defineComponent({
       loading,
       filter,
       selectedItem,
-      item,
+      printSection,
       printSections,
       deletePrintSection,
       upsertPrintSection,
