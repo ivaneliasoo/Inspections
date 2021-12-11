@@ -200,12 +200,6 @@ export default defineComponent({
       loading.value = false
     }
 
-    const htmlEntities = (str: string) => {
-      const encoded = ('<span v-html="' + str + '"</span>')
-      console.log(encoded)
-      return encoded
-    }
-
     watch(
       () => '',
       async (filter: string) => {
