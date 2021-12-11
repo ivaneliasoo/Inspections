@@ -13,7 +13,7 @@
           <v-tab>Advanced Mode</v-tab>
           <v-tab-item>
             <v-card height="500">
-              <ckeditor v-model="options.dataCKEditor" :editor="options.editor" />
+              <ckeditor v-model="dataCKEditor" :editor="options.editor" />
             </v-card>
           </v-tab-item>
           <v-tab-item>
@@ -51,7 +51,7 @@
                   md="12"
                 >
                   <v-textarea
-                    v-model="selectedItem.content"
+                    v-model="dataCKEditor"
                     type="text"
                     label="Content"
                   />
@@ -90,7 +90,7 @@
           >
             <template v-for="(item, index) in printSections">
               <v-list-item :key="item.code">
-                <v-list-item-content @click="selectedItem = item">
+                <v-list-item-content @click="selectedItem = item; dataCKEditor = item.content">
                   <v-list-item-subtitle
                     class="text--primary text-left"
                     v-text="item.code"
@@ -153,10 +153,10 @@ export default defineComponent({
     const dialogRemove = ref<boolean>(false)
     const loading = ref<boolean>(false)
     const filter: String = ''
+    const dataCKEditor: String = ''
     const selectedItem = ref({} as PrintSection)
     const printSection = ref({ id: 0, code: '', description: '', content: '', isMainReport: true, status: 0 } as PrintSectionDTO)
     const options = reactive({
-      dataCKEditor: '',
       editor: ClassicEditor
     })
 
@@ -200,15 +200,21 @@ export default defineComponent({
       loading.value = false
     }
 
+    const htmlEntities = (str: string) => {
+      const encoded = ('<span v-html="' + str + '"</span>')
+      console.log(encoded)
+      return encoded
+    }
+
     watch(
       () => '',
-      async (newValue: string) => {
-        if (!newValue) {
+      async (filter: string) => {
+        if (!filter) {
           return
         }
 
-        if (newValue.length >= 3) {
-          await getPrintSections(newValue)
+        if (filter.length >= 3) {
+          await getPrintSections(filter)
         }
       }
     )
@@ -221,9 +227,11 @@ export default defineComponent({
       selectedItem,
       printSection,
       printSections,
+      dataCKEditor,
       deletePrintSection,
       upsertPrintSection,
-      getPrintSections
+      getPrintSections,
+      htmlEntities
     }
   }
 })
