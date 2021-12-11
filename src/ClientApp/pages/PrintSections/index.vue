@@ -116,11 +116,13 @@
                 </v-list-item-action>
                 <v-list-item-action>
                   <v-list-item-action-text v-text="'Embed'" />
-                  <v-icon
-                    color="default darken-3"
-                  >
-                    mdi-gesture-tap
-                  </v-icon>
+                  <v-btn icon @click="dataCKEditor = dataCKEditor + item.content">
+                    <v-icon
+                      color="default darken-3"
+                    >
+                      mdi-gesture-tap
+                    </v-icon>
+                  </v-btn>
                 </v-list-item-action>
               </v-list-item>
 
@@ -225,7 +227,6 @@ export default defineComponent({
       deletePrintSection,
       upsertPrintSection,
       getPrintSections,
-      htmlEntities
     }
   }
 })
