@@ -13,9 +13,9 @@
     "lint": "eslint --ext \".ts,.js,.vue\" --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@braid/vue-formulate": "^2.5.2",
     "@ckeditor/ckeditor5-build-classic": "^31.0.0",
     "@ckeditor/ckeditor5-vue2": "^1.0.5",
-    "@braid/vue-formulate": "^2.5.2",
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/composition-api": "^0.30.0",
@@ -40,6 +40,7 @@
     "vue-image-compressor": "^1.0.3",
     "vue-papa-parse": "^2.0.0",
     "vue-signature-pad": "2.0.4",
+    "vuedraggable": "^2.24.3",
     "vuex": "^3.6.2"
   },
   "devDependencies": {

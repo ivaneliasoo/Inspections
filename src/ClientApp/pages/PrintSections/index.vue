@@ -88,49 +88,51 @@
           <v-list-item-group
             active-class="indigo--text"
           >
-            <template v-for="(item, index) in printSections">
-              <v-list-item :key="item.code">
-                <v-list-item-content @click="selectedItem = item; dataCKEditor = item.content">
-                  <v-list-item-subtitle
-                    class="text--primary text-left"
-                    v-text="item.code"
-                  />
-                  <v-list-item-subtitle class="text-left" v-text="item.description" />
-                </v-list-item-content>
-                <v-list-item-action>
-                  <v-list-item-action-text v-text="'Is Main Report'" />
-                  <v-icon
-                    v-if="!item.isMainReport"
-                    class="mr-6"
-                    color="grey lighten-1"
-                  >
-                    mdi-key-star
-                  </v-icon>
-                  <v-icon
-                    v-else
-                    class="mr-6"
-                    color="green darken-3"
-                  >
-                    mdi-key-star
-                  </v-icon>
-                </v-list-item-action>
-                <v-list-item-action>
-                  <v-list-item-action-text v-text="'Embed'" />
-                  <v-btn icon @click="dataCKEditor = dataCKEditor + item.content">
+            <draggable v-model="printSections" style="min-height: 10px">
+              <template v-for="(item, index) in printSections">
+                <v-list-item :key="item.code">
+                  <v-list-item-content @click="selectedItem = item; dataCKEditor = item.content">
+                    <v-list-item-subtitle
+                      class="text--primary text-left"
+                      v-text="item.code"
+                    />
+                    <v-list-item-subtitle class="text-left" v-text="item.description" />
+                  </v-list-item-content>
+                  <v-list-item-action>
+                    <v-list-item-action-text v-text="'Is Main Report'" />
                     <v-icon
-                      color="default darken-3"
+                      v-if="!item.isMainReport"
+                      class="mr-6"
+                      color="grey lighten-1"
                     >
-                      mdi-gesture-tap
+                      mdi-key-star
                     </v-icon>
-                  </v-btn>
-                </v-list-item-action>
-              </v-list-item>
+                    <v-icon
+                      v-else
+                      class="mr-6"
+                      color="green darken-3"
+                    >
+                      mdi-key-star
+                    </v-icon>
+                  </v-list-item-action>
+                  <v-list-item-action>
+                    <v-list-item-action-text v-text="'Embed'" />
+                    <v-btn icon @click="dataCKEditor = dataCKEditor + item.content">
+                      <v-icon
+                        color="default darken-3"
+                      >
+                        mdi-gesture-tap
+                      </v-icon>
+                    </v-btn>
+                  </v-list-item-action>
+                </v-list-item>
 
-              <v-divider
-                v-if="index < printSections.length - 1"
-                :key="item.id"
-              />
-            </template>
+                <v-divider
+                  v-if="index < printSections.length - 1"
+                  :key="item.id"
+                />
+              </template>
+            </draggable>
           </v-list-item-group>
         </v-list>
       </v-card>
@@ -141,14 +143,17 @@
 <script lang="ts">
 import { ref, defineComponent, reactive, computed, useStore, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
 import Vue from 'vue'
-import CKEditor from '@ckeditor/ckeditor5-vue2';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CKEditor from '@ckeditor/ckeditor5-vue2'
+import draggable from 'vuedraggable'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { PrintSectionState } from '~/store/printsection'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 import { PrintSection } from '~/types'
 Vue.use(CKEditor)
-
 export default defineComponent({
+  components: {
+    draggable
+  },
   setup () {
     const store = useStore()
     const route = useRoute()
@@ -226,7 +231,7 @@ export default defineComponent({
       dataCKEditor,
       deletePrintSection,
       upsertPrintSection,
-      getPrintSections,
+      getPrintSections
     }
   }
 })
