@@ -169,10 +169,6 @@ export class Job {
         this.setlastUpdate();
     }
 
-    // teamCount() {
-    //     return this.teams ? this.teams.split(/\r\n|\r|\n/).length : 0;
-    // }
-
     setlastUpdate() {
         this.lastUpdate = toIsoDate(new Date())
     }

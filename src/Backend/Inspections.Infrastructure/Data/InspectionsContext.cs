@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Inspections.Core.Domain.PrintSectionsAggregate;
+//using Inspections.Core.Domain.PrintSectionsAggregate;
 using System.Reflection;
 
 namespace Inspections.Infrastructure.Data
@@ -51,7 +51,7 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Core.Domain.Address> Addresses { get; set; }
         public DbSet<Core.Domain.EMALicense> Licenses { get; set; }
         public DbSet<OperationalReadings> OperationalReadings { get; set; }
-        public DbSet<PrintSection> PrintSections { get; set; }
+        // public DbSet<PrintSection> PrintSections { get; set; }
 
         public DbSet<Core.Domain.CurrentTable> CurrentTable { get; set; }
         public DbSet<Core.Domain.Template> Template { get; set; }

@@ -1,771 +1,199 @@
 <template>
   <div>
-
-    <div style="position: fixed; top: 80px; left: 80px;">
-      <v-menu
-        left
-        bottom
-        fixed
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            icon
-            v-bind="attrs"
-            v-on="on"
-          >
-            <v-icon>mdi-menu</v-icon>
-          </v-btn>
-        </template>
-        <v-list class="menu">
-          <v-list-item>
-            <v-list-item-title @click="showJobSchedule">
-              Job schedule projection
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title @click="showJobProjectionOverview">
-              Job projection overview
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title @click="showManPower">
-              Manpower planning
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title @click="showManPowerForecast">
-              Manpower forecast
-            </v-list-item-title>
-          </v-list-item>
-          <v-divider></v-divider>
-          <v-list-item>
-            <v-list-item-title @click="save">
-              Save
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </div>
-
-  <v-container v-show="jobScheduleVisible" fluid class="my-n2 py-n2 mx-4 px-0 fill-height">
-    <v-row>
-      <v-col cols="10">
-        <v-row>
-          <v-col class="mt-0 pt-0 mb-n4 pb-n4 " cols=7>
-            <div class="text-h6" style="text-align: bottomz; display: inline">
-              Job Schedule Projection
-            </div>
-          </v-col>
-          <v-col class="text-right mt-0 pt-0 mb-n4 pb-n4" cols=2>
-            <div id="flatpickr" class="rounded text-body-2"
-              style="padding: 3px; box-shadow: 1px 3px lightgrey;">
-              <flat-pickr
-                  v-model="selectedDate"
-                  @on-change="gotoDate"
-                  :config="dateConfig"
-                  class="calendar"
-                  placeholder="Select date"
-                  name="date"/>
-            </div>
-          </v-col>
-          <v-col class="text-center mt-0 pt-0 mb-n4 pb-n4" cols=3>
-            <v-btn small @click="previousWeek">
-              Previous Week
-            </v-btn>
-            &nbsp; &nbsp;
-            <v-btn small @click="nextWeek">
-              Next Week
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <div style="height: 80vh; overflow-y: scroll">
-              <table
-                id="job-sched"
-                class="my-0 py-0 job-sched">
-                  <colgroup>
-                    <col style="width:8%;">
-                    <col v-bind:span="teams.length" v-bind:style="colWidth()">
-                  </colgroup>
-                  <thead>
-                      <tr>
-                          <th class="text-caption font-weight-bold">Date</th>
-                          <th v-for="team in teams" :key="team.id" class="text-caption font-weight-bold">
-                            {{team.foreman}}
-                          </th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(day, index) in jobSchedule" :key="index" style="height: 0px;">
-                      <td class="text-caption text-left font-weight-bold date" :style="dayColor(day.date)">
-                        <div style="text-align: center;">
-                          {{dayOfWeek(day.date)}}<br>
-                          {{monthAndDate(day.date)}}
-                        </div>
-                      </td>
-                      <td v-for="(team, teamIndex) in teams" :key="team.id"
-                            class="text-left draggable"
-                            draggable="true"
-                            data-source="scheduled-job"
-                            @click="onTableCellClick($event, day.jobs[team.id])"
-                            @drop="dropHandler($event, index, teamIndex)"
-                            @dragover="dragoverHandler($event)"
-                            @dragstart="scheduledJobDragstart($event, index, teamIndex)"
-                            :style = "jobScheduleStyle(day.jobs[team.id])">
-                        <div v-if="splitShift(day.jobs[team.id])">
-                          <label class="font-weight-bold">
-                            Morning
-                          </label><br>
-                          {{ day.jobs[team.id].job1 }}<br>
-                          <label class="font-weight-bold">
-                            Afternoon
-                          </label><br>
-                          {{ day.jobs[team.id].job2 }}
-                        </div>
-                        <div v-else>
-                          <label v-if="day.jobs[team.id].shift==='day'"
-                            class="font-weight-bold">
-                            Day
-                          </label>
-                          <label v-if="day.jobs[team.id].shift==='night'"
-                            class="font-weight-bold">
-                            Night
-                          </label><br>
-                          {{ day.jobs[team.id].job1 }}
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-              </table>
-            </div>
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="2">
-        <v-row>
-          <v-col cols="12" class="mt-1 pt-0 mb-0 pb-0 d-flex text-center">
-              <div>
-                Confirmed Jobs
+    <v-container v-show="jobScheduleVisible" fluid class="my-n2 py-n2 mx-4 px-0 fill-height">
+      <v-row>
+        <v-col cols="10">
+          <v-row>
+            <v-col class="text-left mt-0 pt-0 mb-n4 pb-n4" cols=1>
+              <main-menu 
+                @show-job-projection-overview="showJobProjectionOverview"
+                @show-job-schedule="showJobSchedule"
+                @show-man-power="showManPower"
+                @show-man-power-forecast="showManPowerForecast"
+                @save="save"
+              >
+              </main-menu>
+            </v-col>
+            <v-col class="mt-0 pt-0 mb-n4 pb-n4 " cols=4>
+              <div class="text-h6" style="text-align: bottomz; display: inline">
+                Job Schedule Projection
               </div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <div style="height: 330px; width: 90%; overflow-y: auto;">
-              <table
-                id="confirmed-jobs"
-                class="my-0 py-0 job-table">
-                  <thead v-on:click="openJobTable('confirmed')">
-                    <tr>
-                      <th class="header text-caption font-weight-bold">Job scope</th>
-                      <th class="header text-caption font-weight-bold">Pri</th>
-                    </tr>
-                  </thead>
-                  <tbody v-on:click="openJobTable('confirmed')">
-                    <tr v-for="(job, index) in confirmedJobs" :key="index" :style="background(job.priority)">
-                      <td class="text-caption text-left draggable"
-                          style="width:80%;"
-                          draggable="true"
-                          data-source="confirmed-job"
-                          :data-jobid="job.id"
-                          @dragstart = "jobDragStart">
-                        <div style="height:40px; overflow: hidden">
-                          {{job.scope}}
-                        </div>
-                      </td>
-                      <td class="text-caption text-left" style="width:20%;">
-                        <div style="height:40px; overflow: hidden">
-                          {{job.priority}}
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-              </table>
-            </div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" class="mt-1 pt-0 mb-0 pb-0 d-flex text-center">
-              <div>
-                Upcoming Jobs
+            </v-col>
+            <v-col class="text-right mt-0 pt-0 mb-n4 pb-n4" cols=2>
+              <div id="flatpickr" class="rounded text-body-2"
+                style="padding: 3px; box-shadow: 1px 3px lightgrey;">
+                <flat-pickr
+                    v-model="selectedDate"
+                    @on-change="gotoDate"
+                    :config="dateConfig"
+                    class="calendar"
+                    placeholder="Select date"
+                    name="date"/>
               </div>
-          </v-col>
-        </v-row>
-        <v-row class="my-0 py-0">
-          <v-col>
-            <div style="height: 330px; width: 90%; overflow-y: auto;">
-              <table
-                id="upcoming-jobs"
-                class="my-0 py-0 job-table">
-                  <thead v-on:click="openJobTable('upcoming')">
-                    <tr>
-                      <th class="text-caption font-weight-bold">Job scope</th>
-                      <th class="text-caption font-weight-bold">Pri</th>
-                    </tr>
-                  </thead>
-                  <tbody v-on:click="openJobTable('upcoming')">
-                    <tr v-for="(job, index) in upcomingJobs" :key="index" :style="background(job.priority)">
-                      <td class="text-caption text-left draggable"
-                          style="width:80%"
-                          draggable="true"
-                          data-source="upcoming-job"
-                          :data-jobid="job.id"
-                          @dragstart = "jobDragStart">
-                        <div style="height:40px; overflow: hidden">
-                          {{job.scope}}
-                        </div>
-                      </td>
-                      <td class="text-caption text-left" style="width:20%">
-                        <div style="height:40px; overflow: hidden">
-                          {{job.priority}}
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-              </table>
-            </div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <p justify="end" class="my-0 py-0 text-caption">Version {{ version }}</p>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-
-    <v-dialog v-model="jobTableDialog.open" max-width="900px">
-      <v-card>
-        <v-card-title>
-          <span class="ml-4 headline">{{jobTableDialog.title}}</span>
-          <v-spacer></v-spacer>
-          <v-btn class="mt-2 mr-5" icon @click="delJob"><v-icon>mdi-delete</v-icon></v-btn>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col>
-                <v-simple-table
-                  id="simple-job-table"
-                  class="simple-job-table"
-                  fixed-header
-                  height="600px">
+            </v-col>
+            <v-col class="text-center mt-0 pt-0 mb-n4 pb-n4" cols=5>
+              <v-btn small @click="previousWeek">
+                Previous Week
+              </v-btn>
+              &nbsp; &nbsp;
+              <v-btn small @click="nextWeek">
+                Next Week
+              </v-btn>
+              &nbsp; &nbsp;
+              <v-btn small @click="save">
+                Save
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <div style="height: 80vh; overflow-y: scroll">
+                <table
+                  id="job-sched"
+                  class="my-0 py-0 job-sched">
+                    <colgroup>
+                      <col style="width:8%;">
+                      <col v-bind:span="teams.length" v-bind:style="colWidth()">
+                    </colgroup>
                     <thead>
-                      <tr>
-                        <th></th>
-                        <th>Job scope</th>
-                        <th>Project value</th>
-                        <th>Sales person</th>
-                        <th>Priority</th>
-                      </tr>
+                        <tr>
+                            <th class="text-caption font-weight-bold">Date</th>
+                            <th v-for="team in teams" :key="team.id" class="text-caption font-weight-bold">
+                              {{team.foreman}}
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(job, index) in editedJobTable" :key="index">
-                        <td>
-                          <input type="checkbox" v-model="job.checked">
+                      <tr v-for="(day, index) in jobSchedule" :key="index" style="height: 0px;">
+                        <td class="text-caption text-left font-weight-bold date" :style="dayColor(day.date)">
+                          <div style="text-align: center;">
+                            {{dayOfWeek(day.date)}}<br>
+                            {{monthAndDate(day.date)}}
+                          </div>
                         </td>
-                        <td>
-                          <textarea class="text-caption textarea" rows="2" cols="45"
-                            v-model="job.scope" @change="addToJobs(job)">
-                          </textarea>
-                        </td>
-                        <td>
-                          <input class="text-caption text-right table-input" type="text" size="10"
-                            v-model="job.value" @change="addToJobs(job)"
-                          >
-                        </td>
-                        <td>
-                          <input class="text-caption table-input" type="text" size="20"
-                            v-model="job.salesPerson" @change="addToJobs(job)"
-                          >
-                        </td>
-                        <td v-bind:style="background(job.priority)">
-                          <input class="text-caption text-right table-input" type="text" size="4"
-                            v-bind:style="background(job.priority)"
-                            v-model="job.priority"
-                            @change="markChange"
-                            @blur="sortByPriority(index)"
-                          >
+                        <td v-for="(team, teamIndex) in teams" :key="team.id"
+                              class="text-left draggable"
+                              draggable="true"
+                              data-source="scheduled-job"
+                              @click="onTableCellClick($event, day.jobs[team.id])"
+                              @drop="dropHandler($event, index, teamIndex)"
+                              @dragover="dragoverHandler($event)"
+                              @dragstart="scheduledJobDragstart($event, index, teamIndex)"
+                              :style = "jobScheduleStyle(day.jobs[team.id])">
+                          <div v-if="splitShift(day.jobs[team.id])">
+                            <label class="font-weight-bold">
+                              Morning
+                            </label><br>
+                            {{ day.jobs[team.id].job1 }}<br>
+                            <label class="font-weight-bold">
+                              Afternoon
+                            </label><br>
+                            {{ day.jobs[team.id].job2 }}
+                          </div>
+                          <div v-else>
+                            <label v-if="day.jobs[team.id].shift==='day'"
+                              class="font-weight-bold">
+                              Day
+                            </label>
+                            <label v-if="day.jobs[team.id].shift==='night'"
+                              class="font-weight-bold">
+                              Night
+                            </label><br>
+                            {{ day.jobs[team.id].job1 }}
+                          </div>
                         </td>
                       </tr>
                     </tbody>
-                </v-simple-table>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeJobTable">
-            Close
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+                </table>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="2">
+          <v-row>
+            <v-col cols="12" class="mt-1 pt-0 mb-0 pb-0 d-flex text-center">
+                <div style="height:28px;">
+                </div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-expansion-panels focusable v-model="jobProjectionPanel">
+                <v-expansion-panel
+                  v-for="(jlist, jid) in jobProjectionTable" :key="jid"          
+                >
+                  <v-expansion-panel-header>{{jlist.title}}</v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <job-projection-category v-bind:id="jid" v-bind:jobList="jlist" 
+                      height="490px" v-bind:showHeader="false"
+                      @add-job="addJob"
+                    >
+                    </job-projection-category>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-col>
+          </v-row>
 
-    <v-dialog v-model="jobDialog.open" max-width="800px">
-      <v-card>
-        <v-card-title>
-          <span class="mx-2 headline">Assign Job</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols=12>
-                <v-row class="my-0 py-n0">
-                  <v-col cols=6>
-                    <div id="flatpickr" class="mt-2 pt-1 mb-0 pb-0 rounded text-body-2"
-                      style="padding: 3px; box-shadow: 1px 3px lightgrey;">
-                      <flat-pickr
-                          v-model="jobDialog.startDate"
-                          :config="jobDateConfig"
-                          class="calendar"
-                          placeholder="Select date"
-                          name="startDate"/>
-                    </div>
-                  </v-col>
-                  <v-col cols=6>
-                    <div id="flatpickr" class="mt-2 pt-1 mb-0 pb-0 rounded text-body-2"
-                      style="padding: 3px; box-shadow: 1px 3px lightgrey;">
-                      <flat-pickr
-                          v-model="jobDialog.endDate"
-                          :config="jobDateConfig"
-                          class="calendar"
-                          placeholder="Select date"
-                          name="endtDate"/>
-                    </div>
-                  </v-col>
-                </v-row>
-                <v-row class="my-0 py-0">
-                  <v-col cols=10>
-                    <label class="my-0 py-0 font-weight-bold">
-                      Team: {{getForeman(jobInfo.team)}}
-                    </label>
-                  </v-col>
-                  <v-col cols=2 class="mb-2 pb-2 text-right">
-                    <v-btn icon small @click="flipJobs">
-                      <v-icon>mdi-orbit-variant</v-icon>
-                    </v-btn>
-                    <v-btn icon small @click="addSchedJob">
-                      <v-icon>mdi-plus</v-icon>
-                    </v-btn>
-                  </v-col>
-                </v-row>
-                <v-row class="my-0 py-0">
-                  <v-col>
-                    <div v-if="splitShift(jobInfo)">
-                      <v-row class="my-n4 py-0">
-                        <v-col cols=10>
-                          <label class="font-weight-bold">
-                            Morning
-                          </label>
-                        </v-col>
-                      </v-row>
-                      <v-row class="my-n4 py-0">
-                        <v-col>
-                          <v-textarea
-                            rows=3
-                            outlined
-                            v-model="jobInfo.job1">
-                          </v-textarea>
-                        </v-col>
-                      </v-row>
-                      <v-row class="my-n4 py-0">
-                        <v-col cols=10>
-                          <label class="font-weight-bold">
-                            Afternoon
-                          </label>
-                        </v-col>
-                      </v-row>
-                      <v-row class="my-0 py-0">
-                        <v-col>
-                          <v-textarea
-                            rows=3
-                            outlined
-                            v-model="jobInfo.job2">
-                          </v-textarea>
-                        </v-col>
-                      </v-row>
-                    </div>
-                    <div v-else>
-                      <v-row class="my-n4 py-0">
-                        <v-col cols=10>
-                          <v-label class="my-n5 py-0 font-weight-bold">
-                            {{ jobInfo.shiftLabel() }}
-                          </v-label>
-                        </v-col>
-                      </v-row>
-                      <v-row class="my-0 py-0">
-                        <v-col>
-                          <v-textarea class="my-0 py-0"
-                            outlined
-                            v-model="jobInfo.job1">
-                          </v-textarea>
-                        </v-col>
-                      </v-row>
-                    </div>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-radio-group class="ml-8"
-                    row v-model="jobInfo.shift">
-                    <v-radio
-                      label="Day"
-                      value="day"
-                    ></v-radio>
-                    <v-radio
-                      label="Night"
-                      value="night"
-                    ></v-radio>
-                    <v-radio
-                      label="TBC"
-                      value="tbc"
-                    ></v-radio>
-                  </v-radio-group>
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeSchedJob">
-            Close
-          </v-btn>
-          <v-btn color="blue darken-1" text @click="saveSchedJob">
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <div id="content"></div>
-  </v-container>
+          <v-row>
+            <v-col>
+              <p justify="end" class="my-0 py-0 text-caption">Version {{ version }}</p>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
 
-  <v-container v-show="jobProjectionVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
-    <v-row style="margin-right: 8px;">
-      <v-col>
-        <v-row>
-          <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=7>
-            <div class="text-h6" style="text-align: bottomz; display: inline">
-              Job Projection Overview
-            </div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col v-for="(jobList, id) in jobProjectionTable" :key="id">
-            <div style="height: 40px;">
-              <table style="border: blank; height: 100%; width: 100%;">
-                <tbody>
-                  <tr>
-                    <td class="text-center font-weight-bold" style="font-size: 11pt; border-style: none">
-                      <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-                        <tr>
-                          <td style="width 80%">
-                            {{jobList.title}}
-                          </td>
-                          <td style="width 20%">
-                            <v-btn icon small @click="addJob(id)">
-                              <v-icon>mdi-plus</v-icon>
-                            </v-btn>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div style="height: 680px; overflow-y: scroll;">
-              <table style="width: 100%; border-collapse: separate; border: blank; border-spacing: 0 15px;">
-                <tbody>
-                  <tr v-for="(jobItem, jobId) in jobList.jobs" :key="jobId">
-                    <td class="text-left" style="border-style: none;">
-                      <table class="job-projection">
-                        <colgroup span = "10">
-                            <col v-for="n in 10" width="10" :key="n">
-                        </colgroup>
-                        <tr style="height: 40%; border-botton-style: hidden;">
-                          <td colspan="2" style="border-right-style: hidden;">
-                            <v-btn
-                              class="mx-2"
-                              fab
-                              dark
-                              small
-                              outlined
-                              color="black"
-                            >
-                            <input class="table-input text-center" type="text" size="2" maxlength="2"
-                              style="font-size: 11pt; text-transform:uppercase"
-                              v-model="jobItem.tag"
-                            >
-                            </v-btn>
-                          </td>
-                          <td colspan="9">
-                            <textarea class="text-caption textarea" rows="2" style="width:100%" placeholder="Scope"
-                              v-model="jobItem.scope">
-                            </textarea>
-                          </td>
-                        </tr>
-                        <tr style="height: 20%; border-top-style: hidden; border-bottom-style: hidden;">
-                          <td colspan="5" style="border-right-style: hidden;">
-                            <input class="text-caption table-input" type="text" placeholder="Comments"
-                              @change="$forceUpdate()"
-                              v-model="jobItem.comments" :style="jobProjectionCommentsStyle(jobItem.comments)"
-                            >
-                          </td>
-                          <td colspan="5" rowspan="2">
-                            <textarea v-if="id==='inProgress'"
-                              class="text-caption textarea" rows="2" placeholder="Teams"
-                              v-model="jobItem.teams" style="color: blue; width:100%;">
-                            </textarea>
-                          </td>
-                        </tr>
-                        <tr style="height: 20%; border-top-style: hidden;">
-                          <td colspan="5" style="border-right-style: hidden;">
-                            <input class="text-caption table-input" type="text" placeholder="Value"
-                              v-model="jobItem.value" style="display:table-cell; width:100%"
-                            >
-                          </td>
-                        </tr>
-                        <tr style="height: 20%">
-                          <td class="text-center" colspan="4">
-                            <input class="text-caption table-input" type="text" size="8" placeholder="Team count"
-                              style="text-align: center;"
-                              v-model="jobItem.teamCount"
-                            >
-                          </td>
-                          <td class="text-center" colspan="2">
-                            <input class="text-caption table-input" type="text" size="6" placeholder="Days"
-                              style="text-align: center;"
-                              v-model="jobItem.duration"
-                            >
-                          </td>
-                          <td class="text-center" colspan="4" :style="jobProjectionShiftBackground(jobItem.shift)">
-                            <select class="text-caption table-input" :style="jobProjectionShiftColor(jobItem.shift)"
-                              style="text-align: center;"
-                              v-model="jobItem.shift" @change="updateShift">
-                              <option value="" disabled selected style="color: grey">Select shift</option>
-                              <option value="Day" style="color: black">Day</option>
-                              <option value="Night" style="color: black">Night</option>
-                              <option value="Mixed" style="color: black">Mixed</option>
-                            </select>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-            </div>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
-
-  <v-container v-show="manPowerVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
-    <v-row>
-      <v-col cols="12">
-        <v-row>
-          <v-col class="mt-0 pt-0 mb-n4 pb-n4 " cols=7>
-            <div class="text-h6" style="text-align: bottomz; display: inline">
-              Man Power Planning
-            </div>
-          </v-col>
-          <v-col class="text-right mt-0 pt-0 mb-n4 pb-n4" cols=2>
-            <div id="flatpickr" class="rounded text-body-2"
-              style="padding: 3px; box-shadow: 1px 3px lightgrey;">
-              <flat-pickr
-                  v-model="selectedDate"
-                  @on-change="gotoDate"
-                  :config="dateConfig"
-                  class="calendar"
-                  placeholder="Select date"
-                  name="date"/>
-            </div>
-          </v-col>
-          <v-col class="text-center mt-0 pt-0 mb-n4 pb-n4" cols=3>
-            <v-btn small @click="previousWeek">
-              Previous week
-            </v-btn>
-            &nbsp; &nbsp;
-            <v-btn small @click="nextWeek">
-              Next week
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <div style="height: 780px; overflow-y: scroll;">
-              <table
-                id="manpower"
-                class="my-0 py-0 job-sched">
-                  <colgroup>
-                    <col style="width:4%;">
-                    <col style="width:7%;">
-                    <col :span="teams.length" :style="colWidthMp()">
-                  </colgroup>
-                  <thead>
-                      <tr>
-                        <th colspan="3" class="font-weight-bold"
-                                style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
-                            Manpower Planning Guide
-                        </th>
-                        <th :colspan="teams.length-1" class="font-weight-bold"
-                                style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
-                        </th>
-                      </tr>
-                  </thead>
-                  <tbody v-for="(day, index) in jobSchedule" :key="index">
-                    <tr>
-                        <td class="font-weight-bold date" align ="center" rowspan="4" :style="dayStyle(day.date)">
-                            <div style="text-align: center; writing-mode: vertical-lr; transform: rotate(180deg);">
-                                {{dayOfWeek(day.date)}} {{monthAndDate(day.date)}}
-                            </div>
-                        </td>
-                        <td class="text-caption text-center font-weight-bold foreman">
-                            Manpower: {{ day.manPowerTotals().manPower }}
-                        </td>
-                        <td v-for="team in teams" :key="team.id"
-                            @click="editTeam(team, day.jobs[team.id])"
-                            class="text-caption text-center font-weight-bold foreman"
-                            style="background-color: rgb(180,198,231)">
-                            {{team.foreman}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-caption text-center font-weight-bold foreman">
-                            On leave: {{ day.manPowerTotals().onLeave }}
-                        </td>
-                        <td v-for="team in teams" :key="team.id"
-                            @click="editTeam(team, day.jobs[team.id])"
-                            class="text-caption text-center font-weight-bold">
-                            {{team.vehicle}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-caption text-center font-weight-bold foreman">
-                        </td>
-                        <td v-for="team in teams" :key="team.id" class="text-caption font-weight-bold"
-                            @drop="dropTeamMember($event, day.jobs[team.id])"
-                            @click="editTeam(team, day.jobs[team.id])">
-                              <div v-for="teamMember in day.jobs[team.id].teamMembers" :key="teamMember"
-                                  style="text-align: center;"
-                                  class="draggable"
-                                  draggable="true"
-                                  @dragover="dragoverHandler($event)"
-                                  @dragstart="teamMemberDragstart"
-                                  data-source="team-member"
-                                  :data-day-index="index"
-                                  :data-foreman="team.id"
-                                  :data-team-member="teamMember">
-                                  {{teamMember}}
-                              </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-caption text-center font-weight-bold foreman">
-                            Day notes
-                        </td>
-                        <td v-for="team in teams" :key="team.id"
-                            class="text-left"
-                            :style = "jobScheduleStyle(day.jobs[team.id])">
-                        <div v-if="splitShift(day.jobs[team.id])">
-                          <label class="font-weight-bold">
-                            Morning
-                          </label><br>
-                          {{ day.jobs[team.id].job1 }}<br>
-                          <label class="font-weight-bold">
-                            Afternoon
-                          </label><br>
-                          {{ day.jobs[team.id].job2 }}
-                        </div>
-                        <div v-else>
-                          <label v-if="day.jobs[team.id].shift==='day'"
-                            class="font-weight-bold">
-                            Day
-                          </label>
-                          <label v-if="day.jobs[team.id].shift==='night'"
-                            class="font-weight-bold">
-                            Night
-                          </label><br>
-                          {{ day.jobs[team.id].job1 }}
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-              </table>
-            </div>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-
-    <v-dialog v-model="teamDialog.open" max-width="600px">
-      <v-card>
-        <v-card-title>
-          <span class="mx-2 headline">{{teamDialog.title}}</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-              <v-row class="my-0 py-0">
-                <v-col>
-                  <v-text-field class="my-n2 py-0" label="Foreman" v-model="teamDialog.editedTeam.foreman">
-                  </v-text-field>
-                </v-col>
-              </v-row>
-              <v-row class="my-0 py-0">
-                <v-col cols="8">
-                  <v-text-field class="my-n2 py-0" label="Vehicle license" v-model="teamDialog.editedTeam.vehicle">
-                  </v-text-field>
-                </v-col>
-                <v-col cols="4">
-                  <v-text-field class="my-n2 py-0" label="Position" v-model="teamDialog.editedTeam.position">
-                  </v-text-field>
-                </v-col>
-              </v-row>
-              <v-row class="my-0 py-0">
-                <v-col align="right">
-                  <v-spacer></v-spacer>
-                  <v-btn class="mt-0 pt-0 mb-n4 pb-n4" small @click="deleteTeam">
-                    Delete Team
-                  </v-btn>
-                  &nbsp; &nbsp;
-                  <v-btn class="mt-0 pt-0 mb-n4 pb-n4" small @click="newTeam">
-                    New Team
-                  </v-btn>
-                </v-col>
-              </v-row>
+      <v-dialog v-model="jobTableDialog.open" max-width="900px">
+        <v-card>
+          <v-card-title>
+            <span class="ml-4 headline">{{jobTableDialog.title}}</span>
+            <v-spacer></v-spacer>
+            <v-btn class="mt-2 mr-5" icon @click="delJob"><v-icon>mdi-delete</v-icon></v-btn>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
               <v-row>
                 <v-col>
                   <v-simple-table
-                    id="team-memmbers"
+                    id="simple-job-table"
                     class="simple-job-table"
                     fixed-header
-                    height="440px">
-                      <colgroup>
-                        <col style="width:8%;">
-                        <col style="width:92%;">
-                      </colgroup>
+                    height="600px">
                       <thead>
                         <tr>
-                          <th>
-                            <v-btn icon @click="deleteTeamMember"><v-icon>mdi-delete</v-icon></v-btn>
-                          </th>
-                          <th>Team members</th>
+                          <th></th>
+                          <th>Job scope</th>
+                          <th>Project value</th>
+                          <th>Sales person</th>
+                          <th>Priority</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(teamMember, index) in teamDialog.teamMembers" :key="index">
-                          <td class="text-center">
-                            <input type="checkbox" v-model="teamDialog.checked[index]">
+                        <tr v-for="(job, index) in editedJobTable" :key="index">
+                          <td>
+                            <input type="checkbox" v-model="job.checked">
                           </td>
                           <td>
-                            <input class="text-caption text-left table-input" type="text" size="54"
-                              v-model="teamDialog.teamMembers[index]"
+                            <textarea class="text-caption textarea" rows="2" cols="45"
+                              v-model="job.scope" @change="addToJobs(job)">
+                            </textarea>
+                          </td>
+                          <td>
+                            <input class="text-caption text-right table-input" type="text" size="10"
+                              v-model="job.value" @change="addToJobs(job)"
+                            >
+                          </td>
+                          <td>
+                            <input class="text-caption table-input" type="text" size="20"
+                              v-model="job.salesPerson" @change="addToJobs(job)"
+                            >
+                          </td>
+                          <td v-bind:style="background(job.priority)">
+                            <input class="text-caption text-right table-input" type="text" size="4"
+                              v-bind:style="background(job.priority)"
+                              v-model="job.priority"
+                              @change="markChange"
+                              @blur="sortByPriority(index)"
                             >
                           </td>
                         </tr>
@@ -773,148 +201,676 @@
                   </v-simple-table>
                 </v-col>
               </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn class="mb-2 pt-2" small @click="closeTeam">
-           Close
-          </v-btn>
-          &nbsp; &nbsp;
-          <v-btn class="mb-2 pt-2" small @click="saveTeam">
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-container>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="closeJobTable">
+              Close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
-  <v-container v-show="manPowerForecastVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
-    <v-row>
-      <v-col cols="12">
-        <v-row>
-          <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=7>
-            <div class="text-h6" style="text-align: bottomz; display: inline">
-              4 Day Schedule and Man Power Forecast
-            </div>
-          </v-col>
-          <v-col class="text-right mt-0 pt-0 mb-n4 pb-n4 " cols=2>
-            <div id="flatpickr" class="rounded text-body-2"
-              style="padding: 3px; box-shadow: 1px 3px lightgrey;">
-              <flat-pickr
-                  v-model="selectedDate"
-                  @on-change="gotoDayWindow"
-                  :config="dateConfig"
-                  class="calendar"
-                  placeholder="Select date"
-                  name="date"/>
-            </div>
-          </v-col>
-          <v-col class="text-center mt-0 pt-0 mb-n4 pb-n4" cols=3>
-            <v-btn small @click="prevDayWindow">
-              Previous
+      <v-dialog v-model="jobDialog.open" max-width="800px">
+        <v-card>
+          <v-card-title>
+            <span class="mx-2 headline">Assign Job</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols=12>
+                  <v-row class="my-0 py-n0">
+                    <v-col cols=6>
+                      <div id="flatpickr" class="mt-2 pt-1 mb-0 pb-0 rounded text-body-2"
+                        style="padding: 3px; box-shadow: 1px 3px lightgrey;">
+                        <flat-pickr
+                            v-model="jobDialog.startDate"
+                            :config="jobDateConfig"
+                            class="calendar"
+                            placeholder="Select date"
+                            name="startDate"/>
+                      </div>
+                    </v-col>
+                    <v-col cols=6>
+                      <div id="flatpickr" class="mt-2 pt-1 mb-0 pb-0 rounded text-body-2"
+                        style="padding: 3px; box-shadow: 1px 3px lightgrey;">
+                        <flat-pickr
+                            v-model="jobDialog.endDate"
+                            :config="jobDateConfig"
+                            class="calendar"
+                            placeholder="Select date"
+                            name="endtDate"/>
+                      </div>
+                    </v-col>
+                  </v-row>
+                  <v-row class="my-0 py-0">
+                    <v-col cols=10>
+                      <label class="my-0 py-0 font-weight-bold">
+                        Team: {{getForeman(jobInfo.team)}}
+                      </label>
+                    </v-col>
+                    <v-col cols=2 class="mb-2 pb-2 text-right">
+                      <v-btn icon small @click="flipJobs">
+                        <v-icon>mdi-orbit-variant</v-icon>
+                      </v-btn>
+                      <v-btn icon small @click="addSchedJob">
+                        <v-icon>mdi-plus</v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                  <v-row class="my-0 py-0">
+                    <v-col>
+                      <div v-if="splitShift(jobInfo)">
+                        <v-row class="my-n4 py-0">
+                          <v-col cols=10>
+                            <label class="font-weight-bold">
+                              Morning
+                            </label>
+                          </v-col>
+                        </v-row>
+                        <v-row class="my-n4 py-0">
+                          <v-col>
+                            <v-textarea
+                              rows=3
+                              outlined
+                              v-model="jobInfo.job1">
+                            </v-textarea>
+                          </v-col>
+                        </v-row>
+                        <v-row class="my-n4 py-0">
+                          <v-col cols=10>
+                            <label class="font-weight-bold">
+                              Afternoon
+                            </label>
+                          </v-col>
+                        </v-row>
+                        <v-row class="my-0 py-0">
+                          <v-col>
+                            <v-textarea
+                              rows=3
+                              outlined
+                              v-model="jobInfo.job2">
+                            </v-textarea>
+                          </v-col>
+                        </v-row>
+                      </div>
+                      <div v-else>
+                        <v-row class="my-n4 py-0">
+                          <v-col cols=10>
+                            <v-label class="my-n5 py-0 font-weight-bold">
+                              {{ jobInfo.shiftLabel() }}
+                            </v-label>
+                          </v-col>
+                        </v-row>
+                        <v-row class="my-0 py-0">
+                          <v-col>
+                            <v-textarea class="my-0 py-0"
+                              outlined
+                              v-model="jobInfo.job1">
+                            </v-textarea>
+                          </v-col>
+                        </v-row>
+                      </div>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-radio-group class="ml-8"
+                      row v-model="jobInfo.shift">
+                      <v-radio
+                        label="Day"
+                        value="day"
+                      ></v-radio>
+                      <v-radio
+                        label="Night"
+                        value="night"
+                      ></v-radio>
+                      <v-radio
+                        label="TBC"
+                        value="tbc"
+                      ></v-radio>
+                    </v-radio-group>
+                  </v-row>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="closeSchedJob">
+              Close
             </v-btn>
-            &nbsp; &nbsp;
-            <v-btn small @click="nextDayWindow">
-              Next
+            <v-btn color="blue darken-1" text @click="saveSchedJob">
+              Save
             </v-btn>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <div style="height: 780px; overflow-y: scroll;">
-              <table
-                id="manpower-forecast"
-                class="my-0 py-0 job-sched">
-                  <colgroup>
-                    <col style="width:4%;">
-                    <col style="width:7%;">
-                    <col v-bind:span="teams.length" v-bind:style="colWidthMp()">
-                  </colgroup>
-                  <thead>
-                      <tr>
-                        <th colspan="3" class="font-weight-bold"
-                                style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
-                            Manpower Planning Guide
-                        </th>
-                        <th :colspan="teams.length-1" class="font-weight-bold"
-                                style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
-                        </th>
-                      </tr>
-                  </thead>
-                  <tbody v-for="(day, index) in dayWindow.days" :key="index">
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <div id="content"></div>
+    </v-container>
+
+    <v-container v-show="jobProjectionVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
+      <v-row style="margin-right: 8px;">
+        <v-col>
+          <v-row>
+            <v-col class="text-left mt-0 pt-0 mb-n4 pb-n4" cols=1>
+              <main-menu 
+                @show-job-projection-overview="showJobProjectionOverview"
+                @show-job-schedule="showJobSchedule"
+                @show-man-power="showManPower"
+                @show-man-power-forecast="showManPowerForecast"
+                @save="save"
+              >
+              </main-menu>
+            </v-col>          
+            <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=10>
+              <div class="text-h6" style="text-align: bottomz; display: inline">
+                Job Projection Overview
+              </div>
+            </v-col>
+            <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=1>
+              <v-btn small @click="save">
+                Save
+              </v-btn>            
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col v-for="(jlist, jid) in jobProjectionTable" :key="jid">
+              <job-projection-category v-bind:job-status="jid" v-bind:jobList="jlist" height="680px" showHeader
+                @add-job="addJob"
+              >
+              </job-projection-category>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+
+  <!--      <v-col v-for="(jobList, id) in jobProjectionTable" :key="id">
+              <div style="height: 40px;">
+                <table style="border: blank; height: 100%; width: 100%;">
+                  <tbody>
                     <tr>
-                        <td class="font-weight-bold date" align ="center" rowspan="4" :style="dayStyle(day.date)">
-                            <div style="text-align: center; writing-mode: vertical-lr; transform: rotate(180deg);">
-                                {{dayOfWeek(day.date)}} {{monthAndDate(day.date)}}
-                            </div>
-                        </td>
-                        <td class="text-caption text-center font-weight-bold foreman">
-                            Manpower: {{ day.manPowerTotals().manPower }}
-                        </td>
-                        <td v-for="team in teams" :key="team.id"
-                            class="text-caption text-center font-weight-bold foreman">
-                            {{team.foreman}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-caption text-center font-weight-bold foreman">
-                            On leave: {{ day.manPowerTotals().onLeave }}
-                        </td>
-                        <td v-for="team in teams" :key="team.id"
-                            class="text-caption text-center font-weight-bold">
-                            {{team.vehicle}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-caption text-center font-weight-bold foreman">
-                        </td>
-                        <td v-for="team in teams" :key="team.id" class="text-caption font-weight-bold">
-                              <div v-for="teamMember in getSchedJob(day, team.id).teamMembers" :key="teamMember"
-                                  style="text-align: center;">
-                                  {{teamMember}}
-                              </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-caption text-center font-weight-bold foreman">
-                            Day notes
-                        </td>
-                        <td v-for="team in teams" :key="team.id"
-                            class="text-left"
-                            :style = "jobScheduleStyle(getSchedJob(day,team.id))">
-                        <div v-if="splitShift(getSchedJob(day,team.id))">
-                          <label class="font-weight-bold">
-                            Morning
-                          </label><br>
-                          {{ getSchedJob(day,team.id).job1 }}<br>
-                          <label class="font-weight-bold">
-                            Afternoon
-                          </label><br>
-                          {{ getSchedJob(day,team.id).job2 }}
-                        </div>
-                        <div v-else>
-                          <label v-if="getSchedJob(day,team.id).shift==='day'"
-                            class="font-weight-bold">
-                            Day
-                          </label>
-                          <label v-if="getSchedJob(day,team.id).shift==='night'"
-                            class="font-weight-bold">
-                            Night
-                          </label><br>
-                          {{ getSchedJob(day,team.id).job1 }}
-                        </div>
+                      <td class="text-center font-weight-bold" style="font-size: 11pt; border-style: none">
+                        <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                          <tr>
+                            <td style="width 80%">
+                              {{jobList.title}}
+                            </td>
+                            <td style="width 20%">
+                              <v-btn icon small @click="addJob(id)">
+                                <v-icon>mdi-plus</v-icon>
+                              </v-btn>
+                            </td>
+                          </tr>
+                        </table>
                       </td>
                     </tr>
                   </tbody>
-              </table>
-            </div>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+                </table>
+              </div>
 
+              <div style="height: 680px; overflow-y: scroll;">
+                <table style="width: 100%; border-collapse: separate; border: blank; border-spacing: 0 15px;">
+                  <tbody>
+                    <tr v-for="(jobItem, jobId) in jobList.jobs" :key="jobId">
+                      <td class="text-left" style="border-style: none;">
+                        <table class="job-projection">
+                          <colgroup span = "10">
+                              <col v-for="n in 10" width="10" :key="n">
+                          </colgroup>
+                          <tr style="height: 40%; border-botton-style: hidden;">
+                            <td colspan="2" style="border-right-style: hidden;">
+                              <v-btn
+                                class="mx-2"
+                                fab
+                                dark
+                                small
+                                outlined
+                                color="black"
+                              >
+                              <input class="table-input text-center" type="text" size="2" maxlength="2"
+                                style="font-size: 11pt; text-transform:uppercase"
+                                v-model="jobItem.tag"
+                              >
+                              </v-btn>
+                            </td>
+                            <td colspan="9">
+                              <textarea class="text-caption textarea" rows="2" style="width:100%" placeholder="Scope"
+                                v-model="jobItem.scope">
+                              </textarea>
+                            </td>
+                          </tr>
+                          <tr style="height: 20%; border-top-style: hidden; border-bottom-style: hidden;">
+                            <td colspan="5" style="border-right-style: hidden;">
+                              <input class="text-caption table-input" type="text" placeholder="Comments"
+                                @change="$forceUpdate()"
+                                v-model="jobItem.comments" :style="jobProjectionCommentsStyle(jobItem.comments)"
+                              >
+                            </td>
+                            <td colspan="5" rowspan="2">
+                              <textarea v-if="id==='inProgress'"
+                                class="text-caption textarea" rows="2" placeholder="Teams"
+                                v-model="jobItem.teams" style="color: blue; width:100%;">
+                              </textarea>
+                            </td>
+                          </tr>
+                          <tr style="height: 20%; border-top-style: hidden;">
+                            <td colspan="5" style="border-right-style: hidden;">
+                              <input class="text-caption table-input" type="text" placeholder="Value"
+                                v-model="jobItem.value" style="display:table-cell; width:100%"
+                              >
+                            </td>
+                          </tr>
+                          <tr style="height: 20%">
+                            <td class="text-center" colspan="4">
+                              <input class="text-caption table-input" type="text" size="8" placeholder="Team count"
+                                style="text-align: center;"
+                                v-model="jobItem.teamCount"
+                              >
+                            </td>
+                            <td class="text-center" colspan="2">
+                              <input class="text-caption table-input" type="text" size="6" placeholder="Days"
+                                style="text-align: center;"
+                                v-model="jobItem.duration"
+                              >
+                            </td>
+                            <td class="text-center" colspan="4" :style="jobProjectionShiftBackground(jobItem.shift)">
+                              <select class="text-caption table-input" :style="jobProjectionShiftColor(jobItem.shift)"
+                                style="text-align: center;"
+                                v-model="jobItem.shift" @change="updateShift">
+                                <option value="" disabled selected style="color: grey">Select shift</option>
+                                <option value="Day" style="color: black">Day</option>
+                                <option value="Night" style="color: black">Night</option>
+                                <option value="Mixed" style="color: black">Mixed</option>
+                              </select>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div> 
+            </v-col>  -->
+
+    <v-container v-show="manPowerVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
+      <v-row>
+        <v-col cols="12">
+          <v-row>
+            <v-col class="text-left mt-0 pt-0 mb-n4 pb-n4" cols=1>
+              <main-menu 
+                @show-job-projection-overview="showJobProjectionOverview"
+                @show-job-schedule="showJobSchedule"
+                @show-man-power="showManPower"
+                @show-man-power-forecast="showManPowerForecast"
+                @save="save"
+              >
+              </main-menu>
+            </v-col>          
+            <v-col class="mt-0 pt-0 mb-n4 pb-n4 " cols=6>
+              <div class="text-h6" style="text-align: bottomz; display: inline">
+                Man Power Planning
+              </div>
+            </v-col>
+            <v-col class="text-right mt-0 pt-0 mb-n4 pb-n4" cols=2>
+              <div id="flatpickr" class="rounded text-body-2"
+                style="padding: 3px; box-shadow: 1px 3px lightgrey;">
+                <flat-pickr
+                    v-model="selectedDate"
+                    @on-change="gotoDate"
+                    :config="dateConfig"
+                    class="calendar"
+                    placeholder="Select date"
+                    name="date"/>
+              </div>
+            </v-col>
+            <v-col class="text-center mt-0 pt-0 mb-n4 pb-n4" cols=3>
+              <v-btn small @click="previousWeek">
+                Previous week
+              </v-btn>
+              &nbsp; &nbsp;
+              <v-btn small @click="nextWeek">
+                Next week
+              </v-btn>
+              &nbsp; &nbsp;
+              <v-btn small @click="save">
+                Save
+              </v-btn>            
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <div style="height: 780px; overflow-y: scroll;">
+                <table
+                  id="manpower"
+                  class="my-0 py-0 job-sched">
+                    <colgroup>
+                      <col style="width:4%;">
+                      <col style="width:7%;">
+                      <col :span="teams.length" :style="colWidthMp()">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                          <th colspan="3" class="font-weight-bold"
+                                  style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
+                              Manpower Planning Guide
+                          </th>
+                          <th :colspan="teams.length-1" class="font-weight-bold"
+                                  style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
+                          </th>
+                        </tr>
+                    </thead>
+                    <tbody v-for="(day, index) in jobSchedule" :key="index">
+                      <tr>
+                          <td class="font-weight-bold date" align ="center" rowspan="4" :style="dayStyle(day.date)">
+                              <div style="text-align: center; writing-mode: vertical-lr; transform: rotate(180deg);">
+                                  {{dayOfWeek(day.date)}} {{monthAndDate(day.date)}}
+                              </div>
+                          </td>
+                          <td class="text-caption text-center font-weight-bold foreman">
+                              Manpower: {{ day.manPowerTotals().manPower }}
+                          </td>
+                          <td v-for="team in teams" :key="team.id"
+                              @click="editTeam(team, day.jobs[team.id])"
+                              class="text-caption text-center font-weight-bold foreman"
+                              style="background-color: rgb(180,198,231)">
+                              {{team.foreman}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="text-caption text-center font-weight-bold foreman">
+                              On leave: {{ day.manPowerTotals().onLeave }}
+                          </td>
+                          <td v-for="team in teams" :key="team.id"
+                              @click="editTeam(team, day.jobs[team.id])"
+                              class="text-caption text-center font-weight-bold">
+                              {{team.vehicle}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="text-caption text-center font-weight-bold foreman">
+                          </td>
+                          <td v-for="team in teams" :key="team.id" class="text-caption font-weight-bold"
+                              @drop="dropTeamMember($event, day.jobs[team.id])"
+                              @click="editTeam(team, day.jobs[team.id])">
+                                <div v-for="teamMember in day.jobs[team.id].teamMembers" :key="teamMember"
+                                    style="text-align: center;"
+                                    class="draggable"
+                                    draggable="true"
+                                    @dragover="dragoverHandler($event)"
+                                    @dragstart="teamMemberDragstart"
+                                    data-source="team-member"
+                                    :data-day-index="index"
+                                    :data-foreman="team.id"
+                                    :data-team-member="teamMember">
+                                    {{teamMember}}
+                                </div>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="text-caption text-center font-weight-bold foreman">
+                              Day notes
+                          </td>
+                          <td v-for="team in teams" :key="team.id"
+                              class="text-left"
+                              :style = "jobScheduleStyle(day.jobs[team.id])">
+                          <div v-if="splitShift(day.jobs[team.id])">
+                            <label class="font-weight-bold">
+                              Morning
+                            </label><br>
+                            {{ day.jobs[team.id].job1 }}<br>
+                            <label class="font-weight-bold">
+                              Afternoon
+                            </label><br>
+                            {{ day.jobs[team.id].job2 }}
+                          </div>
+                          <div v-else>
+                            <label v-if="day.jobs[team.id].shift==='day'"
+                              class="font-weight-bold">
+                              Day
+                            </label>
+                            <label v-if="day.jobs[team.id].shift==='night'"
+                              class="font-weight-bold">
+                              Night
+                            </label><br>
+                            {{ day.jobs[team.id].job1 }}
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+
+      <v-dialog v-model="teamDialog.open" max-width="600px">
+        <v-card>
+          <v-card-title>
+            <span class="mx-2 headline">{{teamDialog.title}}</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+                <v-row class="my-0 py-0">
+                  <v-col>
+                    <v-text-field class="my-n2 py-0" label="Foreman" v-model="teamDialog.editedTeam.foreman">
+                    </v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row class="my-0 py-0">
+                  <v-col cols="8">
+                    <v-text-field class="my-n2 py-0" label="Vehicle license" v-model="teamDialog.editedTeam.vehicle">
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-text-field class="my-n2 py-0" label="Position" v-model="teamDialog.editedTeam.position">
+                    </v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row class="my-0 py-0">
+                  <v-col align="right">
+                    <v-spacer></v-spacer>
+                    <v-btn class="mt-0 pt-0 mb-n4 pb-n4" small @click="deleteTeam">
+                      Delete Team
+                    </v-btn>
+                    &nbsp; &nbsp;
+                    <v-btn class="mt-0 pt-0 mb-n4 pb-n4" small @click="newTeam">
+                      New Team
+                    </v-btn>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <v-simple-table
+                      id="team-memmbers"
+                      class="simple-job-table"
+                      fixed-header
+                      height="440px">
+                        <colgroup>
+                          <col style="width:8%;">
+                          <col style="width:92%;">
+                        </colgroup>
+                        <thead>
+                          <tr>
+                            <th>
+                              <v-btn icon @click="deleteTeamMember"><v-icon>mdi-delete</v-icon></v-btn>
+                            </th>
+                            <th>Team members</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(teamMember, index) in teamDialog.teamMembers" :key="index">
+                            <td class="text-center">
+                              <input type="checkbox" v-model="teamDialog.checked[index]">
+                            </td>
+                            <td>
+                              <input class="text-caption text-left table-input" type="text" size="54"
+                                v-model="teamDialog.teamMembers[index]"
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                    </v-simple-table>
+                  </v-col>
+                </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn class="mb-2 pt-2" small @click="closeTeam">
+            Close
+            </v-btn>
+            &nbsp; &nbsp;
+            <v-btn class="mb-2 pt-2" small @click="saveTeam">
+              Save
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-container>
+
+    <v-container v-show="manPowerForecastVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
+      <v-row>
+        <v-col cols="12">
+          <v-row>
+            <v-col class="text-left mt-0 pt-0 mb-n4 pb-n4" cols=1>
+              <main-menu 
+                @show-job-projection-overview="showJobProjectionOverview"
+                @show-job-schedule="showJobSchedule"
+                @show-man-power="showManPower"
+                @show-man-power-forecast="showManPowerForecast"
+                @save="save"
+              >
+              </main-menu>
+            </v-col>          
+            <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=6>
+              <div class="text-h6" style="text-align: bottomz; display: inline">
+                4 Day Schedule and Man Power Forecast
+              </div>
+            </v-col>
+            <v-col class="text-right mt-0 pt-0 mb-n4 pb-n4 " cols=2>
+              <div id="flatpickr" class="rounded text-body-2"
+                style="padding: 3px; box-shadow: 1px 3px lightgrey;">
+                <flat-pickr
+                    v-model="selectedDate"
+                    @on-change="gotoDayWindow"
+                    :config="dateConfig"
+                    class="calendar"
+                    placeholder="Select date"
+                    name="date"/>
+              </div>
+            </v-col>
+            <v-col class="text-center mt-0 pt-0 mb-n4 pb-n4" cols=3>
+              <v-btn small @click="prevDayWindow">
+                Previous
+              </v-btn>
+              &nbsp; &nbsp;
+              <v-btn small @click="nextDayWindow">
+                Next
+              </v-btn>
+              &nbsp; &nbsp;
+              <v-btn small @click="save">
+                Save
+              </v-btn>            
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <div style="height: 780px; overflow-y: scroll;">
+                <table
+                  id="manpower-forecast"
+                  class="my-0 py-0 job-sched">
+                    <colgroup>
+                      <col style="width:4%;">
+                      <col style="width:7%;">
+                      <col v-bind:span="teams.length" v-bind:style="colWidthMp()">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                          <th colspan="3" class="font-weight-bold"
+                                  style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
+                              Manpower Planning Guide
+                          </th>
+                          <th :colspan="teams.length-1" class="font-weight-bold"
+                                  style="font-size: 1.2em; background-color: rgb(48,84,150); color:white">
+                          </th>
+                        </tr>
+                    </thead>
+                    <tbody v-for="(day, index) in dayWindow.days" :key="index">
+                      <tr>
+                          <td class="font-weight-bold date" align ="center" rowspan="4" :style="dayStyle(day.date)">
+                              <div style="text-align: center; writing-mode: vertical-lr; transform: rotate(180deg);">
+                                  {{dayOfWeek(day.date)}} {{monthAndDate(day.date)}}
+                              </div>
+                          </td>
+                          <td class="text-caption text-center font-weight-bold foreman">
+                              Manpower: {{ day.manPowerTotals().manPower }}
+                          </td>
+                          <td v-for="team in teams" :key="team.id"
+                              class="text-caption text-center font-weight-bold foreman">
+                              {{team.foreman}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="text-caption text-center font-weight-bold foreman">
+                              On leave: {{ day.manPowerTotals().onLeave }}
+                          </td>
+                          <td v-for="team in teams" :key="team.id"
+                              class="text-caption text-center font-weight-bold">
+                              {{team.vehicle}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="text-caption text-center font-weight-bold foreman">
+                          </td>
+                          <td v-for="team in teams" :key="team.id" class="text-caption font-weight-bold">
+                                <div v-for="teamMember in getSchedJob(day, team.id).teamMembers" :key="teamMember"
+                                    style="text-align: center;">
+                                    {{teamMember}}
+                                </div>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="text-caption text-center font-weight-bold foreman">
+                              Day notes
+                          </td>
+                          <td v-for="team in teams" :key="team.id"
+                              class="text-left"
+                              :style = "jobScheduleStyle(getSchedJob(day,team.id))">
+                          <div v-if="splitShift(getSchedJob(day,team.id))">
+                            <label class="font-weight-bold">
+                              Morning
+                            </label><br>
+                            {{ getSchedJob(day,team.id).job1 }}<br>
+                            <label class="font-weight-bold">
+                              Afternoon
+                            </label><br>
+                            {{ getSchedJob(day,team.id).job2 }}
+                          </div>
+                          <div v-else>
+                            <label v-if="getSchedJob(day,team.id).shift==='day'"
+                              class="font-weight-bold">
+                              Day
+                            </label>
+                            <label v-if="getSchedJob(day,team.id).shift==='night'"
+                              class="font-weight-bold">
+                              Night
+                            </label><br>
+                            {{ getSchedJob(day,team.id).job1 }}
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -1045,17 +1001,21 @@ html {
   border: none;
   outline: none;
 }
+
+.v-expansion-panel-content>>> .v-expansion-panel-content__wrap {
+  padding: 0 !important;
+}
 </style>
 
 <script>
-// import axios from "axios";
-
+import Vue from 'vue'
 import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import 'flatpickr/dist/themes/material_blue.css';
 
 import { Job, SchedJob, Team, Shift, Selection, Clipboard, JobStatus, Day, JobState } from '../composables/jp_entity.js';
-import { datediff, date2string, string2date, addDays} from '../composables/jp_util.js';
+import { datediff, date2string, string2date, addDays, dateWithoutTime} from '../composables/jp_util.js';
+//import { json } from 'express';
 
   const priorityColors = [
     "tomato", "tomato", "orange", "orange", "yellow", "yellow", "lightgreen", "lightgreen", "limegreen", "limegreen"
@@ -1065,10 +1025,242 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
     "rgb(198,89,17)", "rgb(180,198,231)", "rgb(180,198,231)", "rgb(180,198,231)", "rgb(180,198,231)", "rgb(180,198,231)", "rgb(248,203,173)"
   ];
 
+  Vue.component('job-proj-overview', {
+    data: function () {
+      return {
+        count: 0
+      }
+    },
+    template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+  })
+
+  const mainMenu = Vue.component("main-menu", {
+    template:
+    `<div>
+      <v-menu
+        left
+        bottom
+        fixed
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            icon
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-menu</v-icon>
+          </v-btn>
+        </template>
+        <v-list class="menu">
+          <v-list-item>
+            <v-list-item-title @click="$emit('show-job-schedule')">
+              Job schedule projection
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title @click="$emit('show-job-projection-overview')">
+              Job projection overview
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title @click="$emit('show-man-power')">
+              Manpower planning
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title @click="$emit('show-man-power-forecast')">
+              Manpower forecast
+            </v-list-item-title>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-title @click="$emit('save')">
+              Save
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </div>`
+  });
+
+  Vue.component('job-projection-category', {
+    props: { 
+      jobStatus: String, 
+      jobList: Object,
+      height: String,
+      showHeader: Boolean
+    },
+    computed: {
+      jobProjection() {
+        return `
+          width: 100%;
+          height: 130px;
+          border-collapse: collapse;
+          border: 1px solid black;`
+      }
+    },
+    methods: {
+      mainDivStyle() {
+        return `height: ${this.height}; overflow-y: scroll;`
+      },
+      jobProjectionCommentsStyle(comments) {
+        if (!comments) {
+          return "outline: none; margin-top: 9px; color: black; display:table-cell; width:100%";
+        }
+        const color = (comments.includes("urgent") || comments.includes("Urgent") || comments.includes("URGENT"))
+            ? 'magenta' : 'black'
+        return `outline: none; margin-top: 9px; color: ${color}; display:table-cell; width:100%`;
+      },
+      jobProjectionShiftColor(shift) {
+        if (!shift) {
+          return "color: grey;";
+        } else if (shift === "Night") {
+          return "color: white;";
+        } else {
+          return "color: black;";
+        }
+      },
+      jobProjectionShiftBackground(shift) {
+        if (shift === "Day") {
+          return "background-color:rgb(198,224,180)";
+        } else if (shift === "Night") {
+          return "background: linear-gradient(rgb(20,50,0),rgb(100,140,90));";
+        } else if (shift === "Mixed") {
+          return "background: linear-gradient(to right, rgb(198,224,180) 0%, rgb(198,224,180) 40%, rgb(20,50,0) 80%, rgb(20,50,0) 100%);";
+        }
+        return "background: white;"
+      },
+      jobDragStart(ev) {
+        const source = ev.target.getAttribute("data-source");
+        if (source == "confirmed-job" || source == "upcoming-job") {
+          const data = { source: source, jobId: ev.target.getAttribute("data-jobid") };
+          ev.dataTransfer.setData("application/json", JSON.stringify(data));
+        }
+      },
+      updateShift() {
+        this.$forceUpdate();
+      }
+    },
+    template:
+      `<div>
+        <div style="height: 40px;" v-if="showHeader">
+          <table style="border: blank; height: 100%; width: 100%;">
+            <tbody>
+              <tr>
+                <td class="text-center font-weight-bold" style="font-size: 11pt; border-style: none">
+                  <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                    <tr>
+                      <td style="width 80%">
+                        {{jobList.title}}
+                      </td>
+                      <td style="width 20%">
+                        <v-btn icon small @click="$emit('add-job', jobStatus)">
+                          <v-icon>mdi-plus</v-icon>
+                        </v-btn>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div :style="mainDivStyle()">
+          <table style="width: 100%; border-collapse: separate; border: blank; border-spacing: 0 15px;">
+            <tbody>
+              <tr v-for="(jobItem, index) in jobList.jobs" :key="index">
+                <td class="text-left" style="border-style: none;"
+                    draggable="true"
+                    data-source="confirmed-job"
+                    :data-jobid="jobItem.id"
+                    @dragstart = "jobDragStart"
+                >
+                  <table width="100%" :style="jobProjection">
+                    <colgroup span = "10">
+                        <col v-for="n in 10" width="10" :key="n">
+                    </colgroup>
+                    <tr style="height: 40%; border-botton-style: hidden;">
+                      <td colspan="2" style="border-right-style: hidden;">
+                        <v-btn
+                          class="mx-2"
+                          fab
+                          dark
+                          small
+                          outlined
+                          color="black"
+                        >
+                        <input class="text-center" type="text" size="2" maxlength="2"
+                          style="font-size: 11pt; text-transform: uppercase; outline: none;"
+                          v-model="jobItem.tag"
+                        >
+                        </v-btn>
+                      </td>
+                      <td colspan="9">
+                        <textarea class="text-caption" rows="2" placeholder="Scope"
+                          v-model="jobItem.scope" style="width:100%; outline: none; resize: none;">
+                        </textarea>
+                      </td>
+                    </tr>
+                    <tr style="height: 20%; border-top-style: hidden; border-bottom-style: hjobStatusden;">
+                      <td colspan="5" style="border-right-style: hidden;">
+                        <input class="text-caption" type="text" placeholder="Comments"
+                          @change="$forceUpdate()" @click="$emit('add-job', jobStatus)"
+                          v-model="jobItem.comments" :style="jobProjectionCommentsStyle(jobItem.comments)"
+                        >
+                      </td>
+                      <td colspan="5" rowspan="2">
+                        <textarea v-if="jobStatus==='inProgress'"
+                          class="text-caption" rows="2" placeholder="Teams"
+                          v-model="jobItem.teams" style="outline: none; resize: none; color: blue; width:100%;">
+                        </textarea>
+                      </td>
+                    </tr>
+                    <tr style="height: 20%; border-top-style: hidden;">
+                      <td colspan="5" style="border-right-style: hidden;">
+                        <input class="text-caption table-input" type="text" placeholder="Value"
+                          v-model="jobItem.value" style="outline: none; display: table-cell; width:100%"
+                        >
+                      </td>
+                    </tr>
+                    <tr style="height: 20%">
+                      <td class="text-center" colspan="4">
+                        <input class="text-caption" type="text" size="8" placeholder="Team count"
+                          style="text-align: center; outline: none; "
+                          v-model="jobItem.teamCount"
+                        >
+                      </td>
+                      <td class="text-center" colspan="2">
+                        <input class="text-caption" type="text" size="6" placeholder="Days"
+                          style="text-align: center; outline: none;"
+                          v-model="jobItem.duration"
+                        >
+                      </td>
+                      <td class="text-center" colspan="4" :style="jobProjectionShiftBackground(jobItem.shift)">
+                        <select class="text-caption table-input" :style="jobProjectionShiftColor(jobItem.shift)"
+                          style="text-align: center;"
+                          v-model="jobItem.shift" @change="updateShift">
+                          <option value="" disabled selected style="color: grey">Select shift</option>
+                          <option value="Day" style="color: black">Day</option>
+                          <option value="Night" style="color: black">Night</option>
+                          <option value="Mixed" style="color: black">Mixed</option>
+                        </select>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`
+  })
+
   export default {
     name: 'JobPlanner',
     components: {
-        flatPickr
+        flatPickr,
+        mainMenu
     },
     data: () => ({
       version: '1.0',
@@ -1113,6 +1305,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
           altInput: true,
           dateFormat: 'Y-m-d'
       },
+      jobProjectionPanel: 0,
       refreshJobProjectionTable: 0,
       refreshConfirmedJobs: 0,
       refreshUpcomingJobs: 0,
@@ -1170,25 +1363,25 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
             title: "Confirmed jobs/in progress",
             jobs: this.jobs
               .filter( job => job.id > -1 && job.status === JobStatus.inProgress )
-              .sort( (a, b) => a.priority - b.priority )
+              .sort( (a, b) => a.id - b.id )
           },
           onHold: {
             title: "Confirmed but on hold jobs",
             jobs: this.jobs
               .filter( job => job.id > -1 && job.status === JobStatus.onHold )
-              .sort( (a, b) => a.priority - b.priority )
+              .sort( (a, b) => a.id - b.id )
           },
           highChance: {
             title: "High chance jobs",
             jobs: this.jobs
               .filter( job => job.id > -1 && job.status === JobStatus.highChance )
-              .sort( (a, b) => a.priority - b.priority )
+              .sort( (a, b) => a.id - b.id )
           },
           standBy: {
             title: "Stand-by jobs",
             jobs: this.jobs
               .filter( job => job.id > -1 && job.status === JobStatus.standBy )
-              .sort( (a, b) => a.priority - b.priority )
+              .sort( (a, b) => a.id - b.id )
           }
         };
         return jpt;
@@ -1224,9 +1417,6 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
     },
     methods: {
       updateTeamCount() {
-        this.$forceUpdate();
-      },
-      updateShift() {
         this.$forceUpdate();
       },
       getDay(sday) {
@@ -1525,13 +1715,6 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         const data = { source: source, dayIndex: dayIndex, teamIndex: teamIndex };
         event.dataTransfer.setData("application/json", JSON.stringify(data));
       },
-      jobDragStart(ev) {
-        const source = ev.target.getAttribute("data-source");
-        if (source == "confirmed-job" || source == "upcoming-job") {
-          const data = { source: source, jobId: ev.target.getAttribute("data-jobid") };
-          ev.dataTransfer.setData("application/json", JSON.stringify(data));
-        }
-      },
       dropJob(srcData, targetIndex, teamIndex) {
         const teamId = this.teams[teamIndex].id;
         const foreman = this.teams[teamIndex].foreman;
@@ -1541,19 +1724,21 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         }
 
         const date = this.jobSchedule[targetIndex].date;
-        const jobTable = srcData.source == "confirmed-job" ? this.confirmedJobs : this.upcomingJobs;
 
-        const jobIndex = jobTable.findIndex(item => item.id == srcData.jobId);
-        const job = jobTable[jobIndex];
-
+        const job = this.jobs.find(item => item.id == parseInt(srcData.jobId));
         const currSchedJob = this.jobSchedule[targetIndex].jobs[teamId];
 
         if (currSchedJob.shift == Shift.unasigned) {
           const shift = foreman === "Store" ? Shift.unasigned : Shift.day;
           const schedJob = new SchedJob({id: 0, team: teamId,
               date: date, shift: shift, job1: job.scope, job2: job.scope });
-          this.copyOneToOne(schedJob, -1, date, teamId, true)
-          job.status = foreman === "Store" ? JobStatus.onHold : JobStatus.inProgress;
+          this.copyOneToOne(schedJob, -1, date, teamId, true);
+          const currentDate = date2string(new Date());
+          console.log("datediff", datediff(currentDate, date));
+          if (datediff(currentDate, date) >= 0) {
+            job.status = foreman === "Store" ? JobStatus.onHold : JobStatus.inProgress;
+            this.refreshJobProjectionTable++;
+          }
         }
 
         this.$forceUpdate();
@@ -2054,6 +2239,13 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
       jobScheduleStyle(jobInfo) {
         const shift = jobInfo.shift;
         const fontSize = '0.7em'
+        if (jobInfo.id > 0) {
+          const team = this.teams.find( team => team.id == jobInfo.team )
+          if (team.foreman === "Store") {
+            //return `background-color:rgb(198,224,180);font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`;
+            return `background-color:lightblue;font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`;
+          }
+        }
         if (shift == Shift.day) {
           return `background-color:rgb(198,224,180);font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`;
         } else if (shift == Shift.night) {
@@ -2063,27 +2255,7 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         } else if (shift == Shift.onLeave) {
           return `background-color:rgb(68,114,196);color:white;font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
         } else if (shift == Shift.unasigned) {
-          if (jobInfo.team == "Store" && jobInfo.job1) {
-            return `background-color:rgb(198,224,180);font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`;
-          }
           return `background-color:white;font-size:${fontSize};`;
-        }
-      },
-      jobProjectionCommentsStyle(comments) {
-        if (!comments) {
-          return "margin-top: 9px; color: black; display:table-cell; width:100%";
-        }
-        const color = (comments.includes("urgent") || comments.includes("Urgent") || comments.includes("URGENT"))
-            ? 'magenta' : 'black'
-        return `margin-top: 9px; color: ${color}; display:table-cell; width:100%`;
-      },
-      jobProjectionShiftColor(shift) {
-        if (!shift) {
-          return "color: grey;";
-        } else if (shift === "Night") {
-          return "color: white;";
-        } else {
-          return "color: black;";
         }
       },
       jobProjectionShiftOptionColor(value) {
@@ -2092,24 +2264,15 @@ import { datediff, date2string, string2date, addDays} from '../composables/jp_ut
         }
         return "color: black;";
       },
-      jobProjectionShiftBackground(shift) {
-        if (shift === "Day") {
-          return "background-color:rgb(198,224,180)";
-        } else if (shift === "Night") {
-          return "background: linear-gradient(rgb(20,50,0),rgb(100,140,90));";
-        } else if (shift === "Mixed") {
-          return "background: linear-gradient(to right, rgb(198,224,180) 0%, rgb(198,224,180) 40%, rgb(20,50,0) 80%, rgb(20,50,0) 100%);";
-        }
-        return "background: white;"
-      },
       background(priority) {
         if (!priority) {
           return "background-color:white"
         }
         return `background-color:${priorityColors[priority-1]};`
       },
-      addJob(subStatus) {
-        this.jobs.push(new Job( { id: 0, scope: "", value: "", status: subStatus, priority: 10} ));
+      addJob(status) {
+        console.log("Adding job. status", status);
+        this.jobs.push(new Job( { id: 0, scope: "", value: "", status: status, priority: 10} ));
         this.refreshJobProjectionTable++;
       },
       delJob() {
