@@ -12,7 +12,7 @@
           <v-tab>Beginner Mode</v-tab>
           <v-tab>Advanced Mode</v-tab>
           <v-tab-item>
-            <v-card height="500">
+            <v-card height="450">
               <draggable>
                 <ckeditor v-model="dataCKEditor" :editor="options.editor" />
               </draggable>
@@ -62,6 +62,22 @@
             </v-container>
           </v-tab-item>
         </v-tabs>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="success"
+            text
+            @click="selectedItem.content = dataCKEditor.toString();upsertPrintSection()"
+          >
+            Save
+          </v-btn>
+          <v-btn
+            color="default"
+            text
+          >
+            Cancel
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-col>
     <v-col cols="12" md="4" sm="12" class="mt-8">
@@ -152,7 +168,7 @@ export default defineComponent({
     const dialogRemove = ref<boolean>(false)
     const loading = ref<boolean>(false)
     const filter: String = ''
-    const dataCKEditor: String = ''
+    const dataCKEditor = ref<String>('')
     const selectedItem = ref({} as PrintSection)
     const printSection = ref({ id: 0, code: '', description: '', content: '', isMainReport: true, status: 0 } as PrintSectionDTO)
     const options = reactive({
@@ -192,8 +208,8 @@ export default defineComponent({
 
     const upsertPrintSection = async () => {
       loading.value = true
-      if (printSection.value.id > 0) { await store.dispatch('printsection/updatePrintSection', selectedItem.value.id, { root: true }) } else {
-        await store.dispatch('printsection/createPrintSection', printSection, { root: true })
+      if (selectedItem.value.id > 0) { await store.dispatch('printsection/updatePrintSection', selectedItem.value, { root: true }) } else {
+        await store.dispatch('printsection/createPrintSection', selectedItem.value, { root: true })
         await store.dispatch('printsection/getPrintSections', filter, { root: true })
       }
       loading.value = false

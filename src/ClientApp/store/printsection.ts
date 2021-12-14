@@ -37,7 +37,6 @@ export const actions: ActionTree<PrintSectionState, RootState> = {
     commit('ADD_PRINT_SECTION', payload)
   },
   async updatePrintSection ({ commit }, payload) {
-    payload.responsibleName = ''
     await this.$axios.$put(`printsection/${payload.id}`, payload)
     commit('UPDATE_PRINT_SECTION', payload)
   }
