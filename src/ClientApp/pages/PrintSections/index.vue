@@ -13,7 +13,9 @@
           <v-tab>Advanced Mode</v-tab>
           <v-tab-item>
             <v-card height="500">
-              <ckeditor v-model="dataCKEditor" :editor="options.editor" />
+              <draggable>
+                <ckeditor v-model="dataCKEditor" :editor="options.editor" />
+              </draggable>
             </v-card>
           </v-tab-item>
           <v-tab-item>
@@ -93,8 +95,8 @@
                 <v-list-item :key="item.code">
                   <v-list-item-content @click="selectedItem = item; dataCKEditor = item.content">
                     <v-list-item-subtitle
-                      class="text--primary text-left"
-                      v-text="item.code"
+                      class="text--primary text-left font-weight-bold"
+                      v-text="'#' + item.code"
                     />
                     <v-list-item-subtitle class="text-left" v-text="item.description" />
                   </v-list-item-content>
@@ -114,16 +116,6 @@
                     >
                       mdi-key-star
                     </v-icon>
-                  </v-list-item-action>
-                  <v-list-item-action>
-                    <v-list-item-action-text v-text="'Embed'" />
-                    <v-btn icon @click="dataCKEditor = dataCKEditor + item.content">
-                      <v-icon
-                        color="default darken-3"
-                      >
-                        mdi-gesture-tap
-                      </v-icon>
-                    </v-btn>
                   </v-list-item-action>
                 </v-list-item>
 
