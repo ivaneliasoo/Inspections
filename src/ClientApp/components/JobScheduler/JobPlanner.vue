@@ -5,7 +5,7 @@
         <v-col cols="10">
           <v-row>
             <v-col class="text-left mt-0 pt-0 mb-n4 pb-n4" cols=1>
-              <main-menu 
+              <main-menu
                 @show-job-projection-overview="showJobProjectionOverview"
                 @show-job-schedule="showJobSchedule"
                 @show-man-power="showManPower"
@@ -120,11 +120,11 @@
             <v-col>
               <v-expansion-panels focusable v-model="jobProjectionPanel">
                 <v-expansion-panel
-                  v-for="(jlist, jid) in jobProjectionTable" :key="jid"          
+                  v-for="(jlist, jid) in jobProjectionTable" :key="jid"
                 >
                   <v-expansion-panel-header>{{jlist.title}}</v-expansion-panel-header>
                   <v-expansion-panel-content>
-                    <job-projection-category v-bind:id="jid" v-bind:jobList="jlist" 
+                    <job-projection-category v-bind:id="jid" v-bind:jobList="jlist"
                       height="490px" v-bind:showHeader="false"
                       @add-job="addJob"
                     >
@@ -355,7 +355,7 @@
         <v-col>
           <v-row>
             <v-col class="text-left mt-0 pt-0 mb-n4 pb-n4" cols=1>
-              <main-menu 
+              <main-menu
                 @show-job-projection-overview="showJobProjectionOverview"
                 @show-job-schedule="showJobSchedule"
                 @show-man-power="showManPower"
@@ -363,7 +363,7 @@
                 @save="save"
               >
               </main-menu>
-            </v-col>          
+            </v-col>
             <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=10>
               <div class="text-h6" style="text-align: bottomz; display: inline">
                 Job Projection Overview
@@ -372,7 +372,7 @@
             <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=1>
               <v-btn small @click="save">
                 Save
-              </v-btn>            
+              </v-btn>
             </v-col>
           </v-row>
           <v-row>
@@ -492,7 +492,7 @@
                     </tr>
                   </tbody>
                 </table>
-              </div> 
+              </div>
             </v-col>  -->
 
     <v-container v-show="manPowerVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
@@ -500,7 +500,7 @@
         <v-col cols="12">
           <v-row>
             <v-col class="text-left mt-0 pt-0 mb-n4 pb-n4" cols=1>
-              <main-menu 
+              <main-menu
                 @show-job-projection-overview="showJobProjectionOverview"
                 @show-job-schedule="showJobSchedule"
                 @show-man-power="showManPower"
@@ -508,7 +508,7 @@
                 @save="save"
               >
               </main-menu>
-            </v-col>          
+            </v-col>
             <v-col class="mt-0 pt-0 mb-n4 pb-n4 " cols=6>
               <div class="text-h6" style="text-align: bottomz; display: inline">
                 Man Power Planning
@@ -537,7 +537,7 @@
               &nbsp; &nbsp;
               <v-btn small @click="save">
                 Save
-              </v-btn>            
+              </v-btn>
             </v-col>
           </v-row>
           <v-row>
@@ -737,7 +737,7 @@
         <v-col cols="12">
           <v-row>
             <v-col class="text-left mt-0 pt-0 mb-n4 pb-n4" cols=1>
-              <main-menu 
+              <main-menu
                 @show-job-projection-overview="showJobProjectionOverview"
                 @show-job-schedule="showJobSchedule"
                 @show-man-power="showManPower"
@@ -745,7 +745,7 @@
                 @save="save"
               >
               </main-menu>
-            </v-col>          
+            </v-col>
             <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols=6>
               <div class="text-h6" style="text-align: bottomz; display: inline">
                 4 Day Schedule and Man Power Forecast
@@ -774,7 +774,7 @@
               &nbsp; &nbsp;
               <v-btn small @click="save">
                 Save
-              </v-btn>            
+              </v-btn>
             </v-col>
           </v-row>
           <v-row>
@@ -1008,13 +1008,12 @@ html {
 </style>
 
 <script>
-import Vue from 'vue'
 import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import 'flatpickr/dist/themes/material_blue.css';
 
-import { Job, SchedJob, Team, Shift, Selection, Clipboard, JobStatus, Day, JobState } from '../composables/jp_entity.js';
-import { datediff, date2string, string2date, addDays, dateWithoutTime} from '../composables/jp_util.js';
+import { Job, SchedJob, Team, Shift, Selection, Clipboard, JobStatus, Day, JobState } from '../../composables/jp_entity.js';
+import { datediff, date2string, string2date, addDays, dateWithoutTime} from '../../composables/jp_util.js';
 //import { json } from 'express';
 
   const priorityColors = [
@@ -1025,242 +1024,242 @@ import { datediff, date2string, string2date, addDays, dateWithoutTime} from '../
     "rgb(198,89,17)", "rgb(180,198,231)", "rgb(180,198,231)", "rgb(180,198,231)", "rgb(180,198,231)", "rgb(180,198,231)", "rgb(248,203,173)"
   ];
 
-  Vue.component('job-proj-overview', {
-    data: function () {
-      return {
-        count: 0
-      }
-    },
-    template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
-  })
+  // Vue.component('job-proj-overview', {
+  //   data: function () {
+  //     return {
+  //       count: 0
+  //     }
+  //   },
+  //   template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+  // })
 
-  const mainMenu = Vue.component("main-menu", {
-    template:
-    `<div>
-      <v-menu
-        left
-        bottom
-        fixed
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            icon
-            v-bind="attrs"
-            v-on="on"
-          >
-            <v-icon>mdi-menu</v-icon>
-          </v-btn>
-        </template>
-        <v-list class="menu">
-          <v-list-item>
-            <v-list-item-title @click="$emit('show-job-schedule')">
-              Job schedule projection
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title @click="$emit('show-job-projection-overview')">
-              Job projection overview
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title @click="$emit('show-man-power')">
-              Manpower planning
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title @click="$emit('show-man-power-forecast')">
-              Manpower forecast
-            </v-list-item-title>
-          </v-list-item>
-          <v-divider></v-divider>
-          <v-list-item>
-            <v-list-item-title @click="$emit('save')">
-              Save
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </div>`
-  });
+  // const mainMenu = Vue.component("main-menu", {
+  //   template:
+  //   `<div>
+  //     <v-menu
+  //       left
+  //       bottom
+  //       fixed
+  //     >
+  //       <template v-slot:activator="{ on, attrs }">
+  //         <v-btn
+  //           icon
+  //           v-bind="attrs"
+  //           v-on="on"
+  //         >
+  //           <v-icon>mdi-menu</v-icon>
+  //         </v-btn>
+  //       </template>
+  //       <v-list class="menu">
+  //         <v-list-item>
+  //           <v-list-item-title @click="$emit('show-job-schedule')">
+  //             Job schedule projection
+  //           </v-list-item-title>
+  //         </v-list-item>
+  //         <v-list-item>
+  //           <v-list-item-title @click="$emit('show-job-projection-overview')">
+  //             Job projection overview
+  //           </v-list-item-title>
+  //         </v-list-item>
+  //         <v-list-item>
+  //           <v-list-item-title @click="$emit('show-man-power')">
+  //             Manpower planning
+  //           </v-list-item-title>
+  //         </v-list-item>
+  //         <v-list-item>
+  //           <v-list-item-title @click="$emit('show-man-power-forecast')">
+  //             Manpower forecast
+  //           </v-list-item-title>
+  //         </v-list-item>
+  //         <v-divider></v-divider>
+  //         <v-list-item>
+  //           <v-list-item-title @click="$emit('save')">
+  //             Save
+  //           </v-list-item-title>
+  //         </v-list-item>
+  //       </v-list>
+  //     </v-menu>
+  //   </div>`
+  // });
 
-  Vue.component('job-projection-category', {
-    props: { 
-      jobStatus: String, 
-      jobList: Object,
-      height: String,
-      showHeader: Boolean
-    },
-    computed: {
-      jobProjection() {
-        return `
-          width: 100%;
-          height: 130px;
-          border-collapse: collapse;
-          border: 1px solid black;`
-      }
-    },
-    methods: {
-      mainDivStyle() {
-        return `height: ${this.height}; overflow-y: scroll;`
-      },
-      jobProjectionCommentsStyle(comments) {
-        if (!comments) {
-          return "outline: none; margin-top: 9px; color: black; display:table-cell; width:100%";
-        }
-        const color = (comments.includes("urgent") || comments.includes("Urgent") || comments.includes("URGENT"))
-            ? 'magenta' : 'black'
-        return `outline: none; margin-top: 9px; color: ${color}; display:table-cell; width:100%`;
-      },
-      jobProjectionShiftColor(shift) {
-        if (!shift) {
-          return "color: grey;";
-        } else if (shift === "Night") {
-          return "color: white;";
-        } else {
-          return "color: black;";
-        }
-      },
-      jobProjectionShiftBackground(shift) {
-        if (shift === "Day") {
-          return "background-color:rgb(198,224,180)";
-        } else if (shift === "Night") {
-          return "background: linear-gradient(rgb(20,50,0),rgb(100,140,90));";
-        } else if (shift === "Mixed") {
-          return "background: linear-gradient(to right, rgb(198,224,180) 0%, rgb(198,224,180) 40%, rgb(20,50,0) 80%, rgb(20,50,0) 100%);";
-        }
-        return "background: white;"
-      },
-      jobDragStart(ev) {
-        const source = ev.target.getAttribute("data-source");
-        if (source == "confirmed-job" || source == "upcoming-job") {
-          const data = { source: source, jobId: ev.target.getAttribute("data-jobid") };
-          ev.dataTransfer.setData("application/json", JSON.stringify(data));
-        }
-      },
-      updateShift() {
-        this.$forceUpdate();
-      }
-    },
-    template:
-      `<div>
-        <div style="height: 40px;" v-if="showHeader">
-          <table style="border: blank; height: 100%; width: 100%;">
-            <tbody>
-              <tr>
-                <td class="text-center font-weight-bold" style="font-size: 11pt; border-style: none">
-                  <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-                    <tr>
-                      <td style="width 80%">
-                        {{jobList.title}}
-                      </td>
-                      <td style="width 20%">
-                        <v-btn icon small @click="$emit('add-job', jobStatus)">
-                          <v-icon>mdi-plus</v-icon>
-                        </v-btn>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  // Vue.component('job-projection-category', {
+  //   props: {
+  //     jobStatus: String,
+  //     jobList: Object,
+  //     height: String,
+  //     showHeader: Boolean
+  //   },
+  //   computed: {
+  //     jobProjection() {
+  //       return `
+  //         width: 100%;
+  //         height: 130px;
+  //         border-collapse: collapse;
+  //         border: 1px solid black;`
+  //     }
+  //   },
+  //   methods: {
+  //     mainDivStyle() {
+  //       return `height: ${this.height}; overflow-y: scroll;`
+  //     },
+  //     jobProjectionCommentsStyle(comments) {
+  //       if (!comments) {
+  //         return "outline: none; margin-top: 9px; color: black; display:table-cell; width:100%";
+  //       }
+  //       const color = (comments.includes("urgent") || comments.includes("Urgent") || comments.includes("URGENT"))
+  //           ? 'magenta' : 'black'
+  //       return `outline: none; margin-top: 9px; color: ${color}; display:table-cell; width:100%`;
+  //     },
+  //     jobProjectionShiftColor(shift) {
+  //       if (!shift) {
+  //         return "color: grey;";
+  //       } else if (shift === "Night") {
+  //         return "color: white;";
+  //       } else {
+  //         return "color: black;";
+  //       }
+  //     },
+  //     jobProjectionShiftBackground(shift) {
+  //       if (shift === "Day") {
+  //         return "background-color:rgb(198,224,180)";
+  //       } else if (shift === "Night") {
+  //         return "background: linear-gradient(rgb(20,50,0),rgb(100,140,90));";
+  //       } else if (shift === "Mixed") {
+  //         return "background: linear-gradient(to right, rgb(198,224,180) 0%, rgb(198,224,180) 40%, rgb(20,50,0) 80%, rgb(20,50,0) 100%);";
+  //       }
+  //       return "background: white;"
+  //     },
+  //     jobDragStart(ev) {
+  //       const source = ev.target.getAttribute("data-source");
+  //       if (source == "confirmed-job" || source == "upcoming-job") {
+  //         const data = { source: source, jobId: ev.target.getAttribute("data-jobid") };
+  //         ev.dataTransfer.setData("application/json", JSON.stringify(data));
+  //       }
+  //     },
+  //     updateShift() {
+  //       this.$forceUpdate();
+  //     }
+  //   },
+  //   template:
+  //     `<div>
+  //       <div style="height: 40px;" v-if="showHeader">
+  //         <table style="border: blank; height: 100%; width: 100%;">
+  //           <tbody>
+  //             <tr>
+  //               <td class="text-center font-weight-bold" style="font-size: 11pt; border-style: none">
+  //                 <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+  //                   <tr>
+  //                     <td style="width 80%">
+  //                       {{jobList.title}}
+  //                     </td>
+  //                     <td style="width 20%">
+  //                       <v-btn icon small @click="$emit('add-job', jobStatus)">
+  //                         <v-icon>mdi-plus</v-icon>
+  //                       </v-btn>
+  //                     </td>
+  //                   </tr>
+  //                 </table>
+  //               </td>
+  //             </tr>
+  //           </tbody>
+  //         </table>
+  //       </div>
 
-        <div :style="mainDivStyle()">
-          <table style="width: 100%; border-collapse: separate; border: blank; border-spacing: 0 15px;">
-            <tbody>
-              <tr v-for="(jobItem, index) in jobList.jobs" :key="index">
-                <td class="text-left" style="border-style: none;"
-                    draggable="true"
-                    data-source="confirmed-job"
-                    :data-jobid="jobItem.id"
-                    @dragstart = "jobDragStart"
-                >
-                  <table width="100%" :style="jobProjection">
-                    <colgroup span = "10">
-                        <col v-for="n in 10" width="10" :key="n">
-                    </colgroup>
-                    <tr style="height: 40%; border-botton-style: hidden;">
-                      <td colspan="2" style="border-right-style: hidden;">
-                        <v-btn
-                          class="mx-2"
-                          fab
-                          dark
-                          small
-                          outlined
-                          color="black"
-                        >
-                        <input class="text-center" type="text" size="2" maxlength="2"
-                          style="font-size: 11pt; text-transform: uppercase; outline: none;"
-                          v-model="jobItem.tag"
-                        >
-                        </v-btn>
-                      </td>
-                      <td colspan="9">
-                        <textarea class="text-caption" rows="2" placeholder="Scope"
-                          v-model="jobItem.scope" style="width:100%; outline: none; resize: none;">
-                        </textarea>
-                      </td>
-                    </tr>
-                    <tr style="height: 20%; border-top-style: hidden; border-bottom-style: hjobStatusden;">
-                      <td colspan="5" style="border-right-style: hidden;">
-                        <input class="text-caption" type="text" placeholder="Comments"
-                          @change="$forceUpdate()" @click="$emit('add-job', jobStatus)"
-                          v-model="jobItem.comments" :style="jobProjectionCommentsStyle(jobItem.comments)"
-                        >
-                      </td>
-                      <td colspan="5" rowspan="2">
-                        <textarea v-if="jobStatus==='inProgress'"
-                          class="text-caption" rows="2" placeholder="Teams"
-                          v-model="jobItem.teams" style="outline: none; resize: none; color: blue; width:100%;">
-                        </textarea>
-                      </td>
-                    </tr>
-                    <tr style="height: 20%; border-top-style: hidden;">
-                      <td colspan="5" style="border-right-style: hidden;">
-                        <input class="text-caption table-input" type="text" placeholder="Value"
-                          v-model="jobItem.value" style="outline: none; display: table-cell; width:100%"
-                        >
-                      </td>
-                    </tr>
-                    <tr style="height: 20%">
-                      <td class="text-center" colspan="4">
-                        <input class="text-caption" type="text" size="8" placeholder="Team count"
-                          style="text-align: center; outline: none; "
-                          v-model="jobItem.teamCount"
-                        >
-                      </td>
-                      <td class="text-center" colspan="2">
-                        <input class="text-caption" type="text" size="6" placeholder="Days"
-                          style="text-align: center; outline: none;"
-                          v-model="jobItem.duration"
-                        >
-                      </td>
-                      <td class="text-center" colspan="4" :style="jobProjectionShiftBackground(jobItem.shift)">
-                        <select class="text-caption table-input" :style="jobProjectionShiftColor(jobItem.shift)"
-                          style="text-align: center;"
-                          v-model="jobItem.shift" @change="updateShift">
-                          <option value="" disabled selected style="color: grey">Select shift</option>
-                          <option value="Day" style="color: black">Day</option>
-                          <option value="Night" style="color: black">Night</option>
-                          <option value="Mixed" style="color: black">Mixed</option>
-                        </select>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>`
-  })
+  //       <div :style="mainDivStyle()">
+  //         <table style="width: 100%; border-collapse: separate; border: blank; border-spacing: 0 15px;">
+  //           <tbody>
+  //             <tr v-for="(jobItem, index) in jobList.jobs" :key="index">
+  //               <td class="text-left" style="border-style: none;"
+  //                   draggable="true"
+  //                   data-source="confirmed-job"
+  //                   :data-jobid="jobItem.id"
+  //                   @dragstart = "jobDragStart"
+  //               >
+  //                 <table width="100%" :style="jobProjection">
+  //                   <colgroup span = "10">
+  //                       <col v-for="n in 10" width="10" :key="n">
+  //                   </colgroup>
+  //                   <tr style="height: 40%; border-botton-style: hidden;">
+  //                     <td colspan="2" style="border-right-style: hidden;">
+  //                       <v-btn
+  //                         class="mx-2"
+  //                         fab
+  //                         dark
+  //                         small
+  //                         outlined
+  //                         color="black"
+  //                       >
+  //                       <input class="text-center" type="text" size="2" maxlength="2"
+  //                         style="font-size: 11pt; text-transform: uppercase; outline: none;"
+  //                         v-model="jobItem.tag"
+  //                       >
+  //                       </v-btn>
+  //                     </td>
+  //                     <td colspan="9">
+  //                       <textarea class="text-caption" rows="2" placeholder="Scope"
+  //                         v-model="jobItem.scope" style="width:100%; outline: none; resize: none;">
+  //                       </textarea>
+  //                     </td>
+  //                   </tr>
+  //                   <tr style="height: 20%; border-top-style: hidden; border-bottom-style: hjobStatusden;">
+  //                     <td colspan="5" style="border-right-style: hidden;">
+  //                       <input class="text-caption" type="text" placeholder="Comments"
+  //                         @change="$forceUpdate()" @click="$emit('add-job', jobStatus)"
+  //                         v-model="jobItem.comments" :style="jobProjectionCommentsStyle(jobItem.comments)"
+  //                       >
+  //                     </td>
+  //                     <td colspan="5" rowspan="2">
+  //                       <textarea v-if="jobStatus==='inProgress'"
+  //                         class="text-caption" rows="2" placeholder="Teams"
+  //                         v-model="jobItem.teams" style="outline: none; resize: none; color: blue; width:100%;">
+  //                       </textarea>
+  //                     </td>
+  //                   </tr>
+  //                   <tr style="height: 20%; border-top-style: hidden;">
+  //                     <td colspan="5" style="border-right-style: hidden;">
+  //                       <input class="text-caption table-input" type="text" placeholder="Value"
+  //                         v-model="jobItem.value" style="outline: none; display: table-cell; width:100%"
+  //                       >
+  //                     </td>
+  //                   </tr>
+  //                   <tr style="height: 20%">
+  //                     <td class="text-center" colspan="4">
+  //                       <input class="text-caption" type="text" size="8" placeholder="Team count"
+  //                         style="text-align: center; outline: none; "
+  //                         v-model="jobItem.teamCount"
+  //                       >
+  //                     </td>
+  //                     <td class="text-center" colspan="2">
+  //                       <input class="text-caption" type="text" size="6" placeholder="Days"
+  //                         style="text-align: center; outline: none;"
+  //                         v-model="jobItem.duration"
+  //                       >
+  //                     </td>
+  //                     <td class="text-center" colspan="4" :style="jobProjectionShiftBackground(jobItem.shift)">
+  //                       <select class="text-caption table-input" :style="jobProjectionShiftColor(jobItem.shift)"
+  //                         style="text-align: center;"
+  //                         v-model="jobItem.shift" @change="updateShift">
+  //                         <option value="" disabled selected style="color: grey">Select shift</option>
+  //                         <option value="Day" style="color: black">Day</option>
+  //                         <option value="Night" style="color: black">Night</option>
+  //                         <option value="Mixed" style="color: black">Mixed</option>
+  //                       </select>
+  //                     </td>
+  //                   </tr>
+  //                 </table>
+  //               </td>
+  //             </tr>
+  //           </tbody>
+  //         </table>
+  //       </div>
+  //     </div>`
+  // })
 
   export default {
     name: 'JobPlanner',
     components: {
         flatPickr,
-        mainMenu
+        // mainMenu
     },
     data: () => ({
       version: '1.0',

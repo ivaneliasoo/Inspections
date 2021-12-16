@@ -71,7 +71,10 @@ export default {
       /* icon options */
     }
   },
-  components: true,
+  components: [
+    '~/components',
+    '~/components/JobScheduler'
+  ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

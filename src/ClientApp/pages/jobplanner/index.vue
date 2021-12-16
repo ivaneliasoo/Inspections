@@ -3,12 +3,8 @@
 </template>
 
 <script>
-import JobPlanner from '~/components/JobPlanner.vue'
-
 export default {
-  components: {
-    JobPlanner
-  },
+  name: 'JobPlanner',
   layout: 'default'
 }
 </script>
