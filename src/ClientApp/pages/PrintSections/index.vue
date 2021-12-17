@@ -224,9 +224,7 @@ export default defineComponent({
         return
       }
 
-      if (filter.value.length >= 3) {
-        getPrintSections(filter.value.toString())
-      }
+      getPrintSections(filter.value.toString())
     }, { immediate: true, deep: true })
 
     return {
