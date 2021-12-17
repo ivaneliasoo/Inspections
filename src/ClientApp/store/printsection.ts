@@ -24,7 +24,7 @@ export const actions: ActionTree<PrintSectionState, RootState> = {
     commit('SET_PRINT_SECTION_LIST', printSect)
   },
 
-  async getPrintSectionById (payload) {
+  async getPrintSectionById ({ commit }, payload) {
     return await this.$axios.$get(`printsection/${payload}`)
   },
 

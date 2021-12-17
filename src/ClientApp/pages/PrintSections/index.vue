@@ -9,9 +9,9 @@
           color="deep-indigo accent-4"
           left
         >
-          <v-tab>Beginner Mode</v-tab>
+          <v-tab v-if="!isNew">Beginner Mode</v-tab>
           <v-tab>Advanced Mode</v-tab>
-          <v-tab-item>
+          <v-tab-item v-if="!isNew">
             <v-card height="450">
               <draggable>
                 <ckeditor v-model="dataCKEditor" :editor="options.editor" />
@@ -27,10 +27,13 @@
                   md="4"
                 >
                   <v-text-field
-                    v-model="selectedItem.code"
+                    v-model="printSection.code"
                     type="text"
                     label="Code"
                   />
+                </v-col>
+                <v-col cols="2">
+                  <v-switch v-model="printSection.isMainReport" label="Is Main Report" />
                 </v-col>
               </v-row>
               <v-row class="pl-4">
@@ -40,7 +43,7 @@
                   md="12"
                 >
                   <v-text-field
-                    v-model="selectedItem.description"
+                    v-model="printSection.description"
                     type="text"
                     label="Description"
                   />
@@ -67,7 +70,7 @@
           <v-btn
             color="success"
             text
-            @click="selectedItem.content = dataCKEditor.toString();upsertPrintSection()"
+            @click="printSection.content = dataCKEditor.toString();upsertPrintSection()"
           >
             Save
           </v-btn>
@@ -98,7 +101,7 @@
           <v-btn icon @click="getPrintSections(filter)">
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
-          <v-btn icon>
+          <v-btn icon @click="isNew=true;reset(); dataCKEditor=''">
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </v-toolbar>
@@ -109,7 +112,7 @@
             <draggable v-model="printSections" style="min-height: 10px">
               <template v-for="(item, index) in printSections">
                 <v-list-item :key="item.code">
-                  <v-list-item-content @click="selectedItem = item; dataCKEditor = item.content">
+                  <v-list-item-content @click="selectPrintSection(item); dataCKEditor = item.content;isNew = false">
                     <v-list-item-subtitle
                       class="text--primary text-left font-weight-bold"
                       v-text="'#' + item.code"
@@ -156,7 +159,6 @@ import draggable from 'vuedraggable'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { PrintSectionState } from '~/store/printsection'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
-import { PrintSection } from '~/types'
 Vue.use(CKEditor)
 export default defineComponent({
   components: {
@@ -164,16 +166,20 @@ export default defineComponent({
   },
   setup () {
     const store = useStore()
-    const route = useRoute()
     const dialogRemove = ref<boolean>(false)
     const loading = ref<boolean>(false)
-    const filter: String = ''
+    const isNew = ref<boolean>(false)
+    const filter = ref<String>('')
     const dataCKEditor = ref<String>('')
-    const selectedItem = ref({} as PrintSection)
     const printSection = ref({ id: 0, code: '', description: '', content: '', isMainReport: true, status: 0 } as PrintSectionDTO)
     const options = reactive({
       editor: ClassicEditor
     })
+
+    const selectPrintSection = (item: PrintSectionDTO): void => {
+      store.dispatch('printsection/getPrintSectionById', item.id, { root: true })
+        .then(resp => (printSection.value = resp))
+    }
 
     const printSections = computed((): PrintSectionDTO[] => {
       return ((store.state as any).printsection as PrintSectionState).printSectionsList
@@ -189,51 +195,48 @@ export default defineComponent({
 
     const deletePrintSection = () => {
       store
-        .dispatch('printsection/deletePrintSection', selectedItem.value.id, { root: true })
+        .dispatch('printsection/deletePrintSection', printSection.value.id, { root: true })
         .then(() => {
         })
     }
 
-    useFetch(async () => {
-      await store.dispatch('printsection/getPrintSections', { filter }, { root: true })
-
-      if (route.value.query.id) {
-        store
-          .dispatch('printsection/getPrintSectionsById', route.value.query.id, {
-            root: true
-          })
-          .then(resp => (printSection.value = resp))
-      }
-    })
+    const reset = () => {
+      printSection.value = { id: 0, code: '', description: '', content: '', isMainReport: true, status: 0 }
+    }
 
     const upsertPrintSection = async () => {
       loading.value = true
-      if (selectedItem.value.id > 0) { await store.dispatch('printsection/updatePrintSection', selectedItem.value, { root: true }) } else {
-        await store.dispatch('printsection/createPrintSection', selectedItem.value, { root: true })
-        await store.dispatch('printsection/getPrintSections', filter, { root: true })
+      printSection.value.content = dataCKEditor.value.toString()
+      if (printSection.value.id > 0) { await store.dispatch('printsection/updatePrintSection', printSection.value, { root: true }) } else {
+        await store.dispatch('printsection/createPrintSection', printSection.value, { root: true })
+        await store.dispatch('printsection/getPrintSections', filter.value, { root: true })
       }
       loading.value = false
+      isNew.value = false
     }
 
-    watch(
-      () => '',
-      async (filter: string) => {
-        if (!filter) {
-          return
-        }
+    useFetch(async () => {
+      await store.dispatch('printsection/getPrintSections', filter.value, { root: true })
+    })
 
-        if (filter.length >= 3) {
-          await getPrintSections(filter)
-        }
+    watch(filter, () => {
+      if (!filter) {
+        return
       }
-    )
+
+      if (filter.value.length >= 3) {
+        getPrintSections(filter.value.toString())
+      }
+    }, { immediate: true, deep: true })
 
     return {
       options,
       dialogRemove,
       loading,
+      isNew,
       filter,
-      selectedItem,
+      reset,
+      selectPrintSection,
       printSection,
       printSections,
       dataCKEditor,
