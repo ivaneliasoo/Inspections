@@ -152,7 +152,7 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, reactive, computed, useStore, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
+import { ref, defineComponent, reactive, computed, useStore, useFetch, watch } from '@nuxtjs/composition-api'
 import Vue from 'vue'
 import CKEditor from '@ckeditor/ckeditor5-vue2'
 import draggable from 'vuedraggable'
