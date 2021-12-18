@@ -12,7 +12,7 @@
           <v-tab v-if="!isNew">Beginner Mode</v-tab>
           <v-tab>Advanced Mode</v-tab>
           <v-tab-item v-if="!isNew">
-            <v-card height="450">
+            <v-card height="450" style="overflow-y: scroll">
               <draggable>
                 <ckeditor v-model="dataCKEditor" :editor="options.editor" />
               </draggable>
@@ -70,7 +70,7 @@
           <v-btn
             color="success"
             text
-            @click="printSection.content = dataCKEditor.toString();upsertPrintSection()"
+            @click="upsertPrintSection()"
           >
             Save
           </v-btn>
@@ -84,7 +84,7 @@
       </v-card>
     </v-col>
     <v-col cols="12" md="4" sm="12" class="mt-8">
-      <v-card height="555">
+      <v-card height="555" style="overflow-y: scroll">
         <v-toolbar
           color="indigo"
           dark
@@ -109,7 +109,7 @@
           <v-list-item-group
             active-class="indigo--text"
           >
-            <draggable v-model="printSections" style="min-height: 10px">
+            <draggable v-model="printSections">
               <template v-for="(item, index) in printSections">
                 <v-list-item :key="item.code">
                   <v-list-item-content @click="selectPrintSection(item); dataCKEditor = item.content;isNew = false">
