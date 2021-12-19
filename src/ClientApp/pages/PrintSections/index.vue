@@ -9,12 +9,14 @@
           color="deep-indigo accent-4"
           left
         >
-          <v-tab v-if="!isNew">Beginner Mode</v-tab>
+          <v-tab v-if="!isNew">
+            Beginner Mode
+          </v-tab>
           <v-tab>Advanced Mode</v-tab>
           <v-tab-item v-if="!isNew">
             <v-card height="450" style="overflow-y: scroll">
               <draggable>
-                <ckeditor v-model="dataCKEditor" :editor="options.editor" />
+                <ckeditor id="myeditor" v-model="dataCKEditor" :editor="options.editor" />
               </draggable>
             </v-card>
           </v-tab-item>
@@ -147,7 +149,7 @@
           </v-list-item-group>
         </v-list>
       </v-card>
-    </v-col>
+    </v-col> -->
   </v-row>
 </template>
 
@@ -156,7 +158,7 @@ import { ref, defineComponent, reactive, computed, useStore, useFetch, watch } f
 import Vue from 'vue'
 import CKEditor from '@ckeditor/ckeditor5-vue2'
 import draggable from 'vuedraggable'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import ClassicEditor from '~/assets/ckeditor5.0.0/ckeditor'
 import { PrintSectionState } from '~/store/printsection'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 Vue.use(CKEditor)
@@ -164,6 +166,7 @@ export default defineComponent({
   components: {
     draggable
   },
+  layout: undefined,
   setup () {
     const store = useStore()
     const dialogRemove = ref<boolean>(false)
