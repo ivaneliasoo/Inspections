@@ -37,6 +37,11 @@
           </v-list-item>
           <v-divider></v-divider>
           <v-list-item>
+            <v-list-item-title @click="$emit('edit-options')">
+              Options
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
             <v-list-item-title @click="$emit('save')">
               Save
             </v-list-item-title>

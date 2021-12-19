@@ -1,4 +1,4 @@
-import { toIsoDate } from "./jp_util";
+import { toIsoDate, isSunday } from "./jp_util";
 
 export const JobState = {
     upcoming: "upcoming",
@@ -195,7 +195,7 @@ export class Job {
 export const Shift = {
     day: 'day',
     night: 'night',
-    rest: 'rest',
+    //rest: 'rest',
     tbc: 'tbc',
     onLeave: 'onLeave',
     unasigned: 'unasigned'
@@ -213,6 +213,7 @@ export class SchedJob {
     #shift;
     #splitShift;
     #teamMembers;
+    #excludeSunday;
 
     constructor(sj) {
         if (!sj) {
@@ -224,6 +225,7 @@ export class SchedJob {
             this.shift = "";
             this.splitShift = false;
             this.teamMembers = ["-"];
+            this.excludeSunday = true;
         } else {
             this.id = (sj.id) ? sj.id : 0;
             this.date = sj.date;
@@ -233,6 +235,7 @@ export class SchedJob {
             this.job1 = sj.job1;
             this.job2 = sj.job2;
             this.teamMembers = typeof sj.teamMembers === "string" ? JSON.parse(sj.teamMembers) : sj.teamMembers;
+            this.excludeSunday = sj.excludeSunday;
             this.lastUpdate = sj.lastUpdate;
         }
     }
@@ -310,7 +313,7 @@ export class SchedJob {
     }
 
     getJob1() {
-        return this.#job1;
+        return (this.excludeSunday && isSunday(this.date)) ? "" : this.#job1;
     }
 
     get job1() {
@@ -320,6 +323,10 @@ export class SchedJob {
     set job1(scope) {
         this.#job1 = scope;
         this.setLastUpdate();
+    }
+
+    getJob2() {
+        return (this.excludeSunday && isSunday(this.date)) ? "" : this.#job2;
     }
 
     get job2() {
@@ -349,6 +356,15 @@ export class SchedJob {
         this.setLastUpdate();
     }
 
+    get excludeSunday() {
+        return this.#excludeSunday;
+    }
+
+    set excludeSunday(es) {
+        this.#excludeSunday = es;
+        this.setLastUpdate();
+    }
+
     setLastUpdate() {
         this.lastUpdate = toIsoDate(new Date())
     }
@@ -362,6 +378,7 @@ export class SchedJob {
         this.job1 = sj.job1;
         this.job2 = sj.job2;
         this.teamMembers = typeof sj.teamMembers === "string" ? JSON.parse(sj.teamMembers) : sj.teamMembers;
+        this.excludeSunday = sj.excludeSunday;
 
         if (this.#job2.trim() === "") {
             this.splitShift = false;
@@ -381,6 +398,7 @@ export class SchedJob {
             shift: this.shift,
             splitShift: this.splitShift,
             teamMembers: JSON.stringify(this.teamMembers),
+            excludeSunday: this.excludeSunday,
             lastUpdate: this.lastUpdate
         }
     }

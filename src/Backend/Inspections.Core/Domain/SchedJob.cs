@@ -44,6 +44,8 @@ namespace Inspections.Core.Domain
         
         public string LastEditUser { get; set; }
 
+        public bool excludeSunday { get; set; }
+
         public SchedJob (int id, int team, DateTime date, string shift, bool splitShift, string job1, string job2) {
             this.id = id;
             this.team = team;
@@ -53,10 +55,9 @@ namespace Inspections.Core.Domain
             this.job1 = job1;
             this.job2 = job2;
             this.teamMembers = null;
-            this.LastEdit = new DateTime();
+            this.excludeSunday = true;
             this.LastEditUser = "";
             this.LastEdit = new DateTimeOffset();
-            this.LastEditUser = "";            
         }
 
         public SchedJob() {
@@ -68,6 +69,7 @@ namespace Inspections.Core.Domain
             this.job1 = "";
             this.job2 = "";
             this.teamMembers = null;
+            this.excludeSunday = true;
             this.LastEdit = new DateTimeOffset();
             this.LastEditUser = "";            
         }

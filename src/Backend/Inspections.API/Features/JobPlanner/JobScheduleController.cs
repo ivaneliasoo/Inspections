@@ -7,10 +7,6 @@ using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using System.IO;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 #nullable enable
 namespace Inspections.API.Features.JobPlanner
@@ -29,17 +25,6 @@ namespace Inspections.API.Features.JobPlanner
             _context = context;
         }
 
-        // static string teamQuery = "SELECT team.id as id, f.id AS foreman_id, f.name AS foreman, vehicle, team.last_update, " +
-        //     "ARRAY(SELECT m.id FROM team_member, employee m WHERE team_member.team_id = team.id AND m.id = team_member.employee_id) AS member_ids, " +
-        //     "ARRAY(SELECT m.name FROM team_member, employee m WHERE team_member.team_id = team.id AND m.id = team_member.employee_id) AS members " + 
-        //     "FROM team, employee f WHERE team.foreman_id=f.id";
-
-        // static string teamQuery = 
-        //     "SELECT id, foreman, vehicle, last_update FROM team";
-
-        // static string memberQuery = 
-        //     "SELECT id, team_id, name, team_member.last_update FROM team_member";
-
         [HttpGet]
         public ScheduleData Get() {
             Console.WriteLine("GET jobschedule");
@@ -47,10 +32,11 @@ namespace Inspections.API.Features.JobPlanner
             //var schedJobs = _context.SchedJob.OrderBy(sj => sj.team).ToList();
             var schedJobs = _context.SchedJob.ToList();
             var teams = _context.Team.ToList();
+            var options = _context.Options.Where(op => op.id == 1).FirstOrDefault();
             var now = DateTime.Now;
-            _logger.LogInformation("schedJobs");
-            schedJobs.ForEach(sj => _logger.LogInformation("{0} {1}", sj.id, sj.date, sj.team));
-            return new ScheduleData(now, jobs, schedJobs, teams);
+            //_logger.LogInformation("schedJobs");
+            //schedJobs.ForEach(sj => _logger.LogInformation("{0} {1}", sj.id, sj.date, sj.team));
+            return new ScheduleData(now, jobs, schedJobs, teams, options);
         }
 
         // PUT: JobSchedule
@@ -64,25 +50,6 @@ namespace Inspections.API.Features.JobPlanner
             return new ScheduleData(DateTime.Now, updatedJobs, updatedSchedJobs, updatedTeams);
         }
 
-        // [HttpPut]
-        // public async Task<IActionResult> PutSchedJobs()
-        // {
-        //     if (!this.Request.Body.CanSeek)
-        //     {
-        //         this.Request.EnableBuffering();
-        //     }
-
-        //     this.Request.Body.Position = 0;
-        //     var reader = new StreamReader(this.Request.Body, Encoding.UTF8);
-        //     var body = await reader.ReadToEndAsync().ConfigureAwait(false);
-        //     Console.WriteLine(body);
-        //     this.Request.Body.Position = 0;
-        //     var options = new JsonSerializerOptions();
-        //     ScheduleData? scheduleData = JsonSerializer.Deserialize<ScheduleData>(body, options);
-           
-        //     return Ok();
-        // }
-
         [HttpPut("sched-job")]
         public List<SchedJob> SaveSchedJobs(IEnumerable<SchedJob> schedJobs)
         {
@@ -94,7 +61,7 @@ namespace Inspections.API.Features.JobPlanner
                     if (prev != null) {
                         if (sj.lastUpdate > prev.lastUpdate) {
                             if (sj.lastUpdate > prev.lastUpdate && sj.id < 0) {
-                                _logger.LogInformation("Deleting job: {0:D}: {1}", sj.team, sj.date);
+                                //_logger.LogInformation("Deleting job: {0:D}: {1}", sj.team, sj.date);
                                 _context.Remove(prev);
                         } else if (sj.lastUpdate < prev.lastUpdate) {
                             updated.Add(prev);
@@ -104,20 +71,16 @@ namespace Inspections.API.Features.JobPlanner
             }
             _context.SaveChanges();
 
-            _logger.LogInformation("Saving scheduled jobs");
             foreach (SchedJob sj in schedJobs) {
                 if (sj.id == -1) {
                     continue;
                 }
                 var prev = _context.SchedJob.Where(s => s.date == sj.date && s.team == sj.team).FirstOrDefault();
                 if (prev == null) {
-                    _logger.LogInformation("New scheduled job: {0:D}: {1}", sj.id, sj.job1);
+                    // _logger.LogInformation("New scheduled job: {0:D}: {1}", sj.id, sj.job1);
                     _context.Add(sj);
                 } else {
                     if  (sj.lastUpdate > prev.lastUpdate) {
-                        _logger.LogInformation("Updating scheduled job: {0:D}: {1}", sj.id, sj.job1);
-                        Console.WriteLine("Updating sjob: {0:D}: {1} {2} {3}", prev.id, prev.job1, prev.teamMembers, prev.lastUpdate);
-                        Console.WriteLine("with         : {0:D}: {1} {2} {3}", sj.id, sj.job1, sj.teamMembers, sj.lastUpdate);
                         prev.id = sj.id;
                         prev.team = sj.team;
                         prev.date = sj.date;
@@ -126,6 +89,7 @@ namespace Inspections.API.Features.JobPlanner
                         prev.job1 = sj.job1;
                         prev.job2 = sj.job2;
                         prev.teamMembers = sj.teamMembers;
+                        prev.excludeSunday = sj.excludeSunday;
                         prev.lastUpdate = DateTime.Now;
                     } else if (sj.lastUpdate < prev.lastUpdate) {
                         updated.Add(prev);
@@ -215,6 +179,23 @@ namespace Inspections.API.Features.JobPlanner
             _context.SaveChanges();
             return updated;
         }
+
+        [HttpPut("options")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> UpdateOptions(Options options)
+        {
+            Options opt = new Options();
+            opt.id = 1;
+            opt.scheduleWeeks = options.scheduleWeeks;
+            opt.autosaveInterval = options.autosaveInterval;
+
+            _context.Update(opt);
+
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
     }
 
     public class ScheduleData
@@ -226,6 +207,18 @@ namespace Inspections.API.Features.JobPlanner
         public IEnumerable<SchedJob>? schedJobs { get; set; }
 
         public IEnumerable<Team>? teams { get; set; }
+
+        public Options? options { get; set; }
+
+
+        public ScheduleData(DateTime timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs, 
+                IEnumerable<Team> teams, Options opt) {
+            this.timeStamp = timeStamp;
+            this.jobs = jobs;
+            this.schedJobs = schedJobs;
+            this.teams = teams;
+            this.options = opt;
+        }
 
         public ScheduleData(DateTime timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs, 
                 IEnumerable<Team> teams) {
@@ -239,6 +232,7 @@ namespace Inspections.API.Features.JobPlanner
             this.timeStamp = timeStamp;
             this.jobs = jobs;
             this.schedJobs = schedJobs;
+            this.options = new Options();
         }
         
         public ScheduleData(IEnumerable<SchedJob> schedJobs) {

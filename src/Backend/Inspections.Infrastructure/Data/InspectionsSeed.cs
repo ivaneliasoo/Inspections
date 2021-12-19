@@ -80,6 +80,17 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                     context.Add(t);
                 }
 
+                var OptionsId = 1;
+                if (!context.Options.Any(opt => opt.id == OptionsId)) {
+                    Options opt = new Options();
+                    opt.id = 1;
+                    opt.scheduleWeeks = 1;
+                    opt.autosaveInterval = 120;
+
+                    context.Add(opt);
+                }
+
+
                 if (!context.Team.Any()) {
                     var teams = new List<Team> {
                         new Team { foreman = "Kim", position = 1, teamMembers = "[]", lastUpdate = DateTime.Now },

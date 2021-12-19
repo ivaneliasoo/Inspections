@@ -63,48 +63,6 @@ namespace Inspections.API.Features.EnergyReport
             return NoContent();
         }
 
-        // [HttpPost("category")]
-        // [ProducesResponseType(StatusCodes.Status204NoContent)]
-        // [ProducesDefaultResponseType]
-        // public async Task<IActionResult> UpdateCategories()
-        // {
-        //     var deserializedContent = await JsonSerializer.DeserializeAsync<object>(Request.Body);
-
-        //     using var fileStream = System.IO.File.Create(CategoriesFilePath);
-        //     await JsonSerializer.SerializeAsync(fileStream, deserializedContent, typeof(object), new JsonSerializerOptions { WriteIndented = true });
-
-        //     return NoContent();
-        // }
-
-        //[HttpPost("category/migrate")]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesDefaultResponseType]
-        //public async Task<IActionResult> migrateCategories()
-        //{
-        //    Console.WriteLine("Se ha invocado migrateCategories");
-            
-        //    string? categories = CategoriesFromFile();
-
-        //    Template t = new Template();
-        //    t.id = 1;
-        //    t.templateDef = categories;
-
-        //    var prev = await _context.Template.Where(t => t.id == 1)
-        //        .AsNoTracking()
-        //        .FirstOrDefaultAsync();
-
-        //    if (prev == null) {
-        //        Console.WriteLine("*** No template found in the database, copying template from file categories.json");
-        //        _context.Add(t);
-        //        await _context.SaveChangesAsync();
-        //    }
-
-        //    Console.WriteLine("Se ha ejecutado migrateCategories");
-
-        //    return NoContent();
-        //}
-
-
         [HttpGet("category")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -123,14 +81,6 @@ namespace Inspections.API.Features.EnergyReport
 
             return Ok(results.templateDef);
         }
-
-        //public string CategoriesFromFile()
-        //{
-        //    var reader = System.IO.File.OpenText(CategoriesFilePath);
-        //    var fileContent = reader.ReadToEnd();
-
-        //    return fileContent;
-        //}
 
         private static string CategoriesFilePath => Path.Combine(AppContext.BaseDirectory, "categories.json");
         private static string LogoPath => Path.Combine(AppContext.BaseDirectory, "cse-logo.svg");

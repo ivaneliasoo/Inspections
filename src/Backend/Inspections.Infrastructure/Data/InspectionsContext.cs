@@ -59,6 +59,7 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Core.Domain.SchedJob> SchedJob { get; set; }
         public DbSet<Core.Domain.Job> Job { get; set; }
         public DbSet<Core.Domain.Team> Team { get; set; }
+        public DbSet<Core.Domain.Options> Options { get; set; }
 
         //Queries
         public DbSet<ResumenCheckList> ResumenCheckLists { get; set; }
