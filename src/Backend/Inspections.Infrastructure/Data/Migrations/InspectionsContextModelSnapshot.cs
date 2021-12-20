@@ -291,44 +291,12 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.ToTable("Job");
                 });
 
-            modelBuilder.Entity("Inspections.Core.Domain.Options", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("LastEditUser")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.Property<int>("autosaveInterval")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("lastUpdate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("scheduleWeeks")
-                        .HasColumnType("integer");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Options");
-                });
-
             modelBuilder.Entity("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("AdditionalFileds")
-                        .HasColumnType("text");
 
                     b.Property<string>("Footer")
                         .IsRequired()
@@ -423,9 +391,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("AdditionalFields")
-                        .HasColumnType("text");
 
                     b.Property<short>("EarthFaultA")
                         .HasColumnType("smallint");
@@ -647,9 +612,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
-
-                    b.Property<bool>("excludeSunday")
-                        .HasColumnType("boolean");
 
                     b.Property<int>("id")
                         .HasColumnType("integer");
