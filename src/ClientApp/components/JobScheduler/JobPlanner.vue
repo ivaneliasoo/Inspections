@@ -1136,7 +1136,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
               self.copy();
           }
       },false);
-
+      console.log("Initializing")
       this.initialize();
     },
     updated() {
@@ -1321,6 +1321,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.gotoDayWindow([], date2string(date));
       },
       showJobSchedule() {
+        this.refreshJobProjectionTable++;
         this.manPowerVisible = false;
         this.manPowerForecastVisible = false;
         this.jobProjectionVisible = false;

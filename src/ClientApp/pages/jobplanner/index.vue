@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'JobSheduler',
+  name: 'JobScheduler',
   layout: 'default'
 }
 </script>
