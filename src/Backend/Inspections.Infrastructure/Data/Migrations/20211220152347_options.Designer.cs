@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    [Migration("20211218132611_options")]
+    [Migration("20211220152347_options")]
     partial class options
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
