@@ -1136,7 +1136,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
               self.copy();
           }
       },false);
-
+      console.log("Initializing")
       this.initialize();
     },
     updated() {
