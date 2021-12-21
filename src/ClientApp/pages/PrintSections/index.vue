@@ -10,7 +10,7 @@
           left
         >
           <v-tab v-if="!isNew">
-            Beginner Mode
+            Basic Mode
           </v-tab>
           <v-tab>Advanced Mode</v-tab>
           <v-tab-item v-if="!isNew">
@@ -214,6 +214,7 @@ export default defineComponent({
         await store.dispatch('printsection/createPrintSection', printSection.value, { root: true })
         await store.dispatch('printsection/getPrintSections', filter.value, { root: true })
       }
+      selectPrintSection(printSection.value)
       loading.value = false
       isNew.value = false
     }
