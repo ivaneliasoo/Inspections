@@ -155,7 +155,7 @@ namespace Inspections.API.Features.JobPlanner
                     team.lastUpdate = DateTime.Now;
                     _context.Add(team);
                 } else {
-                    var prev = _context.Team.Where(j => j.id == team.id).FirstOrDefault();
+                    var prev = _context.Team.Where(j => j.id == Math.Abs(team.id)).FirstOrDefault();
                     if (prev != null) {
                         if (team.lastUpdate > prev.lastUpdate) {
                             if (team.id < 0) {

@@ -347,6 +347,10 @@ export class SchedJob {
         this.setLastUpdate();
     }
 
+    getTeamMembers() {
+        return this.teamMembers.length > 0 ? this.teamMembers : ["-"];
+    }
+
     get teamMembers() {
         return this.#teamMembers;
     }
@@ -441,7 +445,7 @@ export class Day {
 }
 
 export class Team {
-    id;
+    #id;
     #foreman;
     #vehicle;
     #position;
@@ -465,6 +469,15 @@ export class Team {
             this.lastUpdate = t.lastUpdate;
         }
     }        
+
+    get id() {
+        return this.#id;
+    }
+
+    set id(id) {
+        this.#id = id;
+        this.setLastUpdate();
+    }
 
     get foreman() {
         return this.#foreman;

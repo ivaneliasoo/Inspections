@@ -16,10 +16,15 @@
                 "
               >
                 <tr>
-                  <td style="width 80%">
+                  <td style="width 84%">
                     {{ jobList.title }}
                   </td>
-                  <td style="width 20%">
+                  <td style="width 8%">
+                    <v-btn icon small @click="delJob">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </td>
+                  <td style="width 8%">
                     <v-btn icon small @click="$emit('add-job', jobStatus)">
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
@@ -42,16 +47,18 @@
         "
       >
         <tbody>
-          <tr v-for="(jobItem, index) in jobList.jobs" :key="index">
+          <tr v-for="(jobItem, index) in jobList.jobs" :key="index"
+          >
             <td
-              class="text-left"
-              style="border-style: none"
+              name="table-cell"
+              class="table-cell text-left"
               draggable="true"
               data-source="confirmed-job"
               :data-jobid="jobItem.id"
               @dragstart="jobDragStart"
+              @click="onJobClick($event, index)"
             >
-              <table width="100%" :style="jobProjection">
+              <table width="100%">
                 <colgroup span="10">
                   <col v-for="n in 10" width="10" :key="n" />
                 </colgroup>
@@ -96,7 +103,6 @@
                       type="text"
                       placeholder="Comments"
                       @change="$forceUpdate()"
-                      @click="$emit('add-job', jobStatus)"
                       v-model="jobItem.comments"
                       :style="jobProjectionCommentsStyle(jobItem.comments)"
                     />
@@ -180,6 +186,25 @@
   </div>
 </template>
 
+<style scoped>
+.table-cell {
+  /* border-style: solid; */
+  border: 1px solid black;
+}
+
+.selected {
+  /* border-style: solid;  */
+  border: 3px solid red;
+}
+
+.job-projection {
+  width: 100%;
+  height: 130px;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+</style>
+
 <script>
 export default {
   props: {
@@ -188,6 +213,14 @@ export default {
     height: String,
     showHeader: Boolean,
   },
+  data: () => ({
+    selected: null
+  }),
+  updated() {
+    if (!this.selected && this.jobList.jobs) {
+      this.selected = new Array(this.jobList.jobs.length).fill(false);
+    }
+  },
   computed: {
     jobProjection() {
       return `
@@ -195,15 +228,47 @@ export default {
           height: 130px;
           border-collapse: collapse;
           border: 1px solid black;`;
-    },
+    }
   },
   methods: {
+    delJob() {
+      console.log("this.selected", this.selected)
+      const jobs = [];
+      for (let i=0; i < this.selected.length; i++) {
+        if (this.selected[i]) {
+          const job = this.jobList.jobs[i];
+          jobs.push(job);
+          this.selected[i] = false;
+        }
+      }
+      let cells = document.getElementsByName("table-cell");
+      for (const cell of cells) {
+        if (cell.classList.contains("selected")) {
+            cell.classList.remove("selected");
+        }        
+      }
+
+      this.$emit('del-job', jobs);
+    },
+    findAncestor(el) {
+        for ( ; el.getAttribute('name') !== "table-cell"; el = el.parentElement);
+        return el;
+    },    
+    onJobClick(event, jobIndex) {
+      const td = this.findAncestor(event.target);
+      if (td.classList.contains("selected")) {
+          td.classList.remove("selected");
+      } else {
+        td.classList.add("selected");
+      }
+      this.selected[jobIndex] = !this.selected[jobIndex];
+    },
     mainDivStyle() {
       return `height: ${this.height}; overflow-y: scroll;`;
     },
     jobProjectionCommentsStyle(comments) {
       if (!comments) {
-        return "outline: none; margin-top: 9px; color: black; display:table-cell; width:100%";
+        return "outline: none; margin-top: 9px; color: black; display: table-cell; width:100%";
       }
       const color =
         comments.includes("urgent") ||
@@ -211,7 +276,7 @@ export default {
         comments.includes("URGENT")
           ? "magenta"
           : "black";
-      return `outline: none; margin-top: 9px; color: ${color}; display:table-cell; width:100%`;
+      return `outline: none; margin-top: 9px; color: ${color}; display: table-cell; width:100%`;
     },
     jobProjectionShiftColor(shift) {
       if (!shift) {
@@ -244,7 +309,7 @@ export default {
     },
     updateShift() {
       this.$forceUpdate();
-    },
+    }
   },
 };
 </script>
