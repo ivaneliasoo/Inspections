@@ -1286,7 +1286,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         if (this.options.autosaveInterval < 20) {
           this.options.autosaveInterval = 20;
         }
-        // setInterval(this.save, this.options.autosaveInterval * 1000);
+        setInterval(this.save, this.options.autosaveInterval * 1000);
       },
       updateSchedJob(schedJob) {
         var sjGroup = this.schedJobGroups[schedJob.id];
