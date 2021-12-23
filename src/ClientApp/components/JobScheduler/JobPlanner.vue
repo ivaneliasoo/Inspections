@@ -977,7 +977,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         // mainMenu
     },
     data: () => ({
-      version: '1.0',
+      version: 'v1.201',
       jobScheduleVisible: true,
       jobProjectionVisible: false,
       manPowerVisible: false,
