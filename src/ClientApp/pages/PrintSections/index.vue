@@ -138,6 +138,12 @@
                       mdi-key-star
                     </v-icon>
                   </v-list-item-action>
+                  <v-list-item-action>
+                    <v-list-item-action-text v-text="'Delete'" />
+                    <v-btn icon color="red" :disabled="item.isMainReport" @click="deletePrintSection(item.id)">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </v-list-item-action>
                 </v-list-item>
 
                 <v-divider
@@ -197,9 +203,9 @@ export default defineComponent({
       )
     }
 
-    const deletePrintSection = () => {
+    const deletePrintSection = (id :number) => {
       store
-        .dispatch('printsection/deletePrintSection', printSection.value.id, { root: true })
+        .dispatch('printsection/deletePrintSection', id, { root: true })
         .then(() => {
         })
     }
