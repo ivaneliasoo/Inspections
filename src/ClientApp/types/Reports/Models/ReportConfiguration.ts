@@ -13,5 +13,4 @@ export interface ReportConfiguration {
     signatureDefinitions: Signature[];
     inactive: boolean;
     printSectionId: number;
-    printSection: string;
 }

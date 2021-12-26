@@ -58,7 +58,8 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
                 MarginBottom = "80px",
                 MarginTop = "20px",
                 MarginLeft = "70px",
-                MarginRight = "70px"
+                MarginRight = "70px",
+                PrintSectionId = request.PrintSectionId
             };
 
             var result = await _reportConfigurationsRepository.AddAsync(repoConfig).ConfigureAwait(false);
