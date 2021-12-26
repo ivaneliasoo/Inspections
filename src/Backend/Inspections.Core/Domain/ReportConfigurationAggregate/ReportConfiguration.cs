@@ -1,4 +1,5 @@
 ﻿using Inspections.Core.Domain.CheckListAggregate;
+using Inspections.Core.Domain.PrintSectionsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Shared;
 using System;
@@ -22,5 +23,6 @@ namespace Inspections.Core.Domain.ReportConfigurationAggregate
         public string MarginLeft { get; set; } = default!;
         public string MarginRight { get; set; } = default!;
         public string? AdditionalFileds { get; set; } =default!;
+        public int? PrintSectionId { get; set; } = default!;
     }
 }

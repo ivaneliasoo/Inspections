@@ -39,19 +39,21 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<ReportConfiguration> GetByIdAsync(int id)
         {
+
             var result = await _context.ReportConfigurations
-                .Where(s => s.Id == id)
-                .SingleOrDefaultAsync();
+           .Where(s => s.Id == id)
+           .SingleOrDefaultAsync();
 
             var signaturesDef = _context.Signatures.Where(s => s.IsConfiguration && s.ReportId == null && s.ReportConfigurationId == id);
             var ChecksDef = _context.CheckLists.Where(s => s.IsConfiguration && s.ReportId == null)
-                .Include(c=>c.Checks)
+                .Include(c => c.Checks)
                 .Where(s => s.IsConfiguration && s.ReportId == null && s.ReportConfigurationId == id);
 
             result.SignatureDefinitions = signaturesDef.ToList();
             result.ChecksDefinition = ChecksDef.ToList();
 
             return result;
+
         }
 
         public async Task UpdateAsync(ReportConfiguration entity)

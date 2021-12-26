@@ -20,7 +20,7 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.MarginBottom).IsRequired();
             builder.Property(p => p.MarginLeft).IsRequired();
             builder.Property(p => p.MarginRight).IsRequired();
-
+            builder.Property(p => p.PrintSectionId).IsRequired();
             builder.Ignore(p => p.DomainEvents);
         }
     }

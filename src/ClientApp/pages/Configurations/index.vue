@@ -138,6 +138,13 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
       class: 'secundary'
     },
     {
+      text: 'Print Section',
+      value: 'printSection',
+      sortable: true,
+      align: 'center',
+      class: 'secundary'
+    },
+    {
       text: '',
       value: 'actions',
       sortable: true,

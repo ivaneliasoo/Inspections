@@ -9,4 +9,5 @@ export interface UpdateReportConfigurationCommand {
     inactive: boolean;
     checksDefinition: number[];
     signatureDefinitions: number[];
+    printSectionId: number;
 }

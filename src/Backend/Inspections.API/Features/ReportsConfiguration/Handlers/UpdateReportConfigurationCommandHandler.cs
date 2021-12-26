@@ -33,7 +33,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             reportConfig.RemarksLabelText = request.RemarksLabelText;
             reportConfig.Title = request.Title;
             reportConfig.FormName = request.FormName;
-
+            reportConfig.PrintSectionId = request.PrintSectionId;
             await _reportConfigurationsRepository.AddAsync(reportConfig).ConfigureAwait(false);
             return true;
         }

@@ -34,6 +34,7 @@ namespace Inspections.Infrastructure.Queries
                       , ""LastEdit""
                       , ""LastEditUser""
                       , ""Inactive""
+                      , ""PrintSection""
                 FROM ""Inspections"".""ReportsConfiguration"" Config
                     LEFT OUTER JOIN(
                     SELECT ""ReportConfigurationId"", COUNT(""ReportConfigurationId"") AS CheckLists
@@ -53,6 +54,11 @@ namespace Inspections.Infrastructure.Queries
                     GROUP BY ""ReportConfigurationId""
                 ) AS ""Reports""
                     ON ""Reports"".""ReportConfigurationId"" = Config.""Id""
+                LEFT OUTER JOIN(
+                    SELECT ""Code"" as ""PrintSection"", ""Id"" as ""PrintSectionId""
+                    FROM ""Inspections"".""PrintSections""
+                ) AS ""P""
+                    ON ""P"".""PrintSectionId"" = Config.""PrintSectionId""
                     WHERE 1=1
             ").Where(p => !p.Inactive && (EF.Functions.Like(p.Title, $" %{filter ?? string.Empty}%") || EF.Functions.Like(p.FormName, $"%{filter ?? string.Empty}%")));
         }

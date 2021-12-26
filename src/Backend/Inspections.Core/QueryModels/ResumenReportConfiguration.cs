@@ -16,5 +16,6 @@ namespace Inspections.Core.QueryModels
         public int DefinedSignatures { get; set; }
         public int UsedByReports { get; set; }
         public bool Inactive { get; set; }
+        public string PrintSection { get; set; }
     }
 }

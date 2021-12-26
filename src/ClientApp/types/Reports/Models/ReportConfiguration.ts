@@ -12,4 +12,6 @@ export interface ReportConfiguration {
     checksDefinition: CheckList[];
     signatureDefinitions: Signature[];
     inactive: boolean;
+    printSectionId: number;
+    printSection: string;
 }

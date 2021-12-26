@@ -26,13 +26,26 @@
             />
           </ValidationProvider>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="6">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-text-field
               id="txtFormName"
               v-model="newConfig.formName"
               :error-messages="errors"
               label="Report Form Name/Number"
+            />
+          </ValidationProvider>
+        </v-col>
+        <v-col cols="6" xs="6" md="6">
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-select
+              id="printSectionId"
+              v-model="newConfig.printSectionId"
+              :error-messages="errors"
+              item-value="id"
+              item-text="code"
+              label="Print Section"
+              :items="printSections"
             />
           </ValidationProvider>
         </v-col>
@@ -123,6 +136,8 @@ import { ReportConfiguration, ReportType, CheckList, FilterType, UpdateReportCon
 import { CheckListsState } from '@/store/checklists'
 import { SignatureState } from '@/store/signatures'
 import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
+import { PrintSectionDTO } from '~/types/PrintSections/ViewModels/PrintSectionDTO'
+import { PrintSectionState } from '~/store/printsection'
 
 @Component({
   components: {
@@ -137,6 +152,11 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
   get checks (): CheckList[] {
     return (this.$store.state.checklists as CheckListsState)
       .checkLists
+  }
+
+  get printSections (): PrintSectionDTO[] {
+    return (this.$store.state.printsection as PrintSectionState)
+      .printSectionsList
   }
 
   get signatures (): SignatureDTO[] {
@@ -158,7 +178,8 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
       remarksLabelText: this.newConfig.formName,
       inactive: this.newConfig.inactive,
       checksDefinition: this.newConfig.checksDefinition.flatMap(check => check.id),
-      signatureDefinitions: this.newConfig.signatureDefinitions.flatMap(sign => sign.id)
+      signatureDefinitions: this.newConfig.signatureDefinitions.flatMap(sign => sign.id),
+      printSectionId: this.newConfig.printSectionId
     }
     if (parseInt(self.$route.params.id) > 0) {
       await this.$store.dispatch('configurations/updateConfiguration', command, { root: true })
@@ -183,13 +204,12 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
     }
     await store.dispatch('checklists/getChecklists', filter, { root: true })
     await store.dispatch('signatures/getSignatures', filter, { root: true })
-
+    await store.dispatch('printsection/getPrintSections', filter, { root: true })
     let newConfig: ReportConfiguration
     if (id > 0) {
       const result = await store.dispatch('configurations/getConfigurationById', id, { root: true })
       newConfig = Object.assign({}, result)
     } else { newConfig = { type: 0 } as ReportConfiguration }
-
     return { newConfig }
   }
 }
