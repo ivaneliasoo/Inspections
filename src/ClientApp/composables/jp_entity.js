@@ -387,7 +387,7 @@ export class SchedJob {
         if (this.#job2.trim() === "") {
             this.splitShift = false;
         }
-        //this.lastUpdate = sj.lastUpdate;
+        this.lastUpdate = sj.lastUpdate;
     }
 
     toJSON() {
@@ -521,12 +521,10 @@ export class Team {
         this.vehicle = t.vehicle;
         this.position = t.position;
         this.teamMembers = typeof t.teamMembers === "string" ? JSON.parse(t.teamMembers) : t.teamMembers;        
-        this.setLastUpdate();
+        this.lastUpdate = t.lastUpdate;
     }
 
     setLastUpdate() {
-        // const date = new Date();
-        // this.lastUpdate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON();
         this.lastUpdate = toIsoDate(new Date())
     }
 

@@ -19,6 +19,8 @@ namespace Inspections.API.Features.JobPlanner
         private readonly ILogger<JobScheduleController> _logger;
         private readonly InspectionsContext _context;
 
+        private readonly string APIVersion = "v1.201";
+
         public JobScheduleController(ILogger<JobScheduleController> logger, InspectionsContext context)
         {
             _logger = logger;
@@ -35,8 +37,8 @@ namespace Inspections.API.Features.JobPlanner
             var options = _context.Options.Where(op => op.id == 1).FirstOrDefault();
             var now = DateTime.Now;
             //_logger.LogInformation("schedJobs");
-            //schedJobs.ForEach(sj => _logger.LogInformation("{0} {1}", sj.id, sj.date, sj.team));
-            return new ScheduleData(now, jobs, schedJobs, teams, options);
+            Console.WriteLine(APIVersion);
+            return new ScheduleData(now, jobs, schedJobs, teams, options, APIVersion);
         }
 
         // PUT: JobSchedule
@@ -114,7 +116,7 @@ namespace Inspections.API.Features.JobPlanner
                 } else { 
                     var prev = _context.Job.Where(j => j.id == Math.Abs(job.id)).FirstOrDefault();
                     if (prev != null) {
-                        if (job.lastUpdate > prev.lastUpdate) {
+                        if (job.lastUpdate.CompareTo(prev.lastUpdate) > 0) {
                             if (job.id < 0) {
                                 _logger.LogInformation("Deleting job: {0:D}: {1}", job.id, job.scope);
                                 job.id = -job.id;
@@ -157,7 +159,13 @@ namespace Inspections.API.Features.JobPlanner
                 } else {
                     var prev = _context.Team.Where(j => j.id == Math.Abs(team.id)).FirstOrDefault();
                     if (prev != null) {
-                        if (team.lastUpdate > prev.lastUpdate) {
+                        int result = prev.lastUpdate.CompareTo(team.lastUpdate);
+                        //  _logger.LogInformation("{0} - {1}", prev.lastUpdate, team.lastUpdate);
+                        // _logger.LogInformation("Date compare result {0}", result);
+                        if (result < 0) {
+                            _logger.LogInformation("Team: {0:D}: {1} was updated, adding to updated list", team.id, team.foreman);
+                            updated.Add(prev);
+                        } else if (result > 0) {
                             if (team.id < 0) {
                                 _logger.LogInformation("Deleting team: {0:D}: {1}", team.id, team.foreman);
                                 team.id = -team.id;
@@ -170,8 +178,6 @@ namespace Inspections.API.Features.JobPlanner
                                 prev.teamMembers = team.teamMembers;
                                 prev.lastUpdate = DateTime.Now;
                             }
-                        } else if (team.lastUpdate < prev.lastUpdate) {
-                            updated.Add(prev);
                         }
                     }
                 } 
@@ -210,14 +216,16 @@ namespace Inspections.API.Features.JobPlanner
 
         public Options? options { get; set; }
 
+        public string? apiVersion { get; set; }
 
         public ScheduleData(DateTime timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs, 
-                IEnumerable<Team> teams, Options opt) {
+                IEnumerable<Team> teams, Options opt, string APIVersion) {
             this.timeStamp = timeStamp;
             this.jobs = jobs;
             this.schedJobs = schedJobs;
             this.teams = teams;
             this.options = opt;
+            this.apiVersion = APIVersion;
         }
 
         public ScheduleData(DateTime timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs, 

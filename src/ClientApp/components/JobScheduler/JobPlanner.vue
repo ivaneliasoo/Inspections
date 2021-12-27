@@ -1278,7 +1278,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         const schedJobs = scheduleData.schedJobs;
         schedJobs.forEach( schedJob => this.updateSchedJob(schedJob) );
 
-        console.log("options", scheduleData.options);
+        console.log("APIVersion", scheduleData.apiVersion);
+        console.log("options", JSON.stringify(scheduleData.options));
         this.options = scheduleData.options;
 
         this.currentDate = date2string(new Date());
