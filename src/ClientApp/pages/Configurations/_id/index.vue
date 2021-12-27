@@ -47,7 +47,7 @@
               label="Print Section"
               :items="printSections"
               append-outer-icon="mdi-page-previous-outline"
-              @click:append-outer="redirect('/printsections')"
+              @click:append-outer="$router.push(`/printsections`)"
             />
           </ValidationProvider>
         </v-col>
@@ -196,10 +196,6 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
           if (parseInt(self.$route.params.id) > 0) { this.$store.dispatch('configurations/getConfigurationById', self.$route.params.id, { root: true }) } else { this.$router.push({ name: 'Configurations-id', params: { id: resp } }) }
         })
     }
-  }
-
-  redirect (route: string) {
-    window.open(route, '_blank')
   }
 
   async asyncData ({ store, params }: any) {
