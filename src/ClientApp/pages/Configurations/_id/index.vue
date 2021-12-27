@@ -133,7 +133,7 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import InnerPageMixin from '@/mixins/innerpage'
 import { ReportConfiguration, ReportType, CheckList, FilterType, UpdateReportConfigurationCommand } from '@/types'
-import { CheckListsState } from '@/store/checklists'
+import { CheckListsState, actions } from '@/store/checklists'
 import { SignatureState } from '@/store/signatures'
 import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
 import { PrintSectionDTO } from '~/types/PrintSections/ViewModels/PrintSectionDTO'
@@ -170,6 +170,7 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
 
   async saveChanges () {
     const self = this
+
     const command: UpdateReportConfigurationCommand = {
       id: parseInt(self.$route.params.id),
       type: this.newConfig.type,
@@ -177,10 +178,11 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
       formName: this.newConfig.formName,
       remarksLabelText: this.newConfig.formName,
       inactive: this.newConfig.inactive,
-      checksDefinition: this.newConfig.checksDefinition.flatMap(check => check.id),
-      signatureDefinitions: this.newConfig.signatureDefinitions.flatMap(sign => sign.id),
+      checksDefinition: this.newConfig.checksDefinition,
+      signatureDefinitions: this.newConfig.signatureDefinitions,
       printSectionId: this.newConfig.printSectionId
     }
+
     if (parseInt(self.$route.params.id) > 0) {
       await this.$store.dispatch('configurations/updateConfiguration', command, { root: true })
         .then((resp) => {
@@ -202,9 +204,13 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
       reportId: undefined,
       reportConfigurationId: undefined
     }
-    await store.dispatch('checklists/getChecklists', filter, { root: true })
-    await store.dispatch('signatures/getSignatures', filter, { root: true })
-    await store.dispatch('printsection/getPrintSections', filter, { root: true })
+
+    await Promise.all([
+      store.dispatch('checklists/getChecklists', filter, { root: true }),
+      store.dispatch('signatures/getSignatures', filter, { root: true }),
+      store.dispatch('printsection/getPrintSections', filter, { root: true })
+    ])
+
     let newConfig: ReportConfiguration
     if (id > 0) {
       const result = await store.dispatch('configurations/getConfigurationById', id, { root: true })

@@ -10,6 +10,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Inspections.Core.Domain.PrintSectionsAggregate;
 
 namespace IOSoft.HelpDesk.Infrastructure.Data
 {
@@ -39,6 +40,11 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                 {
                     context.Users.Add(new User() { UserName = "developer", Password = "developer@@P@sword", Name = "Developer", LastName = "User", IsAdmin = true });
                 }
+                
+                if (!context.PrintSections.Any(u => u.Code == "Inspection"))
+                {
+                    context.PrintSections.Add(new PrintSection() { Code = "Inspection", Content = "<h1>Inspection</h1>", Description = "Inspection" });
+                }
 
 
                 if (!context.ReportConfigurations.Any(rc =>rc.FormName == "CSE EI(R8) FORM"))
@@ -61,7 +67,8 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                         MarginBottom = "80px",
                         MarginTop = "20px",
                         MarginLeft = "70px",
-                        MarginRight = "70px"
+                        MarginRight = "70px",
+                        PrintSectionId = 1
                     });
                 }
 
