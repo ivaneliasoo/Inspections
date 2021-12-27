@@ -392,6 +392,7 @@
             <v-col v-for="(jlist, jid) in jobProjectionTable" :key="jid">
               <job-projection-category v-bind:job-status="jid" v-bind:jobList="jlist" height="680px" showHeader
                 @add-job="addJob"
+                @del-job="delJob"
               >
               </job-projection-category>
             </v-col>
@@ -499,7 +500,7 @@
                       <td v-for="team in teams" :key="team.id" class="text-caption font-weight-bold"
                           @drop="dropTeamMember($event, day.jobs[team.id])"
                           @click="editTeam(team, day.jobs[team.id])">
-                        <div v-for="teamMember in day.jobs[team.id].teamMembers" :key="teamMember"
+                        <div v-for="teamMember in day.jobs[team.id].getTeamMembers()" :key="teamMember"
                             style="text-align: center;"
                             class="draggable"
                             draggable="true"
@@ -507,7 +508,7 @@
                             @dragstart="teamMemberDragstart"
                             data-source="team-member"
                             :data-day-index="index"
-                            :data-foreman="team.id"
+                            :data-team="team.id"
                             :data-team-member="teamMember">
                             {{teamMember}}
                         </div>
@@ -604,13 +605,13 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(teamMember, index) in teamDialog.teamMembers" :key="index">
+                          <tr v-for="teamMember in teamMembers" :key="teamMember.id">
                             <td class="text-center">
-                              <input type="checkbox" v-model="teamDialog.checked[index]">
+                              <input type="checkbox" v-model="teamMember.checked">
                             </td>
                             <td>
                               <input class="text-caption text-left table-input" type="text" size="54"
-                                v-model="teamDialog.teamMembers[index]"
+                                v-model="teamMember.teamMember"
                               >
                             </td>
                           </tr>
@@ -976,7 +977,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         // mainMenu
     },
     data: () => ({
-      version: '1.0',
+      version: 'v1.201',
       jobScheduleVisible: true,
       jobProjectionVisible: false,
       manPowerVisible: false,
@@ -996,7 +997,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       dayIndex: {},
       deletedSchedJobs: [],
       schedJobGroups: {},
-      teams: [],
+      teams_: [],
       jobInfo: new SchedJob(),
       editedJob: {},
       //editedJobTable: [],
@@ -1004,8 +1005,14 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       changeJobDialog2: false,
       jobDialog: { open: false, startDate: "", endDate: "" },
       jobTableDialog: { open: false, option: "", title: "", change: false },
-      teamDialog: { open: false, oper: "", title: "", maxTeamMembers: 8, team: {}, checked: [],
-          teamMembers: [], editedTeam: {}, schedJob: {} },
+      teamDialog: { open: false, 
+          oper: "", title: "", 
+          maxTeamMembers: 8,
+          teamMembers: [],
+          team: {},
+          editedTeam: {}, 
+          schedJob: {} 
+      },
       workerDialog: false,
       dailyPlanDialog: false,
       dateConfig: {
@@ -1022,6 +1029,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       refreshJobProjectionTable: 0,
       refreshConfirmedJobs: 0,
       refreshUpcomingJobs: 0,
+      refreshTeamMembers: 0,
+      refreshTeams: 0,
       showOptionsDialog: false,
       options: {
         scheduleWeeks: 1,
@@ -1118,6 +1127,28 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       },
       jobShiftIcon() {
         return this.jobInfo.splitShift ? 'mdi-dns-outline' : 'check-box-outline-blank'
+      },
+      teams() {
+        this.refreshTeams;
+        const teams = this.teams_.filter( team => team.id > -1 );
+        // console.log("teams:", JSON.stringify(teams));
+        return teams;
+      },
+      teamMembers() {
+        this.refreshTeamMembers;
+        const members = this.teamDialog.team.teamMembers ? this.teamDialog.team.teamMembers : [];
+        const teamMembers = this.teamDialog.teamMembers;
+
+        teamMembers.length = 0;
+        for (let i=0; i<members.length; i++) {
+          teamMembers.push({id: i, checked: false, teamMember: members[i]});
+        }
+
+        for (let i=teamMembers.length; i<this.teamDialog.maxTeamMembers; i++) {
+          teamMembers.push({id: i, checked: false, teamMember: ""});
+        }
+        
+        return teamMembers;
       }
     },
     created() {
@@ -1179,7 +1210,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           if (!day.jobs[team.id]) {
             day.jobs[team.id] = new SchedJob({id: 0, team: team.id,
                 date: sday, shift: Shift.unasigned,
-                job1: "", job2: "", teamMembers : ["-"] });
+                job1: "", job2: "", teamMembers : []});
+                //job1: "", job2: "", teamMembers : ["-"] });
           }
         });
         return day;
@@ -1210,7 +1242,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         });
       },
       updateJobs(jobs) {
-        this.jobs = this.jobs.filter( job => job.id > 0);
+        this.jobs = this.jobs.filter( job => job.id > 0 );
         jobs.forEach( job => {
           const index = this.jobs.findIndex( aJob => job.id == aJob.id );
           if (index < 0) {
@@ -1224,15 +1256,17 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.refreshUpcomingJobs++;
       },
       updateTeams(teams) {
+        this.teams_ = this.teams_.filter( team => team.id > 0 );
         teams.forEach( team => {
-          const index = this.teams.findIndex( aTeam => team.id == aTeam.id );
+          const index = this.teams_.findIndex( aTeam => team.id == aTeam.id );
           if (index < 0) {
-            this.teams.push(new Team(team));
+            this.teams_.push(new Team(team));
           } else {
-            this.teams[index] = new Team(team);
+            this.teams_[index] = new Team(team);
           }
         });
-        this.teams.sort( (t1, t2) => t1.position - t2.position );
+        this.teams_.sort( (t1, t2) => t1.position - t2.position );
+        this.refreshTeams++;
         this.$forceUpdate();
       },
       initJobSchedule(scheduleData) {
@@ -1282,11 +1316,12 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       },
       getSchedJob(day, teamId) {
         let sj = day.jobs[teamId];
-        if (!sj) {
-          sj = new SchedJob({id: 0, team: teamId,
-              date: day.date, shift: Shift.unasigned,
-              job1: "", job2: "", teamMembers : ["-"] });
-        }
+        // if (!sj) {
+        //   sj = new SchedJob({id: 0, team: teamId,
+        //       date: day.date, shift: Shift.unasigned,
+        //       job1: "", job2: "", teamMembers : [] });
+        //       //job1: "", job2: "", teamMembers : ["-"] });
+        // }
         return sj;
       },
       getDays() {
@@ -1393,9 +1428,9 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
             const sj = day.jobs[team];
             if (sj.id != 0) {
               schedJobs[sj.getPk()] = sj;
-              if (sj.teamMembers.length == 1 && sj.teamMembers[0] == "-") {
-                sj.teamMembers = [];
-              }
+              // if (sj.teamMembers.length == 1 && sj.teamMembers[0] == "-") {
+              //   sj.teamMembers = [];
+              // }
             }
           }
         }
@@ -1417,11 +1452,9 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         jobs = jobs.filter( job => !isBlank(job) );
         jobs.forEach(job => job.priority === "" ? 0 : job.priority );
 
-        const data = {jobs: jobs, schedJobs: schedJobs, teams: this.teams};
-        const url = this.endpoint();
+        const data = {jobs: jobs, schedJobs: schedJobs, teams: this.teams_};
 
         var self = this;
-
         this.$axios({
           url: this.endpoint(),
           method: "PUT",
@@ -1746,11 +1779,17 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       },
       dropTeamMember(event, targetJob) {
         event.preventDefault();
+        console.log("targetJob", JSON.stringify(targetJob));
+        if (targetJob.id == 0) {
+          return;
+        }        
         const teamMembers = targetJob.teamMembers;
         const srcData = event.dataTransfer.getData("application/json");
+        console.log("srcData", srcData);
         const src = JSON.parse(srcData);
-        const dayIndex = Number(src.dayIndex);
+        const dayIndex = parseInt(src.dayIndex);
         const srcJob = this.jobSchedule[dayIndex].jobs[src.team];
+
         const srcTeamMembers = srcJob.teamMembers;
         srcTeamMembers.splice(srcTeamMembers.indexOf(src.teamMember), 1);
         if (teamMembers.length == 1 && teamMembers[0] == "-") {
@@ -2061,24 +2100,20 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.jobs.push(new Job( { id: 0, scope: "", value: "", status: status, priority: 10} ));
         this.refreshJobProjectionTable++;
       },
-      delJob() {
-        for (var i=this.editedJobTable.length-1; i>=0; i--) {
-          if (this.editedJobTable[i].checked) {
-            const job = this.editedJobTable[i];
-            if (job.id === 0) {
-              let idx = this.jobs.findIndex(element => element == job);
-              if (idx > -1) {
-                this.jobs.splice(idx, 1);
-              }
+      delJob(jobs) {
+        console.log("delJobs", JSON.stringify(jobs));
+        for (const job of jobs) {
+          if (job.id === 0) {
+            let idx = this.jobs.findIndex(element => element == job);
+            if (idx > -1) {
+              this.jobs.splice(idx, 1);
             }
-            else {
-              job.id = -job.id;
-              job.status = JobStatus.blank;
-            }
-            this.refreshUpcomingJobs++;
-            this.refreshConfirmedJobs++;
-            this.refreshJobProjectionTable++;
           }
+          else {
+            job.id = -job.id;
+            job.status = JobStatus.blank;
+          }
+          this.refreshJobProjectionTable++;
         }
       },
       addSchedJob() {
@@ -2092,28 +2127,71 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       editTeam(team, schedJob) {
         this.teamDialog.team = team;
         this.teamDialog.editedTeam = new Team(team);
-        this.teamDialog.teamMembers = team.teamMembers.slice();
         this.teamDialog.schedJob = schedJob;
-        //console.log("schedJob:", JSON.stringify(schedJob));
-        for (var i=this.teamDialog.teamMembers.length; i<this.teamDialog.maxTeamMembers; i++) {
-          this.teamDialog.teamMembers.push("");
-        }
-        this.teamDialog.checked = new Array(this.teamDialog.maxTeamMembers).fill(false);
+
         this.teamDialog.oper = "edit";
         this.teamDialog.title = "Edit team";
         this.teamDialog.open = true;
       },
       newTeam() {
-        this.teamDialog.team = {};
-        this.teamDialog.editedTeam = new Team({ team: "", vehicle: "", position: 0, teamMembers: []});
-        this.teamDialog.teamMembers = [];
-        for (var i=this.teamDialog.teamMembers.length; i<this.teamDialog.maxTeamMembers; i++) {
-          this.teamDialog.teamMembers.push("");
-        }
-        this.teamDialog.checked = new Array(this.teamDialog.maxTeamMembers).fill(false);
+        this.teamDialog.team = new Team({ id: 0, foreman: "", vehicle: "", position: 0, teamMembers: []});
+        this.teamDialog.editedTeam = new Team({ id: 0, foreman: "", vehicle: "", position: 0, teamMembers: []});
+        
         this.teamDialog.oper = "new";
         this.teamDialog.title = "New team";
         this.teamDialog.open = true;
+      },
+      copyTeamMembers(source, target) {
+        target.length = 0;
+        for (var i=0; i<source.length; i++) {
+          if (source[i].teamMember.trim() !== "") {
+            target.push(source[i].teamMember);
+          }
+        }
+        if (target.length == 0) {
+          target.push("-");
+        }
+      },
+      saveTeam() {
+        const team = this.teamDialog.editedTeam;
+        if (this.teamDialog.oper === "new") {
+          this.teams_.splice(team.position-1, 0, team);
+          this.copyTeamMembers(this.teamMembers, team.teamMembers);
+        } else {
+          team.position -= 0.5;
+          this.teamDialog.team.update(team);
+          this.copyTeamMembers(this.teamMembers, this.teamDialog.team.teamMembers);
+        }
+        this.updateTeamOrder();
+        this.refreshTeams++;
+        this.jobScheduleCount++;
+        this.teamDialog.open = false;
+      },
+      deleteTeam() {
+        if (this.teamDialog.oper === "new") {
+          return;
+        }
+        if (this.teamDialog.editedTeam.position >= 100) {
+          return;
+        }
+        const teamId = this.teamDialog.editedTeam.id;
+        const team = this.teams_.find( t => t.id == teamId );
+        if (team) {
+          team.id = -team.id;
+        }
+        this.refreshTeams++;
+        this.jobScheduleCount++;
+        this.teamDialog.open = false;
+      },
+      deleteTeamMember() {
+        const teamMembers = this.teamDialog.editedTeam.teamMembers;
+        for (var i=this.teamMembers.length-1; i>=0; i--) {
+          if (this.teamMembers[i].checked) {
+            teamMembers.splice(i, 1);
+          }
+        }
+        this.refreshTeamMembers++;
+        this.$forceUpdate();
       },
       updateTeamOrder() {
         this.teams.sort( (t1, t2) => t1.position - t2.position );
@@ -2122,58 +2200,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
             this.teams[i].position = i+1;
           }
         }
-      },
-      copyTeamMembers(source, target) {
-        target.length = 0;
-        for (var i=0; i<source.length; i++) {
-          if (source[i].trim() !== "") {
-            target.push(source[i]);
-          }
-        }
-        if (target.length == 0) {
-          target.push("-");
-        }
-      },
-      createTeam() {
-        const team = this.teamDialog.editedTeam;
-        // console.log("new team:", JSON.stringify(team));
-        this.teams.splice(team.position-1, 0, team);
-        this.copyTeamMembers(this.teamDialog.teamMembers, team.teamMembers);
-        this.updateTeamOrder();
-        this.jobScheduleCount++;
-        this.teamDialog.open = false;
-      },
-      saveTeam() {
-        if (this.teamDialog.oper === "new") {
-          this.createTeam();
-          return;
-        }
-
-        const team = this.teamDialog.editedTeam;
-        team.position -= 0.5;
-        this.teamDialog.team.update(this.teamDialog.editedTeam);
-        this.copyTeamMembers(this.teamDialog.teamMembers, this.teamDialog.team.teamMembers);
-        this.updateTeamOrder();
-        this.jobScheduleCount++;
-        this.teamDialog.open = false;
-      },
-      deleteTeam() {
-        const team = this.teamDialog.editedTeam;
-        this.teams.splice(team.position, 1);
-        this.jobScheduleCount++;
-        this.teamDialog.open = false;
-      },
-      deleteTeamMember() {
-        // console.log("deleteTeamMember");
-        const teamMembers = this.teamDialog.editedTeam.teamMembers;
-        const checked = this.teamDialog.checked;
-        for (var i=teamMembers.length-1; i>=0; i--) {
-          if (checked[i]) {
-            checked[i] = false;
-            teamMembers.splice(i, 1);
-          }
-        }
-      },
+      },      
       closeTeam() {
         this.teamDialog.open = false;
       },
