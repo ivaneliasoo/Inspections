@@ -36,7 +36,7 @@
             />
           </ValidationProvider>
         </v-col>
-        <v-col cols="6" xs="6" md="6">
+        <v-col cols="5" xs="5" md="5">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-select
               id="printSectionId"
@@ -48,6 +48,11 @@
               :items="printSections"
             />
           </ValidationProvider>
+        </v-col>
+        <v-col cols="1" xs="1" md="1">
+          <v-btn icon color="blue" @click="redirect('/printsections')">
+            <v-icon>mdi-eye</v-icon>
+          </v-btn>
         </v-col>
         <v-col cols="8">
           <ValidationProvider v-slot="{ errors }" rules="required">
@@ -156,7 +161,7 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
 
   get printSections (): PrintSectionDTO[] {
     return (this.$store.state.printsection as PrintSectionState)
-      .printSectionsList
+      .printSectionsList.filter(c => c.isMainReport === true)
   }
 
   get signatures (): SignatureDTO[] {
@@ -194,6 +199,10 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
           if (parseInt(self.$route.params.id) > 0) { this.$store.dispatch('configurations/getConfigurationById', self.$route.params.id, { root: true }) } else { this.$router.push({ name: 'Configurations-id', params: { id: resp } }) }
         })
     }
+  }
+
+  redirect (route: string) {
+    window.open(route, '_blank')
   }
 
   async asyncData ({ store, params }: any) {
