@@ -1,9 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12" md="8" sm="12" class="mb-2">
-      <h1 class="font-weight-bold mb-3">
-        Print Section Detail
-      </h1>
+    <v-col cols="12" md="8" sm="12">
       <v-card>
         <v-tabs
           color="deep-indigo accent-4"
@@ -85,7 +82,7 @@
         </v-card-actions>
       </v-card>
     </v-col>
-    <v-col cols="12" md="4" sm="12" class="mt-8">
+    <v-col cols="12" md="4" sm="12">
       <v-card height="555" style="overflow-y: scroll">
         <v-toolbar
           color="indigo"
@@ -155,7 +152,7 @@
           </v-list-item-group>
         </v-list>
       </v-card>
-    </v-col> -->
+    </v-col>
   </v-row>
 </template>
 

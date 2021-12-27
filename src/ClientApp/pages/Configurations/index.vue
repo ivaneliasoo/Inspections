@@ -55,6 +55,12 @@
         >
           mdi-delete
         </v-icon>
+        <v-icon
+          color="indigo"
+          @click="redirect('/printsections')"
+        >
+          mdi-page-previous-outline
+        </v-icon>
       </template>
       <template #item.type="{ item }">
         {{ item.type === 0 ? 'Inspection':'Unkown' }}
@@ -159,6 +165,10 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
 
   async deleteConfig () {
     await this.$store.dispatch('configurations/deleteConfiguration', this.selectedItem.id, { root: false })
+  }
+
+  redirect (route: string) {
+    window.open(route, '_blank')
   }
 
   async fetch () {

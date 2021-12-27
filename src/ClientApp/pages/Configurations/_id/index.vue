@@ -36,7 +36,7 @@
             />
           </ValidationProvider>
         </v-col>
-        <v-col cols="5" xs="5" md="5">
+        <v-col cols="6">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-select
               id="printSectionId"
@@ -46,13 +46,10 @@
               item-text="code"
               label="Print Section"
               :items="printSections"
+              append-outer-icon="mdi-page-previous-outline"
+              @click:append-outer="redirect('/printsections')"
             />
           </ValidationProvider>
-        </v-col>
-        <v-col cols="1" xs="1" md="1">
-          <v-btn icon color="blue" @click="redirect('/printsections')">
-            <v-icon>mdi-eye</v-icon>
-          </v-btn>
         </v-col>
         <v-col cols="8">
           <ValidationProvider v-slot="{ errors }" rules="required">
