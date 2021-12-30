@@ -27,7 +27,7 @@ jobs:
         uses: xom9ikk/split@v1
         id: split
         with:
-          string: ${{ env.RELEASE_VERSION }}
+          string: test-2021-6 #${{ env.RELEASE_VERSION }}
           separator: -
           limit: -1
 
