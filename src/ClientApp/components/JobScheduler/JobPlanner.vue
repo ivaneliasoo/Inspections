@@ -612,6 +612,7 @@
                             <td>
                               <input class="text-caption text-left table-input" type="text" size="54"
                                 v-model="teamMember.teamMember"
+                                @change="validateTeamMember(teamDialog.editedTeam.id, teamMember)"
                               >
                             </td>
                           </tr>
@@ -818,6 +819,20 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog v-model="alert" max-width="600px">
+      <v-card>
+        <v-card-title class="text-body-1"></v-card-title>
+        <v-card-text>
+          <p class="header3" style="white-space: pre-wrap;">{{ userMessage }}</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="closeMessage">OK</v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
@@ -982,8 +997,10 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       manPowerVisible: false,
       manPowerForecastVisible: false,
       title: "Job Planner",
+      userMessage: "",
       timeoutId: null,
       timeStamp: null,
+      alert: false,
       jobs: [],
       dayWindow: { days: [], size: 4 },
       priorityColors: priorityColors,
@@ -2140,6 +2157,27 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           target.push("-");
         }
       },
+      updateSchedJobGroupTeam(schedJob) {
+          const sjGroup = this.schedJobGroups[schedJob.id];
+          Object.values(sjGroup).forEach( sj => {
+            this.copyTeamMembers(this.teamMembers, sj.teamMembers);
+            sj.setLastUpdate();
+          })
+      },
+      validateTeamMember(id, teamMember) {
+        //console.log("team id", id, "teamMember", teamMember);
+        for (const team of this.teams) {
+          if (team.id != id) {
+            const members = team.teamMembers;
+            //console.log("teamMembers", JSON.stringify(members));
+            if (members.includes(teamMember.teamMember)) {
+              this.showMessage(`${teamMember.teamMember} is in ${team.foreman}'s team`);
+              teamMember.teamMember = "";
+              break;
+            }
+          }
+        }
+      },
       saveTeam() {
         const team = this.teamDialog.editedTeam;
         if (this.teamDialog.oper === "new") {
@@ -2149,6 +2187,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           team.position -= 0.5;
           this.teamDialog.team.update(team);
           this.copyTeamMembers(this.teamMembers, this.teamDialog.team.teamMembers);
+          this.updateSchedJobGroupTeam(this.teamDialog.schedJob);
         }
         this.updateTeamOrder();
         this.refreshTeams++;
@@ -2194,6 +2233,14 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       },
       editOptions() {
         this.showOptionsDialog = true;
+      },
+      showMessage(msg) {
+        this.userMessage = msg;
+        this.alert = true;
+      },
+      closeMessage() {
+        this.userMessage = "";
+        this.alert = false;
       }
     }
   }
