@@ -1221,8 +1221,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         if (!op) {
           op = "";
         }
-        return `http://localhost:5000/api/jobschedule${op}`
-        //return `/jobschedule${op}`;        
+        //return `http://localhost:5000/api/jobschedule${op}`
+        return `/jobschedule${op}`;        
       },
       getSchedData() {
         this.$axios({
