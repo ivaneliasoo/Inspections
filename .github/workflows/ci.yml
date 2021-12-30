@@ -1,0 +1,28 @@
+name: Docker Image CI
+
+on:
+  push:
+    tags:
+      - test-*
+      - prod-*
+jobs:
+
+  build-backend:
+
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        
+    steps:
+      - name: Extract tag name
+        id: tag
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUBTOKEN }}
+          script: |
+            return context.payload.ref.replace(/\/refs\/tags\//, '');
+            
+      - uses: actions/checkout@v2
+      - name: Build the API Docker image
+        run: docker build src/Backend --file Dockerfile --tag scb-backend:${{ steps.tag.outputs.result }}
