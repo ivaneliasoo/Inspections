@@ -28,7 +28,7 @@ jobs:
         id: split
         with:
           string: test-2021-6 #${{ env.RELEASE_VERSION }}
-          separator: -
+          separator: \-
           limit: -1
 
       - name: Build the API Docker image
