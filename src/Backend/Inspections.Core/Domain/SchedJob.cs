@@ -40,6 +40,9 @@ namespace Inspections.Core.Domain
         [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTime? lastUpdate { get; set; }
 
+        [NotMapped]
+        public bool updated { get; set; }
+
         public DateTimeOffset LastEdit { get; set; }
         
         public string LastEditUser { get; set; }

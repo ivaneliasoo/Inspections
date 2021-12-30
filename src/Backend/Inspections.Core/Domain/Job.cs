@@ -34,8 +34,11 @@ namespace Inspections.Core.Domain
 
         public string? shift { get; set; }
 
+        [NotMapped]
+        public bool updated { get; set; }
+
         [JsonConverter(typeof(JsonDateTimeConverter))]
-        public DateTime lastUpdate { get; set; }
+        public DateTime? lastUpdate { get; set; }
 
         public DateTimeOffset LastEdit { get; set; }
         

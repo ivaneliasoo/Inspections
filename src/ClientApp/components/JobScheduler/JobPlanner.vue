@@ -731,7 +731,7 @@
                           <td class="text-caption text-center font-weight-bold foreman">
                           </td>
                           <td v-for="team in teams" :key="team.id" class="text-caption font-weight-bold">
-                                <div v-for="teamMember in getSchedJob(day, team.id).teamMembers" :key="teamMember"
+                                <div v-for="teamMember in getTeamMembers(day, team.id)" :key="teamMember"
                                     style="text-align: center;">
                                     {{teamMember}}
                                 </div>
@@ -973,11 +973,10 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
   export default {
     name: 'JobPlanner',
     components: {
-        flatPickr,
-        // mainMenu
+        flatPickr
     },
     data: () => ({
-      version: 'v1.201',
+      version: 'v1.202',
       jobScheduleVisible: true,
       jobProjectionVisible: false,
       manPowerVisible: false,
@@ -1000,7 +999,6 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       teams_: [],
       jobInfo: new SchedJob(),
       editedJob: {},
-      //editedJobTable: [],
       changeJobDialog: false,
       changeJobDialog2: false,
       jobDialog: { open: false, startDate: "", endDate: "" },
@@ -1130,7 +1128,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       },
       teams() {
         this.refreshTeams;
-        const teams = this.teams_.filter( team => team.id > -1 );
+        const teams = this.teams_.filter( team => team.position > -1 );
         // console.log("teams:", JSON.stringify(teams));
         return teams;
       },
@@ -1223,8 +1221,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         if (!op) {
           op = "";
         }
-        //return `http://localhost:5000/api/jobschedule${op}`
-        return `/jobschedule${op}`;        
+        return `http://localhost:5000/api/jobschedule${op}`
+        //return `/jobschedule${op}`;        
       },
       getSchedData() {
         this.$axios({
@@ -1242,6 +1240,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         });
       },
       updateJobs(jobs) {
+        console.log("updating jobs")
+        console.log(JSON.stringify(jobs))
         this.jobs = this.jobs.filter( job => job.id > 0 );
         jobs.forEach( job => {
           const index = this.jobs.findIndex( aJob => job.id == aJob.id );
@@ -1256,22 +1256,24 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.refreshUpcomingJobs++;
       },
       updateTeams(teams) {
-        this.teams_ = this.teams_.filter( team => team.id > 0 );
+        this.teams_ = this.teams_.filter( team => team.position > -1 );
         teams.forEach( team => {
-          const index = this.teams_.findIndex( aTeam => team.id == aTeam.id );
-          if (index < 0) {
-            this.teams_.push(new Team(team));
-          } else {
-            this.teams_[index] = new Team(team);
-          }
+          this.teams_.push(new Team(team));
         });
         this.teams_.sort( (t1, t2) => t1.position - t2.position );
         this.refreshTeams++;
         this.$forceUpdate();
       },
       initJobSchedule(scheduleData) {
+        this.dayIndex = {};
+        this.deletedSchedJobs = [];
+        this.schedJobGroups = {};
+        this.jobs = [];
+        this.teams_ = [];
+
         SchedJob.groupIndex = this.schedJobGroups;
-        this.timeStamp = scheduleData.timeStamp;
+        this.lastUpdate = scheduleData.lastUpdate;
+        console.log("lastUpdate", this.lastUpdate);
         this.updateTeams(scheduleData.teams);
         this.initJobs(scheduleData.jobs);
 
@@ -1279,7 +1281,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         schedJobs.forEach( schedJob => this.updateSchedJob(schedJob) );
 
         console.log("APIVersion", scheduleData.apiVersion);
-        console.log("options", JSON.stringify(scheduleData.options));
+        // console.log("options", JSON.stringify(scheduleData.options));
         this.options = scheduleData.options;
 
         this.currentDate = date2string(new Date());
@@ -1287,7 +1289,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         if (this.options.autosaveInterval < 20) {
           this.options.autosaveInterval = 20;
         }
-        setInterval(this.save, this.options.autosaveInterval * 1000);
+        //setInterval(this.save, this.options.autosaveInterval * 1000);
       },
       updateSchedJob(schedJob) {
         var sjGroup = this.schedJobGroups[schedJob.id];
@@ -1307,22 +1309,21 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         day.jobs[schedJob.team] = sj;
         sjGroup[date] = sj;
       },
-      updateJobSchedule(updatedData) {
-        const schedJobs = updatedData.schedJobs;
+      updateSchedJobs(schedJobs) {
         schedJobs.forEach( schedJob => this.updateSchedJob(schedJob) );
-
+      },
+      updateJobSchedule(updatedData) {
+        this.updateSchedJobs(updatedData.schedJobs);
         this.updateJobs(updatedData.jobs);
         this.updateTeams(updatedData.teams);
         this.jobScheduleCount++;
       },
+      getTeamMembers(day, teamId) {
+        let sj = day.jobs[teamId];
+        return sj ? sj.teamMembers : [];
+      },
       getSchedJob(day, teamId) {
         let sj = day.jobs[teamId];
-        // if (!sj) {
-        //   sj = new SchedJob({id: 0, team: teamId,
-        //       date: day.date, shift: Shift.unasigned,
-        //       job1: "", job2: "", teamMembers : [] });
-        //       //job1: "", job2: "", teamMembers : ["-"] });
-        // }
         return sj;
       },
       getDays() {
@@ -1429,9 +1430,6 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
             const sj = day.jobs[team];
             if (sj.id != 0) {
               schedJobs[sj.getPk()] = sj;
-              // if (sj.teamMembers.length == 1 && sj.teamMembers[0] == "-") {
-              //   sj.teamMembers = [];
-              // }
             }
           }
         }
@@ -1452,8 +1450,9 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         var jobs = this.jobs;
         jobs = jobs.filter( job => !isBlank(job) );
         jobs.forEach(job => job.priority === "" ? 0 : job.priority );
+        console.log(JSON.stringify(jobs));
 
-        const data = {jobs: jobs, schedJobs: schedJobs, teams: this.teams_};
+        const data = {lastUpdate: this.lastUpdate, jobs: jobs, schedJobs: schedJobs, teams: this.teams_};
 
         var self = this;
         this.$axios({
@@ -1463,7 +1462,9 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           crossDomain: true
         })
         .then(function (response) {
-          self.updateJobSchedule(response.data);
+          self.initJobSchedule(response.data);
+          self.initDayWindow();
+          //self.updateJobSchedule(response.data);
         })
         .catch(function (error) {
           console.log(error);
@@ -1541,7 +1542,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         if (currSchedJob.shift == Shift.unasigned) {
           const shift = foreman === "Store" ? Shift.unasigned : Shift.day;
           const schedJob = new SchedJob({id: 0, team: teamId,
-              date: date, shift: shift, job1: job.scope, job2: job.scope });
+              date: date, shift: shift, job1: job.scope, job2: job.scope, lastUpdate: null });
           this.copyOneToOne(schedJob, -1, date, teamId, true);
           const currentDate = date2string(new Date());
           console.log("datediff", datediff(currentDate, date));
@@ -1576,7 +1577,6 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
 
         const srcDate = this.jobSchedule[sourceIndex].date;
         const targetDate = this.jobSchedule[targetIndex].date;
-
 
         if ((srcData.teamIndex === teamIndex) && (srcDate === targetDate)) {
           // source and target are the same cell
@@ -1736,7 +1736,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           const schedJob = new SchedJob(this.dayIndex[source.startDate].jobs[source.team]);
           schedJob.id = newId;
           schedJob.date = d;
-          schedJob.team = target.team
+          schedJob.team = target.team;
+          schedJob.lastUpdate = null;
           day.jobs[target.team] = schedJob;
 
           newGroup[d] = schedJob;
@@ -2156,7 +2157,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       saveTeam() {
         const team = this.teamDialog.editedTeam;
         if (this.teamDialog.oper === "new") {
-          this.teams_.splice(team.position-1, 0, team);
+          this.teams_.splice(team.position, 0, team);
           this.copyTeamMembers(this.teamMembers, team.teamMembers);
         } else {
           team.position -= 0.5;
@@ -2178,7 +2179,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         const teamId = this.teamDialog.editedTeam.id;
         const team = this.teams_.find( t => t.id == teamId );
         if (team) {
-          team.id = -team.id;
+          team.position = -1;
         }
         this.refreshTeams++;
         this.jobScheduleCount++;
@@ -2208,6 +2209,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       editOptions() {
         console.log("open options dialog")
         this.showOptionsDialog = true;
+        console.log(JSON.stringify(this.schedJobGroups))
       }
     }
   }
