@@ -1230,7 +1230,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           method: "GET",
           crossDomain: true
         }).then(response => {
-          this.initJobSchedule(response.data);
+          this.initJobSchedule(response.data, true);
         })
       },
       initJobs(jobs) {
@@ -1238,22 +1238,6 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           const job = new Job(ajob);
           this.jobs.push(job);
         });
-      },
-      updateJobs(jobs) {
-        console.log("updating jobs")
-        console.log(JSON.stringify(jobs))
-        this.jobs = this.jobs.filter( job => job.id > 0 );
-        jobs.forEach( job => {
-          const index = this.jobs.findIndex( aJob => job.id == aJob.id );
-          if (index < 0) {
-            // add new job
-            this.jobs.push(new Job(job));
-          } else {
-            this.jobs[index] = new Job(job);
-          }
-        });
-        this.refreshConfirmedJobs++;
-        this.refreshUpcomingJobs++;
       },
       updateTeams(teams) {
         this.teams_ = this.teams_.filter( team => team.position > -1 );
@@ -1263,33 +1247,6 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.teams_.sort( (t1, t2) => t1.position - t2.position );
         this.refreshTeams++;
         this.$forceUpdate();
-      },
-      initJobSchedule(scheduleData) {
-        this.dayIndex = {};
-        this.deletedSchedJobs = [];
-        this.schedJobGroups = {};
-        this.jobs = [];
-        this.teams_ = [];
-
-        SchedJob.groupIndex = this.schedJobGroups;
-        this.lastUpdate = scheduleData.lastUpdate;
-        console.log("lastUpdate", this.lastUpdate);
-        this.updateTeams(scheduleData.teams);
-        this.initJobs(scheduleData.jobs);
-
-        const schedJobs = scheduleData.schedJobs;
-        schedJobs.forEach( schedJob => this.updateSchedJob(schedJob) );
-
-        console.log("APIVersion", scheduleData.apiVersion);
-        // console.log("options", JSON.stringify(scheduleData.options));
-        this.options = scheduleData.options;
-
-        this.currentDate = date2string(new Date());
-
-        if (this.options.autosaveInterval < 20) {
-          this.options.autosaveInterval = 20;
-        }
-        //setInterval(this.save, this.options.autosaveInterval * 1000);
       },
       updateSchedJob(schedJob) {
         var sjGroup = this.schedJobGroups[schedJob.id];
@@ -1309,15 +1266,45 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         day.jobs[schedJob.team] = sj;
         sjGroup[date] = sj;
       },
-      updateSchedJobs(schedJobs) {
+      initJobSchedule(scheduleData, updateOtions) {
+        this.dayIndex = {};
+        this.deletedSchedJobs = [];
+        this.schedJobGroups = {};
+        this.jobs = [];
+        this.teams_ = [];
+
+        SchedJob.groupIndex = this.schedJobGroups;
+        this.updateTeams(scheduleData.teams);
+        this.initJobs(scheduleData.jobs);
+        const schedJobs = scheduleData.schedJobs;
         schedJobs.forEach( schedJob => this.updateSchedJob(schedJob) );
+
+        this.lastUpdate = scheduleData.lastUpdate;
+        // console.log("lastUpdate", this.lastUpdate);
+
+        if (updateOtions) {
+          console.log("APIVersion", scheduleData.apiVersion);
+          this.options = scheduleData.options;
+          this.currentDate = date2string(new Date());
+        }
+
+        if (this.options.autosaveInterval < 20) {
+          this.options.autosaveInterval = 20;
+        }
+
+        if (this.options.autosaveInterval) {
+          setTimeout(this.save, this.options.autosaveInterval * 1000);
+        }        
       },
-      updateJobSchedule(updatedData) {
-        this.updateSchedJobs(updatedData.schedJobs);
-        this.updateJobs(updatedData.jobs);
-        this.updateTeams(updatedData.teams);
-        this.jobScheduleCount++;
-      },
+      // updateSchedJobs(schedJobs) {
+      //   schedJobs.forEach( schedJob => this.updateSchedJob(schedJob) );
+      // },
+      // updateJobSchedule(updatedData) {
+      //   this.updateSchedJobs(updatedData.schedJobs);
+      //   this.updateJobs(updatedData.jobs);
+      //   this.updateTeams(updatedData.teams);
+      //   this.jobScheduleCount++;
+      // },
       getTeamMembers(day, teamId) {
         let sj = day.jobs[teamId];
         return sj ? sj.teamMembers : [];
@@ -1450,7 +1437,6 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         var jobs = this.jobs;
         jobs = jobs.filter( job => !isBlank(job) );
         jobs.forEach(job => job.priority === "" ? 0 : job.priority );
-        console.log(JSON.stringify(jobs));
 
         const data = {lastUpdate: this.lastUpdate, jobs: jobs, schedJobs: schedJobs, teams: this.teams_};
 
@@ -1462,9 +1448,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           crossDomain: true
         })
         .then(function (response) {
-          self.initJobSchedule(response.data);
+          self.initJobSchedule(response.data, false);
           self.initDayWindow();
-          //self.updateJobSchedule(response.data);
         })
         .catch(function (error) {
           console.log(error);
@@ -1472,6 +1457,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       },
       saveOptions() {
         const data = this.options;
+        var self = this;
         this.$axios({
           url: this.endpoint("/options"),
           method: "PUT",
@@ -1479,7 +1465,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           crossDomain: true
         })
         .then(function (response) {
-          console.log("options updated");
+          self.showOptionsDialog = false;
         })
         .catch(function (error) {
           console.log(error);
@@ -2207,9 +2193,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.teamDialog.open = false;
       },
       editOptions() {
-        console.log("open options dialog")
         this.showOptionsDialog = true;
-        console.log(JSON.stringify(this.schedJobGroups))
       }
     }
   }
