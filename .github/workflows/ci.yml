@@ -15,6 +15,9 @@ jobs:
         os: [ubuntu-latest]
         
     steps:
+      - name: Get the tag name
+          run: echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+          
       - uses: actions/checkout@v2
       - name: Build the API Docker image
-        run: docker build src/Backend --file Dockerfile --tag scb-backend:${{ github.event.release.tag_name }}
+        run: docker build src/Backend --file Dockerfile --tag scb-backend:${{ env.TAG }}
