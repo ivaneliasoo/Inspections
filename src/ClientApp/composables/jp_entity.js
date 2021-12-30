@@ -28,6 +28,7 @@ export class Job {
     #salesPerson;
     #shift;
     lastUpdate;
+    updated;
 
     constructor(job) {
         if (job === undefined) {
@@ -43,7 +44,8 @@ export class Job {
             this.duration = "";
             this.salesPerson = "";
             this.shift = "";
-            this.setlastUpdate();
+            this.lastUpdate = toIsoDate(new Date());
+            this.updated = false;
         } else {
             this.id = job.id;
             this.scope = job.scope;
@@ -58,6 +60,7 @@ export class Job {
             this.salesPerson = job.salesPerson;
             this.shift = job.shift == null ? "" : job.shift;
             this.lastUpdate = job.lastUpdate;
+            this.updated = job.updated;
         }        
     }
 
@@ -170,7 +173,7 @@ export class Job {
     }
 
     setlastUpdate() {
-        this.lastUpdate = toIsoDate(new Date())
+        this.updated = true;
     }
 
     toJSON() {
@@ -187,7 +190,8 @@ export class Job {
             duration: this.duration,
             shift: this.shift,
             salesPerson: this.salesPerson,
-            lastUpdate: this.lastUpdate
+            lastUpdate: this.lastUpdate,
+            updated: this.updated
         }
     }    
 }
@@ -214,6 +218,8 @@ export class SchedJob {
     #splitShift;
     #teamMembers;
     #excludeSunday;
+    lastUpdate;
+    updated;
 
     constructor(sj) {
         if (!sj) {
@@ -226,6 +232,8 @@ export class SchedJob {
             this.splitShift = false;
             this.teamMembers = ["-"];
             this.excludeSunday = true;
+            this.lastUpdate = null;
+            this.updated = false;
         } else {
             this.id = (sj.id) ? sj.id : 0;
             this.date = sj.date;
@@ -237,6 +245,7 @@ export class SchedJob {
             this.teamMembers = typeof sj.teamMembers === "string" ? JSON.parse(sj.teamMembers) : sj.teamMembers;
             this.excludeSunday = sj.excludeSunday;
             this.lastUpdate = sj.lastUpdate;
+            this.updated = sj.updated;
         }
     }
 
@@ -370,7 +379,7 @@ export class SchedJob {
     }
 
     setLastUpdate() {
-        this.lastUpdate = toIsoDate(new Date())
+        this.updated = true;
     }
 
     update(sj) {
@@ -387,7 +396,8 @@ export class SchedJob {
         if (this.#job2.trim() === "") {
             this.splitShift = false;
         }
-        //this.lastUpdate = sj.lastUpdate;
+        this.lastUpdate = sj.lastUpdate;
+        this.updated = sj.updated;
     }
 
     toJSON() {
@@ -403,7 +413,8 @@ export class SchedJob {
             splitShift: this.splitShift,
             teamMembers: JSON.stringify(this.teamMembers),
             excludeSunday: this.excludeSunday,
-            lastUpdate: this.lastUpdate
+            lastUpdate: this.lastUpdate,
+            updated: this.updated
         }
     }
 
@@ -450,23 +461,26 @@ export class Team {
     #vehicle;
     #position;
     #teamMembers;
+    updated;
     lastUpdate;
 
     constructor(t) {
         if (!t) {
-            this.id = 0;
-            this.foreman = "";
-            this.vehicle = "";
-            this.position = "",
-            this.teamMembers = [];
-            this.shift = "";
+            this.#id = 0;
+            this.#foreman = "";
+            this.#vehicle = "";
+            this.#position = "",
+            this.#teamMembers = [];
+            this.lastUpdate = toIsoDate(new Date())
+            this.updated = false;
         } else {
-            this.id = t.id ? t.id : 0;
-            this.foreman = t.foreman;
-            this.vehicle = t.vehicle;
-            this.position = t.position;
-            this.teamMembers = typeof t.teamMembers === "string" ? JSON.parse(t.teamMembers) : t.teamMembers;
+            this.#id = t.id ? t.id : 0;
+            this.#foreman = t.foreman;
+            this.#vehicle = t.vehicle;
+            this.#position = t.position;
+            this.#teamMembers = typeof t.teamMembers === "string" ? JSON.parse(t.teamMembers) : t.teamMembers;
             this.lastUpdate = t.lastUpdate;
+            this.updated = t.updated;
         }
     }        
 
@@ -516,18 +530,17 @@ export class Team {
     }
 
     update(t) {
-        this.id = t.id ? t.id : 0;
-        this.foreman = t.foreman;
-        this.vehicle = t.vehicle;
-        this.position = t.position;
-        this.teamMembers = typeof t.teamMembers === "string" ? JSON.parse(t.teamMembers) : t.teamMembers;        
-        this.setLastUpdate();
+        this.#id = t.id ? t.id : 0;
+        this.#foreman = t.foreman;
+        this.#vehicle = t.vehicle;
+        this.#position = t.position;
+        this.#teamMembers = typeof t.teamMembers === "string" ? JSON.parse(t.teamMembers) : t.teamMembers;        
+        this.lastUpdate = t.lastUpdate;
+        this.updated = t.updated;
     }
 
     setLastUpdate() {
-        // const date = new Date();
-        // this.lastUpdate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON();
-        this.lastUpdate = toIsoDate(new Date())
+        this.updated = true;
     }
 
     toJSON() {
@@ -537,7 +550,8 @@ export class Team {
             vehicle: this.vehicle,
             position: this.position,
             teamMembers: JSON.stringify(this.teamMembers),
-            lastUpdate: this.lastUpdate
+            lastUpdate: this.lastUpdate,
+            updated: this.updated
         }
     }
 }

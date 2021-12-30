@@ -21,8 +21,11 @@ namespace Inspections.Core.Domain
 
         string? status { get; set; }
 
+        [NotMapped]
+        public bool updated { get; set; }
+
         [JsonConverter(typeof(JsonDateTimeConverter))]
-        public DateTime lastUpdate { get; set; }
+        public DateTime? lastUpdate { get; set; }
 
         // [Column("team_members", TypeName = "jsonb")]
         public string? teamMembers { get; set; }
