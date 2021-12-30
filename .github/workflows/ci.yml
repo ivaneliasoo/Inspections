@@ -22,5 +22,22 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ env.RELEASE_VERSION }}
+
+      - name: Split version code
+        uses: xom9ikk/split@v1
+        id: split
+        with:
+          string: ${{ env.RELEASE_VERSION }}
+          separator: -
+          limit: -1
+
       - name: Build the API Docker image
-        run: docker build src/Backend --file Dockerfile --tag scb-backend:${{ env.RELEASE_VERSION }}
+        with:
+          release_branch: ${{ steps.split.outputs._0 }}
+          release_date: ${{ steps.split.outputs._1 }}
+          revision: ${{ steps.split.outputs._2 }}
+        run : |
+          echo $release_branch
+          echo $release_date
+          echo $revision
+          docker build src/Backend --file Dockerfile --tag scb-backend:$release_branch      
