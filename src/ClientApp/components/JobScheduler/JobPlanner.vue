@@ -1309,9 +1309,9 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           this.options.autosaveInterval = 20;
         }
 
-        // if (this.options.autosaveInterval) {
-        //   setTimeout(this.save, this.options.autosaveInterval * 1000);
-        // }        
+        if (this.options.autosaveInterval) {
+          setTimeout(this.save, this.options.autosaveInterval * 1000);
+        }        
       },
       // updateSchedJobs(schedJobs) {
       //   schedJobs.forEach( schedJob => this.updateSchedJob(schedJob) );
