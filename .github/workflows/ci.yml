@@ -40,4 +40,4 @@ jobs:
           echo $release_branch
           echo $release_date
           echo $revision
-          docker build src/Backend --file Dockerfile --tag scb-backend:$release_branch      
+          docker build src/Backend --file src/Backend/Dockerfile --tag scb-backend:$release_branch      
