@@ -4,13 +4,14 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+#RUN npm install -g yarn
 
-RUN npm run build
+RUN yarn install
+
+RUN yarn build
 
 RUN rm -rf node_modules && \
-  NODE_ENV=production npm ci \
-  --only=production
+  yarn install --production=true
 FROM node:lts
 
 WORKDIR /app
