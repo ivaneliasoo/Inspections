@@ -33,9 +33,9 @@ jobs:
 
       - name: version to env
         run: |
-          echo "BRANCH=${ steps.split.outputs._0 }" >> $GITHUB_ENV
-          echo "RELEASE_DATE=${ steps.split.outputs._1 }" >> $GITHUB_ENV
-          echo "REVISION=${ steps.split.outputs._2 }" >> $GITHUB_ENV
+          echo "BRANCH=${{ steps.split.outputs._0 }}" >> $GITHUB_ENV
+          echo "RELEASE_DATE=${{ steps.split.outputs._1 }}" >> $GITHUB_ENV
+          echo "REVISION=${{ steps.split.outputs._2 }}" >> $GITHUB_ENV
       
       - name: Build backend
         run: |
