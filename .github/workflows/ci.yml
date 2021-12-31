@@ -42,4 +42,4 @@ jobs:
           echo ${{ env.BRANCH }}
           echo ${{ env.RELEASE_DATE }}
           echo ${{ env.REVISION }}
-          docker build src/Backend --file src/Backend/Dockerfile --tag scb-backend:${{BRANCH}}
+          docker build src/Backend --file src/Backend/Dockerfile --tag scb-backend:${{env.BRANCH}}
