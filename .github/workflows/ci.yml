@@ -43,3 +43,10 @@ jobs:
           echo ${{ env.RELEASE_DATE }}
           echo ${{ env.REVISION }}
           docker build src/Backend --file src/Backend/Dockerfile --tag scb-backend:${{env.BRANCH}}
+          
+      - name: Build Frontend
+        run: |
+          echo ${{ env.BRANCH }}
+          echo ${{ env.RELEASE_DATE }}
+          echo ${{ env.REVISION }}
+          docker build src/ClientApp --file src/ClientApp/Dockerfile --tag scb-frontend:${{env.BRANCH}}
