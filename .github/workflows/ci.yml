@@ -28,7 +28,7 @@ jobs:
         id: split
         with:
           string: ${{ env.RELEASE_VERSION }}
-          separator: \-
+          separator: '-'
           limit: 3
 
       - name: version to env
@@ -42,4 +42,4 @@ jobs:
           echo ${{ env.BRANCH }}
           echo ${{ env.RELEASE_DATE }}
           echo ${{ env.REVISION }}
-          docker build src/Backend --file src/Backend/Dockerfile --tag scb-backend:$release_branch      
+          docker build src/Backend --file src/Backend/Dockerfile --tag scb-backend:${{BRANCH}}
