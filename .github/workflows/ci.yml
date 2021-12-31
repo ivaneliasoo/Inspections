@@ -27,17 +27,19 @@ jobs:
         uses: xom9ikk/split@v1
         id: split
         with:
-          string: test-2021-6 #${{ env.RELEASE_VERSION }}
+          string: ${{ env.RELEASE_VERSION }}
           separator: \-
-          limit: -1
+          limit: 3
 
-      - name: Build the API Docker image
-        with:
-          release_branch: ${{ steps.split.outputs._0 }}
-          release_date: ${{ steps.split.outputs._1 }}
-          revision: ${{ steps.split.outputs._2 }}
-        run : |
-          echo $release_branch
-          echo $release_date
-          echo $revision
+      - name: version to env
+        run: |
+          echo "BRANCH=${ steps.split.outputs._0 }" >> $GITHUB_ENV
+          echo "RELEASE_DATE=${ steps.split.outputs._1 }" >> $GITHUB_ENV
+          echo "REVISION=${ steps.split.outputs._2 }" >> $GITHUB_ENV
+      
+      - name: Build backend
+        run: |
+          echo ${{ env.BRANCH }}
+          echo ${{ env.RELEASE_DATE }}
+          echo ${{ env.REVISION }}
           docker build src/Backend --file src/Backend/Dockerfile --tag scb-backend:$release_branch      
