@@ -7,8 +7,8 @@ Inspection Reports API & Web App
 [![Build status](https://build.appcenter.ms/v0.1/apps/c0aef46b-14ea-490f-aac3-f99e4e1f6b3b/branches/dev/badge)](https://appcenter.ms)
 
 ### Try it!
-- [Test URL Backend](https://inspectionsscb.azurewebsites.net/index.html)
-- [Test URL UI](http://cseinspectionui-test.s3-website-ap-southeast-1.amazonaws.com/)
+- [Test URL Backend](http://cseinternal-test.ap-southeast-1.elasticbeanstalk.com/)
+- [Test URL UI](http://cseinternal-test.ap-southeast-1.elasticbeanstalk.com:3000/)
 
 - userName: demo
 - password: demo

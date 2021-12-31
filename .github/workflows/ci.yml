@@ -1,0 +1,45 @@
+name: Docker Image CI
+
+on:
+  push:
+    tags:
+      - test-*
+      - prod-*
+jobs:
+
+  build-backend:
+
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Test
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ env.RELEASE_VERSION }}
+
+      - name: Split version code
+        uses: xom9ikk/split@v1
+        id: split
+        with:
+          string: ${{ env.RELEASE_VERSION }}
+          separator: '-'
+          limit: 3
+
+      - name: version to env
+        run: |
+          echo "BRANCH=${{ steps.split.outputs._0 }}" >> $GITHUB_ENV
+          echo "RELEASE_DATE=${{ steps.split.outputs._1 }}" >> $GITHUB_ENV
+          echo "REVISION=${{ steps.split.outputs._2 }}" >> $GITHUB_ENV
+      
+      - name: Build backend
+        run: |
+          echo ${{ env.BRANCH }}
+          echo ${{ env.RELEASE_DATE }}
+          echo ${{ env.REVISION }}
+          docker build src/Backend --file src/Backend/Dockerfile --tag scb-backend:${{env.BRANCH}}
