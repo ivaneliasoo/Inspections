@@ -1,68 +1,63 @@
-﻿#nullable disable
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Inspections.Core;
+using Inspections.Core.Domain;
 using Inspections.Core.Domain.CheckListAggregate;
+using Inspections.Core.Domain.PrintSectionsAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Core.QueryModels;
-using Inspections.Core.Domain;
-using Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguration;
-using Inspections.Infrastructure.Data.ReportsAggregateConfiguration;
 using Inspections.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-//using Inspections.Core.Domain.PrintSectionsAggregate;
-using System.Reflection;
 
 namespace Inspections.Infrastructure.Data
 {
     public class InspectionsContext : DbContext
     {
         internal const string DEFAULT_SCHEMA = "Inspections";
-        private readonly IMediator _mediator;
-        private readonly IUserNameResolver _userNameResolver;
+        private readonly IMediator _mediator = default!;
+        private readonly IUserNameResolver _userNameResolver = default!;
 
         public InspectionsContext(DbContextOptions<InspectionsContext> options)
             : base(options)
         {
-
         }
 
-        public InspectionsContext(DbContextOptions<InspectionsContext> options, IMediator mediator, IUserNameResolver userNameResolver) : base(options)
+        public InspectionsContext(DbContextOptions<InspectionsContext> options, IMediator mediator,
+            IUserNameResolver userNameResolver) : base(options)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
         }
 
-        public DbSet<Report> Reports { get; set; }
-        public DbSet<CheckList> CheckLists { get; set; }
-        public DbSet<CheckListItem> CheckListItems { get; set; }
-        public DbSet<Note> Notes { get; set; }
-        public DbSet<PhotoRecord> Photos { get; set; }
-        public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
-        public DbSet<Signature> Signatures { get; set; }
-        public DbSet<Core.Domain.User> Users { get; set; }
-        public DbSet<Core.Domain.Address> Addresses { get; set; }
-        public DbSet<Core.Domain.EMALicense> Licenses { get; set; }
-        public DbSet<OperationalReadings> OperationalReadings { get; set; }
+        public DbSet<Report> Reports { get; } = default!;
+        public DbSet<CheckList> CheckLists { get; set; } = default!;
+        public DbSet<CheckListItem> CheckListItems { get; set; } = default!;
+        public DbSet<Note> Notes { get; set; } = default!;
+        public DbSet<PhotoRecord> Photos { get; set; } = default!;
+        public DbSet<ReportConfiguration> ReportConfigurations { get; set; } = default!;
+        public DbSet<Signature> Signatures { get; set; } = default!;
+        public DbSet<User> Users { get; set; } = default!;
+        public DbSet<Address> Addresses { get; set; } = default!;
+        public DbSet<EMALicense> Licenses { get; set; } = default!;
+        public DbSet<OperationalReadings> OperationalReadings { get; set; } = default!;
+        public DbSet<PrintSection> PrintSections { get; set; } = default!;
+        public DbSet<CurrentTable> CurrentTable { get; set; } = default!;
+        public DbSet<Template> Template { get; set; } = default!;
 
-        public DbSet<Core.Domain.CurrentTable> CurrentTable { get; set; }
-        public DbSet<Core.Domain.Template> Template { get; set; }
-
-        public DbSet<Core.Domain.SchedJob> SchedJob { get; set; }
-        public DbSet<Core.Domain.Job> Job { get; set; }
-        public DbSet<Core.Domain.Team> Team { get; set; }
-        public DbSet<Core.Domain.Options> Options { get; set; }
+        public DbSet<SchedJob> SchedJob { get; set; } = default!;
+        public DbSet<Job> Job { get; set; } = default!;
+        public DbSet<Team> Team { get; set; } = default!;
+        public DbSet<Options> Options { get; set; } = default!;
 
         //Queries
-        public DbSet<ResumenCheckList> ResumenCheckLists { get; set; }
-        public DbSet<ResumenReportConfiguration> ResumenReportConfigurations { get; set; }
+        public DbSet<ResumenCheckList> ResumenCheckLists { get; set; } = default!;
+        public DbSet<ResumenReportConfiguration> ResumenReportConfigurations { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -70,13 +65,7 @@ namespace Inspections.Infrastructure.Data
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(e => !e.IsOwned()))
             {
-                if (entityType is ResumenReportConfiguration)
-                    continue;
-
-                if (entityType is Core.Domain.EMALicense)
-                    continue;
-
-                if (entityType is DateTimeRange)
+                if (entityType is ResumenReportConfiguration or EMALicense or DateTimeRange)
                     continue;
 
                 modelBuilder.Entity(entityType.Name).Property<DateTimeOffset>("LastEdit").IsRequired();
@@ -84,23 +73,25 @@ namespace Inspections.Infrastructure.Data
             }
 
 
-            modelBuilder.Entity<Core.Domain.User>()
+            modelBuilder.Entity<User>()
                 .HasKey(p => p.UserName);
 
-            modelBuilder.Entity<Core.Domain.User>()
-            .Property(p => p.UserName)
+            modelBuilder.Entity<User>()
+                .Property(p => p.UserName)
                 .HasMaxLength(20);
-            modelBuilder.Entity<Core.Domain.User>()
-            .Property(p => p.Name).IsRequired().HasMaxLength(50);
-            modelBuilder.Entity<Core.Domain.User>()
-            .Property(p => p.LastName).IsRequired().HasMaxLength(50);
+            modelBuilder.Entity<User>()
+                .Property(p => p.Name).IsRequired().HasMaxLength(50);
+            modelBuilder.Entity<User>()
+                .Property(p => p.LastName).IsRequired().HasMaxLength(50);
 
 
-            modelBuilder.Entity<ResumenCheckList>().HasNoKey().ToTable("ResumenCheckList", m => m.ExcludeFromMigrations());
-            modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey().ToTable("ResumenReportConfiguration", m => m.ExcludeFromMigrations());
+            modelBuilder.Entity<ResumenCheckList>().HasNoKey()
+                .ToTable("ResumenCheckList", m => m.ExcludeFromMigrations());
+            modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey()
+                .ToTable("ResumenReportConfiguration", m => m.ExcludeFromMigrations());
 
             modelBuilder.Entity<SchedJob>()
-                .HasKey(sj => new { sj.team, sj.date });
+                .HasKey(sj => new {sj.team, sj.date});
 
             base.OnModelCreating(modelBuilder);
         }
@@ -108,7 +99,7 @@ namespace Inspections.Infrastructure.Data
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entity in ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+                         .Where(e => e.State is EntityState.Added or EntityState.Modified))
             {
                 if (entity.CurrentValues.EntityType.DisplayName() == "Responsible")
                     continue;
@@ -128,6 +119,7 @@ namespace Inspections.Infrastructure.Data
                 entity.Property("LastEdit").CurrentValue = DateTimeOffset.UtcNow;
                 entity.Property("LastEditUser").CurrentValue = _userNameResolver.UserName ?? "Seed";
             }
+
             return base.SaveChangesAsync(cancellationToken);
         }
 

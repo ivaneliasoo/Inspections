@@ -32,6 +32,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ZadERP.Api.Middleware;
 using Inspections.Core.Domain;
+using Inspections.Core.Interfaces.Repositories;
 
 namespace Inspections.API
 {

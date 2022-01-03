@@ -19,7 +19,7 @@ namespace Inspections.Infrastructure.Queries
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public Task<IEnumerable<Signature>> GetAllAsync(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
+        public Task<IEnumerable<Signature>> GetAllAsync(string? filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
         {
             if (inConfigurationOnly == false)
                 inConfigurationOnly = null;

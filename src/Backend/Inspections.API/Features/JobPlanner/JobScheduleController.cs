@@ -204,7 +204,7 @@ namespace Inspections.API.Features.JobPlanner
         public string? apiVersion { get; set; }
 
         public ScheduleData(DateTime? timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs, 
-                IEnumerable<Team> teams, Options opt, string APIVersion) {
+                IEnumerable<Team> teams, Options? opt, string APIVersion) {
             this.lastUpdate = timeStamp;
             this.jobs = jobs;
             this.schedJobs = schedJobs;

@@ -20,7 +20,7 @@ namespace Inspections.Infrastructure.Queries
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<ResumenCheckList>> GetByFilter(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
+        public async Task<IEnumerable<ResumenCheckList>> GetByFilter(string? filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
         {
             if (inConfigurationOnly == false)
                 inConfigurationOnly = null;

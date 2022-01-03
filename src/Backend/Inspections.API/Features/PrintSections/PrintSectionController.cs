@@ -7,6 +7,7 @@ using Inspections.API.Features.PrintSections.Commands;
 using Inspections.API.Features.PrintSections.Models;
 using Inspections.Core.Interfaces;
 using Inspections.Core.Interfaces.Queries;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
