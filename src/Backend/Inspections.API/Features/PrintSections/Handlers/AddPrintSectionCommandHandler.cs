@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.Features.PrintSections.Commands;
 using Inspections.Core.Domain.PrintSectionsAggregate;
-using Inspections.Core.Interfaces;
 using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 

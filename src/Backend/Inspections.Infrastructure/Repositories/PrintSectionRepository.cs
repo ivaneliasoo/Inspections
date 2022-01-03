@@ -1,5 +1,4 @@
 ﻿using Inspections.Core.Domain.PrintSectionsAggregate;
-using Inspections.Core.Interfaces;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

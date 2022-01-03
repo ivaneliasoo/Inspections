@@ -1,10 +1,5 @@
 ﻿using Ardalis.GuardClauses;
 using Inspections.Shared;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace Inspections.Core.Domain.ReportsAggregate
 {

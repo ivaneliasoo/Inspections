@@ -7,7 +7,6 @@ using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 #nullable enable

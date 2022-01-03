@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MediatR;
-using Inspections.Core.Domain.ReportsAggregate;
+﻿using MediatR;
 using System;
 
 namespace Inspections.API.Features.Inspections.Commands

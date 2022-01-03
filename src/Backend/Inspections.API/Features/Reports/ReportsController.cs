@@ -7,12 +7,10 @@ using Ardalis.GuardClauses;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Inspections.API.ApplicationServices;
-using Inspections.API.Extensions;
 using Inspections.API.Features.Inspections.Commands;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Features.Reports.Models;
 using Inspections.API.Models.Configuration;
-using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces;
 using Inspections.Core.QueryModels;
@@ -23,9 +21,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
-using Microsoft.Playwright;
-using PuppeteerSharp;
-using PuppeteerSharp.Media;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

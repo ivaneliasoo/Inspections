@@ -1,11 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
-using Inspections.Core.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Inspections.Core
 {

@@ -1,7 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace Inspections.Shared
 {

@@ -1,10 +1,6 @@
 ﻿using Ardalis.GuardClauses;
-using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Inspections.API.Features.Signatures.Models
 {

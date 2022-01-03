@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Inspections.Core.Domain.ReportsAggregate;
-using Inspections.Shared;
+﻿using Inspections.Shared;
 
 namespace Inspections.Core.Domain
 {

@@ -7,7 +7,6 @@ using Inspections.API.Features.Signatures.Commands;
 using Inspections.API.Features.Signatures.Models;
 using Inspections.Core.Interfaces;
 using Inspections.Core.Interfaces.Queries;
-using Inspections.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

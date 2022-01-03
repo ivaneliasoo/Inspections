@@ -1,9 +1,5 @@
-﻿using Inspections.Core.Domain.ReportConfigurationAggregate;
-using Inspections.Core.Domain.ReportsAggregate;
-using Inspections.Shared;
+﻿using Inspections.Shared;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Inspections.Core.Domain.SignaturesAggregate
 {

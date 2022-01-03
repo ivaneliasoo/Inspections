@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Inspections.Core.Domain.PrintSectionsAggregate;
+﻿using Inspections.Core.Domain.PrintSectionsAggregate;
 using MediatR;
 
 namespace Inspections.API.Features.PrintSections.Commands

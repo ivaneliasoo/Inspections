@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Inspections.Core.QueryModels
+﻿namespace Inspections.Core.QueryModels
 {
     public class ResumenCheckList
     {

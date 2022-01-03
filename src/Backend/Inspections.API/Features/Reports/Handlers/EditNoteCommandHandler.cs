@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using Ardalis.GuardClauses;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.Core.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Inspections.API.Features.Reports.Handlers
 {

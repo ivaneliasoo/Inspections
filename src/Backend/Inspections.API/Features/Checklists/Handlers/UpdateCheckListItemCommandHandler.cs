@@ -1,13 +1,8 @@
 ﻿using Ardalis.GuardClauses;
 using Inspections.API.Features.Checklists.Commands;
-using Inspections.API.Features.Checklists.Mapping;
-using Inspections.API.Features.Checklists.Models;
-using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Interfaces;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

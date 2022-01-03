@@ -1,10 +1,7 @@
 ﻿using Inspections.Core.Domain.CheckListAggregate;
-using Inspections.Core.Domain.PrintSectionsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Shared;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Inspections.Core.Domain.ReportConfigurationAggregate
 {
