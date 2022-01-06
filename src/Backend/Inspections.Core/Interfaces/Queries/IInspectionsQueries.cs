@@ -1,4 +1,4 @@
-﻿namespace Inspections.API.Features.Inspections.Queries
+﻿namespace Inspections.Core.Interfaces.Queries
 {
     public class IInspectionsQueries
     {

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace ZadERP.Api.Middleware
+namespace Inspections.API
 {
     /// <summary>
     /// Errors handling Middleware

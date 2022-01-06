@@ -3,12 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.ApplicationServices;
-using Inspections.API.Features.Inspections.Commands;
+using Inspections.API.Features.Reports.Commands;
 using Inspections.Core;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
+using Inspections.Infrastructure.ApplicationServices;
 using MediatR;
 
-namespace Inspections.API.Features.Inspections.Handlers
+namespace Inspections.API.Features.Reports.Handlers
 {
     public class CreateInspectionHandler : IRequestHandler<CreateReportCommand, int>
     {

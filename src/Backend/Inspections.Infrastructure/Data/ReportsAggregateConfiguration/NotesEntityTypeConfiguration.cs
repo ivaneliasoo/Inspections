@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguration
+namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
 {
     public class NotesEntityTypeConfiguration : IEntityTypeConfiguration<Note>
     {

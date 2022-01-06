@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.Features.Checklists.Commands;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
 namespace Inspections.API.Features.Checklists.Handlers

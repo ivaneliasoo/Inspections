@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.Features.Reports.Commands;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using MediatR;
 

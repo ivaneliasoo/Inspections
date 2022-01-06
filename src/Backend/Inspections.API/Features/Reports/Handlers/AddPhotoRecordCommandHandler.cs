@@ -7,7 +7,7 @@ using Ardalis.GuardClauses;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.Core.Domain.ReportsAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
 namespace Inspections.API.Features.Reports.Handlers

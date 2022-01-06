@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.Features.Signatures.Commands;
 using Inspections.Core.Domain.SignaturesAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
 namespace Inspections.API.Features.Signatures.Handlers

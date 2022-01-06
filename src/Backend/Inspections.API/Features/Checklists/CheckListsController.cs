@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.Features.Checklists.Commands;
-using Inspections.Core.Interfaces;
 using Inspections.Core.Interfaces.Queries;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

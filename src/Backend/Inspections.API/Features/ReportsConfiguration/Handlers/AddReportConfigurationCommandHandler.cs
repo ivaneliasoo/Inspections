@@ -8,7 +8,7 @@ using Inspections.API.Features.ReportsConfiguration.Commands;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

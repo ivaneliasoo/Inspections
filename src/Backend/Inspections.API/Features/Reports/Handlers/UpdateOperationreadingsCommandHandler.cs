@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.Core.Domain.ReportsAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

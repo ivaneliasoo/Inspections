@@ -10,11 +10,10 @@ using Amazon.S3;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Users.Services;
 using Inspections.API.Models.Configuration;
-using Inspections.Core;
 using Inspections.Core.Domain;
-using Inspections.Core.Interfaces;
 using Inspections.Core.Interfaces.Queries;
 using Inspections.Core.Interfaces.Repositories;
+using Inspections.Infrastructure.ApplicationServices;
 using Inspections.Infrastructure.Data;
 using Inspections.Infrastructure.Queries;
 using Inspections.Infrastructure.Repositories;
@@ -30,7 +29,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using ZadERP.Api.Middleware;
 
 namespace Inspections.API
 {

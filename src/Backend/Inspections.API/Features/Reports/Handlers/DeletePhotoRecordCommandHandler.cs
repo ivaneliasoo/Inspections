@@ -6,7 +6,7 @@ using Ardalis.GuardClauses;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Models.Configuration;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 using Microsoft.Extensions.Options;
 

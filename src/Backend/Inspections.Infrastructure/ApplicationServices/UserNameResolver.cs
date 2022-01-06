@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 
-namespace Inspections.Core
+namespace Inspections.Infrastructure.ApplicationServices
 {
     public class UserNameResolver : IUserNameResolver
     {

@@ -2,7 +2,7 @@
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using MediatR;
 
-namespace Inspections.API.Features.Inspections.Commands
+namespace Inspections.API.Features.Reports.Commands
 {
     public class CreateReportCommand : IRequest<int>
     {

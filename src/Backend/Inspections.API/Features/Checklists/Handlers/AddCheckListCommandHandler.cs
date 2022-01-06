@@ -5,7 +5,7 @@ using Ardalis.GuardClauses;
 using Inspections.API.Features.Checklists.Commands;
 using Inspections.API.Features.Checklists.Mapping;
 using Inspections.Core.Domain.CheckListAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
 namespace Inspections.API.Features.Checklists.Handlers

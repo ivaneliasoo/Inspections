@@ -4,7 +4,7 @@ using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.QueryModels;
 using Inspections.Shared;
 
-namespace Inspections.Core.Interfaces
+namespace Inspections.Core.Interfaces.Repositories
 {
     public interface IReportsRepository : IAsyncRepository<Report>
     {
