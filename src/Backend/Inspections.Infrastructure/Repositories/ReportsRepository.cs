@@ -80,7 +80,7 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<IEnumerable<ReportListItem>> GetAll(string? filter, bool? closed, bool myReports, string orderBy = "date", bool descending = true)
         {
-            var query = ApplyOrdering(_context.Reports, orderBy, descending);
+            var query = ApplyOrdering(_context.Set<Report>(), orderBy, descending);
 
             query
             .Include(p => p.PhotoRecords)
