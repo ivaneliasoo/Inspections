@@ -1,6 +1,5 @@
 ﻿using System.Data.Common;
 using Inspections.Infrastructure.Data;
-using IOSoft.HelpDesk.Infrastructure.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,7 +9,7 @@ namespace Inspections.API
 {
     public class Program
     {
-        private const string DATABASE_ERROR_MESSAGE = "can't seed, error connecting to database";
+        private const string DatabaseErrorMessage = "can't seed, error connecting to database";
 
         public static void Main(string[] args)
         {
@@ -28,11 +27,11 @@ namespace Inspections.API
                 catch (DbException ex)
                 {
                     var logger = loggerFactory.CreateLogger<Program>();
-                    logger.LogError(ex, DATABASE_ERROR_MESSAGE);
+                    logger.LogError(ex, DatabaseErrorMessage);
                 }
             }
 
-           host.Run();
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -47,5 +46,4 @@ namespace Inspections.API
                     .UseStartup<Startup>();
                 });
     }
-    // "Inspections": "Server=127.0.0.1;Port=5432;Database=ReportsApp;User Id=appuser;Password=123456"
 }

@@ -1,18 +1,17 @@
-﻿using Inspections.Core.Domain;
-using Inspections.Core.Domain.CheckListAggregate;
-using Inspections.Core.Domain.ReportConfigurationAggregate;
-using Inspections.Core.Domain.SignaturesAggregate;
-using Inspections.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Inspections.Core.Domain;
+using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.PrintSectionsAggregate;
+using Inspections.Core.Domain.ReportConfigurationAggregate;
+using Inspections.Core.Domain.SignaturesAggregate;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace IOSoft.HelpDesk.Infrastructure.Data
+namespace Inspections.Infrastructure.Data
 {
     public class InspectionsSeed
     {
@@ -214,7 +213,7 @@ namespace IOSoft.HelpDesk.Infrastructure.Data
                 CheckValue.None, false, true, string.Empty));
             item4.AddCheckItems(new CheckListItem(0, "Sufficient support & mechanical protection for cables",
                 CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Labelling of circuits",
+            item4.AddCheckItems(new CheckListItem(0, "Labeling of circuits",
                 CheckValue.None, false, true, string.Empty));
             item4.AddCheckItems(new CheckListItem(0, "Sign of Corrosion",
                 CheckValue.None, false, true, string.Empty));
