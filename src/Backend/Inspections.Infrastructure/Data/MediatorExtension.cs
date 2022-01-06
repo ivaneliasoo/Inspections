@@ -1,8 +1,7 @@
-﻿using Inspections.Shared;
-
-using MediatR;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Inspections.Shared;
+using MediatR;
 
 namespace Inspections.Infrastructure.Data
 {

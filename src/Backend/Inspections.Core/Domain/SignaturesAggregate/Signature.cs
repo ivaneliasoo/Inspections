@@ -1,5 +1,5 @@
-﻿using Inspections.Shared;
-using System;
+﻿using System;
+using Inspections.Shared;
 
 namespace Inspections.Core.Domain.SignaturesAggregate
 {
@@ -51,7 +51,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
             newSignature.ReportId = null;
             newSignature.ReportConfigurationId = 0;
             newSignature.IsConfiguration = true;
-            newSignature.Responsible =  new Responsible { Name = string.Empty, Type = ResponsibleType.Inspector };
+            newSignature.Responsible = new Responsible { Name = string.Empty, Type = ResponsibleType.Inspector };
 
             return newSignature;
         }

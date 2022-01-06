@@ -1,9 +1,10 @@
-﻿using Inspections.Core.QueryModels;
-using Inspections.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Inspections.Core.Interfaces.Queries;
+using Inspections.Core.QueryModels;
+using Inspections.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inspections.Infrastructure.Queries
 {

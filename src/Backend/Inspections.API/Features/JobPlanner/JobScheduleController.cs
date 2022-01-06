@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 #nullable enable
 namespace Inspections.API.Features.JobPlanner
@@ -29,7 +29,8 @@ namespace Inspections.API.Features.JobPlanner
         }
 
         [HttpGet]
-        public ScheduleData GetJobSchedule() {
+        public ScheduleData GetJobSchedule()
+        {
             _logger.LogInformation("GET jobschedule");
             var jobs = _context.Job.ToList();
             var schedJobs = _context.SchedJob.ToList();
@@ -54,25 +55,35 @@ namespace Inspections.API.Features.JobPlanner
         public void SaveSchedJobs(IEnumerable<SchedJob> schedJobs)
         {
             _logger.LogInformation("Updating SchedJobs");
-            foreach (SchedJob sj in schedJobs) {
+            foreach (SchedJob sj in schedJobs)
+            {
                 var prev = _context.SchedJob.Where(s => s.date == sj.date && s.team == sj.team).FirstOrDefault();
-                if (prev == null) {
-                    if (sj.lastUpdate == null) {
+                if (prev == null)
+                {
+                    if (sj.lastUpdate == null)
+                    {
                         _logger.LogInformation("New scheduled job: {0:D}: {1}", sj.id, sj.job1);
                         sj.lastUpdate = DateTime.Now;
                         _context.Add(sj);
                     }
-                } else {
+                }
+                else
+                {
                     double result = 0;
-                    if (sj.lastUpdate != null) {
+                    if (sj.lastUpdate != null)
+                    {
                         result = Math.Truncate((prev.lastUpdate - sj.lastUpdate).Value.TotalSeconds);
                     }
-                    if (result <= 0) {
-                        if (sj.id < 0) {
+                    if (result <= 0)
+                    {
+                        if (sj.id < 0)
+                        {
                             _logger.LogInformation("Deleting scheduled job: {0:D}: {1}", sj.id, sj.job1);
                             sj.id = -sj.id;
                             _context.Remove(prev);
-                        } else if (sj.updated) {
+                        }
+                        else if (sj.updated)
+                        {
                             _logger.LogInformation("Updating scheduled job: {0:D}: {1}", sj.id, sj.job1);
                             prev.id = sj.id;
                             prev.team = sj.team;
@@ -86,31 +97,40 @@ namespace Inspections.API.Features.JobPlanner
                             prev.lastUpdate = DateTime.Now;
                             prev.updated = false;
                         }
-                    } 
+                    }
                 }
             }
             _context.SaveChanges();
         }
 
         [HttpPut("job")]
-        public  void SaveJobs(IEnumerable<Job> jobs)
+        public void SaveJobs(IEnumerable<Job> jobs)
         {
             //_logger.LogInformation("Saving jobs");
-            foreach (Job job in jobs) {
-                if (job.id == 0) {
+            foreach (Job job in jobs)
+            {
+                if (job.id == 0)
+                {
                     // _logger.LogInformation("New job: {0:D}: {1}", job.id, job.scope);
                     job.lastUpdate = DateTime.Now;
                     _context.Add(job);
-                } else {
+                }
+                else
+                {
                     var prev = _context.Job.Where(j => j.id == Math.Abs(job.id)).FirstOrDefault();
-                    if (prev != null) {
+                    if (prev != null)
+                    {
                         var result = Math.Truncate((prev.lastUpdate - job.lastUpdate).Value.TotalSeconds);
-                        if (result <= 0) {
-                            if (job.id < 0) {
+                        if (result <= 0)
+                        {
+                            if (job.id < 0)
+                            {
                                 // _logger.LogInformation("Deleting job: {0:D}: {1}", job.id, job.scope);
                                 job.id = -job.id;
                                 _context.Remove(prev);
-                            } else if (job.updated) {
+                            }
+                            else if (job.updated)
+                            {
                                 //_logger.LogInformation("Updating job: {0:D}: {1}", job.id, job.scope);
                                 prev.status = job.status;
                                 prev.priority = job.priority;
@@ -128,7 +148,7 @@ namespace Inspections.API.Features.JobPlanner
                             }
                         }
                     }
-                } 
+                }
             }
             _context.SaveChanges();
         }
@@ -136,24 +156,34 @@ namespace Inspections.API.Features.JobPlanner
         [HttpPut("team")]
         public void SaveTeams(IEnumerable<Team> teams)
         {
-            foreach (Team team in teams) {
-                if (team.id == 0) {
+            foreach (Team team in teams)
+            {
+                if (team.id == 0)
+                {
                     // if id == 0 this is a new team that must be inserted in the database
                     // _logger.LogInformation("New team: {0:D}: {1}", team.id, team.foreman);
                     team.lastUpdate = DateTime.Now;
                     _context.Add(team);
                     _logger.LogInformation("Adding team {0}", team.id);
-                } else {
+                }
+                else
+                {
                     var prev = _context.Team.Where(j => j.id == Math.Abs(team.id)).FirstOrDefault();
-                    if (prev == null) {
+                    if (prev == null)
+                    {
                         // This team was deleted from the database by another user
                         // Return the team with id set to -id this will cause the team to be deleted from the page 
                         prev.id = -prev.id;
-                    } else {
+                    }
+                    else
+                    {
                         var result = Math.Truncate((prev.lastUpdate - team.lastUpdate).Value.TotalSeconds);
-                        if (result > 0) {
+                        if (result > 0)
+                        {
                             // _logger.LogInformation("Team: {0:D}: {1} was updated, adding to updated list", team.id, team.foreman);
-                        } else if (team.updated) {
+                        }
+                        else if (team.updated)
+                        {
                             // _logger.LogInformation("Updating team: {0:D}: {1}", team.id, team.foreman);
                             prev.id = team.id;
                             prev.vehicle = team.vehicle;
@@ -164,7 +194,7 @@ namespace Inspections.API.Features.JobPlanner
                             prev.updated = false;
                         }
                     }
-                } 
+                }
             }
             _context.SaveChanges();
         }
@@ -202,8 +232,9 @@ namespace Inspections.API.Features.JobPlanner
 
         public string? apiVersion { get; set; }
 
-        public ScheduleData(DateTime? timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs, 
-                IEnumerable<Team> teams, Options? opt, string APIVersion) {
+        public ScheduleData(DateTime? timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs,
+                IEnumerable<Team> teams, Options? opt, string APIVersion)
+        {
             this.lastUpdate = timeStamp;
             this.jobs = jobs;
             this.schedJobs = schedJobs;
@@ -212,27 +243,31 @@ namespace Inspections.API.Features.JobPlanner
             this.apiVersion = APIVersion;
         }
 
-        public ScheduleData(DateTime? timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs, 
-                IEnumerable<Team> teams) {
+        public ScheduleData(DateTime? timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs,
+                IEnumerable<Team> teams)
+        {
             this.lastUpdate = timeStamp;
             this.jobs = jobs;
             this.schedJobs = schedJobs;
             this.teams = teams;
         }
 
-        public ScheduleData(DateTime? timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs) {
+        public ScheduleData(DateTime? timeStamp, IEnumerable<Job> jobs, IEnumerable<SchedJob> schedJobs)
+        {
             this.lastUpdate = timeStamp;
             this.jobs = jobs;
             this.schedJobs = schedJobs;
             this.options = new Options();
         }
-        
-        public ScheduleData(IEnumerable<SchedJob> schedJobs) {
+
+        public ScheduleData(IEnumerable<SchedJob> schedJobs)
+        {
             //this.jobs = jobs;
             this.schedJobs = schedJobs;
         }
 
-        public ScheduleData() {
-        }        
+        public ScheduleData()
+        {
+        }
     }
 }

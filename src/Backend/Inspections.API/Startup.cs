@@ -11,8 +11,10 @@ using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Users.Services;
 using Inspections.API.Models.Configuration;
 using Inspections.Core;
+using Inspections.Core.Domain;
 using Inspections.Core.Interfaces;
 using Inspections.Core.Interfaces.Queries;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using Inspections.Infrastructure.Queries;
 using Inspections.Infrastructure.Repositories;
@@ -29,8 +31,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ZadERP.Api.Middleware;
-using Inspections.Core.Domain;
-using Inspections.Core.Interfaces.Repositories;
 
 namespace Inspections.API
 {
@@ -55,12 +55,12 @@ namespace Inspections.API
             services.AddAWSService<IAmazonS3>();
 
             services.AddControllers()
-                .AddJsonOptions(opt => 
+                .AddJsonOptions(opt =>
                 {
                     opt.JsonSerializerOptions.Converters.Add(new JsonDateConverter());
-			        opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
-                //.AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+            //.AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddCors();
             services.AddAuthentication(options =>
             {

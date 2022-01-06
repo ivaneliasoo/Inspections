@@ -1,6 +1,6 @@
-﻿using Inspections.API.Features.Checklists.Models;
+﻿using System.Collections.Generic;
+using Inspections.API.Features.Checklists.Models;
 using Inspections.Core.Domain.CheckListAggregate;
-using System.Collections.Generic;
 
 namespace Inspections.API.Features.Checklists.Mapping
 {

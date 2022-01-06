@@ -39,14 +39,14 @@ namespace Inspections.Infrastructure.Data
                 {
                     context.Users.Add(new User() { UserName = "developer", Password = "developer@@P@sword", Name = "Developer", LastName = "User", IsAdmin = true });
                 }
-                
+
                 if (!context.PrintSections.Any(u => u.Code == "Inspection"))
                 {
                     context.PrintSections.Add(new PrintSection() { Code = "Inspection", Content = "<h1>Inspection</h1>", Description = "Inspection" });
                 }
 
 
-                if (!context.ReportConfigurations.Any(rc =>rc.FormName == "CSE EI(R8) FORM"))
+                if (!context.ReportConfigurations.Any(rc => rc.FormName == "CSE EI(R8) FORM"))
                 {
                     context.Add(new ReportConfiguration()
                     {
@@ -72,7 +72,8 @@ namespace Inspections.Infrastructure.Data
                 }
 
                 var templateId = 1;
-                if (!context.Template.Any(t => t.id == templateId)) {
+                if (!context.Template.Any(t => t.id == templateId))
+                {
                     log.LogInformation("No template found in the database, copying template from file categories.json");
 
                     var CategoriesFilePath = Path.Combine(AppContext.BaseDirectory, "categories.json");
@@ -87,7 +88,8 @@ namespace Inspections.Infrastructure.Data
                 }
 
                 var OptionsId = 1;
-                if (!context.Options.Any(opt => opt.id == OptionsId)) {
+                if (!context.Options.Any(opt => opt.id == OptionsId))
+                {
                     Options opt = new Options();
                     opt.id = 1;
                     opt.scheduleWeeks = 1;
@@ -97,7 +99,8 @@ namespace Inspections.Infrastructure.Data
                 }
 
 
-                if (!context.Team.Any()) {
+                if (!context.Team.Any())
+                {
                     var teams = new List<Team> {
                         new Team { foreman = "Kim", position = 1, teamMembers = "[]", lastUpdate = DateTime.Now },
                         new Team { foreman = "Gan", position = 2, teamMembers = "[]", lastUpdate = DateTime.Now },

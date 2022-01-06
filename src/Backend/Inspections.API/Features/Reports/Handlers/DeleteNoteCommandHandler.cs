@@ -21,7 +21,7 @@ namespace Inspections.API.Features.Reports.Handlers
             Guard.Against.Null(request, nameof(request));
             var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
 
-            if(report != null)
+            if (report != null)
             {
                 var note = report.Notes.Where(n => n.Id == request.Id).FirstOrDefault();
                 if (note != null)

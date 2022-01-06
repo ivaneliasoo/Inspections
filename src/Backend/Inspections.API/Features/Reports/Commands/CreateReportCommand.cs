@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using Ardalis.GuardClauses;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
-using Ardalis.GuardClauses;
+using MediatR;
 
 namespace Inspections.API.Features.Inspections.Commands
 {

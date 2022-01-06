@@ -41,10 +41,11 @@ namespace Inspections.Core.Domain
         public DateTime? lastUpdate { get; set; }
 
         public DateTimeOffset LastEdit { get; set; }
-        
+
         public string LastEditUser { get; set; }
 
-        public Job(int id, string status, int priority, string scope, string tag) {
+        public Job(int id, string status, int priority, string scope, string tag)
+        {
             this.id = id;
             this.status = status;
             this.priority = priority;
@@ -61,7 +62,8 @@ namespace Inspections.Core.Domain
             this.LastEditUser = "";
         }
 
-        public Job() {
+        public Job()
+        {
             this.id = 0;
             this.status = "";
             this.priority = 0;
@@ -76,7 +78,7 @@ namespace Inspections.Core.Domain
             this.teamCount = "";
             this.salesPerson = "";
             this.LastEdit = new DateTimeOffset();
-            this.LastEditUser = "";            
+            this.LastEditUser = "";
         }
 
     }

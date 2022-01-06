@@ -1,6 +1,6 @@
-﻿using Inspections.Core.Domain.ReportConfigurationAggregate;
+﻿using System.Collections.Generic;
+using Inspections.Core.Domain.ReportConfigurationAggregate;
 using MediatR;
-using System.Collections.Generic;
 
 namespace Inspections.API.Features.ReportsConfiguration.Commands
 {
@@ -28,10 +28,10 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
         private UpdateReportConfigurationCommand() { }
 
         public int Id { get; set; }
-        public ReportType Type { get;  set; }
-        public string Title { get;  set; } = default!;
-        public string FormName { get;  set; } = default!;
-        public string RemarksLabelText { get;  set; } = default!;
+        public ReportType Type { get; set; }
+        public string Title { get; set; } = default!;
+        public string FormName { get; set; } = default!;
+        public string RemarksLabelText { get; set; } = default!;
         public List<int>? ChecksDefinition { get; }
         public List<int>? SignatureDefinitions { get; }
         public int PrintSectionId { get; } = default!;

@@ -13,30 +13,32 @@ namespace Inspections.Core.Domain
         public int id { get; set; }
 
         public int scheduleWeeks { get; set; }
-        
+
         public int autosaveInterval { get; set; }
 
         [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTime lastUpdate { get; set; }
 
         public DateTimeOffset LastEdit { get; set; }
-        
+
         public string LastEditUser { get; set; }
 
-        public Options() {
+        public Options()
+        {
             this.id = 1;
             this.scheduleWeeks = 1;
             this.autosaveInterval = 120;
             this.LastEdit = new DateTimeOffset();
-            this.LastEditUser = "";            
+            this.LastEditUser = "";
         }
 
-        public Options(int id, int scheduleWeeks, int autosaveInterval) {
+        public Options(int id, int scheduleWeeks, int autosaveInterval)
+        {
             this.id = id;
             this.scheduleWeeks = scheduleWeeks;
             this.autosaveInterval = autosaveInterval;
             this.LastEdit = new DateTimeOffset();
-            this.LastEditUser = "";            
+            this.LastEditUser = "";
         }
     }
 }

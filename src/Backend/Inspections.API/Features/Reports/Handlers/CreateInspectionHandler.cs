@@ -1,12 +1,12 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Inspections.Commands;
 using Inspections.Core;
 using Inspections.Core.Interfaces;
 using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Inspections.API.Features.Inspections.Handlers
 {

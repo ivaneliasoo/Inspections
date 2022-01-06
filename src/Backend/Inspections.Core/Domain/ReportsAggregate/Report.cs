@@ -1,10 +1,10 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Inspections.Core.Domain.ReportsAggregate
 {

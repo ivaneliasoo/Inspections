@@ -40,7 +40,7 @@ namespace Inspections.API.Features.Reports.Handlers
                 {
                     var nameAndLabel = !isLabelInHeader ? file.FileName.Split('|', StringSplitOptions.RemoveEmptyEntries) : null;
                     var name = nameAndLabel is null ? file.FileName : nameAndLabel[0];
-                    var label = nameAndLabel is null ? request.Label!.ToUpperInvariant() : nameAndLabel.Length > 1 ? nameAndLabel[1] : ""; 
+                    var label = nameAndLabel is null ? request.Label!.ToUpperInvariant() : nameAndLabel.Length > 1 ? nameAndLabel[1] : "";
                     var filePath = await _photoManager.AddPhoto(file.OpenReadStream(), request!.ReportId.ToString(CultureInfo.InvariantCulture), name, file.ContentType).ConfigureAwait(false);
                     var photo = new PhotoRecord(request.ReportId, filePath.PhotoPath, filePath.ThumbnailPath, label);
                     photo.SetMetadata(filePath.PhotoStorageId!, filePath.ThumbnailStorageId!, filePath.PhotoUrl!, filePath.ThumbnailUrl!);

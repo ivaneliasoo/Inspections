@@ -1,4 +1,9 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.API.Features.ReportsConfiguration.Commands;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
@@ -7,11 +12,6 @@ using Inspections.Core.Interfaces;
 using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Inspections.API.Features.ReportsConfiguration.Handlers
 {

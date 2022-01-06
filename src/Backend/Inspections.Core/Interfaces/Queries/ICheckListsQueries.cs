@@ -1,6 +1,6 @@
-﻿using Inspections.Core.QueryModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Inspections.Core.QueryModels;
 
 namespace Inspections.Core.Interfaces.Queries
 {

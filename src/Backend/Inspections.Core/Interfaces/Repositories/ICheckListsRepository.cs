@@ -1,6 +1,6 @@
-﻿using Inspections.Core.Domain.CheckListAggregate;
+﻿using System.Threading.Tasks;
+using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Shared;
-using System.Threading.Tasks;
 
 namespace Inspections.Core.Interfaces
 {

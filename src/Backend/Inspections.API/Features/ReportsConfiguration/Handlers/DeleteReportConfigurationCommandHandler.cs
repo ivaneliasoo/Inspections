@@ -1,11 +1,11 @@
-﻿using Ardalis.GuardClauses;
-using Inspections.API.Features.ReportsConfiguration.Commands;
-using Inspections.Core.Interfaces;
-using MediatR;
-using System;
+﻿using System;
 using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
+using Inspections.API.Features.ReportsConfiguration.Commands;
+using Inspections.Core.Interfaces;
+using MediatR;
 
 namespace Inspections.API.Features.ReportsConfiguration.Handlers
 {

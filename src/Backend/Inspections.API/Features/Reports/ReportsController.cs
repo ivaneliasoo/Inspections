@@ -302,9 +302,9 @@ namespace Inspections.API.Features.Inspections
             var token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "", StringComparison.InvariantCultureIgnoreCase);
             //var exportData = new ExportDTO($"http://localhost:3000/client/print?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
             var exportData = new ExportDTO($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Host}:{Environment.GetEnvironmentVariable("UIPORT")}/print?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
-            var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData)).ConfigureAwait(false);   
+            var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData)).ConfigureAwait(false);
             return File(fileContent, "application/pdf", "prueba.pdf");
-            
+
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using Inspections.Core.Domain.CheckListAggregate;
+﻿using System.Runtime.Serialization;
+using Inspections.Core.Domain.CheckListAggregate;
 using MediatR;
-using System.Runtime.Serialization;
 
 namespace Inspections.API.Features.Checklists.Commands
 {

@@ -1,12 +1,12 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.API.Features.Checklists.Commands;
 using Inspections.API.Features.Checklists.Mapping;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Interfaces;
 using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Inspections.API.Features.Checklists.Handlers
 {
@@ -26,7 +26,7 @@ namespace Inspections.API.Features.Checklists.Handlers
             var checkList = new CheckList(request.Text,
                                           request.Annotation,
                                           request.IsConfiguration);
-            if(request.Items is not null)
+            if (request.Items is not null)
                 checkList.AddCheckItems(CheckListMappingHelper.MapItems(request.Items));
 
             var result = await _checkListsRepository.AddAsync(checkList).ConfigureAwait(false);

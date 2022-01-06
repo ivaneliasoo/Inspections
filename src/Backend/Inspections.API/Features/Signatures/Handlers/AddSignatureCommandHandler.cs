@@ -1,11 +1,11 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.API.Features.Signatures.Commands;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Core.Interfaces;
 using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Inspections.API.Features.Signatures.Handlers
 {
@@ -25,13 +25,13 @@ namespace Inspections.API.Features.Signatures.Handlers
             {
                 Title = request.Title,
                 Annotation = request.Annotation,
-                Remarks= request.Remarks,
-                Designation= request.Designation,
+                Remarks = request.Remarks,
+                Designation = request.Designation,
                 Date = request.Date,
-                Principal =  request.Principal,
-                Responsible = new Responsible() { Name= request.ResponsibleName, Type= request.Title.Contains("LEW", StringComparison.OrdinalIgnoreCase) ? ResponsibleType.LEW : request.ResponsableType },
-                IsConfiguration = request.ReportConfigurationId>0,
-                ReportConfigurationId = request.ReportConfigurationId == 0 ? default:request.ReportConfigurationId,
+                Principal = request.Principal,
+                Responsible = new Responsible() { Name = request.ResponsibleName, Type = request.Title.Contains("LEW", StringComparison.OrdinalIgnoreCase) ? ResponsibleType.LEW : request.ResponsableType },
+                IsConfiguration = request.ReportConfigurationId > 0,
+                ReportConfigurationId = request.ReportConfigurationId == 0 ? default : request.ReportConfigurationId,
                 ReportId = request.ReportId == 0 ? default : request.ReportId
             };
 

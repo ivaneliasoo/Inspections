@@ -1,6 +1,6 @@
-﻿using Inspections.Core.Domain.SignaturesAggregate;
+﻿using System;
+using Inspections.Core.Domain.SignaturesAggregate;
 using MediatR;
-using System;
 
 namespace Inspections.API.Features.Signatures.Commands
 {
@@ -42,7 +42,7 @@ namespace Inspections.API.Features.Signatures.Commands
         public DateTimeOffset Date { get; set; }
         public bool Principal { get; set; }
         public bool IsConfiguration { get; set; }
-        public int? ReportId{ get; set; }
+        public int? ReportId { get; set; }
         public int? ReportConfigurationId { get; set; }
         public short Order { get; }
     }

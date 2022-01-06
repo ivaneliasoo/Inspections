@@ -1,9 +1,9 @@
-﻿using Ardalis.GuardClauses;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Shared;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Inspections.Core.Domain.CheckListAggregate
 {
@@ -34,7 +34,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
 
         public void Edit(string text, string? annotation, bool isConfiguration)
         {
-            
+
             Text = text;
             Annotation = annotation;
             IsConfiguration = isConfiguration;
@@ -52,21 +52,21 @@ namespace Inspections.Core.Domain.CheckListAggregate
         public void AddCheckItems(CheckListItem checkListItem)
         {
             Guard.Against.Null(checkListItem, nameof(checkListItem));
-            
+
             _checks.Add(checkListItem);
         }
 
         public void AddCheckItems(IEnumerable<CheckListItem> checkListItem)
         {
             Guard.Against.Null(checkListItem, nameof(checkListItem));
-            
+
             _checks.AddRange(checkListItem);
         }
 
         public void RemoveCheckItems(CheckListItem checkListItem)
         {
             Guard.Against.Null(checkListItem, nameof(checkListItem));
-            
+
             _checks.Remove(checkListItem);
         }
 
@@ -79,7 +79,7 @@ namespace Inspections.Core.Domain.CheckListAggregate
 
             foreach (var check in Checks)
             {
-                newCheckList.AddCheckItems(new CheckListItem(0, check.Text, CheckValue.NotApplicable,check.Editable, check.Required, check.Remarks));
+                newCheckList.AddCheckItems(new CheckListItem(0, check.Text, CheckValue.NotApplicable, check.Editable, check.Required, check.Remarks));
             }
             return newCheckList;
         }

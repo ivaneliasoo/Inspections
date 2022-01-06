@@ -1,16 +1,16 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.API.Features.ReportsConfiguration.Commands;
 using Inspections.API.Features.ReportsConfiguration.Model;
 using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Queries;
 using Inspections.Core.QueryModels;
-using Inspections.Infrastructure.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Inspections.API.Features.ReportsConfiguration
 {

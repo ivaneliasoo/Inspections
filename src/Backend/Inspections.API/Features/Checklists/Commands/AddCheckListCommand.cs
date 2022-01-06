@@ -1,7 +1,7 @@
-﻿using Inspections.API.Features.Checklists.Models;
-using MediatR;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Inspections.API.Features.Checklists.Models;
+using MediatR;
 
 namespace Inspections.API.Features.Checklists.Commands
 {
@@ -10,7 +10,7 @@ namespace Inspections.API.Features.Checklists.Commands
     {
         [DataMember]
         public string Text { get; set; } = default!;
-        
+
         [DataMember]
         public List<CheckListItemDTO>? Items { get; set; }
         [DataMember]

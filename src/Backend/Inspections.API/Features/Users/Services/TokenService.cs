@@ -1,13 +1,13 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Ardalis.GuardClauses;
 using Inspections.API.Models.Configuration;
 using Inspections.Core.Domain;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace Inspections.API.Features.Users.Services
 {

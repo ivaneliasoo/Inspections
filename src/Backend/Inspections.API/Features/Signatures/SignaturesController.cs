@@ -36,7 +36,7 @@ namespace Inspections.API.Features.Signatures
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> CreateSignature([FromBody]AddSignatureCommand signature)
+        public async Task<IActionResult> CreateSignature([FromBody] AddSignatureCommand signature)
         {
             if (await _mediator.Send(signature).ConfigureAwait(false))
                 return Ok();

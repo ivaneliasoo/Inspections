@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Inspections.Infrastructure.Queries
 {
- 
+
     public class PrintSectionsQueries : IPrintSectionsQueries
     {
         private readonly InspectionsContext _context;
@@ -21,7 +21,7 @@ namespace Inspections.Infrastructure.Queries
 
         public Task<IEnumerable<PrintSection>> GetAllAsync(string filter)
         {
-       
+
             return Task.FromResult(_context.Set<PrintSection>()
                                             .Where(s => EF.Functions.Like(s.Code, $"%{filter}%"))
                                             .AsEnumerable());

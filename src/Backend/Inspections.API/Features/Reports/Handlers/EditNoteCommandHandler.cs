@@ -32,7 +32,7 @@ namespace Inspections.API.Features.Reports.Handlers
 
                 report.AddNote(note);
             }
-                
+
             await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
             return true;
         }

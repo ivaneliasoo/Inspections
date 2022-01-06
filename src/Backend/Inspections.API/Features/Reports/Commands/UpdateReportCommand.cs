@@ -1,16 +1,16 @@
-﻿using MediatR;
-using System;
+﻿using System;
+using MediatR;
 
 namespace Inspections.API.Features.Inspections.Commands
 {
     public class UpdateReportCommand : IRequest<bool>
     {
         public int Id { get; set; }
-        public string Name { get;  set; } = default!;
+        public string Name { get; set; } = default!;
         public string Address { get; set; } = default!;
         public string LicenseNumber { get; set; } = default!;
-        public DateTimeOffset Date { get;  set; }
-        public bool IsClosed { get;  set; }
+        public DateTimeOffset Date { get; set; }
+        public bool IsClosed { get; set; }
         internal UpdateReportCommand()
         {
 

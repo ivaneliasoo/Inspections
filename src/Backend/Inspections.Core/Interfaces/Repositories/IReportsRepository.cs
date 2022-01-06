@@ -1,8 +1,8 @@
-﻿using Inspections.Core.Domain.ReportsAggregate;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.QueryModels;
 using Inspections.Shared;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Inspections.Core.Interfaces
 {

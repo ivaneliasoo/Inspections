@@ -1,11 +1,11 @@
-﻿using Inspections.Core.Domain.PrintSectionsAggregate;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Inspections.Core.Domain.PrintSectionsAggregate;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Inspections.Core.Interfaces.Repositories;
 
 namespace Inspections.Infrastructure.Repositories
 {

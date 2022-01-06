@@ -39,7 +39,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpPost("{id:int}/items", Name ="AddItemToChecklist")]
+        [HttpPost("{id:int}/items", Name = "AddItemToChecklist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -55,7 +55,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpPut("{id:int}", Name ="UpdateChecklist")]
+        [HttpPut("{id:int}", Name = "UpdateChecklist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -71,7 +71,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpPut("{id:int}/items/{idItem:int}", Name ="UpdateChecklistItem")]
+        [HttpPut("{id:int}/items/{idItem:int}", Name = "UpdateChecklistItem")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -87,7 +87,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpDelete("{id:int}", Name ="DeleteChecklist")]
+        [HttpDelete("{id:int}", Name = "DeleteChecklist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -99,7 +99,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpDelete("{id:int}/items/{idItem:int}", Name ="DeleteChecklistItem")]
+        [HttpDelete("{id:int}/items/{idItem:int}", Name = "DeleteChecklistItem")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -111,7 +111,7 @@ namespace Inspections.API.Features.Checklists
             return BadRequest();
         }
 
-        [HttpGet("{id:int}", Name ="GetCheckListbyId")]
+        [HttpGet("{id:int}", Name = "GetCheckListbyId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]

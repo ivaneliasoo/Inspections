@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
+using Inspections.API.Features.Addresses.Models;
+using Inspections.Core.Domain;
+using Inspections.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Inspections.Core.Domain;
-using Inspections.Infrastructure.Data;
-using Inspections.API.Features.Addresses.Models;
-using Ardalis.GuardClauses;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Inspections.API.Features.Addresses
 {

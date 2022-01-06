@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
+using Inspections.API.Features.Users.Models;
+using Inspections.Core.Domain;
+using Inspections.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Inspections.Core.Domain;
-using Inspections.Infrastructure.Data;
-using Inspections.API.Features.Users.Models;
-using Microsoft.AspNetCore.Authorization;
-using Ardalis.GuardClauses;
 
 namespace Inspections.API.Features.Users
 {
@@ -32,7 +32,7 @@ namespace Inspections.API.Features.Users
         }
 
         // GET: api/Users/username
-        [HttpGet("{userName}", Name ="GetUserByUserName")]
+        [HttpGet("{userName}", Name = "GetUserByUserName")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
@@ -49,7 +49,7 @@ namespace Inspections.API.Features.Users
         }
 
         // GET: api/Users/username
-        [HttpGet("active", Name ="GetActiveUser")]
+        [HttpGet("active", Name = "GetActiveUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -72,7 +72,7 @@ namespace Inspections.API.Features.Users
         }
 
         // PUT: api/Users/demo
-        [HttpPut("{userName}", Name ="UpdateUser")]
+        [HttpPut("{userName}", Name = "UpdateUser")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -117,7 +117,7 @@ namespace Inspections.API.Features.Users
         }
 
         // POST: api/Users
-        [HttpPost(Name ="AddUser")]
+        [HttpPost(Name = "AddUser")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesDefaultResponseType]
@@ -154,7 +154,7 @@ namespace Inspections.API.Features.Users
         }
 
         // DELETE: api/Users/5
-        [HttpDelete("{userName}", Name ="DeleteUser")]
+        [HttpDelete("{userName}", Name = "DeleteUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
@@ -178,7 +178,7 @@ namespace Inspections.API.Features.Users
         /// <param name="userName"></param>
         /// <param name="passwordDTO"></param>
         /// <returns></returns>
-        [HttpPatch("{userName}", Name ="ChangePassword")]
+        [HttpPatch("{userName}", Name = "ChangePassword")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]

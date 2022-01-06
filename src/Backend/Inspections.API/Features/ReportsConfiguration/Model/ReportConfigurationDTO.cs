@@ -1,8 +1,8 @@
-﻿using Ardalis.GuardClauses;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Inspections.API.Features.ReportsConfiguration.Model
 {
@@ -17,7 +17,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Model
             FormName = reportConfiguration.FormName;
             RemarksLabelText = reportConfiguration.RemarksLabelText;
             ChecksDefinition = reportConfiguration.ChecksDefinition.Select(cd => cd.Id);
-            SignatureDefinitions= reportConfiguration.SignatureDefinitions.Select(cd => cd.Id);
+            SignatureDefinitions = reportConfiguration.SignatureDefinitions.Select(cd => cd.Id);
             PrintSectionId = reportConfiguration.PrintSectionId;
 
         }

@@ -91,7 +91,7 @@ namespace Inspections.Infrastructure.Data
                 .ToTable("ResumenReportConfiguration", m => m.ExcludeFromMigrations());
 
             modelBuilder.Entity<SchedJob>()
-                .HasKey(sj => new {sj.team, sj.date});
+                .HasKey(sj => new { sj.team, sj.date });
 
             base.OnModelCreating(modelBuilder);
         }

@@ -1,6 +1,6 @@
-﻿using Inspections.Core.Domain.ReportConfigurationAggregate;
+﻿using System.Collections.Generic;
+using Inspections.Core.Domain.ReportConfigurationAggregate;
 using MediatR;
-using System.Collections.Generic;
 
 namespace Inspections.API.Features.ReportsConfiguration.Commands
 {
