@@ -28,4 +28,12 @@ namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
             builder.Ignore(p => p.DomainEvents);
         }
     }
+
+    internal class CheckListPrintingMetadataTypeConfiguration : IEntityTypeConfiguration<CheckListPrintingMetadata>
+    {
+        public void Configure(EntityTypeBuilder<CheckListPrintingMetadata> builder)
+        {
+            builder.ToSqlQuery("SELECT 1").HasNoKey();
+        }
+    }
 }
