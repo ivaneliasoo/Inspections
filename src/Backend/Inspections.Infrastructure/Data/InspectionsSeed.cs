@@ -67,7 +67,8 @@ namespace Inspections.Infrastructure.Data
                         MarginTop = "20px",
                         MarginLeft = "70px",
                         MarginRight = "70px",
-                        PrintSectionId = 1
+                        PrintSectionId = 1,
+                        CheckListMetadata = new CheckListPrintingMetadata { Display = CheckListDisplay.Numbered}
                     });
                 }
 

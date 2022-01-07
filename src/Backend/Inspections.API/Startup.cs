@@ -29,6 +29,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace Inspections.API
 {
@@ -164,6 +165,7 @@ namespace Inspections.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSerilogRequestLogging();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -208,10 +210,9 @@ namespace Inspections.API
 
         private void ConfigurarDbContextInSqlDb(IServiceCollection services)
         {
-            var logger = LoggerFactory.Create(c => c.AddConsole());
             string cn = Configuration.GetConnectionString("Inspections");
             services.AddDbContext<InspectionsContext>(c =>
-            c.UseLoggerFactory(logger).UseNpgsql(cn));
+            c.UseNpgsql(cn));
         }
 
         private static bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)

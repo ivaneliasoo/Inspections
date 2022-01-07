@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using Inspections.Core.Domain.ReportConfigurationAggregate;
-using Inspections.Infrastructure.Data.Conversions;
+﻿using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -24,16 +21,8 @@ namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
             builder.Property(p => p.MarginLeft).IsRequired();
             builder.Property(p => p.MarginRight).IsRequired();
             builder.Property(p => p.PrintSectionId).IsRequired();
-            builder.Property(p => p.CheckListMetadata).IsRequired().HasJsonConversion<CheckListPrintingMetadata>();
+            builder.Property(p => p.CheckListMetadata).HasColumnType("jsonb");
             builder.Ignore(p => p.DomainEvents);
-        }
-    }
-
-    internal class CheckListPrintingMetadataTypeConfiguration : IEntityTypeConfiguration<CheckListPrintingMetadata>
-    {
-        public void Configure(EntityTypeBuilder<CheckListPrintingMetadata> builder)
-        {
-            builder.ToSqlQuery("SELECT 1").HasNoKey();
         }
     }
 }

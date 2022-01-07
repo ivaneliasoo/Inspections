@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using MediatR;
 
@@ -13,8 +14,11 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
                                              string remarksLabelText,
                                              List<int> checksDefinition,
                                              List<int> signatureDefinitions,
-                                             int printSectionId)
+                                             int printSectionId, 
+                                             CheckListPrintingMetadata checklistMetadata)
         {
+            Guard.Against.Null(checklistMetadata, nameof(checklistMetadata));
+
             Id = id;
             Type = type;
             Title = title;

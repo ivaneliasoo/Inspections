@@ -1,10 +1,13 @@
 ﻿using System;
+using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
+#nullable disable
+
 namespace Inspections.Infrastructure.Data.Migrations
 {
-    public partial class print_sections : Migration
+    public partial class print_sections_and_checklist_metadata : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,6 +18,13 @@ namespace Inspections.Infrastructure.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "timestamp without time zone");
+
+            migrationBuilder.AddColumn<CheckListPrintingMetadata>(
+                name: "CheckListMetadata",
+                schema: "Inspections",
+                table: "ReportsConfiguration",
+                type: "jsonb",
+                nullable: false);
 
             migrationBuilder.AddColumn<int>(
                 name: "PrintSectionId",
@@ -58,6 +68,11 @@ namespace Inspections.Infrastructure.Data.Migrations
             migrationBuilder.DropTable(
                 name: "PrintSections",
                 schema: "Inspections");
+
+            migrationBuilder.DropColumn(
+                name: "CheckListMetadata",
+                schema: "Inspections",
+                table: "ReportsConfiguration");
 
             migrationBuilder.DropColumn(
                 name: "PrintSectionId",

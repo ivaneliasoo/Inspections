@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Shared;
@@ -11,7 +13,7 @@ namespace Inspections.Core.Domain.ReportConfigurationAggregate
         public string Title { get; set; } = default!;
         public string FormName { get; set; } = default!;
         public string RemarksLabelText { get; set; } = default!;
-        public CheckListPrintingMetadata CheckListMetadata { get; set; }
+        public CheckListPrintingMetadata CheckListMetadata { get; set; } = new ();
         public List<CheckList> ChecksDefinition { get; set; } = default!;
         public List<Signature> SignatureDefinitions { get; set; } = default!;
         public bool Inactive { get; set; }
@@ -24,14 +26,17 @@ namespace Inspections.Core.Domain.ReportConfigurationAggregate
         public int? PrintSectionId { get; set; } = default!;
     }
 
+    [NotMapped]
     public class CheckListPrintingMetadata
     {
-        public CheckListDisplay Display { get; set; } = CheckListDisplay.NumberedList;
+        public CheckListDisplay Display { get; set; } = CheckListDisplay.Numbered;
     }
 
     public enum CheckListDisplay
     {
-        NumberedList,
+        [Display(Name = "Numbered List")]
+        Numbered,
+        [Display(Name = "Inline List")]
         Inline
     }
 }

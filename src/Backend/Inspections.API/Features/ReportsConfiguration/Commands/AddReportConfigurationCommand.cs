@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using MediatR;
 
@@ -12,8 +13,10 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
                                              string remarksLabelText,
                                              List<int> checksDefinition,
                                              List<int> signatureDefinitions,
-                                             int printSectionId)
+                                             int printSectionId, CheckListPrintingMetadata checklistMetadata)
         {
+            Guard.Against.Null(checklistMetadata, nameof(checklistMetadata));
+            
             Type = type;
             Title = title;
             FormName = formName;
@@ -21,15 +24,20 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
             ChecksDefinition = checksDefinition;
             SignatureDefinitions = signatureDefinitions;
             PrintSectionId = printSectionId;
+            ChecklistMetadata = checklistMetadata;
         }
-        private AddReportConfigurationCommand() { }
+        private AddReportConfigurationCommand()
+        {
+            ChecklistMetadata = new CheckListPrintingMetadata();
+        }
 
-        public ReportType Type { get; set; }
-        public string Title { get; set; } = default!;
-        public string FormName { get; set; } = default!;
-        public string RemarksLabelText { get; set; } = default!;
+        public ReportType Type { get; }
+        public string Title { get; } = default!;
+        public string FormName { get; } = default!;
+        public string RemarksLabelText { get; } = default!;
         public List<int> ChecksDefinition { get; } = default!;
         public List<int> SignatureDefinitions { get; } = default!;
-        public int PrintSectionId { get; } = default!;
+        public CheckListPrintingMetadata ChecklistMetadata { get; }
+        public int PrintSectionId { get; }
     }
 }

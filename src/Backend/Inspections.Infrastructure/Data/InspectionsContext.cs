@@ -26,11 +26,13 @@ namespace Inspections.Infrastructure.Data
         public InspectionsContext(DbContextOptions<InspectionsContext> options)
             : base(options)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         public InspectionsContext(DbContextOptions<InspectionsContext> options, IMediator mediator,
             IUserNameResolver userNameResolver) : base(options)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
         }

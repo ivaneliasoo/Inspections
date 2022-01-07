@@ -1,9 +1,11 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
 using Inspections.Infrastructure.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace Inspections.API
 {
@@ -43,6 +45,10 @@ namespace Inspections.API
                     .UseUrls("http://0.0.0.0:5000")
                     //.UseUrls("https://0.0.0.0:443", "http://0.0.0.0:80", "https://0.0.0.0:5001", "http://0.0.0.0:5000")
 #endif
+                    .UseSerilog((hostContext, loggerConfiguration) =>
+                    {
+                        loggerConfiguration.ReadFrom.Configuration(hostContext.Configuration);
+                    })
                     .UseStartup<Startup>();
                 });
     }
