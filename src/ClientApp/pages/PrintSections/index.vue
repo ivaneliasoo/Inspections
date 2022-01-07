@@ -11,94 +11,84 @@
           @yes="deletePrintSection(printSection.id);"
         />
         <v-col cols="12" md="8" sm="12">
+          <v-row>
+            <v-toolbar flat color="white">
+              <v-spacer />
+              <v-switch v-model="ckEditorMode" inset label="CkEditor Mode" />
+            </v-toolbar>
+          </v-row>
           <v-card>
-            <v-tabs
-              v-model="selectedTab"
-              color="deep-indigo accent-4"
-              left
-            >
-              <v-tab id="basicTab" @click="activeAdvanced=false">
-                Basic Mode
-              </v-tab>
-              <v-tab id="advancedTab" @click="activeAdvanced=true">
-                Advanced Mode
-              </v-tab>
-              <v-tab-item>
-                <v-card height="450" style="overflow-y: scroll">
-                  <draggable>
-                    <ckeditor id="myeditor" v-model="dataCKEditor" :editor="options.editor" />
-                  </draggable>
-                </v-card>
-              </v-tab-item>
-              <v-tab-item>
-                <v-container fluid>
-                  <v-row class="pl-4">
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <ValidationProvider
-                        v-slot="{ errors }"
-                        rules="required"
-                        immediate
-                      >
-                        <v-text-field
-                          v-model="printSection.code"
-                          type="text"
-                          label="Code"
-                          :error-messages="errors"
-                        />
-                      </ValidationProvider>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-switch v-model="printSection.isMainReport" label="Is Main Report" />
-                    </v-col>
-                  </v-row>
-                  <v-row class="pl-4">
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="12"
-                    >
-                      <ValidationProvider
-                        v-slot="{ errors }"
-                        rules="required"
-                        immediate
-                      >
-                        <v-text-field
-                          v-model="printSection.description"
-                          type="text"
-                          label="Description"
-                          :error-messages="errors"
-                        />
-                      </ValidationProvider>
-                    </v-col>
-                  </v-row>
-                  <v-row class="pl-4">
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="12"
-                    >
-                      <v-textarea
-                        v-model="dataCKEditor"
-                        type="text"
-                        label="Content"
-                      />
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-tab-item>
-            </v-tabs>
+            <v-sheet v-if="ckEditorMode" height="450" style="overflow-y: scroll">
+              <draggable>
+                <ckeditor id="myeditor" v-model="dataCKEditor" :editor="options.editor" />
+              </draggable>
+            </v-sheet>
+            <v-sheet v-if="!ckEditorMode" height="450" fluid>
+              <v-row class="pl-4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    rules="required"
+                    immediate
+                  >
+                    <v-text-field
+                      v-model="printSection.code"
+                      type="text"
+                      label="Code"
+                      :error-messages="errors"
+                    />
+                  </ValidationProvider>
+                </v-col>
+                <v-col cols="2">
+                  <v-switch v-model="printSection.isMainReport" label="Is Main Report" />
+                </v-col>
+              </v-row>
+              <v-row class="pl-4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="12"
+                >
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    rules="required"
+                    immediate
+                  >
+                    <v-text-field
+                      v-model="printSection.description"
+                      type="text"
+                      label="Description"
+                      :error-messages="errors"
+                    />
+                  </ValidationProvider>
+                </v-col>
+              </v-row>
+              <v-row class="pl-4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="12"
+                >
+                  <v-textarea
+                    v-model="dataCKEditor"
+                    type="text"
+                    label="Content"
+                  />
+                </v-col>
+              </v-row>
+            </v-sheet>
             <v-card-actions>
               <v-spacer />
               <v-btn
-                v-if="activeAdvanced"
+                v-if="printSection.code != ''"
                 color="success"
                 text
                 :disabled="!valid"
-                @click="upsertPrintSection()"
+                @click="upsertPrintSection();"
               >
                 Save
               </v-btn>
@@ -112,7 +102,7 @@
           </v-card>
         </v-col>
         <v-col cols="12" md="4" sm="12">
-          <v-card height="555" style="overflow-y: scroll">
+          <v-card height="568" style="overflow-y: scroll">
             <v-toolbar
               color="indigo"
               dark
@@ -129,7 +119,7 @@
               <v-btn icon @click="getPrintSections(filter)">
                 <v-icon>mdi-magnify</v-icon>
               </v-btn>
-              <v-btn icon @click="isNew=true;reset(); dataCKEditor='';selectedTab = 'advancedTab'">
+              <v-btn icon @click="isNew=true;reset(); dataCKEditor='';ckEditorMode = false">
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </v-toolbar>
@@ -139,7 +129,7 @@
               >
                 <draggable v-model="printSections">
                   <template v-for="(item, index) in printSections">
-                    <v-list-item :key="item.code">
+                    <v-list-item :key="item.code + index">
                       <v-list-item-content @click="selectPrintSection(item); dataCKEditor = item.content;isNew = false">
                         <v-list-item-subtitle
                           class="text--primary text-left font-weight-bold"
@@ -212,7 +202,7 @@ export default defineComponent({
     const store = useStore()
     const dialogRemove = ref<boolean>(false)
     const loading = ref<boolean>(false)
-    const activeAdvanced = ref<boolean>(false)
+    const ckEditorMode = ref<boolean>(true)
     const isNew = ref<boolean>(false)
     const selectedTab = ref<string>('basicTab')
     const filter = ref<String>('')
@@ -255,11 +245,16 @@ export default defineComponent({
     const upsertPrintSection = async () => {
       loading.value = true
       printSection.value.content = dataCKEditor.value.toString()
-      if (printSection.value.id > 0) { await store.dispatch('printsection/updatePrintSection', printSection.value, { root: true }) } else {
+      if (printSection.value.id > 0) {
+        await store.dispatch('printsection/updatePrintSection', printSection.value, { root: true })
+        selectPrintSection(printSection.value)
+      } else {
         await store.dispatch('printsection/createPrintSection', printSection.value, { root: true })
         await store.dispatch('printsection/getPrintSections', filter.value, { root: true })
+        const lastElement = printSections.value[printSections.value.length - 1]
+        selectPrintSection(lastElement)
       }
-      selectPrintSection(printSection.value)
+
       loading.value = false
       isNew.value = false
     }
@@ -282,7 +277,7 @@ export default defineComponent({
       loading,
       isNew,
       filter,
-      activeAdvanced,
+      ckEditorMode,
       reset,
       selectedTab,
       selectPrintSection,

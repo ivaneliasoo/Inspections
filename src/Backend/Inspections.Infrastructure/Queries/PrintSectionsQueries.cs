@@ -24,6 +24,7 @@ namespace Inspections.Infrastructure.Queries
 
             return Task.FromResult(_context.Set<PrintSection>()
                                             .Where(s => EF.Functions.Like(s.Code, $"%{filter}%"))
+                                            .OrderBy(s => s.Id)
                                             .AsEnumerable());
         }
     }
