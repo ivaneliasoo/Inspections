@@ -142,75 +142,6 @@
         </v-col>
       </v-row>
 
-      <!-- <v-dialog v-model="jobTableDialog.open" max-width="900px">
-        <v-card>
-          <v-card-title>
-            <span class="ml-4 headline">{{jobTableDialog.title}}</span>
-            <v-spacer></v-spacer>
-            <v-btn class="mt-2 mr-5" icon @click="delJob"><v-icon>mdi-delete</v-icon></v-btn>
-          </v-card-title>
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col>
-                  <v-simple-table
-                    id="simple-job-table"
-                    class="simple-job-table"
-                    fixed-header
-                    height="600px">
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th>Job scope</th>
-                          <th>Project value</th>
-                          <th>Sales person</th>
-                          <th>Priority</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="(job, index) in editedJobTable" :key="index">
-                          <td>
-                            <input type="checkbox" v-model="job.checked">
-                          </td>
-                          <td>
-                            <textarea class="text-caption textarea" rows="2" cols="45"
-                              v-model="job.scope" @change="addToJobs(job)">
-                            </textarea>
-                          </td>
-                          <td>
-                            <input class="text-caption text-right table-input" type="text" size="10"
-                              v-model="job.value" @change="addToJobs(job)"
-                            >
-                          </td>
-                          <td>
-                            <input class="text-caption table-input" type="text" size="20"
-                              v-model="job.salesPerson" @change="addToJobs(job)"
-                            >
-                          </td>
-                          <td v-bind:style="background(job.priority)">
-                            <input class="text-caption text-right table-input" type="text" size="4"
-                              v-bind:style="background(job.priority)"
-                              v-model="job.priority"
-                              @change="markChange"
-                              @blur="sortByPriority(index)"
-                            >
-                          </td>
-                        </tr>
-                      </tbody>
-                  </v-simple-table>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="closeJobTable">
-              Close
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog> -->
-
       <v-dialog v-model="jobDialog.open" max-width="800px">
         <v-card>
           <v-card-title class="mb-0 pb-0">
@@ -251,9 +182,9 @@
                       </label>
                     </v-col>
                     <v-col cols=2 class="mb-2 pb-2 text-right">
-                      <!-- <v-btn icon small @click="flipJobs">
+                      <v-btn icon small @click="flipJobs">
                         <v-icon>mdi-orbit-variant</v-icon>
-                      </v-btn> -->
+                      </v-btn>
                       <v-btn icon small @click="addSchedJob">
                         <v-icon v-if="splitShift(jobInfo)">
                           mdi-border-all-variant
@@ -339,8 +270,14 @@
                     </v-col>
                     <v-col cols="3" class="my-0 py-0">
                       <v-checkbox
+                        v-model="jobInfo.excludeSaturday"
+                        label="Exclude saturday"
+                        hide-details
+                      ></v-checkbox>
+                      <v-checkbox 
                         v-model="jobInfo.excludeSunday"
                         label="Exclude sunday"
+                        hide-details
                       ></v-checkbox>                      
                     </v-col>
                   </v-row>
@@ -975,7 +912,7 @@ import 'flatpickr/dist/flatpickr.css';
 import 'flatpickr/dist/themes/material_blue.css';
 
 import { Job, SchedJob, Team, Shift, Selection, Clipboard, JobStatus, Day, JobState } from '../../composables/jp_entity.js';
-import { datediff, date2string, string2date, addDays, isSunday} from '../../composables/jp_util.js';
+import { datediff, date2string, string2date, addDays, isSunday, isSaturday} from '../../composables/jp_util.js';
 
   const priorityColors = [
     "tomato", "tomato", "orange", "orange", "yellow", "yellow", "lightgreen", "lightgreen", "limegreen", "limegreen"
@@ -1213,7 +1150,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.$forceUpdate();
       },
       showSchedJob(schedJob) {
-        return !(schedJob.excludeSunday && isSunday(schedJob.date));
+        return !((schedJob.excludeSaturday && isSaturday(schedJob.date)) || 
+            (schedJob.excludeSunday && isSunday(schedJob.date)) );
       },
       getDay(sday) {
         let day = this.dayIndex[sday];
@@ -1238,8 +1176,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         if (!op) {
           op = "";
         }
-        //return `http://localhost:5000/api/jobschedule${op}`
-        return `/jobschedule${op}`;        
+        return `http://localhost:5000/api/jobschedule${op}`
+        //return `/jobschedule${op}`;        
       },
       getSchedData() {
         this.$axios({
@@ -1313,15 +1251,6 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           setTimeout(this.save, this.options.autosaveInterval * 1000);
         }        
       },
-      // updateSchedJobs(schedJobs) {
-      //   schedJobs.forEach( schedJob => this.updateSchedJob(schedJob) );
-      // },
-      // updateJobSchedule(updatedData) {
-      //   this.updateSchedJobs(updatedData.schedJobs);
-      //   this.updateJobs(updatedData.jobs);
-      //   this.updateTeams(updatedData.teams);
-      //   this.jobScheduleCount++;
-      // },
       getTeamMembers(day, teamId) {
         let sj = day.jobs[teamId];
         return sj ? sj.teamMembers : [];
@@ -2066,7 +1995,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         const shift = jobInfo.shift;
         const fontSize = '0.7em'
 
-        if (jobInfo.excludeSunday && isSunday(jobInfo.date)) {
+        if ((jobInfo.excludeSunday && isSunday(jobInfo.date)) || (jobInfo.excludeSaturday && isSaturday(jobInfo.date))) {
           return `background-color:white;font-size:${fontSize};`;
         }
         if (jobInfo.id > 0) {

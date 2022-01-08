@@ -217,6 +217,7 @@ export class SchedJob {
     #shift;
     #splitShift;
     #teamMembers;
+    #excludeSaturday;
     #excludeSunday;
     lastUpdate;
     updated;
@@ -231,6 +232,7 @@ export class SchedJob {
             this.shift = "";
             this.splitShift = false;
             this.teamMembers = ["-"];
+            this.excludeSaturday = true;
             this.excludeSunday = true;
             this.lastUpdate = null;
             this.updated = false;
@@ -243,6 +245,7 @@ export class SchedJob {
             this.job1 = sj.job1;
             this.job2 = sj.job2;
             this.teamMembers = typeof sj.teamMembers === "string" ? JSON.parse(sj.teamMembers) : sj.teamMembers;
+            this.excludeSaturday = sj.excludeSaturday;
             this.excludeSunday = sj.excludeSunday;
             this.lastUpdate = sj.lastUpdate;
             this.updated = sj.updated;
@@ -369,6 +372,15 @@ export class SchedJob {
         this.setLastUpdate();
     }
 
+    get excludeSaturday() {
+        return this.#excludeSaturday;
+    }
+
+    set excludeSaturday(es) {
+        this.#excludeSaturday = es;
+        this.setLastUpdate();
+    }
+
     get excludeSunday() {
         return this.#excludeSunday;
     }
@@ -391,6 +403,7 @@ export class SchedJob {
         this.job1 = sj.job1;
         this.job2 = sj.job2;
         this.teamMembers = typeof sj.teamMembers === "string" ? JSON.parse(sj.teamMembers) : sj.teamMembers;
+        this.excludeSaturday = sj.excludeSaturday;
         this.excludeSunday = sj.excludeSunday;
 
         if (this.#job2.trim() === "") {
@@ -412,6 +425,7 @@ export class SchedJob {
             shift: this.shift,
             splitShift: this.splitShift,
             teamMembers: JSON.stringify(this.teamMembers),
+            xcludeSaturday: this.excludeSaturday,
             excludeSunday: this.excludeSunday,
             lastUpdate: this.lastUpdate,
             updated: this.updated

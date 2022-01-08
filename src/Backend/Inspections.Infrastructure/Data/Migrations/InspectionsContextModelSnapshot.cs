@@ -256,7 +256,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<string>("duration")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("lastUpdate")
+                    b.Property<DateTime?>("lastUpdate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("priority")
@@ -648,6 +648,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<bool>("excludeSaturday")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("excludeSunday")
                         .HasColumnType("boolean");
 
@@ -753,7 +756,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<string>("foreman")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("lastUpdate")
+                    b.Property<DateTime?>("lastUpdate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("position")
