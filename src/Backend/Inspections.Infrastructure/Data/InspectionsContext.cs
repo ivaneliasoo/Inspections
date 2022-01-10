@@ -37,7 +37,7 @@ namespace Inspections.Infrastructure.Data
             _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
         }
 
-        public DbSet<Report> Reports { get; } = default!;
+        public DbSet<Report> Reports { get; set;} = default!;
         public DbSet<CheckList> CheckLists { get; set; } = default!;
         public DbSet<CheckListItem> CheckListItems { get; set; } = default!;
         public DbSet<Note> Notes { get; set; } = default!;

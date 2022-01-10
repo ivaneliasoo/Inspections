@@ -31,8 +31,7 @@ namespace Inspections.API.Features.Reports.Handlers
             if (license is null)
                 throw new Exception($"Conflict. can't find License {request.LicenseNumber}");
 
-            report.Edit(reportName, request.Address, license, request.Date); ;
-
+            report.Edit(reportName, request.Address, license, request.Date);
             if (!report.IsClosed && request.IsClosed)
             {
                 report.Close();

@@ -75,7 +75,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
         }
 
         public IReadOnlyCollection<PhotoRecord> PhotoRecords => photoRecords;
-        public bool Completed => !checkList.Any(c => !c.Completed);
+        public bool Completed => checkList.All(c => c.Completed);
 
         public void AddNote(Note note)
         {
@@ -125,7 +125,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
         {
             foreach (var sign in signature)
             {
-                signatures.Add(sign.PreparteForNewReport(userName));
+                signatures.Add(sign.PrepareForNewReport(userName));
             }
         }
 

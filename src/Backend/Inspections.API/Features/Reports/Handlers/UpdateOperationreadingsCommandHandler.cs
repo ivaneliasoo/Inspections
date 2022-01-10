@@ -22,7 +22,7 @@ namespace Inspections.API.Features.Reports.Handlers
         }
         public async Task<bool> Handle(UpdateOperationalReadingsCommand request, CancellationToken cancellationToken)
         {
-            var report = await _context.Reports.AsNoTracking().Include("OperationalReadings").AsNoTracking().SingleOrDefaultAsync(r => r.Id == request.ReportId);
+            var report = await _context.Set<Report>().AsNoTracking().Include("OperationalReadings").AsNoTracking().SingleOrDefaultAsync(r => r.Id == request.ReportId);
             if (report is not null && report.OperationalReadings is not null)
             {
                 var op = new OperationalReadings()

@@ -82,7 +82,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             var result = new List<Signature>();
             foreach (Signature signature in signatures)
             {
-                result.Add(signature.PreparteForNewReportConfiguration());
+                result.Add(signature.PrepareForNewReportConfiguration());
             }
             return result;
         }

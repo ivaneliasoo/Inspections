@@ -115,7 +115,7 @@ namespace Inspections.Infrastructure.Repositories
         {
             try
             {
-                return await _context.Reports
+                return await _context.Set<Report>()
                         .Include("CheckList")
                         .Include("Signatures")
                         .Include("PhotoRecords")
@@ -132,7 +132,7 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<ReportQueryResult> GetByIdAsync(int id, bool projected)
         {
-            return await _context.Reports.AsNoTracking().Where(r => r.Id == id).ProjectTo<ReportQueryResult>(config).SingleOrDefaultAsync();
+             return await _context.Set<Report>().AsNoTracking().Where(r => r.Id == id).ProjectTo<ReportQueryResult>(config).SingleOrDefaultAsync();
         }
 
         public async Task UpdateAsync(Report entity)

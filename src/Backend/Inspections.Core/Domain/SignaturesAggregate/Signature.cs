@@ -19,7 +19,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
         public string? DrawnSign { get; set; }
         public short Order { get; set; }
 
-        public Signature PreparteForNewReport(string userName)
+        public Signature PrepareForNewReport(string userName)
         {
             Signature newSignature = (Signature)this.MemberwiseClone();
             if (newSignature is null) throw new Exception("error trying to add signatures to the report");
@@ -43,7 +43,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
             return newSignature;
         }
 
-        public Signature PreparteForNewReportConfiguration()
+        public Signature PrepareForNewReportConfiguration()
         {
             var newSignature = (Signature)this.MemberwiseClone();
             if (newSignature is null) throw new Exception("error trying to add signatures to the report");

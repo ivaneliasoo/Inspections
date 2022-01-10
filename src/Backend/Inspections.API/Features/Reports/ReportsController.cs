@@ -123,7 +123,6 @@ namespace Inspections.API.Features.Reports
             MapperConfiguration config = new MapperConfiguration(cfg =>
                                                                      {
                                                                          cfg.CreateMap<PhotoRecord, PhotoRecordResult>();
-
                                                                      });
             var photos = _context.Set<PhotoRecord>().ProjectTo<PhotoRecordResult>(config).Where(p => p.ReportId == id).ToList();
 
