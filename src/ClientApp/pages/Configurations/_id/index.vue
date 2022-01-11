@@ -110,6 +110,24 @@
           </ValidationProvider>
         </v-col>
       </v-row>
+      <h1 class="text-left">
+        Print Options
+      </h1>
+      <v-row>
+        <v-col>
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-select
+              v-model="display"
+              :items="displayOptions"
+              name="display"
+              label="Checklists Display Orientation"
+              :error-messages="errors"
+              item-text="text"
+              item-value="id"
+            />
+          </ValidationProvider>
+        </v-col>
+      </v-row>
       <v-fab-transition>
         <v-btn
           v-show="hasPendingChanges"
@@ -134,8 +152,8 @@
 import { Component, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import InnerPageMixin from '@/mixins/innerpage'
-import { ReportConfiguration, ReportType, CheckList, FilterType, UpdateReportConfigurationCommand } from '@/types'
-import { CheckListsState, actions } from '@/store/checklists'
+import { ReportConfiguration, ReportType, CheckList, FilterType, UpdateReportConfigurationCommand, ChecklistDisplayList, CheckListDisplay } from '@/types'
+import { CheckListsState } from '@/store/checklists'
 import { SignatureState } from '@/store/signatures'
 import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
 import { PrintSectionDTO } from '~/types/PrintSections/ViewModels/PrintSectionDTO'
@@ -150,6 +168,9 @@ import { PrintSectionState } from '~/store/printsection'
 export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
   defaultType: ReportType = ReportType.Inspection
   newConfig!: ReportConfiguration
+
+  display: CheckListDisplay = CheckListDisplay.Numbered
+  displayOptions = ChecklistDisplayList
 
   get checks (): CheckList[] {
     return (this.$store.state.checklists as CheckListsState)
@@ -182,12 +203,13 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
       inactive: this.newConfig.inactive,
       checksDefinition: this.newConfig.checksDefinition,
       signatureDefinitions: this.newConfig.signatureDefinitions,
-      printSectionId: this.newConfig.printSectionId
+      printSectionId: this.newConfig.printSectionId,
+      display: this.display
     }
 
     if (parseInt(self.$route.params.id) > 0) {
       await this.$store.dispatch('configurations/updateConfiguration', command, { root: true })
-        .then((resp) => {
+        .then(() => {
           this.$store.dispatch('configurations/getConfigurationById', self.$route.params.id, { root: true })
         })
     } else {
@@ -214,11 +236,13 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
     ])
 
     let newConfig: ReportConfiguration
+    let display: number
     if (id > 0) {
       const result = await store.dispatch('configurations/getConfigurationById', id, { root: true })
       newConfig = Object.assign({}, result)
+      display = parseInt(CheckListDisplay[result.checkListMetadata.display])
     } else { newConfig = { type: 0 } as ReportConfiguration }
-    return { newConfig }
+    return { newConfig, display }
   }
 }
 </script>

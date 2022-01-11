@@ -34,9 +34,7 @@ namespace Inspections.Core.Domain.ReportConfigurationAggregate
 
     public enum CheckListDisplay
     {
-        [Display(Name = "Numbered List")]
         Numbered,
-        [Display(Name = "Inline List")]
         Inline
     }
 }

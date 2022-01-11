@@ -28,9 +28,12 @@
           >Date & Time of Inspection: {{ formatedDate }}</span>
         </div>
         <PrintingReportsCheckLists
-          v-if="reportData.checkLists"
+          v-if="reportData.checkLists && configuration.checkListMetadata.display === 'Numbered'"
           :check-lists="reportData.checkLists"
         />
+        <div v-if="reportData.checkLists && configuration.checkListMetadata.display === 'Inline'">
+          {{ reportData.checkLists.map(c => c.text) }}
+        </div>
         <PrintingReportsOperationalReadings
           :readings="operationalReadings"
           :last-checks-count="lastChecksCount"
@@ -68,6 +71,15 @@ export default {
           Authorization: `bearer ${token}`
         }
       })
+
+      const configuration = await $axios.$get('reportconfiguration/1', {
+        headers: {
+          Authorization: `bearer ${token}`
+        }
+      })
+
+      console.log({ configuration })
+
       const pagesLength = Math.ceil(photoRecords.length / 8)
       const photoRecordsPages = [[]]
       let currentPage = 0
@@ -156,7 +168,8 @@ export default {
         printPhotos,
         isCompoundedPhotoRecord,
         isPrintable: false,
-        operationalReadings
+        operationalReadings,
+        configuration
       }
     }
   },
