@@ -31,6 +31,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             reportConfig.Title = request.Title;
             reportConfig.FormName = request.FormName;
             reportConfig.PrintSectionId = request.PrintSectionId;
+            reportConfig.CheckListMetadata.Display = request.Display;
             await _reportConfigurationsRepository.UpdateAsync(reportConfig).ConfigureAwait(false);
             return true;
         }

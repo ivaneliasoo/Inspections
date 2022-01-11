@@ -13,9 +13,9 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
                                              string remarksLabelText,
                                              List<int> checksDefinition,
                                              List<int> signatureDefinitions,
-                                             int printSectionId, CheckListPrintingMetadata checklistMetadata)
+                                             int printSectionId, CheckListDisplay display)
         {
-            Guard.Against.Null(checklistMetadata, nameof(checklistMetadata));
+            Guard.Against.Null(display, nameof(display));
             
             Type = type;
             Title = title;
@@ -24,11 +24,11 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
             ChecksDefinition = checksDefinition;
             SignatureDefinitions = signatureDefinitions;
             PrintSectionId = printSectionId;
-            ChecklistMetadata = checklistMetadata;
+            Display = display;
         }
         private AddReportConfigurationCommand()
         {
-            ChecklistMetadata = new CheckListPrintingMetadata();
+            Display = CheckListDisplay.Numbered;
         }
 
         public ReportType Type { get; }
@@ -37,7 +37,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
         public string RemarksLabelText { get; } = default!;
         public List<int> ChecksDefinition { get; } = default!;
         public List<int> SignatureDefinitions { get; } = default!;
-        public CheckListPrintingMetadata ChecklistMetadata { get; }
+        public CheckListDisplay Display { get; }
         public int PrintSectionId { get; }
     }
 }

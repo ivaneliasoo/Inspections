@@ -15,9 +15,9 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
                                              List<int> checksDefinition,
                                              List<int> signatureDefinitions,
                                              int printSectionId, 
-                                             CheckListPrintingMetadata checklistMetadata)
+                                             CheckListDisplay display)
         {
-            Guard.Against.Null(checklistMetadata, nameof(checklistMetadata));
+            Guard.Against.Null(display, nameof(display));
 
             Id = id;
             Type = type;
@@ -27,6 +27,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
             ChecksDefinition = checksDefinition;
             SignatureDefinitions = signatureDefinitions;
             PrintSectionId = printSectionId;
+            Display = display ;
         }
 
         private UpdateReportConfigurationCommand() { }
@@ -39,5 +40,6 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
         public List<int>? ChecksDefinition { get; }
         public List<int>? SignatureDefinitions { get; }
         public int PrintSectionId { get; } = default!;
+        public CheckListDisplay Display { get; }
     }
 }
