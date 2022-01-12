@@ -83,8 +83,10 @@ export default {
   // },
   publicRuntimeConfig: {
     axios: {
-      baseURL: `${process.env.BASE_URL}/api` || 'http://localhost:5000/api',
-      browserBaseURL: `${process.env.BASE_URL}/api` || 'http://localhost:5000/api'
+      // baseURL: `${process.env.BASE_URL}/api` || 'http://localhost:5000/api',
+      // browserBaseURL: `${process.env.BASE_URL}/api` || 'http://localhost:5000/api'
+      baseURL: 'http://localhost:5000/api',
+      browserBaseURL: 'http://localhost:5000/api'
     }
   },
   auth: {
