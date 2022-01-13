@@ -37,6 +37,13 @@ jobs:
           echo "RELEASE_DATE=${{ steps.split.outputs._1 }}" >> $GITHUB_ENV
           echo "REVISION=${{ steps.split.outputs._2 }}" >> $GITHUB_ENV
       
+      - name: Docker hub Login
+        env:
+          DOCKER_USER: ${{secrets.IOSOFT_DOCKERHUB_USER}}
+          DOCKER_PASSWORD: ${{secrets.IOSOFT_DOCKERHUB_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      
       - name: Build backend
         run: |
           echo ${{ env.BRANCH }}
@@ -50,3 +57,12 @@ jobs:
           echo ${{ env.RELEASE_DATE }}
           echo ${{ env.REVISION }}
           docker build src/ClientApp --file src/ClientApp/Dockerfile --tag scb-frontend:${{env.BRANCH}}
+      
+      - name: Publish to docker hub
+        env:
+            DOCKER_USER: ${{secrets.IOSOFT_DOCKERHUB_USER}}
+        run: |
+          echo ${{ env.BRANCH }}
+          echo ${{ env.RELEASE_DATE }}
+          echo ${{ env.REVISION }}
+          docker push $DOCKER_USER/scb-frontend
