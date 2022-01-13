@@ -7,24 +7,17 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Inspections.Infrastructure.Data.Migrations
 {
-    public partial class print_sections_and_checklist_metadata : Migration
+    public partial class printsections_checklistMetadata : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "lastUpdate",
-                table: "Team",
-                type: "timestamp without time zone",
-                nullable: true,
-                oldClrType: typeof(DateTime),
-                oldType: "timestamp without time zone");
-
             migrationBuilder.AddColumn<CheckListPrintingMetadata>(
                 name: "CheckListMetadata",
                 schema: "Inspections",
                 table: "ReportsConfiguration",
                 type: "jsonb",
-                nullable: false);
+                nullable: false,
+                defaultValueSql: "'{ \"Display\": 0 }'::jsonb");
 
             migrationBuilder.AddColumn<int>(
                 name: "PrintSectionId",
@@ -33,14 +26,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                 type: "integer",
                 nullable: false,
                 defaultValue: 0);
-
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "lastUpdate",
-                table: "Job",
-                type: "timestamp without time zone",
-                nullable: true,
-                oldClrType: typeof(DateTime),
-                oldType: "timestamp without time zone");
 
             migrationBuilder.CreateTable(
                 name: "PrintSections",
@@ -78,26 +63,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                 name: "PrintSectionId",
                 schema: "Inspections",
                 table: "ReportsConfiguration");
-
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "lastUpdate",
-                table: "Team",
-                type: "timestamp without time zone",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                oldClrType: typeof(DateTime),
-                oldType: "timestamp without time zone",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "lastUpdate",
-                table: "Job",
-                type: "timestamp without time zone",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                oldClrType: typeof(DateTime),
-                oldType: "timestamp without time zone",
-                oldNullable: true);
         }
     }
 }

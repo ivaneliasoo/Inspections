@@ -387,7 +387,9 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.Property<CheckListPrintingMetadata>("CheckListMetadata")
                         .IsRequired()
-                        .HasColumnType("jsonb");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValueSql("'{ \"Display\": 0 }'::jsonb");
 
                     b.Property<string>("Footer")
                         .IsRequired()

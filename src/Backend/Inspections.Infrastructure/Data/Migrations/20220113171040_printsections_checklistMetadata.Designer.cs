@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    [Migration("20220106212839_print_sections_and_checklist_metadata")]
-    partial class print_sections_and_checklist_metadata
+    [Migration("20220113171040_printsections_checklistMetadata")]
+    partial class printsections_checklistMetadata
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -389,7 +389,9 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.Property<CheckListPrintingMetadata>("CheckListMetadata")
                         .IsRequired()
-                        .HasColumnType("jsonb");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValueSql("'{ \"Display\": 0 }'::jsonb");
 
                     b.Property<string>("Footer")
                         .IsRequired()
@@ -716,6 +718,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
+
+                    b.Property<bool>("excludeSaturday")
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("excludeSunday")
                         .HasColumnType("boolean");

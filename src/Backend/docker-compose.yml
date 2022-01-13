@@ -1,5 +1,40 @@
-version: '3.4'
+# DEVELOPMENT TESTING
+#version: '3.4'
+#
+#services:
+#  seq:
+#    image: datalust/seq:latest
+#    ports:
+#      - "8081:80"
+#      - "5341:5341"
+#    environment:
+#      - ACCEPT_EULA=Y
+#      
+#  inspections.api:
+#    depends_on:
+#      - seq
+#    image: iosoft/scb-backend:test
+#    environment:
+#      - ConnectionStrings__Inspections=Host=172.17.0.1;Port=5432;Username=appuser;Password=123456;Database=inspections;
+#      - ClientSettings__S3BucketName=cse-inspetions-test-photos
+#      - AWS__Region=ap-southeast-1
+#      - UIPORT=3000
+#      - Serilog__MinimumLevel=Information
+#      - Serilog__Override__Microsoft.AspNetCore=Warning
+#    volumes:
+#      - ~/.aws/:/root/.aws:ro
+#    ports:
+#      - "80:80"
+#  
+#  inspections.ui:
+#    image: iosoft/scb-frontend:test
+#    environment:
+#      - BASE_URL=http://localhost
+#    ports:
+#      - "3000:3000"
+#        
 
+# TESTING ENVIRONMENT HANPIN
 services:
   seq:
     image: datalust/seq:latest
@@ -8,73 +43,44 @@ services:
       - "5341:5341"
     environment:
       - ACCEPT_EULA=Y
-      
+
   inspections.api:
     depends_on:
       - seq
     image: iosoft/scb-backend:test
     environment:
-      - ConnectionStrings__Inspections=Host=172.17.0.1;Port=5432;Username=appuser;Password=123456;Database=inspections;
+      - ConnectionStrings__Inspections=Server=aa1txvky6wbhp2y.cxzbkun1y23x.ap-southeast-1.rds.amazonaws.com;Port=5432;Database=ReportsApp;User Id=appuser;Password=JesusPa55word!
       - ClientSettings__S3BucketName=cse-inspetions-test-photos
       - AWS__Region=ap-southeast-1
-      - UIPORT=3000
       - Serilog__MinimumLevel=Information
       - Serilog__Override__Microsoft.AspNetCore=Warning
     volumes:
       - ~/.aws/:/root/.aws:ro
     ports:
       - "80:80"
-  
+
   inspections.ui:
     image: iosoft/scb-frontend:test
     environment:
-      - BASE_URL=http://localhost
+      - BASE_URL=http://cseinternal-test.ap-southeast-1.elasticbeanstalk.com
     ports:
       - "3000:3000"
-#services:
-#  seq:
-#    image: datalust/seq:latest
-#    ports:
-#      - "80:80"
-#      - "5341:5341"
-#    environment:
-#      ACCEPT_EULA: Y
-#  inspections.api:
-#    depends_on:
-#      - seq
-#    image: iosoft/scb-backend:test
-#    environment:
-#      - ConnectionStrings__Inspections=Server=aa1txvky6wbhp2y.cxzbkun1y23x.ap-southeast-1.rds.amazonaws.com;Port=5432;Database=ReportsApp;User Id=appuser;Password=JesusPa55word!
-#      - ClientSettings__S3BucketName=cse-inspetions-test-photos
-#      - AWS__Region=ap-southeast-1
-#      - UIPORT=3000
-#    volumes:
-#      - ~/.aws/:/root/.aws:ro
-#    ports:
-#      - "80:80"
-#    
-#  inspections.ui:
-#    image: iosoft/scb-frontend:test
-#    environment:
-#      - BASE_URL=http://cseinternal-test.ap-southeast-1.elasticbeanstalk.com
-#    ports:
-#      - "3000:3000"
-
-# version: '3.4'
-
-# services:
-#   inspections.api:
-#     image: iosoft/scb-backend:dev
-#     environment:
-#       - ConnectionStrings__Inspections=Server=cseinternaldbs.cxzbkun1y23x.ap-southeast-1.rds.amazonaws.com;Port=5432;Database=ReportsApp;User Id=appuser;Password=JesusPa55word!
-#       - ClientSettings__S3BucketName=cse-inspetions-test-photos
-#       - AWS__Region=ap-southeast-1
-#       - UIPORT=3000
-#     volumes:
-#       - ~/.aws/:/root/.aws:ro
-#     ports:
-#       - "80:80"
     
+    # version: '3.4'
+    
+    # services:
+    #   inspections.api:
+    #     image: iosoft/scb-backend:dev
+    #     environment:
+    #       - ConnectionStrings__Inspections=Server=cseinternaldbs.cxzbkun1y23x.ap-southeast-1.rds.amazonaws.com;Port=5432;Database=ReportsApp;User Id=appuser;Password=JesusPa55word!
+    #       - ClientSettings__S3BucketName=cse-inspetions-test-photos
+    #       - AWS__Region=ap-southeast-1
+    #       - UIPORT=3000
+    #     volumes:
+    #       - ~/.aws/:/root/.aws:ro
+    #     ports:
+    #       - "80:80"
+
 #   inspections.ui:
 #     image: iosoft/scb-frontend:dev
 #     environment:

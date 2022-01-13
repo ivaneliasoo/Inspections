@@ -21,7 +21,7 @@ namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
             builder.Property(p => p.MarginLeft).IsRequired();
             builder.Property(p => p.MarginRight).IsRequired();
             builder.Property(p => p.PrintSectionId).IsRequired();
-            builder.Property(p => p.CheckListMetadata).HasColumnType("jsonb");
+            builder.Property(p => p.CheckListMetadata).HasColumnType("jsonb").HasDefaultValueSql("'{ \"Display\": 0 }'::jsonb");
             builder.Ignore(p => p.DomainEvents);
         }
     }
