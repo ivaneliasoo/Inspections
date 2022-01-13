@@ -4,7 +4,7 @@ services:
   seq:
     image: datalust/seq:latest
     ports:
-      - "8081:8081"
+      - "8081:80"
       - "5341:5341"
     environment:
       - ACCEPT_EULA=Y
@@ -12,21 +12,23 @@ services:
   inspections.api:
     depends_on:
       - seq
-    image: iosoft/scb-backend:local
+    image: iosoft/scb-backend:test
     environment:
-      - ConnectionStrings__Inspections=Host=postgres-server;Port=5432;Username=appuser;Password=123456;Database=inspections;
+      - ConnectionStrings__Inspections=Host=172.17.0.1;Port=5432;Username=appuser;Password=123456;Database=inspections;
       - ClientSettings__S3BucketName=cse-inspetions-test-photos
       - AWS__Region=ap-southeast-1
       - UIPORT=3000
+      - Serilog__MinimumLevel=Information
+      - Serilog__Override__Microsoft.AspNetCore=Warning
     volumes:
       - ~/.aws/:/root/.aws:ro
     ports:
-      - "5000:5000"
+      - "80:80"
   
   inspections.ui:
-    image: iosoft/scb-frontend:local
+    image: iosoft/scb-frontend:test
     environment:
-      - BASE_URL=http://localhost:5000
+      - BASE_URL=http://localhost
     ports:
       - "3000:3000"
 #services:
