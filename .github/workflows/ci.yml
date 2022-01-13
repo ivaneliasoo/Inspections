@@ -49,14 +49,14 @@ jobs:
           echo ${{ env.BRANCH }}
           echo ${{ env.RELEASE_DATE }}
           echo ${{ env.REVISION }}
-          docker build src/Backend --file src/Backend/Dockerfile --tag $DOCKER_USER/scb-backend:${{env.BRANCH}}
+          docker build src/Backend --file src/Backend/Dockerfile --tag ${{secrets.IOSOFT_DOCKERHUB_USER}}/scb-backend:${{env.BRANCH}}
           
       - name: Build Frontend
         run: |
           echo ${{ env.BRANCH }}
           echo ${{ env.RELEASE_DATE }}
           echo ${{ env.REVISION }}
-          docker build src/ClientApp --file src/ClientApp/Dockerfile --tag $DOCKER_USER/scb-frontend:${{env.BRANCH}}
+          docker build src/ClientApp --file src/ClientApp/Dockerfile --tag ${{secrets.IOSOFT_DOCKERHUB_USER}}/scb-frontend:${{env.BRANCH}}
       
       - name: Publish to docker hub
         env:
