@@ -91,6 +91,12 @@ namespace Inspections.API.Features.Addresses
             }
 
             var savedAddress = await _context.Set<Address>().FindAsync(id).ConfigureAwait(false);
+            
+            if (savedAddress == null)
+            {
+                return NotFound("address not found");
+            }
+            
             savedAddress.AddressLine = address.AddressLine;
             savedAddress.AddressLine2 = address.AddressLine2;
             savedAddress.Unit = address.Unit;

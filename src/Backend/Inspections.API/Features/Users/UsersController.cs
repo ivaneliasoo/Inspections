@@ -38,7 +38,8 @@ namespace Inspections.API.Features.Users
         [ProducesDefaultResponseType]
         public async Task<ActionResult<UserDTO>> GetUserByUserName(string userName)
         {
-            var user = await _context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync().ConfigureAwait(false);
+            var user = await _context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync()
+                .ConfigureAwait(false);
 
             if (user == null)
             {
@@ -61,7 +62,8 @@ namespace Inspections.API.Features.Users
             if (userName is null)
                 return BadRequest();
 
-            var user = await _context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync().ConfigureAwait(false);
+            var user = await _context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync()
+                .ConfigureAwait(false);
 
             if (user == null)
             {
@@ -87,17 +89,15 @@ namespace Inspections.API.Features.Users
 
             try
             {
-                var editedUser = await _context.Set<User>().Where(u => u.UserName == userName).SingleOrDefaultAsync().ConfigureAwait(false);
+                var editedUser = await _context.Set<User>().Where(u => u.UserName == userName).SingleOrDefaultAsync()
+                    .ConfigureAwait(false);
 
-                if (editedUser != null)
-                {
+                if (editedUser == null) return NotFound("user not found");
                     //editedUser.UserName = user.UserName;
-                    editedUser.Name = user.Name;
-                    editedUser.LastName = user.LastName;
-                    editedUser.IsAdmin = user.IsAdmin;
-                    editedUser.LastEditedReport = user.LastEditedReport;
-                }
-
+                editedUser.Name = user.Name;
+                editedUser.LastName = user.LastName;
+                editedUser.IsAdmin = user.IsAdmin;
+                editedUser.LastEditedReport = user.LastEditedReport;
                 _context.Entry(editedUser).State = EntityState.Modified;
                 await _context.SaveChangesAsync().ConfigureAwait(false);
             }
@@ -150,7 +150,7 @@ namespace Inspections.API.Features.Users
                 }
             }
 
-            return CreatedAtAction("PostUser", new { id = user.UserName }, user);
+            return CreatedAtAction("PostUser", new {id = user.UserName}, user);
         }
 
         // DELETE: api/Users/5
@@ -198,6 +198,7 @@ namespace Inspections.API.Features.Users
             {
                 return BadRequest();
             }
+
             user.Password = passwordDTO.NewPasswordConfirmation;
             _context.Entry(user).State = EntityState.Modified;
 
