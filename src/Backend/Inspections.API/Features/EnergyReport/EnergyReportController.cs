@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Inspections.Core.Domain;
+using Inspections.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Inspections.Core.Domain;
-using Inspections.Infrastructure.Data;
 
 namespace Inspections.API.Features.EnergyReport
 {
@@ -25,7 +25,7 @@ namespace Inspections.API.Features.EnergyReport
         public EnergyReportController(InspectionsContext context)
         {
             _context = context;
-        }        
+        }
 
         [HttpPost("category")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -52,9 +52,12 @@ namespace Inspections.API.Features.EnergyReport
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
-            if (prev == null) {
+            if (prev == null)
+            {
                 _context.Add(t);
-            } else {
+            }
+            else
+            {
                 t.templateDef = categories;
                 _context.Update(t);
             }
@@ -105,16 +108,16 @@ namespace Inspections.API.Features.EnergyReport
         public async Task<ActionResult<IEnumerable<CurrentTable>>> GetCurrentTable(string startDate, string endDate)
         {
             // all entities in InspectionsContext has 2 shadow properties: LastEdit, LastEditUser.
-            // this propoerties are used for audit (or that was the original intention haha).
-            // in the future this properties can be skiped in the entity's OnModelCreating override
+            // this properties are used for audit (or that was the original intention haha).
+            // in the future this properties can be skipped in the entity's OnModelCreating override
             // var results = await _context.CurrentTable
             //     .FromSqlRaw(@"SELECT id, circuit, start_date, end_date, current_data, ""LastEdit"", ""LastEditUser""
             //         FROM current WHERE start_date = {0} AND end_date = {1}", startDate, endDate)
             //     .AsNoTracking().ToListAsync();
 
-            var results = await _context.CurrentTable.Where(c => 
-                c.startDate == startDate && 
-                // trancking entities is an expensive task so adds AsNoTracking() to speed up
+            var results = await _context.CurrentTable.Where(c =>
+                c.startDate == startDate &&
+                // tracking entities is an expensive task so adds AsNoTracking() to speed up
                 c.endDate == endDate)
                     .AsNoTracking()
                     .ToListAsync();
@@ -124,6 +127,9 @@ namespace Inspections.API.Features.EnergyReport
 
         // POST: api/current-table
         [HttpPost("current-table")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> SetCurrentTable()
         {
             if (!this.Request.Body.CanSeek)
@@ -138,26 +144,28 @@ namespace Inspections.API.Features.EnergyReport
             this.Request.Body.Position = 0;
             var options = new JsonSerializerOptions();
             CurrentTable? currentTable = JsonSerializer.Deserialize<CurrentTable>(body, options);
-           
-            if (currentTable == null) {
+
+            if (currentTable == null)
+            {
                 return BadRequest();
             }
 
-            var prev = await _context.CurrentTable.Where(c => 
-                c.circuit == currentTable.circuit && 
-                c.startDate == currentTable.startDate && 
-                // trancking entities is an expensive task so adds AsNoTracking() to speed up
+            var prev = await _context.CurrentTable.Where(c =>
+                c.circuit == currentTable.circuit &&
+                c.startDate == currentTable.startDate &&
+                // tracking entities is an expensive task so adds AsNoTracking() to speed up
                 c.endDate == currentTable.endDate)
                     .AsNoTracking()
                     .FirstOrDefaultAsync();
 
-            if (prev == null) {
+            if (prev == null)
+            {
                 _context.Add(currentTable);
                 await _context.SaveChangesAsync();
             }
 
             return NoContent();
-        }        
+        }
 
     }
 }

@@ -4,14 +4,13 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace ZadERP.Api.Middleware
+namespace Inspections.API
 {
     /// <summary>
-    /// Middleware para el manejo de errores
+    /// Errors handling Middleware
     /// </summary>
     public class ExceptionsMiddleware
     {
@@ -20,7 +19,7 @@ namespace ZadERP.Api.Middleware
         private readonly RequestDelegate _next;
 
         /// <summary>
-        /// Crea una Nueva Instancia de <see cref="ExceptionsMiddleware"/> class.
+        /// creates a new instance of <see cref="ExceptionsMiddleware"/> class.
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="next"></param>
@@ -31,7 +30,7 @@ namespace ZadERP.Api.Middleware
         }
 
         /// <summary>
-        /// Serializa Las Excepciones y Deja Registro en el Logger
+        /// Srialize exceptions and log the event
         /// </summary>
         /// <param name="httpContext"></param>
         /// <returns></returns>
@@ -45,9 +44,9 @@ namespace ZadERP.Api.Middleware
         {
             try
             {
-                _logger.LogInformation($"Se está invocando {httpContext.Request.Path.Value} Metodo: {httpContext.Request.Method} - {DateTime.Now}");
+                _logger.LogInformation($"Requesting {httpContext.Request.Path.Value} Method: {httpContext.Request.Method} - {DateTime.Now}");
                 await _next(httpContext).ConfigureAwait(false);
-                _logger.LogInformation($"Se ha invocando {httpContext.Request.Path.Value} Metodo: {httpContext.Request.Method} - {DateTime.Now}");
+                _logger.LogInformation($"Requested {httpContext.Request.Path.Value} Method: {httpContext.Request.Method} - {DateTime.Now}");
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
@@ -66,7 +65,7 @@ namespace ZadERP.Api.Middleware
 
                 await httpContext.Response.WriteAsync(error).ConfigureAwait(false);
 
-                _logger.LogError($"Error: Code {statusCode}. Mensaje: {ex.Message}. InnerException: {ex.InnerException}");
+                _logger.LogError($"Error: Code {statusCode}. Message: {ex.Message}. InnerException: {ex.InnerException}");
             }
         }
 

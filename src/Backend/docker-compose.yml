@@ -1,24 +1,62 @@
 version: '3.4'
 
 services:
-  inspections.api:
-    image: iosoft/scb-backend:test
+  seq:
+    image: datalust/seq:latest
+    ports:
+      - "8081:8081"
+      - "5341:5341"
     environment:
-      - ConnectionStrings__Inspections=Server=aa1txvky6wbhp2y.cxzbkun1y23x.ap-southeast-1.rds.amazonaws.com;Port=5432;Database=ReportsApp;User Id=appuser;Password=JesusPa55word!
+      - ACCEPT_EULA=Y
+      
+  inspections.api:
+    depends_on:
+      - seq
+    image: iosoft/scb-backend:local
+    environment:
+      - ConnectionStrings__Inspections=Host=postgres-server;Port=5432;Username=appuser;Password=123456;Database=inspections;
       - ClientSettings__S3BucketName=cse-inspetions-test-photos
       - AWS__Region=ap-southeast-1
       - UIPORT=3000
     volumes:
       - ~/.aws/:/root/.aws:ro
     ports:
-      - "80:80"
-    
+      - "5000:5000"
+  
   inspections.ui:
-    image: iosoft/scb-frontend:test
+    image: iosoft/scb-frontend:local
     environment:
-      - BASE_URL=http://cseinternal-test.ap-southeast-1.elasticbeanstalk.com
+      - BASE_URL=http://localhost:5000
     ports:
       - "3000:3000"
+#services:
+#  seq:
+#    image: datalust/seq:latest
+#    ports:
+#      - "80:80"
+#      - "5341:5341"
+#    environment:
+#      ACCEPT_EULA: Y
+#  inspections.api:
+#    depends_on:
+#      - seq
+#    image: iosoft/scb-backend:test
+#    environment:
+#      - ConnectionStrings__Inspections=Server=aa1txvky6wbhp2y.cxzbkun1y23x.ap-southeast-1.rds.amazonaws.com;Port=5432;Database=ReportsApp;User Id=appuser;Password=JesusPa55word!
+#      - ClientSettings__S3BucketName=cse-inspetions-test-photos
+#      - AWS__Region=ap-southeast-1
+#      - UIPORT=3000
+#    volumes:
+#      - ~/.aws/:/root/.aws:ro
+#    ports:
+#      - "80:80"
+#    
+#  inspections.ui:
+#    image: iosoft/scb-frontend:test
+#    environment:
+#      - BASE_URL=http://cseinternal-test.ap-southeast-1.elasticbeanstalk.com
+#    ports:
+#      - "3000:3000"
 
 # version: '3.4'
 

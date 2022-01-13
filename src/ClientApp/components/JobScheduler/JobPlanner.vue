@@ -10,6 +10,7 @@
                 @show-job-schedule="showJobSchedule"
                 @show-man-power="showManPower"
                 @show-man-power-forecast="showManPowerForecast"
+                @open-team-dialog="openTeamDialog"
                 @edit-options="editOptions"
                 @save="save"
               >
@@ -142,75 +143,6 @@
         </v-col>
       </v-row>
 
-      <!-- <v-dialog v-model="jobTableDialog.open" max-width="900px">
-        <v-card>
-          <v-card-title>
-            <span class="ml-4 headline">{{jobTableDialog.title}}</span>
-            <v-spacer></v-spacer>
-            <v-btn class="mt-2 mr-5" icon @click="delJob"><v-icon>mdi-delete</v-icon></v-btn>
-          </v-card-title>
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col>
-                  <v-simple-table
-                    id="simple-job-table"
-                    class="simple-job-table"
-                    fixed-header
-                    height="600px">
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th>Job scope</th>
-                          <th>Project value</th>
-                          <th>Sales person</th>
-                          <th>Priority</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="(job, index) in editedJobTable" :key="index">
-                          <td>
-                            <input type="checkbox" v-model="job.checked">
-                          </td>
-                          <td>
-                            <textarea class="text-caption textarea" rows="2" cols="45"
-                              v-model="job.scope" @change="addToJobs(job)">
-                            </textarea>
-                          </td>
-                          <td>
-                            <input class="text-caption text-right table-input" type="text" size="10"
-                              v-model="job.value" @change="addToJobs(job)"
-                            >
-                          </td>
-                          <td>
-                            <input class="text-caption table-input" type="text" size="20"
-                              v-model="job.salesPerson" @change="addToJobs(job)"
-                            >
-                          </td>
-                          <td v-bind:style="background(job.priority)">
-                            <input class="text-caption text-right table-input" type="text" size="4"
-                              v-bind:style="background(job.priority)"
-                              v-model="job.priority"
-                              @change="markChange"
-                              @blur="sortByPriority(index)"
-                            >
-                          </td>
-                        </tr>
-                      </tbody>
-                  </v-simple-table>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="closeJobTable">
-              Close
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog> -->
-
       <v-dialog v-model="jobDialog.open" max-width="800px">
         <v-card>
           <v-card-title class="mb-0 pb-0">
@@ -251,9 +183,9 @@
                       </label>
                     </v-col>
                     <v-col cols=2 class="mb-2 pb-2 text-right">
-                      <!-- <v-btn icon small @click="flipJobs">
+                      <v-btn icon small @click="flipJobs">
                         <v-icon>mdi-orbit-variant</v-icon>
-                      </v-btn> -->
+                      </v-btn>
                       <v-btn icon small @click="addSchedJob">
                         <v-icon v-if="splitShift(jobInfo)">
                           mdi-border-all-variant
@@ -339,8 +271,14 @@
                     </v-col>
                     <v-col cols="3" class="my-0 py-0">
                       <v-checkbox
+                        v-model="jobInfo.excludeSaturday"
+                        label="Exclude saturday"
+                        hide-details
+                      ></v-checkbox>
+                      <v-checkbox 
                         v-model="jobInfo.excludeSunday"
                         label="Exclude sunday"
+                        hide-details
                       ></v-checkbox>                      
                     </v-col>
                   </v-row>
@@ -411,6 +349,7 @@
                 @show-job-schedule="showJobSchedule"
                 @show-man-power="showManPower"
                 @show-man-power-forecast="showManPowerForecast"
+                @open-team-dialog="openTeamDialog"
                 @edit-options="editOptions"
                 @save="save"
               >
@@ -469,7 +408,9 @@
                   </thead>
                   <tbody v-for="(day, index) in jobSchedule" :key="index">
                     <tr>
-                      <td class="font-weight-bold date" align ="center" rowspan="4" :style="dayStyle(day.date)">
+                      <td class="font-weight-bold date" align ="center" rowspan="4" :style="dayStyle(day.date)"
+                        @click="selectDay($event, index, day)"
+                      >
                           <div style="text-align: center; writing-mode: vertical-lr; transform: rotate(180deg);">
                               {{dayOfWeek(day.date)}} {{monthAndDate(day.date)}}
                           </div>
@@ -499,7 +440,7 @@
                       </td>
                       <td v-for="team in teams" :key="team.id" class="text-caption font-weight-bold"
                           @drop="dropTeamMember($event, day.jobs[team.id])"
-                          @click="editTeam(team, day.jobs[team.id])">
+                          @click="openTeamMemberDialog(team, day.jobs[team.id])">
                         <div v-for="teamMember in day.jobs[team.id].getTeamMembers()" :key="teamMember"
                             style="text-align: center;"
                             class="draggable"
@@ -549,92 +490,69 @@
           </v-row>
         </v-col>
       </v-row>
-
-      <v-dialog v-model="teamDialog.open" max-width="600px">
-        <v-card>
-          <v-card-title>
-            <span class="mx-2 headline">{{teamDialog.title}}</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container>
-                <v-row class="my-0 py-0">
-                  <v-col>
-                    <v-text-field class="my-n2 py-0" label="Foreman" v-model="teamDialog.editedTeam.foreman">
-                    </v-text-field>
-                  </v-col>
-                </v-row>
-                <v-row class="my-0 py-0">
-                  <v-col cols="8">
-                    <v-text-field class="my-n2 py-0" label="Vehicle license" v-model="teamDialog.editedTeam.vehicle">
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="4">
-                    <v-text-field class="my-n2 py-0" label="Position" v-model="teamDialog.editedTeam.position">
-                    </v-text-field>
-                  </v-col>
-                </v-row>
-                <v-row class="my-0 py-0">
-                  <v-col align="right">
-                    <v-spacer></v-spacer>
-                    <v-btn class="mt-0 pt-0 mb-n4 pb-n4" small @click="deleteTeam">
-                      Delete Team
-                    </v-btn>
-                    &nbsp; &nbsp;
-                    <v-btn class="mt-0 pt-0 mb-n4 pb-n4" small @click="newTeam">
-                      New Team
-                    </v-btn>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col>
-                    <v-simple-table
-                      id="team-memmbers"
-                      class="simple-job-table"
-                      fixed-header
-                      height="440px">
-                        <colgroup>
-                          <col style="width:8%;">
-                          <col style="width:92%;">
-                        </colgroup>
-                        <thead>
-                          <tr>
-                            <th>
-                              <v-btn icon @click="deleteTeamMember"><v-icon>mdi-delete</v-icon></v-btn>
-                            </th>
-                            <th>Team members</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="teamMember in teamMembers" :key="teamMember.id">
-                            <td class="text-center">
-                              <input type="checkbox" v-model="teamMember.checked">
-                            </td>
-                            <td>
-                              <input class="text-caption text-left table-input" type="text" size="54"
-                                v-model="teamMember.teamMember"
-                                @change="validateTeamMember(teamDialog.editedTeam.id, teamMember)"
-                              >
-                            </td>
-                          </tr>
-                        </tbody>
-                    </v-simple-table>
-                  </v-col>
-                </v-row>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn class="mb-2 pt-2" small @click="closeTeam">
-            Close
-            </v-btn>
-            &nbsp; &nbsp;
-            <v-btn class="mb-2 pt-2" small @click="saveTeam">
-              Save
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-container>
+
+    <v-dialog v-model="teamMemberDialog.open" max-width="680px">
+      <v-card>
+        <v-card-title>
+          <span class="mx-2 headline">Edit team members</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row class="my-0 py-0">
+              <v-col>
+                Foreman: {{teamMemberDialog.team.foreman}}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-simple-table
+                  id="team-memmbers"
+                  class="simple-job-table"
+                  fixed-header
+                  height="440px">
+                    <colgroup>
+                      <col style="width:8%;">
+                      <col style="width:92%;">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>
+                          <v-btn icon @click="deleteJobTeamMember"><v-icon>mdi-delete</v-icon></v-btn>
+                        </th>
+                        <th>Team members</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="teamMember in teamMemberDialog.teamMembers" :key="teamMember.id">
+                        <td class="text-center">
+                          <input type="checkbox" v-model="teamMember.checked">
+                        </td>
+                        <td>
+                          <input class="text-caption text-left table-input" type="text" size="54"
+                            v-model="teamMember.teamMember"
+                            @change="validateJobTeamMember(teamMember)"
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                </v-simple-table>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn class="mb-2 pt-2" small @click="closeTeamMemberDialog">
+            Close
+          </v-btn>
+          &nbsp; &nbsp;
+          <v-btn class="mb-2 pt-2" small @click="saveTeamMembers">
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-container v-show="manPowerForecastVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
       <v-row>
@@ -646,6 +564,7 @@
                 @show-job-schedule="showJobSchedule"
                 @show-man-power="showManPower"
                 @show-man-power-forecast="showManPowerForecast"
+                @open-team-dialog="openTeamDialog"
                 @edit-options="editOptions"
                 @save="save"
               >
@@ -775,6 +694,148 @@
       </v-row>
     </v-container>
 
+    <v-dialog v-model="teamDialog.open" max-width="680px">
+      <v-card v-show="teamDialog.showList">
+        <v-card-title>
+          <span class="mx-2 headline">Teams</span>
+        </v-card-title>          
+        <v-card-text>
+          <v-container>
+            <v-row class="my-0 py-0">
+              <v-col align="right">
+                <v-btn class="mt-0 pt-0 mb-n4 pb-n4" small @click="newTeam">
+                  New Team
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-simple-table
+                  id="teams"
+                  class="simple-job-table"
+                  fixed-header
+                  height="440px">
+                    <colgroup>
+                      <col style="width:10%;">
+                      <col style="width:40%;">
+                      <col style="width:40%;">
+                      <col style="width:10%;">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th class="text-center">Foreman</th>
+                        <th class="text-center">Vehicle license</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(team, index) in teams" :key="index">
+                        <td class="text-center">
+                          {{index+1}}
+                        </td>
+                        <td class="text-center">
+                          {{team.foreman}}
+                        </td>
+                        <td class="text-center">
+                          {{team.vehicle}}
+                        </td>
+                        <td class="text-center">
+                          <v-icon dense @click="editTeam(team)">mdi-pencil</v-icon>
+                        </td>
+                      </tr>
+                    </tbody>
+                </v-simple-table>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn class="mb-2 pt-2" small @click="teamDialog.open=false">
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+      <v-card v-show="teamDialog.showForm">
+        <v-card-title>
+          <span class="mx-2 headline">{{teamDialog.title}}</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+              <v-row class="my-0 py-0">
+                <v-col>
+                  <v-text-field class="my-n2 py-0" label="Foreman" v-model="teamDialog.editedTeam.foreman">
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <v-row class="my-0 py-0">
+                <v-col cols="8">
+                  <v-text-field class="my-n2 py-0" label="Vehicle license" v-model="teamDialog.editedTeam.vehicle">
+                  </v-text-field>
+                </v-col>
+                <v-col cols="4">
+                  <v-text-field class="my-n2 py-0" label="Position" v-model="teamDialog.editedTeam.position">
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <v-row v-show="teamDialog.oper!=='new'" class="my-0 py-0">
+                <v-col align="right">
+                  <v-btn class="mt-0 pt-0 mb-n4 pb-n4" small @click="deleteTeam">
+                    Delete Team
+                  </v-btn>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-simple-table
+                    id="team-memmbers"
+                    class="simple-job-table"
+                    fixed-header
+                    height="440px">
+                      <colgroup>
+                        <col style="width:8%;">
+                        <col style="width:92%;">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th>
+                            <v-btn icon @click="deleteTeamMember"><v-icon>mdi-delete</v-icon></v-btn>
+                          </th>
+                          <th>Team members</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="teamMember in teamDialog.teamMembers" :key="teamMember.id">
+                          <td class="text-center">
+                            <input type="checkbox" v-model="teamMember.checked">
+                          </td>
+                          <td>
+                            <input class="text-caption text-left table-input" type="text" size="54"
+                              v-model="teamMember.teamMember"
+                              @change="validateTeamMember(teamMember)"
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                  </v-simple-table>
+                </v-col>
+              </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn class="mb-2 pt-2" small @click="closeTeam">
+          Close
+          </v-btn>
+          &nbsp; &nbsp;
+          <v-btn class="mb-2 pt-2" small @click="saveTeam">
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-dialog v-model="showOptionsDialog" max-width="800px">
       <v-card>
         <v-card-title class="mb-0 pb-0">
@@ -870,6 +931,10 @@ html {
 }
 
 .job-sched .selected {
+  border: 3px solid red;
+}
+
+.job-sched tbody .selected {
   border: 3px solid red;
 }
 
@@ -975,7 +1040,7 @@ import 'flatpickr/dist/flatpickr.css';
 import 'flatpickr/dist/themes/material_blue.css';
 
 import { Job, SchedJob, Team, Shift, Selection, Clipboard, JobStatus, Day, JobState } from '../../composables/jp_entity.js';
-import { datediff, date2string, string2date, addDays, isSunday} from '../../composables/jp_util.js';
+import { datediff, date2string, string2date, addDays, isSunday, isSaturday} from '../../composables/jp_util.js';
 
   const priorityColors = [
     "tomato", "tomato", "orange", "orange", "yellow", "yellow", "lightgreen", "lightgreen", "limegreen", "limegreen"
@@ -1020,13 +1085,23 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       changeJobDialog2: false,
       jobDialog: { open: false, startDate: "", endDate: "" },
       jobTableDialog: { open: false, option: "", title: "", change: false },
-      teamDialog: { open: false, 
+      teamDialog: { 
+          open: false,
+          showList: true,
+          showForm: false, 
           oper: "", title: "", 
           maxTeamMembers: 8,
           teamMembers: [],
           team: {},
           editedTeam: {}, 
           schedJob: {} 
+      },
+      teamMemberDialog: {
+        open: false,
+        maxTeamMembers: 8,
+        team: {},
+        teamMembers: [],
+        schedJob: {} 
       },
       workerDialog: false,
       dailyPlanDialog: false,
@@ -1045,6 +1120,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       refreshConfirmedJobs: 0,
       refreshUpcomingJobs: 0,
       refreshTeamMembers: 0,
+      refreshJobTeamMembers: 0,
       refreshTeams: 0,
       showOptionsDialog: false,
       options: {
@@ -1146,24 +1222,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       teams() {
         this.refreshTeams;
         const teams = this.teams_.filter( team => team.position > -1 );
-        // console.log("teams:", JSON.stringify(teams));
         return teams;
-      },
-      teamMembers() {
-        this.refreshTeamMembers;
-        const members = this.teamDialog.team.teamMembers ? this.teamDialog.team.teamMembers : [];
-        const teamMembers = this.teamDialog.teamMembers;
-
-        teamMembers.length = 0;
-        for (let i=0; i<members.length; i++) {
-          teamMembers.push({id: i, checked: false, teamMember: members[i]});
-        }
-
-        for (let i=teamMembers.length; i<this.teamDialog.maxTeamMembers; i++) {
-          teamMembers.push({id: i, checked: false, teamMember: ""});
-        }
-        
-        return teamMembers;
       }
     },
     created() {
@@ -1195,6 +1254,9 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
       this.notify();
     },
     methods: {
+      // Pending:
+      // 1. When copying entire row the Store cell changes color to blue
+      // 3. Test everything done
       checkScheduleWeeks() {
         if (this.options.scheduleWeeks < 1) {
           this.options.scheduleWeeks = 1;
@@ -1213,7 +1275,8 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.$forceUpdate();
       },
       showSchedJob(schedJob) {
-        return !(schedJob.excludeSunday && isSunday(schedJob.date));
+        return !((schedJob.excludeSaturday && isSaturday(schedJob.date)) || 
+            (schedJob.excludeSunday && isSunday(schedJob.date)) );
       },
       getDay(sday) {
         let day = this.dayIndex[sday];
@@ -1226,7 +1289,6 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
             day.jobs[team.id] = new SchedJob({id: 0, team: team.id,
                 date: sday, shift: Shift.unasigned,
                 job1: "", job2: "", teamMembers : []});
-                //job1: "", job2: "", teamMembers : ["-"] });
           }
         });
         return day;
@@ -1313,15 +1375,6 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           setTimeout(this.save, this.options.autosaveInterval * 1000);
         }        
       },
-      // updateSchedJobs(schedJobs) {
-      //   schedJobs.forEach( schedJob => this.updateSchedJob(schedJob) );
-      // },
-      // updateJobSchedule(updatedData) {
-      //   this.updateSchedJobs(updatedData.schedJobs);
-      //   this.updateJobs(updatedData.jobs);
-      //   this.updateTeams(updatedData.teams);
-      //   this.jobScheduleCount++;
-      // },
       getTeamMembers(day, teamId) {
         let sj = day.jobs[teamId];
         return sj ? sj.teamMembers : [];
@@ -1492,12 +1545,28 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         if (!this.selection) {
           return;
         }
-        this.copyData = new Clipboard(this.teams[this.selection.col-1].id,
+        console.log(JSON.stringify(this.selection))
+        if (this.selection.col === 0) {
+          // A whole row was selected by clicking on the date column
+          // In this case selection.startRow is the row we want to select
+          const date = this.jobSchedule[this.selection.startRow].date;
+          this.copyData = new Clipboard(-1, date, date);
+        } else {
+          // A scheduled job was selected
+          // In this case we want to select selection.startRow - 1
+          this.copyData = new Clipboard(this.teams[this.selection.col-1].id,
             this.jobSchedule[this.selection.startRow-1].date,
             this.selection.endRow-this.selection.startRow+1);
+        }
       },
       paste() {
-        if (!this.copyData) {
+        if (!this.copyData || !this.selection) {
+          return;
+        }
+
+        //console.log("copyData.team", this.copyData.team)
+        if (this.copyData.team === -1) {
+          this.pasteRow();
           return;
         }
 
@@ -1522,6 +1591,52 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.copySchedJobs(source, target, false)
 
         this.unselect();
+        this.$forceUpdate();
+      },
+      pasteRow() {
+        if (this.selection.col !== 0) {
+          return;
+        }
+
+        console.log("pasteRow")
+
+        const days = this.getDays();
+        const lastDay = days[days.length-1];
+
+        // console.log("this.copyData.date", this.copyData.startDate);
+        // console.log("this.lastDay.date", lastDay.date);
+        // if (this.copyData.startDate <= lastDay.date) {
+        //   return;
+        // }
+
+        const teams = Object.keys(lastDay.jobs);
+        console.log(JSON.stringify(teams))
+        // When copying whole row selection.startRow has the index of the row to copy
+        // no need to subtract 1
+        const targetDate = this.jobSchedule[this.selection.startRow].date;
+        for (let i=0; i<teams.length; i++) {
+          const source = {
+            startDate: this.copyData.startDate,
+            numRows: 1,
+            team: teams[i]
+          }
+          const target = {
+            startDate: targetDate,
+            numRows: 1,
+            team: teams[i]
+          }
+          console.log(i);
+          // console.log(JSON.stringify(source))
+          // console.log(JSON.stringify(target))
+          if (teams[i] > 8)
+            console.log(JSON.stringify(this.jobSchedule[this.selection.startRow].jobs[teams[i]]))
+          this.copySchedJobs(source, target, false)
+          if (teams[i] > 8)
+            console.log(JSON.stringify(this.jobSchedule[this.selection.startRow].jobs[teams[i]]))
+        }
+
+        this.unselect();
+        this.jobScheduleCount++;
         this.$forceUpdate();
       },
       scheduledJobDragstart(event, dayIndex, teamIndex) {
@@ -1558,8 +1673,11 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.$forceUpdate();
       },
       dropHandler(event, dayIndex, teamIndex) {
+        console.log("dropHandler")
         event.preventDefault();
         const srcData = JSON.parse(event.dataTransfer.getData("application/json"));
+
+        console.log("srcData", JSON.stringify(srcData))
 
         if (srcData.source === 'confirmed-job' || srcData.source === 'upcoming-job') {
           this.dropJob(srcData, dayIndex, teamIndex);
@@ -1569,6 +1687,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         this.dropScheduledJob(srcData, dayIndex, teamIndex);
       },
       dropScheduledJob(srcData, targetIndex, teamIndex) {
+        console.log("dropScheduledJob")
         const teamId = this.teams[teamIndex].id;
         const foreman = this.teams[teamIndex].foreman;
 
@@ -1610,6 +1729,9 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
             team: teamId
           }
         }
+
+        console.log("sourceData", JSON.stringify(sourceData))
+        console.log("targetData", JSON.stringify(targetData))
 
         this.copySchedJobs(sourceData, targetData, true)
 
@@ -1688,6 +1810,10 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           const numRows = target.numRows == -1 ? source.numRows : target.numRows;
           const trgt = {startDate: target.startDate, numRows: numRows, team: target.team};
 
+          // console.log("copyOneToMany")
+          // console.log(JSON.stringify(src))
+          // console.log(JSON.stringify(trgt))
+
           this.copyOneToMany(src, trgt)
         } else {
           const sourceStartDate = string2date(source.startDate);
@@ -1722,6 +1848,11 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         }
       },
       copyOneToMany(source, target) {
+        const sourceSchedJob = this.dayIndex[source.startDate].jobs[source.team];
+        if (sourceSchedJob.id === 0) {
+          console.log("blank schedJob", JSON.stringify(sourceSchedJob))
+          return;
+        }
         const targetStartDate = string2date(target.startDate);
 
         const newGroup = {};
@@ -1736,7 +1867,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
             this.dayIndex[d] = day;
           }
 
-          const schedJob = new SchedJob(this.dayIndex[source.startDate].jobs[source.team]);
+          const schedJob = new SchedJob(sourceSchedJob);
           schedJob.id = newId;
           schedJob.date = d;
           schedJob.team = target.team;
@@ -1827,13 +1958,49 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           return;
         }
         const table = document.getElementById("job-sched");
-        for (var i=this.selection.startRow; i<=this.selection.endRow; i++) {
+        for (let i=this.selection.startRow; i<=this.selection.endRow; i++) {
           const cell = table.rows[i].cells[this.selection.col];
           while (cell.classList.contains("selected")) {
               cell.classList.remove("selected");
           }
         }
         this.selection = null;
+      },
+      unselectDay(table) {
+        for (let i=this.selection.startRow; i<=this.selection.endRow; i++) {
+          const tbody = table.tBodies[i];
+          while (tbody.classList.contains("selected")) {
+              tbody.classList.remove("selected");
+          }
+        }
+        this.selection = null;
+      },
+      selectDay(event, index, day) {
+        console.log("selectDay");
+        if (this.selection && this.selection.col !== 0) {
+          this.unselect();
+        }
+
+        const tb = this.findAncestor(event.target, "TBODY");
+        const table = this.findAncestor(tb, "TABLE");
+        var tbodyIndex= [].slice.call(table.tBodies).indexOf(tb);
+
+        // No previous selection
+        if (!this.selection) {
+          tb.classList.add("selected");
+          this.selection = new Selection(0, tbodyIndex);
+          return;
+        }
+
+        // User clicked on the same day, unselect it
+        if (this.selection.startRow === tbodyIndex) {
+          this.unselectDay(table);
+          return;
+        }
+
+        this.unselectDay(table);
+        tb.classList.add("selected");
+        this.selection = new Selection(0, tbodyIndex);
       },
       onTableCellClick(event, job) {
         if (!this.timeoutId) {
@@ -1849,24 +2016,11 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
             this.openSchedJobDialog(job);
         }
       },
-      // printGroups() {
-      //   console.log("printGroups")
-      //   for (const groupId of Object.keys(this.schedJobGroups)) {
-      //     const group = this.schedJobGroups[groupId];
-      //     let psj;
-      //     for (const date of Object.keys(group)) {
-      //       const sj = group[date];
-      //       console.log(`${sj.id} ${sj.team} ${sj.date}`)
-      //       if (psj && psj == sj) {
-      //         console.log(`${psj.date} and ${sj.date} are the same `)
-      //       }
-      //       if (psj && psj.getJob1() == sj.getJob1()) {
-      //         console.log("jobs are the same object")
-      //       }
-      //     }
-      //   }
-      // },
       onTableCellSingleClick(event, job) {
+        if (this.selection && this.selection.col === 0) {
+          this.unselectDay(document.getElementById("manpower"));
+        }
+
         if (job.shift == Shift.unasigned) {
           this.unselect();
         }
@@ -2066,7 +2220,7 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         const shift = jobInfo.shift;
         const fontSize = '0.7em'
 
-        if (jobInfo.excludeSunday && isSunday(jobInfo.date)) {
+        if ((jobInfo.excludeSunday && isSunday(jobInfo.date)) || (jobInfo.excludeSaturday && isSaturday(jobInfo.date))) {
           return `background-color:white;font-size:${fontSize};`;
         }
         if (jobInfo.id > 0) {
@@ -2129,14 +2283,32 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
           this.$forceUpdate();
         }
       },
+      openTeamDialog() {
+        this.teamDialog.open=true;
+      },
+      teamMembers(team) {
+        const members = team.teamMembers ? team.teamMembers : [];
+        const teamMembers = [];
+
+        for (let i=0; i<members.length; i++) {
+          teamMembers.push({id: i+1, checked: false, teamMember: members[i]});
+        }
+
+        for (let i=teamMembers.length; i<this.teamMemberDialog.maxTeamMembers; i++) {
+          teamMembers.push({id: i+1, checked: false, teamMember: ""});
+        }
+        return teamMembers;
+      },
       editTeam(team, schedJob) {
         this.teamDialog.team = team;
         this.teamDialog.editedTeam = new Team(team);
         this.teamDialog.schedJob = schedJob;
+        this.teamDialog.teamMembers = this.teamMembers(team);
 
         this.teamDialog.oper = "edit";
         this.teamDialog.title = "Edit team";
-        this.teamDialog.open = true;
+        this.teamDialog.showList = false;
+        this.teamDialog.showForm = true;
       },
       newTeam() {
         this.teamDialog.team = new Team({ id: 0, foreman: "", vehicle: "", position: 0, teamMembers: []});
@@ -2144,32 +2316,27 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         
         this.teamDialog.oper = "new";
         this.teamDialog.title = "New team";
-        this.teamDialog.open = true;
+
+        this.teamDialog.showList = false;
+        this.teamDialog.showForm = true;
       },
       copyTeamMembers(source, target) {
         target.length = 0;
-        for (var i=0; i<source.length; i++) {
-          if (source[i].teamMember.trim() !== "") {
-            target.push(source[i].teamMember);
+        for (let i=0; i<source.length; i++) {
+          const member = source[i].teamMember;
+          if (member.trim() !== "") {
+            target.push(member);
           }
         }
         if (target.length == 0) {
           target.push("-");
         }
       },
-      updateSchedJobGroupTeam(schedJob) {
-          const sjGroup = this.schedJobGroups[schedJob.id];
-          Object.values(sjGroup).forEach( sj => {
-            this.copyTeamMembers(this.teamMembers, sj.teamMembers);
-            sj.setLastUpdate();
-          })
-      },
-      validateTeamMember(id, teamMember) {
-        //console.log("team id", id, "teamMember", teamMember);
+      validateTeamMember(teamMember) {
+        // verify that the new team member doesn't exist in any other team
         for (const team of this.teams) {
-          if (team.id != id) {
+          if (team.id != teamMember.id) {
             const members = team.teamMembers;
-            //console.log("teamMembers", JSON.stringify(members));
             if (members.includes(teamMember.teamMember)) {
               this.showMessage(`${teamMember.teamMember} is in ${team.foreman}'s team`);
               teamMember.teamMember = "";
@@ -2182,22 +2349,23 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         const team = this.teamDialog.editedTeam;
         if (this.teamDialog.oper === "new") {
           this.teams_.splice(team.position, 0, team);
-          this.copyTeamMembers(this.teamMembers, team.teamMembers);
+          this.copyTeamMembers(this.teamDialog.teamMembers, team.teamMembers);
         } else {
           team.position -= 0.5;
           this.teamDialog.team.update(team);
-          this.copyTeamMembers(this.teamMembers, this.teamDialog.team.teamMembers);
-          this.updateSchedJobGroupTeam(this.teamDialog.schedJob);
+          this.copyTeamMembers(this.teamDialog.teamMembers, this.teamDialog.team.teamMembers);
         }
         this.updateTeamOrder();
         this.refreshTeams++;
         this.jobScheduleCount++;
-        this.teamDialog.open = false;
+        this.teamDialog.showForm = false;
+        this.teamDialog.showList = true;
       },
       deleteTeam() {
-        if (this.teamDialog.oper === "new") {
-          return;
-        }
+        console.log("deleteTeam")
+        // if (this.teamDialog.oper === "new") {
+        //   return;
+        // }
         if (this.teamDialog.editedTeam.position >= 100) {
           return;
         }
@@ -2208,17 +2376,16 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         }
         this.refreshTeams++;
         this.jobScheduleCount++;
-        this.teamDialog.open = false;
+        this.teamDialog.showForm = false;
+        this.teamDialog.showList = true;        
       },
       deleteTeamMember() {
-        const teamMembers = this.teamDialog.editedTeam.teamMembers;
-        for (var i=this.teamMembers.length-1; i>=0; i--) {
-          if (this.teamMembers[i].checked) {
+        const teamMembers = this.teamDialog.teamMembers;
+        for (let i=teamMembers.length-1; i>=0; i--) {
+          if (teamMembers[i].checked) {
             teamMembers.splice(i, 1);
           }
         }
-        this.refreshTeamMembers++;
-        this.$forceUpdate();
       },
       updateTeamOrder() {
         this.teams.sort( (t1, t2) => t1.position - t2.position );
@@ -2229,8 +2396,67 @@ import { datediff, date2string, string2date, addDays, isSunday} from '../../comp
         }
       },      
       closeTeam() {
-        this.teamDialog.open = false;
+        this.teamDialog.showForm = false;
+        this.teamDialog.showList = true;
       },
+      validateJobTeamMember(teamMember) {
+        // validadte that the new team member does not exist in any other scheduled job on the same date
+        const schedJob = this.teamMemberDialog.schedJob;
+        const day = this.dayIndex[schedJob.date];
+        for (const sj of Object.values(day.jobs)) {
+          if (sj != this.teamMemberDialog.schedJob && sj.teamMembers.includes(teamMember.teamMember)) {
+            const team = this.teams_.find( team => team.id === sj.team);
+            this.showMessage(`${teamMember.teamMember} is in ${team.foreman}'s team`);
+            teamMember.teamMember = "";
+            break;
+          }
+        }
+      },
+      jobTeamMembers(schedJob) {
+        const members = schedJob.teamMembers ? schedJob.teamMembers : [];
+        const teamMembers = [];
+
+        for (let i=0; i<members.length; i++) {
+          teamMembers.push({id: i+1, checked: false, teamMember: members[i]});
+        }
+
+        for (let i=teamMembers.length; i<this.teamMemberDialog.maxTeamMembers; i++) {
+          teamMembers.push({id: i+1, checked: false, teamMember: ""});
+        }
+        return teamMembers;
+      },
+      openTeamMemberDialog(team, schedJob) {
+        this.teamMemberDialog.open = true;
+        this.teamMemberDialog.team = team;
+        this.teamMemberDialog.schedJob = schedJob;
+        this.teamMemberDialog.teamMembers = this.jobTeamMembers(schedJob);
+      },
+      closeTeamMemberDialog() {
+        this.teamMemberDialog.open = false;
+      },
+      updateSchedJobGroupTeam(schedJob) {
+          if (schedJob.id === 0) {
+            return;
+          }
+          const teamMembers = this.teamMemberDialog.teamMembers;          
+          const sjGroup = this.schedJobGroups[schedJob.id];
+          Object.values(sjGroup).forEach( sj => {
+            this.copyTeamMembers(teamMembers, sj.teamMembers);
+            sj.setLastUpdate();
+          })
+      },
+      deleteJobTeamMember() {
+        const teamMembers = this.teamMemberDialog.teamMembers;
+        for (let i=teamMembers.length-1; i>=0; i--) {
+          if (teamMembers[i].checked) {
+            teamMembers.splice(i, 1);
+          }
+        }
+      },
+      saveTeamMembers() {
+        this.updateSchedJobGroupTeam(this.teamMemberDialog.schedJob);
+        this.teamMemberDialog.open = false;
+      },      
       editOptions() {
         this.showOptionsDialog = true;
       },

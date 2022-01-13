@@ -1,10 +1,10 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Inspections.Core.Domain.ReportsAggregate
 {
@@ -75,7 +75,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
         }
 
         public IReadOnlyCollection<PhotoRecord> PhotoRecords => photoRecords;
-        public bool Completed => !checkList.Any(c => !c.Completed);
+        public bool Completed => checkList.All(c => c.Completed);
 
         public void AddNote(Note note)
         {
@@ -125,7 +125,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
         {
             foreach (var sign in signature)
             {
-                signatures.Add(sign.PreparteForNewReport(userName));
+                signatures.Add(sign.PrepareForNewReport(userName));
             }
         }
 

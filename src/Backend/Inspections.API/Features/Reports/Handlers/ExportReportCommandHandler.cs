@@ -25,7 +25,7 @@ namespace Inspections.API.Features.Reports.Handlers
         {
             Guard.Against.Null(request, nameof(request));
             var config = _context.Set<ReportConfiguration>().FirstOrDefault(c => c.Id == request.ExportData.ReportConfigurationId);
-            if(config is null) throw new InvalidOperationException("Report configurationinfo is required");
+            if (config is null) throw new InvalidOperationException("Report configurationinfo is required");
             return await GenerateReport(request.ExportData.PageUrl, config, request.ExportData.PhotosPerPage);
         }
 

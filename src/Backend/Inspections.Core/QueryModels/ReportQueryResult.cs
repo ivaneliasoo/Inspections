@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Shared;
 
 namespace Inspections.Core.QueryModels
@@ -19,7 +15,7 @@ namespace Inspections.Core.QueryModels
         public decimal? LicenseKVA { get; set; }
         public decimal? LicenseVolt { get; set; }
         public decimal? LicenseAmp { get; set; }
-        public DateTimeRange ?LicenseValidity { get; set; } = default!;
+        public DateTimeRange? LicenseValidity { get; set; } = default!;
         public string Title { get; set; } = default!;
         public string FormName { get; set; } = default!;
         public string? RemarksLabelText { get; set; }

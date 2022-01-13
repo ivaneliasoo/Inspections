@@ -1,13 +1,11 @@
-﻿using Ardalis.GuardClauses;
-using Inspections.API.Features.Signatures.Commands;
-using Inspections.Core.Domain.SignaturesAggregate;
-using Inspections.Core.Interfaces;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
+using Inspections.API.Features.Signatures.Commands;
+using Inspections.Core.Domain.SignaturesAggregate;
+using Inspections.Core.Interfaces.Repositories;
+using MediatR;
 
 namespace Inspections.API.Features.Signatures.Handlers
 {

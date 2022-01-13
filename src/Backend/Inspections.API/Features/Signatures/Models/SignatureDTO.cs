@@ -1,10 +1,6 @@
-﻿using Ardalis.GuardClauses;
-using Inspections.Core.Domain.ReportsAggregate;
+﻿using System;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain.SignaturesAggregate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Inspections.API.Features.Signatures.Models
 {
@@ -14,7 +10,7 @@ namespace Inspections.API.Features.Signatures.Models
         public string Title { get; set; }
         public string? Annotation { get; set; }
         public ResponsibleType ResponsableType { get; set; }
-        public string? ResponsableName { get; set; } = default!; 
+        public string? ResponsableName { get; set; } = default!;
         public string? Designation { get; set; }
         public string? Remarks { get; set; }
         public DateTimeOffset Date { get; set; }

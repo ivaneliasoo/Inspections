@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Inspections.API.Features.Inspections.Queries
+﻿namespace Inspections.Core.Interfaces.Queries
 {
     public class IInspectionsQueries
     {

@@ -1,11 +1,9 @@
-﻿using Inspections.API.Features.Users.Services;
-using Inspections.Infrastructure.Data;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
+using Inspections.API.Features.Users.Services;
+using Inspections.Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Inspections.API.Features.Users
 {
@@ -28,7 +26,7 @@ namespace Inspections.API.Features.Users
         /// </summary>
         /// <param name="loginModel"></param>
         /// <returns></returns>
-        [HttpPost("token", Name ="Login")]
+        [HttpPost("token", Name = "Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]

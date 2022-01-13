@@ -1,11 +1,10 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using MediatR;
 
 namespace Inspections.Shared
 {
-    public abstract class Entity<T> 
+    public abstract class Entity<T>
     {
 
         int? _requestedHashCode;

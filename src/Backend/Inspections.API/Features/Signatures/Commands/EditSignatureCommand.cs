@@ -1,12 +1,12 @@
-﻿using Inspections.Core.Domain.SignaturesAggregate;
+﻿using System;
+using Inspections.Core.Domain.SignaturesAggregate;
 using MediatR;
-using System;
 
 namespace Inspections.API.Features.Signatures.Commands
 {
     public class EditSignatureCommand : IRequest<bool>
     {
-        public EditSignatureCommand(int id, 
+        public EditSignatureCommand(int id,
                                    string title,
                                    string annotation,
                                    ResponsibleType responsibleType,

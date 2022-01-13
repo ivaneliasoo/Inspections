@@ -7,14 +7,11 @@ using Ardalis.GuardClauses;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Inspections.API.ApplicationServices;
-using Inspections.API.Extensions;
-using Inspections.API.Features.Inspections.Commands;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Features.Reports.Models;
 using Inspections.API.Models.Configuration;
-using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Core.QueryModels;
 using Inspections.Infrastructure.Data;
 using MediatR;
@@ -23,13 +20,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
-using Microsoft.Playwright;
-using PuppeteerSharp;
-using PuppeteerSharp.Media;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Inspections.API.Features.Inspections
+namespace Inspections.API.Features.Reports
 {
     [Authorize]
     [Route("api/[controller]")]
@@ -129,7 +123,6 @@ namespace Inspections.API.Features.Inspections
             MapperConfiguration config = new MapperConfiguration(cfg =>
                                                                      {
                                                                          cfg.CreateMap<PhotoRecord, PhotoRecordResult>();
-
                                                                      });
             var photos = _context.Set<PhotoRecord>().ProjectTo<PhotoRecordResult>(config).Where(p => p.ReportId == id).ToList();
 
@@ -307,9 +300,9 @@ namespace Inspections.API.Features.Inspections
             var token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "", StringComparison.InvariantCultureIgnoreCase);
             //var exportData = new ExportDTO($"http://localhost:3000/client/print?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
             var exportData = new ExportDTO($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Host}:{Environment.GetEnvironmentVariable("UIPORT")}/print?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
-            var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData)).ConfigureAwait(false);   
+            var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData)).ConfigureAwait(false);
             return File(fileContent, "application/pdf", "prueba.pdf");
-            
+
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Inspections.Core.Domain
     public class JsonDateConverter : JsonConverter<DateTime>
     {
         public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            => DateTime.ParseExact(reader.GetString(), 
+            => DateTime.ParseExact(reader.GetString(),
                     "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)

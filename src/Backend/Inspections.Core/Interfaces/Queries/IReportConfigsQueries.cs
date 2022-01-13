@@ -1,8 +1,7 @@
-﻿using Inspections.Core.QueryModels;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Inspections.Core.QueryModels;
 
-namespace Inspections.Infrastructure.Queries
+namespace Inspections.Core.Interfaces.Queries
 {
     public interface IReportConfigurationsQueries
     {

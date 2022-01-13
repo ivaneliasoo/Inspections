@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 #nullable enable
@@ -14,7 +13,7 @@ namespace Inspections.Core.Domain
         public int id { get; set; }
 
         public string? vehicle { get; set; }
-        
+
         public string? foreman { get; set; }
 
         public int position { get; set; }
@@ -31,10 +30,11 @@ namespace Inspections.Core.Domain
         public string? teamMembers { get; set; }
 
         public DateTimeOffset LastEdit { get; set; }
-        
+
         public string LastEditUser { get; set; }
 
-        public Team() {
+        public Team()
+        {
             this.id = 0;
             this.vehicle = "";
             this.status = "";
@@ -42,10 +42,11 @@ namespace Inspections.Core.Domain
             this.position = 0;
             //this.teamMembers = null;
             this.LastEdit = new DateTimeOffset();
-            this.LastEditUser = "";            
+            this.LastEditUser = "";
         }
 
-        public Team(int id, string vehicle, string foreman) {
+        public Team(int id, string vehicle, string foreman)
+        {
             this.id = id;
             this.vehicle = vehicle;
             this.foreman = foreman;
@@ -53,7 +54,7 @@ namespace Inspections.Core.Domain
             this.position = 0;
             //this.teamMembers = null;
             this.LastEdit = new DateTimeOffset();
-            this.LastEditUser = "";            
+            this.LastEditUser = "";
         }
     }
 }

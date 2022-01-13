@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
+using Inspections.API.Features.Licenses.Models;
+using Inspections.Core.Domain;
+using Inspections.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Inspections.Core.Domain;
-using Inspections.Infrastructure.Data;
-using Inspections.API.Features.Licenses.Models;
-using Ardalis.GuardClauses;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Inspections.API.Features.Licenses
 {
@@ -59,7 +59,7 @@ namespace Inspections.API.Features.Licenses
         // PUT: api/EMALicenses/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}", Name ="UpdateLicense")]
+        [HttpPut("{id}", Name = "UpdateLicense")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -110,7 +110,7 @@ namespace Inspections.API.Features.Licenses
         // POST: api/EMALicenses
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost(Name ="AddLicense")]
+        [HttpPost(Name = "AddLicense")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult<EMALicense>> PostEMALicense([FromBody] LicenseDTO eMALicense)
@@ -137,7 +137,7 @@ namespace Inspections.API.Features.Licenses
         }
 
         // DELETE: api/EMALicenses/5
-        [HttpDelete("{id}", Name ="DeleteLicense")]
+        [HttpDelete("{id}", Name = "DeleteLicense")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
@@ -155,7 +155,7 @@ namespace Inspections.API.Features.Licenses
             return eMALicense;
         }
 
-        [HttpGet("dashboard", Name="GetLicensesDashboard")]
+        [HttpGet("dashboard", Name = "GetLicensesDashboard")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]

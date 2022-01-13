@@ -23,15 +23,17 @@ namespace Inspections.Core.Domain
 
         // [Column("lastedit")]
         public DateTimeOffset LastEdit { get; set; }
-        
+
         // [Column("lastedituser")]
         public string LastEditUser { get; set; }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return $"{id} {circuit} {startDate} {endDate} {currentData}";
         }
 
-        public CurrentTable() {
+        public CurrentTable()
+        {
             id = 0;
             circuit = "";
             startDate = "";
@@ -39,6 +41,6 @@ namespace Inspections.Core.Domain
             currentData = "";
             LastEdit = new DateTimeOffset();
             LastEditUser = "";
-        }        
+        }
     }
 }

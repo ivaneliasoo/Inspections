@@ -8,4 +8,5 @@ export interface AddReportConfigurationCommand {
     inactive: boolean;
     checksDefinition: number[];
     signatureDefinitions: number[];
+    printSectionId: number;
 }

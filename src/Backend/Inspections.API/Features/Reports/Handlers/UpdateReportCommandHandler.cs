@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
-using Inspections.API.Features.Inspections.Commands;
-using Inspections.Core.Interfaces;
+using Inspections.API.Features.Reports.Commands;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -31,8 +31,7 @@ namespace Inspections.API.Features.Reports.Handlers
             if (license is null)
                 throw new Exception($"Conflict. can't find License {request.LicenseNumber}");
 
-            report.Edit(reportName, request.Address, license, request.Date); ;
-
+            report.Edit(reportName, request.Address, license, request.Date);
             if (!report.IsClosed && request.IsClosed)
             {
                 report.Close();

@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.Core.Domain.ReportsAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +22,7 @@ namespace Inspections.API.Features.Reports.Handlers
         }
         public async Task<bool> Handle(UpdateOperationalReadingsCommand request, CancellationToken cancellationToken)
         {
-            var report = await _context.Reports.AsNoTracking().Include("OperationalReadings").AsNoTracking().SingleOrDefaultAsync(r => r.Id == request.ReportId);
+            var report = await _context.Set<Report>().AsNoTracking().Include("OperationalReadings").AsNoTracking().SingleOrDefaultAsync(r => r.Id == request.ReportId);
             if (report is not null && report.OperationalReadings is not null)
             {
                 var op = new OperationalReadings()

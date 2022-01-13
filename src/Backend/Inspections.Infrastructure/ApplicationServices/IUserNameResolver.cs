@@ -1,4 +1,4 @@
-﻿namespace Inspections.Core
+﻿namespace Inspections.Infrastructure.ApplicationServices
 {
     public interface IUserNameResolver
     {
