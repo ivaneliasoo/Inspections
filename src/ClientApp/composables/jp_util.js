@@ -50,3 +50,25 @@ export function* dateIterator(startDate, endDate) {
 export function isSunday(strDate) {
   return string2date(strDate).getDay() == 0;
 }
+
+export function isSaturday(strDate) {
+  return string2date(strDate).getDay() == 6;
+}
+
+export function printGroups(schedJobGroups) {
+  console.log("printGroups")
+  for (const groupId of Object.keys(schedJobGroups)) {
+    const group = schedJobGroups[groupId];
+    let psj;
+    for (const date of Object.keys(group)) {
+      const sj = group[date];
+      console.log(`${sj.id} ${sj.team} ${sj.date}`)
+      if (psj && psj == sj) {
+        console.log(`${psj.date} and ${sj.date} are the same `)
+      }
+      if (psj && psj.getJob1() == sj.getJob1()) {
+        console.log("jobs are the same object")
+      }
+    }
+  }
+}

@@ -94,6 +94,7 @@ namespace Inspections.API.Features.JobPlanner
                             prev.job2 = sj.job2;
                             prev.teamMembers = sj.teamMembers;
                             prev.excludeSunday = sj.excludeSunday;
+                            prev.excludeSaturday = sj.excludeSaturday;
                             prev.lastUpdate = DateTime.Now;
                             prev.updated = false;
                         }
