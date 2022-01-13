@@ -65,4 +65,5 @@ jobs:
           echo ${{ env.BRANCH }}
           echo ${{ env.RELEASE_DATE }}
           echo ${{ env.REVISION }}
-          docker push $DOCKER_USER/scb-frontend
+          docker push $DOCKER_USER/scb-frontend:${{env.BRANCH}}
+          docker push $DOCKER_USER/scb-backend:${{env.BRANCH}}
