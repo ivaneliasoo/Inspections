@@ -231,7 +231,7 @@ export class SchedJob {
             this.job2 = "";
             this.shift = "";
             this.splitShift = false;
-            this.teamMembers = ["-"];
+            this.teamMembers = [];
             this.excludeSaturday = true;
             this.excludeSunday = true;
             this.lastUpdate = null;
@@ -244,7 +244,9 @@ export class SchedJob {
             this.splitShift = sj.splitShift ? true : false;
             this.job1 = sj.job1;
             this.job2 = sj.job2;
-            this.teamMembers = typeof sj.teamMembers === "string" ? JSON.parse(sj.teamMembers) : sj.teamMembers;
+            this.teamMembers = sj.teamMembers 
+                ? (typeof sj.teamMembers === "string" ? JSON.parse(sj.teamMembers) : sj.teamMembers.slice())
+                : [];
             this.excludeSaturday = sj.excludeSaturday;
             this.excludeSunday = sj.excludeSunday;
             this.lastUpdate = sj.lastUpdate;
@@ -360,7 +362,8 @@ export class SchedJob {
     }
 
     getTeamMembers() {
-        return this.teamMembers.length > 0 ? this.teamMembers : ["-"];
+        //return this.teamMembers.length > 0 ? this.teamMembers : ["-"];
+        return this.teamMembers;
     }
 
     get teamMembers() {
@@ -388,6 +391,13 @@ export class SchedJob {
     set excludeSunday(es) {
         this.#excludeSunday = es;
         this.setLastUpdate();
+    }
+
+    isBlank() {
+        if (this.id === 0 && this.job1.trim() === "" && this.job2.trim() === "") {
+            return true;
+        }
+        return false;
     }
 
     setLastUpdate() {

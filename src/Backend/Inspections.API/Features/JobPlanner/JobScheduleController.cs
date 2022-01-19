@@ -21,7 +21,7 @@ namespace Inspections.API.Features.JobPlanner
         private readonly ILogger<JobScheduleController> _logger;
         private readonly InspectionsContext _context;
 
-        private readonly string APIVersion = "v1.202";
+        private readonly string APIVersion = "v1.303";
 
         public JobScheduleController(ILogger<JobScheduleController> logger, InspectionsContext context)
         {
@@ -58,7 +58,7 @@ namespace Inspections.API.Features.JobPlanner
             foreach (SchedJob sj in schedJobs) {
                 var prev = _context.SchedJob.Where(s => s.date == sj.date && s.team == sj.team).FirstOrDefault();
                 if (prev == null) {
-                    if (sj.lastUpdate == null) {
+                    if (sj.lastUpdate == null && sj.id > -1) {
                         _logger.LogInformation("New scheduled job: {0:D}: {1}", sj.id, sj.job1);
                         sj.lastUpdate = DateTime.Now;
                         _context.Add(sj);
