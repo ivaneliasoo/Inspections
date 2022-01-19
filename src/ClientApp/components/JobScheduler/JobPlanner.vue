@@ -1924,11 +1924,12 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
 
         const srcTeamMembers = srcJob.teamMembers;
         srcTeamMembers.splice(srcTeamMembers.indexOf(src.teamMember), 1);
-        if (teamMembers.length == 1 && teamMembers[0] == "-") {
-          teamMembers[0] = src.teamMember;
-        } else {
-          teamMembers.push(src.teamMember);
-        }
+        // if (teamMembers.length == 1 && teamMembers[0] == "-") {
+        //   teamMembers[0] = src.teamMember;
+        // } else {
+        //   teamMembers.push(src.teamMember);
+        // }
+        teamMembers.push(src.teamMember);
         srcJob.setLastUpdate();
         targetJob.setLastUpdate();
         this.$forceUpdate();
@@ -2324,9 +2325,9 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
             target.push(member);
           }
         }
-        if (target.length == 0) {
-          target.push("-");
-        }
+        // if (target.length == 0) {
+        //   target.push("-");
+        // }
       },
       checkTeamForeman(team) {
         if (team.foreman.trim() === "") {
