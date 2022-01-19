@@ -40,6 +40,11 @@ export function addDays(date, days) {
   return result;
 }
 
+export function addDays2Date(date, days) {
+  const d = addDays(string2date(date), days);
+  return date2string(d);
+}
+
 export function* dateIterator(startDate, endDate) {
   for (let i = string2date(startDate); i <= string2date(endDate); i=addDays(i, 1)) {
       yield date2string(i);

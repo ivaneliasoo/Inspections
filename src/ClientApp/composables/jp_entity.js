@@ -61,7 +61,7 @@ export class Job {
             this.shift = job.shift == null ? "" : job.shift;
             this.lastUpdate = job.lastUpdate;
             this.updated = job.updated;
-        }        
+        }
     }
 
     get scope() {
@@ -143,7 +143,7 @@ export class Job {
     set teamCount(tc) {
         this.#teamCount = tc;
         this.setlastUpdate();
-    }    
+    }
 
     get duration() {
         return this.#duration;
@@ -161,7 +161,7 @@ export class Job {
     set shift(s) {
         this.#shift = s;
         this.setlastUpdate();
-    }    
+    }
 
     get salesPerson() {
         return this.#salesPerson;
@@ -193,7 +193,7 @@ export class Job {
             lastUpdate: this.lastUpdate,
             updated: this.updated
         }
-    }    
+    }
 }
 
 export const Shift = {
@@ -231,7 +231,7 @@ export class SchedJob {
             this.job2 = "";
             this.shift = "";
             this.splitShift = false;
-            this.teamMembers = ["-"];
+            this.teamMembers = [];
             this.excludeSaturday = true;
             this.excludeSunday = true;
             this.lastUpdate = null;
@@ -244,7 +244,9 @@ export class SchedJob {
             this.splitShift = sj.splitShift ? true : false;
             this.job1 = sj.job1;
             this.job2 = sj.job2;
-            this.teamMembers = typeof sj.teamMembers === "string" ? JSON.parse(sj.teamMembers) : sj.teamMembers;
+            this.teamMembers = sj.teamMembers
+                ? (typeof sj.teamMembers === "string" ? JSON.parse(sj.teamMembers) : sj.teamMembers.slice())
+                : [];
             this.excludeSaturday = sj.excludeSaturday;
             this.excludeSunday = sj.excludeSunday;
             this.lastUpdate = sj.lastUpdate;
@@ -301,7 +303,7 @@ export class SchedJob {
         const g = SchedJob.groupIndex[this.id];
         if (!g) {
             return "";
-        }        
+        }
         const group = Object.keys(SchedJob.groupIndex[this.id]);
         return group.reduce( (d1, d2) => d2 < d1 ? d1 : d2, group[0] )
     }
@@ -360,7 +362,8 @@ export class SchedJob {
     }
 
     getTeamMembers() {
-        return this.teamMembers.length > 0 ? this.teamMembers : ["-"];
+        //return this.teamMembers.length > 0 ? this.teamMembers : ["-"];
+        return this.teamMembers;
     }
 
     get teamMembers() {
@@ -388,6 +391,13 @@ export class SchedJob {
     set excludeSunday(es) {
         this.#excludeSunday = es;
         this.setLastUpdate();
+    }
+
+    isBlank() {
+        if (this.id === 0 && this.job1.trim() === "" && this.job2.trim() === "") {
+            return true;
+        }
+        return false;
     }
 
     setLastUpdate() {
@@ -496,7 +506,7 @@ export class Team {
             this.lastUpdate = t.lastUpdate;
             this.updated = t.updated;
         }
-    }        
+    }
 
     get id() {
         return this.#id;
@@ -548,7 +558,7 @@ export class Team {
         this.#foreman = t.foreman;
         this.#vehicle = t.vehicle;
         this.#position = t.position;
-        this.#teamMembers = typeof t.teamMembers === "string" ? JSON.parse(t.teamMembers) : t.teamMembers;        
+        this.#teamMembers = typeof t.teamMembers === "string" ? JSON.parse(t.teamMembers) : t.teamMembers;
         this.lastUpdate = t.lastUpdate;
         this.updated = t.updated;
     }
@@ -574,7 +584,7 @@ export class Selection {
     constructor(col, startRow) {
         this.col = col;
         this.startRow = startRow;
-        this.endRow = startRow;        
+        this.endRow = startRow;
     }
 }
 
@@ -582,6 +592,6 @@ export class Clipboard {
     constructor(team, startDate, numRows) {
         this.team = team;
         this.startDate = startDate;
-        this.numRows = numRows;        
+        this.numRows = numRows;
     }
 }
