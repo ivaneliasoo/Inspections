@@ -394,7 +394,7 @@ export class SchedJob {
     }
 
     isBlank() {
-        if (this.id === 0 && this.job1.trim() === "" && this.job2.trim() === "") {
+        if (this.id === 0 && this.job1.trim() === "" && this.job2.trim() === "" && this.teamMembers.length==0) {
             return true;
         }
         return false;
@@ -435,7 +435,7 @@ export class SchedJob {
             shift: this.shift,
             splitShift: this.splitShift,
             teamMembers: JSON.stringify(this.teamMembers),
-            xcludeSaturday: this.excludeSaturday,
+            excludeSaturday: this.excludeSaturday,
             excludeSunday: this.excludeSunday,
             lastUpdate: this.lastUpdate,
             updated: this.updated

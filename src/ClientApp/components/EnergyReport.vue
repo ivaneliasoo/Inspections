@@ -2072,6 +2072,7 @@ export default {
         const csvData = Papa.parse(text, {
           header: true,
           dynamicTyping: true,
+          delimiter: ';',
           step: function (parsedRow) {
             const dt = self.dateTime(
               parsedRow.data[self.dateColumn],
