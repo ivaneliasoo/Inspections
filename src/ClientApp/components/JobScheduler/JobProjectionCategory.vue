@@ -17,7 +17,7 @@
               >
                 <tr>
                   <td style="width 84%">
-                    {{ jobList.title }}
+                    {{ jobList.title }} ({{ jobList.jobs.length }})
                   </td>
                   <td style="width 8%">
                     <v-btn icon small @click="delJob">
@@ -25,7 +25,7 @@
                     </v-btn>
                   </td>
                   <td style="width 8%">
-                    <v-btn icon small @click="$emit('add-job', jobStatus)">
+                    <v-btn icon small @click="addJob">
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                   </td>
@@ -37,7 +37,11 @@
       </table>
     </div>
 
-    <div :style="mainDivStyle()">
+    <div 
+      :style="mainDivStyle()"
+      @drop="dropJob($event)"
+      @dragover="dragoverHandler($event)"
+    >
       <table
         style="
           width: 100%;
@@ -47,8 +51,7 @@
         "
       >
         <tbody>
-          <tr v-for="(jobItem, index) in jobList.jobs" :key="index"
-          >
+          <tr v-for="(jobItem, index) in jobList.jobs" :key="index">
             <td
               name="table-cell"
               class="table-cell text-left"
@@ -126,14 +129,16 @@
                 </tr>
                 <tr style="height: 20%; border-top-style: hidden">
                   <td colspan="5" style="border-right-style: hidden">
+                    <label v-if="jobItem.value" class="text-caption">$</label>
                     <input
                       class="text-caption table-input"
                       type="text"
                       placeholder="Value"
                       v-model="jobItem.value"
-                      style="outline: none; display: table-cell; width: 100%"
-                    />
-                  </td>
+                      style="outline: none; display: table-cell; width: 80%"
+                      @change="$forceUpdate()"
+                    >
+                </td>
                 </tr>
                 <tr style="height: 20%">
                   <td class="text-center" colspan="4">
@@ -221,18 +226,21 @@ export default {
       this.selected = new Array(this.jobList.jobs.length).fill(false);
     }
   },
-  computed: {
-    jobProjection() {
-      return `
-          width: 100%;
-          height: 130px;
-          border-collapse: collapse;
-          border: 1px solid black;`;
-    }
-  },
+  // computed: {
+  //   jobProjection() {
+  //     return `
+  //         width: 100%;
+  //         height: 130px;
+  //         border-collapse: collapse;
+  //         border: 1px solid black;`;
+  //   }
+  // },
   methods: {
+    addJob() {
+      this.unselect();
+      this.$emit('add-job', this.jobStatus);
+    },
     delJob() {
-      console.log("this.selected", this.selected)
       const jobs = [];
       for (let i=0; i < this.selected.length; i++) {
         if (this.selected[i]) {
@@ -250,10 +258,34 @@ export default {
 
       this.$emit('del-job', jobs);
     },
+    jobDragStart(ev) {
+      const source = ev.target.getAttribute("data-source");
+      if (source == "confirmed-job" || source == "upcoming-job") {
+        const data = {
+          source: source,
+          jobId: ev.target.getAttribute("data-jobid"),
+          category: this.jobStatus
+        };
+        ev.dataTransfer.setData("application/json", JSON.stringify(data));
+      }
+    },
+    dropJob(event) {
+      console.log("dropJob")
+      const srcData = JSON.parse(event.dataTransfer.getData("application/json"));
+      const jobId = srcData.jobId;
+      const category = srcData.category;
+      if (category !== this.jobStatus) {
+        this.$emit('update-job-status', jobId, this.jobStatus);
+      }
+    },
+    dragoverHandler(event) {
+      event.preventDefault();
+      event.dataTransfer.dropEffect = "move"
+    },
     findAncestor(el) {
         for ( ; el.getAttribute('name') !== "table-cell"; el = el.parentElement);
         return el;
-    },    
+    },
     onJobClick(event, jobIndex) {
       const td = this.findAncestor(event.target);
       if (td.classList.contains("selected")) {
@@ -262,6 +294,19 @@ export default {
         td.classList.add("selected");
       }
       this.selected[jobIndex] = !this.selected[jobIndex];
+    },
+    unselect() {
+      for (let i=0; i < this.selected.length; i++) {
+        if (this.selected[i]) {
+          this.selected[i] = false;
+        }
+      }
+      let cells = document.getElementsByName("table-cell");
+      for (const cell of cells) {
+        if (cell.classList.contains("selected")) {
+            cell.classList.remove("selected");
+        }        
+      }
     },
     mainDivStyle() {
       return `height: ${this.height}; overflow-y: scroll;`;
@@ -296,16 +341,6 @@ export default {
         return "background: linear-gradient(to right, rgb(198,224,180) 0%, rgb(198,224,180) 40%, rgb(20,50,0) 80%, rgb(20,50,0) 100%);";
       }
       return "background: white;";
-    },
-    jobDragStart(ev) {
-      const source = ev.target.getAttribute("data-source");
-      if (source == "confirmed-job" || source == "upcoming-job") {
-        const data = {
-          source: source,
-          jobId: ev.target.getAttribute("data-jobid"),
-        };
-        ev.dataTransfer.setData("application/json", JSON.stringify(data));
-      }
     },
     updateShift() {
       this.$forceUpdate();

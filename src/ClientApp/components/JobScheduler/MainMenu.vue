@@ -16,6 +16,11 @@
         </template>
         <v-list class="menu">
           <v-list-item>
+            <v-list-item-title class="font-weight-bold">
+              JOB SCHEDULE
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
             <v-list-item-title @click="$emit('show-job-schedule')">
               Job schedule projection
             </v-list-item-title>
@@ -23,6 +28,12 @@
           <v-list-item>
             <v-list-item-title @click="$emit('show-job-projection-overview')">
               Job projection overview
+            </v-list-item-title>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-title class="font-weight-bold">
+              MANPOWER SCHEDULE
             </v-list-item-title>
           </v-list-item>
           <v-list-item>
@@ -44,11 +55,6 @@
           <v-list-item>
             <v-list-item-title @click="$emit('edit-options')">
               Options
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title @click="$emit('save')">
-              Save
             </v-list-item-title>
           </v-list-item>
         </v-list>

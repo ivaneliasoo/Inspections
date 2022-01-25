@@ -60,7 +60,14 @@
                     <thead>
                         <tr>
                             <th class="text-caption font-weight-bold">Date</th>
-                            <th v-for="team in teams" :key="team.id" class="text-caption font-weight-bold">
+                            <th v-for="(team, index) in teams" :key="team.id"
+                                class="text-caption font-weight-bold draggable"
+                                draggable="true"
+                                data-source="team"
+                                @drop="dropTeam($event, index, team)"
+                                @dragover="dragoverHandler($event)"
+                                @dragstart="teamDragStart($event, index, team)"
+                              >
                               {{team.foreman}}
                             </th>
                         </tr>
@@ -81,6 +88,7 @@
                               @drop="dropHandler($event, index, teamIndex)"
                               @dragover="dragoverHandler($event)"
                               @dragstart="scheduledJobDragstart($event, index, teamIndex)"
+                              @contextmenu="openContextMenu"
                               :style = "jobScheduleStyle(day.jobs[team.id])">
                           <div v-if="showSchedJob(day.jobs[team.id])">
                             <div v-if="splitShift(day.jobs[team.id])">
@@ -122,7 +130,7 @@
                 <v-expansion-panel
                   v-for="(jlist, jid) in jobProjectionTable" :key="jid"
                 >
-                  <v-expansion-panel-header>{{jlist.title}}</v-expansion-panel-header>
+                  <v-expansion-panel-header>{{jlist.title}} ({{jlist.jobs.length}})</v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <job-projection-category v-bind:id="jid" v-bind:jobList="jlist"
                       height="490px" v-bind:showHeader="false"
@@ -328,9 +336,12 @@
           </v-row>
           <v-row>
             <v-col v-for="(jlist, jid) in jobProjectionTable" :key="jid">
-              <job-projection-category v-bind:job-status="jid" v-bind:jobList="jlist" height="680px" showHeader
+              <job-projection-category v-bind:job-status="jid" v-bind:jobList="jlist"
+                height="680px"
+                showHeader
                 @add-job="addJob"
                 @del-job="delJob"
+                @update-job-status="updateJobStatus"
               >
               </job-projection-category>
             </v-col>
@@ -418,9 +429,14 @@
                       <td class="text-caption text-center font-weight-bold foreman">
                           Manpower: {{ day.manPowerTotals().manPower }}
                       </td>
-                      <td v-for="team in teams" :key="team.id"
+                      <td v-for="(team, index) in teams" :key="team.id"
+                          class="text-caption text-center font-weight-bold foreman draggable"
+                          draggable="true"
+                          data-source="team"
+                          @drop="dropTeam($event, index, team)"
+                          @dragover="dragoverHandler($event)"
+                          @dragstart="teamDragStart($event, index, team)"
                           @click="editTeam(team, day.jobs[team.id])"
-                          class="text-caption text-center font-weight-bold foreman"
                           style="background-color: rgb(180,198,231)">
                           {{team.foreman}}
                       </td>
@@ -779,13 +795,8 @@
                 </v-col>
               </v-row>
               <v-row class="my-0 py-0">
-                <v-col cols="8">
+                <v-col>
                   <v-text-field class="my-n2 py-0" label="Vehicle license" v-model="teamDialog.editedTeam.vehicle">
-                  </v-text-field>
-                </v-col>
-                <v-col cols="4">
-                  <v-text-field class="my-n2 py-0" label="Position"
-                      v-model="teamDialog.editedTeam.position">
                   </v-text-field>
                 </v-col>
               </v-row>
@@ -889,6 +900,32 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-menu
+      v-model="showContextMenu"
+      :position-x="xcoord"
+      :position-y="ycoord"
+      absolute
+      offset-y
+    >
+      <v-list>
+        <v-list-item>
+          <v-list-item-title @click="copy">
+            Copy
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-title @click="paste">
+            Paste
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-title @click="deleteScheduleEntry">
+            Delete entry
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
 
     <v-dialog v-model="alert" max-width="600px">
       <v-card>
@@ -1067,6 +1104,9 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
     },
     data: () => ({
       version: 'v1.303',
+      showContextMenu: false,
+      xcoord: 0,
+      ycoord: 0,
       jobScheduleVisible: true,
       jobProjectionVisible: false,
       manPowerVisible: false,
@@ -1269,9 +1309,15 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
       this.notify();
     },
     methods: {
-      // Pending:
-      // 1. When copying entire row the Store cell changes color to blue
-      // 3. Test everything done
+      openContextMenu(e) {
+        e.preventDefault()
+        this.showContextMenu = false
+        this.xcoord = e.clientX
+        this.ycoord = e.clientY
+        this.$nextTick(() => {
+          this.showContextMenu = true
+        })
+      },
       checkScheduleWeeks() {
         if (this.options.scheduleWeeks < 1) {
           this.options.scheduleWeeks = 1;
@@ -1616,7 +1662,7 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
           team: team
         }
 
-        this.copySchedJobs(source, target, false)
+        this.copySchedJobs(source, target, false, true)
 
         this.unselect();
         this.$forceUpdate();
@@ -1741,13 +1787,30 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
           }
         }
 
-        console.log("sourceData", JSON.stringify(sourceData))
-        console.log("targetData", JSON.stringify(targetData))
-
-        this.copySchedJobs(sourceData, targetData, true)
+        this.copySchedJobs(sourceData, targetData, true, true)
 
         this.jobScheduleCount++;
         this.unselect();
+      },
+      teamDragStart(event, index, team) {
+        const source = event.target.getAttribute("data-source");
+        const data = { source: source, teamIndex: index, team: team };
+        event.dataTransfer.setData("application/json", JSON.stringify(data));
+      },
+      dropTeam(event, index, team) {
+        const srcData = JSON.parse(event.dataTransfer.getData("application/json"));
+        if (srcData.source !== "team") {
+          return;
+        }
+        const srcTeam = this.teams[srcData.teamIndex];
+        if (srcTeam.position >= 100) {
+          return;
+        }
+        const tgtTeam = this.teams[index];
+        srcTeam.position = tgtTeam.position < 100 ? tgtTeam.position + 0.5 : 99;
+        //tgtTeam.position += tgtTeam.position < 100 ? 0.5 : 0;
+        this.refreshTeams++;
+        this.jobScheduleCount++;
       },
       sameJob(startDate, numRows, team) {
         if (numRows <= 1) {
@@ -1813,25 +1876,18 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
           this.schedJobGroups[id] = newGroup;
         }
       },
-      copySchedJobs(source, target, deleteSource) {
+      copySchedJobs(source, target, deleteSource, clearFlags) {
         const sameJob = this.sameJob(source.startDate, source.numRows, source.team)
 
         if (sameJob) {
           const src  = {startDate: source.startDate, numRows: source.numRows, team: source.team};
           const numRows = target.numRows == -1 ? source.numRows : target.numRows;
           const trgt = {startDate: target.startDate, numRows: numRows, team: target.team};
-
-          // console.log("copyOneToMany")
-          // console.log(JSON.stringify(src))
-          // console.log(JSON.stringify(trgt))
-
-          this.copyOneToMany(src, trgt)
+          this.copyOneToMany(src, trgt, clearFlags)
         } else {
-          const sourceStartDate = string2date(source.startDate);
-          const targetStartDate = string2date(target.startDate);
           for (var i=0; i<source.numRows; i++) {
-            const src  = {startDate: addDays(sourceStartDate, i), numRows: 1, team: source.team};
-            const trgt = {startDate: addDays(targetStartDate, i), numRows: 1, team: target.team};
+            const src  = {startDate: addDays2Date(source.startDate, i), numRows: 1, team: source.team};
+            const trgt = {startDate: addDays2Date(target.startDate, i), numRows: 1, team: target.team};
             this.copyOneToMany(src, trgt);
           }
         }
@@ -1858,7 +1914,7 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
           this.updateSchedJobGroup(groupId);
         }
       },
-      copyOneToMany(source, target) {
+      copyOneToMany(source, target, clearFlags) {
         const sourceSchedJob = this.dayIndex[source.startDate].jobs[source.team];
         if (sourceSchedJob.isBlank()) {
           return;
@@ -1881,6 +1937,10 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
           schedJob.id = newId;
           schedJob.date = d;
           schedJob.team = target.team;
+          if (clearFlags) {
+            schedJob.excludeSaturday = false;
+            schedJob.excludeSunday = false;
+          }
           schedJob.lastUpdate = null;
           day.jobs[target.team] = schedJob;
 
@@ -1927,9 +1987,7 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
       },
       dropTeamMember(event, targetJob) {
         event.preventDefault();
-        if (targetJob.isBlank()) {
-          return;
-        }
+        const blankJob = targetJob.isBlank();
         const teamMembers = targetJob.teamMembers;
         const srcData = event.dataTransfer.getData("application/json");
         const src = JSON.parse(srcData);
@@ -1938,11 +1996,13 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
 
         const srcTeamMembers = srcJob.teamMembers;
         srcTeamMembers.splice(srcTeamMembers.indexOf(src.teamMember), 1);
-        if (teamMembers.length == 1 && teamMembers[0] == "-") {
-          teamMembers[0] = src.teamMember;
-        } else {
-          teamMembers.push(src.teamMember);
+        teamMembers.push(src.teamMember);
+
+        if (blankJob) {
+          console.log("blank job")
+          this.copyOneToOne(new SchedJob(targetJob), -1, targetJob.date, targetJob.team, false)
         }
+
         srcJob.setLastUpdate();
         targetJob.setLastUpdate();
         this.$forceUpdate();
@@ -2113,15 +2173,31 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
         return jobSchedule.findIndex( day => day.date === date );
       },
       saveSchedJob() {
-        const sourceData = {
-          startDate: this.editedJob.date,
-          numRows: 1,
-          team: this.jobInfo.team
-        }
-        const targetData = {
-          startDate: this.jobDialog.startDate,
-          numRows: datediff(this.jobDialog.startDate, this.jobDialog.endDate)+1,
-          team: this.jobInfo.team
+        if (this.editedJob.startDate === this.jobDialog.startDate
+            && this.editedJob.endDate === this.jobDialog.endDate) {
+          console.log("dates are the same")
+          var sourceData = {
+            startDate: this.jobInfo.date,
+            numRows: 1,
+            team: this.jobInfo.team
+          }
+          var targetData = {
+            startDate: this.jobInfo.date,
+            numRows: 1,
+            team: this.jobInfo.team
+          }
+        } else {
+          console.log("dates are NOT the same")
+          var sourceData = {
+            startDate: this.editedJob.date,
+            numRows: 1,
+            team: this.jobInfo.team
+          }
+          var targetData = {
+            startDate: this.jobDialog.startDate,
+            numRows: datediff(this.jobDialog.startDate, this.jobDialog.endDate)+1,
+            team: this.jobInfo.team
+          }
         }
 
         this.editedJob.update( this.jobInfo );
@@ -2183,6 +2259,40 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
         this.jobScheduleCount++;
         this.jobDialog.open = false;
       },
+      deleteScheduleEntry() {
+        if (!this.selection) {
+          return;
+        }
+
+        const team = this.teams[this.selection.col-1].id;
+        const foreman = team.foreman;
+
+        if (foreman == "On leave") {
+          return;
+        }
+
+        const date = this.jobSchedule[this.selection.startRow-1].date;
+        const schedJob = new SchedJob({id: 0, team: team.id,
+                date: date, shift: Shift.unasigned,
+                job1: "", job2: "", teamMembers : []});
+
+        const source = {
+          startDate: this.jobSchedule[this.selection.startRow-1].date,
+          numRows: this.selection.endRow-this.selection.startRow+1,
+          team: team
+        }
+
+        this.copyOneToOne(schedJob, -1, date, team, false);
+
+        this.notify = () => {
+          this.notify = () => {};
+          this.deleteSchedJobs(source);
+          this.jobScheduleCount++;
+        }
+
+        this.unselect();
+        this.$forceUpdate();
+      },
       flipJobs() {
         const temp = this.jobInfo.job1;
         this.jobInfo.job1 = this.jobInfo.job2;
@@ -2192,35 +2302,35 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
       closeSchedJob() {
         this.jobDialog.open = false;
       },
-      openJobTable(option) {
-        if (option === JobState.confirmed) {
-          this.jobTableDialog.option = JobState.confirmed;
-          this.jobTableDialog.title = "Confirmed Jobs"
-        } else if (option === JobState.upcoming) {
-          this.jobTableDialog.option = JobState.upcoming;
-          this.jobTableDialog.title = "Upcoming Jobs"
-        }
-        this.jobTableDialog.open = true;
-      },
-      closeJobTable() {
-        this.jobTableDialog.open = false;
-      },
-      markChange() {
-        this.jobTableDialog.change = true;
-      },
-      addToJobs(job) {
-        if (job.status === JobStatus.blank) {
-          job.status = (this.jobTableDialog.option === JobState.confirmed) ? JobStatus.onHold : JobStatus.standBy;
-          job.priority = !job.priority ? 10 : job.priority;
-          this.jobs.push(job);
-          this.refreshJobProjectionTable++;
-        }
-      },
-      sortByPriority() {
-        if (this.jobTableDialog.change) {
-          this.sort(this.editedJobTable);
-        }
-      },
+      // openJobTable(option) {
+      //   if (option === JobState.confirmed) {
+      //     this.jobTableDialog.option = JobState.confirmed;
+      //     this.jobTableDialog.title = "Confirmed Jobs"
+      //   } else if (option === JobState.upcoming) {
+      //     this.jobTableDialog.option = JobState.upcoming;
+      //     this.jobTableDialog.title = "Upcoming Jobs"
+      //   }
+      //   this.jobTableDialog.open = true;
+      // },
+      // closeJobTable() {
+      //   this.jobTableDialog.open = false;
+      // },
+      // markChange() {
+      //   this.jobTableDialog.change = true;
+      // },
+      // addToJobs(job) {
+      //   if (job.status === JobStatus.blank) {
+      //     job.status = (this.jobTableDialog.option === JobState.confirmed) ? JobStatus.onHold : JobStatus.standBy;
+      //     job.priority = !job.priority ? 10 : job.priority;
+      //     this.jobs.push(job);
+      //     this.refreshJobProjectionTable++;
+      //   }
+      // },
+      // sortByPriority() {
+      //   if (this.jobTableDialog.change) {
+      //     this.sort(this.editedJobTable);
+      //   }
+      // },
       sort(jobTable) {
           jobTable.sort( (a, b) => {
             const pa = a.priority ? a.priority : 1000000;
@@ -2269,6 +2379,17 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
       addJob(status) {
         this.jobs.push(new Job( { id: 0, scope: "", value: "", status: status, priority: 10} ));
         this.refreshJobProjectionTable++;
+      },
+      updateJobStatus(jobId, status) {
+        console.log("updateJobStatus", jobId, status)
+        let idx = this.jobs.findIndex( job => job.id == jobId );
+        if (idx > -1) {
+          console.log("idx", idx)
+          this.jobs[idx].status = status;
+          console.log("job", JSON.stringify(this.jobs[idx]))
+          this.refreshJobProjectionTable++;
+          this.$forceUpdate();
+        }
       },
       delJob(jobs) {
         for (const job of jobs) {
@@ -2337,9 +2458,6 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
           if (member.trim() !== "") {
             target.push(member);
           }
-        }
-        if (target.length == 0) {
-          target.push("-");
         }
       },
       checkTeamForeman(team) {
