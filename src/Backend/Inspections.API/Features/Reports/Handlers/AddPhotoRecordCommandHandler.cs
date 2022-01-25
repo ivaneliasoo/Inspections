@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Reports.Commands;
-using Inspections.API.Models.Configuration;
 using Inspections.Core.Domain.ReportsAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp.Processing;
 
 namespace Inspections.API.Features.Reports.Handlers
 {
@@ -49,7 +40,7 @@ namespace Inspections.API.Features.Reports.Handlers
                 {
                     var nameAndLabel = !isLabelInHeader ? file.FileName.Split('|', StringSplitOptions.RemoveEmptyEntries) : null;
                     var name = nameAndLabel is null ? file.FileName : nameAndLabel[0];
-                    var label = nameAndLabel is null ? request.Label!.ToUpperInvariant() : nameAndLabel.Length > 1 ? nameAndLabel[1] : ""; 
+                    var label = nameAndLabel is null ? request.Label!.ToUpperInvariant() : nameAndLabel.Length > 1 ? nameAndLabel[1] : "";
                     var filePath = await _photoManager.AddPhoto(file.OpenReadStream(), request!.ReportId.ToString(CultureInfo.InvariantCulture), name, file.ContentType).ConfigureAwait(false);
                     var photo = new PhotoRecord(request.ReportId, filePath.PhotoPath, filePath.ThumbnailPath, label);
                     photo.SetMetadata(filePath.PhotoStorageId!, filePath.ThumbnailStorageId!, filePath.PhotoUrl!, filePath.ThumbnailUrl!);

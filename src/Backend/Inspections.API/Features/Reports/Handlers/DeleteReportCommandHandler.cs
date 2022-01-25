@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.ApplicationServices;
-using Inspections.API.Features.Inspections.Commands;
+using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Models.Configuration;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 using Microsoft.Extensions.Options;
 

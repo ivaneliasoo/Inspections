@@ -1,33 +1,33 @@
-﻿using Inspections.Core.Domain.SignaturesAggregate;
+﻿using System;
+using Inspections.Core.Domain.SignaturesAggregate;
 using MediatR;
-using System;
 
 namespace Inspections.API.Features.Signatures.Commands
 {
     public class EditSignatureCommand : IRequest<bool>
     {
-        public EditSignatureCommand(int id, 
+        public EditSignatureCommand(int id,
                                    string title,
                                    string annotation,
-                                   ResponsibleType responsableType,
+                                   ResponsibleType responsibleType,
                                    string responsibleName,
                                    string designation,
                                    string remarks,
                                    DateTimeOffset date,
                                    bool principal,
-                                   string drawedSign,
+                                   string drawnSign,
                                    short order)
         {
             Id = id;
             Title = title;
             Annotation = annotation;
-            ResponsibleType = responsableType;
+            ResponsibleType = responsibleType;
             ResponsibleName = responsibleName;
             Designation = designation;
             Remarks = remarks;
             Date = date;
             Principal = principal;
-            DrawnSign = drawedSign;
+            DrawnSign = drawnSign;
             Order = order;
         }
 

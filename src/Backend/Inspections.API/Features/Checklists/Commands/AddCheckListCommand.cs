@@ -1,12 +1,7 @@
-﻿using Inspections.API.Features.Checklists.Models;
-using Inspections.Core.Domain.CheckListAggregate;
-using MediatR;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
+using Inspections.API.Features.Checklists.Models;
+using MediatR;
 
 namespace Inspections.API.Features.Checklists.Commands
 {
@@ -15,7 +10,7 @@ namespace Inspections.API.Features.Checklists.Commands
     {
         [DataMember]
         public string Text { get; set; } = default!;
-        
+
         [DataMember]
         public List<CheckListItemDTO>? Items { get; set; }
         [DataMember]

@@ -1,9 +1,4 @@
-﻿using Inspections.Core.Domain.ReportConfigurationAggregate;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Inspections.Core.QueryModels
+﻿namespace Inspections.Core.QueryModels
 {
     public class ResumenReportConfiguration
     {
@@ -16,5 +11,6 @@ namespace Inspections.Core.QueryModels
         public int DefinedSignatures { get; set; }
         public int UsedByReports { get; set; }
         public bool Inactive { get; set; }
+        public string PrintSection { get; set; } = default!;
     }
 }

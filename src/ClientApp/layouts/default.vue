@@ -34,6 +34,7 @@
         v-show="showScrollUpFab"
         color="primary"
         fab
+        x-small
         fixed
         dark
         bottom

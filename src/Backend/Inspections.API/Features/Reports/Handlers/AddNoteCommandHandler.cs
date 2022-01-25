@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.Core.Domain.ReportsAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
 namespace Inspections.API.Features.Reports.Handlers
@@ -17,7 +16,7 @@ namespace Inspections.API.Features.Reports.Handlers
 
         public AddNoteCommandHandler(IReportsRepository reportsRepository)
         {
-           _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
+            _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
         }
 
         public async Task<int> Handle(AddNoteCommand request, CancellationToken cancellationToken)
@@ -29,7 +28,7 @@ namespace Inspections.API.Features.Reports.Handlers
                 Text = request.Text,
                 Checked = request.Checked,
                 ReportId = request.ReportId,
-                NeedsCheck =  request.NeedsCheck
+                NeedsCheck = request.NeedsCheck
             });
             await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
 

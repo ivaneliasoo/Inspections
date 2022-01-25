@@ -21,16 +21,26 @@ namespace Inspections.Core.Domain
         [Column("current_data", TypeName = "jsonb")]
         public string currentData { get; set; }
 
-        public override string ToString() {
+        // [Column("lastedit")]
+        public DateTimeOffset LastEdit { get; set; }
+
+        // [Column("lastedituser")]
+        public string LastEditUser { get; set; }
+
+        public override string ToString()
+        {
             return $"{id} {circuit} {startDate} {endDate} {currentData}";
         }
 
-        public CurrentTable() {
+        public CurrentTable()
+        {
             id = 0;
             circuit = "";
             startDate = "";
             endDate = "";
             currentData = "";
-        }        
+            LastEdit = new DateTimeOffset();
+            LastEditUser = "";
+        }
     }
 }

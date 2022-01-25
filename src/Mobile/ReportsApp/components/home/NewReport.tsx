@@ -6,6 +6,29 @@ import { API_HOST, API_KEY } from "../../config/config"
 import { useNavigation } from "@react-navigation/native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
+type ModalContentProps = {
+  isBusy: boolean,
+  templates: any[],
+  onPress: (id: number) => void,
+  onCancelPress: () => void
+}
+
+const ModalContent = ({ isBusy, templates, onPress, onCancelPress }: ModalContentProps) => {
+  return <Card disabled={true} header={() => <View style={styles.modalHeader}>{!isBusy && <Text category='h5'>Create Report</Text>}</View>} footer={() => <Footer onCancelPress={onCancelPress} isBusy={isBusy} />}>
+    {!isBusy ?
+      <>
+        <Text>Select a template</Text>
+        <Layout>
+          {templates.map((tmpl: any, index: React.Key | null | undefined) => (
+            <Card key={index} style={styles.modalCard} onPress={() => onPress(tmpl.id)}>
+              <Text>{tmpl.title}</Text>
+              <Text> Creates a new {tmpl.title} With {tmpl.formName} Configuration</Text>
+            </Card>))}
+        </Layout>
+      </> : <View style={styles.progress}><Spinner status='info' size='giant' /><Text>Please Wait</Text></View>}
+  </Card>
+}
+
 type FooterProps = {
   isBusy: boolean
   onCancelPress: any
@@ -17,12 +40,13 @@ const Footer = ({ isBusy, onCancelPress }: FooterProps) => {
 }
 
 type NewReportProps = {
+  isBusy: boolean,
   isOpen: boolean;
   onClose: any;
   onCreate: any;
+  onCreating: (isBusy: boolean) => void;
 }
-export const NewReport = ({ isOpen, onClose, onCreate }: NewReportProps) => {
-  const [isBusy, setIsBusy] = useState(false)
+export const NewReport = ({ isBusy, isOpen, onCreating, onClose, onCreate }: NewReportProps) => {
   const [templates, setTemplates] = useState<ResumenReportConfiguration[]>([])
 
   async function createReport(configuration: CreateReportCommand) {
@@ -33,10 +57,10 @@ export const NewReport = ({ isOpen, onClose, onCreate }: NewReportProps) => {
   }
 
   const callCreateReport = async (id: number) => {
-    setIsBusy(true)
+    onCreating(true)
     await createReport({ configurationId: id, reportType: 0 })
       .then((resp) => onCreate(resp.data))
-      .finally(() => { setIsBusy(false); })
+      .finally(() => onCreating(false))
   }
 
   async function getConfigurationTemplates() {
@@ -47,30 +71,27 @@ export const NewReport = ({ isOpen, onClose, onCreate }: NewReportProps) => {
     return result.data
   }
 
-  
+
 
   useEffect(() => {
     getConfigurationTemplates()
   }, [])
-  return (
-    <>
+
+  try {
+    return (
       <Modal visible={isOpen} backdropStyle={styles.modalBackdrop}>
-        <Card disabled={true} header={() => <View style={styles.modalHeader}>{!isBusy && <Text category='h5'>Create Report</Text>}</View>} footer={() => <Footer onCancelPress={onClose} isBusy={isBusy} />}>
-          {!isBusy ?
-            <>
-              <Text>Select a template</Text>
-              <Layout>
-                {templates.map((tmpl: any, index) => (
-                  <Card key={index} style={styles.modalCard} onPress={() => callCreateReport(tmpl.id)}>
-                    <Text>{tmpl.title}</Text>
-                    <Text> Creates a new {tmpl.title} With {tmpl.formName} Configuration</Text>
-                  </Card>))}
-              </Layout>
-            </> : <View style={styles.progress}><Spinner status='info' size='giant' /><Text>Please Wait</Text></View>}
-        </Card>
+        <ModalContent
+          isBusy={isBusy}
+          templates={templates}
+          onCancelPress={onClose}
+          onPress={(id: number) => callCreateReport(id)}
+        />
       </Modal>
-    </>
-  );
+    );
+  } catch (error) {
+    return null
+  }
+
 }
 
 const styles = StyleSheet.create({

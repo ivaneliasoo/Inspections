@@ -1,16 +1,18 @@
-FROM node:lts as builder
+FROM node:lts-alpine3.14 as builder
 
 WORKDIR /app
 
 COPY . .
 
-RUN npm install
+#RUN npm install -g yarn
 
-RUN npm run build
+RUN yarn install
+
+RUN yarn build
 
 RUN rm -rf node_modules && \
-  NODE_ENV=production npm ci \
-  --only=production
+  rm package-lock.json && \
+  yarn install --production=true
 FROM node:lts
 
 WORKDIR /app

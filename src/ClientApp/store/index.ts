@@ -14,15 +14,15 @@ export const getters: GetterTree<RootState, RootState> = {
 
 export const mutations: MutationTree<RootState> = {
   CHANGE_ISAPIAVAILABLE: (state, value: boolean) => (state.isApiAvaliable = value),
-  CHANGE_SHOWFABSAVEBUTTON: (state, value: boolean) => ( state.showFabSaveButton = value ),
-  CHANGE_CANGOBACK: (state, value: boolean) => ( state.canGoBack = value )
+  CHANGE_SHOWFABSAVEBUTTON: (state, value: boolean) => (state.showFabSaveButton = value),
+  CHANGE_CANGOBACK: (state, value: boolean) => (state.canGoBack = value)
 }
 
 export const actions: ActionTree<RootState, RootState> = {
-  hasPendingChanges({commit}, payload) {
+  hasPendingChanges ({ commit }, payload) {
     commit('CHANGE_SHOWFABSAVEBUTTON', payload)
   },
-  allowToGoBack({commit}, payload) {
+  allowToGoBack ({ commit }, payload) {
     commit('CHANGE_CANGOBACK', payload)
   }
 }

@@ -53,6 +53,7 @@ declare module 'vue/types/vue' {
     $reportsApi: ReportsApi;
     $img: any;
     auth: any;
+    $device: any;
   }
 }
 
@@ -60,5 +61,6 @@ declare module '@nuxt/types' {
   interface Context {
     $auth: Auth;
     $reportsApi: ReportsApi;
+    $device: any;
   }
 }

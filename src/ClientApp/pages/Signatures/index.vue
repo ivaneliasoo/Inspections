@@ -276,7 +276,7 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
 
   async fetch () {
     this.loading = true
-    await Promise.all([this.$store.dispatch('reportstrore/getReports', '', { root: true }),
+    await Promise.all([this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: false, descending: true }, { root: true }),
       this.$store.dispatch('configurations/getConfigurations', '', { root: true }),
       this.$store.dispatch('signatures/getSignatures', this.filter, { root: true })])
     this.loading = false

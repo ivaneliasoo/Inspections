@@ -70,7 +70,8 @@
           >Date: {{ formatDate(itemList.date) ? formatDate(itemList.date).padEnd(32 - formatDate(itemList.date).length, '_') : '' }}</span
         >
       </div>
-      <div class="tw-flex-col tw-flex-wrap tw-text-left tw--mt-6">
+      <br>
+      <div class="tw-flex-col tw-flex-wrap tw-text-left tw--mt-10">
         <ul>
           <li class="tw-h-2 tw-mb-5 tw-mt-2">
             <span class="text-line tw-flex-col tw-text-center">{{ 'Remarks:'.padEnd(97 - 'Remarks:'.length, '_')}}</span>
@@ -79,12 +80,7 @@
             _________________________________________________________________________________________
           </li>
           <li>
-            <!-- {{
-              itemList.remarks
-                ? itemList.remarks.padEnd(95 - itemList.remarks.length, "_")
-                : "".padEnd(89, "_")
-            }} -->
-            <div class="tw-border tw-border-t-0 tw-border-l-0 tw-border-r-0  tw-border-black">asdasd</div>
+            _________________________________________________________________________________________
           </li>
         </ul>
       </div>

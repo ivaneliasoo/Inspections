@@ -1,22 +1,18 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Inspections.Core;
-using Inspections.Core.Domain;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Core.QueryModels;
+using Inspections.Infrastructure.ApplicationServices;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Inspections.Infrastructure.Repositories
 {
@@ -42,7 +38,7 @@ namespace Inspections.Infrastructure.Repositories
                 .ForMember(m => m.HasSignatures, opt => opt.MapFrom(src => src.Signatures.Any()))
                 .ForMember(m => m.CompletedSignaturesCount, opt => opt.MapFrom(src => src.Signatures.Count()))
                 .ForMember(m => m.PhotosCount, opt => opt.MapFrom(src => src.PhotoRecords.Count()))
-                .ForMember(m => m.SignaturesCount, opt => opt.MapFrom(src => src.Signatures.Where(s=>string.IsNullOrWhiteSpace(s.DrawnSign)).Count()));
+                .ForMember(m => m.SignaturesCount, opt => opt.MapFrom(src => src.Signatures.Where(s => string.IsNullOrWhiteSpace(s.DrawnSign)).Count()));
         });
 
         public ReportsRepository(InspectionsContext context, ILogger<ReportsRepository> logger
@@ -66,16 +62,16 @@ namespace Inspections.Infrastructure.Repositories
             switch (orderBy)
             {
                 case "date":
-                    if(descending) return query.OrderByDescending(r => r.Date);
+                    if (descending) return query.OrderByDescending(r => r.Date);
                     return query.OrderBy(r => r.Date);
                 case "company":
-                    if(descending) return query.OrderByDescending(r => r.License!.Name);
+                    if (descending) return query.OrderByDescending(r => r.License!.Name);
                     return query.OrderBy(r => r.License!.Name);
                 case "name":
-                    if(descending) return query.OrderByDescending(r => r.Name);
+                    if (descending) return query.OrderByDescending(r => r.Name);
                     return query.OrderBy(r => r.Name);
                 case "address":
-                    if(descending) return query.OrderByDescending(r => r.Address);
+                    if (descending) return query.OrderByDescending(r => r.Address);
                     return query.OrderBy(r => r.Address);
                 default:
                     return query;
@@ -84,14 +80,14 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<IEnumerable<ReportListItem>> GetAll(string? filter, bool? closed, bool myReports, string orderBy = "date", bool descending = true)
         {
-            var query = ApplyOrdering(_context.Reports, orderBy, descending);
+            var query = ApplyOrdering(_context.Set<Report>(), orderBy, descending);
 
             query
             .Include(p => p.PhotoRecords)
             .Include(p => p.Signatures);
 
-            if (closed.HasValue && closed.Value)
-                return await query.AsNoTracking().Where(r => (r.IsClosed) && (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)) && EF.Functions.Like(r.Name, $"%{filter}%"))
+            if (closed.HasValue)
+                return await query.AsNoTracking().Where(r => (r.IsClosed == closed.Value) && (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)) && EF.Functions.Like(r.Name, $"%{filter}%"))
                     .OrderByDescending(r => r.Date)
                     .ProjectTo<ReportListItem>(config)
                     .ToListAsync();
@@ -106,7 +102,7 @@ namespace Inspections.Infrastructure.Repositories
         public Task DeleteAsync(Report entity)
         {
             _context.CheckLists.RemoveRange(entity.CheckList);
-            _context.OperationalReadings.RemoveRange(entity.OperationalReadings);
+            _context.OperationalReadings.RemoveRange(entity.OperationalReadings ?? throw new InvalidOperationException());
             _context.Signatures.RemoveRange(entity.Signatures);
             _context.SaveChanges();
             _context.Reports.Remove(entity);
@@ -119,7 +115,7 @@ namespace Inspections.Infrastructure.Repositories
         {
             try
             {
-                return await _context.Reports
+                return await _context.Set<Report>()
                         .Include("CheckList")
                         .Include("Signatures")
                         .Include("PhotoRecords")
@@ -136,7 +132,7 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<ReportQueryResult> GetByIdAsync(int id, bool projected)
         {
-            return await _context.Reports.AsNoTracking().Where(r => r.Id == id).ProjectTo<ReportQueryResult>(config).SingleOrDefaultAsync();
+             return await _context.Set<Report>().AsNoTracking().Where(r => r.Id == id).ProjectTo<ReportQueryResult>(config).SingleOrDefaultAsync();
         }
 
         public async Task UpdateAsync(Report entity)

@@ -1,9 +1,5 @@
-﻿using Inspections.Core.Domain.ReportConfigurationAggregate;
-using Inspections.Core.Domain.ReportsAggregate;
+﻿using System;
 using Inspections.Shared;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Inspections.Core.Domain.SignaturesAggregate
 {
@@ -23,7 +19,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
         public string? DrawnSign { get; set; }
         public short Order { get; set; }
 
-        public Signature PreparteForNewReport(string userName)
+        public Signature PrepareForNewReport(string userName)
         {
             Signature newSignature = (Signature)this.MemberwiseClone();
             if (newSignature is null) throw new Exception("error trying to add signatures to the report");
@@ -47,7 +43,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
             return newSignature;
         }
 
-        public Signature PreparteForNewReportConfiguration()
+        public Signature PrepareForNewReportConfiguration()
         {
             var newSignature = (Signature)this.MemberwiseClone();
             if (newSignature is null) throw new Exception("error trying to add signatures to the report");
@@ -55,6 +51,7 @@ namespace Inspections.Core.Domain.SignaturesAggregate
             newSignature.ReportId = null;
             newSignature.ReportConfigurationId = 0;
             newSignature.IsConfiguration = true;
+            newSignature.Responsible = new Responsible { Name = string.Empty, Type = ResponsibleType.Inspector };
 
             return newSignature;
         }

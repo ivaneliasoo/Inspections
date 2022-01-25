@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguration
+namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
 {
     public class ReportConfigurationEntityTypeConfiguration : IEntityTypeConfiguration<ReportConfiguration>
     {
@@ -20,7 +20,8 @@ namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguratio
             builder.Property(p => p.MarginBottom).IsRequired();
             builder.Property(p => p.MarginLeft).IsRequired();
             builder.Property(p => p.MarginRight).IsRequired();
-
+            builder.Property(p => p.PrintSectionId).IsRequired();
+            builder.Property(p => p.CheckListMetadata).HasColumnType("jsonb").HasDefaultValueSql("'{ \"Display\": 0 }'::jsonb");
             builder.Ignore(p => p.DomainEvents);
         }
     }

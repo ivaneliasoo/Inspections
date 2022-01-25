@@ -26,7 +26,7 @@ export const ParticullarOfInstallation = () => {
           date: moment(formRef.current.values.date).format('YYYY-MM-DD'),
           name: formRef.current.values.name ?? '',
           id: formRef.current.values.id ?? 0,
-          isClosed: false, // TODO: Mirar Como pasar isClosed
+          isClosed: formRef.current.values.isClosed, // TODO: Mirar Como pasar isClosed
           licenseNumber: formRef.current.values.licenseNumber ?? ''
         }
         await saveReport(updateCmd)

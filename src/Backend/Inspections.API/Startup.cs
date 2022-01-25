@@ -4,15 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Amazon.Runtime;
 using Amazon.S3;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Users.Services;
 using Inspections.API.Models.Configuration;
-using Inspections.Core;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Domain;
 using Inspections.Core.Interfaces.Queries;
+using Inspections.Core.Interfaces.Repositories;
+using Inspections.Infrastructure.ApplicationServices;
 using Inspections.Infrastructure.Data;
 using Inspections.Infrastructure.Queries;
 using Inspections.Infrastructure.Repositories;
@@ -24,12 +25,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using ZadERP.Api.Middleware;
+using Serilog;
 
 namespace Inspections.API
 {
@@ -53,7 +53,12 @@ namespace Inspections.API
             services.AddDefaultAWSOptions(options);
             services.AddAWSService<IAmazonS3>();
 
-            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddControllers()
+                .AddJsonOptions(opt =>
+                {
+                    opt.JsonSerializerOptions.Converters.Add(new JsonDateConverter());
+                });
+            //.AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddCors();
             services.AddAuthentication(options =>
             {
@@ -148,16 +153,18 @@ namespace Inspections.API
             services.AddScoped<IReportConfigurationsRepository, ReportsConfigurationsRepository>();
             services.AddScoped<IReportsRepository, ReportsRepository>();
             services.AddScoped<ISignaturesRepository, SignaturesRepository>();
+            services.AddScoped<IPrintSectionRepository, PrintSectionRepository>();
 
             services.AddScoped<ICheckListsQueries, CheckListsQueries>();
             services.AddScoped<ISignaturesQueries, SignaturesQueries>();
             services.AddScoped<IReportConfigurationsQueries, ReportConfigurationsQueries>();
-
+            services.AddScoped<IPrintSectionsQueries, PrintSectionsQueries>();
             ConfigurarDbContextInSqlDb(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSerilogRequestLogging();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -202,10 +209,9 @@ namespace Inspections.API
 
         private void ConfigurarDbContextInSqlDb(IServiceCollection services)
         {
-            var logger = LoggerFactory.Create(c => c.AddConsole());
             string cn = Configuration.GetConnectionString("Inspections");
             services.AddDbContext<InspectionsContext>(c =>
-            c.UseLoggerFactory(logger).UseNpgsql(cn));
+            c.UseNpgsql(cn));
         }
 
         private static bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)

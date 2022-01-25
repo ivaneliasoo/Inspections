@@ -1,14 +1,12 @@
 ﻿
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Inspections.Infrastructure.Repositories
 {
@@ -39,19 +37,21 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<ReportConfiguration> GetByIdAsync(int id)
         {
+
             var result = await _context.ReportConfigurations
-                .Where(s => s.Id == id)
-                .SingleOrDefaultAsync();
+           .Where(s => s.Id == id)
+           .SingleOrDefaultAsync();
 
             var signaturesDef = _context.Signatures.Where(s => s.IsConfiguration && s.ReportId == null && s.ReportConfigurationId == id);
             var ChecksDef = _context.CheckLists.Where(s => s.IsConfiguration && s.ReportId == null)
-                .Include(c=>c.Checks)
+                .Include(c => c.Checks)
                 .Where(s => s.IsConfiguration && s.ReportId == null && s.ReportConfigurationId == id);
 
             result.SignatureDefinitions = signaturesDef.ToList();
             result.ChecksDefinition = ChecksDef.ToList();
 
             return result;
+
         }
 
         public async Task UpdateAsync(ReportConfiguration entity)

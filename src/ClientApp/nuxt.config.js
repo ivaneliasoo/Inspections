@@ -1,5 +1,8 @@
 export default {
   ssr: false,
+  // server: {
+  //   host: '0.0.0.0'
+  // },
   /*
   ** Headers of the page
   */
@@ -43,6 +46,8 @@ export default {
     '@nuxtjs/auth',
     '@nuxtjs/pwa',
     '@nuxtjs/device',
+    '@vueuse/core/nuxt',
+    '@braid/vue-formulate/nuxt',
     ['nuxt-compress',
       {
         gzip: {
@@ -66,7 +71,10 @@ export default {
       /* icon options */
     }
   },
-  components: true,
+  components: [
+    '~/components',
+    '~/components/JobScheduler'
+  ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

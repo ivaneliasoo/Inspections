@@ -24,8 +24,10 @@
           <v-toolbar-title>Inspection Reports</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
           <grid-filter :filter.sync="filter" />
+          <v-switch v-model="showOnlyMyReports" class="tw-mx-4" messages="Show only my reports" dense @change="$fetch()" />
           <v-spacer />
           <v-btn
+            v-if="!$route.query.closed"
             class="mx-2"
             x-small
             fab
@@ -178,6 +180,7 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
   dialog: Boolean = false
   selectedItem: Report = {} as Report
   filter: String = ''
+  showOnlyMyReports: Boolean = false
   hostName: string= this.$axios!.defaults!.baseURL!.replace('/api', '')
     headers: any[] = [
       {
@@ -219,7 +222,8 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
 
     async fetch () {
       this.loading = true
-      await this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', descending: true }, { root: true })
+      // TODO: Save filters state on store
+      await this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: this.showOnlyMyReports, descending: true }, { root: true })
 
       this.loading = false
     }

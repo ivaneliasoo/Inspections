@@ -28,9 +28,12 @@
           >Date & Time of Inspection: {{ formatedDate }}</span>
         </div>
         <PrintingReportsCheckLists
-          v-if="reportData.checkLists"
+          v-if="reportData.checkLists && configuration.checkListMetadata.display === 0"
           :check-lists="reportData.checkLists"
         />
+        <div v-if="reportData.checkLists && configuration.checkListMetadata.display === 1">
+          {{ reportData.checkLists.map(c => c.text) }}
+        </div>
         <PrintingReportsOperationalReadings
           :readings="operationalReadings"
           :last-checks-count="lastChecksCount"
@@ -50,6 +53,7 @@
 <script>
 import moment from 'moment'
 export default {
+  name: 'PrintingReports',
   layout: 'printlayout',
   async asyncData ({ route, $axios }) {
     if (route && route.query && route.query.id) {
@@ -68,6 +72,13 @@ export default {
           Authorization: `bearer ${token}`
         }
       })
+
+      const configuration = await $axios.$get('reportconfiguration/1', {
+        headers: {
+          Authorization: `bearer ${token}`
+        }
+      })
+
       const pagesLength = Math.ceil(photoRecords.length / 8)
       const photoRecordsPages = [[]]
       let currentPage = 0
@@ -156,7 +167,8 @@ export default {
         printPhotos,
         isCompoundedPhotoRecord,
         isPrintable: false,
-        operationalReadings
+        operationalReadings,
+        configuration
       }
     }
   },

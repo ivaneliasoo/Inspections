@@ -59,11 +59,6 @@
         "operationId": "AddAddress",
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewAddressDTO"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/NewAddressDTO"
@@ -242,11 +237,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewAddressDTO"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/NewAddressDTO"
@@ -420,11 +410,6 @@
         "requestBody": {
           "description": "",
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginModel"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/LoginModel"
@@ -497,11 +482,6 @@
         "operationId": "CreateCheckList",
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddCheckListCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/AddCheckListCommand"
@@ -668,11 +648,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddCheckListItemCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/AddCheckListItemCommand"
@@ -756,11 +731,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateCheckListCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateCheckListCommand"
@@ -977,11 +947,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateCheckListItemCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateCheckListItemCommand"
@@ -1159,11 +1124,6 @@
         "operationId": "AddLicense",
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LicenseDTO"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/LicenseDTO"
@@ -1323,11 +1283,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LicenseDTO"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/LicenseDTO"
@@ -1750,11 +1705,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CurrentTable"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CurrentTable"
@@ -1773,8 +1723,48 @@
           }
         },
         "responses": {
-          "200": {
+          "204": {
             "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -1786,11 +1776,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddReportConfigurationCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/AddReportConfigurationCommand"
@@ -1958,11 +1943,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateReportConfigurationCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateReportConfigurationCommand"
@@ -2193,11 +2173,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateReportCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateReportCommand"
@@ -2352,11 +2327,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateReportCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateReportCommand"
@@ -2692,11 +2662,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddNoteCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/AddNoteCommand"
@@ -2788,11 +2753,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditNoteCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/EditNoteCommand"
@@ -2954,11 +2914,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditPhotoRecordCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/EditPhotoRecordCommand"
@@ -3217,11 +3172,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateOperationalReadingsCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateOperationalReadingsCommand"
@@ -3286,36 +3236,30 @@
         }
       }
     },
-    "/api/Reports/export": {
-      "post": {
+    "/api/Reports/{id}/export": {
+      "get": {
         "tags": [
           "Reports"
         ],
         "operationId": "Export",
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ExportDTO"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ExportDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ExportDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ExportDTO"
-              }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "printPhotos",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -3330,11 +3274,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddSignatureCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/AddSignatureCommand"
@@ -3528,11 +3467,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditSignatureCommand"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/EditSignatureCommand"
@@ -3767,11 +3701,6 @@
         "operationId": "AddUser",
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserDTO"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UserDTO"
@@ -3949,11 +3878,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserDTO"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UserDTO"
@@ -4135,11 +4059,6 @@
         "requestBody": {
           "description": "",
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChangePasswordDTO"
-              }
-            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ChangePasswordDTO"
@@ -4690,13 +4609,12 @@
       },
       "CheckValue": {
         "enum": [
-          0,
-          1,
-          2,
-          3
+          "NotAcceptableFalse",
+          "Acceptable",
+          "NotApplicable",
+          "None"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "CreateReportCommand": {
         "type": "object",
@@ -4890,28 +4808,6 @@
           },
           "validity": {
             "$ref": "#/components/schemas/DateTimeRange"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ExportDTO": {
-        "type": "object",
-        "properties": {
-          "loginUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "pageUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "photosPerPage": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "reportConfigurationId": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -5310,21 +5206,19 @@
       },
       "ReportType": {
         "enum": [
-          0
+          "Inspection"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "ResponsibleType": {
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4
+          "Supervisor",
+          "Inspector",
+          "Witness",
+          "LEW",
+          "Other"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "ResumenReportConfiguration": {
         "type": "object",

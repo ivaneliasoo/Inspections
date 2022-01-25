@@ -1,14 +1,11 @@
-﻿using Inspections.Core.Domain.CheckListAggregate;
-using Inspections.Core.Interfaces;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Inspections.Core.Domain.CheckListAggregate;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Inspections.Infrastructure.Repositories
 {
@@ -40,8 +37,8 @@ namespace Inspections.Infrastructure.Repositories
         public async Task<CheckList> GetByIdAsync(int id)
         {
             return await _context.Set<CheckList>()
-                .Include(p=>p.Checks)
-                .Where(c=>c.Id == id).SingleOrDefaultAsync();
+                .Include(p => p.Checks)
+                .Where(c => c.Id == id).SingleOrDefaultAsync();
         }
 
         public async Task<CheckListItem> GetItemByIdAsync(int id)

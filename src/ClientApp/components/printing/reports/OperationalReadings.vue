@@ -1,5 +1,6 @@
 <template>
-  <ul id="signatures" class="tw-mx-2 page-break-after">
+  <ul id="signatures" class="tw-mx-2 page-break-before">
+    <br>
     <li class="tw-mt-5 tw-font-bold">
       <PrintingSubTitle>{{lastChecksCount + 1}}. OPERATIONAL READINGS</PrintingSubTitle>
     </li>

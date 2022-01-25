@@ -1,11 +1,8 @@
 ﻿using Inspections.Core.Domain.ReportsAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Inspections.Infrastructure.Data.InspectionReportsAggregateConfiguration
+namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
 {
     public class PhotoRecordEntityTypeConfiguration : IEntityTypeConfiguration<PhotoRecord>
     {

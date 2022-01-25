@@ -1,153 +1,111 @@
 <template>
   <div id="report">
     <alert-dialog
-      v-model="dialogClose"
+      v-model="pageOptions.dialogClose"
       title="Close Report"
       message="you are about to close this report."
       :code="currentReport.id"
       :description="currentReport.name"
-      :loading="savingNewReport"
+      :loading="pageOptions.savingNewReport"
       @yes="closeReport"
       @no="currentReport.isClosed = true"
     />
-    <v-row v-if="loadingReport">
-      <v-col
-        cols="12"
-      >
+    <v-row v-if="pageOptions.loadingReport">
+      <v-col cols="12">
         <v-skeleton-loader
           type="list-item-avatar, divider, list-item-three-line, card-heading, image, actions"
         />
-
-        <v-skeleton-loader
-          type="list-item-avatar-three-line, image, article"
-        />
+        <v-skeleton-loader type="list-item-avatar-three-line, image, article" />
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
-        <ValidationObserver ref="obs" v-slot="{ valid }" tag="form">
-          <v-row align="center" justify="space-between">
-            <v-col cols="8">
-              <ValidationProvider
-                v-slot="{ errors }"
-                rules="required"
-                immediate
-              >
-                <DatePickerBase
-                  v-model="currentReport.date"
-                  name="date"
-                  type="number"
-                  :error-messages="errors"
-                  :max="new Date().toISOString()"
-                />
-              </ValidationProvider>
-            </v-col>
-            <v-col cols="4" class="text-right">
-              <h4>{{ currentReport.title }}</h4>
-              <h6>{{ currentReport.formName }}</h6>
-            </v-col>
-          </v-row>
-          <v-row align="center" justify="space-between">
-            <v-col cols="12" md="9">
-              <ValidationProvider
-                v-slot="{ errors }"
-                rules="required"
-                immediate
-              >
-                <v-autocomplete
-                  v-model="currentReport.address"
-                  :error-messages="errors"
-                  :items="addresses"
-                  :loading="searchingAddresses"
-                  :search-input.sync="search"
-                  hide-selected
-                  item-text="formatedAddress"
-                  item-value="formatedAddress"
-                  label="Inspection Address"
-                  placeholder="Start typing to Search"
-                  prepend-icon="mdi-crosshairs-gps"
-                  clearable
-                  autocomplete="nope"
-                  name="address"
-                  @keypress="isDirty = true"
-                  @change="setLicenseFromAddress"
-                />
-              </ValidationProvider>
-            </v-col>
-            <v-col cols="12" md="3">
-              <ValidationProvider
-                v-slot="{ errors }"
-                rules="required"
-                immediate
-              >
-                <v-text-field
-                  v-model="currentReport.licenseNumber"
-                  readonly
-                  :error-messages="errors"
-                  label="License"
-                />
-              </ValidationProvider>
-            </v-col>
-          </v-row>
-          <v-row align="center" justify="space-between">
-            <v-col cols="6" md="2" class="text-right">
-              <v-checkbox
-                v-if="currentReport.isClosed"
-                v-model="currentReport.isClosed"
-                label="Completed With Signatures"
-                :disabled="currentReport.isClosed || !CanCloseReport"
-                @click="dialogClose = true"
-              />
-              <v-btn
-                v-else
-                :disabled="!valid || currentReport.isClosed || !CanCloseReport"
-                color="success"
-                class="v-btn--example2"
-                @click="
-                  dialogClose = true;
-                  currentReport.isClosed = true;
-                "
-              >
-                <v-icon>mdi-lock</v-icon>
-                Complete Report
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-fab-transition>
-            <v-btn
-              v-if="tabs !== 'photos'"
-              color="success"
-              fab
-              fixed
-              dark
-              bottom
-              right
-              :loading="savingNewReport"
-              class="v-btn--example2"
-              @click="
-                saveReportChanges().then(() => {
-                  CanCloseReport && !currentReport.isClosed
-                    ? (dialogClose = true)
-                    : !CanCloseReport
-                      ? (errorsDialog = true)
-                      : (errorsDialog = false)
-                })
-              "
-            >
-              <v-icon>mdi-content-save</v-icon>
-            </v-btn>
-          </v-fab-transition>
-        </ValidationObserver>
-      </v-col>
-    </v-row>
+    <ValidationObserver ref="obs" v-slot="{ valid }" tag="form">
+      <v-row dense justify="space-between">
+        <v-col align-self="start" class="text-left">
+          <h4><strong>{{ currentReport.title }}</strong></h4>
+          <h6><strong>{{ currentReport.formName }}</strong></h6>
+        </v-col>
+        <v-col class="text-right">
+          <span v-if="currentReport.isClosed" class="tw-text-green-700">
+            <v-icon class="mt-n1" color="#047857">
+              mdi-check-circle-outline
+            </v-icon>
+            Completed With Signatures
+          </span>
+          <v-btn
+            v-else
+            :disabled="!valid || (!currentReport.isClosed && !CanCloseReport)"
+            color="success"
+            class="v-btn--example2"
+            @click="
+              pageOptions.dialogClose = true;
+              currentReport.isClosed = true;
+            "
+          >
+            <v-icon>mdi-lock</v-icon>
+            Complete Report
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row dense align="center" justify="space-between">
+        <v-col cols="12" md="3">
+          <ValidationProvider
+            v-slot="{ errors }"
+            rules="required"
+            immediate
+          >
+            <DatePickerBase
+              v-model="currentReport.date"
+              name="date"
+              type="number"
+              :error-messages="errors"
+              :max="new Date().toISOString()"
+            />
+          </ValidationProvider>
+        </v-col>
+        <v-col cols="12" md="9">
+          <ValidationProvider
+            v-slot="{ errors }"
+            rules="required"
+            immediate
+          >
+            <v-autocomplete
+              v-model="currentReport.address"
+              :error-messages="errors"
+              :items="addresses"
+              :loading="pageOptions.searchingAddresses"
+              :search-input.sync="pageOptions.search"
+              hide-selected
+              item-text="formatedAddress"
+              item-value="formatedAddress"
+              label="Inspection Address"
+              placeholder="Start typing to Search"
+              prepend-icon="mdi-crosshairs-gps"
+              clearable
+              autocomplete="nope"
+              name="address"
+              @keypress="pageOptions.isDirty = true"
+              @change="setLicenseFromAddress"
+            />
+          </ValidationProvider>
+        </v-col>
+      </v-row>
+      <v-row dense>
+        <v-col>
+          <span class="tw-text-base tw-mx-4"><strong>Name: </strong> {{ currentReport.licenseName }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>License: </strong> {{ currentReport.licenseNumber }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>Approved Load: </strong> {{ currentReport.licenseAmp }} A /{{ currentReport.licenseVolt }} V</span>
+          <span class="tw-text-base tw-mx-4"><strong>kVA: </strong> {{ currentReport.licenseKVA }}</span>
+        </v-col>
+      </v-row>
+    </ValidationObserver>
     <v-row>
       <v-col cols="12">
-        <v-tabs v-model="tabs" centered fixed-tabs icons-and-text>
+        <v-tabs v-model="pageOptions.tabs" centered fixed-tabs icons-and-text>
           <v-tabs-slider />
           <v-tab
             href="#checklists"
             :class="
-              !IsCompleted ||
+              hasUntouchedChecks ||
                 HasNotesWithPendingChecks ||
                 !PrincipalSignatureHasAResponsable
                 ? 'error--text'
@@ -157,7 +115,7 @@
             Report Details
             <v-tooltip
               v-if="
-                !IsCompleted ||
+                !hasUntouchedChecks ||
                   HasNotesWithPendingChecks ||
                   !PrincipalSignatureHasAResponsable
               "
@@ -166,7 +124,7 @@
               <template #activator="{ on }">
                 <v-icon
                   :color="
-                    !IsCompleted ||
+                    hasUntouchedChecks ||
                       HasNotesWithPendingChecks ||
                       !PrincipalSignatureHasAResponsable
                       ? 'error'
@@ -188,50 +146,44 @@
             Photo Record
             <v-icon> mdi-folder-multiple-image </v-icon>
           </v-tab>
-          <v-tab href="#operationalReadings">
+          <v-tab href="#operationalReadings" eager>
             Operational Readings
             <v-icon> mdi-order-bool-descending </v-icon>
           </v-tab>
         </v-tabs>
-        <v-tabs-items v-model="tabs" touchless>
+        <v-tabs-items v-model="pageOptions.tabs" touchless>
           <v-tab-item key="checklists" value="checklists">
-            <v-expansion-panels multiple focusable :value="openedPanels">
+            <v-expansion-panels
+              multiple
+              focusable
+              :value="pageOptions.openedPanels"
+            >
               <v-expansion-panel>
                 <v-expansion-panel-header
-                  :style="!IsCompleted ? 'color: white;' : ''"
-                  :color="!IsCompleted ? 'red' : ''"
+                  :style="hasUntouchedChecks ? 'color: white;' : ''"
+                  :color="hasUntouchedChecks ? 'red' : ''"
                 >
-                  <span
-                    class="font-weight-black"
-                  >Check List States:
-                    <!-- New (
+                  <span class="font-weight-black">Check List States: Not Acceptable (
                     <v-icon
-                      :color="!IsCompleted ? 'white' : getCheckIconColor(3)"
-                    >
-                      mdi-{{ getCheckIcon(3) }}
-                    </v-icon>
-                    )  -->
-                    Not Acceptable (
-                    <v-icon
-                      :color="!IsCompleted ? 'white' : getCheckIconColor(0)"
+                      :color="hasUntouchedChecks ? 'white' : getCheckIconColor(0)"
                     >
                       mdi-{{ getCheckIcon(0) }}
                     </v-icon>
                     ) Acceptable (
                     <v-icon
-                      :color="!IsCompleted ? 'white' : getCheckIconColor(1)"
+                      :color="hasUntouchedChecks ? 'white' : getCheckIconColor(1)"
                     >
                       mdi-{{ getCheckIcon(1) }}
                     </v-icon>
                     ) Not Aplicable (
                     <span
-                      :color="!IsCompleted ? 'white' : getCheckIconColor(2)"
+                      :color="hasUntouchedChecks ? 'white' : getCheckIconColor(2)"
                     >
                       {{ getCheckIcon(2) }}
                     </span>
                     )
                   </span>
-                  <v-row v-if="!IsCompleted" dense>
+                  <v-row v-if="hasUntouchedChecks" dense>
                     <v-col>
                       <v-icon dark>
                         mdi-alert-circle
@@ -263,7 +215,7 @@
                                 <span
                                   v-if="
                                     item.checks.filter(
-                                      (c) => c.required && c.checked === 3
+                                      (c) => c.required && !c.touched
                                     ).length == 0
                                   "
                                 >
@@ -377,7 +329,7 @@
                                                   :class="[
                                                     'text-right',
                                                     checkItem.checked == 3 &&
-                                                      shouldShowRequired
+                                                      pageOptions.shouldShowRequired
                                                       ? 'error--text'
                                                       : '',
                                                   ]"
@@ -393,7 +345,7 @@
                                                   :class="[
                                                     'text-left',
                                                     checkItem.checked == 3 &&
-                                                      shouldShowRequired
+                                                      pageOptions.shouldShowRequired
                                                       ? 'error--text'
                                                       : '',
                                                   ]"
@@ -409,7 +361,7 @@
                                                       "
                                                       class="text-uppercase"
                                                       :color="
-                                                        shouldShowRequired
+                                                        pageOptions.shouldShowRequired
                                                           ? 'error'
                                                           : ''
                                                       "
@@ -434,7 +386,7 @@
                                                         x-small
                                                         class="text-uppercase"
                                                         :color="
-                                                          shouldShowRequired
+                                                          pageOptions.shouldShowRequired
                                                             ? 'error'
                                                             : ''
                                                         "
@@ -486,7 +438,7 @@
                                         <v-col cols="2">
                                           <v-btn
                                             v-if="
-                                              showUpdateCheck.findIndex(
+                                              pageOptions.showUpdateCheck.findIndex(
                                                 (l) =>
                                                   l.currentIndex ===
                                                   checkListItemIndex &&
@@ -497,8 +449,8 @@
                                             color="amber"
                                             icon
                                             @click="
-                                              showUpdateCheck.splice(
-                                                showUpdateCheck.findIndex(
+                                              pageOptions.showUpdateCheck.splice(
+                                                pageOptions.showUpdateCheck.findIndex(
                                                   (l) =>
                                                     l.currentIndex ===
                                                     checkListItemIndex &&
@@ -525,6 +477,8 @@
                   </v-list>
                 </v-expansion-panel-content>
               </v-expansion-panel>
+              <!-- End of Checklists -->
+              <!-- Signatures -->
               <v-expansion-panel>
                 <v-expansion-panel-header
                   :style="HasNotesWithPendingChecks ? 'color: white;' : ''"
@@ -573,7 +527,7 @@
                           text
                           :disabled="note.needsCheck"
                           color="error"
-                          @click="removeNote(note.id)"
+                          @click="removeNote(note)"
                         >
                           <v-icon dark>
                             mdi-minus
@@ -606,27 +560,32 @@
                 <h2 class="text-left">
                   Signatures
                 </h2>
-                <SignaturesForm
-                  v-model="currentReport.signatures"
-                  :is-closed="false"
-                />
+                <ValidationObserver ref="obsSignatures">
+                  <SignaturesForm
+                    v-model="signatures"
+                    :can-edit="currentReport.isClosed"
+                  />
+                </ValidationObserver>
               </v-col>
             </v-row>
           </v-tab-item>
           <v-tab-item key="photos" value="photos">
-            <PhotoRecords :report-id="currentReport.id" @uploaded="saveAndLoad()" />
+            <PhotoRecords
+              :report-id="currentReport.id"
+              @uploaded="saveAndLoad()"
+            />
           </v-tab-item>
           <v-tab-item key="operationalReadings" value="operationalReadings">
-            <OperationalReadings :report-data="currentReport" />
+            <OperationalReadings v-model="currentReport" :is-multiline="isMultiLine" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
     </v-row>
     <message-dialog
-      v-model="errorsDialog"
+      v-model="pageOptions.errorsDialog"
       :actions="['no']"
       no-text="close"
-      @no="errorsDialog = false"
+      @no="pageOptions.errorsDialog = false"
     >
       <template #title="{}">
         Report Errors
@@ -634,7 +593,7 @@
       <h2>The Report has been saved! but we've found some errors:</h2>
       <br>
       <span
-        v-if="!IsCompleted"
+        v-if="!hasUntouchedChecks"
         class="subtitle-1 error--text font-weight-black"
       >
         - Please, Complete and check all the required item in the
@@ -650,7 +609,12 @@
         class="subtitle-1 error--text font-weight-black"
       >- The Principal Signature must have an responsable name and type</span>
     </message-dialog>
-    <v-dialog v-model="dialogPrinting" hide-overlay persistent width="300">
+    <v-dialog
+      v-model="pageOptions.dialogPrinting"
+      hide-overlay
+      persistent
+      width="300"
+    >
       <v-card color="primary" dark>
         <v-card-text>
           Processing and Downloading pdf report
@@ -658,421 +622,617 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-snackbar
-      v-model="savedNotification"
-      top
-      centered
-      color="success"
-      :timeout="3000"
-    >
-      Changes has been saved
-
-      <template #action="{ attrs }">
-        <v-btn dark text v-bind="attrs" @click="savedNotification = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Watch, mixins } from 'nuxt-property-decorator'
+import {
+  defineComponent,
+  watch,
+  computed,
+  useContext,
+  onMounted,
+  ref,
+  reactive,
+  useRoute,
+  useFetch
+} from '@nuxtjs/composition-api'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import InnerPageMixin from '@/mixins/innerpage'
-import { PrintHelper } from '@/Helpers'
+import { debouncedWatch } from '@vueuse/core'
+import {
+  AddNoteCommand,
+  AddressDTO,
+  CheckListItemQueryResult,
+  ReportQueryResult,
+  EditSignatureCommand,
+  UpdateReportCommand,
+  CheckValue,
+  EditNoteCommand,
+  UpdateCheckListItemCommand,
+  CheckListQueryResult,
+  SignatureQueryResult,
+  NoteQueryResult,
+  UpdateOperationalReadingsCommand
+} from '@/services/api'
+import { useNotifications } from '~/composables/use-notifications'
+import useGoBack from '~/composables/useGoBack'
 import { AddressesState } from '@/store/addresses'
-import { AddNoteCommand, AddressDTO, CheckListItemQueryResult, NoteQueryResult, ReportQueryResult, EditSignatureCommand, UpdateReportCommand, CheckValue, EditNoteCommand, UpdateCheckListItemCommand } from '@/services/api'
-import { useNotifications } from '@/composables/use-notifications'
-import OperationalReadings from '~/components/OperationalReadings.vue'
 
-const { notify } = useNotifications()
-
-@Component({
+export default defineComponent({
+  name: 'ReportForm',
   components: {
     ValidationObserver,
     ValidationProvider
-  }
-})
-export default class EditReport extends mixins(InnerPageMixin) {
-  $refs!: {
-    obs: InstanceType<typeof ValidationObserver>;
-  };
+  },
+  setup () {
+    useGoBack()
+    const obs = ref<InstanceType<typeof ValidationObserver> | null>(null)
+    const obsSignatures = ref<InstanceType<typeof ValidationObserver> | null>(null)
 
-  loadingReport: boolean = false;
-  errorsDialog: boolean = false;
-  dialogPrinting: boolean = false;
-  savedNotification: boolean = false;
-  shouldShowRequired: boolean = false;
+    const { notify } = useNotifications()
+    const route = useRoute()
+    const { store, $auth, $axios, $reportsApi } = useContext()
+    const id = computed(() => route.value.params.id)
 
-  checkListCalls: Promise<unknown>[] = [];
-
-  search: string | null | undefined = '';
-  isDirty: boolean = false;
-  searchingAddresses: boolean = false;
-  openedPanels: number[] = [0, 1];
-  printHelper!: PrintHelper;
-  savingNewReport: boolean = false;
-  currentPhoto: number = 0;
-  showLabelEdit: number[] = [];
-  showUpdateCheck: { parentIndex: number; currentIndex: number }[] = [];
-  tabs: any = 0;
-  dialogClose: boolean = false;
-  currentReport: ReportQueryResult = {} as ReportQueryResult;
-  // @Provide('reportId') reportId = 0
-
-  hostName: string = this.$axios!.defaults!.baseURL!.replace('/api', '');
-  signaturesChanges: boolean = false;
-
-  get hasPendingChanges () {
-    return this.$store.state.showFabSaveButton
-  }
-
-  get localAddress (): AddressDTO[] {
-    return [{ formatedAddress: this.currentReport.address } as AddressDTO]
-  }
-
-  get addresses (): AddressDTO[] {
-    const dbAddressses = (this.$store.state.addresses as AddressesState)
-      .addressList
-
-    if (dbAddressses.length > 0) {
-      return dbAddressses
-    }
-
-    return this.localAddress
-  }
-
-  async addNote () {
-    const newNote: AddNoteCommand = {
-      reportId: this.currentReport.id,
-      text: '',
-      checked: false,
-      needsCheck: false
-    }
-    await this.$axios
-      .$post(`reports/${this.$route.params.id}/note`, newNote)
-      .then((resp) => {
-        this.currentReport.notes!.push({ id: resp, ...newNote })
-      })
-      .catch(err => alert(err))
-  }
-
-  async removeNote (id: number) {
-    const delNote = {
-      reportId: this.currentReport.id,
-      id
-    }
-    await this.$axios
-      .delete(`reports/${delNote.reportId}/note/${delNote.id}`)
-      .then(() => {
-        this.currentReport.notes = this.currentReport.notes!.filter(
-          n => n.id !== id
-        )
-      })
-  }
-
-  editCheck (parentIndex: number, currentIndex: number) {
-    const index = this.showUpdateCheck.findIndex(
-      l => l.parentIndex === parentIndex && l.currentIndex === currentIndex
-    )
-    if (index >= 0) {
-      this.showUpdateCheck.splice(index, 1)
-      return
-    }
-    this.showUpdateCheck.push({ parentIndex, currentIndex })
-  }
-
-  getCheckIcon (value: CheckValue) {
-    switch (value) {
-      case CheckValue.NotAcceptableFalse:
-        return 'close'
-      case CheckValue.Acceptable:
-        return 'check'
-      case CheckValue.NotApplicable:
-        return 'N.A.'
-      case CheckValue.None:
-        return 'new-box'
-      default:
-        return ''
-    }
-  }
-
-  getCheckIconColor (value: CheckValue) {
-    switch (value) {
-      case CheckValue.NotAcceptableFalse:
-        return 'error'
-      case CheckValue.Acceptable:
-        return 'success'
-      case CheckValue.NotApplicable:
-        return 'black'
-      default:
-        return 'info'
-    }
-  }
-
-  getCheckName (id: number) {
-    return CheckValue[id]
-  }
-
-  saveNote (note: NoteQueryResult) {
-    const data: EditNoteCommand = {
-      reportId: parseInt(this.$route.params.id),
-      id: note.id!,
-      text: note.text!,
-      checked: note.checked!
-    }
-    this.$axios.put(`reports/${data.reportId}/note/${note.id}`, data)
-  }
-
-  async saveCheckItem (checkItem: CheckListItemQueryResult) {
-    const command: UpdateCheckListItemCommand = {
-      id: checkItem.id!,
-      checkListId: checkItem.checkListId!,
-      text: checkItem.text!,
-      required: checkItem.required!,
-      checked: parseInt(checkItem.checked as any),
-      editable: checkItem.editable!,
-      remarks: checkItem.remarks!
-    }
-    await this.$axios.put(
-      `checklists/${command.checkListId}/items/${checkItem.id}`,
-      command
-    )
-  }
-
-  async saveReportChanges () {
-    this.savingNewReport = true
-    const update: UpdateReportCommand = {
-      id: this.currentReport.id,
-      name: this.currentReport.name,
-      address: this.currentReport.address ?? this.search,
-      date: this.currentReport.date,
-      licenseNumber: this.currentReport.licenseNumber,
-      isClosed: this.currentReport.isClosed
-    }
-    await this.$axios.put(`reports/${this.$route.params.id}`, update).then(() => {
-      this.$store.dispatch('hasPendingChanges', false)
-      this.currentReport.signatures!.forEach((signature) => {
-        const command: EditSignatureCommand = {
-          id: signature.id,
-          title: signature.title,
-          annotation: signature.annotation,
-          responsibleType: signature.responsibleType!,
-          responsibleName: signature.responsibleName,
-          designation: signature.designation,
-          remarks: signature.remarks,
-          date: signature.date,
-          principal: signature.principal,
-          drawnSign: signature.drawnSign
-        }
-        this.$axios.$put(`signatures/${signature.id}`, command)
-      })
-      this.savedNotification = true
+    onMounted(() => {
+      if (obs.value && obsSignatures.value) {
+        obs.value!.validate()
+        obsSignatures.value!.validate()
+      }
     })
 
-    this.savingNewReport = false
-    this.shouldShowRequired = true
-  }
+    const pageOptions = reactive({
+      loadingReport: false,
+      errorsDialog: false,
+      dialogPrinting: false,
+      shouldShowRequired: false,
+      isDirty: false,
+      searchingAddresses: false,
+      openedPanels: [0, 1],
+      savingNewReport: true,
+      currentPhoto: 0,
+      showLabelEdit: [],
+      showUpdateCheck: [] as { parentIndex: number; currentIndex: number }[],
+      tabs: '',
+      dialogClose: false,
+      signaturesChanges: false,
+      search: ''
+    })
 
-  @Watch('currentReport', { deep: false })
-  onReportChanged (value: ReportQueryResult, oldValue: ReportQueryResult) {
-    if (value !== oldValue && oldValue !== undefined) {
-      this.$store.dispatch('hasPendingChanges', true)
-    }
-  }
+    const currentReport = ref<ReportQueryResult>({} as ReportQueryResult)
+    const signatures = computed(() => (currentReport.value.signatures || []))
 
-  async fetch () {
-    try {
-      this.loadingReport = true
-      await Promise.all(
-        [
-          this.loadReport(),
-          this.getSuggestedAddresses('')
-        ]
+    const { fetch } = useFetch(async () => {
+      try {
+        currentReport.value = await store.dispatch(
+          'reportstrore/getReportById',
+          id.value,
+          {
+            root: true
+          }
+        )
+        await getSuggestedAddresses('')
+        await store.dispatch(
+          'users/setUserLastEditedReport',
+          {
+            userName: $auth.user.userName,
+            lastEditedReport: route.value.params.id
+          },
+          { root: true }
+        )
+        await $auth.fetchUser()
+      } catch (error) {
+        notify({ error })
+      }
+    })
+
+    const loadReport = () => fetch()
+
+    const getSuggestedAddresses = async (filter: string) => {
+      await store.dispatch(
+        'addresses/getAddresses',
+        { filter },
+        { root: true }
       )
-    } catch (error) {
-      console.error(error)
-    } finally {
-      this.loadingReport = false
     }
-  }
 
-  async loadReport () {
-    const result = await this.$store.dispatch(
-      'reportstrore/getReportById',
-      this.$route.params.id,
-      { root: true }
-    )
+    const localAddress = computed((): AddressDTO[] => {
+      return [
+        {
+          formatedAddress: currentReport.value.address
+        } as AddressDTO
+      ]
+    })
 
-    this.currentReport = result
-    this.search = this.currentReport.address
+    const addresses = computed((): AddressDTO[] => {
+      const dbAddressses = (store.state.addresses as AddressesState)
+        .addressList
 
-    await this.$store.dispatch(
-      'users/setUserLastEditedReport',
-      {
-        userName: this.$auth.user.userName,
-        lastEditedReport: this.$route.params.id
-      },
-      { root: true }
-    )
-    await this.$auth.fetchUser()
-  }
+      if (dbAddressses.length > 0) {
+        return dbAddressses
+      }
 
-  get IsValidForm () {
-    return this.$refs.obs.flags.valid
-  }
+      return localAddress.value
+    })
 
-  get IsCompleted () {
-    if (this.currentReport.checkLists) {
+    const IsValidForm = computed(() => {
+      if (obs.value && obs.value!.flags) {
+        return obs.value!.flags.valid
+      }
+      return false
+    })
+
+    const formHasChanged = computed(() => {
+      return obs.value!.flags.dirty
+    })
+
+    const formHasSignaturesChanged = computed(() => {
+      return obsSignatures.value?.flags.dirty
+    })
+
+    const hasUntouchedChecks = computed(() => {
+      if (currentReport.value.checkLists) {
+        const result = currentReport.value.checkLists.filter(
+          (cl: CheckListQueryResult) =>
+              cl.checks!.findIndex(c => !c.touched) >= 0
+        )
+        return result.length > 0
+      }
+
+      return false
+    })
+
+    const PrincipalSignatureHasAResponsable = computed(() => {
+      if (!currentReport) {
+        return true
+      }
+      if (!currentReport!.value.signatures) {
+        return true
+      }
       return (
-        this.currentReport.checkLists.filter(
-          cl => cl.checks!.findIndex(c => !c.touched) >= 0
-        ).length === 0
+        currentReport.value.signatures.findIndex(
+          (s: SignatureQueryResult) =>
+            s.responsibleType !== undefined &&
+            s.responsibleName !== '' &&
+            s.principal
+        ) >= 0
+      )
+    })
+
+    const HasNotesWithPendingChecks = computed(() => {
+      if (!currentReport) {
+        return false
+      }
+      if (!currentReport.value.notes) {
+        return false
+      }
+      return (
+        currentReport.value.notes.findIndex(
+          (n: NoteQueryResult) => n.needsCheck && !n.checked
+        ) >= 0
+      )
+    })
+
+    const CanCloseReport = computed(() => {
+      return !hasUntouchedChecks.value && !HasNotesWithPendingChecks.value && PrincipalSignatureHasAResponsable.value && IsValidForm.value
+    })
+
+    const isMultiLine = computed(() => {
+      return currentReport.value.licenseVolt! >= 400
+    })
+
+    watch(
+      () => pageOptions.search!,
+      async (newValue: string) => {
+        if (!newValue || !pageOptions.isDirty) {
+          return
+        }
+
+        if (pageOptions.searchingAddresses) {
+          return
+        }
+
+        if (newValue.length >= 3) {
+          await getSuggestedAddresses(newValue)
+        }
+      }
+    )
+
+    debouncedWatch(
+      currentReport,
+      async (newValue: ReportQueryResult) => {
+        if (!IsValidForm.value || !formHasChanged.value) {
+          return
+        }
+        try {
+          if (pageOptions.loadingReport) {
+            return
+          }
+          await saveReportChanges(newValue)
+          // notify({
+          //   title: 'Reports',
+          //   message: 'Changes has been saved',
+          //   type: 'success'
+          // })
+        } catch (error) {
+          notify({
+            title: 'Reports',
+            message: 'Error while saving the report',
+            type: 'error',
+            error
+          })
+        } finally {
+          pageOptions.savingNewReport = false
+          pageOptions.shouldShowRequired = true
+        }
+      },
+      {
+        debounce: 1000,
+        deep: true
+      }
+    )
+
+    debouncedWatch(
+      signatures,
+      (newValue: any) => {
+        if (!formHasSignaturesChanged.value) {
+          return
+        }
+        try {
+          if (pageOptions.loadingReport) {
+            return
+          }
+          newValue!.forEach(async (signature: any) => {
+            const command: EditSignatureCommand = {
+              id: signature.id,
+              title: signature.title,
+              annotation: signature.annotation,
+              responsibleType: signature.responsibleType!,
+              responsibleName: signature.responsibleName,
+              designation: signature.designation,
+              remarks: signature.remarks,
+              date: signature.date,
+              principal: signature.principal,
+              drawnSign: signature.drawnSign
+            }
+            await $axios.$put(`signatures/${signature.id}`, command)
+          })
+          // notify({
+          //   title: 'Signatures',
+          //   message: 'Changes has been saved',
+          //   type: 'success'
+          // })
+        } catch (error) {
+          notify({
+            title: 'Reports',
+            message: 'Error while saving the report',
+            type: 'error',
+            error
+          })
+        } finally {
+          pageOptions.savingNewReport = false
+          pageOptions.shouldShowRequired = true
+        }
+      },
+      {
+        debounce: 1000,
+        deep: true
+      }
+    )
+
+    const addNote = async () => {
+      const newNote: AddNoteCommand = {
+        reportId: currentReport.value.id,
+        text: '',
+        checked: false,
+        needsCheck: false
+      }
+      await $axios
+        .$post(`reports/${route.value.params.id}/note`, newNote)
+        .then((resp) => {
+          currentReport.value.notes!.push({ id: resp, ...newNote })
+        })
+        .catch(err => notify({ type: 'error', message: err.message }))
+    }
+
+    const removeNote = async (note: NoteQueryResult) => {
+      const delNote = {
+        reportId: id,
+        id: note.id ?? 0
+      }
+      await $axios
+        .delete(`reports/${delNote.reportId}/note/${delNote.id}`)
+        .then(() => {
+          currentReport.value.notes = currentReport.value.notes!.filter(
+            n => n.id !== delNote.id
+          )
+        })
+    }
+
+    const getCheckIcon = (value: CheckValue) => {
+      switch (value) {
+        case CheckValue.NotAcceptableFalse:
+          return 'close'
+        case CheckValue.Acceptable:
+          return 'check'
+        case CheckValue.NotApplicable:
+          return 'N.A.'
+        case CheckValue.None:
+          return 'new-box'
+        default:
+          return ''
+      }
+    }
+
+    const getCheckIconColor = (value: CheckValue) => {
+      switch (value) {
+        case CheckValue.NotAcceptableFalse:
+          return 'error'
+        case CheckValue.Acceptable:
+          return 'success'
+        case CheckValue.NotApplicable:
+          return 'black'
+        default:
+          return 'info'
+      }
+    }
+
+    const saveNote = (note: NoteQueryResult) => {
+      const data: EditNoteCommand = {
+        reportId: parseInt(route.value.params.id),
+        id: note.id!,
+        text: note.text!,
+        checked: note.checked!
+      }
+      $axios.put(`reports/${data.reportId}/note/${note.id}`, data)
+    }
+
+    const saveCheckItem = async (checkItem: CheckListItemQueryResult) => {
+      const command: UpdateCheckListItemCommand = {
+        id: checkItem.id!,
+        checkListId: checkItem.checkListId!,
+        text: checkItem.text!,
+        required: checkItem.required!,
+        checked: parseInt(checkItem.checked as any),
+        editable: checkItem.editable!,
+        remarks: checkItem.remarks!
+      }
+      await $axios.put(
+        `checklists/${command.checkListId}/items/${checkItem.id}`,
+        command
       )
     }
 
-    return false
-  }
-
-  get PrincipalSignatureHasAResponsable () {
-    if (!this.currentReport) {
-      return true
+    const saveReportChanges = async (currentReport: ReportQueryResult) => {
+      pageOptions.savingNewReport = true
+      const update: UpdateReportCommand = {
+        id: currentReport.id,
+        name: currentReport.name,
+        address: currentReport.address ?? pageOptions.search,
+        date: currentReport.date,
+        licenseNumber: currentReport.licenseNumber,
+        isClosed: currentReport.isClosed
+      }
+      await $axios.put(`reports/${route.value.params.id}`, update)
+      mapToUpdateCommand(currentReport)
+      if ($reportsApi) {
+        await $reportsApi.updateOperationalReadings(
+          updateCommand.value.reportId!,
+          updateCommand.value
+        )
+      }
+      store.dispatch('hasPendingChanges', false)
     }
-    if (!this.currentReport!.signatures) {
-      return true
-    }
-    return (
-      this.currentReport.signatures.findIndex(
-        s =>
-          s.responsibleType !== undefined &&
-          s.responsibleName !== '' &&
-          s.principal
-      ) >= 0
-    )
-  }
 
-  get HasNotesWithPendingChecks () {
-    if (!this.currentReport) {
-      return false
+    const checkItemChecks = (checkListId: number, value: CheckValue): void => {
+      try {
+        if ($reportsApi) {
+          $reportsApi.bulkUpdateChecks(
+            currentReport.value.id!,
+            checkListId,
+            value
+          )
+          const checkList = currentReport.value.checkLists!.find(
+            c => c.id === checkListId
+          )
+          if (!checkList) {
+            return
+          }
+          checkList.checks!.forEach((check: any) => {
+            check.checked = value
+            check.touched = true
+          })
+        }
+      } catch (error) {
+        notify({
+          title: 'Report Details',
+          defaultMessage: 'Error Updating Checklist',
+          error
+        })
+      }
     }
-    if (!this.currentReport!.notes) {
-      return false
-    }
-    return (
-      this.currentReport.notes.findIndex(n => n.needsCheck && !n.checked) >= 0
-    )
-  }
 
-  get CanCloseReport () {
-    return (
-      this.IsCompleted &&
-      // !this.HasNotesWithPendingChecks &&
-      this.PrincipalSignatureHasAResponsable &&
-      this.IsValidForm
-    )
-  }
-
-  checkItemChecks (checkListId: number, value: CheckValue): void {
-    try {
-      this.$reportsApi.bulkUpdateChecks(this.currentReport.id!, checkListId, value)
-      const checkList = this.currentReport.checkLists!.find(
-        c => c.id === checkListId
-      )
-      if (!checkList) {
+    const setLicenseFromAddress = () => {
+      if (!currentReport.value.address) {
+        currentReport.value.licenseNumber = ''
         return
       }
-    checkList.checks!.forEach((check) => { check.checked = value; check.touched = true })
-    } catch (error) {
-      notify({
-        title: 'Report Details',
-        defaultMessage: 'Error Updating Checklist',
-        error
-      })
-    }
-  }
-
-  checkListCheckedValue (item: any) {
-    return (
-      item.checks.length === item.checks.filter((c: any) => c.checked).length
-    )
-  }
-
-  setLicenseFromAddress () {
-    if (!this.currentReport.address) {
-      this.currentReport!.licenseNumber = ''
-      return
-    }
-    const addressData = this.addresses.filter(
-      a => a.formatedAddress === this.currentReport.address
-    )
-    if (addressData) {
-      this.currentReport!.licenseNumber = addressData[0].number ?? ''
-    }
-  }
-
-  mounted () {
-    this.printHelper = new PrintHelper(this.$store)
-    return this.$refs.obs.validate()
-  }
-
-  async getSuggestedAddresses (filter: string) {
-    await this.$store.dispatch(
-      'addresses/getAddresses',
-      { filter },
-      { root: true }
-    )
-    this.searchingAddresses = false
-    this.isDirty = false
-  }
-
-  async closeReport () {
-    this.currentReport.isClosed = true
-    await this.saveReportChanges()
-    this.dialogClose = false
-    this.currentReport.isClosed = true
-    this.dialogPrinting = true
-    // await this.printHelper.print(this.currentReport.id!)
-    await this.generatePdf(this.currentReport)
-    this.dialogPrinting = false
-    this.$router.push('/reports')
-  }
-
-  async saveAndLoad () {
-    await this.saveReportChanges()
-    await this.loadReport()
-  }
-
-  async generatePdf (item: any, printPhotos: boolean = false) {
-    const file = await this.$axios.$get(`reports/${item.id}/export?printPhotos=${printPhotos}`, { responseType: 'blob' })
-    this.downloadFile(file, printPhotos ? `compunded_photo_record_${item.name}` : `report_${item.name}`)
-  }
-
-  downloadFile (blob: Blob, name:any): void {
-    const link = document.createElement('a')
-    link.target = '_blank'
-    link.href = window.URL.createObjectURL(blob)
-    link.download = `${name}`
-    link.click()
-  }
-
-  @Watch('search')
-  onSearchChanged (value: string) {
-    if (!value || !this.isDirty) {
-      return
+      const addressData = addresses.value.filter(
+        a => a.formatedAddress === currentReport.value.address
+      )
+      if (addressData) {
+        currentReport.value.licenseNumber = addressData[0].number
+        currentReport.value.licenseVolt = addressData[0].volt
+        currentReport.value.licenseAmp = addressData[0].amp
+        currentReport.value.licenseValidity = addressData[0].validity
+        currentReport.value.licenseName = addressData[0].name
+        currentReport.value.licenseKVA = addressData[0].kva
+      }
     }
 
-    if (this.searchingAddresses) {
-      return
+    const closeReport = async () => {
+      currentReport.value.isClosed = true
+      await saveReportChanges(currentReport.value)
+      pageOptions.dialogClose = false
+      currentReport.value.isClosed = true
+      pageOptions.dialogPrinting = true
+      await generatePdf(currentReport.value)
+      pageOptions.dialogPrinting = false
     }
 
-    if (value.length >= 3) {
-      this.searchingAddresses = true
-      const self = this
-      self.getSuggestedAddresses(value)
+    const saveAndLoad = async () => {
+      await saveReportChanges(currentReport.value)
+      await loadReport()
+    }
+
+    const generatePdf = async (item: any, printPhotos: boolean = false) => {
+      const file = await $axios.$get(
+        `reports/${item.id}/export?printPhotos=${printPhotos}`,
+        { responseType: 'blob' }
+      )
+      downloadFile(
+        file,
+        printPhotos
+          ? `compunded_photo_record_${item.name}`
+          : `report_${item.name}`
+      )
+    }
+
+    const downloadFile = (blob: Blob, name: any): void => {
+      const link = document.createElement('a')
+      link.target = '_blank'
+      link.href = window.URL.createObjectURL(blob)
+      link.download = `${name}`
+      link.click()
+    }
+
+    const updateCommand = ref<UpdateOperationalReadingsCommand>({
+      id: currentReport.value.operationalReadingsId!,
+      reportId: currentReport.value.id!,
+      voltageL1N: currentReport.value.operationalReadingsVoltageL1N!,
+      voltageL2N: currentReport.value.operationalReadingsVoltageL2N!,
+      voltageL3N: currentReport.value.operationalReadingsVoltageL3N!,
+      voltageL1L2: currentReport.value.operationalReadingsVoltageL1L2!,
+      voltageL1L3: currentReport.value.operationalReadingsVoltageL1L3!,
+      voltageL2L3: currentReport.value.operationalReadingsVoltageL2L3!,
+      runningLoadL1: currentReport.value.operationalReadingsRunningLoadL1!,
+      runningLoadL2: currentReport.value.operationalReadingsRunningLoadL2!,
+      runningLoadL3: currentReport.value.operationalReadingsRunningLoadL3!,
+      mainBreakerAmp: currentReport.value.operationalReadingsMainBreakerAmp!,
+      mainBreakerPoles: currentReport.value.operationalReadingsMainBreakerPoles!,
+      mainBreakerCapacity: currentReport.value.operationalReadingsMainBreakerCapacity!,
+      overCurrentDTLA: currentReport.value.operationalReadingsOverCurrentDTLA!,
+      overCurrentDTLSec: currentReport.value.operationalReadingsOverCurrentDTLSec!,
+      overCurrentIDMTLA: currentReport.value.operationalReadingsOverCurrentIDMTLA!,
+      overCurrentIDMTLTm: currentReport.value.operationalReadingsOverCurrentIDMTLTm!,
+      earthFaultMA: currentReport.value.operationalReadingsEarthFaultMA!,
+      earthFaultELRA: currentReport.value.operationalReadingsEarthFaultELRA!,
+      earthFaultELRSec: currentReport.value.operationalReadingsEarthFaultELRSec!,
+      earthFaultA: currentReport.value.operationalReadingsEarthFaultA!,
+      earthFaultSec: currentReport.value.operationalReadingsEarthFaultSec!,
+      mainBreakerRating: currentReport.value.operationalReadingsMainBreakerRating,
+      overCurrentDirectActingEnabled:
+        currentReport.value.operationalReadingsOverCurrentDirectActingEnabled,
+      overCurrentDirectActing:
+        currentReport.value.operationalReadingsOverCurrentDirectActing,
+      overCurrentDTLEnabled:
+        currentReport.value.operationalReadingsOverCurrentDTLEnabled,
+      overCurrentIDTMLEnabled:
+        currentReport.value.operationalReadingsOverCurrentIDTMLEnabled,
+      earthFaultRoobEnabled:
+        currentReport.value.operationalReadingsEarthFaultRoobEnabled,
+      earthFaultEIREnabled:
+        currentReport.value.operationalReadingsEarthFaultEIREnabled,
+      earthFaultEFEnabled: currentReport.value.operationalReadingsEarthFaultEFEnabled
+    })
+
+    const mapToUpdateCommand = (newReport: ReportQueryResult) => {
+      updateCommand.value.id = newReport.operationalReadingsId!
+      updateCommand.value.reportId = newReport.id!
+      updateCommand.value.voltageL1N = newReport.operationalReadingsVoltageL1N!
+      updateCommand.value.voltageL2N = newReport.operationalReadingsVoltageL2N!
+      updateCommand.value.voltageL3N = newReport.operationalReadingsVoltageL3N!
+      updateCommand.value.voltageL1L2 =
+          newReport.operationalReadingsVoltageL1L2!
+      updateCommand.value.voltageL1L3 =
+          newReport.operationalReadingsVoltageL1L3!
+      updateCommand.value.voltageL2L3 =
+          newReport.operationalReadingsVoltageL2L3!
+      updateCommand.value.runningLoadL1 =
+          newReport.operationalReadingsRunningLoadL1!
+      updateCommand.value.runningLoadL2 =
+          newReport.operationalReadingsRunningLoadL2!
+      updateCommand.value.runningLoadL3 =
+          newReport.operationalReadingsRunningLoadL3!
+      updateCommand.value.mainBreakerAmp =
+          newReport.operationalReadingsMainBreakerAmp!
+      updateCommand.value.mainBreakerPoles =
+          newReport.operationalReadingsMainBreakerPoles!
+      updateCommand.value.mainBreakerCapacity =
+          newReport.operationalReadingsMainBreakerCapacity!
+      updateCommand.value.overCurrentDTLA =
+          newReport.operationalReadingsOverCurrentDTLA!
+      updateCommand.value.overCurrentDTLSec =
+          newReport.operationalReadingsOverCurrentDTLSec!
+      updateCommand.value.overCurrentIDMTLA =
+          newReport.operationalReadingsOverCurrentIDMTLA!
+      updateCommand.value.overCurrentIDMTLTm =
+          newReport.operationalReadingsOverCurrentIDMTLTm!
+      updateCommand.value.earthFaultMA =
+          newReport.operationalReadingsEarthFaultMA!
+      updateCommand.value.earthFaultELRA =
+          newReport.operationalReadingsEarthFaultELRA!
+      updateCommand.value.earthFaultELRSec =
+          newReport.operationalReadingsEarthFaultELRSec!
+      updateCommand.value.earthFaultA =
+          newReport.operationalReadingsEarthFaultA!
+      updateCommand.value.earthFaultSec =
+          newReport.operationalReadingsEarthFaultSec!
+      updateCommand.value.mainBreakerRating =
+          newReport.operationalReadingsMainBreakerRating
+      updateCommand.value.overCurrentDirectActingEnabled =
+          newReport.operationalReadingsOverCurrentDirectActingEnabled
+      updateCommand.value.overCurrentDirectActing =
+          newReport.operationalReadingsOverCurrentDirectActing
+      updateCommand.value.overCurrentDTLEnabled =
+          newReport.operationalReadingsOverCurrentDTLEnabled
+      updateCommand.value.overCurrentIDTMLEnabled =
+          newReport.operationalReadingsOverCurrentIDTMLEnabled
+      updateCommand.value.earthFaultRoobEnabled =
+          newReport.operationalReadingsEarthFaultRoobEnabled
+      updateCommand.value.earthFaultEIREnabled =
+          newReport.operationalReadingsEarthFaultEIREnabled
+      updateCommand.value.earthFaultEFEnabled =
+          newReport.operationalReadingsEarthFaultEFEnabled
+    }
+
+    return {
+      currentReport,
+      pageOptions,
+      addresses,
+      CanCloseReport,
+      HasNotesWithPendingChecks,
+      hasUntouchedChecks,
+      PrincipalSignatureHasAResponsable,
+      isMultiLine,
+      IsValidForm,
+      saveAndLoad,
+      closeReport,
+      setLicenseFromAddress,
+      checkItemChecks,
+      saveCheckItem,
+      saveNote,
+      getCheckIconColor,
+      getCheckIcon,
+      removeNote,
+      addNote,
+      saveReportChanges,
+      obs,
+      obsSignatures,
+      signatures
     }
   }
-}
+})
 </script>
 
 <style scoped>

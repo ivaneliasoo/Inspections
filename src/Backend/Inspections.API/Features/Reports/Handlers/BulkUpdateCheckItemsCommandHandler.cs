@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.Features.Reports.Commands;
-using Inspections.Core.Interfaces;
+using Inspections.Core.Domain.ReportsAggregate;
+using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using MediatR;
 
@@ -26,7 +26,7 @@ namespace Inspections.API.Features.Reports.Handlers
         {
             Guard.Against.Null(request, nameof(request));
 
-            var report = _context.Reports.Any(r => r.Id == request.ReportId);
+            var report = _context.Set<Report>().Any(r => r.Id == request.ReportId);
 
             var checkList = await _checkListsRepository.GetByIdAsync(request.CheckListId).ConfigureAwait(false);
             checkList.SetValue(request.NewValue);

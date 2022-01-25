@@ -80,40 +80,69 @@
 
             <v-col cols="8">
               <v-row justify="center">
-                <v-data-table
-                  dense
-                  :headers="columnDefs"
-                  :items="template.categories"
-                  item-key="category"
-                  class="elevation-1"
-                  height="360"
-                >
-                  <template slot="item.rank" slot-scope="props">
-                    {{ props.index + 1 }}
-                  </template>
-                  <template #top>
-                    <v-toolbar flat>
-                      <div class="text-body-2">
-                        <v-icon small @click="editTemplateName" v-show="template.description">
-                          mdi-pencil
-                        </v-icon>
-                        {{template.description}}
-                      </div>
-                      <v-spacer />
-                      <v-btn small @click="newItem">
-                        New Section
-                      </v-btn>
-                    </v-toolbar>
-                  </template>
-                  <template #item.actions="{ item }">
-                    <v-icon small class="mx-1" @click="editItem(item)">
-                      mdi-pencil
-                    </v-icon>
-                    <v-label>
-                      {{ item.disabled ? "x" : "" }}
-                    </v-label>
-                  </template>
-                </v-data-table>
+                <v-col class="my-0 py-0">
+                  <v-toolbar flat>
+                    <div class="text-body-2">
+                      <v-icon small @click="editTemplateName" v-show="template.description">
+                        mdi-pencil
+                      </v-icon>
+                      {{template.description}}
+                    </div>
+                    <v-spacer />
+                    <v-btn small @click="newItem">
+                      New Section
+                    </v-btn>
+                  </v-toolbar>
+                </v-col>
+              </v-row>
+              <v-row justify="center">
+                <v-col class="my-n2 py-n2">
+                  <v-simple-table class="simple-table" height="400px"
+                      style="max-width: 100%; overflow-x: hidden; overflow-y: auto"
+                      dense fixed-header>
+                    <colgroup>
+                      <col style="width:8%;">
+                      <col style="width:76%;">
+                      <col style="width:16%;">
+                    </colgroup>
+                    <thead class="text-caption">
+                      <tr>
+                        <th>
+                          Num
+                        </th>
+                        <th>
+                          Title
+                        </th>
+                        <th>
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-caption text-left">
+                      <tr v-for="(category, index) in template.categories" :key="index"
+                          draggable="true"
+                          @dragover="dragoverHandler($event)"
+                          @dragstart="dragstartHandler($event, index)"
+                          @drop="dropHandler($event, index)"
+                      >
+                        <td style="border: 1px solid lightgray;">
+                          {{index+1}}
+                        </td>
+                        <td style="border: 1px solid lightgray;">
+                          {{category.title}}
+                        </td>
+                        <td class="mx-4 px-4" style="border: 1px solid lightgray;">
+                          <v-icon small class="mx-1" @click="editItem(category)">
+                            mdi-pencil
+                          </v-icon>
+                          <v-label>
+                            {{ category.disabled ? "x" : "" }}
+                          </v-label>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </v-simple-table>
+                </v-col>
               </v-row>
             </v-col>
           </v-row>
@@ -235,29 +264,31 @@
                   </v-col>
                 </v-row>
 
-                <v-simple-table class="my-0 py-0" dense fixed-header>
-                  <template v-slot:default class="my-0 py-0">
-                    <thead class="my-0 py-0">
+                <v-simple-table
+                  class="my-0 py-0 simple-table"
+                  style="max-width: 100%; overflow-x: hidden;"
+                  dense fixed-header>
+                    <thead>
                       <tr class="my-0 py-0">
                         <th class="text-left"></th>
-                        <th class="text-left" width="10%">% Time</th>
-                        <th class="text-left" width="12%">Min value</th>
-                        <th class="text-left" width="12%">Max value</th>
-                        <th class="text-left" width="22%">
+                        <th class="text-left" width="9%" style="border: 2px solid lightgray;">% Time</th>
+                        <th class="text-left" width="12%" style="border: 2px solid lightgray;">Min value</th>
+                        <th class="text-left" width="12%" style="border: 2px solid lightgray;">Max value</th>
+                        <th class="text-left" width="22%" style="border: 2px solid lightgray;">
                           <v-text-field
-                            class="my-0 py-0"
+                            flat solo hide-details
                             v-model="editedItem.text.reqHeader1"
                           ></v-text-field>
                         </th>
-                        <th class="text-left" width="22%">
+                        <th class="text-left" width="22%" style="border: 2px solid lightgray;">
                           <v-text-field
-                            class="my-0 py-0"
+                            flat solo hide-details
                             v-model="editedItem.text.reqHeader2"
                           ></v-text-field>
                         </th>
-                        <th class="text-left" width="22%">
+                        <th class="text-left" width="22%" style="border: 2px solid lightgray;">
                           <v-text-field
-                            class="my-0 py-0"
+                            flat solo hide-details
                             v-model="editedItem.text.reqHeader3"
                           ></v-text-field>
                         </th>
@@ -265,46 +296,53 @@
                     </thead>
                     <tbody>
                       <tr
-                        dense
                         v-for="item in editedItem.text.requirements"
                         :key="item.num"
                       >
-                        <td width="60">
-                          <v-checkbox v-model="item.include"></v-checkbox>
+                        <td style="border: 2px solid lightgray;">
+                          <v-checkbox
+                            flat solo hide-details
+                            class="ma-0 pa-0"
+                            v-model="item.include"></v-checkbox>
                         </td>
-                        <td width="260">
+                        <td style="border: 2px solid lightgray;">
                           <v-text-field
+                            flat solo hide-details
                             v-model="item.timePercent"
                           ></v-text-field>
                         </td>
-                        <td width="260">
-                          <v-text-field v-model="item.ymin"></v-text-field>
+                        <td style="border: 2px solid lightgray;">
+                          <v-text-field
+                            flat solo hide-details
+                            v-model="item.ymin"></v-text-field>
                         </td>
-                        <td width="260">
-                          <v-text-field v-model="item.ymax"></v-text-field>
+                        <td style="border: 2px solid lightgray;">
+                          <v-text-field
+                            flat solo hide-details
+                            v-model="item.ymax"></v-text-field>
                         </td>
-                        <td width="260">
+                        <td style="border: 2px solid lightgray;">
                           <v-select
-                            dense
-                            flat
+                            dense flat solo hide-details
+                            class="ma-0 pa-0"
                             :items="csvColumns"
                             v-model="item.value1"
                           >
                           </v-select>
                         </td>
-                        <td width="260">
+                        <td style="border: 2px solid lightgray;">
                           <v-select
-                            dense
-                            flat
+                            dense flat solo hide-details
+                            class="ma-0 pa-0"
                             :items="csvColumns"
                             v-model="item.value2"
                           >
                           </v-select>
                         </td>
-                        <td width="260">
+                        <td style="border: 2px solid lightgray;">
                           <v-select
-                            dense
-                            flat
+                            dense flat solo hide-details
+                            class="ma-0 pa-0"
                             :items="csvColumns"
                             v-model="item.value3"
                           >
@@ -312,7 +350,6 @@
                         </td>
                       </tr>
                     </tbody>
-                  </template>
                 </v-simple-table>
               </v-container>
             </v-tab-item>
@@ -430,69 +467,68 @@
                 </v-row>
                 <v-row justify="start">
                   <v-col cols="10">
-                    <v-simple-table dense fixed-header height="270">
-                      <template dense v-slot:default>
-                        <thead>
-                          <tr>
-                            <th class="text-left" width="26%">Parameter</th>
-                            <th class="text-left" width="29%">Column</th>
-                            <th class="text-left" width="8%">Peaks</th>
-                            <th class="text-left" width="20%">Color</th>
-                            <th class="text-left"></th>
-                            <th class="text-left"></th>
-                          </tr>
-                        </thead>
-                        <tbody dense>
-                          <tr
-                            dense
-                            v-for="(item, index) in editedItem.mappings"
-                            :key="item.series"
-                          >
-                            <td>
-                              <v-text-field
-                                dense
-                                v-model="item.param"
-                              >
-                            </v-text-field>
-                            </td>
-                            <td>
-                              <v-select
-                                dense
-                                flat
-                                :items="csvColumns"
-                                v-model="item.col"
-                              >
-                              </v-select>
-                            </td>
-                            <td>
-                              <v-checkbox
-                                v-model="item.showPeaks"
-                              ></v-checkbox>
-                            </td>
-                            <td>
-                              <v-select
-                                :items="colors"
-                                dense
-                                v-model="item.color"
-                                item-text="name"
-                                item-value="hex"
-                              >
-                              </v-select>
-                            </td>
-                            <td>
-                              <v-btn :color="item.color"></v-btn>
-                            </td>
-                            <td>
-                              <v-icon
-                                class="mr-2"
-                                @click="deleteChartColumn(index)"
-                              >
-                                mdi-delete
-                              </v-icon>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </template>
+                    <v-simple-table class="simple-table"
+                      dense fixed-header height="270">
+                      <thead>
+                        <tr>
+                          <th class="text-left" width="26%" style="border: 1px solid lightgray;">Parameter</th>
+                          <th class="text-left" width="29%" style="border: 1px solid lightgray;">Column</th>
+                          <th class="text-left" width="8%" style="border: 1px solid lightgray;">Peaks</th>
+                          <th class="text-left" width="20%" style="border: 1px solid lightgray;">Color</th>
+                          <th class="text-left" style="border: 1px solid lightgray;"></th>
+                          <th class="text-left" style="border: 1px solid lightgray;"></th>
+                        </tr>
+                      </thead>
+                      <tbody dense>
+                        <tr
+                          dense
+                          v-for="(item, index) in editedItem.mappings"
+                          :key="item.series"
+                        >
+                          <td style="border: 1px solid lightgray;">
+                            <v-text-field
+                              dense flat solo hide-details
+                              v-model="item.param"
+                            >
+                          </v-text-field>
+                          </td>
+                          <td style="border: 1px solid lightgray;">
+                            <v-select
+                              dense flat solo hide-details
+                              :items="csvColumns"
+                              v-model="item.col"
+                            >
+                            </v-select>
+                          </td>
+                          <td style="border: 1px solid lightgray;">
+                            <v-checkbox
+                              dense flat solo hide-details
+                              v-model="item.showPeaks"
+                            ></v-checkbox>
+                          </td>
+                          <td style="border: 1px solid lightgray;">
+                            <v-select
+                              :items="colors"
+                              dense flat solo hide-details
+                              v-model="item.color"
+                              item-text="name"
+                              item-value="hex"
+                            >
+                            </v-select>
+                          </td>
+                          <td style="border: 1px solid lightgray;">
+                            <v-btn small :color="item.color"></v-btn>
+                          </td>
+                          <td style="border: 1px solid lightgray;">
+                            <v-icon
+                              class="mr-2"
+                              @click="deleteChartColumn(index)"
+                            >
+                              mdi-delete
+                            </v-icon>
+                          </td>
+                        </tr>
+                      </tbody>
                     </v-simple-table>
                   </v-col>
                   <v-col cols="2">
@@ -528,67 +564,50 @@
               v-model="editedPage2.subtitle"
               label="Subtitle"
             ></v-text-field>
-            <v-simple-table class="my-0 py-0" dense fixed-header>
-              <template v-slot:default class="my-0 py-0">
-                <thead class="my-0 py-0">
-                  <tr class="my-0 py-0">
-                    <th class="text-left" width="10%">Num.</th>
-                    <th class="text-left" width="45%">Title</th>
-                    <th class="text-left" width="45%">Remarks</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    dense
-                    v-for="item in editedPage2.requirements"
-                    :key="item.num"
-                  >
-                    <td>
-                      {{ item.num }}
-                    </td>
-                    <td>
-                      {{ requirementTableTitle(item.num) }}
-                    </td>
-                    <td>
-                      <v-text-field
-                        class="my-0 py-0"
-                        v-model="item.remarks"
-                      ></v-text-field>
-                    </td>
-                  </tr>
-                </tbody>
-              </template>
-            </v-simple-table>
-            <v-simple-table class="my-0 py-0" dense fixed-header>
-              <template v-slot:default class="my-0 py-0">
-                <thead class="my-0 py-0">
-                  <tr class="my-0 py-0">
-                    <th class="text-left" width="10%">Num.</th>
-                    <th class="text-left" width="45%">Title</th>
-                    <th class="text-left" width="45%">Remarks</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    dense
-                    v-for="item in editedPage2.additionalInfo"
-                    :key="item.num"
-                  >
-                    <td style="height=20px;">
-                      {{ item.num }}
-                    </td>
-                    <td style="height=20px;">
-                      {{ requirementTableTitle(item.num) }}
-                    </td>
-                    <td>
-                      <v-text-field
-                        class="my-0 py-0"
-                        v-model="item.remarks"
-                      ></v-text-field>
-                    </td>
-                  </tr>
-                </tbody>
-              </template>
+            <v-simple-table class="my-0 py-0 simple-table"
+              style="max-width: 100%; overflow-x: hidden;"
+              dense fixed-header>
+              <thead class="my-0 py-0">
+                <tr class="my-0 py-0">
+                  <th class="text-left" width="10%" style="border: 1px solid lightgray;">Num.</th>
+                  <th class="text-left" width="45%" style="border: 1px solid lightgray;">Title</th>
+                  <th class="text-left" width="45%" style="border: 1px solid lightgray;">Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="item in editedPage2.requirements"
+                  :key="item.num"
+                >
+                  <td style="border: 1px solid lightgray;">
+                    {{ item.num }}
+                  </td>
+                  <td style="border: 1px solid lightgray;">
+                    {{ requirementTableTitle(item.num) }}
+                  </td>
+                  <td style="border: 1px solid lightgray;">
+                    <input class="text-caption table-input" type="text" size="40"
+                      v-model="item.remarks"
+                    >
+                  </td>
+                </tr>
+                <tr
+                  v-for="item in editedPage2.additionalInfo"
+                  :key="item.num"
+                >
+                  <td style="height=20px; border: 1px solid lightgray;">
+                    {{ item.num }}
+                  </td>
+                  <td style="height=20px; border: 1px solid lightgray;">
+                    {{ requirementTableTitle(item.num) }}
+                  </td>
+                  <td style="border: 1px solid lightgray;">
+                    <input class="text-caption table-input" type="text" size="40"
+                      v-model="item.remarks"
+                    >
+                  </td>
+                </tr>
+              </tbody>
             </v-simple-table>
           </v-form>
         </v-card-text>
@@ -625,33 +644,31 @@
                   <v-row>
                     <v-col cols="1"> </v-col>
                     <v-col cols="8">
-                      <v-simple-table dense fixed-header>
-                        <template v-slot:default>
-                          <thead>
-                            <tr>
-                              <th class="text-left">Param name</th>
-                              <th class="text-left">CSV column</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr
-                              v-for="(param, j) in calcColumn.params"
-                              :key="j"
-                            >
-                              <td width="120">
-                                {{ param.name }}
-                              </td>
-                              <td width="120">
-                                <v-select
-                                  :items="csvColumns"
-                                  dense
-                                  v-model="param.col"
-                                >
-                                </v-select>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </template>
+                      <v-simple-table class="simple-table" dense fixed-header>
+                        <thead>
+                          <tr>
+                            <th class="text-left">Param name</th>
+                            <th class="text-left">CSV column</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="(param, j) in calcColumn.params"
+                            :key="j"
+                          >
+                            <td width="120" style="border: 1px solid lightgray;">
+                              {{ param.name }}
+                            </td>
+                            <td width="120" style="border: 1px solid lightgray;">
+                              <v-select
+                                :items="csvColumns"
+                                dense flat solo hide-details
+                                v-model="param.col"
+                              >
+                              </v-select>
+                            </td>
+                          </tr>
+                        </tbody>
                       </v-simple-table>
                     </v-col>
                   </v-row>
@@ -1093,7 +1110,17 @@
   </v-container>
 </template>
 
-<style>
+<style scoped>
+.simple-table {
+  border-collapse: collapse;
+  border-style: hidden;
+}
+
+.simple-table th, td {
+  border: 1px solid lightgray;
+  padding: 4px 4px 4px 4px;
+}
+
 .v-input {
   font-size: 1.0em;
 }
@@ -1564,7 +1591,10 @@ export default {
       })
     },
     initialize () {
-      const self = this
+      this.getTemplates();
+    },
+    getTemplates() {
+      const self = this;
       self.$axios.$get(this.endpoint('category'))
         .then((response) => {
           self.templates = response
@@ -1585,6 +1615,27 @@ export default {
               self.background = response
             })
         )
+    },
+    migrateTemplates() {
+      const configHeaders = {
+        'content-type': 'text/plain',
+        Accept: 'text/plain'
+      }
+      this.$axios({
+        url: this.endpoint('category/migrate'),
+        method: 'post',
+        data: "",
+        headers: configHeaders
+      })
+        .then(() => {
+          console.log("Templates migrated from file to database");
+          this.getTemplates();
+        })
+        .catch((error) => {
+          this.errorMessage = error.message
+          // TODO: Do not log in production mode
+          console.error('There was an error when migrating templates from file to database! ', error)
+        })
     },
     saveTemplates (showMessage) {
       const configHeaders = {
@@ -2021,6 +2072,7 @@ export default {
         const csvData = Papa.parse(text, {
           header: true,
           dynamicTyping: true,
+          delimiter: ';',
           step: function (parsedRow) {
             const dt = self.dateTime(
               parsedRow.data[self.dateColumn],
@@ -2189,6 +2241,22 @@ export default {
       }
       this.saveTemplates(false);
       this.close();
+    },
+    dragstartHandler(event, index) {
+      const data = { section: index };
+      event.dataTransfer.setData("application/json", JSON.stringify(data));
+    },
+    dragoverHandler(event) {
+      event.preventDefault();
+      event.dataTransfer.dropEffect = "move"
+    },
+    dropHandler(event, index) {
+      event.preventDefault();
+      const data = JSON.parse(event.dataTransfer.getData("application/json"));
+      const target = this.template.categories[data.section];
+      this.template.categories.splice(data.section, 1);
+      this.template.categories.splice(index, 0, target);
+      this.saveTemplates(false);
     },
     openCurrentTableDialog() {
       this.currentTableDialog.startDate = "";

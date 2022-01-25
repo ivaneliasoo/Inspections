@@ -1,11 +1,7 @@
-﻿using Ardalis.GuardClauses;
+﻿using System.Linq;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
-using Inspections.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Inspections.Core
 {
@@ -23,7 +19,7 @@ namespace Inspections.Core
 
             _report.AddCheckList(configuration.ChecksDefinition);
             _report.AddSignature(configuration.SignatureDefinitions, userName);
-            
+
         }
 
         internal ReportConfiguration Configuration { get; private set; }
@@ -39,7 +35,7 @@ namespace Inspections.Core
                 VoltageL1L2 = 400,
                 VoltageL1L3 = 400,
                 VoltageL2L3 = 400,
-                RunningLoadL1= 10,
+                RunningLoadL1 = 10,
                 RunningLoadL2 = 10,
                 RunningLoadL3 = 10,
                 MainBreakerCapacity = 0,

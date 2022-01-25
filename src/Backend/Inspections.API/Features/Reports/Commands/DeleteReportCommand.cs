@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Inspections.API.Features.Inspections.Commands
+namespace Inspections.API.Features.Reports.Commands
 {
     public class DeleteReportCommand : IRequest<bool>
     {

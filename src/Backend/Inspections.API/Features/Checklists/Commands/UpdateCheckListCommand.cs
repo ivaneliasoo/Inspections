@@ -1,14 +1,10 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
+using MediatR;
 
 namespace Inspections.API.Features.Checklists.Commands
 {
     [DataContract]
-    public class UpdateCheckListCommand:IRequest<bool>
+    public class UpdateCheckListCommand : IRequest<bool>
     {
         [DataMember]
         public int IdCheckList { get; set; }

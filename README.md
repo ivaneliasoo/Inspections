@@ -1,6 +1,8 @@
 # Inspections
 Inspection Reports API & Web App
 
+[![Docker Image CI](https://github.com/ivaneliasoo/Inspections/actions/workflows/ci.yml/badge.svg)](https://github.com/ivaneliasoo/Inspections/actions/workflows/ci.yml)
+
 ![.NET Core](https://github.com/ivaneliasoo/Inspections/workflows/.NET%20Core/badge.svg)
 
 # Mobile Client

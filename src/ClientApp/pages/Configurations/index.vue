@@ -55,6 +55,12 @@
         >
           mdi-delete
         </v-icon>
+        <v-icon
+          color="indigo"
+          @click="$router.push(`/printsections`)"
+        >
+          mdi-page-previous-outline
+        </v-icon>
       </template>
       <template #item.type="{ item }">
         {{ item.type === 0 ? 'Inspection':'Unkown' }}
@@ -133,6 +139,13 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
     {
       text: 'Used by (Reports)',
       value: 'usedByReports',
+      sortable: true,
+      align: 'center',
+      class: 'secundary'
+    },
+    {
+      text: 'Print Section',
+      value: 'printSection',
       sortable: true,
       align: 'center',
       class: 'secundary'

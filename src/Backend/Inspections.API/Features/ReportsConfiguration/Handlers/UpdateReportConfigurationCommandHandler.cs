@@ -1,13 +1,10 @@
-﻿using Ardalis.GuardClauses;
-using Inspections.API.Features.ReportsConfiguration.Commands;
-using Inspections.Core.Domain.ReportConfigurationAggregate;
-using Inspections.Core.Interfaces;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
+using Inspections.API.Features.ReportsConfiguration.Commands;
+using Inspections.Core.Interfaces.Repositories;
+using MediatR;
 
 namespace Inspections.API.Features.ReportsConfiguration.Handlers
 {
@@ -33,8 +30,9 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             reportConfig.RemarksLabelText = request.RemarksLabelText;
             reportConfig.Title = request.Title;
             reportConfig.FormName = request.FormName;
-
-            await _reportConfigurationsRepository.AddAsync(reportConfig).ConfigureAwait(false);
+            reportConfig.PrintSectionId = request.PrintSectionId;
+            reportConfig.CheckListMetadata.Display = request.Display;
+            await _reportConfigurationsRepository.UpdateAsync(reportConfig).ConfigureAwait(false);
             return true;
         }
     }

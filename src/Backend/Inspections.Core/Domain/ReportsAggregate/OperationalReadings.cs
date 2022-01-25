@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Inspections.Shared;
+﻿using Inspections.Shared;
 
 namespace Inspections.Core.Domain.ReportsAggregate
 {
@@ -36,6 +33,8 @@ namespace Inspections.Core.Domain.ReportsAggregate
         public bool EarthFaultRoobEnabled { get; set; }
         public bool EarthFaultEIREnabled { get; set; }
         public bool EarthFaultEFEnabled { get; set; }
+
+        public string? AdditionalFields { get; set; } = default!;
 
         public OperationalReadings()
         {

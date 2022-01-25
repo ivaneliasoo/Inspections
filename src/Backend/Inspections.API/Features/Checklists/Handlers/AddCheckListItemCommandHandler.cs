@@ -1,15 +1,11 @@
-﻿using Ardalis.GuardClauses;
-using Inspections.API.Features.Checklists.Commands;
-using Inspections.API.Features.Checklists.Mapping;
-using Inspections.API.Features.Checklists.Models;
-using Inspections.Core.Domain.CheckListAggregate;
-using Inspections.Core.Interfaces;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
+using Inspections.API.Features.Checklists.Commands;
+using Inspections.Core.Domain.CheckListAggregate;
+using Inspections.Core.Interfaces.Repositories;
+using MediatR;
 
 namespace Inspections.API.Features.Checklists.Handlers
 {
@@ -35,6 +31,6 @@ namespace Inspections.API.Features.Checklists.Handlers
 
             return true;
         }
-       
+
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.Core.Domain;
 using Inspections.Shared;
@@ -37,7 +34,7 @@ namespace Inspections.API.Features.Licenses.Models
             ValidityEnd = eMALicense.Validity.End;
         }
 
-        internal LicenseDTO()
+        public LicenseDTO()
         {
 
         }

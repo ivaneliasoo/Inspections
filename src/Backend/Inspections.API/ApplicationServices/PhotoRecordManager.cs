@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Amazon.S3;
-using Amazon.S3.Model;
 using Inspections.API.Models.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Processing;
 
 namespace Inspections.API.ApplicationServices
@@ -18,14 +15,17 @@ namespace Inspections.API.ApplicationServices
         private readonly StorageDriver _storage;
         private readonly IOptions<ClientSettings> _options;
         private readonly IAmazonS3 _amazonS3;
+        private readonly ILogger _logger;
         private readonly string BasePath;
 
 
-        public PhotoRecordManager(StorageDriver storage, IOptions<ClientSettings> options, IAmazonS3 amazonS3)
+        public PhotoRecordManager(StorageDriver storage, IOptions<ClientSettings> options, IAmazonS3 amazonS3,
+            ILogger<PhotoRecordManager> logger)
         {
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _amazonS3 = amazonS3 ?? throw new ArgumentNullException(nameof(amazonS3));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             BasePath = _options.Value.ReportsImagesFolder.Replace("\\", "/");
         }
 
@@ -37,6 +37,7 @@ namespace Inspections.API.ApplicationServices
 
         internal string GenerateAlbumPath(string albumName)
         {
+
             return Path.Combine(BasePath, albumName);
         }
 
@@ -45,7 +46,13 @@ namespace Inspections.API.ApplicationServices
             using var tnCopy = new MemoryStream();
             await file.CopyToAsync(tnCopy);
 
-            var photo = await _storage.SaveAsync(file, GenerateAlbumPath(album), Path.GetFileName(name), true, contentType).ConfigureAwait(false);
+            file.Position = 0;
+            using Image img = await Image.LoadAsync(file).ConfigureAwait(false);
+            img.Mutate(i => i.Resize(img.Width / 4, img.Height / 4));
+            using var ms = new MemoryStream();
+            img.SaveAsJpeg(ms);
+            ms.Position = 0;
+            var photo = await _storage.SaveAsync(ms, GenerateAlbumPath(album), Path.GetFileName(name), true, contentType).ConfigureAwait(false);
             var thumbnail = await AddPhotoThumbnail(tnCopy, GenerateAlbumPath(album), Path.GetFileName(name), contentType).ConfigureAwait(false);
             if (photo is not null && thumbnail is not null)
                 return new PhotoItemResult
@@ -70,25 +77,26 @@ namespace Inspections.API.ApplicationServices
         {
             try
             {
-                using var fileStream = await _amazonS3.GetObjectStreamAsync(_options.Value.S3BucketName, photoPath, null);
-                using var ms = new MemoryStream();
+                await using var fileStream = await _amazonS3.GetObjectStreamAsync(_options.Value.S3BucketName, photoPath, null);
+                await using var ms = new MemoryStream();
                 await fileStream.CopyToAsync(ms);
                 var content = ms.ToArray();
                 return "data:image/png;base64," + Convert.ToBase64String(content);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error while generating base64 for photo");
                 return "";
             }
         }
 
-        internal async Task<StorageItem> AddPhotoThumbnail(Stream file, string album, string name, string contentType)
+        private async Task<StorageItem> AddPhotoThumbnail(Stream file, string album, string name, string contentType)
         {
             file.Position = 0;
             using Image img = await Image.LoadAsync(file).ConfigureAwait(false);
-            img.Mutate(i => i.Resize(img.Width / 3, img.Height / 3));
-            using var ms = new MemoryStream();
-            img.SaveAsJpeg(ms);
+            img.Mutate(i => i.Resize(img.Width / 5, img.Height / 5));
+            await using var ms = new MemoryStream();
+            await img.SaveAsJpegAsync(ms);
             ms.Position = 0;
             return await _storage.SaveAsync(ms, album, Path.GetFileNameWithoutExtension(name) + "small" + Path.GetExtension(name), true, contentType).ConfigureAwait(false);
         }
@@ -112,11 +120,11 @@ namespace Inspections.API.ApplicationServices
     /// </summary>
     public class PhotoItemResult
     {
-        public string? PhotoStorageId { get; set; } = default!;
-        public string? ThumbnailStorageId { get; set; } = default!;
+        public string? PhotoStorageId { get; set; }
+        public string? ThumbnailStorageId { get; set; }
         public string PhotoPath { get; set; } = default!;
         public string ThumbnailPath { get; set; } = default!;
-        public string? PhotoUrl { get; set; } = default!;
-        public string? ThumbnailUrl { get; set; } = default!;
+        public string? PhotoUrl { get; set; }
+        public string? ThumbnailUrl { get; set; }
     }
 }

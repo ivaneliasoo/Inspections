@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Inspections.API.Features.Signatures.Commands;
 using Inspections.API.Features.Signatures.Models;
-using Inspections.Core.Interfaces;
 using Inspections.Core.Interfaces.Queries;
-using Inspections.Infrastructure.Repositories;
+using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -37,7 +36,7 @@ namespace Inspections.API.Features.Signatures
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> CreateSignature([FromBody]AddSignatureCommand signature)
+        public async Task<IActionResult> CreateSignature([FromBody] AddSignatureCommand signature)
         {
             if (await _mediator.Send(signature).ConfigureAwait(false))
                 return Ok();

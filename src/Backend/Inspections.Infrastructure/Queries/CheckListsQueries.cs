@@ -1,13 +1,10 @@
-﻿using Inspections.Core.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Inspections.Core.Interfaces.Queries;
 using Inspections.Core.QueryModels;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Inspections.Infrastructure.Queries
 {
@@ -20,7 +17,7 @@ namespace Inspections.Infrastructure.Queries
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<ResumenCheckList>> GetByFilter(string filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
+        public async Task<IEnumerable<ResumenCheckList>> GetByFilter(string? filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId)
         {
             if (inConfigurationOnly == false)
                 inConfigurationOnly = null;
