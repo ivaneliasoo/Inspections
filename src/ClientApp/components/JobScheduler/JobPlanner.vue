@@ -74,7 +74,10 @@
                     </thead>
                     <tbody>
                       <tr v-for="(day, index) in jobSchedule" :key="index" style="height: 0px;">
-                        <td class="text-caption text-left font-weight-bold date" :style="dayColor(day.date)">
+                        <td class="text-caption text-left font-weight-bold date" 
+                          :style="dayColor(day.date)"
+                          @contextmenu="openManpowerContextMenu($event, index, day)"
+                        >
                           <div style="text-align: center;">
                             {{dayOfWeek(day.date)}}<br>
                             {{monthAndDate(day.date)}}
@@ -417,7 +420,8 @@
                         </th>
                       </tr>
                   </thead>
-                  <tbody v-for="(day, index) in jobSchedule" :key="index">
+                  <tbody v-for="(day, index) in jobSchedule" :key="index"
+                      @contextmenu="openManpowerContextMenu($event, index, day)">
                     <tr>
                       <td class="font-weight-bold date" align ="center" rowspan="4" :style="dayStyle(day.date)"
                         @click="selectDay($event, index, day)"
@@ -927,6 +931,95 @@
       </v-list>
     </v-menu>
 
+    <v-menu
+      v-model="showManpowerContextMenu"
+      :close-on-content-click="false"
+      :nudge-width="200"
+      :position-x="xcoord"
+      :position-y="ycoord"
+      absolute
+      offset-y
+    >
+      <v-card>
+        <v-card-title class="text-body-1">
+          Copy schedule rows
+        </v-card-title>
+
+        <v-card-text>
+          <v-radio-group v-model="manpowerContextMenu.mode">
+            <v-radio
+              label="Copy previous day"
+              value="day"
+            ></v-radio>
+            <v-radio
+              label="Copy previous Week"
+              value="week"
+            ></v-radio>
+          </v-radio-group>
+        </v-card-text>
+
+        <!-- <v-list>
+          <v-list-item>
+            <v-list-item-action>
+              <v-radio-group v-model="manpowerContextMenu.mode">
+                <v-radio
+                  label="Copy previous day"
+                  value="day"
+                ></v-radio>
+                <v-radio
+                  label="Copy previous Week"
+                  value="week"
+                ></v-radio>
+              </v-radio-group>
+            </v-list-item-action>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
+          <v-list-item>
+            <v-list-item-title @click="copyPreviousDay">
+              Copy previous day
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title @click="copyPreviousWeek">
+              Copy previous Week
+            </v-list-item-title>
+          </v-list-item>
+
+        </v-list> -->
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="showManpowerContextMenu=false">Cancel</v-btn>
+          <v-btn @click="copyPreviousScheduleData">OK</v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+
+      </v-card>
+    </v-menu>
+
+<!--     <v-menu
+      v-model="showManpowerContextMenu"
+      :position-x="xcoord"
+      :position-y="ycoord"
+      absolute
+      offset-y
+    >
+      <v-list>
+        <v-list-item>
+          <v-list-item-title @click="copyPreviousDay">
+            Copy previous day
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-title @click="copyPreviousWeek">
+            Copy previous Week
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu> -->
+
     <v-dialog v-model="alert" max-width="600px">
       <v-card>
         <v-card-title class="text-body-1"></v-card-title>
@@ -1086,8 +1179,10 @@ import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import 'flatpickr/dist/themes/material_blue.css';
 
-import { Job, SchedJob, Team, Shift, Selection, Clipboard, JobStatus, Day, JobState } from '../../composables/jp_entity.js';
-import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addDays2Date} from '../../composables/jp_util.js';
+import { Job, SchedJob, Team, Shift, Selection, Clipboard, JobStatus, Day, JobState } 
+    from '../../composables/jp_entity.js';
+import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMonday, addDays2Date} 
+    from '../../composables/jp_util.js';
 
   const priorityColors = [
     "tomato", "tomato", "orange", "orange", "yellow", "yellow", "lightgreen", "lightgreen", "limegreen", "limegreen"
@@ -1105,6 +1200,7 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
     data: () => ({
       version: 'v1.303',
       showContextMenu: false,
+      showManpowerContextMenu: false,
       xcoord: 0,
       ycoord: 0,
       jobScheduleVisible: true,
@@ -1164,6 +1260,11 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
           altFormat: 'D, M j, Y',
           altInput: true,
           dateFormat: 'Y-m-d'
+      },
+      manpowerContextMenu: {
+        mode: 0,
+        index: 0,
+        day: {}
       },
       jobProjectionPanel: 0,
       refreshJobProjectionTable: 0,
@@ -1314,8 +1415,26 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
         this.showContextMenu = false
         this.xcoord = e.clientX
         this.ycoord = e.clientY
+        this.showManpowerContextMenu = false;
         this.$nextTick(() => {
           this.showContextMenu = true
+        })
+      },
+      openManpowerContextMenu(e, index, day) {
+        e.preventDefault();
+
+        this.showContextMenu = false;
+        this.manpowerContextMenu.mode = "";
+
+        this.showManpowerContextMenu = false
+        this.xcoord = e.clientX
+        this.ycoord = e.clientY
+
+        this.manpowerContextMenu.index = index;
+        this.manpowerContextMenu.day = day;
+
+        this.$nextTick(() => {
+          this.showManpowerContextMenu = true
         })
       },
       checkScheduleWeeks() {
@@ -1667,6 +1786,72 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
         this.unselect();
         this.$forceUpdate();
       },
+      copyPreviousScheduleData() {
+        console.log("mode", this.manpowerContextMenu.mode)
+        if (this.manpowerContextMenu.mode == "day") {
+          this.copyPreviousDay();
+        } else if (this.manpowerContextMenu.mode == "week") {
+          this.copyPreviousWeek();
+        }
+      },
+      copyPreviousWeek() {
+        const strDate = this.manpowerContextMenu.day.date;
+
+        const date = string2date(strDate);
+        let dayOfWeek = date.getDay();
+        let adjust = dayOfWeek == 0 ? -6 : 1; // add this to make monday the first day instead of sunday
+        const firstDayThisWeek = new Date(date.setDate(date.getDate() - dayOfWeek + adjust));
+
+        const sameDayLastWeek = addDays(date, -7);
+        dayOfWeek = sameDayLastWeek.getDay();
+        adjust = sameDayLastWeek == 0 ? -6 : 1; // add this to make monday the first day instead of sunday
+        const firstDayLastWeek = new Date(sameDayLastWeek.setDate(sameDayLastWeek.getDate() - dayOfWeek + adjust));
+
+        const teams = Object.keys(this.manpowerContextMenu.day.jobs);
+        this.copyRow(date2string(firstDayLastWeek), date2string(firstDayThisWeek), teams, 7);
+
+        this.unselect();
+        this.jobScheduleCount++;
+        this.$forceUpdate();
+
+        this.showManpowerContextMenu = false;
+      },
+      copyPreviousDay() {
+        const date = this.manpowerContextMenu.day.date;
+
+        let previousDay;
+        if (isMonday(date)) {
+          previousDay = addDays2Date(date, -3)
+        } else if (isSunday(date)) {
+          previousDay = addDays2Date(date, -2);
+        } else {
+          previousDay = addDays2Date(date, -1);
+        }
+
+        const teams = Object.keys(this.manpowerContextMenu.day.jobs);
+        this.copyRow(previousDay, date, teams, 1);
+
+        this.unselect();
+        this.jobScheduleCount++;
+        this.$forceUpdate();
+
+        this.showManpowerContextMenu = false;
+      },
+      copyRow(fromDate, toDate, teams, numRows) {
+        for (let i=0; i<teams.length; i++) {
+          const source = {
+            startDate: fromDate,
+            numRows: numRows,
+            team: teams[i]
+          }
+          const target = {
+            startDate: toDate,
+            numRows: numRows,
+            team: teams[i]
+          }
+          this.copySchedJobs(source, target, false)
+        }
+      },
       pasteRow() {
         if (this.selection.col !== 0) {
           return;
@@ -1995,7 +2180,6 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
         teamMembers.push(src.teamMember);
 
         if (blankJob) {
-          console.log("blank job")
           this.copyOneToOne(new SchedJob(targetJob), -1, targetJob.date, targetJob.team, false)
         }
 
@@ -2203,33 +2387,22 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
         }
         const schedJob = this.editedJob;
 
-        if (schedJob.job1.toLowerCase().trim() === "on leave") {
-          schedJob.job1 = "On Leave";
-          schedJob.shift = Shift.onLeave;
-        }
-
         this.copySchedJobs(sourceData, targetData, false);
 
         const team = this.editedJob.team;
-        //if (idx1 != -1) {
         if (this.editedJob.startDate < this.jobDialog.startDate) {
           const numRows = this.editedJob.endDate < this.jobDialog.startDate ? 
               datediff(this.editedJob.startDate, this.editedJob.endDate) :
               datediff(this.editedJob.startDate, this.jobDialog.startDate);
           var source1 = {
-            //startDate: this.jobSchedule[idx1].date,
-            //numRows: idx2-idx1+1,
             startDate: this.editedJob.startDate,
             numRows: numRows,
             team: team
           }
         }
         
-        //if (idx3 != -1) {
         if (this.editedJob.endDate > this.jobDialog.endDate) {
           var source2 = {
-            //startDate: this.jobSchedule[idx3].date,
-            //numRows: idx4-idx3+1,
             startDate: addDays2Date(this.jobDialog.endDate, 1),
             numRows: datediff(this.jobDialog.endDate, this.editedJob.endDate),
             team: team
@@ -2298,35 +2471,6 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
       closeSchedJob() {
         this.jobDialog.open = false;
       },
-      // openJobTable(option) {
-      //   if (option === JobState.confirmed) {
-      //     this.jobTableDialog.option = JobState.confirmed;
-      //     this.jobTableDialog.title = "Confirmed Jobs"
-      //   } else if (option === JobState.upcoming) {
-      //     this.jobTableDialog.option = JobState.upcoming;
-      //     this.jobTableDialog.title = "Upcoming Jobs"
-      //   }
-      //   this.jobTableDialog.open = true;
-      // },
-      // closeJobTable() {
-      //   this.jobTableDialog.open = false;
-      // },
-      // markChange() {
-      //   this.jobTableDialog.change = true;
-      // },
-      // addToJobs(job) {
-      //   if (job.status === JobStatus.blank) {
-      //     job.status = (this.jobTableDialog.option === JobState.confirmed) ? JobStatus.onHold : JobStatus.standBy;
-      //     job.priority = !job.priority ? 10 : job.priority;
-      //     this.jobs.push(job);
-      //     this.refreshJobProjectionTable++;
-      //   }
-      // },
-      // sortByPriority() {
-      //   if (this.jobTableDialog.change) {
-      //     this.sort(this.editedJobTable);
-      //   }
-      // },
       sort(jobTable) {
           jobTable.sort( (a, b) => {
             const pa = a.priority ? a.priority : 1000000;
@@ -2348,16 +2492,26 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
             return `background-color:lightblue;font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`;
           }
         }
+
+        const job1 = jobInfo.job1.toLowerCase().trim();
+        if (job1 === "holiday") {
+          return `background-color:yellow;font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
+        } else if (job1 === "on leave") {
+          return `background-color:rgb(68,114,196);color:white;font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
+        } else if (job1 === "rest") {
+          return `background-color:rgb(255,230,153);font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
+        } else if (jobInfo.job1 === "TBC") {
+          return `background-color:rgb(198,89,17);font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
+        }
+
         if (shift == Shift.day) {
           return `background-color:rgb(198,224,180);font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`;
         } else if (shift == Shift.night) {
           return `background-image:linear-gradient(rgb(20,50,0),rgb(100,140,90));color:white;font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
-        } else if (shift == Shift.rest) {
-          return `background-color:lightyellow;font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
-        } else if (shift == Shift.onLeave) {
-          return `background-color:rgb(68,114,196);color:white;font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
-        } else if (shift == Shift.unasigned || shift == Shift.tbc) {
+        } else if (shift == Shift.unasigned) {
           return `background-color:white;font-size:${fontSize};`;
+        } else if (shift == Shift.tbc) {
+          return `background-color:rgb(198,89,17);font-size:${fontSize};`;
         }
       },
       jobProjectionShiftOptionColor(value) {
@@ -2582,9 +2736,9 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
         return teamMembers;
       },
       openTeamMemberDialog(team, schedJob) {
-        if (schedJob.isBlank()) {
-          return;
-        }
+        // if (schedJob.isBlank()) {
+        //   return;
+        // }
         this.teamMemberDialog.open = true;
         this.teamMemberDialog.team = team;
         this.teamMemberDialog.schedJob = schedJob;
@@ -2592,17 +2746,6 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
       },
       closeTeamMemberDialog() {
         this.teamMemberDialog.open = false;
-      },
-      updateSchedJobGroupTeam(schedJob) {
-          if (schedJob.id === 0) {
-            return;
-          }
-          const teamMembers = this.teamMemberDialog.teamMembers;          
-          const sjGroup = this.schedJobGroups[schedJob.id];
-          Object.values(sjGroup).forEach( sj => {
-            this.copyTeamMembers(teamMembers, sj.teamMembers);
-            sj.setLastUpdate();
-          })
       },
       deleteJobTeamMember() {
         const teamMembers = this.teamMemberDialog.teamMembers;
@@ -2613,7 +2756,17 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, addD
         }
       },
       saveTeamMembers() {
-        this.updateSchedJobGroupTeam(this.teamMemberDialog.schedJob);
+        let schedJob = this.teamMemberDialog.schedJob;
+
+        const blankJob = schedJob.isBlank();
+        const teamMembers = this.teamMemberDialog.teamMembers;
+        this.copyTeamMembers(teamMembers, schedJob.teamMembers);
+
+        if (blankJob) {
+          this.copyOneToOne(new SchedJob(schedJob), -1, schedJob.date, schedJob.team, false)
+        }
+        schedJob.setLastUpdate();
+
         this.teamMemberDialog.open = false;
       },      
       editOptions() {
