@@ -1808,7 +1808,9 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
         const firstDayLastWeek = new Date(sameDayLastWeek.setDate(sameDayLastWeek.getDate() - dayOfWeek + adjust));
 
         const teams = Object.keys(this.manpowerContextMenu.day.jobs);
-        this.copyRow(date2string(firstDayLastWeek), date2string(firstDayThisWeek), teams, 7);
+        for (let i=0; i<7; i++) {
+          this.copyRow(date2string(addDays(firstDayLastWeek, i)), date2string(addDays(firstDayThisWeek, i)), teams, 1);
+        }
 
         this.unselect();
         this.jobScheduleCount++;
@@ -1846,10 +1848,10 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
           }
           const target = {
             startDate: toDate,
-            numRows: numRows,
+            numRows: 1,
             team: teams[i]
           }
-          this.copySchedJobs(source, target, false)
+          this.copySchedJobs(source, target, false);
         }
       },
       pasteRow() {
@@ -2084,6 +2086,7 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
         for (let i=0; i<source.numRows; i++) {
           const date = date2string(addDays(startDate, i));
           const sj = this.dayIndex[date].jobs[source.team];
+          console.log("date", date, "sj", JSON.stringify(sj))
           const groupId = sj.id;
           delete this.dayIndex[date].jobs[source.team];
           this.schedJobGroups[groupId][date] = null;
@@ -2098,8 +2101,16 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
       copyOneToMany(source, target, clearFlags) {
         const sourceSchedJob = this.dayIndex[source.startDate].jobs[source.team];
         if (sourceSchedJob.isBlank()) {
+          const targetSchedJob = this.dayIndex[target.startDate].jobs[target.team];
+          if (targetSchedJob && !targetSchedJob.isBlank()) {
+            console.log("targetSchedJob (not blank)", JSON.stringify(targetSchedJob));
+            this.deleteSchedJobs(target);
+          }
           return;
         }
+
+        console.log("source", JSON.stringify(source))
+        console.log("target", JSON.stringify(target))
         const targetStartDate = string2date(target.startDate);
 
         const newGroup = {};
@@ -2494,13 +2505,13 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
         }
 
         const job1 = jobInfo.job1.toLowerCase().trim();
-        if (job1 === "holiday") {
+        if (job1.includes("holiday")) {
           return `background-color:yellow;font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
-        } else if (job1 === "on leave") {
+        } else if (job1.includes("on leave")) {
           return `background-color:rgb(68,114,196);color:white;font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
-        } else if (job1 === "rest") {
+        } else if (job1.includes("rest")) {
           return `background-color:rgb(255,230,153);font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
-        } else if (jobInfo.job1 === "TBC") {
+        } else if (jobInfo.job1.includes("TBC")) {
           return `background-color:rgb(198,89,17);font-size:${fontSize};padding-bottom:5px;margin-bottom:0px;height:0px;`
         }
 
@@ -2634,6 +2645,7 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
       },
       validateTeamMember(teamMember) {
         // verify that the new team member doesn't exist in any other team
+        teamMember.teamMember = teamMember.teamMember.trim();
         for (const team of this.teams) {
           if (team.id != teamMember.id) {
             const members = team.teamMembers;
@@ -2713,6 +2725,7 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
         // validadte that the new team member does not exist in any other scheduled job on the same date
         const schedJob = this.teamMemberDialog.schedJob;
         const day = this.dayIndex[schedJob.date];
+        teamMember.teamMember = teamMember.teamMember.trim();
         for (const sj of Object.values(day.jobs)) {
           if (sj != this.teamMemberDialog.schedJob && sj.teamMembers.includes(teamMember.teamMember)) {
             const team = this.teams_.find( team => team.id === sj.team);
@@ -2736,9 +2749,6 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
         return teamMembers;
       },
       openTeamMemberDialog(team, schedJob) {
-        // if (schedJob.isBlank()) {
-        //   return;
-        // }
         this.teamMemberDialog.open = true;
         this.teamMemberDialog.team = team;
         this.teamMemberDialog.schedJob = schedJob;
