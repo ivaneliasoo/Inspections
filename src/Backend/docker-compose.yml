@@ -54,6 +54,7 @@ services:
       - AWS__Region=ap-southeast-1
       - Serilog__MinimumLevel=Information
       - Serilog__Override__Microsoft.AspNetCore=Warning
+      - UIPORT=3000
     volumes:
       - ~/.aws/:/root/.aws:ro
     ports:
