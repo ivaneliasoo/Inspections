@@ -958,37 +958,6 @@
           </v-radio-group>
         </v-card-text>
 
-        <!-- <v-list>
-          <v-list-item>
-            <v-list-item-action>
-              <v-radio-group v-model="manpowerContextMenu.mode">
-                <v-radio
-                  label="Copy previous day"
-                  value="day"
-                ></v-radio>
-                <v-radio
-                  label="Copy previous Week"
-                  value="week"
-                ></v-radio>
-              </v-radio-group>
-            </v-list-item-action>
-          </v-list-item>
-
-          <v-divider></v-divider>
-
-          <v-list-item>
-            <v-list-item-title @click="copyPreviousDay">
-              Copy previous day
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title @click="copyPreviousWeek">
-              Copy previous Week
-            </v-list-item-title>
-          </v-list-item>
-
-        </v-list> -->
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="showManpowerContextMenu=false">Cancel</v-btn>
@@ -998,27 +967,6 @@
 
       </v-card>
     </v-menu>
-
-<!--     <v-menu
-      v-model="showManpowerContextMenu"
-      :position-x="xcoord"
-      :position-y="ycoord"
-      absolute
-      offset-y
-    >
-      <v-list>
-        <v-list-item>
-          <v-list-item-title @click="copyPreviousDay">
-            Copy previous day
-          </v-list-item-title>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-title @click="copyPreviousWeek">
-            Copy previous Week
-          </v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu> -->
 
     <v-dialog v-model="alert" max-width="600px">
       <v-card>
@@ -1483,8 +1431,8 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
         if (!op) {
           op = "";
         }
-        //return `http://localhost:5000/api/jobschedule${op}`
-        return `/jobschedule${op}`;        
+        return `http://localhost:5000/api/jobschedule${op}`
+        //return `/jobschedule${op}`;        
       },
       getSchedData() {
         this.$axios({
