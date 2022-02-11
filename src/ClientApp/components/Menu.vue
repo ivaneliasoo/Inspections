@@ -66,6 +66,12 @@ export default class Menu extends Vue {
       icon: 'mdi-calendar'
     },
     {
+      name: 'Cost Sheets',
+      parentName: '',
+      route: '/costsheets',
+      icon: 'mdi-table-large'
+    },
+    {
       name: "Risk Assessment",
       parentName: "",
       route: "",
