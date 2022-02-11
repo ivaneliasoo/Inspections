@@ -73,7 +73,8 @@ export default {
   },
   components: [
     '~/components',
-    '~/components/JobScheduler'
+    '~/components/JobScheduler',
+    '~/components/CostSheets'
   ],
   /*
   ** Axios module configuration
