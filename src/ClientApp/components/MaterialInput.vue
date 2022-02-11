@@ -10,7 +10,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-   props: {
+  props: {
     context: {
       type: Object,
       required: true
