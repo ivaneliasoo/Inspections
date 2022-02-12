@@ -10,6 +10,7 @@ namespace Inspections.Core.Domain.ReportsAggregate
 {
     public class Report : Entity<int>, IAggregateRoot
     {
+        public int ReportConfigurationId { get; set; }
         public string Name { get; private set; } = default!;
         public string Address { get; private set; } = default!;
 
@@ -33,17 +34,22 @@ namespace Inspections.Core.Domain.ReportsAggregate
 
         private readonly List<PhotoRecord> photoRecords = new();
 
+        public string? DynamicOperationalReadings { get; set; }
+
+        public string? DynamicFields { get; set; }
+
         internal Report()
         {
 
         }
 
-        public Report(string name, string address, EMALicense? license, DateTimeOffset date)
+        public Report(string name, string address, EMALicense? license, DateTimeOffset date, int reportConfigurationId)
         {
             Name = name;
             Address = address;
             License = license;
             Date = date;
+            ReportConfigurationId = reportConfigurationId;
         }
 
         internal void SetName(string name)
@@ -57,8 +63,8 @@ namespace Inspections.Core.Domain.ReportsAggregate
             OperationalReadings = operationalReadings;
         }
 
-        public Report(string title, string formName, string remarksLabelText)
-            : this(string.Empty, string.Empty, null, DateTimeOffset.UtcNow)
+        public Report(string title, string formName, string remarksLabelText, int reportConfigurationId)
+            : this(string.Empty, string.Empty, null, DateTimeOffset.UtcNow, reportConfigurationId)
         {
             Title = title;
             FormName = formName;

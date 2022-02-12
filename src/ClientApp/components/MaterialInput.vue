@@ -2,7 +2,6 @@
   <v-col :cols="context.cols" :class="`formulate-input-element formulate-input-element--${context.class}`"
     :data-type="context.type">
     <v-text-field v-model="context.model" :type="context.clasification" :label="context.label" :placeholder="context.placeholder" error :error-messages="context.errors[0]" />
-    <!-- <pre>{{context}}</pre> -->
   </v-col>
 </template>
 

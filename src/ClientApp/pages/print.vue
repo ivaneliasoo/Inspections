@@ -73,7 +73,7 @@ export default {
         }
       })
 
-      const configuration = await $axios.$get('reportconfiguration/1', {
+      const configuration = await $axios.$get(`reportconfiguration/${result.reportConfigurationId}`, {
         headers: {
           Authorization: `bearer ${token}`
         }
