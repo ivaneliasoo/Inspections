@@ -15,7 +15,8 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
                                              List<int> checksDefinition,
                                              List<int> signatureDefinitions,
                                              int printSectionId, 
-                                             CheckListDisplay display)
+                                             CheckListDisplay display,
+                                             string templateName)
         {
             Guard.Against.Null(display, nameof(display));
 
@@ -28,6 +29,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
             SignatureDefinitions = signatureDefinitions;
             PrintSectionId = printSectionId;
             Display = display ;
+            TemplateName = templateName;
         }
 
         private UpdateReportConfigurationCommand() { }
@@ -41,5 +43,6 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
         public List<int>? SignatureDefinitions { get; }
         public int PrintSectionId { get; } = default!;
         public CheckListDisplay Display { get; }
+        public string TemplateName { get; }
     }
 }

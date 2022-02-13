@@ -150,6 +150,14 @@
             Operational Readings
             <v-icon> mdi-order-bool-descending </v-icon>
           </v-tab>
+          <v-tab href="#dynamicsoperationalReadings" eager>
+            Dynamics Operational Readings
+            <v-icon> mdi-order-bool-descending </v-icon>
+          </v-tab>
+          <v-tab href="#additionalFields" eager>
+            Additional Fields
+            <v-icon> mdi-order-bool-descending </v-icon>
+          </v-tab>
         </v-tabs>
         <v-tabs-items v-model="pageOptions.tabs" touchless>
           <v-tab-item key="checklists" value="checklists">
@@ -577,6 +585,11 @@
           </v-tab-item>
           <v-tab-item key="operationalReadings" value="operationalReadings">
             <OperationalReadings v-model="currentReport" :is-multiline="isMultiLine" />
+          </v-tab-item>
+          <v-tab-item key="dynamicsoperationalReadings" value="dynamicsoperationalReadings">
+            <OperationalReadings v-model="currentReport" :is-multiline="isMultiLine" />
+          </v-tab-item>
+          <v-tab-item key="additionalFields" value="additionalFields">
           </v-tab-item>
         </v-tabs-items>
       </v-col>
