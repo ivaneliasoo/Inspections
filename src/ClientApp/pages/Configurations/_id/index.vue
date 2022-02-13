@@ -1,7 +1,7 @@
 <template>
   <div>
     <ValidationObserver ref="obs" v-slot="{ valid, dirty }" tag="form">
-      <v-row>
+      <v-row align="center">
         <v-col cols="12" xs="12" md="6">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-select
@@ -51,7 +51,7 @@
             />
           </ValidationProvider>
         </v-col>
-        <v-col cols="8">
+        <v-col cols="12" md="6">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-text-field
               id="txtRemarksLabelText"
@@ -61,11 +61,16 @@
             />
           </ValidationProvider>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="12" md="2">
           <v-switch v-model="newConfig.inactive" label="Inactive" />
         </v-col>
-        <v-col cols="12" sm="2">
-          <nuxt-link :to="`/Configurations/${newConfig.id}/additionalfields`">
+        <v-col cols="12" align-self="space-between" md="4">
+          <nuxt-link :to="`/Configurations/${newConfig.id}/OperationalReadingsSettings`">
+            <v-btn color="primary" outlined>
+              O.R. Fields
+            </v-btn>
+          </nuxt-link>
+          <nuxt-link :to="`/Configurations/${newConfig.id}/AdditionalFieldsSettings`">
             <v-btn color="primary" outlined>
               Additional Fields
             </v-btn>

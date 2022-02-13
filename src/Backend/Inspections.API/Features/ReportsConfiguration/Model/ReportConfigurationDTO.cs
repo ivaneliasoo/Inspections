@@ -21,7 +21,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Model
             PrintSectionId = reportConfiguration.PrintSectionId;
             CheckListMetadata = reportConfiguration.CheckListMetadata;
             OperationalReadings = reportConfiguration.OperationalReadings;
-            AdditionalFileds = reportConfiguration.AdditionalFileds;
+            AdditionalFileds = reportConfiguration.AdditionalFields;
             TemplateName = reportConfiguration.TemplateName;
         }
 
@@ -33,8 +33,8 @@ namespace Inspections.API.Features.ReportsConfiguration.Model
         public IEnumerable<int> ChecksDefinition { get; set; }
         public IEnumerable<int> SignatureDefinitions { get; set; }
         public CheckListPrintingMetadata CheckListMetadata { get; set; }
-        public string? OperationalReadings { get; set; }
-        public string? AdditionalFileds { get; set; }
+        public DynamicFields? OperationalReadings { get; set; }
+        public DynamicFields? AdditionalFileds { get; set; }
         public int? PrintSectionId { get; set; }
         public string? TemplateName { get; set; }
     }
