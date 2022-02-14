@@ -4,6 +4,7 @@ using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    partial class InspectionsContextModelSnapshot : ModelSnapshot
+    [Migration("20220212122945_new_features_2")]
+    partial class new_features_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -382,10 +384,8 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DynamicFields>("AdditionalFields")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("jsonb")
-                        .HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
+                    b.Property<string>("AdditionalFileds")
+                        .HasColumnType("text");
 
                     b.Property<CheckListPrintingMetadata>("CheckListMetadata")
                         .IsRequired()
@@ -430,10 +430,8 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DynamicFields>("OperationalReadings")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("jsonb")
-                        .HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
+                    b.Property<string>("OperationalReadings")
+                        .HasColumnType("text");
 
                     b.Property<int?>("PrintSectionId")
                         .IsRequired()

@@ -15,7 +15,7 @@ namespace Inspections.Core
 
             Configuration = configuration;
 
-            _report = new Report(configuration.Title, configuration.FormName, configuration.RemarksLabelText ?? "Remarks");
+            _report = new Report(configuration.Title, configuration.FormName, configuration.RemarksLabelText ?? "Remarks", configuration.Id);
 
             _report.AddCheckList(configuration.ChecksDefinition);
             _report.AddSignature(configuration.SignatureDefinitions, userName);

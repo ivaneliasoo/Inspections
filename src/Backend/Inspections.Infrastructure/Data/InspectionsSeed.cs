@@ -68,8 +68,21 @@ namespace Inspections.Infrastructure.Data
                         MarginLeft = "70px",
                         MarginRight = "70px",
                         PrintSectionId = 1,
-                        CheckListMetadata = new CheckListPrintingMetadata { Display = CheckListDisplay.Numbered}
+                        CheckListMetadata = new CheckListPrintingMetadata { Display = CheckListDisplay.Numbered },
+                        AdditionalFields = new DynamicFields(),
+                        OperationalReadings = new DynamicFields(),
+                        TemplateName = "print"
                     });
+                }
+                else
+                {
+                    foreach (var config in context.ReportConfigurations)
+                    {
+                        config.AdditionalFields = new DynamicFields();
+                        config.OperationalReadings = new DynamicFields();
+                        config.TemplateName = "print";
+                        context.Update(config);
+                    }
                 }
 
                 var templateId = 1;

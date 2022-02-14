@@ -24,6 +24,7 @@ namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
             builder.Property(p => p.Title).IsRequired();
             builder.Property(p => p.FormName).IsRequired();
             builder.Property(p => p.RemarksLabelText).IsRequired();
+            builder.Property(p => p.ReportConfigurationId).IsRequired();
 
             var navigationChecks = builder.Metadata.FindNavigation(nameof(Report.CheckList));
             navigationChecks.SetField("checkList");
