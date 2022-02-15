@@ -42,7 +42,7 @@
                       <tr style="border-bottom: 1px solid;">
                           <th colspan="2" class="text-h5 title-2">Descriptions(s)</th>
                           <th colspan="5" class="text-h5 title-4">Material(s)</th>
-                          <th colspan="2" class="text-h5 title-5">Labour</th>
+                          <th colspan="2" class="text-h5 title-2">Labour</th>
                           <th colspan="4" class="text-h5 title-4">Summary</th>
                       </tr>
                       <tr>
@@ -55,8 +55,8 @@
                           <th class="text-caption font-weight-bold title-3">Material Cost</th>
                           <th class="text-caption font-weight-bold title-4">Mark up on Material</th>
 
-                          <th class="text-caption font-weight-bold title-6">Labour Cost to do the work per unit</th>
-                          <th class="text-caption font-weight-bold title-5">Labour Cost</th>
+                          <th class="text-caption font-weight-bold title-1">Labour Cost to do the work per unit</th>
+                          <th class="text-caption font-weight-bold title-2">Labour Cost</th>
 
                           <th class="text-caption font-weight-bold title-3">Price to do the work</th>
                           <th class="text-caption font-weight-bold title-3">Summation</th>
@@ -68,33 +68,62 @@
 
                           <th colspan="4" class="title-3"></th>
                           <th class="text-caption font-weight-bold title-4">
-                            <input
-                              class="text-caption"
-                              type="text"
-                              v-model="costSheet.materialMarkup"
-                            />
+                            <NumberField
+                              v-model="costSheet.materialMarkup" format="percent" @change="$forceUpdate()">
+                            </NumberField>
                           </th>
 
-                          <th class="text-caption font-weight-bold title-6"></th>
-                          <th class="text-caption font-weight-bold title-5"></th>
+                          <th class="text-caption font-weight-bold title-1"></th>
+                          <th class="text-caption font-weight-bold title-2"></th>
 
                           <th class="text-caption font-weight-bold title-3"></th>
                           <th class="text-caption font-weight-bold title-3"></th>
                           <th class="text-caption font-weight-bold title-3">
-                            <input
-                              class="text-caption"
-                              type="text"
-                              v-model="costSheet.finalMarkup"
-                            />
+                            <NumberField
+                              v-model="costSheet.finalMarkup" format="percent" @change="$forceUpdate()">
+                            </NumberField>                            
                           </th>
                           <th class="text-caption font-weight-bold title-4"></th>
                       </tr>
                   </thead>
                   <Section v-for="(section, index) in costSheet.sections" :key="index" style="height: 0px;"
                     :section="section"
+                    :index="index"
                     :materialMarkup="costSheet.materialMarkup"
-                    :finalMarkup="costSheet.finalMarkup">
+                    :finalMarkup="costSheet.finalMarkup"
+                    @add-section=addSection
+                    @del-section=delSection>
                   </Section>
+                  <thead class="cs-section">
+                    <tr>
+                      <td colspan="2" class="title-4">
+                      </td>
+                      <td colspan="3" class="text-right title-3">
+                        Material Cost
+                      </td>
+                      <td class="title-3">
+                        <NumberField
+                          :value="costSheet.materialCost()" format="currency" :readOnly="true">
+                        </NumberField>
+                      </td>
+                      <td colspan="2" class="text-right title-3">
+                        Labour Cost
+                      </td>
+                      <td class="title-3">
+                        <NumberField
+                          :value="costSheet.labourCost()" format="currency" :readOnly="true">
+                        </NumberField>
+                      </td>
+                      <td colspan="3" class="text-right title-3">
+                        Total Quote
+                      </td>
+                      <td class="text-right title-3">
+                        <NumberField
+                          :value="costSheet.toQuotePrice()" format="currency" :readOnly="true">
+                        </NumberField>
+                      </td>
+                    </tr>
+                  </thead>
               </table>
             </div>
           </div>
@@ -194,9 +223,6 @@ import { Section, Item, CostSheet }
     computed: {
       toQuotePrice() {
         return 0;
-      },
-      summation() {
-        return 0;
       }
     },
     created() {
@@ -204,6 +230,20 @@ import { Section, Item, CostSheet }
     updated() {
     },
     methods: {
+      addSection(index, position) {
+        console.log("addSection", index, position);
+        const newSection = new Section();
+        newSection.id = 0;
+        const newSecIndex = (position == "above") ? index : index + 1;
+        console.log("newSecIndex", newSecIndex)
+        this.costSheet.sections.splice(newSecIndex, 0, newSection);
+        this.$forceUpdate();
+      },
+      delSection(index) {
+        console.log("delSection", index)
+        this.costSheet.sections.splice(index, 1);
+        this.$forceUpdate();
+      }
     }
   }
 </script>
