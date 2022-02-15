@@ -1,6 +1,6 @@
 <template>
     <tbody class="cs-section">
-      <tr>
+      <tr @contextmenu="showContextMenu($event, -1)">
         <td class="col-group-1">
           <input
             class="text-caption table-input"
@@ -18,11 +18,9 @@
         <td class="col-group-4">
         </td>
         <td class="col-group-1">
-          <input
-            class="text-caption"
-            type="text"
-            v-model="section.materialMarkup"
-          />
+          <NumberField
+            v-model="section.materialMarkup" format="percent" @change="$forceUpdate()">
+          </NumberField>
         </td>
         <td class="col-group-2">
         </td>
@@ -31,26 +29,29 @@
         <td class="col-group-1">
         </td>
         <td class="text-caption col-group-1">
-          {{summation}}
+          <NumberField 
+            :value="section.summation()" format="currency" :readOnly="true">
+          </NumberField>
         </td>
         <td class="text-caption col-group-1">
-          {{finalMarkup}}
+          <NumberField
+            v-model="section.finalMarkup" format="percent" @change="$forceUpdate()">
+          </NumberField>
         </td>
         <td class="text-caption col-group-1">
-          {{toQuotePrice}}
+          <NumberField 
+            :value="section.toQuotePrice()" format="currency" :readObly="true">
+          </NumberField>
         </td>
       </tr>
       <tr v-for="(item, index) in section.items" :key="index"
           @contextmenu="showContextMenu($event, index)">
-        <td class="col-group-1">
-          <input v-if="index==0"
+        <td class="col-group-1" style="padding-left: 25px;">
+          <input
             class="text-caption table-input"
             type="text"
-            v-model="section.subSection"
+            v-model="item.itemNumber"
           >
-          <div v-else>
-            <span>&nbsp;</span>
-          </div> 
         </td>
         <td class="col-group-3">
           <input
@@ -60,44 +61,47 @@
           >
         </td>
         <td class="col-group-2">
-          <input
-            class="text-caption table-input"
-            type="text"
-            v-model="item.noCables"
-          />
+          <NumberField
+            v-model="item.noCables" @change="$forceUpdate()">
+          </NumberField>
         </td>
         <td class="col-group-2">
-          <input
-            class="text-caption table-input"
-            type="text"
-            v-model="item.unitCost"
-          />
+          <NumberField
+            v-model="item.unitCost" format="currency" @change="$forceUpdate()">
+          </NumberField>
         </td>
         <td class="col-group-2">
-          <input
-            class="text-caption table-input"
-            type="text"
+          <NumberField
             v-model="item.units"
-          />
+            @change="$forceUpdate()">
+          </NumberField>
         </td>
         <td class="col-group-4 text-caption">
-            {{ item.materialCost() }}
+         <NumberField 
+            :value="item.materialCost()" 
+            format="currency" 
+            :readOnly="true">
+          </NumberField>
         </td>
         <td class="col-group-1  text-caption">
-          {{ item.materialMarkup }}
+          <NumberField
+            v-model="item.materialMarkup" format="percent" @change="$forceUpdate()">
+          </NumberField>
         </td>
         <td class="col-group-2">
-          <input
-            class="text-caption table-input"
-            type="text"
-            v-model="item.labourCostUnit"
-          />
+          <NumberField
+            v-model="item.laborCostUnit" format="currency"  @change="$forceUpdate()">
+          </NumberField>
         </td>
-        <td class="col-group-1 text-caption" style="width: 100px;">
-          {{ item.labourCost() }}
+        <td class="col-group-1 text-caption text-align-right">
+         <NumberField 
+            :value="item.labourCost()" format="currency" :readOnly="true">
+          </NumberField>
         </td>
-        <td class="col-group-1 text-caption" style="width: 100px;">
-          {{ item.workPrice() }}
+        <td class="col-group-1 text-caption">
+         <NumberField 
+            :value="item.workPrice()" format="currency" :readOnly="true">
+          </NumberField>
         </td>
         <td class="col-group-1 text-caption" style="width: 100px;">
         </td>
@@ -106,6 +110,7 @@
         <td class="col-group-1 text-caption" style="width: 100px;">
         </td>
       </tr>
+
       <tr v-show=false>
         <v-menu
           v-model="contextMenuVisible"
@@ -115,7 +120,7 @@
           absolute
           offset-y
         >
-          <v-list>
+          <v-list dense>
             <v-list-item>
               <v-list-item-title @click="addItem">
                 Add item
@@ -124,6 +129,22 @@
             <v-list-item>
               <v-list-item-title @click="delItem">
                 Delete item
+              </v-list-item-title>
+            </v-list-item>
+            <v-divider></v-divider>
+            <v-list-item>
+              <v-list-item-title @click="addSection('above')">
+                Add section above
+              </v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title @click="addSection('below')">
+                Add section below
+              </v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title @click="delSection">
+                Delete section
               </v-list-item-title>
             </v-list-item>
           </v-list>
@@ -172,6 +193,7 @@ import { Section, Item }
 export default {
   props: {
     section: Object,
+    index: Number,
     materialMarkup: Number,
     finalMarkup: Number
   },
@@ -209,6 +231,12 @@ export default {
     },
     delItem() {
       this.section.items.splice(this.rowIndex, 1,);
+    },
+    addSection(position) {
+      this.$emit('add-section', this.index, position);
+    },
+    delSection() {
+      this.$emit('del-section', this.index);
     }
   },
 };

@@ -100,168 +100,180 @@ import { Section, Item, CostSheet }
     from '../../composables/costsheets/entity.js';
 
 var inMemorySheets = [
-  {
+  new CostSheet({
     id: 1,
     project: "A&A works for new Server Room",
+    location: "25 Serangoon North Ave 5",
     dateCreated: "01-04-2022",
     materialMarkup: 10.0,
     finalMarkup: 10.0,
     sections: [
-      {
+      new Section({
         id: 1,
-        secNumber: "1.1",
-        subSection: "a",
+        secNumber: "1",
         description: "Switchboards and distribution Equipment",
         materialMarkup: 10,
+        finalMarkup: 10,
         items: [
           new Item({
             id: 1,
+            itemNumber: "1.1",
             description: "EMSB-2A",
             noCables: "",
             unitCost: 320056.0,
             units: 1,
-            materialMarkUp: 14,
+            materialMarkup: 14,
             laborCostUnit: 600
           })
         ]
-      },
-      {
+      }),
+      new Section({
         id: 2,
-        secNumber: "1.1",
-        subSection: "b",
+        secNumber: "2",
         description: "Switchboards and distribution Equipment",
         materialMarkup: 10,
+        finalMarkup: 10,
         items: [
           new Item({
-            id: 1,
+            id: 2,
+            itemNumber: "2.1",
             description: "EMSB-2B",
             noCables: "",
             unitCost: 320056.0,
             units: 1,
-            materialMarkUp: 14,
+            materialMarkup: 14,
             laborCostUnit: 600
           })
         ]
-      },
-      {
+      }),
+      new Section({
         id: 3,
-        secNumber: "1.1",
-        subSection: "c",
+        secNumber: "3",
         description: "Switchboards and distribution Equipment",
         materialMarkup: 10,
+        finalMarkup: 10,
         items: [
           new Item({
             id: 1,
+            itemNumber: "3.1",
             description: "GSB-R-1",
             noCables: "",
             unitCost: 148750.0,
             units: 1,
-            materialMarkUp: 14,
+            materialMarkup: 14,
             laborCostUnit: 600
           }),
           new Item({
             id: 2,
+            itemNumber: "3.2",
             description: "Junction Box",
             noCables: "",
             unitCost: 8600.0,
             units: 2,
-            materialMarkUp: 10,
+            materialMarkup: 10,
             laborCostUnit: 600
           }),
           new Item({
             id: 3,
+            itemNumber: "3.3",
             description: "GSB Feed-in via Busduct modification to suit",
             noCables: "",
             unitCost: 3000.0,
             units: 1,
-            materialMarkUp: 10,
+            materialMarkup: 10,
             laborCostUnit: 600
           })
         ]
-      }
+      })
     ]
-  },
-  {
+  }),
+  new CostSheet({
     id: 2,
     project: "Sample project",
+    location: "25 Serangoon North Ave 5",
     dateCreated: "02-05-2022",
     materialMarkup: 10.0,
     finalMarkup: 10.0,
     sections: [
-      {
+      new Section({
         id: 1,
-        secNumber: "1.1",
-        subSection: "a",
+        secNumber: "1",
         description: "Switchboards and distribution Equipment",
         materialMarkup: 10,
+        finalMarkup: 10,
         items: [
           new Item({
             id: 1,
+            itemNumber: "1.1",
             description: "EMSB-2A",
             noCables: "",
             unitCost: 320056.0,
             units: 1,
-            materialMarkUp: 14,
+            materialMarkup: 14,
             laborCostUnit: 600
           })
         ]
-      },
-      {
+      }),
+      new Section({
         id: 2,
-        secNumber: "1.1",
-        subSection: "b",
+        secNumber: "2",
         description: "Switchboards and distribution Equipment",
         materialMarkup: 10,
+        finalMarkup: 10,
         items: [
           new Item({
             id: 1,
+            itemNumber: "2.1",
             description: "EMSB-2B",
             noCables: "",
             unitCost: 320056.0,
             units: 1,
-            materialMarkUp: 14,
+            materialMarkup: 14,
             laborCostUnit: 600
           }),
           new Item({
             id: 3,
+            itemNumber: "2.2",
             description: "GSB Feed-in via Busduct modification to suit",
             noCables: "",
             unitCost: 3000.0,
             units: 1,
-            materialMarkUp: 10,
+            materialMarkup: 10,
             laborCostUnit: 600
           })
         ]
-      },
-      {
+      }),
+      new Section({
         id: 3,
-        secNumber: "1.1",
-        subSection: "c",
+        secNumber: "3",
         description: "Switchboards and distribution Equipment",
         materialMarkup: 10,
+        finalMarkup: 10,
         items: [
           new Item({
             id: 1,
+            itemNumber: "3.1",
             description: "GSB-R-1",
             noCables: "",
             unitCost: 148750.0,
             units: 1,
-            materialMarkUp: 14,
+            materialMarkup: 14,
             laborCostUnit: 600
           }),
           new Item({
             id: 2,
+            itemNumber: "3.2",
             description: "Junction Box",
             noCables: "",
             unitCost: 8600.0,
             units: 2,
-            materialMarkUp: 10,
+            materialMarkup: 10,
             laborCostUnit: 600
           })
         ]
-      }
+      })
     ]
-  },
+  }),
 ];
 
   export default {

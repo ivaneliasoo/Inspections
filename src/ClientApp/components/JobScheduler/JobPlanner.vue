@@ -1330,7 +1330,7 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
         return teams;
       }
     },
-    created() {
+    mounted() {
       var self = this;
       document.body.addEventListener("keydown", function(e){
           e = e || window.event;
