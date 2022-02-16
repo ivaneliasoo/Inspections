@@ -28,7 +28,7 @@
             active-class="indigo--text"
           >
             <template v-for="(item, index) in values">
-              <v-list-item :key="`item-${index}`">
+              <v-list-item :key="`item-${index}`" :value="index">
                 <v-list-item-content>
                   <v-list-item-subtitle
                     class="text--primary text-left font-weight-bold"
@@ -194,7 +194,7 @@ export default defineComponent({
     ]
 
     const addField = () => {
-      values.value.push({
+      values.value.unshift({
         sectionTitle: '',
         fieldName: '',
         label: '',
