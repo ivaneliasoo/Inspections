@@ -19,7 +19,7 @@
         </td>
         <td class="col-group-1">
           <NumberField
-            v-model="section.materialMarkup" format="percent" @change="$forceUpdate()">
+            v-model="section.materialMarkup" format="percent" @change="$emit('update-sheet')">
           </NumberField>
         </td>
         <td class="col-group-2">
@@ -35,7 +35,7 @@
         </td>
         <td class="text-caption col-group-1">
           <NumberField
-            v-model="section.finalMarkup" format="percent" @change="$forceUpdate()">
+            v-model="section.finalMarkup" format="percent" @change="$emit('update-sheet')">
           </NumberField>
         </td>
         <td class="text-caption col-group-1">
@@ -62,35 +62,32 @@
         </td>
         <td class="col-group-2">
           <NumberField
-            v-model="item.noCables" @change="$forceUpdate()">
+            v-model="item.noCables" @change="$emit('update-sheet')">
           </NumberField>
         </td>
         <td class="col-group-2">
           <NumberField
-            v-model="item.unitCost" format="currency" @change="$forceUpdate()">
+            v-model="item.unitCost" format="currency" @change="$emit('update-sheet')">
           </NumberField>
         </td>
         <td class="col-group-2">
           <NumberField
-            v-model="item.units"
-            @change="$forceUpdate()">
+            v-model="item.units" @change="$emit('update-sheet')">
           </NumberField>
         </td>
         <td class="col-group-4 text-caption">
          <NumberField 
-            :value="item.materialCost()" 
-            format="currency" 
-            :readOnly="true">
+            :value="item.materialCost()" format="currency" :readOnly="true">
           </NumberField>
         </td>
         <td class="col-group-1  text-caption">
           <NumberField
-            v-model="item.materialMarkup" format="percent" @change="$forceUpdate()">
+            v-model="item.materialMarkup" format="percent" @change="$emit('update-sheet')">
           </NumberField>
         </td>
         <td class="col-group-2">
           <NumberField
-            v-model="item.laborCostUnit" format="currency"  @change="$forceUpdate()">
+            v-model="item.labourCostUnit" format="currency"  @change="$emit('update-sheet')">
           </NumberField>
         </td>
         <td class="col-group-1 text-caption text-align-right">
@@ -194,8 +191,7 @@ export default {
   props: {
     section: Object,
     index: Number,
-    materialMarkup: Number,
-    finalMarkup: Number
+    triggerUpdate: Number
   },
   data: () => ({
     selected: null,
@@ -210,6 +206,11 @@ export default {
     },
     summation() {
       return 0;
+    }
+  },
+  watch: { 
+    triggerUpdate(newVal, oldVal) {
+      this.$forceUpdate();
     }
   },
   updated() {

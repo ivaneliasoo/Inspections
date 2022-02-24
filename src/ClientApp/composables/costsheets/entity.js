@@ -1,116 +1,43 @@
 
 export class Item {
-    #id;
-    #itemNumber;
-    #description;
-    #noCables;
-    #unitCost;
-    #units;
-    #materialMarkup;
-    #laborCostUnit;
-    lastUpdate;
-    updated;
+    itemNumber;
+    description;
+    noCables;
+    unitCost;
+    units;
+    materialMarkup;
+    labourCostUnit;
 
     constructor(item) {
-        if (!item) {
-            this.id = 0;
-            this.itemNumber = "";
-            this.description = "";
+        this.itemNumber = "";
+        this.description = "";
+        this.noCables = 0;
+        this.unitCost = 0.0;
+        this.units = 0;
+        this.materialMarkup = 0.0;
+        this.labourCostUnit = 0.0;
 
-            this.noCables = 0;
-            this.unitCost = 0.0;
-            this.units = 0;
-            this.materialMarkup = 0.0;
-            this.laborCostUnit = 0.0;
-
-            this.lastUpdate = null;
-            this.updated = false;
-        } else {
-            this.id = (item.id) ? item.id : 0;
-            this.itemNumber = item.itemNumber;
-            this.description = item.description;
-
-            this.noCables = item.noCables;
-            this.unitCost = item.unitCost;
-            this.units = item.units;
-            this.materialMarkup = item.materialMarkup;
-            this.laborCostUnit = item.laborCostUnit;
-
-            this.lastUpdate = item.lastUpdate;
-            this.updated = item.updated;
+        if (item) {
+            const props = Object.getOwnPropertyNames(item);
+            for (const prop of props) {
+                this[prop] = item[prop];
+            }
         }
     }
 
-    get id() {
-        return this.#id;
-    }
+    toJSON() {
+        return {
+            itemNumber: this.itemNumber,
+            description: this.description,
 
-    set id(id) {
-        this.#id = id;
-        this.updated = true;
-    }
+            noCables: parseFloat(this.noCables),
+            unitCost: parseFloat(this.unitCost),
+            units: parseFloat(this.units),
+            labourCostUnit: parseFloat(this.labourCostUnit),
+            materialMarkup: parseFloat(this.materialMarkup),
 
-    get itemNumber() {
-        return this.#itemNumber;
-    }
-
-    set itemNumber(itemNum) {
-        this.#itemNumber = itemNum; 
-        this.updated = true;
-    }
-
-    get description() {
-        return this.#description;
-    }
-
-    set description(desc) {
-        this.#description = desc;
-        this.updated = true;
-    }
-
-    get noCables() {
-        return this.#noCables;
-    }
-
-    set noCables(nc) {
-        this.#noCables = nc;
-        this.updated = true;
-    }
-
-    get unitCost() {
-        return this.#unitCost;
-    }
-
-    set unitCost(uc) {
-        this.#unitCost = uc;
-        this.updated = true;
-    }
-
-    get units() {
-        return this.#units;
-    }
-
-    set units(u) {
-        this.#units = u;
-        this.updated = true;
-    }
-
-    get materialMarkup() {
-        return this.#materialMarkup;
-    }
-
-    set materialMarkup(mm) {
-        this.#materialMarkup = mm;
-        this.updated = true;
-    }
-
-    get laborCostUnit() {
-        return this.#laborCostUnit;
-    }
-
-    set laborCostUnit(lcu) {
-        this.#laborCostUnit = lcu;
-        this.updated = true;
+            items: this.items
+        }
     }
 
     materialCost() {
@@ -118,7 +45,7 @@ export class Item {
     }
 
     labourCost() {
-        return this.units * this.laborCostUnit;
+        return this.units * this.labourCostUnit;
     }
 
     workPrice() {
@@ -127,101 +54,49 @@ export class Item {
 }
 
 export class Section {
-    #id;
-    #secNumber;
-    #subSection;
-    #description;
-    #materialMarkup;
-    #finalMarkup;
-    #items;
-    lastUpdate;
-    updated;
+    secNumber;
+    description;
+    materialMarkup;
+    finalMarkup;
+    items;
 
     constructor(sec) {
-        if (!sec) {
-            this.id = 0;
-            this.secNumber = "";
-            this.subSection = "";
-            this.description = "";
-            this.materialMarkup = 0;
-            this.finalMarkup = 0;
-            this.items = [];
-            this.lastUpdate = null;
-            this.updated = false;
-        } else {
-            this.id = (sec.id) ? sec.id : 0;
-            this.secNumber = sec.secNumber;
-            this.subSection = sec.subSection;
-            this.description = sec.description;
-            this.materialMarkup = sec.materialMarkup;
-            this.finalMarkup = sec.finalMarkup;
-            this.items = sec.items;
-            this.lastUpdate = sec.lastUpdate;
-            this.updated = sec.updated;
+        this.secNumber = "";
+        this.description = "";
+        this.materialMarkup = 0;
+        this.finalMarkup = 0;
+        this.items = [ new Item() ];
+
+        if (sec) {
+            const props = Object.getOwnPropertyNames(sec);
+            for (const prop of props) {
+                this[prop] = sec[prop];
+            }
+
+            if (!this.items || this.items.length == 0) {
+                this.items = [
+                    new Item({
+                        itemNumber: "",
+                        description: "",
+                        noCables: 0,
+                        units: 0,
+                        unitCost: 0.0,
+                        labourCostUnit: 0.0,
+                        materialMarkup: this.materialMarkup
+                    })
+                ]
+            }
         }
     }
 
-    get id() {
-        return this.#id;
-    }
-
-    set id(id) {
-        this.#id = id;
-        this.updated = true;
-    }
-
-    get secNumber() {
-        return this.#secNumber;
-    }
-
-    set secNumber(sn) {
-        this.#secNumber = sn;
-        this.updated = true;
-    }
-
-    get subSection() {
-        return this.#subSection;
-    }
-
-    set subSection(ss) {
-        this.#subSection = ss;
-        this.updated = true;
-    } 
-
-    get description() {
-        return this.#description;
-    }
-
-    set description(desc) {
-        this.#description = desc;
-        this.updated = true;
-    }
-
-    get materialMarkup() {
-        return this.#materialMarkup;
-    }
-
-    set materialMarkup(mm) {
-        this.#materialMarkup = mm;
-        this.updated = true;
-    }
-
-    get finalMarkup() {
-        return this.#finalMarkup;
-    }
-
-    set finalMarkup(fm) {
-        this.#finalMarkup = fm;
-        this.updated = true;
-    }
-
-    get items() {
-        return this.#items;
-    }
-
-    set items(it) {
-        this.#items = it;
-        this.updated = true;
+    toJSON() {
+        return {
+            secNumber: this.secNumber,
+            description: this.description,
+            materialMarkup: parseFloat(this.materialMarkup),
+            finalMarkup: parseFloat(this.finalMarkup),
+            items: this.items
+        }
     }
 
     materialCost() {
@@ -243,102 +118,61 @@ export class Section {
 }
 
 export class CostSheet {
-    #id;
-    #project;
-    #location;
-    #dateCreated;
-    #materialMarkup;
-    #finalMarkup;
-    #sections;
+    id;
+    project;
+    location;
+    dateCreated;
+    materialMarkup;
+    labourDailyRate;
+    labourNightMultiplier;
+    finalMarkup;
+    sections;
     lastUpdate;
     updated;
 
     constructor(cs) {
-        if (!cs) {
-            this.id = 0;
-            this.project = "";
-            this.location = "";
-            this.dateCreated = "";
-            this.materialMarkup = 0.0;
-            this.finalMarkup = 0.0;
-            this.sections = [];
-            this.lastUpdate = null;
-            this.updated = false;
-        } else {
-            this.id = (cs.id) ? cs.id : 0;
-            this.project = cs.project;
-            this.location = cs.location;
-            this.dateCreated = cs.dateCreated;
-            this.materialMarkup = cs.materialMarkup;
-            this.finalMarkup = cs.finalMarkup;
-            this.sections = cs.sections;
-            this.lastUpdate = cs.lastUpdate;
-            this.updated = cs.updated;
+        this.id = 0;
+        this.project = "";
+        this.location = "";
+        this.dateCreated = new Date();
+        this.materialMarkup = 0;
+        this.labourDailyRate = 0;
+        this.labourNightMultiplier = 0;
+        this.finalMarkup = 0;
+        this.lastUpdate = null;
+        this.updated = false;
+        if (cs) {
+            const props = Object.getOwnPropertyNames(cs);
+            for (const prop of props) {
+                this[prop] = cs[prop];
+            }
+            if (!this.sections || this.sections.length == 0) {
+                this.sections = [ new Section({
+                    secNumber: "",
+                    description: "",
+                    labourDailyRate: 0,
+                    labourNightMultiplier: 0,
+                    materialMarkup: this.materialMarkup, 
+                    finalMarkup: this.finalMarkup})
+                ]
+            }
         }
     }
 
-    get id() {
-        return this.#id;
-    }
-
-    set id(id) {
-        this.#id = id;
-        this.updated = true;
-    }
-
-    get project() {
-      return this.#project;
-    }
-
-    set project(pr) {
-      this.#project = pr;
-      this.updated = true;
-    }
-
-    get location() {
-        return this.#location;
-    }
-
-    set location(loc) {
-        this.#location = loc;
-        this.updated = true;
-    }
-
-    get materialMarkup() {
-        console.log("materialMarkup", this.#materialMarkup);
-        return this.#materialMarkup;
-    }
-
-    set materialMarkup(mm) {
-        this.#materialMarkup = mm;
-        this.updated = true;
-    }
-
-    get finalMarkup() {
-        return this.#finalMarkup;
-    }
-
-    set finalMarkup(fm) {
-        this.#finalMarkup = fm;
-        this.updated = true;
-    }
-
-    get sections() {
-        return this.#sections;
-    }
-
-    set sections(sec) {
-        this.#sections = sec;
-        this.updated = true;
-    }
-
-    get dateCreated() {
-        return this.#dateCreated;
-    }
-
-    set dateCreated(d) {
-        this.#dateCreated = d;
-        this.updated = true;
+    toJSON() {
+        return {
+            id: this.id,
+            project: this.project,
+            location: this.location,
+            dateCreated: this.dateCreated.toISOString(),
+            materialMarkup: parseFloat(this.materialMarkup),
+            labourDailyRate: parseFloat(this.labourDailyRate),
+            labourNightMultiplier: parseFloat(this.labourNightMultiplier),
+            finalMarkup: parseFloat(this.finalMarkup),
+            sections: this.sections,
+            lastUpdate: this.lastUpdate,
+            updated: this.updated
+        }
     }
 
     materialCost() {
@@ -351,5 +185,25 @@ export class CostSheet {
 
     toQuotePrice() {
         return this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0;
+    }
+
+    grossProfit() {
+        return this.toQuotePrice() - this.materialCost() - this.labourCost();
+    }
+
+    materialCostPercent() {
+        return (this.materialCost()*100) / this.toQuotePrice();
+    }
+
+    labourCostPercent() {
+        return (this.labourCost()*100) / this.toQuotePrice();
+    }
+
+    grossProfitPercent() {
+        return (this.grossProfit()*100) / this.toQuotePrice();
+    }
+
+    numberOfDaysComplete() {
+        return (this.labourCost()*100) / this.labourDailyRate;
     }
 }

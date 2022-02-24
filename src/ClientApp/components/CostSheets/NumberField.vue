@@ -45,7 +45,8 @@ export default {
       required: true,
     },
     format: String,
-    readOnly: Boolean
+    readOnly: Boolean,
+    decimals: Number
   },
   computed: {
     style() {
@@ -61,7 +62,11 @@ export default {
     },
     dataValue: {
       get() {
-        return this.format === "currency" ? parseFloat(this.value).toFixed(2) : this.value; 
+        const dec = this.decimals ? this. decimals : 0;
+        if (isNaN(this.value)) {
+          return "";
+        }
+        return this.format === "currency" ? parseFloat(this.value).toFixed(2) : parseFloat(this.value).toFixed(dec); 
       },
       set(v) {
         this.$emit('input', v);
