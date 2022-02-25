@@ -56,6 +56,7 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Job> Job { get; set; } = default!;
         public DbSet<Team> Team { get; set; } = default!;
         public DbSet<Options> Options { get; set; } = default!;
+        public DbSet<CostSheet> CostSheet { get; set; } = default!;
 
         //Queries
         public DbSet<ResumenCheckList> ResumenCheckLists { get; set; } = default!;
@@ -94,6 +95,10 @@ namespace Inspections.Infrastructure.Data
 
             modelBuilder.Entity<SchedJob>()
                 .HasKey(sj => new { sj.team, sj.date });
+
+            modelBuilder.Entity<CostSheet>()
+                .Property(p => p.id)
+                .ValueGeneratedOnAdd();
 
             base.OnModelCreating(modelBuilder);
         }
