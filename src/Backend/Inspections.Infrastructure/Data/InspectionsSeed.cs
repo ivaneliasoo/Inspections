@@ -76,13 +76,13 @@ namespace Inspections.Infrastructure.Data
                 }
                 else
                 {
-                    foreach (var config in context.ReportConfigurations)
-                    {
-                        config.AdditionalFields = new DynamicFields();
-                        config.OperationalReadings = new DynamicFields();
-                        config.TemplateName = "print";
-                        context.Update(config);
-                    }
+                    // foreach (var config in context.ReportConfigurations)
+                    // {
+                    //     config.AdditionalFields = new DynamicFields();
+                    //     config.OperationalReadings = new DynamicFields();
+                    //     config.TemplateName = "print";
+                    //     context.Update(config);
+                    // }
                 }
 
                 var templateId = 1;
