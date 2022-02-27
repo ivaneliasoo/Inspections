@@ -16,7 +16,7 @@ public class UpdateOperationalReadingsHandler : IRequestHandler<UpdateOperationa
         try
         {
             var config = await _repository.GetByIdAsync(request.Id);
-            config.OperationalReadings = request.FieldsDefinitions;
+            // config.OperationalReadings = request.FieldsDefinitions;
             await _repository.UpdateAsync(config);
             return true;
         }

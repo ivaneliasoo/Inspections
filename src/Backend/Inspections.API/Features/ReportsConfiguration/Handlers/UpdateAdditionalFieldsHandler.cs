@@ -17,7 +17,7 @@ public class UpdateAdditionalFieldsHandler : IRequestHandler<UpdateAdditionalFie
         try
         {
             var config = await _repository.GetByIdAsync(request.Id);
-            config.AdditionalFields = request.FieldsDefinitions;
+            //config.AdditionalFields = request.FieldsDefinitions;
             await _repository.UpdateAsync(config);
             return true;
         }

@@ -14,37 +14,37 @@ public class ReportsBuilder : IReportsBuilder
 
         Configuration = configuration;
 
-        _report = new Report(configuration.Title, configuration.FormName, configuration.RemarksLabelText ?? "Remarks", configuration.Id);
+        _report = new Report(configuration.Title, configuration.FormName, configuration.RemarksLabelText ?? "Remarks",
+            configuration.Id);
 
         _report.AddCheckList(configuration.ChecksDefinition);
         _report.AddSignature(configuration.SignatureDefinitions, userName);
-
     }
 
     internal ReportConfiguration Configuration { get; private set; }
 
-    public ReportsBuilder WithOperationalReadings()
-    {
-        var or = new OperationalReadings
-        {
-            // TODO: this values should come from configuration
-            VoltageL1N = 230,
-            VoltageL2N = 230,
-            VoltageL3N = 230,
-            VoltageL1L2 = 400,
-            VoltageL1L3 = 400,
-            VoltageL2L3 = 400,
-            RunningLoadL1 = 10,
-            RunningLoadL2 = 10,
-            RunningLoadL3 = 10,
-            MainBreakerCapacity = 0,
-            OverCurrentDirectActing = 0,
-            MainBreakerRating = 100,
-        };
-
-        _report.AddOperationalReadings(or);
-        return this;
-    }
+    // public ReportsBuilder WithOperationalReadings()
+    // {
+    //     var or = new OperationalReadings
+    //     {
+    //         // TODO: this values should come from configuration
+    //         VoltageL1N = 230,
+    //         VoltageL2N = 230,
+    //         VoltageL3N = 230,
+    //         VoltageL1L2 = 400,
+    //         VoltageL1L3 = 400,
+    //         VoltageL2L3 = 400,
+    //         RunningLoadL1 = 10,
+    //         RunningLoadL2 = 10,
+    //         RunningLoadL3 = 10,
+    //         MainBreakerCapacity = 0,
+    //         OverCurrentDirectActing = 0,
+    //         MainBreakerRating = 100,
+    //     };
+    //
+    //     _report.AddOperationalReadings(or);
+    //     return this;
+    // }
 
     public ReportsBuilder AddChecklists(int[] checklistsIds)
     {
@@ -62,6 +62,26 @@ public class ReportsBuilder : IReportsBuilder
         return this;
     }
 
+    public ReportsBuilder AddDynamicFields()
+    {
+        // var dynfields = Configuration.AdditionalFields;
+        // if (dynfields is not { })
+        //     throw new InvalidDataException("operational readings in config can't be null");
+        // _report.SetDynamicFields(dynfields);
+        return this;
+    }
+
+    public ReportsBuilder AddDynamicOperationalReadings()
+    {
+        // var operationalReadingsFields = Configuration.OperationalReadings;
+        //
+        // if (operationalReadingsFields is not { })
+        //     throw new InvalidDataException("operational readings in config can't be null");
+
+        // _report.SetDynamicOperationalReadings(operationalReadingsFields);
+        return this;
+    }
+
     public ReportsBuilder WithName(string name)
     {
         _report.SetName(name);
@@ -73,9 +93,7 @@ public class ReportsBuilder : IReportsBuilder
     {
         var note = new Note()
         {
-            Text = "Premise owner to rectify items marked \"not acceptable\"",
-            NeedsCheck = true,
-            Checked = true
+            Text = "Premise owner to rectify items marked \"not acceptable\"", NeedsCheck = true, Checked = true
         };
 
         _report.AddNote(note);

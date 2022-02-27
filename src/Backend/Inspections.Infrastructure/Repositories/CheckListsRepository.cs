@@ -36,7 +36,7 @@ public class CheckListsRepository : ICheckListsRepository
             .Include(p => p.Checks)
             .SingleOrDefaultAsync(c => c.Id == id);
 
-        if (result is { })
+        if (result is not { })
             throw new NotFoundException(id.ToString(), nameof(CheckList));
 
         return result!;

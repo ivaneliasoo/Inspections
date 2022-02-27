@@ -32,7 +32,8 @@ public class CreateInspectionHandler : IRequestHandler<CreateReportCommand, int>
 
         IReportsBuilder reportsBuilder = new ReportsBuilder(cfg, _userNameResolver.FullName);
         var newReport = reportsBuilder
-            .WithOperationalReadings()
+            .AddDynamicOperationalReadings()
+            .AddDynamicFields()
             .WithDefaultNotes(false)
             .WithName(reportName)
             .Build();
