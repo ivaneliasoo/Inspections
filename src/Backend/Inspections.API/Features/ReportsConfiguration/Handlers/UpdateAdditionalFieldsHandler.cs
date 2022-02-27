@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Inspections.API.Features.ReportsConfiguration.Commands;
+﻿using Inspections.API.Features.ReportsConfiguration.Commands;
 using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
@@ -12,7 +10,7 @@ public class UpdateAdditionalFieldsHandler : IRequestHandler<UpdateAdditionalFie
 
     public UpdateAdditionalFieldsHandler(IReportConfigurationsRepository repository)
     {
-        _repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
     public async Task<bool> Handle(UpdateAdditionalFields request, CancellationToken cancellationToken)
     {
@@ -23,7 +21,7 @@ public class UpdateAdditionalFieldsHandler : IRequestHandler<UpdateAdditionalFie
             await _repository.UpdateAsync(config);
             return true;
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return false;
         }

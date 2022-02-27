@@ -41,7 +41,7 @@ namespace Inspections.Infrastructure.Repositories
                 .Where(s => s.Id == id)
                 .Include(p => p.Responsible)
                 .OrderBy(s => s.Order)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync() ?? throw new InvalidOperationException();
         }
 
         public async Task UpdateAsync(Signature entity)

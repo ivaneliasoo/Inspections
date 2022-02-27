@@ -6,13 +6,12 @@ namespace Inspections.Core.Domain.ReportConfigurationAggregate;
 [NotMapped]
 public class DynamicFieldMetadata
 {
-    [Key]
-    public string FieldName { get; set; }
-    public string SectionTitle { get; set; }
-    public string Label { get; set; }
-    public string InputType { get; set; }
-    public string Suffix { get; set; }
-    public string Preffix { get; set; }
+    [Key] public string FieldName { get; set; } = default!;
+    public string SectionTitle { get; set; } = default!;
+    public string Label { get; set; } = default!;
+    public string InputType { get; set; } = default!;
+    public string Suffix { get; set; } = default!;
+    public string Prefix { get; set; } = default!;
     public int Min { get; set; } = 0;
     public int Max { get; set; } = 999;
     public float Step { get; set; } = 1;
@@ -29,4 +28,3 @@ public class DynamicFields
 {
     public DynamicFieldMetadata[]? FieldsDefinitions { get; set; }
 }
-

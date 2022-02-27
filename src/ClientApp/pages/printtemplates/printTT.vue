@@ -6,8 +6,12 @@
           <!-- <PrintingLogo /> -->
         </h1>
         <div class="title-box">
-          <h1 class="">Testing Turn-On Record (TT System)</h1>
-          <h5 class="">CSE T&C-TT FORM</h5>
+          <h1 class="">
+            Testing Turn-On Record (TT System)
+          </h1>
+          <h5 class="">
+            CSE T&C-TT FORM
+          </h5>
         </div>
       </div>
     </header>
@@ -476,7 +480,7 @@
             </div>
           </div>
           <div class="particular-inputs">
-            <span style="width: 150px;"></span>
+            <span style="width: 150px;" />
             <div class="box">
               <label for="">
                 Single Line Diagram

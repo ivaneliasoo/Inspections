@@ -1,8 +1,7 @@
-﻿namespace Inspections.Core.Domain.PrintSectionsAggregate
+﻿namespace Inspections.Core.Domain.PrintSectionsAggregate;
+
+public enum PrintSectionStatus
 {
-    public enum PrintSectionStatus
-    {
-        Inactive,
-        Active
-    }
+    Inactive,
+    Active
 }

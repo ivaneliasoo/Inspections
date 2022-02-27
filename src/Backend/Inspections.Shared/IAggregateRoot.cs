@@ -1,6 +1,5 @@
-﻿namespace Inspections.Shared
+﻿namespace Inspections.Shared;
+
+public interface IAggregateRoot
 {
-    public interface IAggregateRoot
-    {
-    }
 }

@@ -39,7 +39,7 @@ namespace Inspections.Infrastructure.Repositories
             return await _context.Set<PrintSection>()
                 .Where(s => s.Id == id)
                 .OrderBy(s => s.Code)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync() ?? throw new InvalidOperationException();
         }
 
         public async Task UpdateAsync(PrintSection entity)

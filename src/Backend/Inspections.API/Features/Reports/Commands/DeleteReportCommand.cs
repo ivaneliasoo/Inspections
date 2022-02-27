@@ -4,7 +4,7 @@ namespace Inspections.API.Features.Reports.Commands
 {
     public class DeleteReportCommand : IRequest<bool>
     {
-        public int Id { get; set; }
+        public int Id { get; }
         private DeleteReportCommand()
         {
         }

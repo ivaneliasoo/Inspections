@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
@@ -37,21 +38,23 @@ namespace Inspections.Infrastructure.Repositories
 
         public async Task<ReportConfiguration> GetByIdAsync(int id)
         {
-
             var result = await _context.ReportConfigurations
-           .Where(s => s.Id == id)
-           .SingleOrDefaultAsync();
+           .SingleOrDefaultAsync(s => s.Id == id);
+
+            if (result is { }) throw new NotFoundException(id.ToString(), nameof(ReportConfiguration));
 
             var signaturesDef = _context.Signatures.Where(s => s.IsConfiguration && s.ReportId == null && s.ReportConfigurationId == id);
-            var ChecksDef = _context.CheckLists.Where(s => s.IsConfiguration && s.ReportId == null)
+            var checksDef = _context.CheckLists.Where(s => s.IsConfiguration && s.ReportId == null)
                 .Include(c => c.Checks)
                 .Where(s => s.IsConfiguration && s.ReportId == null && s.ReportConfigurationId == id);
 
-            result.SignatureDefinitions = signaturesDef.ToList();
-            result.ChecksDefinition = ChecksDef.ToList();
+            if (result != null)
+            {
+                result.SignatureDefinitions = signaturesDef.ToList();
+                result.ChecksDefinition = checksDef.ToList();
+            }
 
-            return result;
-
+            return result ?? throw new NotFoundException(id.ToString(), nameof(ReportConfiguration));
         }
 
         public async Task UpdateAsync(ReportConfiguration entity)

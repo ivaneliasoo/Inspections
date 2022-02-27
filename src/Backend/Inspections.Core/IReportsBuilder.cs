@@ -1,14 +1,13 @@
 ﻿using Inspections.Core.Domain.ReportsAggregate;
 
-namespace Inspections.Core
+namespace Inspections.Core;
+
+public interface IReportsBuilder
 {
-    public interface IReportsBuilder
-    {
-        Report Build();
-        ReportsBuilder AddChecklists(int[] checklistsIds);
-        ReportsBuilder WithDefaultNotes(bool addDefaultNOtes);
-        ReportsBuilder AddSignatures(int[] signaturesIds);
-        ReportsBuilder WithName(string name);
-        ReportsBuilder WithOperationalReadings();
-    }
+    Report Build();
+    ReportsBuilder AddChecklists(int[] checklistsIds);
+    ReportsBuilder WithDefaultNotes(bool addDefaultNOtes);
+    ReportsBuilder AddSignatures(int[] signaturesIds);
+    ReportsBuilder WithName(string name);
+    ReportsBuilder WithOperationalReadings();
 }

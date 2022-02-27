@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Amazon.S3;
+﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Inspections.API.Models.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace Inspections.API.ApplicationServices
 {
-    public class S3StorageDriver : StorageDriver
+    public class S3Storage : StorageDriver
     {
         private readonly IAmazonS3 _amazonS3;
-        private readonly IOptions<ClientSettings> options;
+        private readonly IOptions<ClientSettings> _options;
 
-        public S3StorageDriver(IAmazonS3 amazonS3, IOptions<ClientSettings> options)
+        public S3Storage(IAmazonS3 amazonS3, IOptions<ClientSettings> options)
         {
             _amazonS3 = amazonS3 ?? throw new ArgumentNullException(nameof(amazonS3));
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            this._options = options ?? throw new ArgumentNullException(nameof(options));
 
         }
 
@@ -27,7 +23,7 @@ namespace Inspections.API.ApplicationServices
             GetObjectResponse? obj = default!;
             try
             {
-                obj = await _amazonS3.GetObjectAsync(options.Value.S3BucketName, key);
+                obj = await _amazonS3.GetObjectAsync(_options.Value.S3BucketName, key);
             }
             catch (Exception)
             {
@@ -35,10 +31,10 @@ namespace Inspections.API.ApplicationServices
                 {
                     var uploadObject = new PutObjectRequest
                     {
-                        BucketName = options.Value.S3BucketName,
+                        BucketName = _options.Value.S3BucketName,
                         Key = key
                     };
-                    var response = await _amazonS3.PutObjectAsync(uploadObject);
+                    await _amazonS3.PutObjectAsync(uploadObject);
                 }
             }
         }
@@ -47,7 +43,7 @@ namespace Inspections.API.ApplicationServices
         {
             var delRequest = new DeleteObjectRequest
             {
-                BucketName = options.Value.S3BucketName,
+                BucketName = _options.Value.S3BucketName,
                 Key = filePath
             };
             await _amazonS3.DeleteObjectAsync(delRequest);
@@ -57,20 +53,15 @@ namespace Inspections.API.ApplicationServices
         {
             var delRequest = new DeleteObjectRequest
             {
-                BucketName = options.Value.S3BucketName,
+                BucketName = _options.Value.S3BucketName,
                 Key = path
             };
             await _amazonS3.DeleteObjectAsync(delRequest);
         }
 
-        public async Task DeleteFolder(string path, bool recursive = true)
+        public Task DeleteFolderRecursive(string path)
         {
-            var delRequest = new DeleteObjectRequest
-            {
-                BucketName = options.Value.S3BucketName,
-                Key = path
-            };
-            await _amazonS3.DeleteObjectAsync(delRequest);
+            throw new NotSupportedException();
         }
 
         public string GenerateFilePath(string path, string fileName, bool useUniqueString = false)
@@ -81,10 +72,10 @@ namespace Inspections.API.ApplicationServices
         public async Task<string[]> GetFilesInFolder(string folder)
         {
             List<string> fileList = new List<string>();
-            var result = await _amazonS3.ListObjectsAsync(options.Value.S3BucketName);
+            var result = await _amazonS3.ListObjectsAsync(_options.Value.S3BucketName);
             foreach (var obj in result.S3Objects)
             {
-                var url = _amazonS3.GeneratePreSignedURL(options.Value.S3BucketName, obj.Key, DateTime.Now.AddHours(8), null);
+                var url = _amazonS3.GeneratePreSignedURL(_options.Value.S3BucketName, obj.Key, DateTime.Now.AddHours(8), null);
                 fileList.Add(url);
             }
 
@@ -101,7 +92,7 @@ namespace Inspections.API.ApplicationServices
             string filePath = GenerateFilePath(path, fileName, useUniqueString);
             var uploadObject = new PutObjectRequest
             {
-                BucketName = options.Value.S3BucketName,
+                BucketName = _options.Value.S3BucketName,
                 Key = filePath,
                 InputStream = fileStream,
                 ContentType = contentType

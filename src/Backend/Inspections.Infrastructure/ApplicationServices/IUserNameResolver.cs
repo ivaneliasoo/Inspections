@@ -1,9 +1,8 @@
-﻿namespace Inspections.Infrastructure.ApplicationServices
+﻿namespace Inspections.Infrastructure.ApplicationServices;
+
+public interface IUserNameResolver
 {
-    public interface IUserNameResolver
-    {
-        string UserName { get; }
-        bool IsAdmin { get; }
-        string FullName { get; }
-    }
+    string UserName { get; }
+    bool IsAdmin { get; }
+    string FullName { get; }
 }

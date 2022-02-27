@@ -2,30 +2,29 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
+namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration;
+
+public class ReportConfigurationEntityTypeConfiguration : IEntityTypeConfiguration<ReportConfiguration>
 {
-    public class ReportConfigurationEntityTypeConfiguration : IEntityTypeConfiguration<ReportConfiguration>
+    public void Configure(EntityTypeBuilder<ReportConfiguration> builder)
     {
-        public void Configure(EntityTypeBuilder<ReportConfiguration> builder)
-        {
-            builder.ToTable("ReportsConfiguration", InspectionsContext.DEFAULT_SCHEMA);
-            builder.HasKey(p => p.Id);
-            builder.Property(p => p.Id).UseIdentityColumn();
-            builder.Property(p => p.Title).IsRequired();
-            builder.Property(p => p.RemarksLabelText).IsRequired(false);
-            builder.Property(p => p.FormName).IsRequired();
-            builder.Property(p => p.Inactive).IsRequired().HasDefaultValue(false);
-            builder.Property(p => p.Footer).IsRequired();
-            builder.Property(p => p.MarginTop).IsRequired();
-            builder.Property(p => p.MarginBottom).IsRequired();
-            builder.Property(p => p.MarginLeft).IsRequired();
-            builder.Property(p => p.MarginRight).IsRequired();
-            builder.Property(p => p.PrintSectionId).IsRequired();
-            builder.Property(p => p.CheckListMetadata).HasColumnType("jsonb").HasDefaultValueSql("'{ \"Display\": 0 }'::jsonb");
-            builder.Property(p => p.TemplateName).IsRequired().HasDefaultValue("print");
-            builder.Property(p => p.OperationalReadings).HasColumnType("jsonb").HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
-            builder.Property(p => p.AdditionalFields).HasColumnType("jsonb").HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
-            builder.Ignore(p => p.DomainEvents);
-        }
+        builder.ToTable("ReportsConfiguration", InspectionsContext.DEFAULT_SCHEMA);
+        builder.HasKey(p => p.Id);
+        builder.Property(p => p.Id).UseIdentityColumn();
+        builder.Property(p => p.Title).IsRequired();
+        builder.Property(p => p.RemarksLabelText).IsRequired(false);
+        builder.Property(p => p.FormName).IsRequired();
+        builder.Property(p => p.Inactive).IsRequired().HasDefaultValue(false);
+        builder.Property(p => p.Footer).IsRequired();
+        builder.Property(p => p.MarginTop).IsRequired();
+        builder.Property(p => p.MarginBottom).IsRequired();
+        builder.Property(p => p.MarginLeft).IsRequired();
+        builder.Property(p => p.MarginRight).IsRequired();
+        builder.Property(p => p.PrintSectionId).IsRequired();
+        builder.Property(p => p.CheckListMetadata).HasColumnType("jsonb").HasDefaultValueSql("'{ \"Display\": 0 }'::jsonb");
+        builder.Property(p => p.TemplateName).IsRequired().HasDefaultValue("print");
+        builder.Property(p => p.OperationalReadings).HasColumnType("jsonb").HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
+        builder.Property(p => p.AdditionalFields).HasColumnType("jsonb").HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
+        builder.Ignore(p => p.DomainEvents);
     }
 }

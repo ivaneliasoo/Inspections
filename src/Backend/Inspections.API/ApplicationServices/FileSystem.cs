@@ -1,17 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-
-namespace Inspections.API.ApplicationServices
+﻿namespace Inspections.API.ApplicationServices
 {
-    public class FileSystemStorageDriver : StorageDriver
+    public class FileSystem : StorageDriver
     {
-        public async Task<StorageItem> SaveAsync(Stream fileStream, string path, string fileName, bool useUniqueString, string contenType = "")
+        public async Task<StorageItem> SaveAsync(Stream fileStream, string path, string fileName, bool useUniqueString, string contentType = "")
         {
             string filePath = GenerateFilePath(path, fileName, useUniqueString);
             await CreatFolderIfNotExists(path);
 
-            using (var stream = File.Create(filePath))
+            await using (var stream = File.Create(filePath))
             {
                 await fileStream.CopyToAsync(stream).ConfigureAwait(false);
             }
@@ -24,10 +20,8 @@ namespace Inspections.API.ApplicationServices
 
             CreatFolderIfNotExists(path);
 
-            using (var stream = File.Create(filePath))
-            {
-                fileStream.CopyTo(stream);
-            }
+            using var stream = File.Create(filePath);
+            fileStream.CopyTo(stream);
             return filePath;
         }
 
@@ -52,7 +46,7 @@ namespace Inspections.API.ApplicationServices
             return Task.CompletedTask;
         }
 
-        public Task DeleteFolder(string path, bool recursive = true)
+        public Task DeleteFolderRecursive(string path)
         {
             if (Directory.Exists(path))
             {
@@ -63,14 +57,7 @@ namespace Inspections.API.ApplicationServices
 
         public Task<string[]> GetFilesInFolder(string folder)
         {
-            try
-            {
-                return Task.FromResult(Directory.GetFiles(folder));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return Task.FromResult(Directory.GetFiles(folder));
         }
 
         public Task CreatFolderIfNotExists(string folderPath)
@@ -88,8 +75,7 @@ namespace Inspections.API.ApplicationServices
 
             if (useUniqueString)
                 return Path.Combine(path, fileName.Insert(fileName.LastIndexOf('.'), DateTime.Now.Ticks.ToString()));
-            else
-                return Path.Combine(path, fileName);
+            return Path.Combine(path, fileName);
         }
     }
 }
