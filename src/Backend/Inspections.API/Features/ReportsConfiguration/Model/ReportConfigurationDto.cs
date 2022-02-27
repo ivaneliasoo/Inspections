@@ -20,8 +20,6 @@ public class ReportConfigurationDto
         SignatureDefinitions = reportConfiguration.SignatureDefinitions.Select(cd => cd.Id);
         PrintSectionId = reportConfiguration.PrintSectionId;
         CheckListMetadata = reportConfiguration.CheckListMetadata;
-        OperationalReadings = reportConfiguration.OperationalReadings;
-        AdditionalFields = reportConfiguration.AdditionalFields;
         TemplateName = reportConfiguration.TemplateName;
     }
 
@@ -33,8 +31,6 @@ public class ReportConfigurationDto
     public IEnumerable<int> ChecksDefinition { [UsedImplicitly] get; }
     public IEnumerable<int> SignatureDefinitions { [UsedImplicitly] get; }
     public CheckListPrintingMetadata CheckListMetadata { [UsedImplicitly] get; }
-    public DynamicFields? OperationalReadings { [UsedImplicitly] get; }
-    public DynamicFields? AdditionalFields { [UsedImplicitly] get; }
     public int? PrintSectionId { [UsedImplicitly] get; }
     public string? TemplateName { [UsedImplicitly] get; }
 }

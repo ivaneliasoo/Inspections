@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Inspections.Core.Domain;
 using Inspections.Core.Domain.CheckListAggregate;
+using Inspections.Core.Domain.Forms;
 using Inspections.Core.Domain.PrintSectionsAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
@@ -43,8 +44,10 @@ public class InspectionsContext : DbContext
     public DbSet<User> Users { get; set; } = default!;
     public DbSet<Address> Addresses { get; set; } = default!;
     public DbSet<EMALicense> Licenses { get; set; } = default!;
-    public DbSet<OperationalReadings> OperationalReadings { get; set; } = default!;
+    // public DbSet<OperationalReadings> OperationalReadings { get; set; } = default!;
     public DbSet<PrintSection> PrintSections { get; set; } = default!;
+
+    public DbSet<FormDefinition> FormsDefinitions { get; set; }
     public DbSet<CurrentTable> CurrentTable { get; set; } = default!;
     public DbSet<Template> Template { get; set; } = default!;
 
