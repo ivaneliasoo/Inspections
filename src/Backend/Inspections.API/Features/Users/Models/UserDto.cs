@@ -3,18 +3,18 @@ using Inspections.Core.Domain;
 
 namespace Inspections.API.Features.Users.Models
 {
-    public class UserDTO
+    public class UserDto
     {
         public string UserName { get; set; } = default!;
         public string Name { get; set; } = default!;
         public string LastName { get; set; } = default!;
         public int? LastEditedReport { get; set; }
         public bool IsAdmin { get; set; }
-        public UserDTO()
+        public UserDto()
         {
 
         }
-        public UserDTO(User user)
+        public UserDto(User user)
         {
             Guard.Against.Null(user, nameof(user));
 

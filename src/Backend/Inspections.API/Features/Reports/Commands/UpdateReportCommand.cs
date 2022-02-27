@@ -1,16 +1,17 @@
 ﻿using System;
+using JetBrains.Annotations;
 using MediatR;
 
 namespace Inspections.API.Features.Reports.Commands
 {
     public class UpdateReportCommand : IRequest<bool>
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = default!;
-        public string Address { get; set; } = default!;
-        public string LicenseNumber { get; set; } = default!;
-        public DateTimeOffset Date { get; set; }
-        public bool IsClosed { get; set; }
+        public int Id { get;  }
+        public string Name { [UsedImplicitly] get;  } = default!;
+        public string Address { get;  } = default!;
+        public string LicenseNumber { get;  } = default!;
+        public DateTimeOffset Date { get;  }
+        public bool IsClosed { get;  }
         internal UpdateReportCommand()
         {
 

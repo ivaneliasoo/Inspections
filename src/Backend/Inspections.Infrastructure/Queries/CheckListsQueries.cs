@@ -21,7 +21,7 @@ namespace Inspections.Infrastructure.Queries
         {
             if (inConfigurationOnly == false)
                 inConfigurationOnly = null;
-
+            
             return await _context.ResumenCheckLists.FromSqlRaw(@"
                 SELECT ""Id"",
                         ""Text"",
@@ -42,7 +42,7 @@ namespace Inspections.Infrastructure.Queries
                         AND (""cl"".""ReportId"" = {1} OR {1} IS NULL)
                         AND (""cl"".""IsConfiguration"" = {2} OR {2} IS NULL)
                         AND (""cl"".""ReportConfigurationId"" = {3} OR {3} IS NULL)
-            ", $"%{filter ?? string.Empty}%", reportId, inConfigurationOnly, reportConfigurationId).ToListAsync();
+            ", $"%{filter ?? string.Empty}%", reportId!, inConfigurationOnly!, reportConfigurationId!).ToListAsync();
         }
     }
 }

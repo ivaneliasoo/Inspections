@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Inspections.API.Features.ReportsConfiguration.Commands;
+﻿using Inspections.API.Features.ReportsConfiguration.Commands;
 using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
@@ -11,7 +9,7 @@ public class UpdateOperationalReadingsHandler : IRequestHandler<UpdateOperationa
     private readonly IReportConfigurationsRepository _repository;
     public UpdateOperationalReadingsHandler(IReportConfigurationsRepository repository)
     {
-        _repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
     public async Task<bool> Handle(UpdateOperationalReadings request, CancellationToken cancellationToken)
     {
@@ -22,7 +20,7 @@ public class UpdateOperationalReadingsHandler : IRequestHandler<UpdateOperationa
             await _repository.UpdateAsync(config);
             return true;
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return false;
         }

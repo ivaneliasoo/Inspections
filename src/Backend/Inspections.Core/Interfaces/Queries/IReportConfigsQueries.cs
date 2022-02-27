@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using Inspections.Core.QueryModels;
+﻿using Inspections.Core.QueryModels;
 
-namespace Inspections.Core.Interfaces.Queries
+namespace Inspections.Core.Interfaces.Queries;
+
+public interface IReportConfigurationsQueries
 {
-    public interface IReportConfigurationsQueries
-    {
-        IEnumerable<ResumenReportConfiguration> GetByFilter(string? filter);
-    }
+    IEnumerable<ResumenReportConfiguration> GetByFilter(string? filter);
 }

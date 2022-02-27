@@ -1,5 +1,6 @@
 ﻿using System;
 using Inspections.Core.Domain.SignaturesAggregate;
+using JetBrains.Annotations;
 using MediatR;
 
 namespace Inspections.API.Features.Signatures.Commands
@@ -33,16 +34,17 @@ namespace Inspections.API.Features.Signatures.Commands
 
         private EditSignatureCommand() { }
 
-        public int Id { get; set; }
-        public string Title { get; set; } = default!;
-        public string? Annotation { get; set; }
-        public ResponsibleType ResponsibleType { get; set; }
-        public string ResponsibleName { get; set; } = default!;
-        public string? Designation { get; set; }
-        public string? Remarks { get; set; }
-        public DateTimeOffset Date { get; set; }
-        public bool Principal { get; set; }
-        public string? DrawnSign { get; set; }
-        public short Order { get; }
+        public int Id { get; }
+        public string Title { get; } = default!;
+        public string? Annotation { get; }
+        public ResponsibleType ResponsibleType { get; }
+        public string ResponsibleName { get; } = default!;
+        public string? Designation { get; }
+        public string? Remarks { get; }
+        public DateTimeOffset Date { get; }
+        public bool Principal { get; }
+        public string? DrawnSign { get; }
+        // ReSharper disable once MemberCanBePrivate.Global
+        public short Order { [UsedImplicitly] get; }
     }
 }
