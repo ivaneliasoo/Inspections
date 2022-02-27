@@ -169,7 +169,7 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
       align: 'center',
       class: 'secundary'
     }
-  ];
+  ]
 
   get checks (): CheckList[] {
     return (this.$store.state.checklists as CheckListsState)
@@ -237,6 +237,3 @@ export default class CheckListsPage extends mixins(InnerPageMixin) {
   }
 }
 </script>
-
-<style>
-</style>

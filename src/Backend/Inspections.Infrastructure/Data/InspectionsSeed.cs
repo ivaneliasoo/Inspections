@@ -3,6 +3,7 @@ using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.PrintSectionsAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
+using Inspections.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -16,7 +17,7 @@ public class InspectionsSeed
 
         if (!context.Database.IsInMemory())
         {
-            context.Database.Migrate();
+            await context.Database.MigrateAsync();
         }
 
         var log = logger.CreateLogger<InspectionsSeed>();
@@ -25,25 +26,67 @@ public class InspectionsSeed
         {
             log.LogInformation($"Initializing data {nameof(InspectionsContext)}");
 
-            if (!context.Users.Any(u => u.UserName == "demo"))
+            if (!await context.Users.AnyAsync(u => u.UserName == "demo"))
             {
-                context.Users.Add(new User() { UserName = "demo", Password = "demo", Name = "demo", LastName = "User", IsAdmin = true });
+                await context.Users.AddAsync(new User() { UserName = "demo", Password = "demo", Name = "demo", LastName = "User", IsAdmin = true });
             }
 
-            if (!context.Users.Any(u => u.UserName == "developer"))
+            if (!await context.Users.AnyAsync(u => u.UserName == "developer"))
             {
-                context.Users.Add(new User() { UserName = "developer", Password = "developer@@P@sword", Name = "Developer", LastName = "User", IsAdmin = true });
+                await context.Users.AddAsync(new User() { UserName = "developer", Password = "developer@@P@sword", Name = "Developer", LastName = "User", IsAdmin = true });
             }
 
-            if (!context.PrintSections.Any(u => u.Code == "Inspection"))
+            if (!await context.PrintSections.AnyAsync(u => u.Code == "Inspection"))
             {
-                context.PrintSections.Add(new PrintSection() { Code = "Inspection", Content = "<h1>Inspection</h1>", Description = "Inspection" });
+                await context.PrintSections.AddAsync(new PrintSection() { Code = "Inspection", Content = "<h1>Inspection</h1>", Description = "Inspection" });
             }
 
-
-            if (!context.ReportConfigurations.Any(rc => rc.FormName == "CSE EI(R8) FORM"))
+            if (!(await context.Addresses.AnyAsync(a => a.Id == 1)))
             {
-                context.Add(new ReportConfiguration()
+                await context.Addresses.AddAsync(new Address
+                {
+                    Country = "Singapore",
+                    Unit = "unit",
+                    AddressLine = "Some Sample Address",
+                    License = new EMALicense
+                    {
+                        Amp = 120,
+                        Contact = "Someone",
+                        Email = "someone@anotherone.com",
+                        Name = "Some Person or Company",
+                        Number = "E123456",
+                        Validity = new DateTimeRange { Start = DateTime.Now, End = DateTime.Now.AddMonths(1) },
+                        Volt = 120,
+                        KVA = 120,
+                        PersonInCharge = "Some Powered Person" 
+                    },
+                    PostalCode = "123456"
+                });
+                
+                await context.Addresses.AddAsync(new Address
+                {
+                    Country = "Singapore",
+                    Unit = "unit 2",
+                    AddressLine = "Some Sample Address 2",
+                    License = new EMALicense
+                    {
+                        Amp = 400,
+                        Contact = "Someone2",
+                        Email = "someone2@anotherone.com",
+                        Name = "Some Person or Company 2",
+                        Number = "E654321",
+                        Validity = new DateTimeRange { Start = DateTime.Now, End = DateTime.Now.AddYears(1) },
+                        Volt = 400,
+                        KVA = 400,
+                        PersonInCharge = "Some Powered Person 2" 
+                    },
+                    PostalCode = "654321"
+                });
+            }
+
+            if (!await context.ReportConfigurations.AnyAsync(rc => rc.FormName == "CSE EI(R8) FORM"))
+            {
+                await context.AddAsync(new ReportConfiguration()
                 {
                     ChecksDefinition = AddCheckLists().ToList(),
                     SignatureDefinitions = AddSignatures().ToList(),
@@ -64,51 +107,34 @@ public class InspectionsSeed
                     MarginRight = "70px",
                     PrintSectionId = 1,
                     CheckListMetadata = new CheckListPrintingMetadata { Display = CheckListDisplay.Numbered },
-                    AdditionalFields = new DynamicFields(),
-                    OperationalReadings = new DynamicFields(),
                     TemplateName = "print"
                 });
             }
-            else
-            {
-                // foreach (var config in context.ReportConfigurations)
-                // {
-                //     config.AdditionalFields = new DynamicFields();
-                //     config.OperationalReadings = new DynamicFields();
-                //     config.TemplateName = "print";
-                //     context.Update(config);
-                // }
-            }
 
-            var templateId = 1;
-            if (!context.Template.Any(t => t.id == templateId))
+            const int templateId = 1;
+            if (!await context.Template.AnyAsync(t => t.id == templateId))
             {
                 log.LogInformation("No template found in the database, copying template from file categories.json");
 
-                var CategoriesFilePath = Path.Combine(AppContext.BaseDirectory, "categories.json");
-                var reader = System.IO.File.OpenText(CategoriesFilePath);
-                var categories = reader.ReadToEnd();
+                var categoriesFilePath = Path.Combine(AppContext.BaseDirectory, "categories.json");
+                var reader = File.OpenText(categoriesFilePath);
+                var categories = await reader.ReadToEndAsync();
 
-                Template t = new Template();
-                t.id = templateId;
-                t.templateDef = categories;
+                Template t = new() {id = templateId, templateDef = categories};
 
-                context.Add(t);
+                await context.AddAsync(t);
             }
 
-            var OptionsId = 1;
-            if (!context.Options.Any(opt => opt.id == OptionsId))
+            const int optionsId = 1;
+            if (!await context.Options.AnyAsync(opt => opt.id == optionsId))
             {
-                Options opt = new Options();
-                opt.id = 1;
-                opt.scheduleWeeks = 1;
-                opt.autosaveInterval = 120;
+                Options opt = new Options {id = 1, scheduleWeeks = 1, autosaveInterval = 120};
 
-                context.Add(opt);
+                await context.AddAsync(opt);
             }
 
 
-            if (!context.Team.Any())
+            if (!await context.Team.AnyAsync())
             {
                 var teams = new List<Team> {
                     new Team { foreman = "Kim", position = 1, teamMembers = "[]", lastUpdate = DateTime.Now },
@@ -122,9 +148,9 @@ public class InspectionsSeed
                     new Team { foreman = "Store", position = 100, teamMembers = "[]", lastUpdate = DateTime.Now },
                     new Team { foreman = "On leave", position = 101, teamMembers = "[]", lastUpdate = DateTime.Now }
                 };
-                context.AddRange(teams);
+                await context.AddRangeAsync(teams);
             }
-
+            
             await context.SaveChangesAsync();
         }
         catch (Exception ex)
@@ -133,8 +159,7 @@ public class InspectionsSeed
             {
                 retries++;
 
-                log.LogError(ex.Message);
-                log.LogInformation($"Retries {retries}");
+                log.LogError(ex, "Stopped at Retry: {Retries}", retries);
                 await SeedAsync(context, logger);
             }
         }
@@ -142,7 +167,7 @@ public class InspectionsSeed
 
     private static IEnumerable<Signature> AddSignatures()
     {
-        return new Signature[] {
+        return new[] {
             new Signature
             {
                 Title = "INSPECTION CARRIED OUT BY",
@@ -248,6 +273,6 @@ public class InspectionsSeed
         item6.AddCheckItems(new CheckListItem(0, "Function test of RCD (* power disruption)",
             CheckValue.None, false, true, string.Empty));
 
-        return new CheckList[] { item1, item3, item4, item6 };
+        return new[] { item1, item3, item4, item6 };
     }
 }

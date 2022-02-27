@@ -4,7 +4,7 @@ using Inspections.Core.Domain.ReportsAggregate;
 
 namespace Inspections.Core;
 
-public class ReportsBuilder : IReportsBuilder
+public class ReportsBuilder
 {
     private Report _report;
 
@@ -14,37 +14,38 @@ public class ReportsBuilder : IReportsBuilder
 
         Configuration = configuration;
 
-        _report = new Report(configuration.Title, configuration.FormName, configuration.RemarksLabelText ?? "Remarks", configuration.Id);
+        _report = new Report(configuration.Title, configuration.FormName, configuration.RemarksLabelText ?? "Remarks",
+            configuration.Id);
 
         _report.AddCheckList(configuration.ChecksDefinition);
         _report.AddSignature(configuration.SignatureDefinitions, userName);
-
+        _report.AddForms(configuration.Forms);
     }
 
     internal ReportConfiguration Configuration { get; private set; }
 
-    public ReportsBuilder WithOperationalReadings()
-    {
-        var or = new OperationalReadings
-        {
-            // TODO: this values should come from configuration
-            VoltageL1N = 230,
-            VoltageL2N = 230,
-            VoltageL3N = 230,
-            VoltageL1L2 = 400,
-            VoltageL1L3 = 400,
-            VoltageL2L3 = 400,
-            RunningLoadL1 = 10,
-            RunningLoadL2 = 10,
-            RunningLoadL3 = 10,
-            MainBreakerCapacity = 0,
-            OverCurrentDirectActing = 0,
-            MainBreakerRating = 100,
-        };
-
-        _report.AddOperationalReadings(or);
-        return this;
-    }
+    // public ReportsBuilder WithOperationalReadings()
+    // {
+    //     var or = new OperationalReadings
+    //     {
+    //         // TODO: this values should come from configuration
+    //         VoltageL1N = 230,
+    //         VoltageL2N = 230,
+    //         VoltageL3N = 230,
+    //         VoltageL1L2 = 400,
+    //         VoltageL1L3 = 400,
+    //         VoltageL2L3 = 400,
+    //         RunningLoadL1 = 10,
+    //         RunningLoadL2 = 10,
+    //         RunningLoadL3 = 10,
+    //         MainBreakerCapacity = 0,
+    //         OverCurrentDirectActing = 0,
+    //         MainBreakerRating = 100,
+    //     };
+    //
+    //     _report.AddOperationalReadings(or);
+    //     return this;
+    // }
 
     public ReportsBuilder AddChecklists(int[] checklistsIds)
     {
@@ -73,9 +74,7 @@ public class ReportsBuilder : IReportsBuilder
     {
         var note = new Note()
         {
-            Text = "Premise owner to rectify items marked \"not acceptable\"",
-            NeedsCheck = true,
-            Checked = true
+            Text = "Premise owner to rectify items marked \"not acceptable\"", NeedsCheck = true, Checked = true
         };
 
         _report.AddNote(note);

@@ -253,24 +253,6 @@ namespace Inspections.API.Features.Reports
             return NoContent();
         }
 
-        [HttpPut("{id:int}/readings", Name = nameof(UpdateOperationalReadings))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateOperationalReadings(int id,
-            [FromBody] UpdateOperationalReadingsCommand operationalReadingsCommand)
-        {
-            Guard.Against.Null(operationalReadingsCommand, nameof(operationalReadingsCommand));
-            if (id != operationalReadingsCommand.ReportId)
-                return BadRequest();
-
-            var result = await _mediator.Send(operationalReadingsCommand).ConfigureAwait(false);
-            if (!result)
-                return BadRequest();
-
-            return Ok(result);
-        }
-
         [HttpGet("{id:int}/export", Name = nameof(Export))]
         public async Task<FileResult> Export(int id, bool printPhotos)
         {

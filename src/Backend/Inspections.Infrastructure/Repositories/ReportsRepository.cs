@@ -99,7 +99,7 @@ public class ReportsRepository : IReportsRepository
     public Task DeleteAsync(Report entity)
     {
         _context.CheckLists.RemoveRange(entity.CheckList);
-        _context.OperationalReadings.RemoveRange(entity.OperationalReadings ?? throw new InvalidOperationException());
+        // _context.OperationalReadings.RemoveRange(entity.OperationalReadings ?? throw new InvalidOperationException());
         _context.Signatures.RemoveRange(entity.Signatures);
         _context.SaveChanges();
         _context.Reports.Remove(entity);
@@ -117,7 +117,6 @@ public class ReportsRepository : IReportsRepository
                 .Include("Signatures")
                 .Include("PhotoRecords")
                 .Include("Notes")
-                .Include("OperationalReadings")
                 .SingleOrDefaultAsync(r => r.Id == id) ?? throw new NotFoundException(id.ToString(), nameof(Report));
         }
         catch (Exception ex)
@@ -129,14 +128,14 @@ public class ReportsRepository : IReportsRepository
 
     public async Task<ReportQueryResult?> GetByIdAsync(int id, bool projected)
     {
-        return await _context.Set<Report>().AsNoTracking().Where(r => r.Id == id).ProjectTo<ReportQueryResult>(config).SingleOrDefaultAsync();
+        return await _context.Set<Report>().AsNoTracking().ProjectTo<ReportQueryResult>(config).SingleOrDefaultAsync(r => r.Id == id);
     }
 
     public async Task UpdateAsync(Report entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
-        if (entity.OperationalReadings is not null)
-            _context.Entry(entity.OperationalReadings).State = EntityState.Modified;
+        // if (entity.OperationalReadings is not null)
+        //     _context.Entry(entity.OperationalReadings).State = EntityState.Modified;
         if (entity.PhotoRecords.Any())
         {
             foreach (var photo in entity.PhotoRecords)

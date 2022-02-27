@@ -1,4 +1,5 @@
 ﻿using Inspections.Core.Domain.CheckListAggregate;
+using Inspections.Core.Domain.Forms;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Shared;
 
@@ -21,6 +22,7 @@ public class ReportConfiguration : Entity<int>, IAggregateRoot
     public string MarginRight { get; set; } = default!;
     public int? PrintSectionId { get; set; } = default!;
     public string? TemplateName { get; set; }
-    public DynamicFields? OperationalReadings { get; set; } = new();
-    public DynamicFields? AdditionalFields { get; set; } = new();
+
+    private readonly List<FormDefinition> forms = new();
+    public IReadOnlyCollection<FormDefinition> Forms => forms;
 }

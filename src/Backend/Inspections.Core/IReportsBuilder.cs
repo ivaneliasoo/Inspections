@@ -9,5 +9,6 @@ public interface IReportsBuilder
     ReportsBuilder WithDefaultNotes(bool addDefaultNOtes);
     ReportsBuilder AddSignatures(int[] signaturesIds);
     ReportsBuilder WithName(string name);
-    ReportsBuilder WithOperationalReadings();
+    ReportsBuilder AddDynamicFields();
+    ReportsBuilder AddDynamicOperationalReadings();
 }
