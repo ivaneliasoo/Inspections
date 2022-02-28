@@ -1,4 +1,4 @@
-﻿using Ardalis.GuardClauses;
+using Ardalis.GuardClauses;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.Forms;
 using Inspections.Core.Domain.SignaturesAggregate;

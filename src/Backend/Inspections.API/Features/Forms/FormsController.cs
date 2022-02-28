@@ -32,7 +32,7 @@ public class FormsController : ControllerBase
     }
     
     [HttpGet(Name = nameof(GetFormsDefinitions))]
-    public async Task<ActionResult<List<FormDefinitionResponse>>> GetFormsDefinitions(GetAllQuery request, CancellationToken cancellationToken)
+    public async Task<ActionResult<List<FormDefinitionResponse>>> GetFormsDefinitions([FromQuery]GetAllQuery request, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(request, cancellationToken);
         return Ok(result);
