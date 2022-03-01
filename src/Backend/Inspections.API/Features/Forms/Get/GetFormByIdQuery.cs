@@ -29,7 +29,8 @@ public class GetFormByIdHandler : IRequestHandler<GetFormByIdQuery, FormDefiniti
     {
         return await _context.FormsDefinitions
             .AsNoTracking()
-            .Select(fd => FormDefinitionResponse.CreateFromEntity(fd)).SingleAsync(f => f.Id == request.Id, cancellationToken);
+            .Where(f => f.Id == request.Id)
+            .Select(fd => FormDefinitionResponse.CreateFromEntity(fd)).SingleAsync(cancellationToken);
     }
 }
 
