@@ -30,7 +30,7 @@ public class CreateInspectionHandler : IRequestHandler<CreateReportCommand, int>
 
         var reportName = $"{DateTime.Now:yyyyMMdd}-{cfg.Title}";
 
-        IReportsBuilder reportsBuilder = new ReportsBuilder(cfg, _userNameResolver.FullName);
+        var reportsBuilder = new ReportsBuilder(cfg, _userNameResolver.FullName);
         var newReport = reportsBuilder
             .WithDefaultNotes(false)
             .WithName(reportName)
