@@ -236,7 +236,7 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
       sortable: false,
       align: 'center'
     }
-  ];
+  ]
 
   selectedItem: Signature = {} as Signature
   item: any = { principal: false }

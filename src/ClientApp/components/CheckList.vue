@@ -7,7 +7,7 @@
         >
           <div v-for="(check, index) in checklistItem.checks" :key="index">
             <check-item
-              :item.sync="check"
+              :item.sync="checkList"
               :index="`1.${index + 1}`"
               @update:item="enqueueCheckItem"
             />

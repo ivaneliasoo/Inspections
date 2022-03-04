@@ -1,4 +1,3 @@
-
 export interface EditNoteCommand {
     reportId: number;
     id: number;
