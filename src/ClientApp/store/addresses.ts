@@ -1,21 +1,21 @@
 import { ActionTree, MutationTree } from 'vuex'
 import { RootState } from 'store'
-import { AddressDTO } from '~/types'
+import { AddressDto } from '~/types'
 
 export const state = () => ({
-  addressList: [] as AddressDTO[]
+  addressList: [] as AddressDto[]
 })
 
 export type AddressesState = ReturnType<typeof state>
 
 export const mutations: MutationTree<AddressesState> = {
-  SET_ADDRESSES_LIST: (state, value: AddressDTO[]) => (state.addressList = value),
-  REMOVE_ADDRESS: (state, value: number) => (state.addressList = state.addressList.filter(s=>s.id !== value)),
-  ADD_ADDRESS: (state, value: AddressDTO) => (state.addressList.splice(0,0,value)),
-  UPDATE_ADDRESS: (state, value: AddressDTO) => {
-    const index = state.addressList.findIndex(s=>s.id === value.id)
-    state.addressList.splice(index,1,value)
-   }
+  SET_ADDRESSES_LIST: (state, value: AddressDto[]) => (state.addressList = value),
+  REMOVE_ADDRESS: (state, value: number) => (state.addressList = state.addressList.filter(s => s.id !== value)),
+  ADD_ADDRESS: (state, value: AddressDto) => (state.addressList.splice(0, 0, value)),
+  UPDATE_ADDRESS: (state, value: AddressDto) => {
+    const index = state.addressList.findIndex(s => s.id === value.id)
+    state.addressList.splice(index, 1, value)
+  }
 }
 
 export const actions: ActionTree<AddressesState, RootState> = {
@@ -33,7 +33,7 @@ export const actions: ActionTree<AddressesState, RootState> = {
     commit('REMOVE_ADDRESS', payload)
   },
   async createAddress ({ commit }, payload) {
-    await this.$axios.$post(`addresses`, payload)
+    await this.$axios.$post('addresses', payload)
     commit('ADD_ADDRESS', payload)
   },
   async updateAddress ({ commit }, payload) {

@@ -182,7 +182,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { AddressesState } from 'store/addresses'
 import { LicensesState } from 'store/licenses'
 import InnerPageMixin from '@/mixins/innerpage'
-import { AddressDTO } from '@/types/Addresses'
+import { AddressDto } from '@/types/Addresses'
 
 @Component({
   components: {
@@ -191,13 +191,13 @@ import { AddressDTO } from '@/types/Addresses'
   }
 })
 export default class AddressesAdmin extends mixins(InnerPageMixin) {
-  dialog: boolean = false;
-  dialogRemove: boolean = false;
-  loading: boolean = false;
+  dialog: boolean = false
+  dialogRemove: boolean = false
+  loading: boolean = false
 
   filter: any = {
     filterText: ''
-  };
+  }
 
   headers: any[] = [
     {
@@ -236,13 +236,13 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
       sortable: false,
       align: 'left'
     }
-  ];
+  ]
 
-  selectedItem: AddressDTO = {} as AddressDTO;
-  item: any = { principal: false };
-  isNew: boolean = false;
+  selectedItem: AddressDto = {} as AddressDto
+  item: any = { principal: false }
+  isNew: boolean = false
 
-  get addresses (): AddressDTO[] {
+  get addresses (): AddressDto[] {
     return (this.$store.state.addresses as AddressesState).addressList
   }
 
@@ -250,7 +250,7 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
     return (this.$store.state.licenses as LicensesState).licensesList
   }
 
-  selectItem (item: AddressDTO): void {
+  selectItem (item: AddressDto): void {
     this.selectedItem = item
     this.$store
       .dispatch('addresses/getAddressById', this.selectedItem.id, {

@@ -1,6 +1,6 @@
 import { Plugin } from '@nuxt/types'
-import { ReportsApi } from '@/services/api'
 import { Configuration } from '../services/api/configuration'
+import { ReportsApi } from '@/services/api'
 
 const apiClient: Plugin = ({ $auth, $config }, inject) => {
   if (!$auth?.user) { return }

@@ -24,10 +24,9 @@ export const actions: ActionTree<ReportConfigurationState, RootState> = {
     return await this.$axios.$get(`reportconfiguration/${payload}`)
   },
   async createConfiguration ({ commit }, payload: AddReportConfigurationCommand) {
-    return await this.$axios.$post(`reportconfiguration`, payload)
+    return await this.$axios.$post('reportconfiguration', payload)
   },
-  async updateConfiguration ({commit}, payload: UpdateReportConfigurationCommand) {
-    console.log({payload})
+  async updateConfiguration ({ commit }, payload: UpdateReportConfigurationCommand) {
     return await this.$axios.$put(`reportconfiguration/${payload.id}`, payload)
   },
   async deleteConfiguration ({ commit }, payload: number) {
