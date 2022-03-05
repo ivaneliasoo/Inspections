@@ -41,7 +41,7 @@ export class Item {
     }
 
     materialCost() {
-        return this.noCables ? this.noCables*this.units*this.unitCost : this.units*this.unitCost;
+        return (this.noCables && this.noCables !== 0) ? this.noCables*this.units*this.unitCost : this.units*this.unitCost;
     }
 
     labourCost() {
@@ -54,7 +54,7 @@ export class Item {
 }
 
 export class Section {
-    secNumber;
+    #secNumber;
     description;
     materialMarkup;
     finalMarkup;
@@ -65,28 +65,36 @@ export class Section {
         this.description = "";
         this.materialMarkup = 0;
         this.finalMarkup = 0;
-        this.items = [ new Item() ];
 
         if (sec) {
             const props = Object.getOwnPropertyNames(sec);
             for (const prop of props) {
                 this[prop] = sec[prop];
             }
-
-            if (!this.items || this.items.length == 0) {
-                this.items = [
-                    new Item({
-                        itemNumber: "",
-                        description: "",
-                        noCables: 0,
-                        units: 0,
-                        unitCost: 0.0,
-                        labourCostUnit: 0.0,
-                        materialMarkup: this.materialMarkup
-                    })
-                ]
-            }
         }
+
+        if (!this.items || this.items.length == 0) {
+            this.items = [
+                new Item({
+                    itemNumber: "",
+                    description: "",
+                    noCables: 0,
+                    units: 0,
+                    unitCost: 0.0,
+                    labourCostUnit: 0.0,
+                    materialMarkup: this.materialMarkup
+                })
+            ];
+        }
+    }
+
+    get secNumber() {
+        return this.#secNumber;
+    }
+
+    set secNumber(sn) {
+        this.#secNumber = sn;
+        this.renumberItems();
     }
 
     toJSON() {
@@ -96,6 +104,15 @@ export class Section {
             materialMarkup: parseFloat(this.materialMarkup),
             finalMarkup: parseFloat(this.finalMarkup),
             items: this.items
+        }
+    }
+
+    renumberItems() {
+        const items = this.items;
+        if (items) {
+            for (let i=0; i<items.length; i++) {
+                items[i].itemNumber = this.secNumber + "." + (i+1);
+            }
         }
     }
 
@@ -139,23 +156,26 @@ export class CostSheet {
         this.labourDailyRate = 0;
         this.labourNightMultiplier = 0;
         this.finalMarkup = 0;
+
         this.lastUpdate = null;
         this.updated = false;
+
         if (cs) {
             const props = Object.getOwnPropertyNames(cs);
             for (const prop of props) {
                 this[prop] = cs[prop];
             }
-            if (!this.sections || this.sections.length == 0) {
-                this.sections = [ new Section({
-                    secNumber: "",
-                    description: "",
-                    labourDailyRate: 0,
-                    labourNightMultiplier: 0,
-                    materialMarkup: this.materialMarkup, 
-                    finalMarkup: this.finalMarkup})
-                ]
-            }
+        }
+
+        if (!this.sections || this.sections.length == 0) {
+            this.sections = [ new Section({
+                secNumber: "",
+                description: "",
+                labourDailyRate: 0,
+                labourNightMultiplier: 0,
+                materialMarkup: this.materialMarkup, 
+                finalMarkup: this.finalMarkup})
+            ];
         }
     }
 
@@ -175,6 +195,13 @@ export class CostSheet {
         }
     }
 
+    renumberSections() {
+        const sections = this.sections;
+        for (let i=0; i<sections.length; i++) {
+          sections[i].secNumber = (i+1).toString();
+        }
+    }
+
     materialCost() {
         return this.sections ? this.sections.reduce((sum, section, index) => sum + section.materialCost(), 0) : 0;
     }
@@ -187,23 +214,39 @@ export class CostSheet {
         return this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0;
     }
 
-    grossProfit() {
-        return this.toQuotePrice() - this.materialCost() - this.labourCost();
+    totalSales(delta) {
+        if (!delta) {
+            return this.toQuotePrice();
+        }
+        const finalMarkup = parseFloat(this.finalMarkup);
+        return this.toQuotePrice() * (1+(finalMarkup+delta)/100) / (1+finalMarkup/100)
     }
 
-    materialCostPercent() {
-        return (this.materialCost()*100) / this.toQuotePrice();
+    grossProfit(delta) {
+        return this.totalSales(delta) - this.materialCost() - this.labourCost();
     }
 
-    labourCostPercent() {
-        return (this.labourCost()*100) / this.toQuotePrice();
+    totalSalesPercent() {
+        return 100;
     }
 
-    grossProfitPercent() {
-        return (this.grossProfit()*100) / this.toQuotePrice();
+    materialCostPercent(delta) {
+        return (this.materialCost()*100) / this.totalSales(delta);
+    }
+
+    labourCostPercent(delta) {
+        return (this.labourCost()*100) / this.totalSales(delta);
+    }
+
+    grossProfitPercent(delta) {
+        return (this.grossProfit(delta)*100) / this.totalSales(delta);
     }
 
     numberOfDaysComplete() {
-        return (this.labourCost()*100) / this.labourDailyRate;
+        return this.labourCost() / this.labourDailyRate;
+    }
+
+    numberOfNightsComplete() {
+        return this.labourCost() / (this.labourDailyRate*this.labourNightMultiplier);
     }
 }

@@ -377,6 +377,7 @@ import { Section, Item, CostSheet }
             labourNightMultiplier: parseFloat(this.newSheet.labourNightMultiplier),
             finalMarkup: finalMarkup
         });
+        costSheet.renumberSections();
         this.createCostSheet(costSheet);
       },
       async deleteCostSheet(index) {
@@ -428,8 +429,7 @@ import { Section, Item, CostSheet }
         if (this.cancelAction) {
           this.cancelAction("cancel");
         }
-      },
-
+      }
     }
   }
 </script>
