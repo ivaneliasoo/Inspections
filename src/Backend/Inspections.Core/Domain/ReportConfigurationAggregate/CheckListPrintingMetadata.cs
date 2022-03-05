@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Inspections.Core.Domain.ReportConfigurationAggregate
+namespace Inspections.Core.Domain.ReportConfigurationAggregate;
+
+[NotMapped]
+public class CheckListPrintingMetadata
 {
-    [NotMapped]
-    public class CheckListPrintingMetadata
-    {
-        public CheckListDisplay Display { get; set; } = CheckListDisplay.Numbered;
-    }
+    public CheckListDisplay Display { get; set; } = CheckListDisplay.Numbered;
 }

@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Inspections.Core.QueryModels;
+﻿using Inspections.Core.QueryModels;
 
-namespace Inspections.Core.Interfaces.Queries
+namespace Inspections.Core.Interfaces.Queries;
+
+public interface ICheckListsQueries
 {
-    public interface ICheckListsQueries
-    {
-        Task<IEnumerable<ResumenCheckList>> GetByFilter(string? filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId);
-    }
+    Task<IEnumerable<ResumenCheckList>> GetByFilter(string? filter, bool? inConfigurationOnly, int? reportConfigurationId, int? reportId);
 }

@@ -4,8 +4,8 @@ namespace Inspections.API.Features.Reports.Commands
 {
     public class DeletePhotoRecordCommand : IRequest<bool>
     {
-        public int ReportId { get; set; }
-        public int Id { get; set; }
+        public int ReportId { get; }
+        public int Id { get; }
         internal DeletePhotoRecordCommand()
         {
 

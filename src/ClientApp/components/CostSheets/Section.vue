@@ -1,7 +1,7 @@
 <template>
     <tbody class="cs-section">
       <tr @contextmenu="showContextMenu($event, -1)">
-        <td class="col-group-1">
+        <td class="col-group-1"  style="width: 60px">
           <input
             class="text-caption table-input"
             type="text"
@@ -9,7 +9,7 @@
           />
         </td>
         <td class="col-group-2" colspan="4">
-          <input
+          <input 
             class="text-caption table-input"
             type="text"
             v-model="section.description"
@@ -54,11 +54,9 @@
           >
         </td>
         <td class="col-group-3">
-          <input
-            class="text-caption table-input"
-            type="text"
-            v-model="item.description"
-          >
+          <TextField 
+            v-model="item.description" @change="$emit('update-sheet')">
+          </TextField>
         </td>
         <td class="col-group-2">
           <NumberField
@@ -200,20 +198,10 @@ export default {
     xcoord: 0,
     ycoord: 0
   }),
-  computed: {
-    toQuotePrice() {
-      return 0;
-    },
-    summation() {
-      return 0;
-    }
-  },
   watch: { 
     triggerUpdate(newVal, oldVal) {
       this.$forceUpdate();
     }
-  },
-  updated() {
   },
   methods: {
     showContextMenu(e, index) {
@@ -225,13 +213,19 @@ export default {
     },
     addItem() {
       if (this.rowIndex == this.section.items.length-1) {
-        this.section.items.push(new Item());
+        this.section.items.push(new Item({ 
+          materialMarkup: this.section.materialMarkup
+        }));
       } else {
-        this.section.items.splice(this.rowIndex+1, 0, new Item());
+        this.section.items.splice(this.rowIndex+1, 0, new Item({
+          materialMarkup: this.section.materialMarkup
+        }));
       }
+      this.section.renumberItems();
     },
     delItem() {
-      this.section.items.splice(this.rowIndex, 1,);
+      this.section.items.splice(this.rowIndex, 1);
+      this.section.renumberItems();
     },
     addSection(position) {
       this.$emit('add-section', this.index, position);

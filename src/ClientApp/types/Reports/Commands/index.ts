@@ -1,4 +1,3 @@
-
 export * from './AddReportConfigurationCommand'
 export * from './CreateReport'
 export * from './DeleteReportConfigurationCommand'
@@ -9,5 +8,3 @@ export * from './DeletePhotoRecordCommand'
 export * from './EditNoteCommand'
 export * from './EditPhotoRecordCommand'
 export * from './UpdateReportCommand'
-
-

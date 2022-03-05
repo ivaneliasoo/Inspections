@@ -4,18 +4,22 @@
     <input
       ref="textbox"
       type="text"
-      class="text-caption table-input"
+      class="text-caption text-bold table-input"
       :style="style"
       v-model="dataValue"
       @change="$emit('change', $event.target.value);"
     />
-    <label v-if="value && format==='percent'" class="text-caption">%</label>
+    <label v-if="value" class="text-caption">{{suffixStr}}</label>
   </div>
 </template>
 
 <style scoped>
 input {
   width: 100%;
+}
+
+.boldtext {
+  font-weight: bold;
 }
 </style>
 
@@ -38,7 +42,6 @@ function setInputFilter(textbox, inputFilter) {
     });
   });
 }
-
 export default {
   props: {
     value: {
@@ -46,15 +49,25 @@ export default {
     },
     format: String,
     readOnly: Boolean,
-    decimals: Number
+    decimals: Number,
+    suffix: String,
+    bold: Boolean
   },
   computed: {
+    suffixStr() {
+      if (this.format === 'percent') {
+        return "%" 
+      }
+      return this.suffix ? this.suffix : "";
+    },
     style() {
       let width;
       if (this.format === "currency") {
         width = "80%";
       } else if (this.format === "percent") {
         width = "85%";
+      } else  if (this.suffix) {
+        width = "85%"
       } else {
         width = "100%";
       }
@@ -62,6 +75,9 @@ export default {
     },
     dataValue: {
       get() {
+        if (this.editing) {
+          return this.value;
+        }
         const dec = this.decimals ? this. decimals : 0;
         if (isNaN(this.value)) {
           return "";
@@ -69,16 +85,36 @@ export default {
         return this.format === "currency" ? parseFloat(this.value).toFixed(2) : parseFloat(this.value).toFixed(dec); 
       },
       set(v) {
+        this.editing = true;
         this.$emit('input', v);
       }
     }
   },
   mounted() {
     const textBox = this.$refs.textbox;
+    if (this.bold) {
+      textBox.classList.add("boldtext");
+    }
     textBox.readOnly = this.readOnly;
     setInputFilter(textBox, function(value) {
       return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
     })
+  },
+  updated() {
+    if (this.editing) {
+      const tx = this.$refs.textbox;
+      tx.focus(); 
+    }
+  },
+  methods: {
+    onClick() {
+      this.editing=true;
+    },
+    onExit() {
+      if (this.$refs.textbox !== document.activeElement) {
+        this.editing=false;
+      }
+    }
   }
 };
 </script>

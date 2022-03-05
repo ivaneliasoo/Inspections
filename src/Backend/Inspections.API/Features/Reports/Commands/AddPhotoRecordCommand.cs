@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace Inspections.API.Features.Reports.Commands
 {

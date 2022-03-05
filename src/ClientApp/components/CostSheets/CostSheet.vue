@@ -149,128 +149,149 @@
 
                 <tbody class="cs-section">
                   <td colspan="10" class="text-h5 text-left">
-                    Summary
+                    &nbsp;
                   </td>
                 </tbody>
 
                 <tbody class="cs-section">
                   <tr>
-                    <td colspan="2" class="text-left title-1">
+                    <td class="title-7"></td>
+                    <td colspan="9" class="text-h5 text-left title-7">
+                      Summary
+                    </td>
+                    <td colspan="2" rowspan="4" class="title-7">
+                      <img src="~/static/Logo.jpeg" />
+                    </td>
+                    <td class="title-7"></td>
+                  </tr>
+                  <tr>
+                    <td class="title-7"></td>
+                    <td colspan="2" class="text-body-2 text-left title-7">
                       Set Material Mark Up:
                     </td>
-                    <td class="text-caption font-weight-bold title-1">
+                    <td class="text-caption font-weight-bold title-7">
                       <NumberField
                         v-model="costSheet.materialMarkup" format="percent" @change="updateSheet">
                       </NumberField>              
                     </td>
-                    <td colspan="10" class="title-1">
+                    <td colspan="9" class="title-7">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="text-left title-1">
+                    <td class="title-7"></td>
+                    <td colspan="2" class="text-body-2 text-left title-7">
                       Set Labour Daily Rate (Day):
                     </td>
-                    <td class="text-caption font-weight-bold title-1">
+                    <td class="text-caption font-weight-bold title-7">
                       <NumberField
                         v-model="costSheet.labourDailyRate" format="currency" @change="updateSheet">
                       </NumberField>                            
                     </td>
-                    <td colspan="10" class="title-1">
+                    <td colspan="9" class="title-7">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="text-left title-1">
+                    <td class="title-7"></td>
+                    <td colspan="2" class="text-body-2 text-left title-7">
+                      Set Labour multiplier (Night):
+                    </td>
+                    <td class="text-caption font-weight-bold title-7">
+                      <NumberField
+                        v-model="costSheet.labourNightMultiplier" suffix="x" @change="updateSheet">
+                      </NumberField>                            
+                    </td>
+                    <td colspan="9" class="title-7">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="title-7"></td>
+                    <td colspan="2" class="text-body-2 text-left title-7">
                       Final Overall Markup:
                     </td>
-                    <td class="text-caption font-weight-bold title-1">
+                    <td class="text-caption font-weight-bold title-7">
                       <NumberField
-                        v-model="costSheet.finalMarkup" format="currency" @change="updateSheet">
+                        v-model="costSheet.finalMarkup" format="percent" @change="updateSheet">
                       </NumberField>                            
                     </td>
-                    <td colspan="10" class="title-1">
+                    <td colspan="9" class="title-7">
                     </td>
                   </tr>
 
                   <tr>
-                    <td colspan="13" class="title-1">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="13" class="title-1">
+                    <td colspan="13" class="text-caption title-7">
+                      &nbsp;
                     </td>
                   </tr>
 
                   <tr>
-                    <td colspan="2" class="text-left title-1">
-                      Total Sales:
-                    </td>
-                    <td class="text-caption font-weight-bold title-1">
-                      <NumberField
-                        :value="costSheet.toQuotePrice()" format="currency" :readOnly="true">
-                      </NumberField>                            
-                    </td>
-                    <td colspan="10" class="title-1">
+                    <td class="title-7"></td>
+                    <Summary
+                      :cost-sheet="costSheet"
+                      :trigger-update="updateSummary">
+                    </Summary>
+                    <td rowspan="5" class="title-7"></td>
+                    <td colspan="4">
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td colspan="3" class="text-body-2 text-left title-7">
+                              Translate to number of days to complete:
+                            </td>
+                            <td class="text-caption font-weight-bold title-7">
+                              <NumberField
+                                :value="costSheet.numberOfDaysComplete()" :decimals="2" suffix=" " :readOnly="true">
+                              </NumberField>                            
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" class="text-body-2 text-left title-7">
+                              Translate to number of nights to complete:
+                            </td>
+                            <td class="text-caption font-weight-bold title-7">
+                              <NumberField
+                                :value="costSheet.numberOfNightsComplete()" :decimals="2" suffix=" " :readOnly="true">
+                              </NumberField>                            
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="5" class="title-7" style="font-size: 6px">
+                              &nbsp;
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="text-body-2 text-left title-7" style="background-color: #31b3c5; border: 1px solid black;">
+                              Super
+                            </td>
+                            <td colspan="2" class="text-body-2 text-left title-7">
+                              &nbsp; When GP &gt;20%
+                            </td>
+                            <td class="title-7"></td>
+                          </tr>
+                          <tr>
+                            <td class="text-body-2 text-left title-7" style="background-color: #9eedca; border: 1px solid black;">
+                              Healthy
+                            </td>
+                            <td colspan="2" class="text-body-2 text-left title-7">
+                              &nbsp; When 10% &gt; GP &gt; 19.9%
+                            </td>
+                            <td class="title-7"></td>
+                          </tr>
+                          <tr>
+                            <td class="text-body-2 text-left title-7" style="background-color: #c04225; border: 1px solid black;">
+                              Low
+                            </td>
+                            <td colspan="2" class="text-body-2 text-left title-7">
+                              &nbsp; When GP &lt;10%
+                            </td>
+                            <td class="title-7"></td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="text-left title-1">
-                      COGS:
-                    </td>
-                    <td class="text-caption font-weight-bold title-1">
-                      <NumberField
-                        :value="costSheet.materialCost()" format="currency" :readOnly="true">
-                      </NumberField>                            
-                    </td>
-                    <td class="text-caption font-weight-bold title-1">
-                      <NumberField
-                        :value="costSheet.materialCostPercent()" format="percent" :decimals="2" :readOnly="true">
-                      </NumberField>                            
-                    </td>
-                    <td colspan="9" class="title-1">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2" class="text-left title-1">
-                      Labour cost:
-                    </td>
-                    <td class="text-caption font-weight-bold title-1">
-                      <NumberField
-                        :value="costSheet.labourCost()" format="currency" :readOnly="true">
-                      </NumberField>                            
-                    </td>
-                    <td class="text-caption font-weight-bold title-1">
-                      <NumberField
-                        :value="costSheet.labourCostPercent()" format="percent" :decimals="2" :readOnly="true">
-                      </NumberField>                            
-                    </td>
-                    <td class="title-1">
-                    </td>
-                    <td colspan="3" class="text-left title-1">
-                      Translate to number of days to complete:
-                    </td>
-                    <td class="text-caption font-weight-bold title-1">
-                      <NumberField
-                        :value="costSheet.numberOfDaysComplete()" :decimals="2" :readOnly="true">
-                      </NumberField>                            
-                    </td>
-                    <td colspan="4" class="title-1">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2" class="text-left title-1">
-                      Gross Profit:
-                    </td>
-                    <td class="text-caption font-weight-bold title-1">
-                      <NumberField
-                        :value="costSheet.grossProfit()" format="currency" :readOnly="true">
-                      </NumberField>                            
-                    </td>
-                    <td class="text-caption font-weight-bold title-1">
-                      <NumberField
-                        :value="costSheet.grossProfitPercent()" format="percent" :decimals="2" :readOnly="true">
-                      </NumberField>                            
-                    </td>
-                    <td colspan="10" class="title-1">
+                    <td colspan="13" class="title-7" style="font-size: 6px">
+                      &nbsp;
                     </td>
                   </tr>
                 </tbody>
@@ -305,7 +326,7 @@ html {
 }
 
 td, th {
-  min-width: 120px;
+  min-width: 110px;
 } 
 
 /* .costsheet-table {
@@ -355,6 +376,13 @@ input {
   padding: 2px;
 }
 
+.title-7 {
+  background-color: #eae4ef;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
 </style>
 
 <script>
@@ -370,16 +398,9 @@ import { Section, Item, CostSheet }
       version: 'v0.101',
       costSheetVisible: true,
       updateSection: 0,
+      updateSummary: 0,
       timer: null
     }),
-    computed: {
-      labourCostPercent() {
-        return this.costSheet.toQuotePrice() / this.costSheet.labourCost();
-      },
-      grossProfitPercent() {
-        return this.costSheet.toQuotePrice() / this.costSheet.grossProfit();
-      }
-    },
     watch: { 
       triggerUpdate(newVal, oldVal) {
         this.updateSheet();
@@ -401,15 +422,16 @@ import { Section, Item, CostSheet }
         this.$emit('go-back');
       },
       addSection(index, position) {
-        const newSection = new Section();
-        newSection.id = 0;
+        const newSection = new Section({materialMarkup: this.costSheet.materialMarkup});
         const newSecIndex = (position == "above") ? index : index + 1;
         this.costSheet.sections.splice(newSecIndex, 0, newSection);
+        this.costSheet.renumberSections();
         this.costSheet.updated = true;
         this.$forceUpdate();
       },
       delSection(index) {
         this.costSheet.sections.splice(index, 1);
+        this.costSheet.renumberSections();
         this.costSheet.updated = true;
         this.$forceUpdate();
       },
@@ -417,6 +439,7 @@ import { Section, Item, CostSheet }
         this.costSheet.updated = true;
         this.$forceUpdate();
         this.updateSection++;
+        this.updateSummary++;
       }
     }
   }

@@ -4,10 +4,10 @@ namespace Inspections.API.Features.Reports.Commands
 {
     public class EditNoteCommand : IRequest<bool>
     {
-        public int ReportId { get; set; }
-        public int Id { get; set; }
-        public string Text { get; set; } = default!;
-        public bool Checked { get; set; }
+        public int ReportId { get; }
+        public int Id { get; }
+        public string Text { get; } = default!;
+        public bool Checked { get; }
 
         internal EditNoteCommand()
         {

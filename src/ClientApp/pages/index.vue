@@ -19,10 +19,10 @@
             :items="expiring"
             @dblclick:row="goToLicenses"
           >
-            <template v-slot:item.validityStart="{ item }">
+            <template #item.validityStart="{ item }">
               {{ parseDate(item.validityStart) }}
             </template>
-            <template v-slot:item.validityEnd="{ item }">
+            <template #item.validityEnd="{ item }">
               {{ parseDate(item.validityEnd) }}
             </template>
           </v-data-table>
@@ -43,10 +43,10 @@
             :items="expired"
             @dblclick:row="goToLicenses"
           >
-            <template v-slot:item.validityStart="{ item }">
+            <template #item.validityStart="{ item }">
               {{ parseDate(item.validityStart) }}
             </template>
-            <template v-slot:item.validityEnd="{ item }">
+            <template #item.validityEnd="{ item }">
               {{ parseDate(item.validityEnd) }}
             </template>
           </v-data-table>
@@ -58,8 +58,8 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { LicensesState } from 'store/licenses'
 import { DateTime } from 'luxon'
+import { LicensesState } from 'store/licenses'
 import { CardOption } from '~/types'
 
 @Component({

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Features.Reports.Models;
-using Inspections.API.Models.Configuration;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces.Repositories;
@@ -17,12 +11,9 @@ using Inspections.Core.QueryModels;
 using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Inspections.API.Features.Reports
 {
@@ -34,19 +25,15 @@ namespace Inspections.API.Features.Reports
         private readonly IMediator _mediator;
         private readonly IReportsRepository _reportsRepository;
         private readonly InspectionsContext _context;
-        private readonly IOptions<ClientSettings> _storageOptions;
         private readonly PhotoRecordManager _photoRecordManager;
-        private readonly IAuthorizationService _authorizationService;
 
-        public ReportsController(IMediator mediator, IReportsRepository reportsRepository, InspectionsContext context, IOptions<ClientSettings> storageOptions,
-            PhotoRecordManager photoRecordManager, IAuthorizationService authorizationService)
+        public ReportsController(IMediator mediator, IReportsRepository reportsRepository, InspectionsContext context,
+            PhotoRecordManager photoRecordManager)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _storageOptions = storageOptions ?? throw new ArgumentNullException(nameof(storageOptions));
             _photoRecordManager = photoRecordManager ?? throw new ArgumentNullException(nameof(photoRecordManager));
-            _authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
         }
 
         [HttpPost]
@@ -66,9 +53,9 @@ namespace Inspections.API.Features.Reports
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Put([FromBody] UpdateReportCommand udpateData)
+        public async Task<IActionResult> Put([FromBody] UpdateReportCommand updateData)
         {
-            var result = await _mediator.Send(udpateData).ConfigureAwait(false);
+            var result = await _mediator.Send(updateData).ConfigureAwait(false);
             if (!result)
                 return BadRequest();
 
@@ -79,10 +66,12 @@ namespace Inspections.API.Features.Reports
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetAll(string? filter, bool? closed, bool myReports = true, string orderBy = "date", bool descending = true)
+        public async Task<IActionResult> GetAll(string? filter, bool? closed, bool myReports = true,
+            string orderBy = "date", bool descending = true)
         {
-            var result = await _reportsRepository.GetAll(filter, closed, myReports, orderBy, descending).ConfigureAwait(false);
-            if (result is null)
+            var result = await _reportsRepository.GetAll(filter, closed, myReports, orderBy, descending)
+                .ConfigureAwait(false);
+            if (!result.Any())
                 return NoContent();
 
             return Ok(result);
@@ -122,37 +111,23 @@ namespace Inspections.API.Features.Reports
         public async Task<IActionResult> GetPhotoRecords(int id)
         {
             MapperConfiguration config = new MapperConfiguration(cfg =>
-                                                                     {
-                                                                         cfg.CreateMap<PhotoRecord, PhotoRecordResult>();
-                                                                     });
-            var photos = _context.Set<PhotoRecord>().ProjectTo<PhotoRecordResult>(config).Where(p => p.ReportId == id).ToList();
+            {
+                cfg.CreateMap<PhotoRecord, PhotoRecordResult>();
+            });
+            var photos = _context.Set<PhotoRecord>().ProjectTo<PhotoRecordResult>(config).Where(p => p.ReportId == id)
+                .ToList();
 
             foreach (var photo in photos)
             {
                 photo.PhotoUrl = _photoRecordManager.GenerateSafeUrl(photo.FileName);
                 photo.ThumbnailUrl = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
                 photo.PhotoBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileName);
-                photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized); ;
+                photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized);
             }
 
-            if (photos != null)
-                return Ok(photos);
+            if (!photos.Any()) return BadRequest();
 
-            return BadRequest();
-        }
-
-        private static string ToBase64String(string fileName)
-        {
-            byte[] fileBytes = Array.Empty<byte>();
-            try
-            {
-                fileBytes = System.IO.File.ReadAllBytes(fileName);
-            }
-            catch (IOException ex)
-            {
-                Trace.WriteLine(ex.Message);
-            }
-            return "data:image/png;base64," + Convert.ToBase64String(fileBytes);
+            return Ok(photos);
         }
 
         [HttpPost("{id:int}/photorecord")]
@@ -166,12 +141,10 @@ namespace Inspections.API.Features.Reports
             if (!request.Files.Any())
                 return BadRequest("can't find a file in the request");
 
-            if (request != null)
-            {
-                var result = await _mediator.Send(new AddPhotoRecordCommand(id, request.Files, label)).ConfigureAwait(false);
-                if (result)
-                    return Ok();
-            }
+            var result = await _mediator.Send(new AddPhotoRecordCommand(id, request.Files, label))
+                .ConfigureAwait(false);
+            if (result)
+                return Ok();
 
             return BadRequest();
         }
@@ -221,7 +194,8 @@ namespace Inspections.API.Features.Reports
             if (photo.Id != idPhoto || photo.ReportId != id)
                 return BadRequest();
 
-            var result = await _mediator.Send(new EditPhotoRecordCommand(photo.ReportId, photo.Label, photo.Id)).ConfigureAwait(false);
+            var result = await _mediator.Send(new EditPhotoRecordCommand(photo.ReportId, photo.Label, photo.Id))
+                .ConfigureAwait(false);
             if (result)
                 return Ok();
 
@@ -259,7 +233,8 @@ namespace Inspections.API.Features.Reports
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<ActionResult<bool>> BulkUpdateChecks(int reportId, int checkListId, int newValue)
         {
-            var result = await _mediator.Send(new BulkUpdateCheckItemsCommand(reportId, checkListId, newValue)).ConfigureAwait(false);
+            var result = await _mediator.Send(new BulkUpdateCheckItemsCommand(reportId, checkListId, newValue))
+                .ConfigureAwait(false);
             if (!result)
                 return Conflict();
 
@@ -269,7 +244,7 @@ namespace Inspections.API.Features.Reports
         [HttpPatch("{reportId:int}/complete", Name = nameof(CompleteReport))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult<bool>> CompleteReport(int reportId)
+        public async Task<IActionResult> CompleteReport(int reportId)
         {
             var result = await _mediator.Send(new CompleteReportCommand(reportId)).ConfigureAwait(false);
             if (!result)
@@ -278,35 +253,20 @@ namespace Inspections.API.Features.Reports
             return NoContent();
         }
 
-        [HttpPut("{id:int}/readings", Name = nameof(UpdateOperationalReadings))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateOperationalReadings(int id, [FromBody] UpdateOperationalReadingsCommand operationalReadingsCommand)
-        {
-            Guard.Against.Null(operationalReadingsCommand, nameof(operationalReadingsCommand));
-            if (id != operationalReadingsCommand.ReportId)
-                return BadRequest();
-
-            var result = await _mediator.Send(operationalReadingsCommand).ConfigureAwait(false);
-            if (result)
-                return Ok(result);
-
-            return BadRequest();
-        }
-
         [HttpGet("{id:int}/export", Name = nameof(Export))]
         public async Task<FileResult> Export(int id, bool printPhotos)
         {
-            var token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "", StringComparison.InvariantCultureIgnoreCase);
-            
+            var token = Request.Headers[HeaderNames.Authorization].ToString()
+                .Replace("Bearer ", "", StringComparison.InvariantCultureIgnoreCase);
+
             var reportConfigId = (await _context.Set<Report>().FindAsync(id))!.ReportConfigurationId;
             var reportConfig = _context.Set<ReportConfiguration>().Single(rc => rc.Id == reportConfigId);
 
-            var exportData = new ExportDTO($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Host}:{Environment.GetEnvironmentVariable("UIPORT")}/{reportConfig.TemplateName}?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
-            var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData)).ConfigureAwait(false);
+            var exportData = new ExportDto(
+                $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Host}:{Environment.GetEnvironmentVariable("UIPORT")}/{reportConfig.TemplateName}?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
+            var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData))
+                .ConfigureAwait(false);
             return File(fileContent, "application/pdf", "prueba.pdf");
-
         }
     }
 }

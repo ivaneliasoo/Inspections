@@ -1,27 +1,26 @@
 ﻿using System.Runtime.Serialization;
 using MediatR;
 
-namespace Inspections.API.Features.Checklists.Commands
+namespace Inspections.API.Features.Checklists.Commands;
+
+[DataContract]
+public class UpdateCheckListCommand : IRequest<bool>
 {
-    [DataContract]
-    public class UpdateCheckListCommand : IRequest<bool>
+    [DataMember]
+    public int IdCheckList { get; set; }
+    [DataMember]
+    public string Text { get; set; } = default!;
+    [DataMember]
+    public string? Annotation { get; set; }
+    [DataMember]
+    public bool IsConfiguration { get; set; }
+
+    private UpdateCheckListCommand() { }
+
+    public UpdateCheckListCommand(string text, string? annotation, bool isConfiguration)
     {
-        [DataMember]
-        public int IdCheckList { get; set; }
-        [DataMember]
-        public string Text { get; set; } = default!;
-        [DataMember]
-        public string? Annotation { get; set; }
-        [DataMember]
-        public bool IsConfiguration { get; set; }
-
-        private UpdateCheckListCommand() { }
-
-        public UpdateCheckListCommand(string text, string? annotation, bool isConfiguration)
-        {
-            Text = text;
-            Annotation = annotation;
-            IsConfiguration = isConfiguration;
-        }
+        Text = text;
+        Annotation = annotation;
+        IsConfiguration = isConfiguration;
     }
 }

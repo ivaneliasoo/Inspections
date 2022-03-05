@@ -182,9 +182,9 @@
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
+import { User, ChangePasswordDTO } from '../../types/Users'
 import InnerPageMixin from '@/mixins/innerpage'
 import { UserState } from 'store/users'
-import { User, ChangePasswordDTO } from '../../types/Users'
 
 extend('password', {
   params: ['target'],
@@ -201,13 +201,13 @@ extend('password', {
   }
 })
 export default class UserAdmin extends mixins(InnerPageMixin) {
-  dialog: boolean = false;
-  dialogRemove: boolean = false;
-  loading: boolean = false;
-  confirmPassword: string = '';
+  dialog: boolean = false
+  dialogRemove: boolean = false
+  loading: boolean = false
+  confirmPassword: string = ''
   filter: any = {
     filterText: ''
-  };
+  }
 
   headers: any[] = [
     {
@@ -240,11 +240,11 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
       sortable: false,
       align: 'left'
     }
-  ];
+  ]
 
-  selectedItem: User = {} as User;
-  item: any = { principal: false };
-  isNew: boolean = false;
+  selectedItem: User = {} as User
+  item: any = { principal: false }
+  isNew: boolean = false
 
   get users (): User[] {
     return (this.$store.state.users as UserState).users

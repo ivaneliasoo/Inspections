@@ -241,7 +241,7 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
   ]
 
   get reportList (): Report[] {
-    return (this.$store.state.reportstrore as ReportsState).reportList
+    return (this.$store.state.reportstrore as ReportsState).reportList || []
   }
 
   async fetch () {
