@@ -48,15 +48,15 @@
     </ValidationObserver>
     <v-row align="start" justify="space-between">
       <v-col cols="8" align-self="start">
-        <!-- <FormulateForm
+        <FormulateForm
           v-if="selectedField"
           v-model="selectedField"
           :schema="schema"
           @submit="handleSubmit"
-        /> -->
-        <!-- <h6 v-else>
+        />
+        <h6 v-else>
           Select a Field or create a new one in the list to edit
-        </h6> -->
+        </h6>
       </v-col>
       <v-col cols="4">
         <v-toolbar color="indigo" dark>
