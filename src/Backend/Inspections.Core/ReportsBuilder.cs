@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Inspections.Core.Domain.Forms;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 
@@ -19,7 +20,6 @@ public class ReportsBuilder
 
         _report.AddCheckList(configuration.ChecksDefinition);
         _report.AddSignature(configuration.SignatureDefinitions, userName);
-        _report.AddForms(configuration.Forms);
     }
 
     internal ReportConfiguration Configuration { get; private set; }

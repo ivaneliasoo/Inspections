@@ -36,6 +36,7 @@ public class ReportsConfigurationsRepository : IReportConfigurationsRepository
     public async Task<ReportConfiguration> GetByIdAsync(int id)
     {
         var result = await _context.ReportConfigurations
+            .Include("Forms")
             .SingleOrDefaultAsync(s => s.Id == id);
 
         if (result is not { }) throw new NotFoundException(id.ToString(), nameof(ReportConfiguration));

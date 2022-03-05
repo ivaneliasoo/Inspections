@@ -477,85 +477,6 @@ export interface ChangePasswordDto {
 /**
  * 
  * @export
- * @interface CheckList
- */
-export interface CheckList {
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckList
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof CheckList
-     */
-    domainEvents?: Array<object> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckList
-     */
-    reportId?: number | null;
-    /**
-     * 
-     * @type {Report}
-     * @memberof CheckList
-     */
-    report?: Report;
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckList
-     */
-    reportConfigurationId?: number | null;
-    /**
-     * 
-     * @type {ReportConfiguration}
-     * @memberof CheckList
-     */
-    reportConfiguration?: ReportConfiguration;
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckList
-     */
-    text?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckList
-     */
-    annotation?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckList
-     */
-    isConfiguration?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckList
-     */
-    completed?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckList
-     */
-    checked?: boolean;
-    /**
-     * 
-     * @type {Array<CheckListItem>}
-     * @memberof CheckList
-     */
-    checks?: Array<CheckListItem> | null;
-}
-/**
- * 
- * @export
  * @enum {string}
  */
 export enum CheckListDisplay {
@@ -563,67 +484,6 @@ export enum CheckListDisplay {
     Inline = 1
 }
 
-/**
- * 
- * @export
- * @interface CheckListItem
- */
-export interface CheckListItem {
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckListItem
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof CheckListItem
-     */
-    domainEvents?: Array<object> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CheckListItem
-     */
-    checkListId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckListItem
-     */
-    text?: string | null;
-    /**
-     * 
-     * @type {CheckValue}
-     * @memberof CheckListItem
-     */
-    checked?: CheckValue;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckListItem
-     */
-    editable?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckListItem
-     */
-    required?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckListItem
-     */
-    remarks?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CheckListItem
-     */
-    touched?: boolean;
-}
 /**
  * 
  * @export
@@ -1326,67 +1186,6 @@ export interface EditSignatureCommand {
 /**
  * 
  * @export
- * @interface FormDefinition
- */
-export interface FormDefinition {
-    /**
-     * 
-     * @type {number}
-     * @memberof FormDefinition
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof FormDefinition
-     */
-    domainEvents?: Array<object> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDefinition
-     */
-    name?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDefinition
-     */
-    title?: string | null;
-    /**
-     * 
-     * @type {DynamicFields}
-     * @memberof FormDefinition
-     */
-    fields?: DynamicFields;
-    /**
-     * 
-     * @type {any}
-     * @memberof FormDefinition
-     */
-    defaultValues?: any | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FormDefinition
-     */
-    enabled?: boolean;
-    /**
-     * 
-     * @type {Array<Report>}
-     * @memberof FormDefinition
-     */
-    reports?: Array<Report> | null;
-    /**
-     * 
-     * @type {Array<ReportConfiguration>}
-     * @memberof FormDefinition
-     */
-    reportConfigurations?: Array<ReportConfiguration> | null;
-}
-/**
- * 
- * @export
  * @interface FormDefinitionResponse
  */
 export interface FormDefinitionResponse {
@@ -1426,18 +1225,6 @@ export interface FormDefinitionResponse {
      * @memberof FormDefinitionResponse
      */
     enabled?: boolean;
-    /**
-     * 
-     * @type {Array<Report>}
-     * @memberof FormDefinitionResponse
-     */
-    reports?: Array<Report> | null;
-    /**
-     * 
-     * @type {Array<ReportConfiguration>}
-     * @memberof FormDefinitionResponse
-     */
-    reportConfigurations?: Array<ReportConfiguration> | null;
 }
 /**
  * 
@@ -1790,49 +1577,6 @@ export interface NewFormDefinitionCommand {
 /**
  * 
  * @export
- * @interface Note
- */
-export interface Note {
-    /**
-     * 
-     * @type {number}
-     * @memberof Note
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Note
-     */
-    domainEvents?: Array<object> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Note
-     */
-    reportId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Note
-     */
-    text?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Note
-     */
-    checked?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Note
-     */
-    needsCheck?: boolean;
-}
-/**
- * 
- * @export
  * @interface NoteQueryResult
  */
 export interface NoteQueryResult {
@@ -1909,73 +1653,6 @@ export interface Options {
      * @memberof Options
      */
     lastEditUser?: string | null;
-}
-/**
- * 
- * @export
- * @interface PhotoRecord
- */
-export interface PhotoRecord {
-    /**
-     * 
-     * @type {number}
-     * @memberof PhotoRecord
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof PhotoRecord
-     */
-    domainEvents?: Array<object> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PhotoRecord
-     */
-    reportId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhotoRecord
-     */
-    fileName?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhotoRecord
-     */
-    fileNameResized?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhotoRecord
-     */
-    label?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhotoRecord
-     */
-    photoStorageId?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhotoRecord
-     */
-    thumbnailStorageId?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhotoRecord
-     */
-    photoUrl?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhotoRecord
-     */
-    thumbnailUrl?: string | null;
 }
 /**
  * 
@@ -2072,236 +1749,6 @@ export interface ProblemDetails {
 /**
  * 
  * @export
- * @interface Report
- */
-export interface Report {
-    /**
-     * 
-     * @type {number}
-     * @memberof Report
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Report
-     */
-    domainEvents?: Array<object> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Report
-     */
-    reportConfigurationId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    name?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    address?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Report
-     */
-    emaLicenseId?: number | null;
-    /**
-     * 
-     * @type {EMALicense}
-     * @memberof Report
-     */
-    license?: EMALicense;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    date?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Report
-     */
-    isClosed?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    title?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    formName?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Report
-     */
-    remarksLabelText?: string | null;
-    /**
-     * 
-     * @type {Array<Signature>}
-     * @memberof Report
-     */
-    signatures?: Array<Signature> | null;
-    /**
-     * 
-     * @type {Array<Note>}
-     * @memberof Report
-     */
-    notes?: Array<Note> | null;
-    /**
-     * 
-     * @type {Array<CheckList>}
-     * @memberof Report
-     */
-    checkList?: Array<CheckList> | null;
-    /**
-     * 
-     * @type {Array<FormDefinition>}
-     * @memberof Report
-     */
-    forms?: Array<FormDefinition> | null;
-    /**
-     * 
-     * @type {Array<PhotoRecord>}
-     * @memberof Report
-     */
-    photoRecords?: Array<PhotoRecord> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Report
-     */
-    completed?: boolean;
-}
-/**
- * 
- * @export
- * @interface ReportConfiguration
- */
-export interface ReportConfiguration {
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportConfiguration
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof ReportConfiguration
-     */
-    domainEvents?: Array<object> | null;
-    /**
-     * 
-     * @type {ReportType}
-     * @memberof ReportConfiguration
-     */
-    type?: ReportType;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    title?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    formName?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    remarksLabelText?: string | null;
-    /**
-     * 
-     * @type {CheckListPrintingMetadata}
-     * @memberof ReportConfiguration
-     */
-    checkListMetadata?: CheckListPrintingMetadata;
-    /**
-     * 
-     * @type {Array<CheckList>}
-     * @memberof ReportConfiguration
-     */
-    checksDefinition?: Array<CheckList> | null;
-    /**
-     * 
-     * @type {Array<Signature>}
-     * @memberof ReportConfiguration
-     */
-    signatureDefinitions?: Array<Signature> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ReportConfiguration
-     */
-    inactive?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    footer?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    marginTop?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    marginBottom?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    marginLeft?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    marginRight?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportConfiguration
-     */
-    printSectionId?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReportConfiguration
-     */
-    templateName?: string | null;
-    /**
-     * 
-     * @type {Array<FormDefinition>}
-     * @memberof ReportConfiguration
-     */
-    forms?: Array<FormDefinition> | null;
-}
-/**
- * 
- * @export
  * @interface ReportConfigurationDto
  */
 export interface ReportConfigurationDto {
@@ -2365,6 +1812,12 @@ export interface ReportConfigurationDto {
      * @memberof ReportConfigurationDto
      */
     templateName?: string | null;
+    /**
+     * 
+     * @type {FormDefinitionResponse}
+     * @memberof ReportConfigurationDto
+     */
+     forms?: string | null;
 }
 /**
  * 
@@ -2502,25 +1955,6 @@ export enum ReportType {
     Inspection = 0
 }
 
-/**
- * 
- * @export
- * @interface Responsible
- */
-export interface Responsible {
-    /**
-     * 
-     * @type {ResponsibleType}
-     * @memberof Responsible
-     */
-    type?: ResponsibleType;
-    /**
-     * 
-     * @type {string}
-     * @memberof Responsible
-     */
-    name?: string | null;
-}
 /**
  * 
  * @export
@@ -2777,103 +2211,6 @@ export interface Section {
      * @memberof Section
      */
     finalMarkup?: number;
-}
-/**
- * 
- * @export
- * @interface Signature
- */
-export interface Signature {
-    /**
-     * 
-     * @type {number}
-     * @memberof Signature
-     */
-    id?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Signature
-     */
-    domainEvents?: Array<object> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    title?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    annotation?: string | null;
-    /**
-     * 
-     * @type {Responsible}
-     * @memberof Signature
-     */
-    responsible?: Responsible;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    responsibleName?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    designation?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    remarks?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    date?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Signature
-     */
-    principal?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Signature
-     */
-    isConfiguration?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Signature
-     */
-    reportId?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Signature
-     */
-    reportConfigurationId?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Signature
-     */
-    drawnSign?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Signature
-     */
-    order?: number;
 }
 /**
  * 
@@ -5827,6 +5164,44 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @param {number} [reportId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFormsDefinitionsByReportId: async (reportId?: number, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Forms/report`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (reportId !== undefined) {
+                localVarQueryParameter['ReportId'] = reportId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {number} id 
          * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
          * @param {*} [options] Override http request option.
@@ -5918,6 +5293,16 @@ export const FormsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {number} [reportId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFormsDefinitionsByReportId(reportId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FormDefinitionResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFormsDefinitionsByReportId(reportId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {number} id 
          * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
          * @param {*} [options] Override http request option.
@@ -5972,6 +5357,15 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          */
         getFormsDefinitions(filter?: string, options?: any): AxiosPromise<Array<FormDefinitionResponse>> {
             return localVarFp.getFormsDefinitions(filter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} [reportId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFormsDefinitionsByReportId(reportId?: number, options?: any): AxiosPromise<Array<FormDefinitionResponse>> {
+            return localVarFp.getFormsDefinitionsByReportId(reportId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6035,6 +5429,17 @@ export class FormsApi extends BaseAPI {
      */
     public getFormsDefinitions(filter?: string, options?: any) {
         return FormsApiFp(this.configuration).getFormsDefinitions(filter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} [reportId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FormsApi
+     */
+    public getFormsDefinitionsByReportId(reportId?: number, options?: any) {
+        return FormsApiFp(this.configuration).getFormsDefinitionsByReportId(reportId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6133,7 +5538,7 @@ export const JobScheduleApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiJobScheduleOptionsPut: async (_options?: Options, options: any = {}): Promise<RequestArgs> => {
+        apiJobScheduleOptionsPut: async (options?: Options, _options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/JobSchedule/options`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6154,9 +5559,9 @@ export const JobScheduleApiAxiosParamCreator = function (configuration?: Configu
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter, _options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ..._options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(options, localVarRequestOptions, configuration)
 
             return {
@@ -6311,7 +5716,7 @@ export const JobScheduleApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async apiJobScheduleOptionsPut(options?: Options, _options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiJobScheduleOptionsPut(options, options);
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiJobScheduleOptionsPut(options, _options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**

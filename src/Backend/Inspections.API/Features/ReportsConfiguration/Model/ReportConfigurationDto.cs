@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Inspections.API.Features.Forms;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using JetBrains.Annotations;
@@ -15,6 +16,7 @@ public class ReportConfigurationDto
         Type = reportConfiguration.Type;
         Title = reportConfiguration.Title;
         FormName = reportConfiguration.FormName;
+        Forms = reportConfiguration.Forms.Select(FormDefinitionResponse.CreateFromEntity);
         RemarksLabelText = reportConfiguration.RemarksLabelText;
         ChecksDefinition = reportConfiguration.ChecksDefinition.Select(cd => cd.Id);
         SignatureDefinitions = reportConfiguration.SignatureDefinitions.Select(cd => cd.Id);
@@ -30,6 +32,7 @@ public class ReportConfigurationDto
     public string RemarksLabelText { [UsedImplicitly] get; }
     public IEnumerable<int> ChecksDefinition { [UsedImplicitly] get; }
     public IEnumerable<int> SignatureDefinitions { [UsedImplicitly] get; }
+    public IEnumerable<FormDefinitionResponse> Forms { [UsedImplicitly] get; }
     public CheckListPrintingMetadata CheckListMetadata { [UsedImplicitly] get; }
     public int? PrintSectionId { [UsedImplicitly] get; }
     public string? TemplateName { [UsedImplicitly] get; }

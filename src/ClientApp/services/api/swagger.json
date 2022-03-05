@@ -2144,6 +2144,55 @@
         }
       }
     },
+    "/api/Forms/report": {
+      "get": {
+        "tags": [
+          "Forms"
+        ],
+        "operationId": "GetFormsDefinitionsByReportId",
+        "parameters": [
+          {
+            "name": "ReportId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormDefinitionResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormDefinitionResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormDefinitionResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Forms/{id}": {
       "get": {
         "tags": [
@@ -5873,67 +5922,6 @@
         },
         "additionalProperties": false
       },
-      "CheckList": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "domainEvents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/INotification"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "reportId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "report": {
-            "$ref": "#/components/schemas/Report"
-          },
-          "reportConfigurationId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "reportConfiguration": {
-            "$ref": "#/components/schemas/ReportConfiguration"
-          },
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
-          "annotation": {
-            "type": "string",
-            "nullable": true
-          },
-          "isConfiguration": {
-            "type": "boolean"
-          },
-          "completed": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "checked": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "checks": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CheckListItem"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
       "CheckListDisplay": {
         "enum": [
           0,
@@ -5941,48 +5929,6 @@
         ],
         "type": "integer",
         "format": "int32"
-      },
-      "CheckListItem": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "domainEvents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/INotification"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "checkListId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
-          "checked": {
-            "$ref": "#/components/schemas/CheckValue"
-          },
-          "editable": {
-            "type": "boolean"
-          },
-          "required": {
-            "type": "boolean"
-          },
-          "remarks": {
-            "type": "string",
-            "nullable": true
-          },
-          "touched": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
       },
       "CheckListItemDTO": {
         "type": "object",
@@ -6467,58 +6413,6 @@
         },
         "additionalProperties": false
       },
-      "FormDefinition": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "domainEvents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/INotification"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "fields": {
-            "$ref": "#/components/schemas/DynamicFields"
-          },
-          "defaultValues": {
-            "nullable": true
-          },
-          "enabled": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "reports": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Report"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "reportConfigurations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ReportConfiguration"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
       "FormDefinitionResponse": {
         "type": "object",
         "properties": {
@@ -6542,20 +6436,6 @@
           },
           "enabled": {
             "type": "boolean"
-          },
-          "reports": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Report"
-            },
-            "nullable": true
-          },
-          "reportConfigurations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ReportConfiguration"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -6816,38 +6696,6 @@
         },
         "additionalProperties": false
       },
-      "Note": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "domainEvents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/INotification"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "reportId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
-          "checked": {
-            "type": "boolean"
-          },
-          "needsCheck": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
       "NoteQueryResult": {
         "type": "object",
         "properties": {
@@ -6896,56 +6744,6 @@
             "format": "date-time"
           },
           "lastEditUser": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "PhotoRecord": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "domainEvents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/INotification"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "reportId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "fileName": {
-            "type": "string",
-            "nullable": true
-          },
-          "fileNameResized": {
-            "type": "string",
-            "nullable": true
-          },
-          "label": {
-            "type": "string",
-            "nullable": true
-          },
-          "photoStorageId": {
-            "type": "string",
-            "nullable": true
-          },
-          "thumbnailStorageId": {
-            "type": "string",
-            "nullable": true
-          },
-          "photoUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "thumbnailUrl": {
             "type": "string",
             "nullable": true
           }
@@ -7019,198 +6817,6 @@
           }
         },
         "additionalProperties": { }
-      },
-      "Report": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "domainEvents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/INotification"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "reportConfigurationId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "address": {
-            "type": "string",
-            "nullable": true
-          },
-          "emaLicenseId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "license": {
-            "$ref": "#/components/schemas/EMALicense"
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "isClosed": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "formName": {
-            "type": "string",
-            "nullable": true
-          },
-          "remarksLabelText": {
-            "type": "string",
-            "nullable": true
-          },
-          "signatures": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Signature"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "notes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Note"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "checkList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CheckList"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "forms": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FormDefinition"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "photoRecords": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PhotoRecord"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "completed": {
-            "type": "boolean",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ReportConfiguration": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "domainEvents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/INotification"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "type": {
-            "$ref": "#/components/schemas/ReportType"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "formName": {
-            "type": "string",
-            "nullable": true
-          },
-          "remarksLabelText": {
-            "type": "string",
-            "nullable": true
-          },
-          "checkListMetadata": {
-            "$ref": "#/components/schemas/CheckListPrintingMetadata"
-          },
-          "checksDefinition": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CheckList"
-            },
-            "nullable": true
-          },
-          "signatureDefinitions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Signature"
-            },
-            "nullable": true
-          },
-          "inactive": {
-            "type": "boolean"
-          },
-          "footer": {
-            "type": "string",
-            "nullable": true
-          },
-          "marginTop": {
-            "type": "string",
-            "nullable": true
-          },
-          "marginBottom": {
-            "type": "string",
-            "nullable": true
-          },
-          "marginLeft": {
-            "type": "string",
-            "nullable": true
-          },
-          "marginRight": {
-            "type": "string",
-            "nullable": true
-          },
-          "printSectionId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "templateName": {
-            "type": "string",
-            "nullable": true
-          },
-          "forms": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FormDefinition"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
       },
       "ReportConfigurationDto": {
         "type": "object",
@@ -7373,19 +6979,6 @@
         ],
         "type": "integer",
         "format": "int32"
-      },
-      "Responsible": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "$ref": "#/components/schemas/ResponsibleType"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       },
       "ResponsibleType": {
         "enum": [
@@ -7573,76 +7166,6 @@
           "finalMarkup": {
             "type": "number",
             "format": "double"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Signature": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "domainEvents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/INotification"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "annotation": {
-            "type": "string",
-            "nullable": true
-          },
-          "responsible": {
-            "$ref": "#/components/schemas/Responsible"
-          },
-          "responsibleName": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "designation": {
-            "type": "string",
-            "nullable": true
-          },
-          "remarks": {
-            "type": "string",
-            "nullable": true
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "principal": {
-            "type": "boolean"
-          },
-          "isConfiguration": {
-            "type": "boolean"
-          },
-          "reportId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "reportConfigurationId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "drawnSign": {
-            "type": "string",
-            "nullable": true
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -2,6 +2,7 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Inspections.Core.Domain.CheckListAggregate;
+using Inspections.Core.Domain.Forms;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Core.Interfaces.Repositories;
