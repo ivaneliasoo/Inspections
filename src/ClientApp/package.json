@@ -42,7 +42,7 @@
     "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "@nuxt/image": "^0.6.0",
+    "@nuxt/image": "^0.5.0",
     "@nuxt/types": "^2.15.8",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/device": "^2.1.0",

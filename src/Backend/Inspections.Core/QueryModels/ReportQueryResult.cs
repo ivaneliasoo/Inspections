@@ -15,6 +15,7 @@ namespace Inspections.Core.QueryModels
         public decimal? LicenseKVA { get; set; }
         public decimal? LicenseVolt { get; set; }
         public decimal? LicenseAmp { get; set; }
+        public int ReportConfigurationId { get; set; }
         public DateTimeRange? LicenseValidity { get; set; } = default!;
         public string Title { get; set; } = default!;
         public string FormName { get; set; } = default!;

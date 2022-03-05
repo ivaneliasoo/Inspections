@@ -14,5 +14,6 @@ export interface ReportConfiguration {
     signatureDefinitions: Signature[];
     inactive: boolean;
     printSectionId: number;
+    templateName: string;
     checkListPrintingMetadata: CheckListPrintingMetadata;
 }

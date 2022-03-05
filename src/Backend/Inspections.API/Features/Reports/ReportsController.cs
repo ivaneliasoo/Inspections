@@ -10,6 +10,7 @@ using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.API.Features.Reports.Models;
 using Inspections.API.Models.Configuration;
+using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces.Repositories;
 using Inspections.Core.QueryModels;
@@ -298,8 +299,11 @@ namespace Inspections.API.Features.Reports
         public async Task<FileResult> Export(int id, bool printPhotos)
         {
             var token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "", StringComparison.InvariantCultureIgnoreCase);
-            //var exportData = new ExportDTO($"http://localhost:3000/client/print?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
-            var exportData = new ExportDTO($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Host}:{Environment.GetEnvironmentVariable("UIPORT")}/print?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
+            
+            var reportConfigId = (await _context.Set<Report>().FindAsync(id))!.ReportConfigurationId;
+            var reportConfig = _context.Set<ReportConfiguration>().Single(rc => rc.Id == reportConfigId);
+
+            var exportData = new ExportDTO($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Host}:{Environment.GetEnvironmentVariable("UIPORT")}/{reportConfig.TemplateName}?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
             var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData)).ConfigureAwait(false);
             return File(fileContent, "application/pdf", "prueba.pdf");
 

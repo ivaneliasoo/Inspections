@@ -14,4 +14,5 @@ export interface UpdateReportConfigurationCommand {
     signatureDefinitions: number[] | Signature[];
     printSectionId: number;
     display: CheckListDisplay;
+    templateName: string;
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <ValidationObserver ref="obs" v-slot="{ valid, dirty }" tag="form">
-      <v-row>
+      <v-row align="center">
         <v-col cols="12" xs="12" md="6">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-select
@@ -51,7 +51,7 @@
             />
           </ValidationProvider>
         </v-col>
-        <v-col cols="8">
+        <v-col cols="12" md="6">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-text-field
               id="txtRemarksLabelText"
@@ -61,11 +61,16 @@
             />
           </ValidationProvider>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="12" md="2">
           <v-switch v-model="newConfig.inactive" label="Inactive" />
         </v-col>
-        <v-col cols="12" sm="2">
-          <nuxt-link :to="`/Configurations/${newConfig.id}/additionalfields`">
+        <v-col cols="12" align-self="space-between" md="4">
+          <nuxt-link :to="`/Configurations/${newConfig.id}/OperationalReadingsSettings`">
+            <v-btn color="primary" outlined>
+              O.R. Fields
+            </v-btn>
+          </nuxt-link>
+          <nuxt-link :to="`/Configurations/${newConfig.id}/AdditionalFieldsSettings`">
             <v-btn color="primary" outlined>
               Additional Fields
             </v-btn>
@@ -124,6 +129,16 @@
               :error-messages="errors"
               item-text="text"
               item-value="id"
+            />
+          </ValidationProvider>
+        </v-col>
+        <v-col>
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-text-field
+              id="txtTemplateName"
+              v-model="newConfig.templateName"
+              :error-messages="errors"
+              label="Print Template Name"
             />
           </ValidationProvider>
         </v-col>
@@ -204,7 +219,8 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
       checksDefinition: this.newConfig.checksDefinition,
       signatureDefinitions: this.newConfig.signatureDefinitions,
       printSectionId: this.newConfig.printSectionId,
-      display: this.display
+      display: this.display,
+      templateName: this.newConfig.templateName
     }
 
     if (parseInt(self.$route.params.id) > 0) {
@@ -240,7 +256,7 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
     if (id > 0) {
       const result = await store.dispatch('configurations/getConfigurationById', id, { root: true })
       newConfig = Object.assign({}, result)
-      display = parseInt(CheckListDisplay[result.checkListMetadata.display])
+      display = parseInt(result.checkListMetadata.display)
     } else { newConfig = { type: 0 } as ReportConfiguration }
     return { newConfig, display }
   }

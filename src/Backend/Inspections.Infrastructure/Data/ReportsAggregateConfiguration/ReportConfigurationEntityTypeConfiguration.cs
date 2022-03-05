@@ -22,6 +22,9 @@ namespace Inspections.Infrastructure.Data.ReportsAggregateConfiguration
             builder.Property(p => p.MarginRight).IsRequired();
             builder.Property(p => p.PrintSectionId).IsRequired();
             builder.Property(p => p.CheckListMetadata).HasColumnType("jsonb").HasDefaultValueSql("'{ \"Display\": 0 }'::jsonb");
+            builder.Property(p => p.TemplateName).IsRequired().HasDefaultValue("print");
+            builder.Property(p => p.OperationalReadings).HasColumnType("jsonb").HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
+            builder.Property(p => p.AdditionalFields).HasColumnType("jsonb").HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
             builder.Ignore(p => p.DomainEvents);
         }
     }

@@ -52,6 +52,10 @@ export function* dateIterator(startDate, endDate) {
   return null;
 }
 
+export function isMonday(strDate) {
+  return string2date(strDate).getDay() == 1;
+}
+
 export function isSunday(strDate) {
   return string2date(strDate).getDay() == 0;
 }

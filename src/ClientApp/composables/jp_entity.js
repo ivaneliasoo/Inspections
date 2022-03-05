@@ -199,9 +199,9 @@ export class Job {
 export const Shift = {
     day: 'day',
     night: 'night',
-    //rest: 'rest',
     tbc: 'tbc',
-    onLeave: 'onLeave',
+    // rest: 'rest',
+    // onLeave: 'onLeave',
     unasigned: 'unasigned'
 };
 
