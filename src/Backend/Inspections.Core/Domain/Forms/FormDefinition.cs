@@ -26,9 +26,9 @@ public sealed class FormDefinition : Entity<int>
     public JsonDocument? DefaultValues { get; private set; }
     public bool Enabled { get; private set; } = true;
     
-    public List<Report> Reports => new();
-    
-    public List<ReportConfiguration> ReportConfigurations => new();
+    public List<Report> Reports { get; } = new();
+
+    public List<ReportConfiguration> ReportConfigurations { get; } = new();
 
     public void SetTitle(string title)
     {

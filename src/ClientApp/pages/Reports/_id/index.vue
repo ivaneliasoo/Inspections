@@ -146,7 +146,7 @@
             Photo Record
             <v-icon> mdi-folder-multiple-image </v-icon>
           </v-tab>
-          <v-tab v-for="form in forms" :key="`df-${form.id}`" eager>
+          <v-tab v-for="form in forms.filter(f => f.enabled)" :key="`df-${form.id}`" eager>
             {{ form.name }}
             <v-icon> {{ form.icon }} </v-icon>
           </v-tab>
@@ -575,8 +575,8 @@
               @uploaded="saveAndLoad()"
             />
           </v-tab-item>
-          <v-tab-item v-for="form in forms" :key="`ti-${form.id}`">
-            {{ form.fields.fieldsDefinitions }}
+          <v-tab-item v-for="form in forms.filter(f => f.enabled)" :key="`ti-${form.id}`">
+            <CustomForm :schema="form.fields.fieldsDefinitions" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -702,7 +702,7 @@ export default defineComponent({
     const currentReport = ref<ReportQueryResult>({} as ReportQueryResult)
     const signatures = computed(() => (currentReport.value.signatures || []))
 
-    const forms = ref<FormDefinitionResponse[]>()
+    const forms = ref<FormDefinitionResponse[]>([])
 
     const { fetch } = useFetch(async () => {
       try {
@@ -856,11 +856,6 @@ export default defineComponent({
             return
           }
           await saveReportChanges(newValue)
-          // notify({
-          //   title: 'Reports',
-          //   message: 'Changes has been saved',
-          //   type: 'success'
-          // })
         } catch (error) {
           notify({
             title: 'Reports',

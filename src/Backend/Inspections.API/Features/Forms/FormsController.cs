@@ -74,7 +74,12 @@ public class FormsController : ControllerBase
         }
             
         //TODO: Update
+        if(!newFormDef.Enabled)
+            savedFormDefinition.Disable();
 
+        savedFormDefinition.SetFields(newFormDef.Fields);
+        savedFormDefinition.Icon = newFormDef.Icon;
+        savedFormDefinition.SetTitle(newFormDef.Title);
         _context.Entry(savedFormDefinition).State = EntityState.Modified;
 
         try
