@@ -31,11 +31,17 @@
               id="txtIcon"
               v-model="form.icon"
               :error-messages="errors"
-              label="Form Name"
-            />
+              label="Form Icon"
+            >
+              <template #append-outer>
+                <a href="https://materialdesignicons.com/" target="_blank">
+                  <v-icon>mdi-help</v-icon>
+                </a>
+              </template>
+            </v-text-field>
           </ValidationProvider>
         </v-col>
-        <v-col>
+        <v-col cols="1">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-checkbox
               id="chkEnabled"
@@ -44,6 +50,12 @@
               label="Enabled"
             />
           </ValidationProvider>
+        </v-col>
+        <v-col cols="1" class="text-right">
+          <v-btn small text title="Save" @click="handleSubmit">
+            <v-icon color="success">mdi-content-save</v-icon>
+            Save
+          </v-btn>
         </v-col>
       </v-row>
     </ValidationObserver>
@@ -85,8 +97,11 @@
                   />
                 </v-list-item-content>
                 <v-list-item-action>
-                  <v-btn icon color="red" @click="removeField(index)">
-                    <v-icon>mdi-delete</v-icon>
+                  <v-btn icon small color="red" @click="removeField(index)">
+                    <v-icon small>mdi-delete</v-icon>
+                  </v-btn>
+                  <v-btn icon small color="info" @click="duplicateField(index)">
+                    <v-icon small>mdi-content-duplicate</v-icon>
                   </v-btn>
                 </v-list-item-action>
               </v-list-item>
@@ -238,6 +253,11 @@ export default defineComponent({
         label: 'Default Value'
       },
       {
+        type: 'number',
+        name: 'order',
+        label: 'Field Painting Order'
+      },
+      {
         component: 'div',
         class: 'double-wide',
         children: [
@@ -278,13 +298,17 @@ export default defineComponent({
         rollerOnMobile: true,
         rollerDigits: 3,
         visible: true,
-        defaultValue: 0
+        defaultValue: 0,
+        order: form.value.fields.fieldsDefinitions.length + 1
       })
     }
 
     const removeField = (index) => {
       form.value.fields.fieldsDefinitions.splice(index, 1)
-      $formsApi.updateFormDefinition(id.value, { ...form.value } as NewFormDefinitionCommand)
+    }
+
+    const duplicateField = (index) => {
+      form.value.fields.fieldsDefinitions.unshift(form.value.fields.fieldsDefinitions[index])
     }
 
     const selectedListItem = ref()
@@ -320,7 +344,8 @@ export default defineComponent({
       selectedListItem,
       selectedField,
       addField,
-      removeField
+      removeField,
+      duplicateField
     }
   }
 })

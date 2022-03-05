@@ -24,7 +24,7 @@ public sealed class FormDefinition : Entity<int>
     public string? Icon { get; set; }
     public DynamicFields Fields { get; private set; }
     public JsonDocument? DefaultValues { get; private set; }
-    public bool Enabled { get; private set; } = true;
+    public bool Enabled { get; set; } = true;
     
     public List<Report> Reports { get; } = new();
 
@@ -62,10 +62,5 @@ public sealed class FormDefinition : Entity<int>
         Guard.Against.Null(reportConfigurations, nameof(reportConfigurations));
         
         this.ReportConfigurations.AddRange(reportConfigurations);
-    }
-
-    public void Disable()
-    {
-        Enabled = false;
     }
 }

@@ -147,7 +147,7 @@
             <v-icon> mdi-folder-multiple-image </v-icon>
           </v-tab>
           <v-tab v-for="form in forms.filter(f => f.enabled)" :key="`df-${form.id}`" eager>
-            {{ form.name }}
+            {{ form.title }}
             <v-icon> {{ form.icon }} </v-icon>
           </v-tab>
         </v-tabs>

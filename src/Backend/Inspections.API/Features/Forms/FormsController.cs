@@ -74,9 +74,7 @@ public class FormsController : ControllerBase
         }
             
         //TODO: Update
-        if(!newFormDef.Enabled)
-            savedFormDefinition.Disable();
-
+        savedFormDefinition.Enabled = newFormDef.Enabled;
         savedFormDefinition.SetFields(newFormDef.Fields);
         savedFormDefinition.Icon = newFormDef.Icon;
         savedFormDefinition.SetTitle(newFormDef.Title);

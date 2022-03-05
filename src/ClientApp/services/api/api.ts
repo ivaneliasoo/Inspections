@@ -924,6 +924,12 @@ export interface DynamicFieldMetadata {
      * @memberof DynamicFieldMetadata
      */
     defaultValue?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DynamicFieldMetadata
+     */
+     order?: number;
 }
 /**
  * 

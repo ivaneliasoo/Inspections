@@ -10,7 +10,7 @@
         <v-row align="center" justify="center">
           <v-col
             :cols="field.inputType === 'textarea' ? 12 : 3"
-            v-for="field in sections[section].reverse()"
+            v-for="field in sections[section].sort(f =>f.order)"
             :key="field.fieldName"
           >
             <v-text-field
@@ -69,7 +69,16 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const defaultValues = props.schema.reverse().reduce((acc, value) => {
+    const defaultValues = props.schema.sort((a, b) => {
+      if (a.order > b.order) {
+        return 1;
+      }
+      if (a.order < b.order) {
+        return -1;
+      }
+      // a must be equal to b
+      return 0;
+    }).reduce((acc, value) => {
       if (!acc[value.fieldName]) {
         acc[value.fieldName] = "";
       }

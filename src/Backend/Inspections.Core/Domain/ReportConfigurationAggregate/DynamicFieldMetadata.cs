@@ -21,6 +21,7 @@ public class DynamicFieldMetadata
     public short RollerDigits { get; set; } = 3;
     public bool Visible { get; set; } = true;
     public int DefaultValue { get; set; }
+    public int Order { get; set; }
 }
 
 [NotMapped]
