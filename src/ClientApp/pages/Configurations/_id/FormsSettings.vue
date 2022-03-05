@@ -9,6 +9,7 @@
             <v-text-field
               id="txtName"
               v-model="form.name"
+              :disabled="form.id > 0"
               :error-messages="errors"
               label="Form Name"
             />
@@ -71,7 +72,7 @@
             v-model="selectedListItem"
             active-class="indigo--text"
           >
-            <template v-for="(item, index) in form.fields">
+            <template v-for="(item, index) in form.fields.fieldsDefinitions">
               <v-list-item :key="`item-${index}`" :value="index">
                 <v-list-item-content>
                   <v-list-item-subtitle
@@ -94,22 +95,24 @@
           </v-list-item-group>
         </v-list>
       </v-col>
-    </v-row> -->
+    </v-row>
   </div>
 </template>
 
 <script lang="ts">
+import { AxiosResponse } from 'axios'
 import {
   defineComponent,
   ref,
   useRoute,
   computed,
   useFetch,
-  useContext
+  useContext,
+  useRouter
 } from '@nuxtjs/composition-api'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import useGoBack from '~/composables/useGoBack'
-import { FormDefinitionResponse } from '~/services/api'
+import { FormDefinitionResponse, NewFormDefinitionCommand } from '~/services/api'
 
 export default defineComponent({
   components: {
@@ -119,16 +122,26 @@ export default defineComponent({
   setup () {
     useGoBack()
     const route = useRoute()
+    const router = useRouter()
 
-    const id = computed(() => route.value.query.id)
+    const id = computed(() => parseInt(route.value.query.id.toString()))
+    const reportConfigurationId = computed(() => parseInt(route.value.params.id.toString()))
 
     const { $formsApi } = useContext()
 
-    const form = ref<FormDefinitionResponse>()
+    const form = ref<FormDefinitionResponse>({
+      id: 0,
+      name: '',
+      title: '',
+      icon: '',
+      enabled: false,
+      fields: {
+        fieldsDefinitions: []
+      }
+    })
 
     useFetch(async () => {
-      console.log({ id })
-      const result = await $formsApi.getFormDefinition(id.value)
+      const result = await $formsApi.getFormDefinition(id.value) as unknown as AxiosResponse<FormDefinitionResponse>
       if (
         result.data.fields &&
         result.data.fields.fieldsDefinitions
@@ -170,6 +183,7 @@ export default defineComponent({
         label: 'Field Input Type',
         options: [
           { value: 'text', label: 'Text input' },
+          { value: 'textarea', label: 'Text Area' },
           { value: 'number', label: 'Numeric Input' },
           { value: 'select', label: 'Select' },
           { value: 'checkbox', label: 'Checkbox' }
@@ -270,12 +284,7 @@ export default defineComponent({
 
     const removeField = (index) => {
       form.value.fields.fieldsDefinitions.splice(index, 1)
-      // $axios.$put(`reportconfiguration/${id.value}/additionalfields`, {
-      //   id: id.value,
-      //   fieldsDefinitions: {
-      //     fieldsDefinitions: values.value
-      //   }
-      // })
+      $formsApi.updateFormDefinition(id.value, { ...form.value } as NewFormDefinitionCommand)
     }
 
     const selectedListItem = ref()
@@ -290,8 +299,17 @@ export default defineComponent({
       }
     })
 
-    const handleSubmit = (data: any) => {
-      console.log({ data })
+    const handleSubmit = async (data: any) => {
+      const payload: NewFormDefinitionCommand = {
+        ...form.value,
+        reportConfigurations: [reportConfigurationId.value]
+      }
+      if (id.value > 0) {
+        await $formsApi.updateFormDefinition(id.value, payload)
+      } else {
+        await $formsApi.addFormDefinition(payload)
+        router.back()
+      }
     }
 
     return {

@@ -1209,6 +1209,12 @@ export interface FormDefinitionResponse {
     title?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof FormDefinitionResponse
+     */
+    icon?: string | null;
+    /**
+     * 
      * @type {DynamicFields}
      * @memberof FormDefinitionResponse
      */

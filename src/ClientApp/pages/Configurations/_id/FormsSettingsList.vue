@@ -6,7 +6,7 @@
       message="This operation will remove this Form Setting. If Proceed, you no longer get it suggested again"
       :code="selectedForm.id"
       :description="selectedForm.title"
-      @yes="deleteForm()"
+      @yes="deleteForm(selectedForm.id)"
     />
     <v-data-table
       :items="forms"
@@ -89,8 +89,8 @@ export default defineComponent({
     const router = useRouter()
     const { id } = route.value.params
     const forms = useAsync(async () => {
-      const response = await $reportsConfigApi.apiReportConfigurationIdGet(id)
-      return response.data.forms
+      const response = await $reportsConfigApi.apiReportConfigurationIdGet(parseInt(id.toString()))
+      return response.data.forms as unknown as FormDefinitionResponse[]
     })
 
     const headers = [
@@ -136,9 +136,11 @@ export default defineComponent({
     const deleteForm = async (id: number) => {
       try {
         await $formsApi.deleteFormDefinition(id)
+        forms.value = forms.value.filter(form => form.id !== id)
         notify({
-          type: 'success',
-          message: 'Form Deleted'
+          title: 'Forms Settings',
+          message: 'forms has been deleted',
+          type: 'success'
         })
       } catch (error) {
         notify({
