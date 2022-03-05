@@ -65,14 +65,9 @@
           <v-switch v-model="newConfig.inactive" label="Inactive" />
         </v-col>
         <v-col cols="12" align-self="space-between" md="4">
-          <nuxt-link :to="`/Configurations/${newConfig.id}/OperationalReadingsSettings`">
+          <nuxt-link :to="`/Configurations/${newConfig.id}/FormsSettingsList`">
             <v-btn color="primary" outlined>
-              O.R. Fields
-            </v-btn>
-          </nuxt-link>
-          <nuxt-link :to="`/Configurations/${newConfig.id}/AdditionalFieldsSettings`">
-            <v-btn color="primary" outlined>
-              Additional Fields
+              Configure Forms
             </v-btn>
           </nuxt-link>
         </v-col>

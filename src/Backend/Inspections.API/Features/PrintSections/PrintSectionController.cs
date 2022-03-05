@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Inspections.API.Features.PrintSections.Commands;
 using Inspections.API.Features.PrintSections.Models;
 using Inspections.Core.Interfaces.Queries;
 using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inspections.API.Features.PrintSections
@@ -37,9 +32,9 @@ namespace Inspections.API.Features.PrintSections
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> CreatePrintSection([FromBody] AddPrintSectionCommand PrintSection)
+        public async Task<IActionResult> CreatePrintSection([FromBody] AddPrintSectionCommand printSection)
         {
-            if (await _mediator.Send(PrintSection).ConfigureAwait(false))
+            if (await _mediator.Send(printSection).ConfigureAwait(false))
                 return Ok();
 
             return BadRequest();
@@ -49,13 +44,13 @@ namespace Inspections.API.Features.PrintSections
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdatePrintSection(int id, [FromBody] EditPrintSectionCommand PrintSection)
+        public async Task<IActionResult> UpdatePrintSection(int id, [FromBody] EditPrintSectionCommand printSection)
         {
-            Guard.Against.Null(PrintSection, nameof(PrintSection));
-            if (id != PrintSection.Id)
+            Guard.Against.Null(printSection, nameof(printSection));
+            if (id != printSection.Id)
                 return BadRequest();
 
-            if (await _mediator.Send(PrintSection).ConfigureAwait(false))
+            if (await _mediator.Send(printSection).ConfigureAwait(false))
                 return Ok();
 
             return BadRequest();
@@ -80,12 +75,12 @@ namespace Inspections.API.Features.PrintSections
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetPrintSectionById(int id)
         {
-            var PrintSection = await _printSectionsRepository.GetByIdAsync(id).ConfigureAwait(false);
+            var printSection = await _printSectionsRepository.GetByIdAsync(id).ConfigureAwait(false);
 
-            if (PrintSection is null)
+            if (printSection is null)
                 return NotFound();
 
-            return Ok(new PrintSectionDTO(PrintSection));
+            return Ok(new PrintSectionDto(printSection));
 
         }
         [HttpGet]
@@ -93,14 +88,14 @@ namespace Inspections.API.Features.PrintSections
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<IEnumerable<PrintSectionDTO>>> GetPrintSections(string? filter)
+        public async Task<ActionResult<IEnumerable<PrintSectionDto>>> GetPrintSections(string? filter)
         {
-            var printSections = await _printSectionsQueries.GetAllAsync(filter ?? "").ConfigureAwait(false);
+            var printSections = (await _printSectionsQueries.GetAllAsync(filter ?? "").ConfigureAwait(false)).ToList();
 
-            if (printSections is null)
+            if (!printSections.Any())
                 return NoContent();
 
-            return Ok(printSections.Select(x => new PrintSectionDTO(x)));
+            return Ok(printSections.Select(x => new PrintSectionDto(x)));
         }
 
     }

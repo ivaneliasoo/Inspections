@@ -1,45 +1,40 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.Core.Interfaces.Repositories;
 using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Inspections.API.Features.Reports.Handlers
+namespace Inspections.API.Features.Reports.Handlers;
+
+public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, bool>
 {
-    public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, bool>
+    private readonly IReportsRepository _reportsRepository;
+    private readonly InspectionsContext _context;
+
+    public UpdateReportCommandHandler(IReportsRepository reportsRepository, InspectionsContext context)
     {
-        private readonly IReportsRepository _reportsRepository;
-        private readonly InspectionsContext _context;
+        _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+    }
 
-        public UpdateReportCommandHandler(IReportsRepository reportsRepository, InspectionsContext context)
+    public async Task<bool> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
+    {
+        Guard.Against.Null(request, nameof(request));
+        var report = await _reportsRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
+        var reportName = $"{request.Date:yyyyMMdd}-{report.Title}-{request.LicenseNumber}-{request.Address}";
+        var license = _context.Licenses.AsNoTracking().FirstOrDefault(l => l.Number == request.LicenseNumber);
+        if (license is null)
+            throw new Exception($"Conflict. can't find License {request.LicenseNumber}");
+
+        report.Edit(reportName, request.Address, license, request.Date);
+        if (!report.IsClosed && request.IsClosed)
         {
-            _reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            report.Close();
         }
 
-        public async Task<bool> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
-        {
-            Guard.Against.Null(request, nameof(request));
-            var report = await _reportsRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
-            var reportName = $"{request.Date:yyyyMMdd}-{report.Title}-{request.LicenseNumber}-{request.Address}";
-            var license = _context.Licenses.AsNoTracking().Where(l => l.Number == request.LicenseNumber).FirstOrDefault();
-            if (license is null)
-                throw new Exception($"Conflict. can't find License {request.LicenseNumber}");
+        await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
 
-            report.Edit(reportName, request.Address, license, request.Date);
-            if (!report.IsClosed && request.IsClosed)
-            {
-                report.Close();
-            }
-
-            await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
-
-            return true;
-        }
+        return true;
     }
 }

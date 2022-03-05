@@ -1,5 +1,5 @@
-import { CheckValue } from './CheckValue'
 import { CheckListParam } from './CheckListParam'
+import { CheckValue } from '~/services/api'
 
 export interface CheckListItem {
     id: number;

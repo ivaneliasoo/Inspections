@@ -1,11 +1,9 @@
-﻿using System.Threading.Tasks;
-using Inspections.Core.Domain.CheckListAggregate;
+﻿using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Shared;
 
-namespace Inspections.Core.Interfaces.Repositories
+namespace Inspections.Core.Interfaces.Repositories;
+
+public interface ICheckListsRepository : IAsyncRepository<CheckList>
 {
-    public interface ICheckListsRepository : IAsyncRepository<CheckList>
-    {
-        Task<CheckListItem> GetItemByIdAsync(int id);
-    }
+    Task<CheckListItem> GetItemByIdAsync(int id);
 }

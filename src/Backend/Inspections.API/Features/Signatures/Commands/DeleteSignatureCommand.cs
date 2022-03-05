@@ -11,6 +11,6 @@ namespace Inspections.API.Features.Signatures.Commands
 
         private DeleteSignatureCommand() { }
 
-        public int Id { get; set; }
+        public int Id { get; }
     }
 }

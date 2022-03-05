@@ -1,7 +1,7 @@
 
 import { CheckListParam } from './CheckListParam'
-import { ReportConfiguration } from '~/types/Reports/Models/ReportConfiguration'
 import { CheckListItem } from './CheckListItem'
+import { ReportConfiguration } from '~/types/Reports/Models/ReportConfiguration'
 
 export interface CheckList {
     id: number;

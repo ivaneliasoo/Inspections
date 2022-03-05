@@ -1,7 +1,6 @@
-﻿namespace Inspections.Core.Domain.ReportConfigurationAggregate
+﻿namespace Inspections.Core.Domain.ReportConfigurationAggregate;
+
+public enum ReportType
 {
-    public enum ReportType
-    {
-        Inspection
-    }
+    Inspection
 }

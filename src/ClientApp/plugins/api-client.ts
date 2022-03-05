@@ -1,6 +1,6 @@
 import { Plugin } from '@nuxt/types'
-import { ReportsApi } from '@/services/api'
 import { Configuration } from '../services/api/configuration'
+import { FormsApi, ReportConfigurationApi, ReportsApi } from '@/services/api'
 
 const apiClient: Plugin = ({ $auth, $config }, inject) => {
   if (!$auth?.user) { return }
@@ -10,7 +10,12 @@ const apiClient: Plugin = ({ $auth, $config }, inject) => {
     isJsonMime: () => false
   }
   const reportsApi = new ReportsApi(config)
+  const formsApi = new FormsApi(config)
+  const reportsConfigApi = new ReportConfigurationApi(config)
+
   inject('reportsApi', reportsApi)
+  inject('formsApi', formsApi)
+  inject('reportsConfigApi', reportsConfigApi)
 }
 
 export default apiClient

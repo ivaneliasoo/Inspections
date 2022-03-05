@@ -1,38 +1,33 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
-namespace Inspections.API.Features.Reports.Handlers
+namespace Inspections.API.Features.Reports.Handlers;
+
+public class EditPhotoRecordCommandHandler : IRequestHandler<EditPhotoRecordCommand, bool>
 {
-    public class EditPhotoRecordCommandHandler : IRequestHandler<EditPhotoRecordCommand, bool>
+    private readonly IReportsRepository _reportsRepository;
+
+    public EditPhotoRecordCommandHandler(IReportsRepository reportsRepository)
     {
-        private readonly IReportsRepository _reportsRepository;
+        this._reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
+    }
 
-        public EditPhotoRecordCommandHandler(IReportsRepository reportsRepository)
+    public async Task<bool> Handle(EditPhotoRecordCommand request, CancellationToken cancellationToken)
+    {
+        Guard.Against.Null(request, nameof(request));
+        var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
+
+        var photo = report.PhotoRecords.FirstOrDefault(n => n.Id == request.Id);
+        if (photo is not null)
         {
-            this._reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
+            report.RemovePhoto(photo);
+            photo.Label = request.Label.ToUpperInvariant();
+            report.AddPhoto(photo);
+
         }
-
-        public async Task<bool> Handle(EditPhotoRecordCommand request, CancellationToken cancellationToken)
-        {
-            Guard.Against.Null(request, nameof(request));
-            var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
-
-            var photo = report.PhotoRecords.Where(n => n.Id == request.Id).FirstOrDefault();
-            if (photo is not null)
-            {
-                report.RemovePhoto(photo);
-                photo.Label = request.Label?.ToUpperInvariant();
-                report.AddPhoto(photo);
-
-            }
-            await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
-            return true;
-        }
+        await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
+        return true;
     }
 }

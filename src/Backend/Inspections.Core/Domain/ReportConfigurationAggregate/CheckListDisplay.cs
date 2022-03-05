@@ -1,8 +1,7 @@
-﻿namespace Inspections.Core.Domain.ReportConfigurationAggregate
+﻿namespace Inspections.Core.Domain.ReportConfigurationAggregate;
+
+public enum CheckListDisplay
 {
-    public enum CheckListDisplay
-    {
-        Numbered,
-        Inline
-    }
+    Numbered,
+    Inline
 }

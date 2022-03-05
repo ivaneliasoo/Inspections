@@ -85,20 +85,20 @@ import { Vue, Component } from 'nuxt-property-decorator'
     layout: 'guest'
   })
 export default class LoginPage extends Vue {
-      userName: string = ''
-      password: string = ''
-      loading: Boolean = false
-      hasError: Boolean = false
+  userName: string = ''
+  password: string = ''
+  loading: Boolean = false
+  hasError: Boolean = false
 
-      async login () {
-        this.loading = true
-        await this.$auth.login({ data: { userName: this.userName, password: this.password } })
-          .catch(() => {
-            this.hasError = true
+  async login () {
+    this.loading = true
+    await this.$auth.login({ data: { userName: this.userName, password: this.password } })
+      .catch(() => {
+        this.hasError = true
 
-            setTimeout(() => { this.hasError = false }, 3000)
-          })
-          .finally(() => { this.loading = false })
-      }
+        setTimeout(() => { this.hasError = false }, 3000)
+      })
+      .finally(() => { this.loading = false })
+  }
 }
 </script>

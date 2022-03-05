@@ -1,46 +1,44 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Inspections.Core.Domain
+namespace Inspections.Core.Domain;
+
+[Table("current")]
+public class CurrentTable
 {
-    [Table("current")]
-    public class CurrentTable
+    [Key]
+    public int id { get; set; }
+
+    public string circuit { get; set; }
+
+    [Column("start_date")]
+    public string startDate { get; set; }
+
+    [Column("end_date")]
+    public string endDate { get; set; }
+
+    [Column("current_data", TypeName = "jsonb")]
+    public string currentData { get; set; }
+
+    // [Column("lastedit")]
+    public DateTimeOffset LastEdit { get; set; }
+
+    // [Column("lastedituser")]
+    public string LastEditUser { get; set; }
+
+    public override string ToString()
     {
-        [Key]
-        public int id { get; set; }
+        return $"{id} {circuit} {startDate} {endDate} {currentData}";
+    }
 
-        public string circuit { get; set; }
-
-        [Column("start_date")]
-        public string startDate { get; set; }
-
-        [Column("end_date")]
-        public string endDate { get; set; }
-
-        [Column("current_data", TypeName = "jsonb")]
-        public string currentData { get; set; }
-
-        // [Column("lastedit")]
-        public DateTimeOffset LastEdit { get; set; }
-
-        // [Column("lastedituser")]
-        public string LastEditUser { get; set; }
-
-        public override string ToString()
-        {
-            return $"{id} {circuit} {startDate} {endDate} {currentData}";
-        }
-
-        public CurrentTable()
-        {
-            id = 0;
-            circuit = "";
-            startDate = "";
-            endDate = "";
-            currentData = "";
-            LastEdit = new DateTimeOffset();
-            LastEditUser = "";
-        }
+    public CurrentTable()
+    {
+        id = 0;
+        circuit = "";
+        startDate = "";
+        endDate = "";
+        currentData = "";
+        LastEdit = new DateTimeOffset();
+        LastEditUser = "";
     }
 }
