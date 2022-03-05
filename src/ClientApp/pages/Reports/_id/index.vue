@@ -146,13 +146,9 @@
             Photo Record
             <v-icon> mdi-folder-multiple-image </v-icon>
           </v-tab>
-          <v-tab href="#dynamicsoperationalReadings" eager>
-            Dynamics Operational Readings
-            <v-icon> mdi-order-bool-descending </v-icon>
-          </v-tab>
-          <v-tab href="#additionalFields" eager>
-            Additional Fields
-            <v-icon> mdi-order-bool-descending </v-icon>
+          <v-tab v-for="form in forms" :key="`df-${form.id}`" eager>
+            {{ form.name }}
+            <v-icon> {{ form.icon }} </v-icon>
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="pageOptions.tabs" touchless>
@@ -579,9 +575,8 @@
               @uploaded="saveAndLoad()"
             />
           </v-tab-item>
-          <v-tab-item key="dynamicsoperationalReadings" value="dynamicsoperationalReadings">
-          </v-tab-item>
-          <v-tab-item key="additionalFields" value="additionalFields">
+          <v-tab-item v-for="form in forms" :key="`ti-${form.id}`">
+            {{ form.fields.fieldsDefinitions }}
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -656,8 +651,8 @@ import {
   CheckListQueryResult,
   SignatureQueryResult,
   NoteQueryResult,
-  // UpdateOperationalReadingsCommand,
-  AddressDto
+  AddressDto,
+  FormDefinitionResponse
 } from '@/services/api'
 import { useNotifications } from '~/composables/use-notifications'
 import useGoBack from '~/composables/useGoBack'
@@ -676,7 +671,7 @@ export default defineComponent({
 
     const { notify } = useNotifications()
     const route = useRoute()
-    const { store, $auth, $axios, $reportsApi } = useContext()
+    const { store, $auth, $axios, $reportsApi, $formsApi } = useContext()
     const id = computed(() => route.value.params.id)
 
     onMounted(() => {
@@ -707,6 +702,8 @@ export default defineComponent({
     const currentReport = ref<ReportQueryResult>({} as ReportQueryResult)
     const signatures = computed(() => (currentReport.value.signatures || []))
 
+    const forms = ref<FormDefinitionResponse[]>()
+
     const { fetch } = useFetch(async () => {
       try {
         currentReport.value = await store.dispatch(
@@ -716,16 +713,21 @@ export default defineComponent({
             root: true
           }
         )
-        await getSuggestedAddresses('')
-        await store.dispatch(
-          'users/setUserLastEditedReport',
-          {
-            userName: $auth.user.userName,
-            lastEditedReport: route.value.params.id
-          },
-          { root: true }
-        )
-        await $auth.fetchUser()
+
+        Promise.all([
+          getSuggestedAddresses(''),
+          store.dispatch(
+            'users/setUserLastEditedReport',
+            {
+              userName: $auth.user.userName,
+              lastEditedReport: id.value
+            },
+            { root: true }
+          ),
+          $auth.fetchUser(),
+          $formsApi.getFormsDefinitionsByReportId(parseInt(id.value.toString()))
+            .then((resp) => { forms.value = resp.data })
+        ])
       } catch (error) {
         notify({ error })
       }
@@ -1127,7 +1129,8 @@ export default defineComponent({
       saveReportChanges,
       obs,
       obsSignatures,
-      signatures
+      signatures,
+      forms
     }
   }
 })

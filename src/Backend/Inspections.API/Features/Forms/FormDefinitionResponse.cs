@@ -16,20 +16,18 @@ public class FormDefinitionResponse
         instance.Id = entity.Id;
         instance.Name = entity.Name;
         instance.Title = entity.Title;
+        instance.Icon = entity.Icon;
         instance.Fields = entity.Fields;
         instance.DefaultValues = entity.DefaultValues;
         instance.Enabled = entity.Enabled;
-        instance.Reports = entity.Reports.ToList();
-        instance.ReportConfigurations = entity.ReportConfigurations.ToList();
         return instance;
     }
 
     public int Id { get; set; }
     public string Name { get; set; } = default!;
     public string Title { get; set; } = default!;
+    public string? Icon { get; set; } 
     public DynamicFields Fields { get; set; } = new();
     public JsonDocument? DefaultValues { get; set; }
     public bool Enabled { get; set; } = true;
-    public List<Report> Reports { get; set; } = new();
-    public List<ReportConfiguration> ReportConfigurations { get; set; } = new();
 }

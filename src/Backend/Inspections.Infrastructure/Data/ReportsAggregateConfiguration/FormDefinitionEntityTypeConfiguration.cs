@@ -12,5 +12,13 @@ public class FormDefinitionEntityTypeConfiguration : IEntityTypeConfiguration<Fo
         builder.Property(p => p.Title).HasMaxLength(150).IsRequired();
         builder.Property(p => p.DefaultValues).HasColumnType("jsonb");
         builder.Property(p => p.Fields).HasColumnType("jsonb").HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
+        // builder.HasMany(p => p.Reports)
+        //     .WithMany(p => p.Forms);
+        // builder.HasMany(p => p.ReportConfigurations)
+        //     .WithMany(p => p.Forms)
+        //     .UsingEntity(s =>
+        //     {
+        //         s.ToTable();
+        //     });
     }
 }

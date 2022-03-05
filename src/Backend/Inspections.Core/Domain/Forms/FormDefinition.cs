@@ -6,8 +6,12 @@ using Inspections.Shared;
 
 namespace Inspections.Core.Domain.Forms;
 
-public class FormDefinition : Entity<int>
+public sealed class FormDefinition : Entity<int>
 {
+    private FormDefinition()
+    {
+            
+    }
     public FormDefinition(string name, string title, DynamicFields fields, JsonDocument? defaultValues)
     {
         Name = name;
@@ -17,6 +21,7 @@ public class FormDefinition : Entity<int>
     }
     public string Name { get;  }
     public string Title { get; private set; }
+    public string? Icon { get; set; }
     public DynamicFields Fields { get; private set; }
     public JsonDocument? DefaultValues { get; private set; }
     public bool Enabled { get; private set; } = true;

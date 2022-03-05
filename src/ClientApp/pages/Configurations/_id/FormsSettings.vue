@@ -1,17 +1,62 @@
 <template>
-  <div>
-    <h3>Reports Configuration .- Operational Readings Configuration</h3>
+  <div v-if="form">
+    <h3>Forms Settings for Report Configuration</h3>
+    <h6>Let's configurate some fields</h6>
+    <ValidationObserver tag="form">
+      <v-row justify="space-between" align="center">
+        <v-col>
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-text-field
+              id="txtName"
+              v-model="form.name"
+              :error-messages="errors"
+              label="Form Name"
+            />
+          </ValidationProvider>
+        </v-col>
+        <v-col>
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-text-field
+              id="txtTitle"
+              v-model="form.title"
+              :error-messages="errors"
+              label="Form Title"
+            />
+          </ValidationProvider>
+        </v-col>
+        <v-col>
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-text-field
+              id="txtIcon"
+              v-model="form.icon"
+              :error-messages="errors"
+              label="Form Name"
+            />
+          </ValidationProvider>
+        </v-col>
+        <v-col>
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-checkbox
+              id="chkEnabled"
+              v-model="form.enabled"
+              :error-messages="errors"
+              label="Enabled"
+            />
+          </ValidationProvider>
+        </v-col>
+      </v-row>
+    </ValidationObserver>
     <v-row align="start" justify="space-between">
       <v-col cols="8" align-self="start">
-        <FormulateForm
+        <!-- <FormulateForm
           v-if="selectedField"
           v-model="selectedField"
           :schema="schema"
           @submit="handleSubmit"
-        />
-        <h6 v-else>
+        /> -->
+        <!-- <h6 v-else>
           Select a Field or create a new one in the list to edit
-        </h6>
+        </h6> -->
       </v-col>
       <v-col cols="4">
         <v-toolbar color="indigo" dark>
@@ -21,12 +66,12 @@
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-list v-if="values" max-height="10" dense>
+        <v-list v-if="form.fields.fieldsDefinitions" max-height="10" dense>
           <v-list-item-group
             v-model="selectedListItem"
             active-class="indigo--text"
           >
-            <template v-for="(item, index) in values">
+            <template v-for="(item, index) in form.fields">
               <v-list-item :key="`item-${index}`" :value="index">
                 <v-list-item-content>
                   <v-list-item-subtitle
@@ -49,7 +94,7 @@
           </v-list-item-group>
         </v-list>
       </v-col>
-    </v-row>
+    </v-row> -->
   </div>
 </template>
 
@@ -62,31 +107,42 @@ import {
   useFetch,
   useContext
 } from '@nuxtjs/composition-api'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import useGoBack from '~/composables/useGoBack'
+import { FormDefinitionResponse } from '~/services/api'
 
 export default defineComponent({
-  layout: '',
+  components: {
+    ValidationObserver,
+    ValidationProvider
+  },
   setup () {
     useGoBack()
     const route = useRoute()
 
-    const id = computed(() => route.value.params.id)
+    const id = computed(() => route.value.query.id)
 
-    const { $axios } = useContext()
+    const { $formsApi } = useContext()
+
+    const form = ref<FormDefinitionResponse>()
 
     useFetch(async () => {
-      const result = await $axios.$get(`reportconfiguration/${id.value}`)
+      console.log({ id })
+      const result = await $formsApi.getFormDefinition(id.value)
       if (
-        result.operationalReadings &&
-        result.operationalReadings.fieldsDefinitions
+        result.data.fields &&
+        result.data.fields.fieldsDefinitions
       ) {
-        values.value = result.operationalReadings.fieldsDefinitions
+        form.value = result.data
       } else {
-        values.value = []
+        form.value = {
+          ...result.data,
+          fields: {
+            fieldsDefinitions: []
+          }
+        }
       }
     })
-
-    const values = ref([])
 
     const schema = [
       {
@@ -193,60 +249,55 @@ export default defineComponent({
     ]
 
     const addField = () => {
-      values.value.unshift({
+      form.value.fields.fieldsDefinitions.unshift({
         sectionTitle: '',
-        dieldName: '',
+        fieldName: '',
         label: '',
         inputType: '',
         suffix: '',
-        preffix: '',
+        prefix: '',
         min: 0,
         max: 999,
-        step: 0.1,
-        maxLength: '3',
+        step: 1,
+        maxLength: 3,
         enabled: true,
         rollerOnMobile: true,
-        rollerDigits: '3',
+        rollerDigits: 3,
         visible: true,
         defaultValue: 0
       })
     }
 
     const removeField = (index) => {
-      values.value.splice(index, 1)
-      $axios.$put(`reportconfiguration/${id.value}/operationalreadings`, {
-        id: id.value,
-        fieldsDefinitions: {
-          fieldsDefinitions: values.value
-        }
-      })
+      form.value.fields.fieldsDefinitions.splice(index, 1)
+      // $axios.$put(`reportconfiguration/${id.value}/additionalfields`, {
+      //   id: id.value,
+      //   fieldsDefinitions: {
+      //     fieldsDefinitions: values.value
+      //   }
+      // })
     }
 
     const selectedListItem = ref()
 
     const selectedField = computed({
       get: () => {
-        return values.value[selectedListItem.value]
+        return form.value.fields.fieldsDefinitions[selectedListItem.value]
       },
       set: (value) => {
         const index = selectedListItem.value
-        values.value.splice(index, 1, value)
+        form.value.fields.fieldsDefinitions.splice(index, 1, value)
       }
     })
 
     const handleSubmit = (data: any) => {
-      $axios.$put(`reportconfiguration/${id.value}/operationalreadings`, {
-        id: id.value,
-        fieldsDefinitions: {
-          fieldsDefinitions: values.value
-        }
-      })
+      console.log({ data })
     }
 
     return {
       id,
       schema,
-      values,
+      form,
       handleSubmit,
       selectedListItem,
       selectedField,

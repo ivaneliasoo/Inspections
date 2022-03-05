@@ -6,6 +6,7 @@ using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -14,9 +15,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    partial class InspectionsContextModelSnapshot : ModelSnapshot
+    [Migration("20220305023826_adds_icon_field_in_forms")]
+    partial class adds_icon_field_in_forms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -388,7 +390,7 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FormDefinition");
+                    b.ToTable("FormsDefinitions");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.Job", b =>
@@ -631,117 +633,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.HasIndex("ReportId");
 
                     b.ToTable("Notes", "Inspections");
-                });
-
-            modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.OperationalReadings", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AdditionalFields")
-                        .HasColumnType("text");
-
-                    b.Property<short>("EarthFaultA")
-                        .HasColumnType("smallint");
-
-                    b.Property<bool>("EarthFaultEFEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("EarthFaultEIREnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<short>("EarthFaultELRA")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("EarthFaultELRSec")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("EarthFaultMA")
-                        .HasColumnType("smallint");
-
-                    b.Property<bool>("EarthFaultRoobEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<short>("EarthFaultSec")
-                        .HasColumnType("smallint");
-
-                    b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("LastEditUser")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.Property<short>("MainBreakerAmp")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("MainBreakerCapacity")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("MainBreakerPoles")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("MainBreakerRating")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("OverCurrentDTLA")
-                        .HasColumnType("smallint");
-
-                    b.Property<bool>("OverCurrentDTLEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<short>("OverCurrentDTLSec")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("OverCurrentDirectActing")
-                        .HasColumnType("smallint");
-
-                    b.Property<bool>("OverCurrentDirectActingEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<short>("OverCurrentIDMTLA")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("OverCurrentIDMTLTm")
-                        .HasColumnType("smallint");
-
-                    b.Property<bool>("OverCurrentIDTMLEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<short>("RunningLoadL1")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("RunningLoadL2")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("RunningLoadL3")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("VoltageL1L2")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("VoltageL1L3")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("VoltageL1N")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("VoltageL2L3")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("VoltageL2N")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("VoltageL3N")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OperationalReadings");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportsAggregate.PhotoRecord", b =>

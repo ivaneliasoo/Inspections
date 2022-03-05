@@ -89,7 +89,8 @@ export default class NewReportDialog extends Vue {
   }
 
   async createReport () {
-    this.creatingReport =true
+    try {
+      this.creatingReport =true
     const reportId = await this.$store.dispatch('reportstrore/createReport', this.selectedConfiguration, { root: true })
       .then((resp) => {
         this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: true, descending: true }, { root: true })
@@ -97,7 +98,12 @@ export default class NewReportDialog extends Vue {
         this.$emit('report-created', resp)
       })
     await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: reportId }, { root: true })
-    this.creatingReport = false
+    } catch (error) {
+      console.log({ error })
+    } finally {
+      this.creatingReport = false
+    }
+    
   }
 
   get configurations (): ReportConfiguration[] {

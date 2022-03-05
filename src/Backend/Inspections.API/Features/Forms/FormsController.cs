@@ -1,17 +1,15 @@
 using Ardalis.GuardClauses;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Inspections.API.Features.Forms.Create;
 using Inspections.API.Features.Forms.Delete;
 using Inspections.API.Features.Forms.Get;
 using Inspections.API.Features.Forms.GetAll;
+using Inspections.API.Features.Forms.GetAllByReportId;
 using Inspections.Core.Domain.Forms;
 using Inspections.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
 
 namespace Inspections.API.Features.Forms;
 
@@ -21,18 +19,23 @@ namespace Inspections.API.Features.Forms;
 public class FormsController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
     private readonly InspectionsContext _context;
 
-    public FormsController(IMediator mediator, IMapper mapper , InspectionsContext context)
+    public FormsController(IMediator mediator, InspectionsContext context)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
     
     [HttpGet(Name = nameof(GetFormsDefinitions))]
     public async Task<ActionResult<List<FormDefinitionResponse>>> GetFormsDefinitions(GetAllQuery request, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(request, cancellationToken);
+        return Ok(result);
+    }
+    
+    [HttpGet("report", Name = nameof(GetFormsDefinitionsByReportId))]
+    public async Task<ActionResult<List<FormDefinitionResponse>>> GetFormsDefinitionsByReportId([FromQuery]GetAllByReportIdQuery request, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(request, cancellationToken);
         return Ok(result);
