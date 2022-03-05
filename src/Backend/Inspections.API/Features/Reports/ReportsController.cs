@@ -244,7 +244,7 @@ namespace Inspections.API.Features.Reports
         [HttpPatch("{reportId:int}/complete", Name = nameof(CompleteReport))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult<bool>> CompleteReport(int reportId)
+        public async Task<IActionResult> CompleteReport(int reportId)
         {
             var result = await _mediator.Send(new CompleteReportCommand(reportId)).ConfigureAwait(false);
             if (!result)

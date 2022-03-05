@@ -6,6 +6,7 @@ using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -14,9 +15,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    partial class InspectionsContextModelSnapshot : ModelSnapshot
+    [Migration("20220301054108_dynamic_fields_generation_feature 2")]
+    partial class dynamic_fields_generation_feature2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -364,9 +366,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("jsonb")
                         .HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("LastEdit")
                         .HasColumnType("timestamp with time zone");

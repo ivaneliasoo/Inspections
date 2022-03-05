@@ -26,11 +26,9 @@ public sealed class FormDefinition : Entity<int>
     public JsonDocument? DefaultValues { get; private set; }
     public bool Enabled { get; private set; } = true;
     
-    private readonly List<Report> _reports = new();
-    public IReadOnlyCollection<Report> Reports => _reports;
-    
-    private readonly List<ReportConfiguration> _reportConfigurations = new();
-    public IReadOnlyCollection<ReportConfiguration> ReportConfigurations => _reportConfigurations;
+    public List<Report> Reports { get; } = new();
+
+    public List<ReportConfiguration> ReportConfigurations { get; } = new();
 
     public void SetTitle(string title)
     {
@@ -56,14 +54,14 @@ public sealed class FormDefinition : Entity<int>
     {
         Guard.Against.Null(reports, nameof(reports));
         
-        _reports.AddRange(reports);
+        this.Reports.AddRange(reports);
     }
 
     public void AssociateReportConfiguration(IList<ReportConfiguration> reportConfigurations)
     {
         Guard.Against.Null(reportConfigurations, nameof(reportConfigurations));
         
-        _reportConfigurations.AddRange(reportConfigurations);
+        this.ReportConfigurations.AddRange(reportConfigurations);
     }
 
     public void Disable()
