@@ -50,6 +50,8 @@
               :suffix="field.suffix"
               :prefix="field.preffix"
               @blur="handleSubmit"
+              @checked="handleSubmit"
+              @change="handleSubmit"
             />
           </v-col>
         </v-row>
