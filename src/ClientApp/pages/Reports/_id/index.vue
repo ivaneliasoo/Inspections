@@ -671,7 +671,7 @@ export default defineComponent({
 
     const { notify } = useNotifications()
     const route = useRoute()
-    const { store, $auth, $axios, $reportsApi, $formsApi } = useContext()
+    const { store, $auth, $axios, $reportsApi } = useContext()
     const id = computed(() => route.value.params.id)
 
     onMounted(() => {
@@ -1102,7 +1102,6 @@ export default defineComponent({
 
     const saveFormValues = ({ values, formId }) => {
       $reportsApi.updateForm(parseInt(id.value.toString()), formId, values)
-      console.log({ values, formId })
     }
 
     return {
