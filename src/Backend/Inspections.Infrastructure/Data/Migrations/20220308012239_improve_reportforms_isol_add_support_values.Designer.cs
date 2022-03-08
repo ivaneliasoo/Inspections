@@ -6,6 +6,7 @@ using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -14,9 +15,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    partial class InspectionsContextModelSnapshot : ModelSnapshot
+    [Migration("20220308012239_improve_reportforms_isol_add_support_values")]
+    partial class improve_reportforms_isol_add_support_values
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,7 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.HasIndex("ReportConfigurationsId");
 
-                    b.ToTable("FormDefinitionReportConfiguration", "Inspections");
+                    b.ToTable("FormDefinitionReportConfiguration");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.Address", b =>
@@ -319,7 +321,7 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Licenses", "Inspections");
+                    b.ToTable("Licenses");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.Forms.FormDefinition", b =>
@@ -329,6 +331,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<JsonDocument>("DefaultValues")
+                        .HasColumnType("jsonb");
 
                     b.Property<bool>("Enabled")
                         .HasColumnType("boolean");
@@ -362,7 +367,7 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FormDefinition", "Inspections");
+                    b.ToTable("FormsDefinitions");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.Job", b =>
@@ -720,18 +725,6 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DynamicFields>("Fields")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("jsonb")
-                        .HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("text");
-
                     b.Property<DateTimeOffset>("LastEdit")
                         .HasColumnType("timestamp with time zone");
 
@@ -740,25 +733,15 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<int>("ReportId")
+                    b.Property<int?>("ReportId1")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
 
                     b.Property<JsonDocument>("Values")
                         .HasColumnType("jsonb");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReportId");
+                    b.HasIndex("ReportId1");
 
                     b.ToTable("ReportFroms", "Inspections");
                 });
@@ -1106,7 +1089,7 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                             b1.HasKey("EMALicenseId");
 
-                            b1.ToTable("Licenses", "Inspections");
+                            b1.ToTable("Licenses");
 
                             b1.WithOwner()
                                 .HasForeignKey("EMALicenseId");
@@ -1147,9 +1130,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                 {
                     b.HasOne("Inspections.Core.Domain.ReportsAggregate.Report", null)
                         .WithMany("AvailableForms")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReportId1");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.SignaturesAggregate.Signature", b =>

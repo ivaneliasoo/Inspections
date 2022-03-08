@@ -33,9 +33,9 @@ public class CreateInspectionHandler : IRequestHandler<CreateReportCommand, int>
         var cfg = await _reportConfigurationsRepository.GetByIdAsync(request.ConfigurationId).ConfigureAwait(false);
         var cfgForms = await _context.ReportConfigurations
             .AsNoTracking()
-            .SelectMany(c => c.Forms, (c, f) => new { c.Id, FormId = f.Id })
+            .SelectMany(c => c.Forms, (c, f) => new { c.Id, Forms =f })
             .Where(s => s.Id == request.ConfigurationId)
-            .Select(cf => cf.FormId)
+            .Select(f => f.Forms)
             .ToListAsync(cancellationToken);
         
         var reportName = $"{DateTime.Now:yyyyMMdd}-{cfg.Title}";
@@ -44,14 +44,10 @@ public class CreateInspectionHandler : IRequestHandler<CreateReportCommand, int>
         var newReport = reportsBuilder
             .WithDefaultNotes(false)
             .WithName(reportName)
+            .WithForms(cfgForms)
             .Build();
 
         var result = await _reportsRepository.AddAsync(newReport).ConfigureAwait(false);
-        foreach (var form in cfgForms)
-        {
-            await _context.Database.ExecuteSqlInterpolatedAsync(@$"INSERT INTO public.""FormDefinitionReport""(""FormsId"", ""ReportsId"", ""LastEdit"", ""LastEditUser"")
-            VALUES ({form}, {result.Id}, Now(), {_userNameResolver.UserName});", cancellationToken);
-        }
         await _photoRecordManager.CreateAlbum(result.Id.ToString());
         return result.Id;
     }

@@ -24,7 +24,7 @@ public class GetAllByReportId : IRequestHandler<GetAllByReportIdQuery, IEnumerab
         return await _context.Reports
             .AsNoTracking()
             .Where(r => r.Id == request.ReportId)
-            .SelectMany(r => r.Forms, (report, form) =>
+            .SelectMany(r => r.AvailableForms, (report, form) =>
                 new FormDefinitionResponse
                 {
                    Id = form.Id,
@@ -32,7 +32,6 @@ public class GetAllByReportId : IRequestHandler<GetAllByReportIdQuery, IEnumerab
                    Title = form.Title,
                    Icon = form.Icon,
                    Fields = form.Fields,
-                   DefaultValues = form.DefaultValues,
                    Enabled = form.Enabled
                 })
             .ToListAsync(cancellationToken);

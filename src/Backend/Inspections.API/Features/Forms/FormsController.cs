@@ -33,13 +33,6 @@ public class FormsController : ControllerBase
         var result = await _mediator.Send(request, cancellationToken);
         return Ok(result);
     }
-    
-    [HttpGet("report", Name = nameof(GetFormsDefinitionsByReportId))]
-    public async Task<ActionResult<List<FormDefinitionResponse>>> GetFormsDefinitionsByReportId([FromQuery]GetAllByReportIdQuery request, CancellationToken cancellationToken)
-    {
-        var result = await _mediator.Send(request, cancellationToken);
-        return Ok(result);
-    }
 
     [HttpGet("{id}", Name = nameof(GetFormDefinition))]
     [ProducesResponseType(StatusCodes.Status200OK)]

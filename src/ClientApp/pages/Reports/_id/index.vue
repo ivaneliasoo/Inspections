@@ -576,7 +576,7 @@
             />
           </v-tab-item>
           <v-tab-item v-for="form in forms.filter(f => f.enabled)" :key="`ti-${form.id}`">
-            <CustomForm :schema="form.fields.fieldsDefinitions" />
+            <CustomForm v-model="form.values" :schema="form.fields.fieldsDefinitions" :form-id="form.id" @handle-submit="saveFormValues" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -724,10 +724,9 @@ export default defineComponent({
             },
             { root: true }
           ),
-          $auth.fetchUser(),
-          $formsApi.getFormsDefinitionsByReportId(parseInt(id.value.toString()))
-            .then((resp) => { forms.value = resp.data })
+          $auth.fetchUser()
         ])
+        forms.value = currentReport.value.forms || []
       } catch (error) {
         notify({ error })
       }
@@ -1101,6 +1100,11 @@ export default defineComponent({
       link.click()
     }
 
+    const saveFormValues = ({ values, formId }) => {
+      $reportsApi.updateForm(parseInt(id.value.toString()), formId, values)
+      console.log({ values, formId })
+    }
+
     return {
       currentReport,
       pageOptions,
@@ -1125,7 +1129,8 @@ export default defineComponent({
       obs,
       obsSignatures,
       signatures,
-      forms
+      forms,
+      saveFormValues
     }
   }
 })

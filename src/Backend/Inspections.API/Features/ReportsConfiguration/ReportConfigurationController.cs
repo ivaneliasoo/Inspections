@@ -59,40 +59,6 @@ namespace Inspections.API.Features.ReportsConfiguration
             return Ok();
         }
 
-        [HttpPut("{id:int}/operational-readings", Name = nameof(UpdateOperationalReadingsConfig))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateOperationalReadingsConfig(int id, [FromBody] UpdateOperationalReadings request)
-        {
-            Guard.Against.Null(request, nameof(request));
-            Guard.Against.NegativeOrZero(id, nameof(id));
-
-            var result = await _mediator.Send(request).ConfigureAwait(false);
-            if (!result)
-                return Conflict();
-
-            return Ok();
-        }
-
-        [HttpPut("{id:int}/additionalfields", Name = nameof(UpdateAdditionalFieldsConfig))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateAdditionalFieldsConfig(int id, [FromBody] UpdateAdditionalFields request)
-        {
-            Guard.Against.Null(request, nameof(request));
-            Guard.Against.NegativeOrZero(id, nameof(id));
-
-            var result = await _mediator.Send(request).ConfigureAwait(false);
-            if (!result)
-                return Conflict();
-
-            return Ok();
-        }
-
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]

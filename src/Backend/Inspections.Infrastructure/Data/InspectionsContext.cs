@@ -35,6 +35,7 @@ public class InspectionsContext : DbContext
     }
 
     public DbSet<Report> Reports { get; set;} = default!;
+    public DbSet<ReportForm> AvailableForms { get; set;} = default!;
     public DbSet<CheckList> CheckLists { get; set; } = default!;
     public DbSet<CheckListItem> CheckListItems { get; set; } = default!;
     public DbSet<Note> Notes { get; set; } = default!;

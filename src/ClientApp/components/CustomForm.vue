@@ -23,6 +23,7 @@
               :label="field.label"
               :suffix="field.suffix"
               :prefix="field.preffix"
+              @blur="handleSubmit"
             />
             <v-textarea
               v-if="field.inputType === 'textarea'"
@@ -31,6 +32,7 @@
               :label="field.label"
               :suffix="field.suffix"
               :prefix="field.preffix"
+              @blur="handleSubmit"
             />
             <v-select
               v-if="field.inputType === 'select'"
@@ -39,6 +41,7 @@
               :label="field.label"
               :suffix="field.suffix"
               :prefix="field.preffix"
+              @change="handleSubmit"
             />
             <v-checkbox
               v-if="field.inputType === 'checkbox'"
@@ -46,6 +49,7 @@
               :label="field.label"
               :suffix="field.suffix"
               :prefix="field.preffix"
+              @blur="handleSubmit"
             />
           </v-col>
         </v-row>
@@ -58,11 +62,14 @@
 import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
 import { DynamicFieldMetadata } from "~/services/api";
 export default defineComponent({
-  model: {
-    prop: "value",
-    event: "input",
-  },
   props: {
+    value: {
+      type: Object,
+    },
+    formId: {
+      type: Number,
+      required: true,
+    },
     schema: {
       type: Array as () => DynamicFieldMetadata[],
       required: true,
@@ -86,7 +93,9 @@ export default defineComponent({
       return acc;
     }, {});
 
-    const values = ref<any>(defaultValues);
+    const savedValues = props.value || defaultValues;
+
+    const values = ref<any>(savedValues);
 
     const sections = computed(() => {
       return props.schema.reduce((acc, value) => {
@@ -98,7 +107,10 @@ export default defineComponent({
       }, {});
     });
 
-    const handleSubmit = () => emit("submit", values);
+    const handleSubmit = () => {
+      emit("handle-submit", {values: values.value, formId: props.formId});
+      emit("input", values.value);
+    }
 
     return { sections, values, handleSubmit };
   },

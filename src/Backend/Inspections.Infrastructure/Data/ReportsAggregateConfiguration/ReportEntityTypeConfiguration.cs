@@ -8,7 +8,6 @@ public class ReportEntityTypeConfiguration : IEntityTypeConfiguration<Report>
 {
     public void Configure(EntityTypeBuilder<Report> builder)
     {
-
         builder.ToTable("Reports", InspectionsContext.DEFAULT_SCHEMA);
         builder.Ignore(p => p.DomainEvents);
         builder.HasKey(p => p.Id);
@@ -21,7 +20,11 @@ public class ReportEntityTypeConfiguration : IEntityTypeConfiguration<Report>
         builder.Property(p => p.FormName).IsRequired();
         builder.Property(p => p.RemarksLabelText).IsRequired();
         builder.Property(p => p.ReportConfigurationId).IsRequired();
-        
+        builder.HasMany(p => p.AvailableForms)
+            .WithOne()
+            .HasForeignKey(p => p.ReportId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         var navigationChecks = builder.Metadata.FindNavigation(nameof(Report.CheckList));
         navigationChecks!.SetField("checkList");
         navigationChecks.SetPropertyAccessMode(PropertyAccessMode.Field);
@@ -37,6 +40,5 @@ public class ReportEntityTypeConfiguration : IEntityTypeConfiguration<Report>
         var navigationSignatures = builder.Metadata.FindNavigation(nameof(Report.Signatures));
         navigationSignatures!.SetField("signatures");
         navigationSignatures.SetPropertyAccessMode(PropertyAccessMode.Field);
-
     }
 }

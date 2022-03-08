@@ -2144,55 +2144,6 @@
         }
       }
     },
-    "/api/Forms/report": {
-      "get": {
-        "tags": [
-          "Forms"
-        ],
-        "operationId": "GetFormsDefinitionsByReportId",
-        "parameters": [
-          {
-            "name": "ReportId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormDefinitionResponse"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormDefinitionResponse"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormDefinitionResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Forms/{id}": {
       "get": {
         "tags": [
@@ -3432,212 +3383,6 @@
         }
       }
     },
-    "/api/ReportConfiguration/{id}/operational-readings": {
-      "put": {
-        "tags": [
-          "ReportConfiguration"
-        ],
-        "operationId": "UpdateOperationalReadingsConfig",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateOperationalReadings"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateOperationalReadings"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateOperationalReadings"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ReportConfiguration/{id}/additionalfields": {
-      "put": {
-        "tags": [
-          "ReportConfiguration"
-        ],
-        "operationId": "UpdateAdditionalFieldsConfig",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateAdditionalFields"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateAdditionalFields"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateAdditionalFields"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Reports": {
       "post": {
         "tags": [
@@ -4312,6 +4057,92 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Reports/{id}/forms/{idForm}": {
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "UpdateForm",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idForm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { }
+            },
+            "text/json": {
+              "schema": { }
+            },
+            "application/*+json": {
+              "schema": { }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success"
@@ -6228,6 +6059,10 @@
           "defaultValue": {
             "type": "integer",
             "format": "int32"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -6428,10 +6263,45 @@
             "type": "string",
             "nullable": true
           },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
           "fields": {
             "$ref": "#/components/schemas/DynamicFields"
           },
           "defaultValues": {
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "fields": {
+            "$ref": "#/components/schemas/DynamicFields"
+          },
+          "values": {
             "nullable": true
           },
           "enabled": {
@@ -6668,6 +6538,10 @@
             "type": "string",
             "nullable": true
           },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
           "fields": {
             "$ref": "#/components/schemas/DynamicFields"
           },
@@ -6862,6 +6736,14 @@
             "nullable": true,
             "readOnly": true
           },
+          "forms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormDefinitionResponse"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
           "checkListMetadata": {
             "$ref": "#/components/schemas/CheckListPrintingMetadata"
           },
@@ -6943,11 +6825,12 @@
           "isClosed": {
             "type": "boolean"
           },
-          "additionalFields": {
-            "$ref": "#/components/schemas/DynamicFields"
-          },
-          "dynamicOperationalReadings": {
-            "$ref": "#/components/schemas/DynamicFields"
+          "forms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormResult"
+            },
+            "nullable": true
           },
           "signatures": {
             "type": "array",
@@ -7335,19 +7218,6 @@
         },
         "additionalProperties": false
       },
-      "UpdateAdditionalFields": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "fieldsDefinitions": {
-            "$ref": "#/components/schemas/DynamicFields"
-          }
-        },
-        "additionalProperties": false
-      },
       "UpdateCheckListCommand": {
         "type": "object",
         "properties": {
@@ -7396,19 +7266,6 @@
           "remarks": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateOperationalReadings": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "fieldsDefinitions": {
-            "$ref": "#/components/schemas/DynamicFields"
           }
         },
         "additionalProperties": false

@@ -27,9 +27,10 @@ public class Report : Entity<int>, IAggregateRoot
     public IReadOnlyCollection<CheckList> CheckList => checkList;
 
     private readonly List<PhotoRecord> photoRecords = new();
+    public IReadOnlyCollection<PhotoRecord> PhotoRecords => photoRecords;
     
-    private readonly List<FormDefinition> forms = new();
-    public IReadOnlyCollection<FormDefinition> Forms => forms;
+    private readonly List<ReportForm> _availableForms = new();
+    public IReadOnlyCollection<ReportForm> AvailableForms => _availableForms;
 
     internal Report()
     {
@@ -67,7 +68,6 @@ public class Report : Entity<int>, IAggregateRoot
         Date = date;
     }
 
-    public IReadOnlyCollection<PhotoRecord> PhotoRecords => photoRecords;
     public bool Completed => checkList.All(c => c.Completed);
 
     public void AddNote(Note note)
@@ -135,9 +135,9 @@ public class Report : Entity<int>, IAggregateRoot
         IsClosed = true;
     }
 
-    public void AddForms(IReadOnlyCollection<FormDefinition> configurationForms)
+    public void AddForms(IReadOnlyCollection<ReportForm> configurationForms)
     {
         Guard.Against.Null(configurationForms, nameof(configurationForms));
-        forms.AddRange(configurationForms);
+        _availableForms.AddRange(configurationForms);
     }
 }

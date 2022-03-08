@@ -929,7 +929,7 @@ export interface DynamicFieldMetadata {
      * @type {number}
      * @memberof DynamicFieldMetadata
      */
-     order?: number;
+    order?: number;
 }
 /**
  * 
@@ -1235,6 +1235,55 @@ export interface FormDefinitionResponse {
      * 
      * @type {boolean}
      * @memberof FormDefinitionResponse
+     */
+    enabled?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface FormResult
+ */
+export interface FormResult {
+    /**
+     * 
+     * @type {number}
+     * @memberof FormResult
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof FormResult
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof FormResult
+     */
+    title?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof FormResult
+     */
+    icon?: string | null;
+    /**
+     * 
+     * @type {DynamicFields}
+     * @memberof FormResult
+     */
+    fields?: DynamicFields;
+    /**
+     * 
+     * @type {any}
+     * @memberof FormResult
+     */
+    values?: any | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FormResult
      */
     enabled?: boolean;
 }
@@ -1557,6 +1606,12 @@ export interface NewFormDefinitionCommand {
     title?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof NewFormDefinitionCommand
+     */
+    icon?: string | null;
+    /**
+     * 
      * @type {DynamicFields}
      * @memberof NewFormDefinitionCommand
      */
@@ -1808,6 +1863,12 @@ export interface ReportConfigurationDto {
     signatureDefinitions?: Array<number> | null;
     /**
      * 
+     * @type {Array<FormDefinitionResponse>}
+     * @memberof ReportConfigurationDto
+     */
+    forms?: Array<FormDefinitionResponse> | null;
+    /**
+     * 
      * @type {CheckListPrintingMetadata}
      * @memberof ReportConfigurationDto
      */
@@ -1824,12 +1885,6 @@ export interface ReportConfigurationDto {
      * @memberof ReportConfigurationDto
      */
     templateName?: string | null;
-    /**
-     * 
-     * @type {FormDefinitionResponse}
-     * @memberof ReportConfigurationDto
-     */
-     forms?: string | null;
 }
 /**
  * 
@@ -1929,16 +1984,10 @@ export interface ReportQueryResult {
     isClosed?: boolean;
     /**
      * 
-     * @type {DynamicFields}
+     * @type {Array<FormResult>}
      * @memberof ReportQueryResult
      */
-    additionalFields?: DynamicFields;
-    /**
-     * 
-     * @type {DynamicFields}
-     * @memberof ReportQueryResult
-     */
-    dynamicOperationalReadings?: DynamicFields;
+    forms?: Array<FormResult> | null;
     /**
      * 
      * @type {Array<SignatureQueryResult>}
@@ -2452,25 +2501,6 @@ export interface Team {
 /**
  * 
  * @export
- * @interface UpdateAdditionalFields
- */
-export interface UpdateAdditionalFields {
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateAdditionalFields
-     */
-    id?: number;
-    /**
-     * 
-     * @type {DynamicFields}
-     * @memberof UpdateAdditionalFields
-     */
-    fieldsDefinitions?: DynamicFields;
-}
-/**
- * 
- * @export
  * @interface UpdateCheckListCommand
  */
 export interface UpdateCheckListCommand {
@@ -2547,25 +2577,6 @@ export interface UpdateCheckListItemCommand {
      * @memberof UpdateCheckListItemCommand
      */
     remarks?: string | null;
-}
-/**
- * 
- * @export
- * @interface UpdateOperationalReadings
- */
-export interface UpdateOperationalReadings {
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadings
-     */
-    id?: number;
-    /**
-     * 
-     * @type {DynamicFields}
-     * @memberof UpdateOperationalReadings
-     */
-    fieldsDefinitions?: DynamicFields;
 }
 /**
  * 
@@ -5176,44 +5187,6 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @param {number} [reportId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getFormsDefinitionsByReportId: async (reportId?: number, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/Forms/report`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication jwt_auth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (reportId !== undefined) {
-                localVarQueryParameter['ReportId'] = reportId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {number} id 
          * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
          * @param {*} [options] Override http request option.
@@ -5305,16 +5278,6 @@ export const FormsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {number} [reportId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getFormsDefinitionsByReportId(reportId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FormDefinitionResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFormsDefinitionsByReportId(reportId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @param {number} id 
          * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
          * @param {*} [options] Override http request option.
@@ -5369,15 +5332,6 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          */
         getFormsDefinitions(filter?: string, options?: any): AxiosPromise<Array<FormDefinitionResponse>> {
             return localVarFp.getFormsDefinitions(filter, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} [reportId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getFormsDefinitionsByReportId(reportId?: number, options?: any): AxiosPromise<Array<FormDefinitionResponse>> {
-            return localVarFp.getFormsDefinitionsByReportId(reportId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5441,17 +5395,6 @@ export class FormsApi extends BaseAPI {
      */
     public getFormsDefinitions(filter?: string, options?: any) {
         return FormsApiFp(this.configuration).getFormsDefinitions(filter, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} [reportId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FormsApi
-     */
-    public getFormsDefinitionsByReportId(reportId?: number, options?: any) {
-        return FormsApiFp(this.configuration).getFormsDefinitionsByReportId(reportId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6478,88 +6421,6 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {number} id 
-         * @param {UpdateAdditionalFields} [updateAdditionalFields] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateAdditionalFieldsConfig: async (id: number, updateAdditionalFields?: UpdateAdditionalFields, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('updateAdditionalFieldsConfig', 'id', id)
-            const localVarPath = `/api/ReportConfiguration/{id}/additionalfields`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication jwt_auth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateAdditionalFields, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {UpdateOperationalReadings} [updateOperationalReadings] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateOperationalReadingsConfig: async (id: number, updateOperationalReadings?: UpdateOperationalReadings, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('updateOperationalReadingsConfig', 'id', id)
-            const localVarPath = `/api/ReportConfiguration/{id}/operational-readings`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication jwt_auth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateOperationalReadings, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -6621,28 +6482,6 @@ export const ReportConfigurationApiFp = function(configuration?: Configuration) 
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiReportConfigurationPost(addReportConfigurationCommand, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * 
-         * @param {number} id 
-         * @param {UpdateAdditionalFields} [updateAdditionalFields] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateAdditionalFieldsConfig(id: number, updateAdditionalFields?: UpdateAdditionalFields, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateAdditionalFieldsConfig(id, updateAdditionalFields, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {UpdateOperationalReadings} [updateOperationalReadings] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateOperationalReadingsConfig(id: number, updateOperationalReadings?: UpdateOperationalReadings, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateOperationalReadingsConfig(id, updateOperationalReadings, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -6698,26 +6537,6 @@ export const ReportConfigurationApiFactory = function (configuration?: Configura
          */
         apiReportConfigurationPost(addReportConfigurationCommand?: AddReportConfigurationCommand, options?: any): AxiosPromise<void> {
             return localVarFp.apiReportConfigurationPost(addReportConfigurationCommand, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {UpdateAdditionalFields} [updateAdditionalFields] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateAdditionalFieldsConfig(id: number, updateAdditionalFields?: UpdateAdditionalFields, options?: any): AxiosPromise<void> {
-            return localVarFp.updateAdditionalFieldsConfig(id, updateAdditionalFields, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {UpdateOperationalReadings} [updateOperationalReadings] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateOperationalReadingsConfig(id: number, updateOperationalReadings?: UpdateOperationalReadings, options?: any): AxiosPromise<void> {
-            return localVarFp.updateOperationalReadingsConfig(id, updateOperationalReadings, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6783,30 +6602,6 @@ export class ReportConfigurationApi extends BaseAPI {
      */
     public apiReportConfigurationPost(addReportConfigurationCommand?: AddReportConfigurationCommand, options?: any) {
         return ReportConfigurationApiFp(this.configuration).apiReportConfigurationPost(addReportConfigurationCommand, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} id 
-     * @param {UpdateAdditionalFields} [updateAdditionalFields] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ReportConfigurationApi
-     */
-    public updateAdditionalFieldsConfig(id: number, updateAdditionalFields?: UpdateAdditionalFields, options?: any) {
-        return ReportConfigurationApiFp(this.configuration).updateAdditionalFieldsConfig(id, updateAdditionalFields, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} id 
-     * @param {UpdateOperationalReadings} [updateOperationalReadings] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ReportConfigurationApi
-     */
-    public updateOperationalReadingsConfig(id: number, updateOperationalReadings?: UpdateOperationalReadings, options?: any) {
-        return ReportConfigurationApiFp(this.configuration).updateOperationalReadingsConfig(id, updateOperationalReadings, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -7444,6 +7239,51 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {number} id 
+         * @param {number} idForm 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateForm: async (id: number, idForm: number, body?: any, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateForm', 'id', id)
+            // verify required parameter 'idForm' is not null or undefined
+            assertParamExists('updateForm', 'idForm', idForm)
+            const localVarPath = `/api/Reports/{id}/forms/{idForm}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"idForm"}}`, encodeURIComponent(String(idForm)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -7620,6 +7460,18 @@ export const ReportsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.completeReport(reportId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {number} id 
+         * @param {number} idForm 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateForm(id: number, idForm: number, body?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateForm(id, idForm, body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -7780,6 +7632,17 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
          */
         completeReport(reportId: number, options?: any): AxiosPromise<void> {
             return localVarFp.completeReport(reportId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {number} idForm 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateForm(id: number, idForm: number, body?: any, options?: any): AxiosPromise<void> {
+            return localVarFp.updateForm(id, idForm, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7970,6 +7833,19 @@ export class ReportsApi extends BaseAPI {
      */
     public completeReport(reportId: number, options?: any) {
         return ReportsApiFp(this.configuration).completeReport(reportId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {number} idForm 
+     * @param {any} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public updateForm(id: number, idForm: number, body?: any, options?: any) {
+        return ReportsApiFp(this.configuration).updateForm(id, idForm, body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

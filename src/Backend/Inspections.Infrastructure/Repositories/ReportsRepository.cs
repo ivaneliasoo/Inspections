@@ -24,12 +24,14 @@ public class ReportsRepository : IReportsRepository
     private readonly MapperConfiguration config = new MapperConfiguration(cfg =>
     {
         cfg.CreateMap<Signature, SignatureQueryResult>();
+        cfg.CreateMap<ReportForm, FormResult>();
         cfg.CreateMap<Note, NoteQueryResult>();
         cfg.CreateMap<CheckListItem, CheckListItemQueryResult>();
         cfg.CreateMap<CheckList, CheckListQueryResult>().ForMember(m => m.Checks, opt => opt.MapFrom(src => src.Checks));
         cfg.CreateMap<Report, ReportQueryResult>()
             .ForMember(m => m.Signatures, opt => opt.MapFrom(src => src.Signatures.OrderBy(ob => ob.Order)))
-            .ForMember(m => m.CheckLists, opt => opt.MapFrom(src => src.CheckList));
+            .ForMember(m => m.CheckLists, opt => opt.MapFrom(src => src.CheckList))
+            .ForMember(m => m.Forms, opt => opt.MapFrom(src => src.AvailableForms));
         cfg.CreateMap<Report, ReportListItem>()
             .ForMember(m => m.HasNotes, opt => opt.MapFrom(src => src.Notes.Any()))
             .ForMember(m => m.HasPhotoRecords, opt => opt.MapFrom(src => src.PhotoRecords.Any()))
@@ -100,7 +102,6 @@ public class ReportsRepository : IReportsRepository
     public Task DeleteAsync(Report entity)
     {
         _context.CheckLists.RemoveRange(entity.CheckList);
-        // _context.OperationalReadings.RemoveRange(entity.OperationalReadings ?? throw new InvalidOperationException());
         _context.Signatures.RemoveRange(entity.Signatures);
         _context.SaveChanges();
         _context.Reports.Remove(entity);
@@ -118,6 +119,7 @@ public class ReportsRepository : IReportsRepository
                 .Include("Signatures")
                 .Include("PhotoRecords")
                 .Include("Notes")
+                .Include("AvailableForms")
                 .SingleOrDefaultAsync(r => r.Id == id) ?? throw new NotFoundException(id.ToString(), nameof(Report));
         }
         catch (Exception ex)
@@ -135,8 +137,6 @@ public class ReportsRepository : IReportsRepository
     public async Task UpdateAsync(Report entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
-        // if (entity.OperationalReadings is not null)
-        //     _context.Entry(entity.OperationalReadings).State = EntityState.Modified;
         if (entity.PhotoRecords.Any())
         {
             foreach (var photo in entity.PhotoRecords)

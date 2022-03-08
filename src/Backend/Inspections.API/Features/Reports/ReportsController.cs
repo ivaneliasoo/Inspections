@@ -1,4 +1,5 @@
-﻿using Ardalis.GuardClauses;
+﻿using System.Text.Json;
+using Ardalis.GuardClauses;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Inspections.API.ApplicationServices;
@@ -181,6 +182,26 @@ namespace Inspections.API.Features.Reports
                 return Ok();
 
             return BadRequest();
+        }
+        
+        [HttpPut("{id:int}/forms/{idForm:int}", Name = nameof(UpdateForm))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> UpdateForm(int id, int idForm, [FromBody] JsonDocument values)
+        {
+            Guard.Against.Null(values, nameof(values));
+
+            var result = await _context.AvailableForms.FindAsync(idForm);
+            if (result is null)
+            {
+                return BadRequest();
+            }
+
+            result.SetValues(values);
+            await _context.SaveChangesAsync(); 
+            return Ok();
+
         }
 
         [HttpPut("{id:int}/photorecord/{idPhoto:int}")]

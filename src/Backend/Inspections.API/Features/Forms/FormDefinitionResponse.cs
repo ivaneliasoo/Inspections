@@ -18,7 +18,6 @@ public class FormDefinitionResponse
         instance.Title = entity.Title;
         instance.Icon = entity.Icon;
         instance.Fields = entity.Fields;
-        instance.DefaultValues = entity.DefaultValues;
         instance.Enabled = entity.Enabled;
         return instance;
     }

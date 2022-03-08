@@ -8,17 +8,9 @@ public class FormDefinitionEntityTypeConfiguration : IEntityTypeConfiguration<Fo
 {
     public void Configure(EntityTypeBuilder<FormDefinition> builder)
     {
+        builder.ToTable("FormDefinition", InspectionsContext.DEFAULT_SCHEMA);
         builder.Property(p => p.Name).HasMaxLength(50).IsRequired();
         builder.Property(p => p.Title).HasMaxLength(150).IsRequired();
-        builder.Property(p => p.DefaultValues).HasColumnType("jsonb");
         builder.Property(p => p.Fields).HasColumnType("jsonb").HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
-        // builder.HasMany(p => p.Reports)
-        //     .WithMany(p => p.Forms);
-        // builder.HasMany(p => p.ReportConfigurations)
-        //     .WithMany(p => p.Forms)
-        //     .UsingEntity(s =>
-        //     {
-        //         s.ToTable();
-        //     });
     }
 }
