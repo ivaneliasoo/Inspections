@@ -8,8 +8,10 @@ public class DynamicFieldMetadata
 {
     [Key] public string FieldName { get; set; } = default!;
     public string SectionTitle { get; set; } = default!;
+    public string? SwitchableSection { get; set; }
     public string Label { get; set; } = default!;
     public string InputType { get; set; } = default!;
+    public string? SelectOptions { get; set; }
     public string Suffix { get; set; } = default!;
     public string Prefix { get; set; } = default!;
     public int Min { get; set; } = 0;
@@ -20,7 +22,7 @@ public class DynamicFieldMetadata
     public bool RollerOnMobile { get; set; }
     public short RollerDigits { get; set; } = 3;
     public bool Visible { get; set; } = true;
-    public int DefaultValue { get; set; }
+    public object DefaultValue { get; set; } = default!;
     public int Order { get; set; }
 }
 

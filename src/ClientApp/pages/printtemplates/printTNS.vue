@@ -550,32 +550,31 @@
             <label for="" style="    width: 20%!important;">
               Recorded by:
             </label>
-            <input v-model="reportData.recordedBy"  class="special-input" type="text">
+            <input v-model="reportData.recordedBy" class="special-input" type="text">
             <label for="" style="    width: 20%!important;">
               Witness, if any:
             </label>
-            <input v-model="reportData.wtiness"  class="special-input" type="text">
+            <input v-model="reportData.wtiness" class="special-input" type="text">
           </div>
           <div class="particular-inputs">
             <label for="">
               Date:
             </label>
-            <input v-model="reportData.date"  class="special-input" type="text">
+            <input v-model="reportData.date" class="special-input" type="text">
             <label for="">
               Signature:
             </label>
-            <input v-model="reportData.signature"  class="special-input" type="text">
+            <input v-model="reportData.signature" class="special-input" type="text">
           </div>
           <div class="particular-inputs">
             <label for="">
               Remarks:
             </label>
-            <input v-model="reportData.remarks"  type="text">
+            <input v-model="reportData.remarks" type="text">
           </div>
         </div>
       </div>
     </div>
-    <!-- TODO-IVAN Hacer Encabezado del Compounded Photo Record -->
   </div>
 </template>
 

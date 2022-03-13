@@ -1,7 +1,5 @@
-﻿using System.Text.Json;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
-using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Shared;
 
 namespace Inspections.Core.Domain.Forms;
@@ -14,10 +12,11 @@ public sealed class FormDefinition : Entity<int>
     {
             
     }
-    public FormDefinition(string name, string title, DynamicFields fields)
+    public FormDefinition(string name, string title, string icon, DynamicFields fields)
     {
         Name = name;
         Title = title;
+        Icon = icon;
         Fields = fields;
     }
     public string Name { get;  }

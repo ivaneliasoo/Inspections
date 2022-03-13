@@ -851,6 +851,12 @@ export interface DynamicFieldMetadata {
      * @type {string}
      * @memberof DynamicFieldMetadata
      */
+     switchableSection?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof DynamicFieldMetadata
+     */
     label?: string | null;
     /**
      * 
@@ -923,7 +929,7 @@ export interface DynamicFieldMetadata {
      * @type {number}
      * @memberof DynamicFieldMetadata
      */
-    defaultValue?: number;
+    defaultValue?: any;
     /**
      * 
      * @type {number}

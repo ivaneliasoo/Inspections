@@ -11,7 +11,7 @@ internal static class FormsExtensions
     {
         Guard.Against.Null(newForm, nameof(newForm));
 
-        var result = new FormDefinition(newForm.Name, newForm.Title, newForm.Fields);
+        var result = new FormDefinition(newForm.Name, newForm.Title, newForm.Icon, newForm.Fields);
         return result;
     }
 }

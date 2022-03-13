@@ -3,14 +3,10 @@
     <header>
       <PrintingLogo />
       <div class="content">
-        <!-- <h1 class="title">Inspection Report</h1> -->
         <h2 class="subtitle">
           EI(R1) REPORT
         </h2>
       </div>
-      <!-- <div class="container">
-        <h1>EI(R1) REPORT</h1>
-      </div> -->
     </header>
     <div class="wrapper">
       <div class="row">
@@ -188,71 +184,7 @@ export default {
 
       let operationalReadings = {}
       if (result) {
-        const {
-          operationalReadingsId,
-          operationalReadingsVoltageL1N,
-          operationalReadingsVoltageL2N,
-          operationalReadingsVoltageL3N,
-          operationalReadingsVoltageL1L2,
-          operationalReadingsVoltageL1L3,
-          operationalReadingsVoltageL2L3,
-          operationalReadingsRunningLoadL1,
-          operationalReadingsRunningLoadL2,
-          operationalReadingsRunningLoadL3,
-          operationalReadingsMainBreakerAmp,
-          operationalReadingsMainBreakerPoles,
-          operationalReadingsMainBreakerCapacity,
-          operationalReadingsOverCurrentDTLA,
-          operationalReadingsOverCurrentDTLSec,
-          operationalReadingsOverCurrentIDMTLA,
-          operationalReadingsOverCurrentIDMTLTm,
-          operationalReadingsEarthFaultMA,
-          operationalReadingsEarthFaultELRA,
-          operationalReadingsEarthFaultELRSec,
-          operationalReadingsEarthFaultA,
-          operationalReadingsEarthFaultSec,
-          operationalReadingsMainBreakerRating,
-          operationalReadingsOverCurrentDirectActingEnabled,
-          operationalReadingsOverCurrentDirectActing,
-          operationalReadingsOverCurrentDTLEnabled,
-          operationalReadingsOverCurrentIDTMLEnabled,
-          operationalReadingsEarthFaultRoobEnabled,
-          operationalReadingsEarthFaultEIREnabled,
-          operationalReadingsEarthFaultEFEnabled
-        } = result
-
-        operationalReadings = {
-          operationalReadingsId,
-          operationalReadingsVoltageL1N,
-          operationalReadingsVoltageL2N,
-          operationalReadingsVoltageL3N,
-          operationalReadingsVoltageL1L2,
-          operationalReadingsVoltageL1L3,
-          operationalReadingsVoltageL2L3,
-          operationalReadingsRunningLoadL1,
-          operationalReadingsRunningLoadL2,
-          operationalReadingsRunningLoadL3,
-          operationalReadingsMainBreakerAmp,
-          operationalReadingsMainBreakerPoles,
-          operationalReadingsMainBreakerCapacity,
-          operationalReadingsOverCurrentDTLA,
-          operationalReadingsOverCurrentDTLSec,
-          operationalReadingsOverCurrentIDMTLA,
-          operationalReadingsOverCurrentIDMTLTm,
-          operationalReadingsEarthFaultMA,
-          operationalReadingsEarthFaultELRA,
-          operationalReadingsEarthFaultELRSec,
-          operationalReadingsEarthFaultA,
-          operationalReadingsEarthFaultSec,
-          operationalReadingsMainBreakerRating,
-          operationalReadingsOverCurrentDirectActingEnabled,
-          operationalReadingsOverCurrentDirectActing,
-          operationalReadingsOverCurrentDTLEnabled,
-          operationalReadingsOverCurrentIDTMLEnabled,
-          operationalReadingsEarthFaultRoobEnabled,
-          operationalReadingsEarthFaultEIREnabled,
-          operationalReadingsEarthFaultEFEnabled
-        }
+        operationalReadings = result.forms.filter(f => f.name === 'OperationalReadings')[0].values
       }
 
       return {

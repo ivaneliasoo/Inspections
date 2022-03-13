@@ -53,7 +53,9 @@
         </v-col>
         <v-col cols="1" class="text-right">
           <v-btn small text title="Save" @click="handleSubmit">
-            <v-icon color="success">mdi-content-save</v-icon>
+            <v-icon color="success">
+              mdi-content-save
+            </v-icon>
             Save
           </v-btn>
         </v-col>
@@ -98,10 +100,14 @@
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-btn icon small color="red" @click="removeField(index)">
-                    <v-icon small>mdi-delete</v-icon>
+                    <v-icon small>
+                      mdi-delete
+                    </v-icon>
                   </v-btn>
                   <v-btn icon small color="info" @click="duplicateField(index)">
-                    <v-icon small>mdi-content-duplicate</v-icon>
+                    <v-icon small>
+                      mdi-content-duplicate
+                    </v-icon>
                   </v-btn>
                 </v-list-item-action>
               </v-list-item>
@@ -123,7 +129,9 @@ import {
   computed,
   useFetch,
   useContext,
-  useRouter
+  useRouter,
+  watchEffect,
+  watch
 } from '@nuxtjs/composition-api'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import useGoBack from '~/composables/useGoBack'
@@ -149,7 +157,7 @@ export default defineComponent({
       name: '',
       title: '',
       icon: '',
-      enabled: false,
+      enabled: true,
       fields: {
         fieldsDefinitions: []
       }
@@ -179,6 +187,12 @@ export default defineComponent({
         label: 'Section Title',
         enabled: true,
         validation: 'required'
+      },
+      {
+        type: 'text',
+        name: 'switchableSection',
+        label: 'SubSection (Enabled/Disabled)',
+        enabled: true
       },
       {
         type: 'text',
@@ -285,6 +299,7 @@ export default defineComponent({
     const addField = () => {
       form.value.fields.fieldsDefinitions.unshift({
         sectionTitle: '',
+        switchableSection: '',
         fieldName: '',
         label: '',
         inputType: '',
@@ -298,7 +313,7 @@ export default defineComponent({
         rollerOnMobile: true,
         rollerDigits: 3,
         visible: true,
-        defaultValue: 0,
+        defaultValue: '',
         order: form.value.fields.fieldsDefinitions.length + 1
       })
     }
@@ -309,6 +324,7 @@ export default defineComponent({
 
     const duplicateField = (index) => {
       form.value.fields.fieldsDefinitions.unshift(form.value.fields.fieldsDefinitions[index])
+      selectedListItem.value = 0
     }
 
     const selectedListItem = ref()
@@ -320,6 +336,26 @@ export default defineComponent({
       set: (value) => {
         const index = selectedListItem.value
         form.value.fields.fieldsDefinitions.splice(index, 1, value)
+      }
+    })
+
+    watch(() => selectedField.value, (value, oldValue) => {
+      if (value && value.inputType === 'select') {
+        const optionsIndex = schema.findIndex(s => s.name === 'selectOptions')
+        const inputTypeIndex = schema.findIndex(s => s.name === 'inputType')
+        if (optionsIndex > -1 && oldValue && oldValue.inputType === 'select') {
+          schema.splice(optionsIndex, 1)
+        } else if (optionsIndex > -1 && oldValue && oldValue.inputType !== 'select') {
+          return
+        }
+
+        schema.splice(inputTypeIndex + 1, 0, {
+          type: 'text',
+          name: 'selectOptions',
+          label: 'Select Options',
+          enabled: true,
+          validation: 'required'
+        })
       }
     })
 

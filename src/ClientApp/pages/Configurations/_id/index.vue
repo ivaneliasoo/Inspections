@@ -209,7 +209,7 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
       type: this.newConfig.type,
       title: this.newConfig.title,
       formName: this.newConfig.formName,
-      remarksLabelText: this.newConfig.formName,
+      remarksLabelText: this.newConfig.remarksLabelText,
       inactive: this.newConfig.inactive,
       checksDefinition: this.newConfig.checksDefinition,
       signatureDefinitions: this.newConfig.signatureDefinitions,

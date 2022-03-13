@@ -16,6 +16,7 @@
             <v-text-field
               v-if="['number', 'text'].some((l) => l === field.inputType)"
               v-model="values[field.fieldName]"
+              v-show="field.visible"
               :min="field.min"
               :step="field.step"
               :max="field.max"
@@ -27,6 +28,7 @@
             />
             <v-textarea
               v-if="field.inputType === 'textarea'"
+              v-show="field.visible"
               v-model="values[field.fieldName]"
               :type="field.inputType"
               :label="field.label"
@@ -36,8 +38,9 @@
             />
             <v-select
               v-if="field.inputType === 'select'"
+              v-show="field.visible"
               v-model="values[field.fieldName]"
-              :items="field.options"
+              :items="field.selectOptions.split(',')"
               :label="field.label"
               :suffix="field.suffix"
               :prefix="field.preffix"
@@ -45,6 +48,7 @@
             />
             <v-checkbox
               v-if="field.inputType === 'checkbox'"
+              v-show="field.visible"
               v-model="values[field.fieldName]"
               :label="field.label"
               :suffix="field.suffix"
@@ -85,7 +89,6 @@ export default defineComponent({
       if (a.order < b.order) {
         return -1;
       }
-      // a must be equal to b
       return 0;
     }).reduce((acc, value) => {
       if (!acc[value.fieldName]) {
@@ -100,7 +103,7 @@ export default defineComponent({
     const values = ref<any>(savedValues);
 
     const sections = computed(() => {
-      return props.schema.reduce((acc, value) => {
+      return props.schema.filter(s => s.enabled).reduce((acc, value) => {
         if (!acc[value.sectionTitle]) {
           acc[value.sectionTitle] = [];
         }

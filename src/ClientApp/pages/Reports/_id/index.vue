@@ -898,11 +898,6 @@ export default defineComponent({
             }
             await $axios.$put(`signatures/${signature.id}`, command)
           })
-          // notify({
-          //   title: 'Signatures',
-          //   message: 'Changes has been saved',
-          //   type: 'success'
-          // })
         } catch (error) {
           notify({
             title: 'Reports',

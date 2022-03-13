@@ -93,71 +93,7 @@ export default {
 
       let operationalReadings = {}
       if (result) {
-        const {
-          operationalReadingsId,
-          operationalReadingsVoltageL1N,
-          operationalReadingsVoltageL2N,
-          operationalReadingsVoltageL3N,
-          operationalReadingsVoltageL1L2,
-          operationalReadingsVoltageL1L3,
-          operationalReadingsVoltageL2L3,
-          operationalReadingsRunningLoadL1,
-          operationalReadingsRunningLoadL2,
-          operationalReadingsRunningLoadL3,
-          operationalReadingsMainBreakerAmp,
-          operationalReadingsMainBreakerPoles,
-          operationalReadingsMainBreakerCapacity,
-          operationalReadingsOverCurrentDTLA,
-          operationalReadingsOverCurrentDTLSec,
-          operationalReadingsOverCurrentIDMTLA,
-          operationalReadingsOverCurrentIDMTLTm,
-          operationalReadingsEarthFaultMA,
-          operationalReadingsEarthFaultELRA,
-          operationalReadingsEarthFaultELRSec,
-          operationalReadingsEarthFaultA,
-          operationalReadingsEarthFaultSec,
-          operationalReadingsMainBreakerRating,
-          operationalReadingsOverCurrentDirectActingEnabled,
-          operationalReadingsOverCurrentDirectActing,
-          operationalReadingsOverCurrentDTLEnabled,
-          operationalReadingsOverCurrentIDTMLEnabled,
-          operationalReadingsEarthFaultRoobEnabled,
-          operationalReadingsEarthFaultEIREnabled,
-          operationalReadingsEarthFaultEFEnabled
-        } = result
-
-        operationalReadings = {
-          operationalReadingsId,
-          operationalReadingsVoltageL1N,
-          operationalReadingsVoltageL2N,
-          operationalReadingsVoltageL3N,
-          operationalReadingsVoltageL1L2,
-          operationalReadingsVoltageL1L3,
-          operationalReadingsVoltageL2L3,
-          operationalReadingsRunningLoadL1,
-          operationalReadingsRunningLoadL2,
-          operationalReadingsRunningLoadL3,
-          operationalReadingsMainBreakerAmp,
-          operationalReadingsMainBreakerPoles,
-          operationalReadingsMainBreakerCapacity,
-          operationalReadingsOverCurrentDTLA,
-          operationalReadingsOverCurrentDTLSec,
-          operationalReadingsOverCurrentIDMTLA,
-          operationalReadingsOverCurrentIDMTLTm,
-          operationalReadingsEarthFaultMA,
-          operationalReadingsEarthFaultELRA,
-          operationalReadingsEarthFaultELRSec,
-          operationalReadingsEarthFaultA,
-          operationalReadingsEarthFaultSec,
-          operationalReadingsMainBreakerRating,
-          operationalReadingsOverCurrentDirectActingEnabled,
-          operationalReadingsOverCurrentDirectActing,
-          operationalReadingsOverCurrentDTLEnabled,
-          operationalReadingsOverCurrentIDTMLEnabled,
-          operationalReadingsEarthFaultRoobEnabled,
-          operationalReadingsEarthFaultEIREnabled,
-          operationalReadingsEarthFaultEFEnabled
-        }
+        operationalReadings = result.forms.filter(f => f.name === 'OperationalReadings')[0].values
       }
 
       return {
