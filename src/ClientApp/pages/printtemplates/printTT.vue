@@ -7,10 +7,10 @@
         </h1>
         <div class="title-box">
           <h1 class="">
-            Testing Turn-On Record (TT System)
+            {{ reportData.title }}
           </h1>
           <h5 class="">
-            CSE T&C-TT FORM
+            {{ reportData.formName }}
           </h5>
         </div>
       </div>
@@ -25,24 +25,24 @@
             <label for="">
               Location:
             </label>
-            <input v-model="reportData.location" type="text">
+            <input v-model="reportData.address" type="text">
           </div>
           <div class="particular-inputs" style="align-items: center;">
             <div class="box">
               <label for="">
                 Client:
               </label>
-              <input v-model="reportData.client" type="text">
+              <input v-model="reportData.licenseName" type="text">
             </div>
             <div class="box" style="">
               <label for="" style="width: 290px !important;">
                 Approved Load:
               </label>
-              <input v-model="reportData.approvedLoad" type="text">
+              <input v-model="reportData.licenseAmp" type="text">
               <label for="" style="width:35px !important">
                 A/
               </label>
-              <input v-model="reportData.approvedAt" type="text">
+              <input v-model="reportData.licenseVolt" type="text">
               <label for="">
                 V
               </label>
@@ -53,13 +53,13 @@
               <label for="">
                 EI Licence: <b>E/</b>
               </label>
-              <input v-model="reportData.eiLicence" class="special-input" type="text">
+              <input v-model="reportData.licenseNumber" class="special-input" type="text">
             </div>
             <div class="box">
               <label for="">
                 Drawing No:
               </label>
-              <input v-model="reportData.drawnum" class="special-input" type="text">
+              <input v-model="reportData.forms.filter(f => f.name === 'AdditionalFieldsTT')[0].values.DrawingNo" class="special-input" type="text">
             </div>
           </div>
         </div>
@@ -68,43 +68,51 @@
         <span style="text-decoration: underline; font-weight: bold;">
           2. BEFORE TURN-ON
         </span>
+        <div v-for="checkList in reportData.checkLists" :key="checkList.checkListId" class="particulars">
+          <div class="particular-inputs" />
+          <span style="text-decoration:none; width: 150px;">
+            <b>{{ checkList.text }}: </b>
+          </span>
+          <div v-for="checkListItem in checkList.checks" :key="checkListItem.id" class="box-checks">
+            <label for="">
+              {{ checkListItem.text }}
+            </label>
+            <input v-model="checkListItem.checked" type="checkbox">
+          </div>
+        </div>
         <div class="particulars">
-          <div class="particular-inputs" style="gap: 10px;">
+          <div class="particular-inputs" style="align-items: center;">
+            <span style="text-decoration:none; width: 150px;">
+              <b>d) Earth Pit</b>
+            </span>
             <div class="box">
-              <label for="" style="width: 100px !important;">
-                L1-E:
+              <label for="">
+                Ring circuit
               </label>
-              <input v-model="reportData.beforeTurnOnLOneELeft" type="text">
+              <input v-model="beforeTurnOn.EarthPitRingCircuit" type="checkbox">
             </div>
             <div class="box">
-              <label for="" style="width: 100px !important;">
-                L1-N:
+              <label for="">
+                No. of Earth Pit
               </label>
-              <input v-model="reportData.beforeTurnOnLOneNLeft" type="text">
+              <input v-model="beforeTurnOn.EarthPitNoOfEarthPit" class="special-input" type="text">
             </div>
-            <div class="box">
-              <label for="" style="width: 100px !important;">
-                L1-L2:
+            <div class="box" style="align-items: center;">
+              <label for="">
+                Overall Earth pit Value
               </label>
-              <input v-model="reportData.beforeTurnOnLOneLTwoLeft" type="text">
+              <input v-model="beforeTurnOn.EarthPitOverallEarthPitValue" class="special-input" type="text">
+              <label for="">Ω</label>
             </div>
+          </div>
+        </div>
+        <div class="particulars">
+          <div class="particular-inputs">
             <div class="box">
-              <label for="" style="width: 100px !important;">
-                L1-E:
+              <label for="">
+                <b> e) Sub Main Cable Protection</b>
               </label>
-              <input v-model="reportData.beforeTurnOnLOneERight" type="text">
-            </div>
-            <div class="box">
-              <label for="" style="width: 100px !important;">
-                L1-N:
-              </label>
-              <input v-model="reportData.beforeTurnOnLOneNRight" type="text">
-            </div>
-            <div class="box">
-              <label for="" style="width: 100px !important;">
-                L1-L2:
-              </label>
-              <input v-model="reportData.beforeTurnOnLOneLTwoRight" type="text">
+              <input v-model="beforeTurnOn.SubMainCableProtection " type="checkbox">
             </div>
           </div>
         </div>
@@ -114,37 +122,37 @@
               <label for="" style="width: 100px !important;">
                 L1-E:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneELeftTwo" type="text">
+              <input v-model="beforeTurnOn.L1E" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L1-N:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneNLeftTwo" type="text">
+              <input v-model="beforeTurnOn.L1N" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L1-L2:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneLTwoLeftTwo" type="text">
+              <input v-model="beforeTurnOn.L1L2" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L1-E:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneERightTwo" type="text">
+              <input v-model="beforeTurnOn.L1E" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L1-N:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneNRightTwo" type="text">
+              <input v-model="beforeTurnOn.L1N" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L1-L2:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneLTwoRightTwo" type="text">
+              <input v-model="beforeTurnOn.L1L2" type="text">
             </div>
           </div>
         </div>
@@ -152,39 +160,79 @@
           <div class="particular-inputs" style="gap: 10px;">
             <div class="box">
               <label for="" style="width: 100px !important;">
-                L1-E:
+                L2-E:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneELeftThree" type="text">
+              <input v-model="beforeTurnOn.L2E" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
-                L1-N:
+                L2-N:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneNLeftThree" type="text">
+              <input v-model="beforeTurnOn.L2N" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
-                L1-L2:
+                L2-L2:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneLTwoLeftThree" type="text">
+              <input v-model="beforeTurnOn.L2L2" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
-                L1-E:
+                L2-E:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneERightThree" type="text">
+              <input v-model="beforeTurnOn.L2E" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
-                L1-N:
+                L2-N:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneNRightThree" type="text">
+              <input v-model="beforeTurnOn.L2N" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
-                L1-L2:
+                L2-L2:
               </label>
-              <input v-model="reportData.beforeTurnOnLOneLTwoRightThree" type="text">
+              <input v-model="beforeTurnOn.L2L2" type="text">
+            </div>
+          </div>
+        </div>
+        <div class="particulars">
+          <div class="particular-inputs" style="gap: 10px;">
+            <div class="box">
+              <label for="" style="width: 100px !important;">
+                L3-E:
+              </label>
+              <input v-model="beforeTurnOn.L3E" type="text">
+            </div>
+            <div class="box">
+              <label for="" style="width: 100px !important;">
+                L3-N:
+              </label>
+              <input v-model="beforeTurnOn.L3N" type="text">
+            </div>
+            <div class="box">
+              <label for="" style="width: 100px !important;">
+                L3-L2:
+              </label>
+              <input v-model="beforeTurnOn.L2L3" type="text">
+            </div>
+            <div class="box">
+              <label for="" style="width: 100px !important;">
+                L3-E:
+              </label>
+              <input v-model="beforeTurnOn.L3E" type="text">
+            </div>
+            <div class="box">
+              <label for="" style="width: 100px !important;">
+                L3-N:
+              </label>
+              <input v-model="beforeTurnOn.L3N" type="text">
+            </div>
+            <div class="box">
+              <label for="" style="width: 100px !important;">
+                L3-L2:
+              </label>
+              <input v-model="beforeTurnOn.L2L3" type="text">
             </div>
           </div>
         </div>
@@ -194,25 +242,25 @@
               <label for="" style="width: 100px !important;">
                 N-E:
               </label>
-              <input v-model="reportData.beforeTurnOnNELeft" type="text">
+              <input v-model="beforeTurnOn.NE" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 Remarks:
               </label>
-              <input v-model="reportData.beforeTurnOnRemarksLeft" type="text">
+              <input v-model="beforeTurnOn.IncomingCablesRemarks" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
-                L1-E:
+                N-E:
               </label>
-              <input v-model="reportData.beforeTurnOnNERight" type="text">
+              <input v-model="beforeTurnOn.NE" type="text">
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
-                L1-N:
+                Remarks:
               </label>
-              <input v-model="reportData.beforeTurnOnRemarksRight" type="text">
+              <input v-model="beforeTurnOn.Remarks" type="text">
             </div>
           </div>
         </div>
@@ -230,10 +278,10 @@
             </div>
             <div class="box">
               <!-- <span>Acceptable / Not Acceptable</span> -->
-              <input id="one" v-model="reportData.phaseSequenceTest" type="radio" value="One">
+              <input id="one" :checked="afterTurnOn.PhaseSequenceTest === 'Acceptable' ? true : false" type="radio" value="one">
               <label for="one">Acceptable</label>
               /
-              <input id="two" v-model="reportData.phaseSequenceTest" type="radio" value="Two">
+              <input id="two" :checked="afterTurnOn.PhaseSequenceTest === 'Not Acceptable' ? true : false" type="radio" value="two">
               <label for="two">Not Acceptable</label>
             </div>
           </div>
@@ -245,29 +293,29 @@
               <label for="" style="width: 100px !important;">
                 L1-N:
               </label>
-              <input v-model="reportData.voltageLOneN" type="text">
-              V
+              <input v-model="afterTurnOn.L1N" type="text">
+              V&nbsp;
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L2-N:
               </label>
-              <input v-model="reportData.voltageLTwoN" type="text">
-              V
+              <input v-model="afterTurnOn.L2N" type="text">
+              V&nbsp;
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L3-N:
               </label>
-              <input v-model="reportData.voltageLThreeN" type="text">
-              V
+              <input v-model="afterTurnOn.L3N" type="text">
+              V&nbsp;
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 N-E:
               </label>
-              <input v-model="reportData.voltageNE" type="text">
-              V
+              <input v-model="afterTurnOn.NE" type="text">
+              V&nbsp;
             </div>
           </div>
           <div class="particular-inputs">
@@ -275,22 +323,22 @@
               <label for="" style="width: 100px !important;">
                 L1-L2:
               </label>
-              <input v-model="reportData.voltageLOneLTwo" type="text">
-              V
+              <input v-model="afterTurnOn.L1L2" type="text">
+              V&nbsp;
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L1-L3:
               </label>
-              <input v-model="reportData.voltageLOneLThree" type="text">
+              <input v-model="afterTurnOn.L1L3" type="text">
               V
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L2-L3:
               </label>
-              <input v-model="reportData.voltageLTwoLThree" type="text">
-              V
+              <input v-model="afterTurnOn.L2L3" type="text">
+              V&nbsp;
             </div>
           </div>
         </div>
@@ -303,21 +351,21 @@
               <label for="" style="width: 100px !important;">
                 L1-E:
               </label>
-              <input v-model="reportData.earthImpedanceLOneE" type="text">
+              <input v-model="afterTurnOn.L1E" type="text">
               Ω
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L2-E:
               </label>
-              <input v-model="reportData.earthImpedanceLTwoE" type="text">
+              <input v-model="afterTurnOn.L2E" type="text">
               Ω
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 L3-E:
               </label>
-              <input v-model="reportData.earthImpedanceLThreeE" type="text">
+              <input v-model="afterTurnOn.L3E" type="text">
               Ω
             </div>
           </div>
@@ -331,7 +379,7 @@
               <label for="" style="width: 100px !important;">
                 RCCB:
               </label>
-              <input v-model="reportData.earthFaultRCCB" type="text">
+              <input v-model="afterTurnOn.RCCB" type="text">
               mA
             </div>
             <span> OR</span>
@@ -339,18 +387,18 @@
               <label for="" style="width: 100px !important;">
                 ELR:
               </label>
-              <input v-model="reportData.earthFaultELROne" type="text">
+              <input v-model="afterTurnOn.ELRA" type="text">
               A
-              <input v-model="reportData.earthFaultELRTwo" type="text">
+              <input v-model="afterTurnOn.ELRS" type="text">
               s
             </div>
             <div class="box">
               <label for="" style="width: 100px !important;">
                 EF:
               </label>
-              <input v-model="reportData.earthFaultEFOne" type="text">
+              <input v-model="afterTurnOn.EFA" type="text">
               A
-              <input v-model="reportData.earthFaultEFTwo" type="text">
+              <input v-model="afterTurnOn.EFS" type="text">
               s
             </div>
           </div>
@@ -364,10 +412,10 @@
             </div>
             <div class="box">
               <!-- <span>Acceptable / Not Acceptable</span> -->
-              <input id="one" v-model="reportData.functionTest" type="radio" value="One">
+              <input id="one" :checked="afterTurnOn.FunctionTest === 'Acceptable'" type="radio" value="One">
               <label for="one">Acceptable</label>
               /
-              <input id="two" v-model="reportData.functionTest" type="radio" value="Two">
+              <input id="two" :checked="afterTurnOn.FunctionTest === 'Not Acceptable'" type="radio" value="Two">
               <label for="two">Not Acceptable</label>
             </div>
           </div>
@@ -381,10 +429,10 @@
             </div>
             <div class="box">
               <!-- <span>Acceptable / Not Acceptable / Not Applicable</span> -->
-              <input id="one" v-model="reportData.tariffMeter" type="radio" value="One">
+              <input id="one" :checked="afterTurnOn.TariffMeterDirection === 'Acceptable'" type="radio" value="One">
               <label for="one">Acceptable</label>
               /
-              <input id="two" v-model="reportData.tariffMeter" type="radio" value="Two">
+              <input id="two" :checked="afterTurnOn.TariffMeterDirection === 'Not Acceptable'" type="radio" value="Two">
               <label for="two">Not Acceptable</label>
             </div>
           </div>
@@ -398,154 +446,10 @@
             </div>
             <div class="box">
               <!-- <span>Acceptable / Not Acceptable</span> -->
-              <input id="one" v-model="reportData.polarityTest" type="radio" value="One">
+              <input id="one" :checked="afterTurnOn.PolarityTest === 'Acceptable'" type="radio" value="One">
               <label for="one">Acceptable</label>
               /
-              <input id="two" v-model="reportData.polarityTest" type="radio" value="Two">
-              <label for="two">Not Acceptable</label>
-            </div>
-          </div>
-        </div>
-        <div class="particulars">
-          <div class="particular-inputs">
-            <span style="text-decoration:none; width: 150px;">
-              <b>b) Earth Bonding</b>
-            </span>
-            <div class="box">
-              <label for="">
-                Electrical Bonding
-              </label>
-              <input v-model="reportData.earthBondingElectricalBonding" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                Water-pipe
-              </label>
-              <input v-model="reportData.earthBondingWaterPipe" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                Fire-pipe
-              </label>
-              <input v-model="reportData.earthBondingFirePipe" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                Gas-pipe
-              </label>
-              <input v-model="reportData.earthBondingGasPipe" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                Other Metallic parts
-              </label>
-              <input v-model="reportData.earthBondingOtherMetallicParts" type="checkbox">
-            </div>
-          </div>
-        </div>
-        <div class="particulars">
-          <div class="particular-inputs">
-            <span style="text-decoration:none; width: 150px;">
-              <b>c) Checklist</b>
-            </span>
-            <div class="box">
-              <label for="">
-                Labeling
-              </label>
-              <input v-model="reportData.checklistLabeling" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                Fire Extinguisher
-              </label>
-              <input v-model="reportData.checklistFireExtinguisher" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                Danger Sign
-              </label>
-              <input v-model="reportData.checklistDangerSign" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                Safety Chart
-              </label>
-              <input v-model="reportData.checklistSafetyChart" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                Rubber Mat
-              </label>
-              <input v-model="reportData.checklistRuberMat" type="checkbox">
-            </div>
-          </div>
-          <div class="particular-inputs">
-            <span style="width: 150px;" />
-            <div class="box">
-              <label for="">
-                Single Line Diagram
-              </label>
-              <input v-model="reportData.checklistSingleLineDiagram" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                EI License
-              </label>
-              <input v-model="reportData.checklistEiLicense" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                13A SSO
-              </label>
-              <input v-model="reportData.checklistThirteenASSO" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                Lighting
-              </label>
-              <input v-model="reportData.checklistLighting" type="checkbox">
-            </div>
-          </div>
-        </div>
-        <div class="particulars">
-          <div class="particular-inputs" style="align-items: center;">
-            <span style="text-decoration:none; width: 150px;">
-              <b>d) Earth Pit</b>
-            </span>
-            <div class="box">
-              <label for="">
-                Ring circuit
-              </label>
-              <input v-model="reportData.earthPitRingCircuit" type="checkbox">
-            </div>
-            <div class="box">
-              <label for="">
-                No. of Earth Pit
-              </label>
-              <input v-model="reportData.earthPitNum" class="special-input" type="text">
-            </div>
-            <div class="box" style="align-items: center;">
-              <label for="">
-                Overall Earth pit Value
-              </label>
-              <input v-model="reportData.earthPitOverallValue" class="special-input" type="text">
-              <label for="">Ω</label>
-            </div>
-          </div>
-        </div>
-        <div class="particulars">
-          <div class="particular-inputs">
-            <div class="box">
-              <label for="">
-                <b> e) Sub Main Cable Protection</b>
-              </label>
-            </div>
-            <div class="box">
-              <!-- <span>Acceptable / Not Acceptable</span> -->
-              <input id="one" v-model="reportData.subMainCableProtection" type="radio" value="One">
-              <label for="one">Acceptable</label>
-              /
-              <input id="two" v-model="reportData.subMainCableProtection" type="radio" value="Two">
+              <input id="two" :checked="afterTurnOn.PolarityTest === 'Not Acceptable'" type="radio" value="Two">
               <label for="two">Not Acceptable</label>
             </div>
           </div>
@@ -570,7 +474,7 @@
             <label for="">
               Date:
             </label>
-            <input v-model="reportData.date" class="special-input" type="text">
+            <input v-model="formatedDate" class="special-input" type="text">
             <label for="">
               Signature:
             </label>
@@ -593,6 +497,54 @@ import moment from 'moment'
 export default {
   name: 'PrintingReports',
   layout: 'printlayout',
+  async asyncData ({ route, $axios }) {
+    if (route && route.query && route.query.id) {
+      const id = parseInt(route.query.id)
+      const token = route.query.token
+
+      const printPhotos = route.query && route.query.printPhotos ? route.query.printPhotos === 'true' : false
+      const isCompoundedPhotoRecord = route.query && route.query.compoundedPhotoRecord ? route.query.compoundedPhotoRecord === 'true' : false
+      const result = await $axios.$get(`reports/${id}`, {
+        headers: {
+          Authorization: `bearer ${token}`
+        }
+      })
+
+      const configuration = await $axios.$get(`reportconfiguration/${result.reportConfigurationId}`, {
+        headers: {
+          Authorization: `bearer ${token}`
+        }
+      })
+
+      let beforeTurnOn = {}
+      let afterTurnOn = {}
+      if (result) {
+        beforeTurnOn = result.forms.filter(f => f.name === 'BEFORETURNON')[0].values
+        afterTurnOn = result.forms.filter(f => f.name === 'AFTERTURNON ')[0].values
+      }
+      console.log({
+        reportId: id,
+        reportData: result,
+        printPhotos,
+        isCompoundedPhotoRecord,
+        isPrintable: false,
+        beforeTurnOn,
+        afterTurnOn,
+        configuration
+      })
+
+      return {
+        reportId: id,
+        reportData: result,
+        printPhotos,
+        isCompoundedPhotoRecord,
+        isPrintable: false,
+        beforeTurnOn,
+        afterTurnOn,
+        configuration
+      }
+    }
+  },
   data () {
     return {
       reportId: -1,
@@ -668,6 +620,12 @@ export default {
         display: flex;
         /* padding: 20px 0px; */
         justify-content: space-between;
+    }
+    .box-checks{
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0px 10px;
     }
     .box{
         display: flex;

@@ -29,7 +29,21 @@
             fab
             dark
             color="primary"
-            @click="item = { principal: false }; dialog = true"
+            @click="item = {
+              title: '',
+              annotation: '',
+              responsableType: 0,
+              responsibleName: '',
+              date: new Date().toISOString(),
+              signature: '',
+              designation: '',
+              remarks: '',
+              date: null,
+              principal: true,
+              reportId: 0,
+              reportConfigurationId: 0,
+              order: 0
+            }; dialog = true"
           >
             <v-icon dark>
               mdi-plus
@@ -239,7 +253,20 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
   ]
 
   selectedItem: Signature = {} as Signature
-  item: any = { principal: false }
+  item: any = {
+    title: '',
+    annotation: '',
+    responsableType: 0,
+    responsibleName: '',
+    designation: '',
+    remarks: '',
+    date: new Date().toISOString(),
+    signature: '',
+    principal: true,
+    reportId: 0,
+    reportConfigurationId: 0,
+    order: 0
+  }
 
   get reports (): Report[] {
     return (this.$store.state.reportstrore as ReportsState)
