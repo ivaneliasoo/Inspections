@@ -68,6 +68,23 @@
         <span style="text-decoration: underline; font-weight: bold;">
           2. BEFORE TURN-ON
         </span>
+        <div class="particulars">
+          <div class="particular-inputs">
+            <div class="box">
+              <label for="">
+                <b> a) Phase Out Test for Cable</b>
+              </label>
+            </div>
+            <div class="box">
+              <!-- <span>Acceptable / Not Acceptable</span> -->
+              <input id="one" :checked="beforeTurnOn.PhaseOutTestCable === 'Acceptable'" type="radio" value="One">
+              <label for="one">Acceptable</label>
+              /
+              <input id="two" :checked="beforeTurnOn.PhaseOutTestCable === 'Not Acceptable'" type="radio" value="Two">
+              <label for="two">Not Acceptable</label>
+            </div>
+          </div>
+        </div>
         <div v-for="checkList in reportData.checkLists" :key="checkList.checkListId" class="particulars">
           <div class="particular-inputs" />
           <span style="text-decoration:none; width: 150px;">
@@ -522,16 +539,16 @@ export default {
         beforeTurnOn = result.forms.filter(f => f.name === 'BEFORETURNON')[0].values
         afterTurnOn = result.forms.filter(f => f.name === 'AFTERTURNON ')[0].values
       }
-      console.log({
-        reportId: id,
-        reportData: result,
-        printPhotos,
-        isCompoundedPhotoRecord,
-        isPrintable: false,
-        beforeTurnOn,
-        afterTurnOn,
-        configuration
-      })
+      // console.log({
+      //   reportId: id,
+      //   reportData: result,
+      //   printPhotos,
+      //   isCompoundedPhotoRecord,
+      //   isPrintable: false,
+      //   beforeTurnOn,
+      //   afterTurnOn,
+      //   configuration
+      // })
 
       return {
         reportId: id,
