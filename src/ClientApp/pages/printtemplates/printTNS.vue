@@ -1,20 +1,5 @@
 <template>
   <div style="display: block">
-    <header>
-      <div class="container">
-        <h1 class="mh-logo">
-          <!-- <PrintingLogo /> -->
-        </h1>
-        <div class="title-box">
-          <h1 class="">
-            {{ reportData.title }}
-          </h1>
-          <h5 class="">
-            {{ reportData.formName }}
-          </h5>
-        </div>
-      </div>
-    </header>
     <div class="wrapper">
       <div class="row">
         <div class="particulars">

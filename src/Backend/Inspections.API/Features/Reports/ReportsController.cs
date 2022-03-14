@@ -14,7 +14,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-
+using Microsoft.AspNetCore.Http;
 
 namespace Inspections.API.Features.Reports
 {
@@ -109,6 +109,7 @@ namespace Inspections.API.Features.Reports
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> GetPhotoRecords(int id)
         {
             MapperConfiguration config = new MapperConfiguration(cfg =>
@@ -126,7 +127,7 @@ namespace Inspections.API.Features.Reports
                 photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized);
             }
 
-            if (!photos.Any()) return BadRequest();
+            if (!photos.Any()) return NoContent();
 
             return Ok(photos);
         }
