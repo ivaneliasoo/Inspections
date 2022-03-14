@@ -1,5 +1,18 @@
 <template>
   <div style="display: block">
+    <header>
+      <div class="container">
+        <PrintingLogo />
+        <div class="title">
+          <h1 class="">
+            {{ reportData.title }}
+          </h1>
+          <h5 class="subtitle">
+            {{ reportData.formName }}
+          </h5>
+        </div>
+      </div>
+    </header>
     <div class="wrapper">
       <div class="row">
         <div class="particulars">

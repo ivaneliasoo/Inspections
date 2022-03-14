@@ -1,5 +1,18 @@
 <template>
   <div style="display: block; border: 2px">
+    <header>
+      <div class="container">
+        <PrintingLogo />
+        <div class="title">
+          <h1 class="">
+            {{ reportData.title }}
+          </h1>
+          <h5 class="subtitle">
+            {{ reportData.formName }}
+          </h5>
+        </div>
+      </div>
+    </header>
     <div style="display: block;" class="page-break-after">
       <article class="tw-text-justify">
         <PrintingTitle> Particulars Of Instalation </PrintingTitle>

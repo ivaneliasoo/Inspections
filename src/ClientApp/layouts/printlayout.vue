@@ -1,16 +1,5 @@
 <template>
   <div style="display: block">
-    <header>
-      <PrintingLogo />
-      <div class="content">
-        <h1 class="title">
-          Inspection Report
-        </h1>
-        <h2 class="subtitle">
-          CSE EI(R1) FORM
-        </h2>
-      </div>
-    </header>
     <nuxt />
   </div>
 </template>
