@@ -28,7 +28,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AddressDTO"
+                    "$ref": "#/components/schemas/AddressDto"
                   }
                 }
               },
@@ -36,7 +36,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AddressDTO"
+                    "$ref": "#/components/schemas/AddressDto"
                   }
                 }
               },
@@ -44,7 +44,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AddressDTO"
+                    "$ref": "#/components/schemas/AddressDto"
                   }
                 }
               }
@@ -61,17 +61,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAddressDTO"
+                "$ref": "#/components/schemas/NewAddressDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAddressDTO"
+                "$ref": "#/components/schemas/NewAddressDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAddressDTO"
+                "$ref": "#/components/schemas/NewAddressDto"
               }
             }
           }
@@ -162,17 +162,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddressDTO"
+                  "$ref": "#/components/schemas/AddressDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddressDTO"
+                  "$ref": "#/components/schemas/AddressDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddressDTO"
+                  "$ref": "#/components/schemas/AddressDto"
                 }
               }
             }
@@ -239,17 +239,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAddressDTO"
+                "$ref": "#/components/schemas/NewAddressDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAddressDTO"
+                "$ref": "#/components/schemas/NewAddressDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAddressDTO"
+                "$ref": "#/components/schemas/NewAddressDto"
               }
             }
           }
@@ -342,17 +342,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddressDTO"
+                  "$ref": "#/components/schemas/AddressDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddressDTO"
+                  "$ref": "#/components/schemas/AddressDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddressDTO"
+                  "$ref": "#/components/schemas/AddressDto"
                 }
               }
             }
@@ -1082,6 +1082,265 @@
         }
       }
     },
+    "/api/CostSheet": {
+      "get": {
+        "tags": [
+          "CostSheet"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CostSheet"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CostSheet"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/CostSheet/{id}": {
+      "get": {
+        "tags": [
+          "CostSheet"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostSheet"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostSheet"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostSheet"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CostSheet"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/EMALicenses": {
       "get": {
         "tags": [
@@ -1703,27 +1962,985 @@
         "tags": [
           "EnergyReport"
         ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Forms": {
+      "get": {
+        "tags": [
+          "Forms"
+        ],
+        "operationId": "GetFormsDefinitions",
+        "parameters": [
+          {
+            "name": "Filter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormDefinitionResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormDefinitionResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormDefinitionResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Forms"
+        ],
+        "operationId": "AddFormDefinition",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CurrentTable"
+                "$ref": "#/components/schemas/NewFormDefinitionCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CurrentTable"
+                "$ref": "#/components/schemas/NewFormDefinitionCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CurrentTable"
+                "$ref": "#/components/schemas/NewFormDefinitionCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormDefinitionResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormDefinitionResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormDefinitionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Forms/{id}": {
+      "get": {
+        "tags": [
+          "Forms"
+        ],
+        "operationId": "GetFormDefinition",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Forms"
+        ],
+        "operationId": "UpdateFormDefinition",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFormDefinitionCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFormDefinitionCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFormDefinitionCommand"
               }
             }
           }
         },
         "responses": {
           "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Forms"
+        ],
+        "operationId": "DeleteFormDefinition",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/JobSchedule": {
+      "get": {
+        "tags": [
+          "JobSchedule"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleData"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "JobSchedule"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleData"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleData"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/JobSchedule/sched-job": {
+      "put": {
+        "tags": [
+          "JobSchedule"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SchedJob"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SchedJob"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SchedJob"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/JobSchedule/job": {
+      "put": {
+        "tags": [
+          "JobSchedule"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/JobSchedule/team": {
+      "put": {
+        "tags": [
+          "JobSchedule"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Team"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Team"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Team"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/JobSchedule/options": {
+      "put": {
+        "tags": [
+          "JobSchedule"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Options"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Options"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Options"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PrintSection": {
+      "post": {
+        "tags": [
+          "PrintSection"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPrintSectionCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPrintSectionCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPrintSectionCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "PrintSection"
+        ],
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PrintSectionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PrintSectionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PrintSectionDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/PrintSection/{id}": {
+      "put": {
+        "tags": [
+          "PrintSection"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPrintSectionCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPrintSectionCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPrintSectionCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "PrintSection"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "PrintSection"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
             "description": "Success"
           },
           "400": {
@@ -2108,17 +3325,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReportConfigurationDTO"
+                  "$ref": "#/components/schemas/ReportConfigurationDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReportConfigurationDTO"
+                  "$ref": "#/components/schemas/ReportConfigurationDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReportConfigurationDTO"
+                  "$ref": "#/components/schemas/ReportConfigurationDto"
                 }
               }
             }
@@ -2572,6 +3789,9 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "Success"
           }
         }
       },
@@ -2887,6 +4107,92 @@
         }
       }
     },
+    "/api/Reports/{id}/forms/{idForm}": {
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "UpdateForm",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idForm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { }
+            },
+            "text/json": {
+              "schema": { }
+            },
+            "application/*+json": {
+              "schema": { }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Reports/{id}/photorecord/{idPhoto}": {
       "put": {
         "tags": [
@@ -3153,89 +4459,6 @@
         }
       }
     },
-    "/api/Reports/{id}/readings": {
-      "put": {
-        "tags": [
-          "Reports"
-        ],
-        "operationId": "UpdateOperationalReadings",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateOperationalReadingsCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateOperationalReadingsCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateOperationalReadingsCommand"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Reports/{id}/export": {
       "get": {
         "tags": [
@@ -3381,7 +4604,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SignatureDTO"
+                    "$ref": "#/components/schemas/SignatureDto"
                   }
                 }
               },
@@ -3389,7 +4612,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SignatureDTO"
+                    "$ref": "#/components/schemas/SignatureDto"
                   }
                 }
               },
@@ -3397,7 +4620,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SignatureDTO"
+                    "$ref": "#/components/schemas/SignatureDto"
                   }
                 }
               }
@@ -3670,7 +4893,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserDTO"
+                    "$ref": "#/components/schemas/UserDto"
                   }
                 }
               },
@@ -3678,7 +4901,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserDTO"
+                    "$ref": "#/components/schemas/UserDto"
                   }
                 }
               },
@@ -3686,7 +4909,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserDTO"
+                    "$ref": "#/components/schemas/UserDto"
                   }
                 }
               }
@@ -3703,17 +4926,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDTO"
+                "$ref": "#/components/schemas/UserDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDTO"
+                "$ref": "#/components/schemas/UserDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDTO"
+                "$ref": "#/components/schemas/UserDto"
               }
             }
           }
@@ -3804,17 +5027,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDTO"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDTO"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDTO"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               }
             }
@@ -3880,17 +5103,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDTO"
+                "$ref": "#/components/schemas/UserDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDTO"
+                "$ref": "#/components/schemas/UserDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDTO"
+                "$ref": "#/components/schemas/UserDto"
               }
             }
           }
@@ -4043,7 +5266,7 @@
         "tags": [
           "Users"
         ],
-        "summary": "Change User Password afeter validated",
+        "summary": "Change User Password after validated",
         "operationId": "ChangePassword",
         "parameters": [
           {
@@ -4061,17 +5284,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChangePasswordDTO"
+                "$ref": "#/components/schemas/ChangePasswordDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChangePasswordDTO"
+                "$ref": "#/components/schemas/ChangePasswordDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ChangePasswordDTO"
+                "$ref": "#/components/schemas/ChangePasswordDto"
               }
             }
           }
@@ -4135,17 +5358,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDTO"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDTO"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDTO"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               }
             }
@@ -4282,8 +5505,31 @@
             "type": "boolean"
           },
           "needsCheck": {
-            "type": "boolean",
-            "readOnly": true
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddPrintSectionCommand": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "content": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "isMainReport": {
+            "type": "boolean"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PrintSectionStatus"
           }
         },
         "additionalProperties": false
@@ -4312,8 +5558,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "signatureDefinitions": {
             "type": "array",
@@ -4321,8 +5566,14 @@
               "type": "integer",
               "format": "int32"
             },
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
+          },
+          "display": {
+            "$ref": "#/components/schemas/CheckListDisplay"
+          },
+          "printSectionId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -4372,7 +5623,7 @@
         },
         "additionalProperties": false
       },
-      "AddressDTO": {
+      "AddressDto": {
         "type": "object",
         "properties": {
           "id": {
@@ -4466,9 +5717,6 @@
           "principal": {
             "type": "boolean"
           },
-          "isConfiguration": {
-            "type": "boolean"
-          },
           "reportId": {
             "type": "integer",
             "format": "int32",
@@ -4481,13 +5729,16 @@
           },
           "order": {
             "type": "integer",
-            "format": "int32",
-            "readOnly": true
+            "format": "int32"
+          },
+          "signature": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "ChangePasswordDTO": {
+      "ChangePasswordDto": {
         "type": "object",
         "properties": {
           "userName": {
@@ -4508,6 +5759,14 @@
           }
         },
         "additionalProperties": false
+      },
+      "CheckListDisplay": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "CheckListItemDTO": {
         "type": "object",
@@ -4575,6 +5834,15 @@
         },
         "additionalProperties": false
       },
+      "CheckListPrintingMetadata": {
+        "type": "object",
+        "properties": {
+          "display": {
+            "$ref": "#/components/schemas/CheckListDisplay"
+          }
+        },
+        "additionalProperties": false
+      },
       "CheckListQueryResult": {
         "type": "object",
         "properties": {
@@ -4616,6 +5884,68 @@
         ],
         "type": "string"
       },
+      "CostSheet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "project": {
+            "type": "string",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "materialMarkup": {
+            "type": "number",
+            "format": "double"
+          },
+          "labourDailyRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "labourNightMultiplier": {
+            "type": "number",
+            "format": "double"
+          },
+          "finalMarkup": {
+            "type": "number",
+            "format": "double"
+          },
+          "sections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Section"
+            },
+            "nullable": true
+          },
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updated": {
+            "type": "boolean"
+          },
+          "lastEdit": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastEditUser": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateReportCommand": {
         "type": "object",
         "properties": {
@@ -4651,6 +5981,14 @@
           "currentData": {
             "type": "string",
             "nullable": true
+          },
+          "lastEdit": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastEditUser": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4665,6 +6003,93 @@
           "end": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DynamicFieldMetadata": {
+        "type": "object",
+        "properties": {
+          "fieldName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sectionTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "switchableSection": {
+            "type": "string",
+            "nullable": true
+          },
+          "label": {
+            "type": "string",
+            "nullable": true
+          },
+          "inputType": {
+            "type": "string",
+            "nullable": true
+          },
+          "selectOptions": {
+            "type": "string",
+            "nullable": true
+          },
+          "suffix": {
+            "type": "string",
+            "nullable": true
+          },
+          "prefix": {
+            "type": "string",
+            "nullable": true
+          },
+          "min": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "max": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "step": {
+            "type": "number",
+            "format": "float"
+          },
+          "maxLength": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "rollerOnMobile": {
+            "type": "boolean"
+          },
+          "rollerDigits": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "visible": {
+            "type": "boolean"
+          },
+          "defaultValue": {
+            "nullable": true
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DynamicFields": {
+        "type": "object",
+        "properties": {
+          "fieldsDefinitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DynamicFieldMetadata"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4695,8 +6120,7 @@
         "properties": {
           "reportId": {
             "type": "integer",
-            "format": "int32",
-            "readOnly": true
+            "format": "int32"
           },
           "id": {
             "type": "integer",
@@ -4704,8 +6128,35 @@
           },
           "label": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EditPrintSectionCommand": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "content": {
+            "type": "string",
+            "nullable": true
+          },
+          "isMainReport": {
+            "type": "boolean"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PrintSectionStatus"
           }
         },
         "additionalProperties": false
@@ -4753,8 +6204,7 @@
           },
           "order": {
             "type": "integer",
-            "format": "int32",
-            "readOnly": true
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -4812,8 +6262,174 @@
         },
         "additionalProperties": false
       },
+      "FormDefinitionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "fields": {
+            "$ref": "#/components/schemas/DynamicFields"
+          },
+          "defaultValues": {
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "fields": {
+            "$ref": "#/components/schemas/DynamicFields"
+          },
+          "values": {
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "INotification": {
         "type": "object",
+        "additionalProperties": false
+      },
+      "Item": {
+        "type": "object",
+        "properties": {
+          "itemNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "materialMarkup": {
+            "type": "number",
+            "format": "double"
+          },
+          "noCables": {
+            "type": "number",
+            "format": "double"
+          },
+          "unitCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "units": {
+            "type": "number",
+            "format": "double"
+          },
+          "labourCostUnit": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Job": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "salesPerson": {
+            "type": "string",
+            "nullable": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scope": {
+            "type": "string",
+            "nullable": true
+          },
+          "tag": {
+            "type": "string",
+            "nullable": true
+          },
+          "comments": {
+            "type": "string",
+            "nullable": true
+          },
+          "teams": {
+            "type": "string",
+            "nullable": true
+          },
+          "teamCount": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "string",
+            "nullable": true
+          },
+          "shift": {
+            "type": "string",
+            "nullable": true
+          },
+          "updated": {
+            "type": "boolean"
+          },
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastEdit": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastEditUser": {
+            "type": "string",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "LicenseDTO": {
@@ -4880,36 +6496,90 @@
         },
         "additionalProperties": false
       },
-      "NewAddressDTO": {
+      "NewAddressDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "addressLine": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "addressLine2": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "unit": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "licenseId": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NewFormDefinitionCommand": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "addressLine": {
+          "name": {
             "type": "string",
             "nullable": true
           },
-          "addressLine2": {
+          "title": {
             "type": "string",
             "nullable": true
           },
-          "unit": {
+          "icon": {
             "type": "string",
             "nullable": true
           },
-          "country": {
-            "type": "string",
+          "fields": {
+            "$ref": "#/components/schemas/DynamicFields"
+          },
+          "defaultValues": {
             "nullable": true
           },
-          "postalCode": {
-            "type": "string",
+          "enabled": {
+            "type": "boolean"
+          },
+          "reports": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
             "nullable": true
           },
-          "licenseId": {
-            "type": "integer",
-            "format": "int32"
+          "reportConfigurations": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4938,6 +6608,77 @@
         },
         "additionalProperties": false
       },
+      "Options": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scheduleWeeks": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "autosaveInterval": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastEdit": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastEditUser": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PrintSectionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "content": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "isMainReport": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/PrintSectionStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PrintSectionStatus": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "ProblemDetails": {
         "type": "object",
         "properties": {
@@ -4965,27 +6706,31 @@
         },
         "additionalProperties": { }
       },
-      "ReportConfigurationDTO": {
+      "ReportConfigurationDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "readOnly": true
           },
           "type": {
             "$ref": "#/components/schemas/ReportType"
           },
           "title": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "formName": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "remarksLabelText": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "checksDefinition": {
             "type": "array",
@@ -4993,7 +6738,8 @@
               "type": "integer",
               "format": "int32"
             },
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "signatureDefinitions": {
             "type": "array",
@@ -5001,7 +6747,30 @@
               "type": "integer",
               "format": "int32"
             },
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
+          },
+          "forms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormDefinitionResponse"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "checkListMetadata": {
+            "$ref": "#/components/schemas/CheckListPrintingMetadata"
+          },
+          "printSectionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "templateName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -5048,6 +6817,10 @@
             "format": "double",
             "nullable": true
           },
+          "reportConfigurationId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "licenseValidity": {
             "$ref": "#/components/schemas/DateTimeRange"
           },
@@ -5066,119 +6839,12 @@
           "isClosed": {
             "type": "boolean"
           },
-          "operationalReadingsId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsVoltageL1N": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsVoltageL2N": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsVoltageL3N": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsVoltageL1L2": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsVoltageL1L3": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsVoltageL2L3": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsRunningLoadL1": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsRunningLoadL2": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsRunningLoadL3": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsMainBreakerAmp": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsMainBreakerPoles": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsMainBreakerCapacity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsOverCurrentDTLA": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsOverCurrentDTLSec": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsOverCurrentIDMTLA": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsOverCurrentIDMTLTm": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsEarthFaultMA": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsEarthFaultELRA": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsEarthFaultELRSec": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsEarthFaultA": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsEarthFaultSec": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsMainBreakerRating": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsOverCurrentDirectActingEnabled": {
-            "type": "boolean"
-          },
-          "operationalReadingsOverCurrentDirectActing": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "operationalReadingsOverCurrentDTLEnabled": {
-            "type": "boolean"
-          },
-          "operationalReadingsOverCurrentIDTMLEnabled": {
-            "type": "boolean"
-          },
-          "operationalReadingsEarthFaultRoobEnabled": {
-            "type": "boolean"
-          },
-          "operationalReadingsEarthFaultEIREnabled": {
-            "type": "boolean"
-          },
-          "operationalReadingsEarthFaultEFEnabled": {
-            "type": "boolean"
+          "forms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormResult"
+            },
+            "nullable": true
           },
           "signatures": {
             "type": "array",
@@ -5206,19 +6872,21 @@
       },
       "ReportType": {
         "enum": [
-          "Inspection"
+          0
         ],
-        "type": "string"
+        "type": "integer",
+        "format": "int32"
       },
       "ResponsibleType": {
         "enum": [
-          "Supervisor",
-          "Inspector",
-          "Witness",
-          "LEW",
-          "Other"
+          0,
+          1,
+          2,
+          3,
+          4
         ],
-        "type": "string"
+        "type": "integer",
+        "format": "int32"
       },
       "ResumenReportConfiguration": {
         "type": "object",
@@ -5257,60 +6925,209 @@
           },
           "inactive": {
             "type": "boolean"
+          },
+          "printSection": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "SignatureDTO": {
+      "SchedJob": {
+        "required": [
+          "date"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "title": {
+          "team": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "shift": {
             "type": "string",
             "nullable": true
           },
-          "annotation": {
+          "splitShift": {
+            "type": "boolean"
+          },
+          "job1": {
             "type": "string",
             "nullable": true
+          },
+          "job2": {
+            "type": "string",
+            "nullable": true
+          },
+          "teamMembers": {
+            "type": "string",
+            "nullable": true
+          },
+          "excludeSaturday": {
+            "type": "boolean"
+          },
+          "excludeSunday": {
+            "type": "boolean"
+          },
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updated": {
+            "type": "boolean"
+          },
+          "lastEdit": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastEditUser": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ScheduleData": {
+        "type": "object",
+        "properties": {
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "jobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Job"
+            },
+            "nullable": true
+          },
+          "schedJobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SchedJob"
+            },
+            "nullable": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Team"
+            },
+            "nullable": true
+          },
+          "options": {
+            "$ref": "#/components/schemas/Options"
+          },
+          "apiVersion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Section": {
+        "type": "object",
+        "properties": {
+          "secNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "subSection": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            },
+            "nullable": true
+          },
+          "materialMarkup": {
+            "type": "number",
+            "format": "double"
+          },
+          "finalMarkup": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SignatureDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "annotation": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           },
           "responsableType": {
             "$ref": "#/components/schemas/ResponsibleType"
           },
           "responsableName": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "designation": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "remarks": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "date": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "readOnly": true
           },
           "principal": {
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           },
           "reportId": {
             "type": "integer",
             "format": "int32",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "reportConfigurationId": {
             "type": "integer",
             "format": "int32",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "order": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -5373,6 +7190,48 @@
         },
         "additionalProperties": false
       },
+      "Team": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vehicle": {
+            "type": "string",
+            "nullable": true
+          },
+          "foreman": {
+            "type": "string",
+            "nullable": true
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "updated": {
+            "type": "boolean"
+          },
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "teamMembers": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastEdit": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastEditUser": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateCheckListCommand": {
         "type": "object",
         "properties": {
@@ -5421,130 +7280,6 @@
           "remarks": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateOperationalReadingsCommand": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "reportId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "voltageL1N": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "voltageL2N": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "voltageL3N": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "voltageL1L2": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "voltageL1L3": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "voltageL2L3": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "runningLoadL1": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "runningLoadL2": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "runningLoadL3": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "mainBreakerAmp": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "mainBreakerPoles": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "mainBreakerCapacity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "overCurrentDTLA": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "overCurrentDTLSec": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "overCurrentIDMTLA": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "overCurrentIDMTLTm": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "earthFaultMA": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "earthFaultELRA": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "earthFaultELRSec": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "earthFaultA": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "earthFaultSec": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "mainBreakerRating": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "overCurrentDirectActingEnabled": {
-            "type": "boolean"
-          },
-          "overCurrentDirectActing": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "overCurrentDTLEnabled": {
-            "type": "boolean"
-          },
-          "overCurrentIDTMLEnabled": {
-            "type": "boolean"
-          },
-          "earthFaultRoobEnabled": {
-            "type": "boolean"
-          },
-          "earthFaultEIREnabled": {
-            "type": "boolean"
-          },
-          "earthFaultEFEnabled": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -5606,8 +7341,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "signatureDefinitions": {
             "type": "array",
@@ -5615,8 +7349,18 @@
               "type": "integer",
               "format": "int32"
             },
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
+          },
+          "printSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "display": {
+            "$ref": "#/components/schemas/CheckListDisplay"
+          },
+          "templateName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5651,7 +7395,7 @@
         },
         "additionalProperties": false
       },
-      "UserDTO": {
+      "UserDto": {
         "type": "object",
         "properties": {
           "userName": {

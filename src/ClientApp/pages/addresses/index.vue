@@ -275,14 +275,22 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
   }
 
   async upsertAddress () {
-    this.loading = true
-    if (!this.isNew) { await this.$store.dispatch('addresses/updateAddress', this.item, { root: true }) } else {
-      await this.$store.dispatch('addresses/createAddress', this.item, { root: true })
-      await this.$store.dispatch('addresses/getAddresses', {}, { root: true })
+    try {
+      this.loading = true
+      if (!this.isNew) {
+        console.log({ item: this.item })
+        await this.$store.dispatch('addresses/updateAddress', this.item, { root: true })
+      } else {
+        await this.$store.dispatch('addresses/createAddress', this.item, { root: true })
+        await this.$store.dispatch('addresses/getAddresses', {}, { root: true })
+      }
+    } catch (error) {
+      console.log({ error })
+    } finally {
+      this.dialog = false
+      this.isNew = true
+      this.loading = false
     }
-    this.dialog = false
-    this.isNew = true
-    this.loading = false
   }
 }
 </script>

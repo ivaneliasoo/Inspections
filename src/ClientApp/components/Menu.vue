@@ -44,7 +44,7 @@ export default class Menu extends Vue {
     {
       name: "LEW Licensing",
       parentName: "",
-      route: "",
+      route: "/lewlicensing",
       icon: "",
     },
     {

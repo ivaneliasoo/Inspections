@@ -129,6 +129,43 @@ export interface AddNoteCommand {
 /**
  * 
  * @export
+ * @interface AddPrintSectionCommand
+ */
+export interface AddPrintSectionCommand {
+    /**
+     * 
+     * @type {string}
+     * @memberof AddPrintSectionCommand
+     */
+    code?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AddPrintSectionCommand
+     */
+    content?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AddPrintSectionCommand
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AddPrintSectionCommand
+     */
+    isMainReport?: boolean;
+    /**
+     * 
+     * @type {PrintSectionStatus}
+     * @memberof AddPrintSectionCommand
+     */
+    status?: PrintSectionStatus;
+}
+/**
+ * 
+ * @export
  * @interface AddReportConfigurationCommand
  */
 export interface AddReportConfigurationCommand {
@@ -168,6 +205,18 @@ export interface AddReportConfigurationCommand {
      * @memberof AddReportConfigurationCommand
      */
     signatureDefinitions?: Array<number> | null;
+    /**
+     * 
+     * @type {CheckListDisplay}
+     * @memberof AddReportConfigurationCommand
+     */
+    display?: CheckListDisplay;
+    /**
+     * 
+     * @type {number}
+     * @memberof AddReportConfigurationCommand
+     */
+    printSectionId?: number;
 }
 /**
  * 
@@ -225,12 +274,6 @@ export interface AddSignatureCommand {
     principal?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof AddSignatureCommand
-     */
-    isConfiguration?: boolean;
-    /**
-     * 
      * @type {number}
      * @memberof AddSignatureCommand
      */
@@ -247,6 +290,12 @@ export interface AddSignatureCommand {
      * @memberof AddSignatureCommand
      */
     order?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AddSignatureCommand
+     */
+    signature?: string | null;
 }
 /**
  * 
@@ -312,125 +361,136 @@ export interface Address {
 /**
  * 
  * @export
- * @interface AddressDTO
+ * @interface AddressDto
  */
-export interface AddressDTO {
+export interface AddressDto {
     /**
      * 
      * @type {number}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     id?: number;
     /**
      * 
      * @type {string}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     addressLine?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     addressLine2?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     unit?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     country?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     postalCode?: string | null;
     /**
      * 
      * @type {number}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     licenseId?: number;
     /**
      * 
      * @type {string}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     number?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     name?: string | null;
     /**
      * 
      * @type {number}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     amp?: number;
     /**
      * 
      * @type {number}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     volt?: number;
     /**
      * 
      * @type {number}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     kva?: number;
     /**
      * 
      * @type {DateTimeRange}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     validity?: DateTimeRange;
     /**
      * 
      * @type {string}
-     * @memberof AddressDTO
+     * @memberof AddressDto
      */
     formatedAddress?: string | null;
 }
 /**
  * 
  * @export
- * @interface ChangePasswordDTO
+ * @interface ChangePasswordDto
  */
-export interface ChangePasswordDTO {
+export interface ChangePasswordDto {
     /**
      * 
      * @type {string}
-     * @memberof ChangePasswordDTO
+     * @memberof ChangePasswordDto
      */
     userName?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof ChangePasswordDTO
+     * @memberof ChangePasswordDto
      */
     currentPassword?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof ChangePasswordDTO
+     * @memberof ChangePasswordDto
      */
     newPassword?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof ChangePasswordDTO
+     * @memberof ChangePasswordDto
      */
     newPasswordConfirmation?: string | null;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum CheckListDisplay {
+    Numbered = 0,
+    Inline = 1
+}
+
 /**
  * 
  * @export
@@ -512,6 +572,9 @@ export interface CheckListItemQueryResult {
     id?: number;
     /**
      * 
+    /**
+     * 
+     * @type {number}
      * @type {string}
      * @memberof CheckListItemQueryResult
      */
@@ -534,6 +597,19 @@ export interface CheckListItemQueryResult {
      * @memberof CheckListItemQueryResult
      */
     touched?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface CheckListPrintingMetadata
+ */
+export interface CheckListPrintingMetadata {
+    /**
+     * 
+     * @type {CheckListDisplay}
+     * @memberof CheckListPrintingMetadata
+     */
+    display?: CheckListDisplay;
 }
 /**
  * 
@@ -594,6 +670,91 @@ export enum CheckValue {
 /**
  * 
  * @export
+ * @interface CostSheet
+ */
+export interface CostSheet {
+    /**
+     * 
+     * @type {number}
+     * @memberof CostSheet
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CostSheet
+     */
+    project?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CostSheet
+     */
+    location?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CostSheet
+     */
+    dateCreated?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CostSheet
+     */
+    materialMarkup?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CostSheet
+     */
+    labourDailyRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CostSheet
+     */
+    labourNightMultiplier?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CostSheet
+     */
+    finalMarkup?: number;
+    /**
+     * 
+     * @type {Array<Section>}
+     * @memberof CostSheet
+     */
+    sections?: Array<Section> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CostSheet
+     */
+    lastUpdate?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CostSheet
+     */
+    updated?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CostSheet
+     */
+    lastEdit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CostSheet
+     */
+    lastEditUser?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface CreateReportCommand
  */
 export interface CreateReportCommand {
@@ -646,6 +807,18 @@ export interface CurrentTable {
      * @memberof CurrentTable
      */
     currentData?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CurrentTable
+     */
+    lastEdit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CurrentTable
+     */
+    lastEditUser?: string | null;
 }
 /**
  * 
@@ -665,6 +838,134 @@ export interface DateTimeRange {
      * @memberof DateTimeRange
      */
     end?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DynamicFieldMetadata
+ */
+export interface DynamicFieldMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof DynamicFieldMetadata
+     */
+    fieldName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof DynamicFieldMetadata
+     */
+    sectionTitle?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof DynamicFieldMetadata
+     */
+    switchableSection?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof DynamicFieldMetadata
+     */
+    label?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof DynamicFieldMetadata
+     */
+    inputType?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof DynamicFieldMetadata
+     */
+    selectOptions?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof DynamicFieldMetadata
+     */
+    suffix?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof DynamicFieldMetadata
+     */
+    prefix?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof DynamicFieldMetadata
+     */
+    min?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DynamicFieldMetadata
+     */
+    max?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DynamicFieldMetadata
+     */
+    step?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DynamicFieldMetadata
+     */
+    maxLength?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DynamicFieldMetadata
+     */
+    enabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DynamicFieldMetadata
+     */
+    rollerOnMobile?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof DynamicFieldMetadata
+     */
+    rollerDigits?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DynamicFieldMetadata
+     */
+    visible?: boolean;
+    /**
+     * 
+     * @type {any}
+     * @memberof DynamicFieldMetadata
+     */
+    defaultValue?: any | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof DynamicFieldMetadata
+     */
+    order?: number;
+}
+/**
+ * 
+ * @export
+ * @interface DynamicFields
+ */
+export interface DynamicFields {
+    /**
+     * 
+     * @type {Array<DynamicFieldMetadata>}
+     * @memberof DynamicFields
+     */
+    fieldsDefinitions?: Array<DynamicFieldMetadata> | null;
 }
 /**
  * 
@@ -798,6 +1099,49 @@ export interface EditPhotoRecordCommand {
 /**
  * 
  * @export
+ * @interface EditPrintSectionCommand
+ */
+export interface EditPrintSectionCommand {
+    /**
+     * 
+     * @type {number}
+     * @memberof EditPrintSectionCommand
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof EditPrintSectionCommand
+     */
+    code?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EditPrintSectionCommand
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EditPrintSectionCommand
+     */
+    content?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EditPrintSectionCommand
+     */
+    isMainReport?: boolean;
+    /**
+     * 
+     * @type {PrintSectionStatus}
+     * @memberof EditPrintSectionCommand
+     */
+    status?: PrintSectionStatus;
+}
+/**
+ * 
+ * @export
  * @interface EditSignatureCommand
  */
 export interface EditSignatureCommand {
@@ -867,6 +1211,256 @@ export interface EditSignatureCommand {
      * @memberof EditSignatureCommand
      */
     order?: number;
+}
+/**
+ * 
+ * @export
+ * @interface FormDefinitionResponse
+ */
+export interface FormDefinitionResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof FormDefinitionResponse
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof FormDefinitionResponse
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof FormDefinitionResponse
+     */
+    title?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof FormDefinitionResponse
+     */
+    icon?: string | null;
+    /**
+     * 
+     * @type {DynamicFields}
+     * @memberof FormDefinitionResponse
+     */
+    fields?: DynamicFields;
+    /**
+     * 
+     * @type {any}
+     * @memberof FormDefinitionResponse
+     */
+    defaultValues?: any | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FormDefinitionResponse
+     */
+    enabled?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface FormResult
+ */
+export interface FormResult {
+    /**
+     * 
+     * @type {number}
+     * @memberof FormResult
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof FormResult
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof FormResult
+     */
+    title?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof FormResult
+     */
+    icon?: string | null;
+    /**
+     * 
+     * @type {DynamicFields}
+     * @memberof FormResult
+     */
+    fields?: DynamicFields;
+    /**
+     * 
+     * @type {any}
+     * @memberof FormResult
+     */
+    values?: any | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FormResult
+     */
+    enabled?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface Item
+ */
+export interface Item {
+    /**
+     * 
+     * @type {string}
+     * @memberof Item
+     */
+    itemNumber?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Item
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof Item
+     */
+    materialMarkup?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Item
+     */
+    noCables?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Item
+     */
+    unitCost?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Item
+     */
+    units?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Item
+     */
+    labourCostUnit?: number;
+}
+/**
+ * 
+ * @export
+ * @interface Job
+ */
+export interface Job {
+    /**
+     * 
+     * @type {number}
+     * @memberof Job
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    status?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    value?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    salesPerson?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof Job
+     */
+    priority?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    scope?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    tag?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    comments?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    teams?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    teamCount?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    duration?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    shift?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Job
+     */
+    updated?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    lastUpdate?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    lastEdit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Job
+     */
+    lastEditUser?: string | null;
 }
 /**
  * 
@@ -963,51 +1557,112 @@ export interface LoginModel {
 /**
  * 
  * @export
- * @interface NewAddressDTO
+ * @interface NewAddressDto
  */
-export interface NewAddressDTO {
+export interface NewAddressDto {
     /**
      * 
      * @type {number}
-     * @memberof NewAddressDTO
+     * @memberof NewAddressDto
      */
     id?: number;
     /**
      * 
      * @type {string}
-     * @memberof NewAddressDTO
+     * @memberof NewAddressDto
      */
     addressLine?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof NewAddressDTO
+     * @memberof NewAddressDto
      */
     addressLine2?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof NewAddressDTO
+     * @memberof NewAddressDto
      */
     unit?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof NewAddressDTO
+     * @memberof NewAddressDto
      */
     country?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof NewAddressDTO
+     * @memberof NewAddressDto
      */
     postalCode?: string | null;
     /**
      * 
      * @type {number}
-     * @memberof NewAddressDTO
+     * @memberof NewAddressDto
      */
     licenseId?: number;
+}
+/**
+ * 
+ * @export
+ * @interface NewFormDefinitionCommand
+ */
+export interface NewFormDefinitionCommand {
+    /**
+     * 
+     * @type {number}
+     * @memberof NewFormDefinitionCommand
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewFormDefinitionCommand
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewFormDefinitionCommand
+     */
+    title?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewFormDefinitionCommand
+     */
+    icon?: string | null;
+    /**
+     * 
+     * @type {DynamicFields}
+     * @memberof NewFormDefinitionCommand
+     */
+    fields?: DynamicFields;
+    /**
+     * 
+     * @type {any}
+     * @memberof NewFormDefinitionCommand
+     */
+    defaultValues?: any | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof NewFormDefinitionCommand
+     */
+    enabled?: boolean;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof NewFormDefinitionCommand
+     */
+    reports?: Array<number> | null;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof NewFormDefinitionCommand
+     */
+    reportConfigurations?: Array<number> | null;
 }
 /**
  * 
@@ -1046,6 +1701,103 @@ export interface NoteQueryResult {
      */
     needsCheck?: boolean;
 }
+/**
+ * 
+ * @export
+ * @interface Options
+ */
+export interface Options {
+    /**
+     * 
+     * @type {number}
+     * @memberof Options
+     */
+    id?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Options
+     */
+    scheduleWeeks?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Options
+     */
+    autosaveInterval?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Options
+     */
+    lastUpdate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Options
+     */
+    lastEdit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Options
+     */
+    lastEditUser?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface PrintSectionDto
+ */
+export interface PrintSectionDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof PrintSectionDto
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PrintSectionDto
+     */
+    code?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PrintSectionDto
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PrintSectionDto
+     */
+    content?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PrintSectionDto
+     */
+    isMainReport?: boolean;
+    /**
+     * 
+     * @type {PrintSectionStatus}
+     * @memberof PrintSectionDto
+     */
+    status?: PrintSectionStatus;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum PrintSectionStatus {
+    NUMBER_0 = 0,
+    NUMBER_1 = 1
+}
+
 /**
  * 
  * @export
@@ -1088,51 +1840,75 @@ export interface ProblemDetails {
 /**
  * 
  * @export
- * @interface ReportConfigurationDTO
+ * @interface ReportConfigurationDto
  */
-export interface ReportConfigurationDTO {
+export interface ReportConfigurationDto {
     /**
      * 
      * @type {number}
-     * @memberof ReportConfigurationDTO
+     * @memberof ReportConfigurationDto
      */
     id?: number;
     /**
      * 
      * @type {ReportType}
-     * @memberof ReportConfigurationDTO
+     * @memberof ReportConfigurationDto
      */
     type?: ReportType;
     /**
      * 
      * @type {string}
-     * @memberof ReportConfigurationDTO
+     * @memberof ReportConfigurationDto
      */
     title?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof ReportConfigurationDTO
+     * @memberof ReportConfigurationDto
      */
     formName?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof ReportConfigurationDTO
+     * @memberof ReportConfigurationDto
      */
     remarksLabelText?: string | null;
     /**
      * 
      * @type {Array<number>}
-     * @memberof ReportConfigurationDTO
+     * @memberof ReportConfigurationDto
      */
     checksDefinition?: Array<number> | null;
     /**
      * 
      * @type {Array<number>}
-     * @memberof ReportConfigurationDTO
+     * @memberof ReportConfigurationDto
      */
     signatureDefinitions?: Array<number> | null;
+    /**
+     * 
+     * @type {Array<FormDefinitionResponse>}
+     * @memberof ReportConfigurationDto
+     */
+    forms?: Array<FormDefinitionResponse> | null;
+    /**
+     * 
+     * @type {CheckListPrintingMetadata}
+     * @memberof ReportConfigurationDto
+     */
+    checkListMetadata?: CheckListPrintingMetadata;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportConfigurationDto
+     */
+    printSectionId?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportConfigurationDto
+     */
+    templateName?: string | null;
 }
 /**
  * 
@@ -1196,6 +1972,12 @@ export interface ReportQueryResult {
     licenseAmp?: number | null;
     /**
      * 
+     * @type {number}
+     * @memberof ReportQueryResult
+     */
+    reportConfigurationId?: number;
+    /**
+     * 
      * @type {DateTimeRange}
      * @memberof ReportQueryResult
      */
@@ -1226,184 +2008,10 @@ export interface ReportQueryResult {
     isClosed?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {Array<FormResult>}
      * @memberof ReportQueryResult
      */
-    operationalReadingsId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsVoltageL1N?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsVoltageL2N?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsVoltageL3N?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsVoltageL1L2?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsVoltageL1L3?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsVoltageL2L3?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsRunningLoadL1?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsRunningLoadL2?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsRunningLoadL3?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsMainBreakerAmp?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsMainBreakerPoles?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsMainBreakerCapacity?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentDTLA?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentDTLSec?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentIDMTLA?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentIDMTLTm?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultMA?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultELRA?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultELRSec?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultA?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultSec?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsMainBreakerRating?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentDirectActingEnabled?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentDirectActing?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentDTLEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsOverCurrentIDTMLEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultRoobEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultEIREnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ReportQueryResult
-     */
-    operationalReadingsEarthFaultEFEnabled?: boolean;
+    forms?: Array<FormResult> | null;
     /**
      * 
      * @type {Array<SignatureQueryResult>}
@@ -1507,83 +2115,266 @@ export interface ResumenReportConfiguration {
      * @memberof ResumenReportConfiguration
      */
     inactive?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResumenReportConfiguration
+     */
+    printSection?: string | null;
 }
 /**
  * 
  * @export
- * @interface SignatureDTO
+ * @interface SchedJob
  */
-export interface SignatureDTO {
+export interface SchedJob {
     /**
      * 
      * @type {number}
-     * @memberof SignatureDTO
+     * @memberof SchedJob
+     */
+    id?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SchedJob
+     */
+    team?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SchedJob
+     */
+    date: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SchedJob
+     */
+    shift?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SchedJob
+     */
+    splitShift?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SchedJob
+     */
+    job1?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SchedJob
+     */
+    job2?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SchedJob
+     */
+    teamMembers?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SchedJob
+     */
+    excludeSaturday?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SchedJob
+     */
+    excludeSunday?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SchedJob
+     */
+    lastUpdate?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SchedJob
+     */
+    updated?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SchedJob
+     */
+    lastEdit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SchedJob
+     */
+    lastEditUser?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ScheduleData
+ */
+export interface ScheduleData {
+    /**
+     * 
+     * @type {string}
+     * @memberof ScheduleData
+     */
+    lastUpdate?: string | null;
+    /**
+     * 
+     * @type {Array<Job>}
+     * @memberof ScheduleData
+     */
+    jobs?: Array<Job> | null;
+    /**
+     * 
+     * @type {Array<SchedJob>}
+     * @memberof ScheduleData
+     */
+    schedJobs?: Array<SchedJob> | null;
+    /**
+     * 
+     * @type {Array<Team>}
+     * @memberof ScheduleData
+     */
+    teams?: Array<Team> | null;
+    /**
+     * 
+     * @type {Options}
+     * @memberof ScheduleData
+     */
+    options?: Options;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScheduleData
+     */
+    apiVersion?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface Section
+ */
+export interface Section {
+    /**
+     * 
+     * @type {string}
+     * @memberof Section
+     */
+    secNumber?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Section
+     */
+    subSection?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Section
+     */
+    description?: string | null;
+    /**
+     * 
+     * @type {Array<Item>}
+     * @memberof Section
+     */
+    items?: Array<Item> | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof Section
+     */
+    materialMarkup?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Section
+     */
+    finalMarkup?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SignatureDto
+ */
+export interface SignatureDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof SignatureDto
      */
     id?: number;
     /**
      * 
      * @type {string}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     title?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     annotation?: string | null;
     /**
      * 
      * @type {ResponsibleType}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     responsableType?: ResponsibleType;
     /**
      * 
      * @type {string}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     responsableName?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     designation?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     remarks?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     date?: string;
     /**
      * 
      * @type {boolean}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     principal?: boolean;
     /**
      * 
      * @type {number}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     reportId?: number | null;
     /**
      * 
      * @type {number}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     reportConfigurationId?: number | null;
     /**
      * 
      * @type {number}
-     * @memberof SignatureDTO
+     * @memberof SignatureDto
      */
     order?: number;
 }
@@ -1675,6 +2466,67 @@ export interface SignatureQueryResult {
 /**
  * 
  * @export
+ * @interface Team
+ */
+export interface Team {
+    /**
+     * 
+     * @type {number}
+     * @memberof Team
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Team
+     */
+    vehicle?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Team
+     */
+    foreman?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof Team
+     */
+    position?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Team
+     */
+    updated?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Team
+     */
+    lastUpdate?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Team
+     */
+    teamMembers?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Team
+     */
+    lastEdit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Team
+     */
+    lastEditUser?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface UpdateCheckListCommand
  */
 export interface UpdateCheckListCommand {
@@ -1751,199 +2603,6 @@ export interface UpdateCheckListItemCommand {
      * @memberof UpdateCheckListItemCommand
      */
     remarks?: string | null;
-}
-/**
- * 
- * @export
- * @interface UpdateOperationalReadingsCommand
- */
-export interface UpdateOperationalReadingsCommand {
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    id?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    reportId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    voltageL1N?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    voltageL2N?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    voltageL3N?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    voltageL1L2?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    voltageL1L3?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    voltageL2L3?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    runningLoadL1?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    runningLoadL2?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    runningLoadL3?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    mainBreakerAmp?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    mainBreakerPoles?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    mainBreakerCapacity?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    overCurrentDTLA?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    overCurrentDTLSec?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    overCurrentIDMTLA?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    overCurrentIDMTLTm?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    earthFaultMA?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    earthFaultELRA?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    earthFaultELRSec?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    earthFaultA?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    earthFaultSec?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    mainBreakerRating?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    overCurrentDirectActingEnabled?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    overCurrentDirectActing?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    overCurrentDTLEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    overCurrentIDTMLEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    earthFaultRoobEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    earthFaultEIREnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateOperationalReadingsCommand
-     */
-    earthFaultEFEnabled?: boolean;
 }
 /**
  * 
@@ -2036,6 +2695,24 @@ export interface UpdateReportConfigurationCommand {
      * @memberof UpdateReportConfigurationCommand
      */
     signatureDefinitions?: Array<number> | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateReportConfigurationCommand
+     */
+    printSectionId?: number;
+    /**
+     * 
+     * @type {CheckListDisplay}
+     * @memberof UpdateReportConfigurationCommand
+     */
+    display?: CheckListDisplay;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateReportConfigurationCommand
+     */
+    templateName?: string | null;
 }
 /**
  * 
@@ -2083,37 +2760,37 @@ export interface User {
 /**
  * 
  * @export
- * @interface UserDTO
+ * @interface UserDto
  */
-export interface UserDTO {
+export interface UserDto {
     /**
      * 
      * @type {string}
-     * @memberof UserDTO
+     * @memberof UserDto
      */
     userName?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof UserDTO
+     * @memberof UserDto
      */
     name?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof UserDTO
+     * @memberof UserDto
      */
     lastName?: string | null;
     /**
      * 
      * @type {number}
-     * @memberof UserDTO
+     * @memberof UserDto
      */
     lastEditedReport?: number | null;
     /**
      * 
      * @type {boolean}
-     * @memberof UserDTO
+     * @memberof UserDto
      */
     isAdmin?: boolean;
 }
@@ -2126,11 +2803,11 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
     return {
         /**
          * 
-         * @param {NewAddressDTO} [newAddressDTO] 
+         * @param {NewAddressDto} [newAddressDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addAddress: async (newAddressDTO?: NewAddressDTO, options: any = {}): Promise<RequestArgs> => {
+        addAddress: async (newAddressDto?: NewAddressDto, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Addresses`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2149,12 +2826,12 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(newAddressDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(newAddressDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2276,11 +2953,11 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @param {number} id 
-         * @param {NewAddressDTO} [newAddressDTO] 
+         * @param {NewAddressDto} [newAddressDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateAddress: async (id: number, newAddressDTO?: NewAddressDTO, options: any = {}): Promise<RequestArgs> => {
+        updateAddress: async (id: number, newAddressDto?: NewAddressDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateAddress', 'id', id)
             const localVarPath = `/api/Addresses/{id}`
@@ -2302,12 +2979,12 @@ export const AddressesApiAxiosParamCreator = function (configuration?: Configura
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(newAddressDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(newAddressDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2326,12 +3003,12 @@ export const AddressesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {NewAddressDTO} [newAddressDTO] 
+         * @param {NewAddressDto} [newAddressDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addAddress(newAddressDTO?: NewAddressDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Address>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addAddress(newAddressDTO, options);
+        async addAddress(newAddressDto?: NewAddressDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Address>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addAddress(newAddressDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2340,7 +3017,7 @@ export const AddressesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiAddressesIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddressDTO>> {
+        async apiAddressesIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddressDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiAddressesIdGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2350,7 +3027,7 @@ export const AddressesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAddress(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddressDTO>> {
+        async deleteAddress(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddressDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAddress(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2360,19 +3037,19 @@ export const AddressesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAddresses(filter?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AddressDTO>>> {
+        async getAddresses(filter?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AddressDto>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAddresses(filter, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @param {number} id 
-         * @param {NewAddressDTO} [newAddressDTO] 
+         * @param {NewAddressDto} [newAddressDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateAddress(id: number, newAddressDTO?: NewAddressDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateAddress(id, newAddressDTO, options);
+        async updateAddress(id: number, newAddressDto?: NewAddressDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateAddress(id, newAddressDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2387,12 +3064,12 @@ export const AddressesApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
-         * @param {NewAddressDTO} [newAddressDTO] 
+         * @param {NewAddressDto} [newAddressDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addAddress(newAddressDTO?: NewAddressDTO, options?: any): AxiosPromise<Address> {
-            return localVarFp.addAddress(newAddressDTO, options).then((request) => request(axios, basePath));
+        addAddress(newAddressDto?: NewAddressDto, options?: any): AxiosPromise<Address> {
+            return localVarFp.addAddress(newAddressDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2400,7 +3077,7 @@ export const AddressesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAddressesIdGet(id: number, options?: any): AxiosPromise<AddressDTO> {
+        apiAddressesIdGet(id: number, options?: any): AxiosPromise<AddressDto> {
             return localVarFp.apiAddressesIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2409,7 +3086,7 @@ export const AddressesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAddress(id: number, options?: any): AxiosPromise<AddressDTO> {
+        deleteAddress(id: number, options?: any): AxiosPromise<AddressDto> {
             return localVarFp.deleteAddress(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2418,18 +3095,18 @@ export const AddressesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAddresses(filter?: string, options?: any): AxiosPromise<Array<AddressDTO>> {
+        getAddresses(filter?: string, options?: any): AxiosPromise<Array<AddressDto>> {
             return localVarFp.getAddresses(filter, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {number} id 
-         * @param {NewAddressDTO} [newAddressDTO] 
+         * @param {NewAddressDto} [newAddressDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateAddress(id: number, newAddressDTO?: NewAddressDTO, options?: any): AxiosPromise<void> {
-            return localVarFp.updateAddress(id, newAddressDTO, options).then((request) => request(axios, basePath));
+        updateAddress(id: number, newAddressDto?: NewAddressDto, options?: any): AxiosPromise<void> {
+            return localVarFp.updateAddress(id, newAddressDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2443,13 +3120,13 @@ export const AddressesApiFactory = function (configuration?: Configuration, base
 export class AddressesApi extends BaseAPI {
     /**
      * 
-     * @param {NewAddressDTO} [newAddressDTO] 
+     * @param {NewAddressDto} [newAddressDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AddressesApi
      */
-    public addAddress(newAddressDTO?: NewAddressDTO, options?: any) {
-        return AddressesApiFp(this.configuration).addAddress(newAddressDTO, options).then((request) => request(this.axios, this.basePath));
+    public addAddress(newAddressDto?: NewAddressDto, options?: any) {
+        return AddressesApiFp(this.configuration).addAddress(newAddressDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2488,13 +3165,13 @@ export class AddressesApi extends BaseAPI {
     /**
      * 
      * @param {number} id 
-     * @param {NewAddressDTO} [newAddressDTO] 
+     * @param {NewAddressDto} [newAddressDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AddressesApi
      */
-    public updateAddress(id: number, newAddressDTO?: NewAddressDTO, options?: any) {
-        return AddressesApiFp(this.configuration).updateAddress(id, newAddressDTO, options).then((request) => request(this.axios, this.basePath));
+    public updateAddress(id: number, newAddressDto?: NewAddressDto, options?: any) {
+        return AddressesApiFp(this.configuration).updateAddress(id, newAddressDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2531,7 +3208,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -2643,7 +3320,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -2680,7 +3357,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -2889,7 +3566,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -2934,7 +3611,7 @@ export const CheckListsApiAxiosParamCreator = function (configuration?: Configur
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -3243,6 +3920,358 @@ export class CheckListsApi extends BaseAPI {
 
 
 /**
+ * CostSheetApi - axios parameter creator
+ * @export
+ */
+export const CostSheetApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CostSheet`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetIdDelete: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCostSheetIdDelete', 'id', id)
+            const localVarPath = `/api/CostSheet/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetIdGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCostSheetIdGet', 'id', id)
+            const localVarPath = `/api/CostSheet/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetPost: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CostSheet`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetPut: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CostSheet`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CostSheetApi - functional programming interface
+ * @export
+ */
+export const CostSheetApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CostSheetApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCostSheetGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCostSheetIdDelete(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetIdDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCostSheetIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CostSheet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetIdGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCostSheetPost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetPost(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCostSheetPut(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetPut(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * CostSheetApi - factory interface
+ * @export
+ */
+export const CostSheetApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CostSheetApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetGet(options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetIdDelete(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetIdGet(id: number, options?: any): AxiosPromise<CostSheet> {
+            return localVarFp.apiCostSheetIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetPost(options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetPost(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetPut(options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetPut(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CostSheetApi - object-oriented interface
+ * @export
+ * @class CostSheetApi
+ * @extends {BaseAPI}
+ */
+export class CostSheetApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CostSheetApi
+     */
+    public apiCostSheetGet(options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CostSheetApi
+     */
+    public apiCostSheetIdDelete(id: number, options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CostSheetApi
+     */
+    public apiCostSheetIdGet(id: number, options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CostSheetApi
+     */
+    public apiCostSheetPost(options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetPost(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CostSheetApi
+     */
+    public apiCostSheetPut(options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetPut(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * EMALicensesApi - axios parameter creator
  * @export
  */
@@ -3273,7 +4302,7 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -3454,7 +4483,7 @@ export const EMALicensesApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -3782,11 +4811,10 @@ export const EnergyReportApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @param {CurrentTable} [currentTable] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiEnergyReportCurrentTablePost: async (currentTable?: CurrentTable, options: any = {}): Promise<RequestArgs> => {
+        apiEnergyReportCurrentTablePost: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/EnergyReport/current-table`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3805,12 +4833,9 @@ export const EnergyReportApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(currentTable, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3897,12 +4922,11 @@ export const EnergyReportApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {CurrentTable} [currentTable] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiEnergyReportCurrentTablePost(currentTable?: CurrentTable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiEnergyReportCurrentTablePost(currentTable, options);
+        async apiEnergyReportCurrentTablePost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiEnergyReportCurrentTablePost(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3952,12 +4976,11 @@ export const EnergyReportApiFactory = function (configuration?: Configuration, b
         },
         /**
          * 
-         * @param {CurrentTable} [currentTable] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiEnergyReportCurrentTablePost(currentTable?: CurrentTable, options?: any): AxiosPromise<void> {
-            return localVarFp.apiEnergyReportCurrentTablePost(currentTable, options).then((request) => request(axios, basePath));
+        apiEnergyReportCurrentTablePost(options?: any): AxiosPromise<void> {
+            return localVarFp.apiEnergyReportCurrentTablePost(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4011,13 +5034,12 @@ export class EnergyReportApi extends BaseAPI {
 
     /**
      * 
-     * @param {CurrentTable} [currentTable] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnergyReportApi
      */
-    public apiEnergyReportCurrentTablePost(currentTable?: CurrentTable, options?: any) {
-        return EnergyReportApiFp(this.configuration).apiEnergyReportCurrentTablePost(currentTable, options).then((request) => request(this.axios, this.basePath));
+    public apiEnergyReportCurrentTablePost(options?: any) {
+        return EnergyReportApiFp(this.configuration).apiEnergyReportCurrentTablePost(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4030,6 +5052,1201 @@ export class EnergyReportApi extends BaseAPI {
      */
     public apiEnergyReportCurrentTableStartDateEndDateGet(startDate: string, endDate: string, options?: any) {
         return EnergyReportApiFp(this.configuration).apiEnergyReportCurrentTableStartDateEndDateGet(startDate, endDate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * FormsApi - axios parameter creator
+ * @export
+ */
+export const FormsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addFormDefinition: async (newFormDefinitionCommand?: NewFormDefinitionCommand, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Forms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(newFormDefinitionCommand, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteFormDefinition: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteFormDefinition', 'id', id)
+            const localVarPath = `/api/Forms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFormDefinition: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getFormDefinition', 'id', id)
+            const localVarPath = `/api/Forms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [filter] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFormsDefinitions: async (filter?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Forms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (filter !== undefined) {
+                localVarQueryParameter['Filter'] = filter;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateFormDefinition: async (id: number, newFormDefinitionCommand?: NewFormDefinitionCommand, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateFormDefinition', 'id', id)
+            const localVarPath = `/api/Forms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(newFormDefinitionCommand, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FormsApi - functional programming interface
+ * @export
+ */
+export const FormsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FormsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addFormDefinition(newFormDefinitionCommand?: NewFormDefinitionCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormDefinitionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addFormDefinition(newFormDefinitionCommand, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteFormDefinition(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFormDefinition(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFormDefinition(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFormDefinition(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} [filter] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFormsDefinitions(filter?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FormDefinitionResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFormsDefinitions(filter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateFormDefinition(id: number, newFormDefinitionCommand?: NewFormDefinitionCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateFormDefinition(id, newFormDefinitionCommand, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * FormsApi - factory interface
+ * @export
+ */
+export const FormsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FormsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addFormDefinition(newFormDefinitionCommand?: NewFormDefinitionCommand, options?: any): AxiosPromise<FormDefinitionResponse> {
+            return localVarFp.addFormDefinition(newFormDefinitionCommand, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteFormDefinition(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteFormDefinition(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFormDefinition(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.getFormDefinition(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [filter] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFormsDefinitions(filter?: string, options?: any): AxiosPromise<Array<FormDefinitionResponse>> {
+            return localVarFp.getFormsDefinitions(filter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateFormDefinition(id: number, newFormDefinitionCommand?: NewFormDefinitionCommand, options?: any): AxiosPromise<void> {
+            return localVarFp.updateFormDefinition(id, newFormDefinitionCommand, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * FormsApi - object-oriented interface
+ * @export
+ * @class FormsApi
+ * @extends {BaseAPI}
+ */
+export class FormsApi extends BaseAPI {
+    /**
+     * 
+     * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FormsApi
+     */
+    public addFormDefinition(newFormDefinitionCommand?: NewFormDefinitionCommand, options?: any) {
+        return FormsApiFp(this.configuration).addFormDefinition(newFormDefinitionCommand, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FormsApi
+     */
+    public deleteFormDefinition(id: number, options?: any) {
+        return FormsApiFp(this.configuration).deleteFormDefinition(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FormsApi
+     */
+    public getFormDefinition(id: number, options?: any) {
+        return FormsApiFp(this.configuration).getFormDefinition(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [filter] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FormsApi
+     */
+    public getFormsDefinitions(filter?: string, options?: any) {
+        return FormsApiFp(this.configuration).getFormsDefinitions(filter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {NewFormDefinitionCommand} [newFormDefinitionCommand] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FormsApi
+     */
+    public updateFormDefinition(id: number, newFormDefinitionCommand?: NewFormDefinitionCommand, options?: any) {
+        return FormsApiFp(this.configuration).updateFormDefinition(id, newFormDefinitionCommand, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * JobScheduleApi - axios parameter creator
+ * @export
+ */
+export const JobScheduleApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobScheduleGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/JobSchedule`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Array<Job>} [job] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobScheduleJobPut: async (job?: Array<Job>, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/JobSchedule/job`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(job, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Options} [options] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobScheduleOptionsPut: async (options?: Options, _options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/JobSchedule/options`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ..._options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, _options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ..._options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(options, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {ScheduleData} [scheduleData] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobSchedulePut: async (scheduleData?: ScheduleData, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/JobSchedule`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(scheduleData, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Array<SchedJob>} [schedJob] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobScheduleSchedJobPut: async (schedJob?: Array<SchedJob>, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/JobSchedule/sched-job`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(schedJob, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Array<Team>} [team] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobScheduleTeamPut: async (team?: Array<Team>, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/JobSchedule/team`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(team, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobScheduleApi - functional programming interface
+ * @export
+ */
+export const JobScheduleApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobScheduleApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiJobScheduleGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScheduleData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiJobScheduleGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Array<Job>} [job] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiJobScheduleJobPut(job?: Array<Job>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiJobScheduleJobPut(job, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Options} [options] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiJobScheduleOptionsPut(options?: Options, _options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiJobScheduleOptionsPut(options, _options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {ScheduleData} [scheduleData] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiJobSchedulePut(scheduleData?: ScheduleData, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScheduleData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiJobSchedulePut(scheduleData, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Array<SchedJob>} [schedJob] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiJobScheduleSchedJobPut(schedJob?: Array<SchedJob>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiJobScheduleSchedJobPut(schedJob, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Array<Team>} [team] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiJobScheduleTeamPut(team?: Array<Team>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiJobScheduleTeamPut(team, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * JobScheduleApi - factory interface
+ * @export
+ */
+export const JobScheduleApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobScheduleApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobScheduleGet(options?: any): AxiosPromise<ScheduleData> {
+            return localVarFp.apiJobScheduleGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Array<Job>} [job] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobScheduleJobPut(job?: Array<Job>, options?: any): AxiosPromise<void> {
+            return localVarFp.apiJobScheduleJobPut(job, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Options} [options] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobScheduleOptionsPut(options?: Options, _options?: any): AxiosPromise<void> {
+            return localVarFp.apiJobScheduleOptionsPut(options, _options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ScheduleData} [scheduleData] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobSchedulePut(scheduleData?: ScheduleData, options?: any): AxiosPromise<ScheduleData> {
+            return localVarFp.apiJobSchedulePut(scheduleData, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Array<SchedJob>} [schedJob] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobScheduleSchedJobPut(schedJob?: Array<SchedJob>, options?: any): AxiosPromise<void> {
+            return localVarFp.apiJobScheduleSchedJobPut(schedJob, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Array<Team>} [team] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiJobScheduleTeamPut(team?: Array<Team>, options?: any): AxiosPromise<void> {
+            return localVarFp.apiJobScheduleTeamPut(team, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobScheduleApi - object-oriented interface
+ * @export
+ * @class JobScheduleApi
+ * @extends {BaseAPI}
+ */
+export class JobScheduleApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobScheduleApi
+     */
+    public apiJobScheduleGet(options?: any) {
+        return JobScheduleApiFp(this.configuration).apiJobScheduleGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Array<Job>} [job] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobScheduleApi
+     */
+    public apiJobScheduleJobPut(job?: Array<Job>, options?: any) {
+        return JobScheduleApiFp(this.configuration).apiJobScheduleJobPut(job, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Options} [options] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobScheduleApi
+     */
+    public apiJobScheduleOptionsPut(options?: Options, _options?: any) {
+        return JobScheduleApiFp(this.configuration).apiJobScheduleOptionsPut(options, _options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ScheduleData} [scheduleData] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobScheduleApi
+     */
+    public apiJobSchedulePut(scheduleData?: ScheduleData, options?: any) {
+        return JobScheduleApiFp(this.configuration).apiJobSchedulePut(scheduleData, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Array<SchedJob>} [schedJob] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobScheduleApi
+     */
+    public apiJobScheduleSchedJobPut(schedJob?: Array<SchedJob>, options?: any) {
+        return JobScheduleApiFp(this.configuration).apiJobScheduleSchedJobPut(schedJob, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Array<Team>} [team] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobScheduleApi
+     */
+    public apiJobScheduleTeamPut(team?: Array<Team>, options?: any) {
+        return JobScheduleApiFp(this.configuration).apiJobScheduleTeamPut(team, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * PrintSectionApi - axios parameter creator
+ * @export
+ */
+export const PrintSectionApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} [filter] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPrintSectionGet: async (filter?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/PrintSection`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (filter !== undefined) {
+                localVarQueryParameter['filter'] = filter;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPrintSectionIdDelete: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiPrintSectionIdDelete', 'id', id)
+            const localVarPath = `/api/PrintSection/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPrintSectionIdGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiPrintSectionIdGet', 'id', id)
+            const localVarPath = `/api/PrintSection/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {EditPrintSectionCommand} [editPrintSectionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPrintSectionIdPut: async (id: number, editPrintSectionCommand?: EditPrintSectionCommand, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiPrintSectionIdPut', 'id', id)
+            const localVarPath = `/api/PrintSection/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(editPrintSectionCommand, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {AddPrintSectionCommand} [addPrintSectionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPrintSectionPost: async (addPrintSectionCommand?: AddPrintSectionCommand, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/PrintSection`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(addPrintSectionCommand, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PrintSectionApi - functional programming interface
+ * @export
+ */
+export const PrintSectionApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PrintSectionApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} [filter] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPrintSectionGet(filter?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PrintSectionDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPrintSectionGet(filter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPrintSectionIdDelete(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPrintSectionIdDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPrintSectionIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPrintSectionIdGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {EditPrintSectionCommand} [editPrintSectionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPrintSectionIdPut(id: number, editPrintSectionCommand?: EditPrintSectionCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPrintSectionIdPut(id, editPrintSectionCommand, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {AddPrintSectionCommand} [addPrintSectionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPrintSectionPost(addPrintSectionCommand?: AddPrintSectionCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPrintSectionPost(addPrintSectionCommand, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PrintSectionApi - factory interface
+ * @export
+ */
+export const PrintSectionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PrintSectionApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} [filter] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPrintSectionGet(filter?: string, options?: any): AxiosPromise<Array<PrintSectionDto>> {
+            return localVarFp.apiPrintSectionGet(filter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPrintSectionIdDelete(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.apiPrintSectionIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPrintSectionIdGet(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.apiPrintSectionIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {EditPrintSectionCommand} [editPrintSectionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPrintSectionIdPut(id: number, editPrintSectionCommand?: EditPrintSectionCommand, options?: any): AxiosPromise<void> {
+            return localVarFp.apiPrintSectionIdPut(id, editPrintSectionCommand, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {AddPrintSectionCommand} [addPrintSectionCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPrintSectionPost(addPrintSectionCommand?: AddPrintSectionCommand, options?: any): AxiosPromise<void> {
+            return localVarFp.apiPrintSectionPost(addPrintSectionCommand, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PrintSectionApi - object-oriented interface
+ * @export
+ * @class PrintSectionApi
+ * @extends {BaseAPI}
+ */
+export class PrintSectionApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} [filter] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PrintSectionApi
+     */
+    public apiPrintSectionGet(filter?: string, options?: any) {
+        return PrintSectionApiFp(this.configuration).apiPrintSectionGet(filter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PrintSectionApi
+     */
+    public apiPrintSectionIdDelete(id: number, options?: any) {
+        return PrintSectionApiFp(this.configuration).apiPrintSectionIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PrintSectionApi
+     */
+    public apiPrintSectionIdGet(id: number, options?: any) {
+        return PrintSectionApiFp(this.configuration).apiPrintSectionIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {EditPrintSectionCommand} [editPrintSectionCommand] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PrintSectionApi
+     */
+    public apiPrintSectionIdPut(id: number, editPrintSectionCommand?: EditPrintSectionCommand, options?: any) {
+        return PrintSectionApiFp(this.configuration).apiPrintSectionIdPut(id, editPrintSectionCommand, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {AddPrintSectionCommand} [addPrintSectionCommand] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PrintSectionApi
+     */
+    public apiPrintSectionPost(addPrintSectionCommand?: AddPrintSectionCommand, options?: any) {
+        return PrintSectionApiFp(this.configuration).apiPrintSectionPost(addPrintSectionCommand, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -4181,7 +6398,7 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -4218,7 +6435,7 @@ export const ReportConfigurationApiAxiosParamCreator = function (configuration?:
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -4266,7 +6483,7 @@ export const ReportConfigurationApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiReportConfigurationIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportConfigurationDTO>> {
+        async apiReportConfigurationIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportConfigurationDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiReportConfigurationIdGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4325,7 +6542,7 @@ export const ReportConfigurationApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiReportConfigurationIdGet(id: number, options?: any): AxiosPromise<ReportConfigurationDTO> {
+        apiReportConfigurationIdGet(id: number, options?: any): AxiosPromise<ReportConfigurationDto> {
             return localVarFp.apiReportConfigurationIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -4669,7 +6886,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -4710,7 +6927,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -4833,7 +7050,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -4916,7 +7133,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -4953,7 +7170,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -5051,15 +7268,19 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @param {number} id 
-         * @param {UpdateOperationalReadingsCommand} [updateOperationalReadingsCommand] 
+         * @param {number} idForm 
+         * @param {any} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOperationalReadings: async (id: number, updateOperationalReadingsCommand?: UpdateOperationalReadingsCommand, options: any = {}): Promise<RequestArgs> => {
+        updateForm: async (id: number, idForm: number, body?: any, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('updateOperationalReadings', 'id', id)
-            const localVarPath = `/api/Reports/{id}/readings`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            assertParamExists('updateForm', 'id', id)
+            // verify required parameter 'idForm' is not null or undefined
+            assertParamExists('updateForm', 'idForm', idForm)
+            const localVarPath = `/api/Reports/{id}/forms/{idForm}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"idForm"}}`, encodeURIComponent(String(idForm)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5077,12 +7298,12 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateOperationalReadingsCommand, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5268,12 +7489,13 @@ export const ReportsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} id 
-         * @param {UpdateOperationalReadingsCommand} [updateOperationalReadingsCommand] 
+         * @param {number} idForm 
+         * @param {any} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateOperationalReadings(id: number, updateOperationalReadingsCommand?: UpdateOperationalReadingsCommand, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateOperationalReadings(id, updateOperationalReadingsCommand, options);
+        async updateForm(id: number, idForm: number, body?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateForm(id, idForm, body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -5440,12 +7662,13 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @param {number} id 
-         * @param {UpdateOperationalReadingsCommand} [updateOperationalReadingsCommand] 
+         * @param {number} idForm 
+         * @param {any} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOperationalReadings(id: number, updateOperationalReadingsCommand?: UpdateOperationalReadingsCommand, options?: any): AxiosPromise<void> {
-            return localVarFp.updateOperationalReadings(id, updateOperationalReadingsCommand, options).then((request) => request(axios, basePath));
+        updateForm(id: number, idForm: number, body?: any, options?: any): AxiosPromise<void> {
+            return localVarFp.updateForm(id, idForm, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5641,13 +7864,14 @@ export class ReportsApi extends BaseAPI {
     /**
      * 
      * @param {number} id 
-     * @param {UpdateOperationalReadingsCommand} [updateOperationalReadingsCommand] 
+     * @param {number} idForm 
+     * @param {any} [body] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReportsApi
      */
-    public updateOperationalReadings(id: number, updateOperationalReadingsCommand?: UpdateOperationalReadingsCommand, options?: any) {
-        return ReportsApiFp(this.configuration).updateOperationalReadings(id, updateOperationalReadingsCommand, options).then((request) => request(this.axios, this.basePath));
+    public updateForm(id: number, idForm: number, body?: any, options?: any) {
+        return ReportsApiFp(this.configuration).updateForm(id, idForm, body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5814,7 +8038,7 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -5851,7 +8075,7 @@ export const SignaturesApiAxiosParamCreator = function (configuration?: Configur
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -5882,7 +8106,7 @@ export const SignaturesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiSignaturesGet(filter?: string, reportConfigurationId?: number, reportId?: number, inConfigurationOnly?: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SignatureDTO>>> {
+        async apiSignaturesGet(filter?: string, reportConfigurationId?: number, reportId?: number, inConfigurationOnly?: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SignatureDto>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiSignaturesGet(filter, reportConfigurationId, reportId, inConfigurationOnly, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5946,7 +8170,7 @@ export const SignaturesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiSignaturesGet(filter?: string, reportConfigurationId?: number, reportId?: number, inConfigurationOnly?: boolean, options?: any): AxiosPromise<Array<SignatureDTO>> {
+        apiSignaturesGet(filter?: string, reportConfigurationId?: number, reportId?: number, inConfigurationOnly?: boolean, options?: any): AxiosPromise<Array<SignatureDto>> {
             return localVarFp.apiSignaturesGet(filter, reportConfigurationId, reportId, inConfigurationOnly, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6065,11 +8289,11 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
-         * @param {UserDTO} [userDTO] 
+         * @param {UserDto} [userDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addUser: async (userDTO?: UserDTO, options: any = {}): Promise<RequestArgs> => {
+        addUser: async (userDto?: UserDto, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6088,12 +8312,12 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(userDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(userDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6102,13 +8326,13 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Change User Password afeter validated
+         * @summary Change User Password after validated
          * @param {string} userName 
-         * @param {ChangePasswordDTO} [changePasswordDTO] 
+         * @param {ChangePasswordDto} [changePasswordDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        changePassword: async (userName: string, changePasswordDTO?: ChangePasswordDTO, options: any = {}): Promise<RequestArgs> => {
+        changePassword: async (userName: string, changePasswordDto?: ChangePasswordDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'userName' is not null or undefined
             assertParamExists('changePassword', 'userName', userName)
             const localVarPath = `/api/Users/{userName}`
@@ -6130,12 +8354,12 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(changePasswordDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(changePasswordDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6285,11 +8509,11 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @param {string} userName 
-         * @param {UserDTO} [userDTO] 
+         * @param {UserDto} [userDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser: async (userName: string, userDTO?: UserDTO, options: any = {}): Promise<RequestArgs> => {
+        updateUser: async (userName: string, userDto?: UserDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'userName' is not null or undefined
             assertParamExists('updateUser', 'userName', userName)
             const localVarPath = `/api/Users/{userName}`
@@ -6311,12 +8535,12 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(userDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(userDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6335,24 +8559,24 @@ export const UsersApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {UserDTO} [userDTO] 
+         * @param {UserDto} [userDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addUser(userDTO?: UserDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addUser(userDTO, options);
+        async addUser(userDto?: UserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addUser(userDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Change User Password afeter validated
+         * @summary Change User Password after validated
          * @param {string} userName 
-         * @param {ChangePasswordDTO} [changePasswordDTO] 
+         * @param {ChangePasswordDto} [changePasswordDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async changePassword(userName: string, changePasswordDTO?: ChangePasswordDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.changePassword(userName, changePasswordDTO, options);
+        async changePassword(userName: string, changePasswordDto?: ChangePasswordDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.changePassword(userName, changePasswordDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6370,7 +8594,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getActiveUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>> {
+        async getActiveUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getActiveUser(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -6380,7 +8604,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserByUserName(userName: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>> {
+        async getUserByUserName(userName: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUserByUserName(userName, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -6389,19 +8613,19 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserDTO>>> {
+        async getUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserDto>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUsers(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @param {string} userName 
-         * @param {UserDTO} [userDTO] 
+         * @param {UserDto} [userDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUser(userName: string, userDTO?: UserDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(userName, userDTO, options);
+        async updateUser(userName: string, userDto?: UserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(userName, userDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -6416,23 +8640,23 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
-         * @param {UserDTO} [userDTO] 
+         * @param {UserDto} [userDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addUser(userDTO?: UserDTO, options?: any): AxiosPromise<User> {
-            return localVarFp.addUser(userDTO, options).then((request) => request(axios, basePath));
+        addUser(userDto?: UserDto, options?: any): AxiosPromise<User> {
+            return localVarFp.addUser(userDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Change User Password afeter validated
+         * @summary Change User Password after validated
          * @param {string} userName 
-         * @param {ChangePasswordDTO} [changePasswordDTO] 
+         * @param {ChangePasswordDto} [changePasswordDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        changePassword(userName: string, changePasswordDTO?: ChangePasswordDTO, options?: any): AxiosPromise<void> {
-            return localVarFp.changePassword(userName, changePasswordDTO, options).then((request) => request(axios, basePath));
+        changePassword(userName: string, changePasswordDto?: ChangePasswordDto, options?: any): AxiosPromise<void> {
+            return localVarFp.changePassword(userName, changePasswordDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6448,7 +8672,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getActiveUser(options?: any): AxiosPromise<UserDTO> {
+        getActiveUser(options?: any): AxiosPromise<UserDto> {
             return localVarFp.getActiveUser(options).then((request) => request(axios, basePath));
         },
         /**
@@ -6457,7 +8681,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserByUserName(userName: string, options?: any): AxiosPromise<UserDTO> {
+        getUserByUserName(userName: string, options?: any): AxiosPromise<UserDto> {
             return localVarFp.getUserByUserName(userName, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6465,18 +8689,18 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUsers(options?: any): AxiosPromise<Array<UserDTO>> {
+        getUsers(options?: any): AxiosPromise<Array<UserDto>> {
             return localVarFp.getUsers(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} userName 
-         * @param {UserDTO} [userDTO] 
+         * @param {UserDto} [userDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser(userName: string, userDTO?: UserDTO, options?: any): AxiosPromise<void> {
-            return localVarFp.updateUser(userName, userDTO, options).then((request) => request(axios, basePath));
+        updateUser(userName: string, userDto?: UserDto, options?: any): AxiosPromise<void> {
+            return localVarFp.updateUser(userName, userDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6490,26 +8714,26 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
 export class UsersApi extends BaseAPI {
     /**
      * 
-     * @param {UserDTO} [userDTO] 
+     * @param {UserDto} [userDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public addUser(userDTO?: UserDTO, options?: any) {
-        return UsersApiFp(this.configuration).addUser(userDTO, options).then((request) => request(this.axios, this.basePath));
+    public addUser(userDto?: UserDto, options?: any) {
+        return UsersApiFp(this.configuration).addUser(userDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Change User Password afeter validated
+     * @summary Change User Password after validated
      * @param {string} userName 
-     * @param {ChangePasswordDTO} [changePasswordDTO] 
+     * @param {ChangePasswordDto} [changePasswordDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public changePassword(userName: string, changePasswordDTO?: ChangePasswordDTO, options?: any) {
-        return UsersApiFp(this.configuration).changePassword(userName, changePasswordDTO, options).then((request) => request(this.axios, this.basePath));
+    public changePassword(userName: string, changePasswordDto?: ChangePasswordDto, options?: any) {
+        return UsersApiFp(this.configuration).changePassword(userName, changePasswordDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6557,13 +8781,13 @@ export class UsersApi extends BaseAPI {
     /**
      * 
      * @param {string} userName 
-     * @param {UserDTO} [userDTO] 
+     * @param {UserDto} [userDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public updateUser(userName: string, userDTO?: UserDTO, options?: any) {
-        return UsersApiFp(this.configuration).updateUser(userName, userDTO, options).then((request) => request(this.axios, this.basePath));
+    public updateUser(userName: string, userDto?: UserDto, options?: any) {
+        return UsersApiFp(this.configuration).updateUser(userName, userDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

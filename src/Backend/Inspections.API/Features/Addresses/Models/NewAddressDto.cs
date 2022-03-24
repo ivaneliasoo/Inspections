@@ -5,6 +5,21 @@ namespace Inspections.API.Features.Addresses.Models;
 
 public class NewAddressDto
 {
+    public NewAddressDto()
+    {
+            
+    }
+    public NewAddressDto(int id, string addressLine, string? addressLine2, string unit, string country, string postalCode, int licenseId)
+    {
+        Id = id;
+        AddressLine = addressLine;
+        AddressLine2 = addressLine2;
+        Unit = unit;
+        Country = country;
+        PostalCode = postalCode;
+        LicenseId = licenseId;
+    }
+
     public NewAddressDto(Address address)
     {
         Guard.Against.Null(address, nameof(address));
@@ -18,11 +33,11 @@ public class NewAddressDto
         LicenseId = address.LicenseId;
     }
 
-    public int Id { get; }
-    public string AddressLine { get; }
-    public string? AddressLine2 { get; }
-    public string Unit { get; }
-    public string Country { get; }
-    public string PostalCode { get; }
-    public int LicenseId { get; }
+    public int Id { get; init; }
+    public string AddressLine { get; init;}
+    public string? AddressLine2 { get; init;}
+    public string Unit { get; init;}
+    public string Country { get; init;}
+    public string PostalCode { get; init;}
+    public int LicenseId { get; init;}
 }

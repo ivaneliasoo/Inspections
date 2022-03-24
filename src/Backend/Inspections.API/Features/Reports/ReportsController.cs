@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inspections.API.Features.Reports
 {
@@ -114,7 +115,8 @@ namespace Inspections.API.Features.Reports
         {
             MapperConfiguration config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<PhotoRecord, PhotoRecordResult>();
+                cfg.CreateMap<PhotoRecord, PhotoRecordResult>()
+                    .ForMember(m=>m.Timestamp, d=>d.MapFrom(m=> EF.Property<DateTimeOffset>(m, "LastEdit")));
             });
             var photos = _context.Set<PhotoRecord>().ProjectTo<PhotoRecordResult>(config).Where(p => p.ReportId == id)
                 .ToList();

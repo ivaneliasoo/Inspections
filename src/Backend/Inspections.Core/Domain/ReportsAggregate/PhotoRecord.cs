@@ -56,4 +56,5 @@ public class PhotoRecordResult : Entity<int>
     public string? ThumbnailStorageId { get; set; }
     public string? PhotoBase64 { get; set; } = default!;
     public string? ThumbnailBase64 { get; set; } = default!;
+    public DateTimeOffset Timestamp { get; set; }
 }

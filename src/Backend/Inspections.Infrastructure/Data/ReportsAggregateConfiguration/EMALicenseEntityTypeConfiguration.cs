@@ -11,8 +11,8 @@ public class EMALicenseEntityTypeConfiguration : IEntityTypeConfiguration<EMALic
         builder.ToTable("Licenses", InspectionsContext.DEFAULT_SCHEMA);
         builder.Property(p => p.Name).IsRequired();
         builder.Property(p => p.PersonInCharge).IsRequired();
-        builder.Property(p => p.Contact).IsRequired();
-        builder.Property(p => p.Email).IsRequired();
+        builder.Property(p => p.Contact).IsRequired(false);
+        builder.Property(p => p.Email).IsRequired(false);
         builder.Property(p => p.Amp).IsRequired();
         builder.Property(p => p.Volt).IsRequired();
         builder.Property(p => p.KVA).IsRequired();

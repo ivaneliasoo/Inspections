@@ -2,6 +2,7 @@
   <v-dialog
     v-model="dialog"
     persistent
+    scrollable
     :fullscreen="$vuetify.breakpoint.smAndDown"
     :max-width="!$vuetify.breakpoint.smAndDown ? '50%' : '100%'"
   >
