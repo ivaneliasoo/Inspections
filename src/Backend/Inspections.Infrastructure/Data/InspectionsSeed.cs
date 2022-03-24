@@ -35,6 +35,11 @@ public class InspectionsSeed
             {
                 await context.Users.AddAsync(new User() { UserName = "developer", Password = "developer@@P@sword", Name = "Developer", LastName = "User", IsAdmin = true });
             }
+            
+            if (!await context.Users.AnyAsync(u => u.UserName == "reports"))
+            {
+                await context.Users.AddAsync(new User() { UserName = "reports", Password = "123456", Name = "Reports", LastName = "User", IsAdmin = true });
+            }
 
             if (!await context.PrintSections.AnyAsync(u => u.Code == "Inspection"))
             {
