@@ -183,8 +183,9 @@ export default {
       }
 
       let operationalReadings = {}
-      if (result) {
-        operationalReadings = result.forms.filter(f => f.name === 'OperationalReadings')[0].values
+      const orform = result.forms.filter(f => f.name === 'OperationalReadings')
+      if (result && orform && orform.length > 0) {
+        operationalReadings = orform[0].values
       }
 
       return {
