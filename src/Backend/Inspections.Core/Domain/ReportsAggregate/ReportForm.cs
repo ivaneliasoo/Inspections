@@ -10,7 +10,7 @@ public class ReportForm : Entity<int>
 #pragma warning disable CS8618
     private ReportForm() { }
 #pragma warning restore CS8618
-    public ReportForm(string name, string title, DynamicFields fields, string? icon, bool enabled)
+    public ReportForm(string name, string title, DynamicFields fields, string? icon, bool enabled, short order)
     {
         Guard.Against.NullOrWhiteSpace(name, nameof(name));
         Guard.Against.NullOrWhiteSpace(title, nameof(title));
@@ -21,6 +21,7 @@ public class ReportForm : Entity<int>
         Fields = fields;
         Icon = icon;
         Enabled = enabled;
+        Order = order;
     }
 
     public int ReportId { get; set; }
@@ -30,6 +31,7 @@ public class ReportForm : Entity<int>
     public DynamicFields Fields { get; }
     public JsonDocument? Values { get; private set; }
     public bool Enabled { get; }
+    public short Order { get; set; }
 
     public void SetValues(JsonDocument newValues)
     {

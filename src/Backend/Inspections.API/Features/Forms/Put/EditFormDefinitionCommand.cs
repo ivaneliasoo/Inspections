@@ -6,7 +6,7 @@ namespace Inspections.API.Features.Forms.Put;
 
 public class EditFormDefinitionCommand : IRequest<bool>
 {
-    public EditFormDefinitionCommand(int id, string name, string title, DynamicFields fields, JsonDocument? defaultValues, bool enabled, List<int> reports, List<int> reportConfigurations)
+    public EditFormDefinitionCommand(int id, string name, string title, DynamicFields fields, JsonDocument? defaultValues, bool enabled, short order, List<int> reports, List<int> reportConfigurations)
     {
         Id = id;
         Name = name;
@@ -14,6 +14,7 @@ public class EditFormDefinitionCommand : IRequest<bool>
         Fields = fields;
         DefaultValues = defaultValues;
         Enabled = enabled;
+        Order = order;
         Reports = reports;
         ReportConfigurations = reportConfigurations;
     }
@@ -24,6 +25,7 @@ public class EditFormDefinitionCommand : IRequest<bool>
     public DynamicFields Fields { get; }
     public JsonDocument? DefaultValues { get; }
     public bool Enabled { get; } = true;
+    public short Order { get; set; }
     public List<int> Reports { get; } = new();
     public List<int> ReportConfigurations { get; } = new();
 }

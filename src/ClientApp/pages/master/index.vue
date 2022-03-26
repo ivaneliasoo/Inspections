@@ -24,22 +24,6 @@ export default class MasterMenu extends Vue {
       icon: 'mdi-cog-outline',
       color: 'accent',
       path: '/configurations?configurationonly=true'
-    },
-    {
-      name: 'addresses',
-      text: 'Address Management',
-      helpText: 'Allows to create, update, delete address',
-      icon: 'mdi-cog-outline',
-      color: 'accent',
-      path: '/addresses'
-    },
-    {
-      name: 'licenses',
-      text: 'Licenses Management',
-      helpText: 'Allows to create, update, delete licenses',
-      icon: 'mdi-license',
-      color: 'accent',
-      path: '/licenses'
     }
   ]
 

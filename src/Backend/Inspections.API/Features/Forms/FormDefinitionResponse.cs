@@ -19,6 +19,7 @@ public class FormDefinitionResponse
         instance.Icon = entity.Icon;
         instance.Fields = entity.Fields;
         instance.Enabled = entity.Enabled;
+        instance.Order = entity.Order;
         return instance;
     }
 
@@ -29,4 +30,5 @@ public class FormDefinitionResponse
     public DynamicFields Fields { get; set; } = new();
     public JsonDocument? DefaultValues { get; set; }
     public bool Enabled { get; set; } = true;
+    public short Order { get; set; }
 }

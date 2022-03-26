@@ -23,7 +23,7 @@ public class ReportsBuilder
     
     public ReportsBuilder WithForms(IEnumerable<FormDefinition> forms)
     {
-        _report.AddForms(forms.Select(f => new ReportForm(f.Name, f.Title, f.Fields, f.Icon, f.Enabled))
+        _report.AddForms(forms.Select(f => new ReportForm(f.Name, f.Title, f.Fields, f.Icon, f.Enabled, f.Order))
             .ToList());
 
         return this;

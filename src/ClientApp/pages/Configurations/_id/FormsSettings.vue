@@ -28,6 +28,16 @@
         <v-col>
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-text-field
+              id="txtOrder"
+              v-model.number="form.order"
+              :error-messages="errors"
+              label="Order"
+            />
+          </ValidationProvider>
+        </v-col>
+        <v-col>
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-text-field
               id="txtIcon"
               v-model="form.icon"
               :error-messages="errors"
@@ -130,7 +140,6 @@ import {
   useFetch,
   useContext,
   useRouter,
-  watchEffect,
   watch
 } from '@nuxtjs/composition-api'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'

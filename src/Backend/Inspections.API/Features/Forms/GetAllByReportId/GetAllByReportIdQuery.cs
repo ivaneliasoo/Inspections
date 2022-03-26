@@ -32,7 +32,8 @@ public class GetAllByReportId : IRequestHandler<GetAllByReportIdQuery, IEnumerab
                    Title = form.Title,
                    Icon = form.Icon,
                    Fields = form.Fields,
-                   Enabled = form.Enabled
+                   Enabled = form.Enabled,
+                   Order = form.Order
                 })
             .ToListAsync(cancellationToken);
     }

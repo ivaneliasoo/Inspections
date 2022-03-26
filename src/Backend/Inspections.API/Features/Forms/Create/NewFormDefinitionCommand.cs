@@ -34,6 +34,7 @@ public class NewFormDefinitionCommand : IRequest<FormDefinitionResponse>
     public DynamicFields Fields { get; }
     public JsonDocument? DefaultValues { get; }
     public bool Enabled { get; }
+    public short Order { get; }
     public List<int>? Reports { get; }
     public List<int>? ReportConfigurations { get; }
 }

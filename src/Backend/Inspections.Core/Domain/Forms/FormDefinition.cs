@@ -12,19 +12,21 @@ public sealed class FormDefinition : Entity<int>
     {
             
     }
-    public FormDefinition(string name, string title, string icon, DynamicFields fields)
+    public FormDefinition(string name, string title, string icon, DynamicFields fields, short order)
     {
         Name = name;
         Title = title;
         Icon = icon;
         Fields = fields;
+        Ordern = order;
     }
     public string Name { get;  }
     public string Title { get; private set; }
     public string? Icon { get; set; }
     public DynamicFields Fields { get; private set; }
+    public short Ordern { get; }
     public bool Enabled { get; set; } = true;
-    
+    public short Order { get; set; }
     public List<ReportConfiguration> ReportConfigurations { get; } = new();
 
     public void SetTitle(string title)
