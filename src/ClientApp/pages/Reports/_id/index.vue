@@ -705,6 +705,7 @@ export default defineComponent({
     const forms = ref<FormDefinitionResponse[]>([])
 
     const { fetch } = useFetch(async () => {
+      console.log("*** useFetch ***");
       try {
         currentReport.value = await store.dispatch(
           'reportstrore/getReportById',

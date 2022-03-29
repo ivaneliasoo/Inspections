@@ -128,6 +128,8 @@ export default class IndexPage extends Vue {
   }
 
   goToNewReport (event: any) {
+    console.log("event", event);
+    console.log("event", JSON.stringify(event));
     this.$router.push(`/reports/${event}`)
   }
 
