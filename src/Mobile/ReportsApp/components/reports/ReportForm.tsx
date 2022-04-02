@@ -5,6 +5,7 @@ import { Checklists } from './Checklists'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useReports } from '../../hooks/useReports';
 import { ParticullarOfInstallation } from './ParticullarOfInstallation'
+import { Signatures } from './Signatures'
 
 const ReportForm = () => {
 
@@ -21,6 +22,7 @@ const ReportForm = () => {
           checkLists={workingCheckList}
           onCheckListUpdated={(item: any) => updateCheckList({ ...item, reportId: workingReport!.id })}
           onCheckListItemUpdated={updateCheckListItem} />
+        <Signatures />
       </Card>
     </ScrollView>
   )
