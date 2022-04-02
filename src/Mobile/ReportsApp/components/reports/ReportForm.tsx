@@ -13,6 +13,8 @@ const ReportForm = () => {
     <ScrollView style={{ backgroundColor: 'white'}}>
       <ParticullarOfInstallation />
       <Card
+        style={{ marginHorizontal: -20, marginVertical: 0 }}
+        
         header={() => <Text style={styles.header} category="s2">Checks Legend {workingCheckList ? workingCheckList[0]?.annotation! : ''}</Text>}
       >
         <Checklists
@@ -28,6 +30,6 @@ export { ReportForm }
 
 const styles = StyleSheet.create({
   header: {
-    marginHorizontal: 5, marginTop: 20
+    marginHorizontal: 25, marginTop: 20
   }
 })
