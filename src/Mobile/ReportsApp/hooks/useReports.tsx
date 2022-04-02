@@ -34,6 +34,7 @@ export const useReports = () => {
 
   const getReportById = async (id: number) => {
     const result: ReportQueryResult = await reportsApi.apiReportsIdGet({id})
+    console.log({ result: result.checkLists })
     if (!result.date) result.date = new Date()
     else result.date = moment(result.date).toDate()
     setWorkingReport({ report: result })

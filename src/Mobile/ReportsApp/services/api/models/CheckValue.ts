@@ -18,10 +18,10 @@
  * @enum {string}
  */
 export enum CheckValue {
-    NotAcceptableFalse = 'NotAcceptableFalse',
-    Acceptable = 'Acceptable',
-    NotApplicable = 'NotApplicable',
-    None = 'None'
+    NotAcceptableFalse = 0,
+    Acceptable = 1,
+    NotApplicable = 2,
+    None = 3
 }
 
 export function CheckValueFromJSON(json: any): CheckValue {

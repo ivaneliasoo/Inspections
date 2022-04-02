@@ -21,6 +21,7 @@ import {
     AddCheckListItemCommand,
     AddCheckListItemCommandFromJSON,
     AddCheckListItemCommandToJSON,
+    CheckListQueryResult,
     ProblemDetails,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
@@ -225,7 +226,7 @@ export class CheckListsApi extends runtime.BaseAPI {
 
     /**
      */
-    async getCheckListbyIdRaw(requestParameters: GetCheckListbyIdRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+    async getCheckListbyIdRaw(requestParameters: GetCheckListbyIdRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CheckListQueryResult>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCheckListbyId.');
         }
@@ -249,18 +250,18 @@ export class CheckListsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response);
     }
 
     /**
      */
-    async getCheckListbyId(requestParameters: GetCheckListbyIdRequest, initOverrides?: RequestInit): Promise<void> {
-        await this.getCheckListbyIdRaw(requestParameters, initOverrides);
+    async getCheckListbyId(requestParameters: GetCheckListbyIdRequest, initOverrides?: RequestInit): Promise<CheckListQueryResult> {
+        return await (await this.getCheckListbyIdRaw(requestParameters, initOverrides)).value();
     }
 
     /**
      */
-    async getChecklistsRaw(requestParameters: GetChecklistsRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+    async getChecklistsRaw(requestParameters: GetChecklistsRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CheckListQueryResult>> {
         const queryParameters: any = {};
 
         if (requestParameters.filter !== undefined) {
@@ -296,13 +297,13 @@ export class CheckListsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response);
     }
 
     /**
      */
-    async getChecklists(requestParameters: GetChecklistsRequest, initOverrides?: RequestInit): Promise<void> {
-        await this.getChecklistsRaw(requestParameters, initOverrides);
+    async getChecklists(requestParameters: GetChecklistsRequest, initOverrides?: RequestInit): Promise<CheckListQueryResult> {
+        return await (await this.getChecklistsRaw(requestParameters, initOverrides)).value();
     }
 
     /**

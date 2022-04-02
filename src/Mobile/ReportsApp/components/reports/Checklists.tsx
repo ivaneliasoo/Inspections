@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Text, Icon, Input, Card, List, ListItem, Button } from '@ui-kitten/components'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { SegmentedControlIOSComponent, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { CheckListQueryResult, CheckListItemQueryResult, CheckValue } from '../../services/api'
 
 const checkItemIcon = [
