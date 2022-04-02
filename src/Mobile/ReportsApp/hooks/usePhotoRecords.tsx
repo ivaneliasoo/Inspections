@@ -55,7 +55,7 @@ export const usePhotoRecords = () => {
     uploadOptions.path = uploadOptions.path
       .replace('{file}', path)
       .replace('file://', '');
-    uploadOptions.headers = { ...uploadOptions.headers, label };
+    uploadOptions.headers = { ...uploadOptions.headers, label: label ?? 'NO LABEL' };
     console.log({ uploadOptions });
     Upload.startUpload(uploadOptions)
       .then((uploadId) => {
@@ -96,12 +96,12 @@ export const usePhotoRecords = () => {
   const editLabel = async (
     reportId: number,
     id: number,
-    label: string,
+    label?: string,
   ): Promise<any[]> => {
     const result = await reportsApi.apiReportsIdPhotorecordIdPhotoPut({
       id: reportId,
       idPhoto: id,
-      editPhotoRecordCommand: { reportId, id, label },
+      editPhotoRecordCommand: { reportId, id, label: label ?? 'NO LABEL' },
     });
     return result as unknown as any[];
   };

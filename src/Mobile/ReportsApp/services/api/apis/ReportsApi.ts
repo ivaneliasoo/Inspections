@@ -407,7 +407,7 @@ export class ReportsApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiReportsIdPhotorecordGetRaw(requestParameters: ApiReportsIdPhotorecordGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+    async apiReportsIdPhotorecordGetRaw(requestParameters: ApiReportsIdPhotorecordGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling apiReportsIdPhotorecordGet.');
         }
@@ -431,13 +431,13 @@ export class ReportsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response);
     }
 
     /**
      */
-    async apiReportsIdPhotorecordGet(requestParameters: ApiReportsIdPhotorecordGetRequest, initOverrides?: RequestInit): Promise<void> {
-        await this.apiReportsIdPhotorecordGetRaw(requestParameters, initOverrides);
+    async apiReportsIdPhotorecordGet(requestParameters: ApiReportsIdPhotorecordGetRequest, initOverrides?: RequestInit): Promise<any> {
+        return await (await this.apiReportsIdPhotorecordGetRaw(requestParameters, initOverrides)).value();
     }
 
     /**
@@ -677,7 +677,7 @@ export class ReportsApi extends runtime.BaseAPI {
 
     /**
      */
-    async completeReportRaw(requestParameters: CompleteReportRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+    async completeReportRaw(requestParameters: CompleteReportRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.reportId === null || requestParameters.reportId === undefined) {
             throw new runtime.RequiredError('reportId','Required parameter requestParameters.reportId was null or undefined when calling completeReport.');
         }
@@ -701,13 +701,13 @@ export class ReportsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response);
     }
 
     /**
      */
-    async completeReport(requestParameters: CompleteReportRequest, initOverrides?: RequestInit): Promise<void> {
-        await this.completeReportRaw(requestParameters, initOverrides);
+    async completeReport(requestParameters: CompleteReportRequest, initOverrides?: RequestInit): Promise<any> {
+        return await (await this.completeReportRaw(requestParameters, initOverrides)).value();
     }
 
     /**

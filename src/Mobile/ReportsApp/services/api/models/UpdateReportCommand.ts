@@ -89,7 +89,7 @@ export function UpdateReportCommandToJSON(value?: UpdateReportCommand | null): a
         'name': value.name,
         'address': value.address,
         'licenseNumber': value.licenseNumber,
-        'date': value.date === undefined ? undefined : (value.date.toISOString()),
+        'date': value.date === undefined ? undefined : (value.date),//.toISOString()),
         'isClosed': value.isClosed,
     };
 }

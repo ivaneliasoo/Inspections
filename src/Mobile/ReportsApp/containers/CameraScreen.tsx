@@ -132,7 +132,7 @@ export const CameraScreen = () => {
         }}
           onClose={() => setShowLabeler(false)}
           onSave={() => {
-            EnqueuePhotoUpload(workingReport!.id!, lastPhoto, lastLabel)
+            EnqueuePhotoUpload(workingReport!.id!, lastPhoto, lastLabel.length > 0 ? lastLabel : 'NO LABEL')
             setShowLabeler(false)
             showMessage({
               message: 'Photo Upload has been enqueued',

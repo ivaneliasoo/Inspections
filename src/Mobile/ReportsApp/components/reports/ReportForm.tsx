@@ -13,7 +13,7 @@ const ReportForm = () => {
     <ScrollView style={{ backgroundColor: 'white'}}>
       <ParticullarOfInstallation />
       <Card
-        header={() => <Text style={styles.header} category="h6">Checks Legend {workingCheckList ? workingCheckList[0]?.annotation! : ''}</Text>}
+        header={() => <Text style={styles.header} category="s2">Checks Legend {workingCheckList ? workingCheckList[0]?.annotation! : ''}</Text>}
       >
         <Checklists
           checkLists={workingCheckList}

@@ -50,7 +50,7 @@ const Signatures = () => {
             {values && values.signatures && values.signatures!.map((item, signIndex) => {
               return (<Card key={signIndex} style={styles.card}>
 
-                <Text category='h6'>
+                <Text category='s1'>
                   {`${item.title}`}
                 </Text>
                 <Text status='warning' category='s2'>

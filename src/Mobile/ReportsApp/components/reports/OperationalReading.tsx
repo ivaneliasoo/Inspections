@@ -85,8 +85,8 @@ const OperationalReading = () => {
           <View style={{ alignSelf: 'center' }}>
             <AutoSave debounceMs={600} />
           </View>
-          <Text category='h6' style={{ fontWeight: '900' }}>Operational Readings</Text>
-          <Text category='s1' appearance='hint'>Voltage</Text>
+          <Text category='s1' style={{ fontWeight: '900' }}>Operational Readings</Text>
+          <Text category='s2' appearance='hint'>Voltage</Text>
           <View style={{ margin: 5, marginVertical: 20, justifyContent: !isSingleLine ? 'space-evenly' : 'flex-start', alignContent: 'flex-start', flexDirection: 'row', flexWrap: 'wrap' }}>
             {(isSingleLine || isMultiLine) && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsVoltageL1N!)} preppendLabel="L1-N2" itemSelected={value => setFieldValue('operationalReadingsVoltageL1N', value)} />}
             {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsVoltageL2N!)} preppendLabel="L2-N" itemSelected={value => setFieldValue('operationalReadingsVoltageL2N', value)} />}
@@ -98,14 +98,14 @@ const OperationalReading = () => {
             {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsVoltageL2L3!)} preppendLabel="L2-L3" itemSelected={value => setFieldValue('operationalReadingsVoltageL2L3', value)} />}
           </View>
           <Divider />
-          <Text category='s1' appearance='hint'>Running Load</Text>
+          <Text category='s2' appearance='hint'>Running Load</Text>
           <View style={{ marginVertical: 20, justifyContent: !isSingleLine ? 'space-evenly' : 'flex-start', alignContent: 'center', flexDirection: 'row', flexWrap: 'wrap' }}>
             {(isSingleLine || isMultiLine) && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL1!)} preppendLabel="L1" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL1', value)} />}
             {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL2!)} preppendLabel="L2" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL2', value)} />}
             {isMultiLine && <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsRunningLoadL3!)} preppendLabel="L3" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsRunningLoadL3', value)} />}
           </View>
           <Divider />
-          <Text category='h6'>Main Breaker Details</Text>
+          <Text category='s1'>Main Breaker Details</Text>
           <View style={{ flexDirection: 'row', margin: 5, alignContent: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
             <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsMainBreakerAmp!)} preppendLabel="Main Breaker" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsMainBreakerAmp', value)} />
             <NumericPicker2 defaultValue={formatPickerValue(values.operationalReadingsMainBreakerRating!)} preppendLabel="Rating" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsMainBreakerRating', value)} />
@@ -127,7 +127,7 @@ const OperationalReading = () => {
             <NumericPicker defaultValue={formatPickerValue(values.operationalReadingsMainBreakerCapacity!)} preppendLabel="Breaking Capacity (lsc)" appendLabel="A" itemSelected={value => setFieldValue('operationalReadingsMainBreakerCapacity', value)} />
           </View>
           <Divider />
-          <Text style={{ flex: 1, margin: 5 }} category='h6'>Over current</Text>
+          <Text style={{ flex: 1, margin: 5 }} category='s1'>Over current</Text>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               <CheckBox
@@ -173,7 +173,7 @@ const OperationalReading = () => {
             </View>
           </View>
           <Divider />
-          <Text style={{ flex: 1, margin: 5 }} category='h6'>Earth Fault</Text>
+          <Text style={{ flex: 1, margin: 5 }} category='s1'>Earth Fault</Text>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <CheckBox

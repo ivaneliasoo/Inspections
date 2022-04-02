@@ -31,6 +31,7 @@ export const ParticullarOfInstallation = () => {
         }
         await saveReport(updateCmd)
           .catch(error => {
+            console.log(error)
             Alert.alert('Datos Inválidos', error.response.message)
           })
       } else {

@@ -49,10 +49,11 @@ const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
         onSubmitEditing={() => { setShowRemarks(prev => !prev); onPress(); }}
         accessoryRight={() => <TouchableOpacity onPress={() => { setShowRemarks(prev => !prev); onPress(); }}><Icon name='close-outline' fill='black' style={styles.icon} /></TouchableOpacity>} />
     : <ListItem
+      style={{ marginHorizontal: -15, padding: 0 }}
       key={`text-${item.id}`}
-      title={() => <Text category='h6' status={!item.touched ? 'danger':''}>{`.${index + 1} - ${item.text}`}</Text>}
+      title={() => <Text category='s2' status={!item.touched ? 'danger':''}>{`.${index + 1} - ${item.text}`}</Text>}
       onPress={onPress}
-      description={() => <Text category='s1' appearance='hint'>{`Remarks: ${remark}`}</Text>}
+      description={() => <Text category='s2' appearance='hint'>{`Remarks: ${remark}`}</Text>}
       accessoryRight={RightActions}
     />
 }
@@ -68,10 +69,10 @@ const CheckListGroup = React.memo(({ item, index, onChange, onCheckUpdated, ...p
   return (
     <Card 
       key={`list-${item.id}`}
-      style={{ marginVertical: 6, elevation: 3 }}
+      style={{ marginVertical: 3, elevation: 1, marginHorizontal: 0 }}
       header={() => <>
         <TouchableOpacity key={`touch-${item.id}`} onPress={(e) => { e.preventDefault(); onChange(item.checked) }} style={styles.line}>
-          <Text key={`title-${item.id}`} style={styles.checkListTitle} category='h6' >{`${index + 1} - ${item.text}`}</Text>
+          <Text key={`title-${item.id}`} style={styles.checkListTitle} category='s1' >{`${index + 1} - ${item.text}`}</Text>
           <Icon key={`titleicon-${item.id}`} name={checkItemIcon[item.checked].name} fill={checkItemIcon[item.checked].color} style={styles.icon} />
         </TouchableOpacity>
       </>}
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    padding: 5,
+    paddingHorizontal: 5,
   },
   line: {
     flex: 1,
@@ -126,14 +127,15 @@ const styles = StyleSheet.create({
     fontWeight: '900'
   },
   icon: {
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
   },
   lineIcon: {
-    width: 35,
-    height: 35,
-    marginHorizontal: 5
+    width: 24,
+    height: 24,
+    marginStart: 14,
+    marginEnd: -10
   },
-  checkListTitle: { flex: 10 },
+  checkListTitle: { flex: 1, fontWeight: '900' },
   checkListSubtitle: { alignSelf: 'center', alignContent: 'center' },
 })
