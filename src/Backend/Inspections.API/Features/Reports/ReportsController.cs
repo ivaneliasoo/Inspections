@@ -19,7 +19,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Inspections.API.Features.Reports
 {
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReportsController : ControllerBase

@@ -3,7 +3,6 @@ import { Button, Card, Layout, Modal, Spinner, Text } from "@ui-kitten/component
 import { StyleSheet, View } from 'react-native'
 import { Configuration, CreateReportCommand, ReportConfigurationApi, ReportsApi, ResumenReportConfiguration } from "../../services/api"
 import { API_HOST, API_KEY } from "../../config/config"
-import { useNavigation } from "@react-navigation/native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 type ModalContentProps = {
@@ -51,24 +50,24 @@ export const NewReport = ({ isBusy, isOpen, onCreating, onClose, onCreate }: New
 
   async function createReport(configuration: CreateReportCommand) {
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
-    const reportsApi = new ReportsApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
-    const reportId = await reportsApi.apiReportsPost(configuration)
+    const reportsApi = new ReportsApi(new Configuration({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as unknown as Configuration))
+    const reportId = await reportsApi.apiReportsPost( { createReportCommand: configuration })
     return reportId
   }
 
   const callCreateReport = async (id: number) => {
     onCreating(true)
-    await createReport({ configurationId: id, reportType: 0 })
-      .then((resp) => onCreate(resp.data))
+    await createReport({ configurationId: id })
+      .then((resp) => onCreate(resp))
       .finally(() => onCreating(false))
   }
 
   async function getConfigurationTemplates() {
     const userToken: string = await AsyncStorage.getItem('userToken') as string;
-    const reportConfigurationApi = new ReportConfigurationApi({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as Configuration)
-    const result = await reportConfigurationApi.apiReportConfigurationGet();
-    setTemplates(result.data)
-    return result.data
+    const reportConfigurationApi = new ReportConfigurationApi(new Configuration({ accessToken: userToken, basePath: API_HOST, apiKey: API_KEY } as unknown as Configuration))
+    const result = await reportConfigurationApi.apiReportConfigurationGet({ filter: ''});
+    setTemplates(result)
+    return result
   }
 
 

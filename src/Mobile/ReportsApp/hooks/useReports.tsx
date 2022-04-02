@@ -1,11 +1,10 @@
 import { useContext } from 'react';
 import { ReportsContext } from '../contexts/ReportsContext';
 import { API_HOST, API_KEY } from '../config/config';
-import { Configuration, ReportsApi, CheckListsApiFactory } from '../services/api';
+import { Configuration, ReportsApi, CheckListsApi, CheckValue, ResponsibleType } from '../services/api';
 import { AuthContext } from '../contexts/AuthContext';
 import { CheckListItemQueryResult, ReportQueryResult, UpdateCheckListItemCommand, UpdateReportCommand, SignaturesApi, SignatureQueryResult } from '../services/api';
-import { UpdateOperationalReadingsCommand } from '../services/api/api';
-import moment from 'moment'; 0
+import moment from 'moment';
 
 export const useReports = () => {
   const { authState: { userToken } } = useContext(AuthContext)
@@ -17,15 +16,15 @@ export const useReports = () => {
     apiKey: API_KEY
   })
 
-  const checkListsApi = CheckListsApiFactory(configuration)
+  const checkListsApiInstance = new CheckListsApi(configuration)
   const reportsApi = new ReportsApi(configuration)
   const signaturesApi = new SignaturesApi(configuration)
 
   const getReports = async () => {
     try {
       setRefreshing(true)
-      const resp = await reportsApi.apiReportsGet(reportsState.filter, reportsState.isClosed, reportsState.myReports, reportsState.orderBy, reportsState.descendingSort)
-      getAll({ reports: resp.data as unknown as ReportQueryResult[] })
+      const resp = await reportsApi.apiReportsGet({ filter: reportsState.filter, closed: reportsState.isClosed, myReports: reportsState.myReports, orderBy: reportsState.orderBy, descending: reportsState.descendingSort})
+      getAll({ reports: resp as unknown as ReportQueryResult[] })
     } catch (error) {
       console.log(error)
     } finally {
@@ -34,7 +33,7 @@ export const useReports = () => {
   }
 
   const getReportById = async (id: number) => {
-    const result: ReportQueryResult = (await reportsApi.apiReportsIdGet(id)).data as unknown as ReportQueryResult
+    const result: ReportQueryResult = await reportsApi.apiReportsIdGet({id})
     if (!result.date) result.date = new Date()
     else result.date = moment(result.date).toDate()
     setWorkingReport({ report: result })
@@ -43,7 +42,7 @@ export const useReports = () => {
 
   const completeReport = async (reportId: number) => {
     try {
-      const result = await reportsApi.completeReport(reportId).catch(error => console.log(error.response.message))
+      const result = await reportsApi.completeReport({reportId}).catch(error => console.log(error.response.message))
       complete(reportId)
       return result
     } catch (error) {
@@ -54,7 +53,7 @@ export const useReports = () => {
 
   const deleteReport = async (reportId: number) => {
     try {
-      const result = await reportsApi.apiReportsIdDelete(reportId).catch(error => console.log(error.response.message))
+      const result = await reportsApi.apiReportsIdDelete({ id: reportId }).catch(error => console.log(error.response.message))
       removeReport(reportId)
       return result
     } catch (error) {
@@ -91,7 +90,7 @@ export const useReports = () => {
       tempCheckValue = 2
     }
     updateCheckListItems({ checklistId: payload.checkListId, newValue: tempCheckValue })
-    await reportsApi.bulkUpdateChecks(payload.reportId, payload.checkListId, tempCheckValue)
+    await reportsApi.bulkUpdateChecks({ reportId: payload.reportId, checkListId: payload.checkListId, newValue: tempCheckValue })
   }
 
   const updateCheckListItem = async (payload: CheckListItemQueryResult) => {
@@ -112,7 +111,7 @@ export const useReports = () => {
 
     const command: UpdateCheckListItemCommand = {
       checkListId: payload.checkListId!,
-      checked: tempCheckValue!,
+      checked: tempCheckValue! as unknown as CheckValue,
       editable: payload.editable!,
       id: payload.id!,
       remarks: payload.remarks!,
@@ -121,39 +120,39 @@ export const useReports = () => {
     }
 
     updCheckItem({ checkListId: payload.checkListId!, checklistItemId: payload.id!, newValue: tempCheckValue, remarks: payload.remarks! })
-    await checkListsApi.updateChecklistItem(payload.checkListId ?? -1, payload.id ?? -1, command)
+    await checkListsApiInstance.updateChecklistItem({ id: payload.checkListId ?? -1, idItem: payload.id ?? -1, updateCheckListItemCommand: command })
   }
 
   const saveSignature = async (s: { signature: SignatureQueryResult, index: number }) => {
-    await signaturesApi.apiSignaturesIdPut(Number(s.signature.id), {
+    await signaturesApi.apiSignaturesIdPut({ id: Number(s.signature.id), editSignatureCommand: {
       id: s.signature.id!,
       title: s.signature.title!,
       annotation: s.signature.annotation!,
-      responsibleType: s.signature.responsibleType!,
+      responsibleType: s.signature.responsibleType! as unknown as ResponsibleType,
       responsibleName: s.signature.responsibleName!,
       designation: s.signature.designation!,
       remarks: s.signature.remarks!,
       date: s.signature.date!,
       principal: s.signature.principal!,
       drawnSign: s.signature.drawnSign!
-    }).then(() => {
+    }}).then(() => {
       updateSignature(s)
     })
   }
 
-  const saveOperationalreadings = async (or: UpdateOperationalReadingsCommand) => {
-    await reportsApi.updateOperationalReadings(or.reportId!, or)
-  }
+  // const saveOperationalreadings = async (or: UpdateOperationalReadingsCommand) => {
+  //   await reportsApi.updateOperationalReadings(or.reportId!, or)
+  // }
 
   const saveReport = async (updateCmd: UpdateReportCommand) => {
     if (updateCmd && updateCmd.id) {
-      await reportsApi.apiReportsIdPut(updateCmd.id.toString(), updateCmd)
+      await reportsApi.apiReportsIdPut({ id: updateCmd.id.toString(), updateReportCommand: updateCmd })
       getReportById(updateCmd.id)
     }
   }
 
   const generatePdf = async (id: number, compoundedPhotoRecord: boolean = true, printPhotos: boolean = true) => {
-    await reportsApi._export(id, true)
+    await reportsApi._export({  id, printPhotos })
   }
 
   return {
@@ -173,7 +172,7 @@ export const useReports = () => {
     updateCheckListItem,
     saveSignature,
     clearWorkingReport,
-    saveOperationalreadings,
+    // saveOperationalreadings,
     setSorting,
     setOptions,
     reportsState,

@@ -38,10 +38,10 @@ export default function PhotoRecordGallery() {
   }, [])
 
   const updateLabel = (id: number, text: string) => {
-    const index = images.findIndex(im => im.source.id === id )
-    const image = images[index]
+    const index = images.findIndex((im: any) => im.source.id === id )
+    const image = images[index] as any
     image.source.label = text
-    setImages(images.splice(index, 1, image))
+    setImages(images.splice(index, 1, image as never))
   }
   return (
     <>

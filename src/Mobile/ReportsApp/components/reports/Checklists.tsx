@@ -14,14 +14,14 @@ const checkItemIcon = [
 
 const computeCheckListValue = (checkList: CheckListQueryResult) => {
   const totalAcceptable = checkList.checks!.filter(ci => ci.checked === CheckValue.Acceptable).length
-  const totalNotAcceptable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAcceptable).length
-  const totalNotAplicable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAplicable || ci.checked === CheckValue.None).length
+  const totalNotAcceptable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAcceptableFalse).length
+  const totalNotAplicable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotApplicable || ci.checked === CheckValue.None).length
   const total = checkList.checks!.length
 
   if (total === totalAcceptable) return CheckValue.Acceptable
-  else if (total === totalNotAplicable) return CheckValue.NotAplicable
-  else if (total === totalNotAcceptable) return CheckValue.NotAcceptable
-  else return CheckValue.NotAplicable
+  else if (total === totalNotAplicable) return CheckValue.NotApplicable
+  else if (total === totalNotAcceptable) return CheckValue.NotAcceptableFalse
+  else return CheckValue.NotApplicable
 }
 
 const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {

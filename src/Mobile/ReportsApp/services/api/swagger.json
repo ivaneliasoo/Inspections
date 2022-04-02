@@ -5762,11 +5762,10 @@
       },
       "CheckListDisplay": {
         "enum": [
-          0,
-          1
+          "Numbered",
+          "Inline"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "CheckListItemDTO": {
         "type": "object",
@@ -6289,6 +6288,10 @@
           },
           "enabled": {
             "type": "boolean"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -6501,38 +6504,31 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32",
-            "readOnly": true
+            "format": "int32"
           },
           "addressLine": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "addressLine2": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "unit": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "country": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "postalCode": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "licenseId": {
             "type": "integer",
-            "format": "int32",
-            "readOnly": true
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -6564,6 +6560,11 @@
           },
           "enabled": {
             "type": "boolean"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "reports": {
             "type": "array",
@@ -6673,11 +6674,10 @@
       },
       "PrintSectionStatus": {
         "enum": [
-          0,
-          1
+          "Inactive",
+          "Active"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "ProblemDetails": {
         "type": "object",
@@ -6872,21 +6872,19 @@
       },
       "ReportType": {
         "enum": [
-          0
+          "Inspection"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "ResponsibleType": {
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4
+          "Supervisor",
+          "Inspector",
+          "Witness",
+          "LEW",
+          "Other"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "ResumenReportConfiguration": {
         "type": "object",

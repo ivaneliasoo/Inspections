@@ -57,6 +57,8 @@ namespace Inspections.API
                 .AddJsonOptions(opt =>
                 {
                     opt.JsonSerializerOptions.Converters.Add(new JsonDateConverter());
+                    opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    opt.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                 });
             //.AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddCors();

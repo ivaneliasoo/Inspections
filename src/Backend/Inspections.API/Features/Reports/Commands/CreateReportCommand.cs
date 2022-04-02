@@ -7,10 +7,10 @@ namespace Inspections.API.Features.Reports.Commands
 {
     public class CreateReportCommand : IRequest<int>
     {
-        public int ConfigurationId { get; init; }
-        public ReportType ReportType { [UsedImplicitly] get; init; }
+        public int ConfigurationId { get; set; }
+        public ReportType ReportType { [UsedImplicitly] get; set; }
 
-        private CreateReportCommand()
+        public CreateReportCommand()
         {
 
         }

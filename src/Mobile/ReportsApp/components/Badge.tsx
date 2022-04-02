@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native';
-import { Camera } from './Icons';
 import { useTheme } from '@ui-kitten/components';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
@@ -37,7 +36,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: -10,
     top: -6,
-    // backgroundColor: 'red',
     borderRadius: 12,
     width: 18,
     height: 18,
@@ -47,7 +45,6 @@ const styles = StyleSheet.create({
   text: {
     top: -1,
     left: -1,
-    // color: 'white',
     fontSize: 12,
     fontWeight: '900'
   },

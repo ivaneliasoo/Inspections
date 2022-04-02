@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider, Text, Icon, TopNavigation, TopNavigationAction, useTheme } from '@ui-kitten/components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native';
@@ -10,7 +10,6 @@ import { Signatures } from '../components/reports/Signatures';
 import { ReportsContext } from '../contexts/ReportsContext';
 import { useContext } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import useMemo from 'react';
 import { useDownloader } from '../hooks/useDownloader';
 
 type DetailsScreenNavigationProp = StackNavigationProp<any, any>
@@ -89,9 +88,6 @@ export const Details = ({ route, navigation }: Props) => {
     getReportById(reportId).finally(() => { setLoading(false) })
   }, [])
 
-
-
-
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <TopNavigation title={`Report  `} alignment='center' accessoryRight={CompleteAction} accessoryLeft={BackAction} />
@@ -113,8 +109,6 @@ export const Details = ({ route, navigation }: Props) => {
       }
     </View>
   );
-
-
 };
 
 const styles = StyleSheet.create({

@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import { AutoSave } from '../../components/AutoSave'
 import { showMessage } from 'react-native-flash-message';
 import { useReports } from '../../hooks/useReports';
-import { ReportQueryResult, ResponsibleType, SignatureQueryResult } from '../../services/api/api';
+import { ReportQueryResult, SignatureQueryResult } from '../../services/api';
 
 
 const Signatures = () => {
