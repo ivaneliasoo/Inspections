@@ -34,7 +34,6 @@ export const useReports = () => {
 
   const getReportById = async (id: number) => {
     const result: ReportQueryResult = await reportsApi.apiReportsIdGet({id})
-    console.log({ result: result.checkLists })
     if (!result.date) result.date = new Date()
     else result.date = moment(result.date).toDate()
     setWorkingReport({ report: result })
@@ -43,9 +42,8 @@ export const useReports = () => {
 
   const completeReport = async (reportId: number) => {
     try {
-      const result = await reportsApi.completeReport({reportId}).catch(error => console.log(error.response.message))
+      await reportsApi.completeReport({reportId}).catch(error => console.log(error.response.message))
       complete(reportId)
-      return result
     } catch (error) {
       console.log(error)
     } finally {
@@ -153,7 +151,6 @@ export const useReports = () => {
   }
 
   const updateDynamicForm = async (idForm: number, values: any) => {
-    console.log({ idForm, values })
     await reportsApi.updateForm({ id: parseInt(reportsState.workingReport.id!.toString()), idForm, body: values })
   }
 

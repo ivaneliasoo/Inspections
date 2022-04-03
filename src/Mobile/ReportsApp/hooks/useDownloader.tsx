@@ -25,7 +25,6 @@ export const useDownloader =() => {
     })
     .then((resp) => {
       setTimeout(() => {
-        console.log(resp.path())
         android.actionViewIntent(resp.path(), 'application/pdf')
       }, 5000);
     })

@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }: any) => {
 
   const signIn = async (data: { user: string, password: string }) => {
     const token = await createToken(data)
-    console.log({ token })
     if (token) {
       const userData = await userInfo(token)
       dispatch({ type: 'SIGN_IN', payload: { userInfo: userData, token } });

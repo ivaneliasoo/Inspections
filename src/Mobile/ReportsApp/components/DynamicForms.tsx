@@ -111,7 +111,6 @@ const DynamicForms = () => {
                                       value={values[field.fieldName!]}
                                       disabled={!field.enabled}
                                       onChangeText={(value) => { setFieldValue(field.fieldName!, value); }}
-                                      // onChange={(value) => { console.log(value.target); setFieldValue(field.fieldName!, value.target.value); }}
                                     />
                                   )}
                                   {field.inputType === 'textarea' && (
@@ -161,7 +160,7 @@ const DynamicForms = () => {
                                       />
                                     )}
                                     {
-                                      field.inputType === 'select' && <Select label={field.label} value={field.selectOptions.split(',')[values[field.fieldName!]]} selectedIndex={new IndexPath(values[field.fieldName!] ?? 0)} onSelect={(index) => { console.log(index); setFieldValue(field.fieldName, index.row) }}>
+                                      field.inputType === 'select' && <Select label={field.label} value={field.selectOptions.split(',')[values[field.fieldName!]]} selectedIndex={new IndexPath(values[field.fieldName!] ?? 0)} onSelect={(index) => {setFieldValue(field.fieldName, index.row) }}>
                                         {field.selectOptions.split(',').map((option, index) => {
                                           return <SelectItem key={`option_${option}`} title={option} />
                                         })}

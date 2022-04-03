@@ -21,7 +21,6 @@ export const useAuthorization = () => {
 
       const usersApi = new UsersApi((new Configuration({ accessToken: token ?? userToken, basePath: API_HOST, apiKey: API_KEY })));
       const resp = await usersApi.getActiveUser()
-      console.log({resp})
       return resp || {}
     } catch (error) {
       console.log({ error })
