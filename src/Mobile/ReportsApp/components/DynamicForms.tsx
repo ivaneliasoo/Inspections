@@ -10,6 +10,7 @@ import {
   useTheme,
   Select,
   SelectItem,
+  IndexPath,
 } from '@ui-kitten/components';
 import {
   DynamicFieldMetadata,
@@ -160,7 +161,7 @@ const DynamicForms = () => {
                                       />
                                     )}
                                     {
-                                      field.inputType === 'select' && <Select label={field.label} selectedIndex={0}>
+                                      field.inputType === 'select' && <Select label={field.label} value={field.selectOptions.split(',')[values[field.fieldName!]]} selectedIndex={new IndexPath(values[field.fieldName!] ?? 0)} onSelect={(index) => { console.log(index); setFieldValue(field.fieldName, index.row) }}>
                                         {field.selectOptions.split(',').map((option, index) => {
                                           return <SelectItem key={`option_${option}`} title={option} />
                                         })}

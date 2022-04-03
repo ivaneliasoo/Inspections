@@ -286,7 +286,7 @@ export default defineComponent({
         children: [
           {
             type: 'checkbox',
-            name: 'isRollerOnMobile',
+            name: 'rollerOnMobile',
             label: 'Is Roller On Mobile',
             cols: 1
           },
