@@ -152,6 +152,11 @@ export const useReports = () => {
     }
   }
 
+  const updateDynamicForm = async (idForm: number, values: any) => {
+    console.log({ idForm, values })
+    await reportsApi.updateForm({ id: parseInt(reportsState.workingReport.id!.toString()), idForm, body: values })
+  }
+
   const generatePdf = async (id: number, compoundedPhotoRecord: boolean = true, printPhotos: boolean = true) => {
     await reportsApi._export({  id, printPhotos })
   }
@@ -173,7 +178,7 @@ export const useReports = () => {
     updateCheckListItem,
     saveSignature,
     clearWorkingReport,
-    // saveOperationalreadings,
+    updateDynamicForm,
     setSorting,
     setOptions,
     reportsState,

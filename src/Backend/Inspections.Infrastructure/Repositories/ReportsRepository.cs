@@ -31,7 +31,7 @@ public class ReportsRepository : IReportsRepository
         cfg.CreateMap<Report, ReportQueryResult>()
             .ForMember(m => m.Signatures, opt => opt.MapFrom(src => src.Signatures.OrderBy(ob => ob.Order)))
             .ForMember(m => m.CheckLists, opt => opt.MapFrom(src => src.CheckList))
-            .ForMember(m => m.Forms, opt => opt.MapFrom(src => src.AvailableForms));
+            .ForMember(m => m.Forms, opt => opt.MapFrom(src => src.AvailableForms.OrderBy(f => f.Order)));
         cfg.CreateMap<Report, ReportListItem>()
             .ForMember(m => m.HasNotes, opt => opt.MapFrom(src => src.Notes.Any()))
             .ForMember(m => m.HasPhotoRecords, opt => opt.MapFrom(src => src.PhotoRecords.Any()))

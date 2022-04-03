@@ -1,26 +1,32 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import React, { createRef, useState } from 'react';
 import {
   Icon,
   Input,
   Layout,
   Tab,
-  TabBar,
+  Text,
   TabView,
   useTheme,
+  Select,
+  SelectItem,
 } from '@ui-kitten/components';
-import { FormDefinitionResponse } from '../services/api/models';
+import {
+  DynamicFieldMetadata,
+  FormDefinitionResponse,
+} from '../services/api/models';
 import { useReports } from '../hooks/useReports';
 import { Formik, FormikProps } from 'formik';
 import NumericPicker from './NumericPicker';
+import NumericPicker2 from './NumericPicker2';
+import { AutoSave } from './AutoSave';
 
 const DynamicForms = () => {
   const theme = useTheme();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   //   const shouldLoadComponent = (index) => index === selectedTabIndex;
 
-  const { workingReport: report, saveSignature } = useReports();
-  console.log({ forms: report.forms });
+  const { workingReport: report, updateDynamicForm } = useReports();
   const formRef = createRef<FormikProps<FormDefinitionResponse>>();
 
   const formatPickerValue = (value: number) => {
@@ -33,79 +39,148 @@ const DynamicForms = () => {
     return <Text>Empty</Text>;
   }
 
-  const saveReadings = async (values: FormDefinitionResponse) => {};
-
   return (
     <TabView
       selectedIndex={selectedTabIndex}
-      onSelect={(index) => setSelectedTabIndex(index)}>
-      {report.forms!.map((schema, index) => {
-        const TabIcon = (props) => <Icon {...props} name={schema.icon ?? ''} />;
+      onSelect={(index) => setSelectedTabIndex(index)}
+      shouldLoadComponent={(index) => index === selectedTabIndex}>
+      {report
+        .forms!.filter((s) => s.enabled)
+        .map((schema, index) => {
+          // const TabIcon = (props) => (
+          //   <Icon {...props} name={schema.icon ?? ''} />
+          // );
 
-        const defaultValues = {}
+          const sections = schema
+            .fields!.fieldsDefinitions!.filter((s) => s.enabled)
+            .sort((a, b) => a.order! - b.order!)
+            .reduce((acc, value) => {
+              if (!acc[value.sectionTitle!]) {
+                acc[value.sectionTitle!] = [];
+              }
+              acc[value.sectionTitle!].push(value);
+              return acc;
+            }, {});
 
-        schema.fields!.fieldsDefinitions!.forEach(({...f}) => {
-                Object.defineProperty(defaultValues, f.fieldName!, {
-                    value: f.defaultValue,
-                    writable: true,
-                    enumerable: true,
-                    configurable: true
-                })
+          const saveReadings = async (values: FormDefinitionResponse) => {
+            updateDynamicForm(schema.id!, values);
+          };
+
+          const defaultValues = {};
+
+          schema.fields!.fieldsDefinitions!.forEach(({ ...f }) => {
+            Object.defineProperty(defaultValues, f.fieldName!, {
+              value: f.defaultValue,
+              writable: true,
+              enumerable: true,
+              configurable: true,
+            });
           });
-
-        return (
-          <Tab
-            key={`${schema.name}_${index}`}
-            title={schema.title ?? ''}
-            icon={TabIcon}>
-            <ScrollView style={{ height: '100%' }}>
-              <Formik
-                innerRef={formRef}
-                initialValues={defaultValues}
-                enableReinitialize
-                onSubmit={saveReadings}>
-                {({ values, setFieldValue }) => {
-                  return schema.fields!.fieldsDefinitions!.map(
-                    (field, index) => {
+          return (
+            <Tab key={`${schema.name}_${index}`} title={schema.title ?? ''}>
+              <ScrollView style={{ height: '95%', backgroundColor: 'white' }}>
+                <Formik
+                  innerRef={formRef}
+                  initialValues={schema.values ?? defaultValues}
+                  enableReinitialize
+                  onSubmit={saveReadings}>
+                  {({ values, setFieldValue }) => {
+                    return Object.keys(sections).map((section, index) => {
                       return (
-                        <Layout key={`layout_${index}`}>
-                          {/* <Text>{field.label}</Text> */}
-                          {field.inputType === 'text' && (
-                            <Input
-                              value={field.defaultValue}
-                              disabled={!field.enabled}
-                            />
-                          )}
-                          {field.inputType === 'textarea' && (
-                            <Input
-                              multiline={true}
-                              numberOfLines={5}
-                              value={field.defaultValue}
-                              disabled={!field.enabled}
-                            />
-                          )}
-                          {field.inputType === 'number' &&
-                            field.rollerOnMobile && (
-                              <NumericPicker
-                                preppendLabel={field.label!}
-                                appendLabel={field.suffix!}
-                                key={field.fieldName}
-                                itemSelected={() => {}}
-                                defaultValue={formatPickerValue(
-                                  values.defaultValues,
-                                )}
-                              />
-                            )}
-                        </Layout>
+                        <>
+                          <View key={`Autosave_View_${index}`} style={{ alignSelf: 'center' }}>
+                            <AutoSave debounceMs={600} />
+                          </View>
+                          <Text
+                            key={`section_${section}`}
+                            category={'s1'}
+                            style={{ margin: 10, fontWeight: '700' }}>
+                            {section}
+                          </Text>
+                          {sections[section]
+                            .sort((f: any) => f.order)
+                            .map((field: any, index: number) => {
+                              return (
+                                <View
+                                  key={`layout_${index}`}
+                                  style={{ marginVertical: 5 }}>
+                                  {field.inputType === 'text' && (
+                                    <Input
+                                      key={`input_${index}`}
+                                      value={values[field.fieldName!]}
+                                      disabled={!field.enabled}
+                                      onChangeText={(value) => { setFieldValue(field.fieldName!, value); }}
+                                      // onChange={(value) => { console.log(value.target); setFieldValue(field.fieldName!, value.target.value); }}
+                                    />
+                                  )}
+                                  {field.inputType === 'textarea' && (
+                                    <Input
+                                      key={`input_${index}`}
+                                      multiline={true}
+                                      numberOfLines={5}
+                                      value={values[field.fieldName!]}
+                                      disabled={!field.enabled}
+                                      onChangeText={(value) => { setFieldValue(field.fieldName!, value); }}
+                                    />
+                                  )}
+                                  {(field.inputType === 'number' &&
+                                    field.rollerOnMobile &&
+                                    (field as DynamicFieldMetadata)
+                                      .rollerDigits == 3) ? (
+                                      <NumericPicker
+                                        key={`picker_${index}`}
+                                        preppendLabel={field.label!}
+                                        appendLabel={field.suffix!}
+                                        itemSelected={(value) =>
+                                          setFieldValue(field.fieldName, value)
+                                        }
+                                        defaultValue={formatPickerValue(
+                                          parseInt(
+                                            values[field.fieldName!],
+                                          ),
+                                        )}
+                                      />
+                                    ): null}
+                                  {(field.inputType === 'number' &&
+                                    field.rollerOnMobile &&
+                                    (field as DynamicFieldMetadata)
+                                      .rollerDigits == 4) && (
+                                      <NumericPicker2
+                                        preppendLabel={field.label!}
+                                        appendLabel={field.suffix!}
+                                        key={field.fieldName}
+                                        itemSelected={(value) =>
+                                          setFieldValue(field.fieldName, value)
+                                        }
+                                        defaultValue={formatPickerValue(
+                                          parseInt(
+                                            defaultValues[field.fieldName!],
+                                          ),
+                                        )}
+                                      />
+                                    )}
+                                    {
+                                      field.inputType === 'select' && <Select label={field.label} selectedIndex={0}>
+                                        {field.selectOptions.split(',').map((option, index) => {
+                                          return <SelectItem key={`option_${option}`} title={option} />
+                                        })}
+                                      </Select>
+                                    }
+                                    {
+                                      (field.inputType === 'number' && !field.rollerOnMobile) && <Input maxLength={field.maxLength} keyboardType={'numeric'} label={field.label} value={values[field.fieldName!]} onChangeText={(value) => { setFieldValue(field.fieldName!, value); }} />
+                                    }
+                                </View>
+                              );
+                            })}
+                        </>
                       );
-                    },
-                  );
-                }}
-              </Formik>
-            </ScrollView>
-          </Tab>
-        );
-      })}
+                    });
+                  }}
+                </Formik>
+              </ScrollView>
+            </Tab>
+          );
+        })}
     </TabView>
   );
 };

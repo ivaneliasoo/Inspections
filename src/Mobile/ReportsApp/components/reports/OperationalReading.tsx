@@ -26,43 +26,7 @@ const OperationalReading = () => {
   const saveReadings = async () => {
     if (formRef.current) {
       if (formRef.current.isValid && formRef.current.dirty) {
-        // const updateCmd: UpdateOperationalReadingsCommand = {
-          // id: formRef.current.values.operationalReadingsId!,
-          // reportId: formRef.current.values.id!,
-          // voltageL1N: formRef.current.values.operationalReadingsVoltageL1N!,
-          // voltageL2N: formRef.current.values.operationalReadingsVoltageL2N!,
-          // voltageL3N: formRef.current.values.operationalReadingsVoltageL3N!,
-          // voltageL1L2: formRef.current.values.operationalReadingsVoltageL1L2!,
-          // voltageL1L3: formRef.current.values.operationalReadingsVoltageL1L3!,
-          // voltageL2L3: formRef.current.values.operationalReadingsVoltageL2L3!,
-          // runningLoadL1: formRef.current.values.operationalReadingsRunningLoadL1!,
-          // runningLoadL2: formRef.current.values.operationalReadingsRunningLoadL2!,
-          // runningLoadL3: formRef.current.values.operationalReadingsRunningLoadL3!,
-          // mainBreakerAmp: formRef.current.values.operationalReadingsMainBreakerAmp!,
-          // mainBreakerPoles: formRef.current.values.operationalReadingsMainBreakerPoles!,
-          // mainBreakerCapacity: formRef.current.values.operationalReadingsMainBreakerCapacity!,
-          // overCurrentDTLA: formRef.current.values.operationalReadingsOverCurrentDTLA!,
-          // overCurrentDTLSec: formRef.current.values.operationalReadingsOverCurrentDTLSec!,
-          // overCurrentIDMTLA: formRef.current.values.operationalReadingsOverCurrentIDMTLA!,
-          // overCurrentIDMTLTm: formRef.current.values.operationalReadingsOverCurrentIDMTLTm!,
-          // earthFaultMA: formRef.current.values.operationalReadingsEarthFaultMA!,
-          // earthFaultELRA: formRef.current.values.operationalReadingsEarthFaultELRA!,
-          // earthFaultELRSec: formRef.current.values.operationalReadingsEarthFaultELRSec!,
-          // earthFaultA: formRef.current.values.operationalReadingsEarthFaultA!,
-          // earthFaultSec: formRef.current.values.operationalReadingsEarthFaultSec!,
-          // mainBreakerRating: formRef.current.values.operationalReadingsEarthFaultSec!,
-          // overCurrentDirectActingEnabled: formRef.current.values.operationalReadingsOverCurrentDirectActingEnabled!,
-          // overCurrentDirectActing: formRef.current.values.operationalReadingsOverCurrentDirectActing!,
-          // overCurrentDTLEnabled: formRef.current.values.operationalReadingsOverCurrentDTLEnabled!,
-          // overCurrentIDTMLEnabled: formRef.current.values.operationalReadingsOverCurrentIDTMLEnabled!,
-          // earthFaultRoobEnabled: formRef.current.values.operationalReadingsEarthFaultRoobEnabled!,
-          // earthFaultEIREnabled: formRef.current.values.operationalReadingsEarthFaultEIREnabled!,
-          // earthFaultEFEnabled: formRef.current.values.operationalReadingsEarthFaultEFEnabled!,
-        // }
-        // await saveOperationalreadings(updateCmd)
-        //   .catch(error => {
-        //     showMessage(error.response.message)
-        //   })
+      
       } else {
         Alert.alert('Bad Request', `report contains invalid fields: ${Object.keys(formRef.current.errors).map(field => field)}`)
       }
