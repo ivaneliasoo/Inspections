@@ -600,7 +600,7 @@ export class ReportsApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiReportsPostRaw(requestParameters: ApiReportsPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+    async apiReportsPostRaw(requestParameters: ApiReportsPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<string>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -623,13 +623,13 @@ export class ReportsApi extends runtime.BaseAPI {
             body: CreateReportCommandToJSON(requestParameters.createReportCommand),
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.TextApiResponse(response);
     }
 
     /**
      */
-    async apiReportsPost(requestParameters: ApiReportsPostRequest, initOverrides?: RequestInit): Promise<void> {
-        await this.apiReportsPostRaw(requestParameters, initOverrides);
+    async apiReportsPost(requestParameters: ApiReportsPostRequest, initOverrides?: RequestInit): Promise<string> {
+       return await (await this.apiReportsPostRaw(requestParameters, initOverrides)).value();
     }
 
     /**
