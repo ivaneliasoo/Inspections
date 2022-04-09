@@ -67,7 +67,9 @@
       </div>
       <PrintingReportsCheckLists
         v-if="
-          reportData.checkLists
+          reportData.checkLists &&
+            configuration.checkListMetadata &&
+            configuration.checkListMetadata.display === 'Numbered'
         "
         :check-lists="reportData.checkLists"
       />
@@ -75,7 +77,7 @@
         v-if="
           reportData.checkLists &&
             configuration.checkListMetadata &&
-            configuration.checkListMetadata.display === 1
+            configuration.checkListMetadata.display === 'Inline'
         "
       >
         {{ reportData.checkLists.map((c) => c.text) }}
@@ -189,8 +191,8 @@ export default {
 
       const pagesLength = Math.ceil(photoRecords.length / 8)
 
+      const photoRecordsPages = [[]]
       if (photoRecords && photoRecords.length) {
-        const photoRecordsPages = [[]]
         let currentPage = 0
         photoRecords.forEach((photo, index) => {
           if (index > 0 && index % 8 === 0) {
