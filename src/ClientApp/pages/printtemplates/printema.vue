@@ -67,9 +67,7 @@
       </div>
       <PrintingReportsCheckLists
         v-if="
-          reportData.checkLists &&
-            configuration.checkListMetadata &&
-            configuration.checkListMetadata.display === 0
+          reportData.checkLists
         "
         :check-lists="reportData.checkLists"
       />
