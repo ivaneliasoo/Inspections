@@ -1,8 +1,6 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import React, { createRef, useState } from 'react';
 import {
-  Icon,
-  Input,
   Layout,
   Tab,
   Text,
@@ -36,8 +34,8 @@ const DynamicForms = () => {
     return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2])];
   };
 
-  if (!report || !report.forms) {
-    return <Text>Empty</Text>;
+  if (!report || !report.forms || !report.forms.length) {
+    return <Layout style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}><Text>There is not additional data in this report...</Text></Layout>;
   }
 
   return (
@@ -48,10 +46,6 @@ const DynamicForms = () => {
       {report
         .forms!.filter((s) => s.enabled)
         .map((schema, index) => {
-          // const TabIcon = (props) => (
-          //   <Icon {...props} name={schema.icon ?? ''} />
-          // );
-
           const sections = schema
             .fields!.fieldsDefinitions!.filter((s) => s.enabled)
             .sort((a, b) => a.order! - b.order!)
@@ -80,7 +74,7 @@ const DynamicForms = () => {
           return (
             <Tab key={`${schema.name}_${index}`} title={schema.title ?? ''}>
               <ScrollView style={{ height: '95%', backgroundColor: 'white' }}>
-                <Formik
+                {/* <Formik
                   innerRef={formRef}
                   initialValues={schema.values ?? defaultValues}
                   enableReinitialize
@@ -176,7 +170,7 @@ const DynamicForms = () => {
                       );
                     });
                   }}
-                </Formik>
+                </Formik> */}
               </ScrollView>
             </Tab>
           );
