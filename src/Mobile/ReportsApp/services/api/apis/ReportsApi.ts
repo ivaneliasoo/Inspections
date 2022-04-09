@@ -205,7 +205,6 @@ export class ReportsApi extends runtime.BaseAPI {
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
-
         return new runtime.JSONApiResponse(response);
     }
 

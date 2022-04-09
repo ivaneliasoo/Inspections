@@ -92,7 +92,7 @@ export const useReports = () => {
     await reportsApi.bulkUpdateChecks({ reportId: payload.reportId, checkListId: payload.checkListId, newValue: tempCheckValue })
   }
 
-  const updateCheckListItem = async (payload: CheckListItemQueryResult) => {
+  const updateCheckListItem = async (remarksOnly :boolean, payload: CheckListItemQueryResult) => {
     let tempCheckValue = 0
 
     if (payload.checked! > 2) {
@@ -110,7 +110,7 @@ export const useReports = () => {
 
     const command: UpdateCheckListItemCommand = {
       checkListId: payload.checkListId!,
-      checked: tempCheckValue! as unknown as CheckValue,
+      checked: remarksOnly ?payload.checked : tempCheckValue! as unknown as CheckValue,
       editable: payload.editable!,
       id: payload.id!,
       remarks: payload.remarks!,

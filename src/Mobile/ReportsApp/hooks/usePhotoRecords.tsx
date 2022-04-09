@@ -56,7 +56,6 @@ export const usePhotoRecords = () => {
       .replace('{file}', path)
       .replace('file://', '');
     uploadOptions.headers = { ...uploadOptions.headers, label: label ?? 'NO LABEL' };
-    console.log({ uploadOptions });
     Upload.startUpload(uploadOptions)
       .then((uploadId) => {
         Upload.addListener('error', uploadId, (data) => {

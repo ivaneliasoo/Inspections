@@ -16,7 +16,7 @@ export const ParticullarOfInstallation = () => {
   const flexType = orientation === 'landscape' ? 'row' : 'column'
 
   const formRef = useRef<FormikProps<ReportQueryResult>>(null)
-  const { workingReport: reportData, saveReport, updateCheckList, updateCheckListItem } = useReports()
+  const { workingReport: reportData, saveReport } = useReports()
 
   const handleSubmit = async () => {
     if (formRef.current) {

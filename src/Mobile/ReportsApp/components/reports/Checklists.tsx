@@ -27,13 +27,13 @@ const computeCheckListValue = (checkList: CheckListQueryResult) => {
 const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
   const [showRemark, setShowRemarks] = useState(false)
   const [remark, setRemark] = useState(item.remarks)
-  const onPress = () => {
-    onCheckUpdated({...item, checked: item.checked, touched: true, remarks: remark})
+  const onPress = (remarksOnly: boolean) => {
+    onCheckUpdated(remarksOnly, {...item, checked: item.checked, touched: true, remarks: remark})
   }
 
   const RightActions = (props: any) => {
     return <>
-      <TouchableOpacity key={`check-${item.id}`} onPress={(e) => { e.preventDefault(); setShowRemarks(prev => !prev) }}>
+      <TouchableOpacity key={`check-${item.id}`} onPress={(e) => { e.preventDefault(); setShowRemarks(prev => !prev); return false; }}>
         <Icon name='message-square-outline' fill='black' style={styles.lineIcon} />
       </TouchableOpacity>
       <Icon key={`icon-${item.id}`} name={checkItemIcon[item.checked ?? 0].name} {...props} fill={checkItemIcon[item.checked ?? 0].color} style={styles.lineIcon} />
@@ -46,13 +46,13 @@ const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
         placeholder='type a remark'
         value={remark!}
         onChangeText={(text) => { setRemark(text) }}
-        onSubmitEditing={() => { setShowRemarks(prev => !prev); onPress(); }}
-        accessoryRight={() => <TouchableOpacity onPress={() => { setShowRemarks(prev => !prev); onPress(); }}><Icon name='close-outline' fill='black' style={styles.icon} /></TouchableOpacity>} />
+        onSubmitEditing={(e) => { e.preventDefault(); setShowRemarks(prev => !prev); onPress(true); return false; }}
+        accessoryRight={() => <TouchableOpacity onPress={(e) => { e.preventDefault(); setShowRemarks(prev => !prev); onPress(true); return false; }}><Icon name='close-outline' fill='black' style={styles.icon} /></TouchableOpacity>} />
     : <ListItem
       style={{ marginHorizontal: -15, padding: 0 }}
       key={`text-${item.id}`}
       title={() => <Text category='s2' status={!item.touched ? 'danger':''}>{`.${index + 1} - ${item.text}`}</Text>}
-      onPress={onPress}
+      onPress={() => onPress(false)}
       description={() => <Text category='s2' appearance='hint'>{`Remarks: ${remark}`}</Text>}
       accessoryRight={RightActions}
     />
@@ -62,7 +62,7 @@ export interface CheckListItemProps {
   item: CheckListQueryResult;
   index: number;
   onChange: (checked: any) => any;
-  onCheckUpdated: (payload: CheckListItemQueryResult) => any
+  onCheckUpdated: (remarksOnly: boolean, payload: CheckListItemQueryResult) => any
 }
 const CheckListGroup = React.memo(({ item, index, onChange, onCheckUpdated, ...props }: CheckListItemProps) => {
   item.checked = computeCheckListValue(item)
@@ -78,7 +78,7 @@ const CheckListGroup = React.memo(({ item, index, onChange, onCheckUpdated, ...p
       </>}
     >
       {item && item.checks!.map((checkList, checkIndex) => {
-        return <CheckListItemCheck key={`checkItemsList-${checkList.id}`} item={checkList} index={checkIndex} onCheckUpdated={onCheckUpdated} />
+        return <CheckListItemCheck key={`checkItemsList-${checkList.id}`} item={checkList} index={checkIndex} onCheckUpdated={(a, b) => { onCheckUpdated(a,b)}} />
       })}
     </Card>
   )
@@ -97,8 +97,8 @@ const Checklists = ({ checkLists = [], onCheckListUpdated, onCheckListItemUpdate
           <CheckListGroup item={checkList} index={index} key={`checklist-${checkList.id}`} onChange={(checked) => {
             onCheckListUpdated({ reportId: checkList.reportId, checkListId: checkList.id, newValue: checked })
           }}
-            onCheckUpdated={(payload: CheckListItemQueryResult) => {
-              onCheckListItemUpdated(payload)
+            onCheckUpdated={(remarksOnly: boolean, payload: CheckListItemQueryResult) => {
+              onCheckListItemUpdated(remarksOnly, payload)
             }}
           />
         )
