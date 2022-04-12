@@ -12,7 +12,7 @@ namespace Inspections.API.Features.Forms.Create;
 
 public class NewFormDefinitionCommand : IRequest<FormDefinitionResponse>
 {
-    public NewFormDefinitionCommand(int id, string name, string title, string icon, DynamicFields fields, JsonDocument? defaultValues, bool enabled, List<int>? reports, List<int>? reportConfigurations)
+    public NewFormDefinitionCommand(int id, string name, string title, string icon, DynamicFields fields, JsonDocument? defaultValues, bool enabled, List<int>? reports, List<int>? reportConfigurations, short order)
     {
         Id = id;
         Name = name;
@@ -21,6 +21,7 @@ public class NewFormDefinitionCommand : IRequest<FormDefinitionResponse>
         Fields = fields;
         DefaultValues = defaultValues;
         Enabled = enabled;
+        Order = order;
         if(reports is {})
             Reports = reports;
         if(reportConfigurations is {})
