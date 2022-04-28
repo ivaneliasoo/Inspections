@@ -33,9 +33,12 @@
               :type="field.inputType"
               :label="field.label"
               :suffix="field.suffix"
-              :prefix="field.preffix"
-              @blur="handleSubmit"
+              :prefix="field.preffix"@blur="handleSubmit"
+              
             />
+            <!-- <client-only>
+              <VueEditor v-model="values[field.fieldName]" />
+            </client-only> -->
             <v-select
               v-if="field.inputType === 'select'"
               v-show="field.visible"
@@ -67,6 +70,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
 import { DynamicFieldMetadata } from "~/services/api";
+
 export default defineComponent({
   props: {
     value: {
