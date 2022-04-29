@@ -36,9 +36,9 @@
               :prefix="field.preffix"@blur="handleSubmit"
               
             />
-            <!-- <client-only>
+            <client-only>
               <VueEditor v-model="values[field.fieldName]" />
-            </client-only> -->
+            </client-only> 
             <v-select
               v-if="field.inputType === 'select'"
               v-show="field.visible"
