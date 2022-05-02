@@ -9,7 +9,7 @@
         <h1 class="text-h6 text-left">{{ section }}</h1>
         <v-row align="center" justify="center">
           <v-col
-            :cols="field.inputType === 'textarea' ? 12 : 3"
+            :cols="field.inputType.includes('textarea') || field.inputType.includes('richtext') ? 12 : 3"
             v-for="field in sections[section].sort(f =>f.order)"
             :key="field.fieldName"
           >
@@ -33,11 +33,19 @@
               :type="field.inputType"
               :label="field.label"
               :suffix="field.suffix"
-              :prefix="field.preffix"@blur="handleSubmit"
-              
+              :prefix="field.preffix"
+              @blur="handleSubmit"
             />
             <client-only>
-              <VueEditor v-model="values[field.fieldName]" />
+              <VueEditor 
+                v-if="field.inputType === 'richtext'"
+                v-model="values[field.fieldName]"
+                v-show="field.visible"
+                :label="field.label"
+                :suffix="field.suffix"
+                :prefix="field.preffix"
+                @blur="handleSubmit"
+              />
             </client-only> 
             <v-select
               v-if="field.inputType === 'select'"

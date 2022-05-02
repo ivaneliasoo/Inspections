@@ -24,12 +24,7 @@ public class AddReportConfigurationCommandHandler : IRequestHandler<AddReportCon
     public async Task<int> Handle(AddReportConfigurationCommand request, CancellationToken cancellationToken)
     {
         Guard.Against.Null(request, nameof(request));
-
-        var checks = _context.Set<CheckList>()
-            .Where(s => request.ChecksDefinition.Contains(s.Id))
-            .Include(p => p.Checks)
-            .ToList();
-
+        
         var signatures = _context.Signatures.Where(s => request.SignatureDefinitions.Contains(s.Id))
             .Include(p => p.Responsible)
             .ToList();
@@ -40,7 +35,6 @@ public class AddReportConfigurationCommandHandler : IRequestHandler<AddReportCon
             RemarksLabelText = request.RemarksLabelText,
             Title = request.Title,
             FormName = request.FormName,
-            ChecksDefinition = PrepareForConfiguration(checks),
             SignatureDefinitions = PrepareForConfiguration(signatures),
             Footer = $@"<footer style=""padding-left: 20px; opacity: 0.5; font-size: 3.2em; display: flex;margin: 10px, 10px;flex-direction: column;color: grey;font-family: 'Times New Roman', Times, serif;"">
                                             <div class='' style='font-size: 3.2em; text-align: right;letter-spacing: 2px;'><label class='pageNumber'></label> | Page</div>
@@ -54,8 +48,19 @@ public class AddReportConfigurationCommandHandler : IRequestHandler<AddReportCon
             MarginTop = "20px",
             MarginLeft = "70px",
             MarginRight = "70px",
-            PrintSectionId = request.PrintSectionId
+            PrintSectionId = request.PrintSectionId,
+            TemplateName = request.TemplateName,
         };
+        
+        if (request.ChecksDefinition is {})
+        {
+            var checks = _context.Set<CheckList>()
+                .Where(s => request.ChecksDefinition.Contains(s.Id))
+                .Include(p => p.Checks)
+                .ToList();
+
+            repoConfig.ChecksDefinition = PrepareForConfiguration(checks);
+        }
 
         var result = await _reportConfigurationsRepository.AddAsync(repoConfig).ConfigureAwait(false);
 

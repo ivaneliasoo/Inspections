@@ -10,9 +10,9 @@ export interface UpdateReportConfigurationCommand {
     formName: string;
     remarksLabelText: string;
     inactive: boolean;
-    checksDefinition: number[] | CheckList[];
+    checksDefinition?: number[] | CheckList[];
     signatureDefinitions: number[] | Signature[];
     printSectionId: number;
-    display: CheckListDisplay;
+    display: CheckListDisplay | string;
     templateName: string;
 }

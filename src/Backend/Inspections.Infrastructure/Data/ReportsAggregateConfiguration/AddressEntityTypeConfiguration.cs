@@ -17,7 +17,7 @@ class AddressEntityTypeConfiguration : IEntityTypeConfiguration<Address>
         builder.Property(p => p.Unit);
         builder.Property(p => p.Country).IsRequired();
         builder.Property(p => p.PostalCode).IsRequired();
-        builder.Property(p => p.LicenseId).IsRequired();
+        builder.Property(p => p.LicenseId).IsRequired(false);
         builder.HasOne(p => p.License);
     }
 }

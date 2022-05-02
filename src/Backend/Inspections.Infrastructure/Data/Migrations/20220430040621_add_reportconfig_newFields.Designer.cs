@@ -6,6 +6,7 @@ using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -14,9 +15,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    partial class InspectionsContextModelSnapshot : ModelSnapshot
+    [Migration("20220430040621_add_reportconfig_newFields")]
+    partial class add_reportconfig_newFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,7 +77,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int?>("LicenseId")
+                    b.Property<int>("LicenseId")
                         .HasColumnType("integer");
 
                     b.Property<string>("PostalCode")
@@ -522,6 +524,12 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
+
+                    b.Property<bool>("IsAddressRequired")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsLicenseRequired")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset>("LastEdit")
                         .HasColumnType("timestamp with time zone");
@@ -1064,7 +1072,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                 {
                     b.HasOne("Inspections.Core.Domain.EMALicense", "License")
                         .WithMany()
-                        .HasForeignKey("LicenseId");
+                        .HasForeignKey("LicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("License");
                 });

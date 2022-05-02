@@ -23,4 +23,5 @@ public class ReportListItem
     public int SignaturesCount { get; set; }
     public bool HasPhotoRecords { get; set; }
     public int PhotosCount { get; set; }
+    public int ReportConfigurationId { get; set; }
 }

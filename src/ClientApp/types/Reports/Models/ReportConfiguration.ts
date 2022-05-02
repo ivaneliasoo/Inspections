@@ -16,4 +16,5 @@ export interface ReportConfiguration {
     printSectionId: number;
     templateName: string;
     checkListPrintingMetadata: CheckListPrintingMetadata;
+    display: string;
 }

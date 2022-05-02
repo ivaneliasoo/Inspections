@@ -18,7 +18,7 @@ internal static class NewAddressExtensions
             Unit = newAddress.Unit,
             Country = newAddress.Country,
             PostalCode = newAddress.PostalCode,
-            LicenseId = newAddress.LicenseId,
+            LicenseId = newAddress.LicenseId == 0 ? null:newAddress.LicenseId,
         };
     }
 }

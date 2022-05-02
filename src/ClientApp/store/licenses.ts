@@ -26,13 +26,14 @@ export const actions: ActionTree<LicensesState, RootState> = {
     commit('SET_LICENSES_LIST', licenses === '' ? [] : licenses)
   },
 
-  async getLicensesDashboard ({ commit }, payload) {
+  async getLicensesDashboard ({ commit }) {
     const dashboard = await this.$axios.$get('EMALicenses/dashboard')
     commit('SET_DASHBOARD', dashboard)
     return dashboard
   },
 
-  async getLicenseById ({ commit }, payload) {
+  // eslint-disable-next-line no-empty-pattern
+  async getLicenseById ({ }, payload) {
     return await this.$axios.$get(`EMALicenses/${payload}`)
   },
 

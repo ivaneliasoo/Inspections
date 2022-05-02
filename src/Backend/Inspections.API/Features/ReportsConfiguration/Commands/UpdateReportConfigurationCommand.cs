@@ -11,7 +11,7 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
                                              string title,
                                              string formName,
                                              string remarksLabelText,
-                                             List<int> checksDefinition,
+                                             List<int>? checksDefinition,
                                              List<int> signatureDefinitions,
                                              int printSectionId, 
                                              CheckListDisplay display,

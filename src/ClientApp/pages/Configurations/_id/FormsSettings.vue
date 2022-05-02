@@ -222,7 +222,7 @@ export default defineComponent({
         options: [
           { value: 'text', label: 'Text input' },
           { value: 'textarea', label: 'Text Area' },
-          { value: 'asdasdasd', label: 'asdfasdf asdf asdf asdfasdf asdf' },
+          { value: 'richtext', label: 'Rich Text Field' },
           { value: 'number', label: 'Numeric Input' },
           { value: 'select', label: 'Select' },
           { value: 'checkbox', label: 'Checkbox' }
@@ -369,6 +369,7 @@ export default defineComponent({
       }
     })
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleSubmit = async (data: any) => {
       const payload: NewFormDefinitionCommand = {
         ...form.value,
@@ -383,6 +384,7 @@ export default defineComponent({
     }
 
     // creat a function to encode html string
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const htmlEncode = (str) => {
       let s = ''
       if (str.length === 0) {

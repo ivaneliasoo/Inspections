@@ -56,7 +56,7 @@ public class NewFormDefinitionCommandHandler : IRequestHandler<NewFormDefinition
         Guard.Against.Null(request, nameof(request));
 
         var newFormDefinition = request.ToEntity();
-        var reportsConfigurationToAssociate = await _context.ReportConfigurations.Where(r => request.ReportConfigurations.Contains(r.Id)).ToListAsync(cancellationToken: cancellationToken);
+        var reportsConfigurationToAssociate = await _context.ReportConfigurations.Where(r => request.ReportConfigurations!.Contains(r.Id)).ToListAsync(cancellationToken: cancellationToken);
         newFormDefinition.AssociateReportConfiguration(reportsConfigurationToAssociate);
 
         await _context.FormsDefinitions.AddAsync(newFormDefinition, cancellationToken);

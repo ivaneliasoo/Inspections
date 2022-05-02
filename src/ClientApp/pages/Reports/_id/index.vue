@@ -91,10 +91,10 @@
       </v-row>
       <v-row dense>
         <v-col>
-          <span class="tw-text-base tw-mx-4"><strong>Name: </strong> {{ currentReport.licenseName }}</span>
-          <span class="tw-text-base tw-mx-4"><strong>License: </strong> {{ currentReport.licenseNumber }}</span>
-          <span class="tw-text-base tw-mx-4"><strong>Approved Load: </strong> {{ currentReport.licenseAmp }} A /{{ currentReport.licenseVolt }} V</span>
-          <span class="tw-text-base tw-mx-4"><strong>kVA: </strong> {{ currentReport.licenseKVA }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>Name: </strong> {{ currentReport.licenseName ? currentReport.licenseName : 'Not Licensed' }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>License: </strong> {{ currentReport.licenseNumber ? currentReport.licenseNumber : 'Not Licensed' }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>Approved Load: </strong> {{ currentReport.licenseAmp ? currentReport.licenseAmp : 0 }} A /{{ currentReport.licenseVolt ? currentReport.licenseVolt : 0 }} V</span>
+          <span class="tw-text-base tw-mx-4"><strong>kVA: </strong> {{ currentReport.licenseKVA ? currentReport.licenseKVA : 0 }}</span>
         </v-col>
       </v-row>
     </ValidationObserver>
@@ -1076,7 +1076,7 @@ export default defineComponent({
 
     const generatePdf = async (item: any, printPhotos: boolean = false) => {
       const file = await $axios.$get(
-        `reports/${item.id}/export?printPhotos=${printPhotos}`,
+        `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${currentReport.value.reportConfigurationId}`,
         { responseType: 'blob' }
       )
       downloadFile(
