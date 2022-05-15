@@ -5,6 +5,7 @@ using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -13,9 +14,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    partial class InspectionsContextModelSnapshot : ModelSnapshot
+    [Migration("20220427173057_add_istemplate_field")]
+    partial class add_istemplate_field
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,62 +211,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.HasKey("id");
 
                     b.ToTable("CostSheet");
-                });
-
-            modelBuilder.Entity("Inspections.Core.Domain.CSTemplate", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("id"));
-
-                    b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("LastEditUser")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.Property<DateTime?>("dateCreated")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<double>("finalMarkup")
-                        .HasColumnType("double precision");
-
-                    b.Property<bool>("isTemplate")
-                        .HasColumnType("boolean");
-
-                    b.Property<double>("labourDailyRate")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("labourNightMultiplier")
-                        .HasColumnType("double precision");
-
-                    b.Property<DateTime?>("lastUpdate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("location")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<double>("materialMarkup")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("project")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Section[]>("sections")
-                        .HasColumnType("jsonb");
-
-                    b.Property<bool>("updated")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("id");
-
-                    b.ToTable("CSTemplate");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.CurrentTable", b =>

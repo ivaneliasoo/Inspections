@@ -1,5 +1,5 @@
 <template>
-  <CostSheetTable />
+  <CostSheetMain />
 </template>
 
 <script>

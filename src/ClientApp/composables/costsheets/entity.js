@@ -130,7 +130,8 @@ export class Section {
 
     toQuotePrice() {
         const finalMarkup = this.finalMarkup ? this.finalMarkup : 0;
-        return this.summation() * (1 + finalMarkup/100);
+        const x = this.summation() * (1 + finalMarkup/100);
+        return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
     }
 }
 
@@ -138,6 +139,7 @@ export class CostSheet {
     id;
     project;
     location;
+    isTemplate;
     dateCreated;
     materialMarkup;
     labourDailyRate;
@@ -151,6 +153,7 @@ export class CostSheet {
         this.id = 0;
         this.project = "";
         this.location = "";
+        this.isTemplate = false;
         this.dateCreated = new Date();
         this.materialMarkup = 0;
         this.labourDailyRate = 0;
@@ -184,6 +187,7 @@ export class CostSheet {
             id: this.id,
             project: this.project,
             location: this.location,
+            isTemplate: this.isTemplate,
             dateCreated: this.dateCreated.toISOString(),
             materialMarkup: parseFloat(this.materialMarkup),
             labourDailyRate: parseFloat(this.labourDailyRate),
@@ -211,8 +215,15 @@ export class CostSheet {
     }
 
     toQuotePrice() {
+        // const x = this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0;
+        // return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
         return this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0;
     }
+
+    // toQuotePriceRound5() {
+    //     let x = this.toQuotePrice();
+    //     return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
+    // }
 
     totalSales(delta) {
         if (!delta) {

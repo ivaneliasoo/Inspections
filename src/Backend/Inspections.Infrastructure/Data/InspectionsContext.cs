@@ -57,6 +57,7 @@ namespace Inspections.Infrastructure.Data
         public DbSet<Team> Team { get; set; } = default!;
         public DbSet<Options> Options { get; set; } = default!;
         public DbSet<CostSheet> CostSheet { get; set; } = default!;
+        public DbSet<CSTemplate> CSTemplate { get; set; } = default!;
 
         //Queries
         public DbSet<ResumenCheckList> ResumenCheckLists { get; set; } = default!;

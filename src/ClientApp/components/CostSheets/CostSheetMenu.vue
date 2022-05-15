@@ -1,7 +1,7 @@
 <template>
   <div>
       <v-menu
-        left
+        right
         bottom
         fixed
       >
@@ -16,8 +16,13 @@
         </template>
         <v-list class="menu">
           <v-list-item>
-            <v-list-item-title class="font-weight-bold">
-              COST SHEETS
+            <v-list-item-title @click="$emit('show-cost-sheets')">
+              Cost Sheets
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title @click="$emit('show-templates')">
+              Templates
             </v-list-item-title>
           </v-list-item>
         </v-list>
