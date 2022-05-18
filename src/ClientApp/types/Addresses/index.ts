@@ -1,6 +1,6 @@
 import { DateTimeRange } from '../Licenses'
 
-export interface AddressDTO {
+export interface AddressDto {
   id?: number;
   addressLine?: string;
   addressLine2?: string;

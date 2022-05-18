@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import { AutoSave } from '../../components/AutoSave'
 import { showMessage } from 'react-native-flash-message';
 import { useReports } from '../../hooks/useReports';
-import { ReportQueryResult, ResponsibleType, SignatureQueryResult } from '../../services/api/api';
+import { ReportQueryResult, SignatureQueryResult } from '../../services/api';
 
 
 const Signatures = () => {
@@ -50,7 +50,7 @@ const Signatures = () => {
             {values && values.signatures && values.signatures!.map((item, signIndex) => {
               return (<Card key={signIndex} style={styles.card}>
 
-                <Text category='h6'>
+                <Text category='s1'>
                   {`${item.title}`}
                 </Text>
                 <Text status='warning' category='s2'>

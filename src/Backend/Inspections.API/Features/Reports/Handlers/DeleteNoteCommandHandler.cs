@@ -1,37 +1,36 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
-namespace Inspections.API.Features.Reports.Handlers
+namespace Inspections.API.Features.Reports.Handlers;
+
+public class DeleteNoteCommandHandler : IRequestHandler<DeleteNoteCommand, bool>
 {
-    public class DeleteNoteCommandHandler : IRequestHandler<DeleteNoteCommand, bool>
+    private readonly IReportsRepository _reportsRepository;
+
+    public DeleteNoteCommandHandler(IReportsRepository reportsRepository)
     {
-        private readonly IReportsRepository _reportsRepository;
+        _reportsRepository = reportsRepository;
+    }
+    public async Task<bool> Handle(DeleteNoteCommand request, CancellationToken cancellationToken)
+    {
+        Guard.Against.Null(request, nameof(request));
+        var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
 
-        public DeleteNoteCommandHandler(IReportsRepository reportsRepository)
+        if (report == null)
         {
-            _reportsRepository = reportsRepository;
-        }
-        public async Task<bool> Handle(DeleteNoteCommand request, CancellationToken cancellationToken)
-        {
-            Guard.Against.Null(request, nameof(request));
-            var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
-
-            if (report != null)
-            {
-                var note = report.Notes.Where(n => n.Id == request.Id).FirstOrDefault();
-                if (note != null)
-                {
-                    report.RemoveNote(note);
-                    await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
-                    return true;
-                }
-            }
             return false;
         }
+
+        var note = report.Notes.FirstOrDefault(n => n.Id == request.Id);
+        if (note == null)
+        {
+            return false;
+        }
+
+        report.RemoveNote(note);
+        await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
+        return true;
     }
 }

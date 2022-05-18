@@ -1,39 +1,34 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Inspections.API.Features.PrintSections.Commands;
 using Inspections.Core.Domain.PrintSectionsAggregate;
 using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
-namespace Inspections.API.Features.PrintSections.Handlers
+namespace Inspections.API.Features.PrintSections.Handlers;
+
+public class AddPrintSectionCommandHandler : IRequestHandler<AddPrintSectionCommand, bool>
 {
+    private readonly IPrintSectionRepository _printSectionRepository;
 
-    public class AddPrintSectionCommandHandler : IRequestHandler<AddPrintSectionCommand, bool>
+    public AddPrintSectionCommandHandler(IPrintSectionRepository printSectionRepository)
     {
-        private readonly IPrintSectionRepository _printSectionRepository;
+        _printSectionRepository = printSectionRepository ?? throw new ArgumentNullException(nameof(printSectionRepository));
+    }
 
-        public AddPrintSectionCommandHandler(IPrintSectionRepository printSectionRepository)
+    public async Task<bool> Handle(AddPrintSectionCommand request, CancellationToken cancellationToken)
+    {
+        Guard.Against.Null(request, nameof(request));
+        var newPrintSection = new PrintSection()
         {
-            _printSectionRepository = printSectionRepository ?? throw new ArgumentNullException(nameof(printSectionRepository));
-        }
+            Code = request.Code,
+            Content = request.Content,
+            Description = request.Description,
+            IsMainReport = request.IsMainReport,
+            Status = request.Status,
+        };
 
-        public async Task<bool> Handle(AddPrintSectionCommand request, CancellationToken cancellationToken)
-        {
-            Guard.Against.Null(request, nameof(request));
-            var newPrintSection = new PrintSection()
-            {
-                Code = request.Code,
-                Content = request.Content,
-                Description = request.Description,
-                IsMainReport = request.IsMainReport,
-                Status = request.Status,
-            };
+        var result = await _printSectionRepository.AddAsync(newPrintSection).ConfigureAwait(false);
 
-            var result = await _printSectionRepository.AddAsync(newPrintSection).ConfigureAwait(false);
-
-            return result.Id > 0;
-        }
+        return result.Id > 0;
     }
 }

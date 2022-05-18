@@ -30,7 +30,7 @@
               Save
             </v-btn>
             <v-btn v-if="!costSheet.isTemplate" small @click="openSelectTemplate">
-              Template
+              L.Template
             </v-btn>
             <v-btn small @click="createPDF">
               Gen.PDF

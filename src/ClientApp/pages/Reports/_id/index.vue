@@ -91,10 +91,10 @@
       </v-row>
       <v-row dense>
         <v-col>
-          <span class="tw-text-base tw-mx-4"><strong>Name: </strong> {{ currentReport.licenseName }}</span>
-          <span class="tw-text-base tw-mx-4"><strong>License: </strong> {{ currentReport.licenseNumber }}</span>
-          <span class="tw-text-base tw-mx-4"><strong>Approved Load: </strong> {{ currentReport.licenseAmp }} A /{{ currentReport.licenseVolt }} V</span>
-          <span class="tw-text-base tw-mx-4"><strong>kVA: </strong> {{ currentReport.licenseKVA }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>Name: </strong> {{ currentReport.licenseName ? currentReport.licenseName : 'Not Licensed' }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>License: </strong> {{ currentReport.licenseNumber ? currentReport.licenseNumber : 'Not Licensed' }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>Approved Load: </strong> {{ currentReport.licenseAmp ? currentReport.licenseAmp : 0 }} A /{{ currentReport.licenseVolt ? currentReport.licenseVolt : 0 }} V</span>
+          <span class="tw-text-base tw-mx-4"><strong>kVA: </strong> {{ currentReport.licenseKVA ? currentReport.licenseKVA : 0 }}</span>
         </v-col>
       </v-row>
     </ValidationObserver>
@@ -146,9 +146,9 @@
             Photo Record
             <v-icon> mdi-folder-multiple-image </v-icon>
           </v-tab>
-          <v-tab href="#operationalReadings" eager>
-            Operational Readings
-            <v-icon> mdi-order-bool-descending </v-icon>
+          <v-tab v-for="form in forms.filter(f => f.enabled)" :key="`df-${form.id}`" eager>
+            {{ form.title }}
+            <v-icon> {{ form.icon }} </v-icon>
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="pageOptions.tabs" touchless>
@@ -575,8 +575,8 @@
               @uploaded="saveAndLoad()"
             />
           </v-tab-item>
-          <v-tab-item key="operationalReadings" value="operationalReadings">
-            <OperationalReadings v-model="currentReport" :is-multiline="isMultiLine" />
+          <v-tab-item v-for="form in forms.filter(f => f.enabled)" :key="`ti-${form.id}`">
+            <CustomForm v-model="form.values" :schema="form.fields.fieldsDefinitions" :form-id="form.id" @handle-submit="saveFormValues" />
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -641,7 +641,6 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { debouncedWatch } from '@vueuse/core'
 import {
   AddNoteCommand,
-  AddressDTO,
   CheckListItemQueryResult,
   ReportQueryResult,
   EditSignatureCommand,
@@ -652,7 +651,8 @@ import {
   CheckListQueryResult,
   SignatureQueryResult,
   NoteQueryResult,
-  UpdateOperationalReadingsCommand
+  AddressDto,
+  FormDefinitionResponse
 } from '@/services/api'
 import { useNotifications } from '~/composables/use-notifications'
 import useGoBack from '~/composables/useGoBack'
@@ -702,6 +702,8 @@ export default defineComponent({
     const currentReport = ref<ReportQueryResult>({} as ReportQueryResult)
     const signatures = computed(() => (currentReport.value.signatures || []))
 
+    const forms = ref<FormDefinitionResponse[]>([])
+
     const { fetch } = useFetch(async () => {
       try {
         currentReport.value = await store.dispatch(
@@ -711,16 +713,20 @@ export default defineComponent({
             root: true
           }
         )
-        await getSuggestedAddresses('')
-        await store.dispatch(
-          'users/setUserLastEditedReport',
-          {
-            userName: $auth.user.userName,
-            lastEditedReport: route.value.params.id
-          },
-          { root: true }
-        )
-        await $auth.fetchUser()
+
+        Promise.all([
+          getSuggestedAddresses(''),
+          store.dispatch(
+            'users/setUserLastEditedReport',
+            {
+              userName: $auth.user.userName,
+              lastEditedReport: id.value
+            },
+            { root: true }
+          ),
+          $auth.fetchUser()
+        ])
+        forms.value = currentReport.value.forms || []
       } catch (error) {
         notify({ error })
       }
@@ -736,15 +742,15 @@ export default defineComponent({
       )
     }
 
-    const localAddress = computed((): AddressDTO[] => {
+    const localAddress = computed((): AddressDto[] => {
       return [
         {
           formatedAddress: currentReport.value.address
-        } as AddressDTO
+        } as AddressDto
       ]
     })
 
-    const addresses = computed((): AddressDTO[] => {
+    const addresses = computed((): AddressDto[] => {
       const dbAddressses = (store.state.addresses as AddressesState)
         .addressList
 
@@ -849,11 +855,6 @@ export default defineComponent({
             return
           }
           await saveReportChanges(newValue)
-          // notify({
-          //   title: 'Reports',
-          //   message: 'Changes has been saved',
-          //   type: 'success'
-          // })
         } catch (error) {
           notify({
             title: 'Reports',
@@ -897,11 +898,6 @@ export default defineComponent({
             }
             await $axios.$put(`signatures/${signature.id}`, command)
           })
-          // notify({
-          //   title: 'Signatures',
-          //   message: 'Changes has been saved',
-          //   type: 'success'
-          // })
         } catch (error) {
           notify({
             title: 'Reports',
@@ -993,7 +989,7 @@ export default defineComponent({
         checkListId: checkItem.checkListId!,
         text: checkItem.text!,
         required: checkItem.required!,
-        checked: parseInt(checkItem.checked as any),
+        checked: checkItem.checked as unknown as CheckValue,
         editable: checkItem.editable!,
         remarks: checkItem.remarks!
       }
@@ -1014,13 +1010,6 @@ export default defineComponent({
         isClosed: currentReport.isClosed
       }
       await $axios.put(`reports/${route.value.params.id}`, update)
-      mapToUpdateCommand(currentReport)
-      if ($reportsApi) {
-        await $reportsApi.updateOperationalReadings(
-          updateCommand.value.reportId!,
-          updateCommand.value
-        )
-      }
       store.dispatch('hasPendingChanges', false)
     }
 
@@ -1030,7 +1019,7 @@ export default defineComponent({
           $reportsApi.bulkUpdateChecks(
             currentReport.value.id!,
             checkListId,
-            value
+            parseInt(value.toString())
           )
           const checkList = currentReport.value.checkLists!.find(
             c => c.id === checkListId
@@ -1087,7 +1076,7 @@ export default defineComponent({
 
     const generatePdf = async (item: any, printPhotos: boolean = false) => {
       const file = await $axios.$get(
-        `reports/${item.id}/export?printPhotos=${printPhotos}`,
+        `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${currentReport.value.reportConfigurationId}`,
         { responseType: 'blob' }
       )
       downloadFile(
@@ -1106,104 +1095,8 @@ export default defineComponent({
       link.click()
     }
 
-    const updateCommand = ref<UpdateOperationalReadingsCommand>({
-      id: currentReport.value.operationalReadingsId!,
-      reportId: currentReport.value.id!,
-      voltageL1N: currentReport.value.operationalReadingsVoltageL1N!,
-      voltageL2N: currentReport.value.operationalReadingsVoltageL2N!,
-      voltageL3N: currentReport.value.operationalReadingsVoltageL3N!,
-      voltageL1L2: currentReport.value.operationalReadingsVoltageL1L2!,
-      voltageL1L3: currentReport.value.operationalReadingsVoltageL1L3!,
-      voltageL2L3: currentReport.value.operationalReadingsVoltageL2L3!,
-      runningLoadL1: currentReport.value.operationalReadingsRunningLoadL1!,
-      runningLoadL2: currentReport.value.operationalReadingsRunningLoadL2!,
-      runningLoadL3: currentReport.value.operationalReadingsRunningLoadL3!,
-      mainBreakerAmp: currentReport.value.operationalReadingsMainBreakerAmp!,
-      mainBreakerPoles: currentReport.value.operationalReadingsMainBreakerPoles!,
-      mainBreakerCapacity: currentReport.value.operationalReadingsMainBreakerCapacity!,
-      overCurrentDTLA: currentReport.value.operationalReadingsOverCurrentDTLA!,
-      overCurrentDTLSec: currentReport.value.operationalReadingsOverCurrentDTLSec!,
-      overCurrentIDMTLA: currentReport.value.operationalReadingsOverCurrentIDMTLA!,
-      overCurrentIDMTLTm: currentReport.value.operationalReadingsOverCurrentIDMTLTm!,
-      earthFaultMA: currentReport.value.operationalReadingsEarthFaultMA!,
-      earthFaultELRA: currentReport.value.operationalReadingsEarthFaultELRA!,
-      earthFaultELRSec: currentReport.value.operationalReadingsEarthFaultELRSec!,
-      earthFaultA: currentReport.value.operationalReadingsEarthFaultA!,
-      earthFaultSec: currentReport.value.operationalReadingsEarthFaultSec!,
-      mainBreakerRating: currentReport.value.operationalReadingsMainBreakerRating,
-      overCurrentDirectActingEnabled:
-        currentReport.value.operationalReadingsOverCurrentDirectActingEnabled,
-      overCurrentDirectActing:
-        currentReport.value.operationalReadingsOverCurrentDirectActing,
-      overCurrentDTLEnabled:
-        currentReport.value.operationalReadingsOverCurrentDTLEnabled,
-      overCurrentIDTMLEnabled:
-        currentReport.value.operationalReadingsOverCurrentIDTMLEnabled,
-      earthFaultRoobEnabled:
-        currentReport.value.operationalReadingsEarthFaultRoobEnabled,
-      earthFaultEIREnabled:
-        currentReport.value.operationalReadingsEarthFaultEIREnabled,
-      earthFaultEFEnabled: currentReport.value.operationalReadingsEarthFaultEFEnabled
-    })
-
-    const mapToUpdateCommand = (newReport: ReportQueryResult) => {
-      updateCommand.value.id = newReport.operationalReadingsId!
-      updateCommand.value.reportId = newReport.id!
-      updateCommand.value.voltageL1N = newReport.operationalReadingsVoltageL1N!
-      updateCommand.value.voltageL2N = newReport.operationalReadingsVoltageL2N!
-      updateCommand.value.voltageL3N = newReport.operationalReadingsVoltageL3N!
-      updateCommand.value.voltageL1L2 =
-          newReport.operationalReadingsVoltageL1L2!
-      updateCommand.value.voltageL1L3 =
-          newReport.operationalReadingsVoltageL1L3!
-      updateCommand.value.voltageL2L3 =
-          newReport.operationalReadingsVoltageL2L3!
-      updateCommand.value.runningLoadL1 =
-          newReport.operationalReadingsRunningLoadL1!
-      updateCommand.value.runningLoadL2 =
-          newReport.operationalReadingsRunningLoadL2!
-      updateCommand.value.runningLoadL3 =
-          newReport.operationalReadingsRunningLoadL3!
-      updateCommand.value.mainBreakerAmp =
-          newReport.operationalReadingsMainBreakerAmp!
-      updateCommand.value.mainBreakerPoles =
-          newReport.operationalReadingsMainBreakerPoles!
-      updateCommand.value.mainBreakerCapacity =
-          newReport.operationalReadingsMainBreakerCapacity!
-      updateCommand.value.overCurrentDTLA =
-          newReport.operationalReadingsOverCurrentDTLA!
-      updateCommand.value.overCurrentDTLSec =
-          newReport.operationalReadingsOverCurrentDTLSec!
-      updateCommand.value.overCurrentIDMTLA =
-          newReport.operationalReadingsOverCurrentIDMTLA!
-      updateCommand.value.overCurrentIDMTLTm =
-          newReport.operationalReadingsOverCurrentIDMTLTm!
-      updateCommand.value.earthFaultMA =
-          newReport.operationalReadingsEarthFaultMA!
-      updateCommand.value.earthFaultELRA =
-          newReport.operationalReadingsEarthFaultELRA!
-      updateCommand.value.earthFaultELRSec =
-          newReport.operationalReadingsEarthFaultELRSec!
-      updateCommand.value.earthFaultA =
-          newReport.operationalReadingsEarthFaultA!
-      updateCommand.value.earthFaultSec =
-          newReport.operationalReadingsEarthFaultSec!
-      updateCommand.value.mainBreakerRating =
-          newReport.operationalReadingsMainBreakerRating
-      updateCommand.value.overCurrentDirectActingEnabled =
-          newReport.operationalReadingsOverCurrentDirectActingEnabled
-      updateCommand.value.overCurrentDirectActing =
-          newReport.operationalReadingsOverCurrentDirectActing
-      updateCommand.value.overCurrentDTLEnabled =
-          newReport.operationalReadingsOverCurrentDTLEnabled
-      updateCommand.value.overCurrentIDTMLEnabled =
-          newReport.operationalReadingsOverCurrentIDTMLEnabled
-      updateCommand.value.earthFaultRoobEnabled =
-          newReport.operationalReadingsEarthFaultRoobEnabled
-      updateCommand.value.earthFaultEIREnabled =
-          newReport.operationalReadingsEarthFaultEIREnabled
-      updateCommand.value.earthFaultEFEnabled =
-          newReport.operationalReadingsEarthFaultEFEnabled
+    const saveFormValues = ({ values, formId }) => {
+      $reportsApi.updateForm(parseInt(id.value.toString()), formId, values)
     }
 
     return {
@@ -1229,7 +1122,9 @@ export default defineComponent({
       saveReportChanges,
       obs,
       obsSignatures,
-      signatures
+      signatures,
+      forms,
+      saveFormValues
     }
   }
 })

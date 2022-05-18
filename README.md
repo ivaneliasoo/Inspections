@@ -17,7 +17,7 @@ Inspection Reports API & Web App
 
 BACKEND
 ----------
-- .NET 5.0
+- .NET 6.0
 - Visual Studio Code or any other code editor
 
 FRONTEND

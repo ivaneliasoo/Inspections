@@ -6,40 +6,32 @@
     </li>
     <li class="text-line tw-text-sm tw-font-bold tw-text-gray-600">{{lastChecksCount + 1}}.1 Voltage
       <ul class="text-line tw-text-sm tw-font-normal tw-text-black">
-        <li>L1-N: {{readings.operationalReadingsVoltageL1N}} V  L2-N: {{readings.operationalReadingsVoltageL2N}} V  L3-N: {{readings.operationalReadingsVoltageL3N}} V</li>
-        <li>L1-L2: {{readings.operationalReadingsVoltageL1L2}} V  L1-L3: {{readings.operationalReadingsVoltageL1L3}} V  L2-L3: {{readings.operationalReadingsVoltageL2L3}} V</li>
+        <li>L1-N: {{readings.L1N}} V  L2-N: {{readings.L2N}} V  L3-N: {{readings.L3N}} V</li>
+        <li>L1-L2: {{readings.L1L2}} V  L1-L3: {{readings.L1L3}} V  L2-L3: {{readings.L2L3}} V</li>
       </ul>
     </li>
     <li class="text-line tw-text-sm tw-font-bold tw-text-gray-600">{{lastChecksCount + 1}}.2 Running Load
       <ul class="text-line tw-text-sm tw-font-normal tw-text-black">
-        <li>L1: {{readings.operationalReadingsRunningLoadL1}} A  L2-N: {{readings.operationalReadingsRunningLoadL2}} A  L3-N: {{readings.operationalReadingsRunningLoadL3}} A</li>
+        <li>L1: {{readings.RunningLoadL1}} A  L2-N: {{readings.RunningLoadL2}} A  L3-N: {{readings.RunningLoadL3}} A</li>
       </ul>
     </li>
     <li class="text-line tw-text-sm tw-font-bold tw-text-gray-600">{{ lastChecksCount + 1}}.3 Main Breaker Details
       <ul class="text-line tw-text-sm tw-font-normal tw-text-black">
-        <li>a) Main Breaker: {{readings.operationalReadingsMainBreakerAmp}} A, Rating {{readings.operationalReadingsMainBreakerRating}} A, {{readings.operationalReadingsMainBreakerPoles}} Poles, Braking Capacity {{readings.operationalReadingsMainBreakerCapacity}} kA</li>
-        <li v-if="readings.operationalReadingsOverCurrentDirectActingEnabled ||
-        readings.operationalReadingsOverCurrentDTLEnabled||
-        readings.operationalReadingsOverCurrentIDTMLEnabled">b) Over-current Settings:</li>
-        <li class="tw-p-3" v-if="readings.operationalReadingsOverCurrentDirectActingEnabled">   Direct Acting: {{readings.operationalReadingsOverCurrentDirectActing}} A</li>
-        <li class="tw-p-3" v-if="readings.operationalReadingsOverCurrentDTLEnabled">   <span>DTL: OC: {{readings.operationalReadingsOverCurrentDTLA}} A @ {{readings.operationalReadingsOverCurrentDTLSec}} sec</span></li>
-        <li class="tw-p-3" v-if="readings.operationalReadingsOverCurrentIDTMLEnabled">   <span>IDMTL: OC: {{readings.operationalReadingsOverCurrentIDMTLA}} A TMS {{readings.operationalReadingsOverCurrentIDMTLTm}}</span></li>
-        <li v-if="readings.operationalReadingsEarthFaultRoobEnabled ||
-        readings.operationalReadingsEarthFaultEIREnabled ||
-        readings.operationalReadingsEarthFaultEFEnabled">c) Earth Fault Settings:</li>
-        <li class="tw-p-3" v-if="readings.operationalReadingsEarthFaultRoobEnabled">   RCCB: {{readings.operationalReadingsEarthFaultMA}} mA</li>
-        <li class="tw-p-3" v-if="readings.operationalReadingsEarthFaultEIREnabled">   <span>ELR: {{readings.operationalReadingsEarthFaultELRA}} A @ {{readings.operationalReadingsEarthFaultELRSec}} sec</span></li>
-        <li class="tw-p-3" v-if="readings.operationalReadingsEarthFaultEFEnabled">   <span>EF: OC: {{readings.operationalReadingsEarthFaultA}} A {{readings.operationalReadingsEarthFaultSec}}s</span></li>
+        <li>a) Main Breaker: {{readings.MainBreakerDetailsMainBreaker}} A, Rating {{readings.MainBreakerDetailsRating}} A, {{readings.MainBreakerDetailsPolesCapacity}} Poles, Braking Capacity {{readings.MainBreakerDetailsBreakingCapacity}} kA</li>
+        <li v-if="readings.OvercurrentProtectionDirectActingEnabled ||
+        readings.OvercurrentProtectionDTLEnabled||
+        readings.OvercurrentProtectionIDTMLEnabled">b) Over-current Settings:</li>
+        <li class="tw-p-3" v-if="readings.OvercurrentProtectionDirectActingEnabled">   Direct Acting: {{readings.OvercurrentProtectionDirectActing}} A</li>
+        <li class="tw-p-3" v-if="readings.OvercurrentProtectionDTLEnabled">   <span>DTL: OC: {{readings.OvercurrentProtectionDTLA}} A @ {{readings.OvercurrentProtectionDTLSec}} sec</span></li>
+        <li class="tw-p-3" v-if="readings.OvercurrentProtectionIDTMLEnabled">   <span>IDMTL: OC: {{readings.OvercurrentProtectionIDMTLA}} A TMS {{readings.OvercurrentProtectionIDMTLTm}}</span></li>
+        <li v-if="readings.EarthFaultProtectionRCCBEnabled ||
+        readings.EarthFaultProtectionELREnabled ||
+        readings.EarthFaultProtectionEFREnabled">c) Earth Fault Settings:</li>
+        <li class="tw-p-3" v-if="readings.EarthFaultProtectionRCCBEnabled">   RCCB: {{readings.EarthFaultProtectionProtectionRCCB}} mA</li>
+        <li class="tw-p-3" v-if="readings.EarthFaultProtectionELREnabled">   <span>ELR: {{readings.EarthFaultProtectionELRA}} A @ {{readings.EarthFaultProtectionELRSEC}} sec</span></li>
+        <li class="tw-p-3" v-if="readings.EarthFaultProtectionEFREnabled">   <span>EFR: OC: {{readings.EarthFaultProtectionA}} A {{readings.EarthFaultProtectionEFRTm}}s</span></li>
       </ul>
     </li>
-    <!-- <li>5.4 Others
-      <ul>
-        <li>Earth loop impedance (Power Disruption might occur)</li>
-        <li>L1-E: , L2-E: , L3</li>
-        <li></li>
-        <li></li>
-      </ul>
-    </li> -->
   </ul>
 </template>
 

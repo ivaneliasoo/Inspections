@@ -1,5 +1,4 @@
-import { EMALicenseType } from '..';
-
+import { EMALicenseType } from '../Models/EMALicenseType'
 
 export interface UpdateReportCommand {
     id: number;

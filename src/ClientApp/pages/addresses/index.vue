@@ -182,7 +182,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { AddressesState } from 'store/addresses'
 import { LicensesState } from 'store/licenses'
 import InnerPageMixin from '@/mixins/innerpage'
-import { AddressDTO } from '@/types/Addresses'
+import { AddressDto } from '@/types/Addresses'
 
 @Component({
   components: {
@@ -191,13 +191,13 @@ import { AddressDTO } from '@/types/Addresses'
   }
 })
 export default class AddressesAdmin extends mixins(InnerPageMixin) {
-  dialog: boolean = false;
-  dialogRemove: boolean = false;
-  loading: boolean = false;
+  dialog: boolean = false
+  dialogRemove: boolean = false
+  loading: boolean = false
 
   filter: any = {
     filterText: ''
-  };
+  }
 
   headers: any[] = [
     {
@@ -236,21 +236,36 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
       sortable: false,
       align: 'left'
     }
-  ];
+  ]
 
-  selectedItem: AddressDTO = {} as AddressDTO;
-  item: any = { principal: false };
-  isNew: boolean = false;
+  selectedItem: AddressDto = {} as AddressDto
+  item: any = { principal: false }
+  isNew: boolean = false
 
-  get addresses (): AddressDTO[] {
+  get addresses (): AddressDto[] {
     return (this.$store.state.addresses as AddressesState).addressList
   }
 
   get licenses () {
-    return (this.$store.state.licenses as LicensesState).licensesList
+    return [
+      {
+        licenseId: 0,
+        number: 'No Licensed',
+        Name: 'No Licensed',
+        PersonInCharge: '',
+        Contact: '',
+        Email: '',
+        Amp: 0,
+        Volt: 0,
+        KVA: 0,
+        validityStart: null,
+        validityEnd: null
+      },
+      ...(this.$store.state.licenses as LicensesState).licensesList
+    ]
   }
 
-  selectItem (item: AddressDTO): void {
+  selectItem (item: AddressDto): void {
     this.selectedItem = item
     this.$store
       .dispatch('addresses/getAddressById', this.selectedItem.id, {
@@ -275,14 +290,22 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
   }
 
   async upsertAddress () {
-    this.loading = true
-    if (!this.isNew) { await this.$store.dispatch('addresses/updateAddress', this.item, { root: true }) } else {
-      await this.$store.dispatch('addresses/createAddress', this.item, { root: true })
-      await this.$store.dispatch('addresses/getAddresses', {}, { root: true })
+    try {
+      this.loading = true
+      if (!this.isNew) {
+        console.log({ item: this.item })
+        await this.$store.dispatch('addresses/updateAddress', this.item, { root: true })
+      } else {
+        await this.$store.dispatch('addresses/createAddress', this.item, { root: true })
+        await this.$store.dispatch('addresses/getAddresses', {}, { root: true })
+      }
+    } catch (error) {
+      console.log({ error })
+    } finally {
+      this.dialog = false
+      this.isNew = true
+      this.loading = false
     }
-    this.dialog = false
-    this.isNew = true
-    this.loading = false
   }
 }
 </script>

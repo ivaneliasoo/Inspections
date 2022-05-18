@@ -1,61 +1,104 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Inspections.Core.Domain;
+﻿using Inspections.Core.Domain;
 using Inspections.Core.Domain.CheckListAggregate;
 using Inspections.Core.Domain.PrintSectionsAggregate;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.SignaturesAggregate;
+using Inspections.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Inspections.Infrastructure.Data
-{
-    public class InspectionsSeed
-    {
-        public static async Task SeedAsync(InspectionsContext context, ILoggerFactory logger
-            , int retriesNumber = 0)
-        {
+namespace Inspections.Infrastructure.Data;
 
-            if (!context.Database.IsInMemory())
+public class InspectionsSeed
+{
+    public static async Task SeedAsync(InspectionsContext context, ILoggerFactory logger
+        , int retriesNumber = 0)
+    {
+
+        if (!context.Database.IsInMemory())
+        {
+            await context.Database.MigrateAsync();
+        }
+
+        var log = logger.CreateLogger<InspectionsSeed>();
+        int retries = retriesNumber;
+        try
+        {
+            log.LogInformation($"Initializing data {nameof(InspectionsContext)}");
+
+            if (!await context.Users.AnyAsync(u => u.UserName == "demo"))
             {
-                context.Database.Migrate();
+                await context.Users.AddAsync(new User() { UserName = "demo", Password = "demo", Name = "demo", LastName = "User", IsAdmin = true });
             }
 
-            var log = logger.CreateLogger<InspectionsSeed>();
-            int retries = retriesNumber;
-            try
+            if (!await context.Users.AnyAsync(u => u.UserName == "developer"))
             {
-                log.LogInformation($"Initializing data {nameof(InspectionsContext)}");
+                await context.Users.AddAsync(new User() { UserName = "developer", Password = "developer@@P@sword", Name = "Developer", LastName = "User", IsAdmin = true });
+            }
+            
+            if (!await context.Users.AnyAsync(u => u.UserName == "reports"))
+            {
+                await context.Users.AddAsync(new User() { UserName = "reports", Password = "123456", Name = "Reports", LastName = "User", IsAdmin = true });
+            }
 
-                if (!context.Users.Any(u => u.UserName == "demo"))
+            if (!await context.PrintSections.AnyAsync(u => u.Code == "Inspection"))
+            {
+                await context.PrintSections.AddAsync(new PrintSection() { Code = "Inspection", Content = "<h1>Inspection</h1>", Description = "Inspection" });
+            }
+
+            if (!(await context.Addresses.AnyAsync(a => a.Id == 1)))
+            {
+                await context.Addresses.AddAsync(new Address
                 {
-                    context.Users.Add(new User() { UserName = "demo", Password = "demo", Name = "demo", LastName = "User", IsAdmin = true });
-                }
-
-                if (!context.Users.Any(u => u.UserName == "developer"))
-                {
-                    context.Users.Add(new User() { UserName = "developer", Password = "developer@@P@sword", Name = "Developer", LastName = "User", IsAdmin = true });
-                }
-
-                if (!context.PrintSections.Any(u => u.Code == "Inspection"))
-                {
-                    context.PrintSections.Add(new PrintSection() { Code = "Inspection", Content = "<h1>Inspection</h1>", Description = "Inspection" });
-                }
-
-
-                if (!context.ReportConfigurations.Any(rc => rc.FormName == "CSE EI(R8) FORM"))
-                {
-                    context.Add(new ReportConfiguration()
+                    Country = "Singapore",
+                    Unit = "unit",
+                    AddressLine = "Some Sample Address",
+                    License = new EMALicense
                     {
-                        ChecksDefinition = AddCheckLists().ToList(),
-                        SignatureDefinitions = AddSignatures().ToList(),
-                        FormName = "CSE EI(R8) FORM",
-                        Title = "Inspection Report",
-                        Type = ReportType.Inspection,
-                        Footer = $@"<footer style=""padding-left: 20px; opacity: 0.5; font-size: 3.2em; display: flex;margin: 10px, 10px;flex-direction: column;color: grey;font-family: 'Times New Roman', Times, serif;"">
+                        Amp = 120,
+                        Contact = "Someone",
+                        Email = "someone@anotherone.com",
+                        Name = "Some Person or Company",
+                        Number = "E123456",
+                        Validity = new DateTimeRange { Start = DateTime.Now, End = DateTime.Now.AddMonths(1) },
+                        Volt = 120,
+                        KVA = 120,
+                        PersonInCharge = "Some Powered Person" 
+                    },
+                    PostalCode = "123456"
+                });
+                
+                await context.Addresses.AddAsync(new Address
+                {
+                    Country = "Singapore",
+                    Unit = "unit 2",
+                    AddressLine = "Some Sample Address 2",
+                    License = new EMALicense
+                    {
+                        Amp = 400,
+                        Contact = "Someone2",
+                        Email = "someone2@anotherone.com",
+                        Name = "Some Person or Company 2",
+                        Number = "E654321",
+                        Validity = new DateTimeRange { Start = DateTime.Now, End = DateTime.Now.AddYears(1) },
+                        Volt = 400,
+                        KVA = 400,
+                        PersonInCharge = "Some Powered Person 2" 
+                    },
+                    PostalCode = "654321"
+                });
+            }
+
+            if (!await context.ReportConfigurations.AnyAsync(rc => rc.FormName == "CSE EI(R8) FORM"))
+            {
+                await context.AddAsync(new ReportConfiguration()
+                {
+                    ChecksDefinition = AddCheckLists().ToList(),
+                    SignatureDefinitions = AddSignatures().ToList(),
+                    FormName = "CSE EI(R8) FORM",
+                    Title = "Inspection Report",
+                    Type = ReportType.Inspection,
+                    Footer = $@"<footer style=""padding-left: 20px; opacity: 0.5; font-size: 3.2em; display: flex;margin: 10px, 10px;flex-direction: column;color: grey;font-family: 'Times New Roman', Times, serif;"">
                                             <div class='' style='font-size: 3.2em; text-align: right;letter-spacing: 2px;'><label class='pageNumber'></label> | Page</div>
                                             <div class='footer'>
                                               <p style='line-height: 3px;font-size: 3.2em;'>FORM E1(CSE INTERNAL) INSPECTION REPORT FOR LICENSING LEW SINGLE USER PREMISE- REV #8
@@ -63,41 +106,37 @@ namespace Inspections.Infrastructure.Data
                                             </div>
                                           </footer>
                                         ",
-                        MarginBottom = "80px",
-                        MarginTop = "20px",
-                        MarginLeft = "70px",
-                        MarginRight = "70px",
-                        PrintSectionId = 1,
-                        CheckListMetadata = new CheckListPrintingMetadata { Display = CheckListDisplay.Numbered}
-                    });
-                }
+                    MarginBottom = "80px",
+                    MarginTop = "20px",
+                    MarginLeft = "70px",
+                    MarginRight = "70px",
+                    PrintSectionId = 1,
+                    CheckListMetadata = new CheckListPrintingMetadata { Display = CheckListDisplay.Numbered },
+                    TemplateName = "print"
+                });
+            }
 
-                var templateId = 1;
-                if (!context.Template.Any(t => t.id == templateId))
-                {
-                    log.LogInformation("No template found in the database, copying template from file categories.json");
+            const int templateId = 1;
+            if (!await context.Template.AnyAsync(t => t.id == templateId))
+            {
+                log.LogInformation("No template found in the database, copying template from file categories.json");
 
-                    var CategoriesFilePath = Path.Combine(AppContext.BaseDirectory, "categories.json");
-                    var reader = System.IO.File.OpenText(CategoriesFilePath);
-                    var categories = reader.ReadToEnd();
+                var categoriesFilePath = Path.Combine(AppContext.BaseDirectory, "categories.json");
+                var reader = File.OpenText(categoriesFilePath);
+                var categories = await reader.ReadToEndAsync();
 
-                    Template t = new Template();
-                    t.id = templateId;
-                    t.templateDef = categories;
+                Template t = new() {id = templateId, templateDef = categories};
 
-                    context.Add(t);
-                }
+                await context.AddAsync(t);
+            }
 
-                var OptionsId = 1;
-                if (!context.Options.Any(opt => opt.id == OptionsId))
-                {
-                    Options opt = new Options();
-                    opt.id = 1;
-                    opt.scheduleWeeks = 1;
-                    opt.autosaveInterval = 120;
+            const int optionsId = 1;
+            if (!await context.Options.AnyAsync(opt => opt.id == optionsId))
+            {
+                Options opt = new Options {id = 1, scheduleWeeks = 1, autosaveInterval = 120};
 
-                    context.Add(opt);
-                }
+                await context.AddAsync(opt);
+            }
 
 
                 if (!context.Team.Any())
@@ -138,128 +177,129 @@ namespace Inspections.Infrastructure.Data
 
                 await context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            
+            await context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            if (retries < retriesNumber)
             {
-                if (retries < retriesNumber)
-                {
-                    retries++;
+                retries++;
 
-                    log.LogError(ex.Message);
-                    log.LogInformation($"Retries {retries}");
-                    await SeedAsync(context, logger);
-                }
+                log.LogError(ex, "Stopped at Retry: {Retries}", retries);
+                await SeedAsync(context, logger);
             }
         }
+    }
 
-        private static IEnumerable<Signature> AddSignatures()
-        {
-            return new Signature[] {
-                new Signature
-                {
-                    Title = "INSPECTION CARRIED OUT BY",
-                    IsConfiguration = true,
-                    Annotation = "",
-                    Principal = true,
-                    Order = 1
-                },
-             new Signature
+    private static IEnumerable<Signature> AddSignatures()
+    {
+        return new[] {
+            new Signature
+            {
+                Title = "INSPECTION CARRIED OUT BY",
+                IsConfiguration = true,
+                Annotation = "",
+                Principal = true,
+                Order = 1
+            },
+            new Signature
             {
                 Title = "THE INSPECTION WAS WITNESSED BY REPRESENTATIVE OF THE LICENSEE",
                 IsConfiguration = true,
                 Annotation = "",
-                    Order = 2
+                Order = 2
             },
-                new Signature
-                {
-                    Title = "DECLARATION BY LEW",
-                    IsConfiguration = true,
-                    Annotation = "I am satisfied that the electrical installation is fit for operation."
-                    ,
-                    Order = 3
-                }};
-        }
+            new Signature
+            {
+                Title = "DECLARATION BY LEW",
+                IsConfiguration = true,
+                Annotation = "I am satisfied that the electrical installation is fit for operation."
+                ,
+                Order = 3
+            }};
+    }
 
-        private static IEnumerable<CheckList> AddCheckLists()
-        {
-            var item1 = new CheckList(
-                   "SITE CONDITIONS",
-                   "[√: acceptable / blank(unchecked): not acceptable / Dash(-): not applicable ]",
-                   true
-                );
-            item1.AddCheckItems(new CheckListItem(0, "Access to MSB / Sub-Board / Distribution-Board",
-                CheckValue.None, false, true, string.Empty));
-            item1.AddCheckItems(new CheckListItem(0, "Locking facilities",
-                CheckValue.None, false, true, string.Empty));
-            item1.AddCheckItems(new CheckListItem(0, "Roofing or shed condition (for outdoor)",
-                CheckValue.None, false, true, string.Empty));
-            item1.AddCheckItems(new CheckListItem(0, "Lighting",
-                CheckValue.None, false, true, string.Empty));
-            item1.AddCheckItems(new CheckListItem(0, "Air Ventilation",
-                CheckValue.None, false, true, string.Empty));
-            item1.AddCheckItems(new CheckListItem(0, "No sign of nird/pest habilitation",
-                CheckValue.None, false, true, string.Empty));
+    private static IEnumerable<CheckList> AddCheckLists()
+    {
+        var item1 = new CheckList(
+            "SITE CONDITIONS",
+            "[√: acceptable / blank(unchecked): not acceptable / Dash(-): not applicable ]",
+            true
+        );
+        item1.AddCheckItems(new CheckListItem(0, "Access to MSB / Sub-Board / Distribution-Board",
+            CheckValue.None, false, true, string.Empty));
+        item1.AddCheckItems(new CheckListItem(0, "Locking facilities",
+            CheckValue.None, false, true, string.Empty));
+        item1.AddCheckItems(new CheckListItem(0, "Roofing or shed condition (for outdoor)",
+            CheckValue.None, false, true, string.Empty));
+        item1.AddCheckItems(new CheckListItem(0, "Lighting",
+            CheckValue.None, false, true, string.Empty));
+        item1.AddCheckItems(new CheckListItem(0, "Air Ventilation",
+            CheckValue.None, false, true, string.Empty));
+        item1.AddCheckItems(new CheckListItem(0, "No sign of nird/pest habilitation",
+            CheckValue.None, false, true, string.Empty));
 
-            var item3 = new CheckList(
-                   "SWITCH-ROOM REQUIREMENTS",
-                   "",
-                   true
-                );
-            item3.AddCheckItems(new CheckListItem(0, "Rubber mat",
-                CheckValue.None, false, true, string.Empty));
-            item3.AddCheckItems(new CheckListItem(0, "Single-line diagram",
-                CheckValue.None, false, true, string.Empty));
-            item3.AddCheckItems(new CheckListItem(0, "LEW’s contact particulars",
-                CheckValue.None, false, true, string.Empty));
-            item3.AddCheckItems(new CheckListItem(0, "First-aid chart",
-                CheckValue.None, false, true, string.Empty));
-            item3.AddCheckItems(new CheckListItem(0, "Display of Electrical Installation license",
-                CheckValue.None, false, true, string.Empty));
-            item3.AddCheckItems(new CheckListItem(0, "Danger sign",
-                CheckValue.None, false, true, string.Empty));
+        var item3 = new CheckList(
+            "SWITCH-ROOM REQUIREMENTS",
+            "",
+            true
+        );
+        item3.AddCheckItems(new CheckListItem(0, "Rubber mat",
+            CheckValue.None, false, true, string.Empty));
+        item3.AddCheckItems(new CheckListItem(0, "Single-line diagram",
+            CheckValue.None, false, true, string.Empty));
+        item3.AddCheckItems(new CheckListItem(0, "LEW’s contact particulars",
+            CheckValue.None, false, true, string.Empty));
+        item3.AddCheckItems(new CheckListItem(0, "First-aid chart",
+            CheckValue.None, false, true, string.Empty));
+        item3.AddCheckItems(new CheckListItem(0, "Display of Electrical Installation license",
+            CheckValue.None, false, true, string.Empty));
+        item3.AddCheckItems(new CheckListItem(0, "Danger sign",
+            CheckValue.None, false, true, string.Empty));
 
-            var item4 = new CheckList(
-                       "SWITCH-BOARD REQUIREMENTS",
-                       "",
-                       true
-                    );
-            item4.AddCheckItems(new CheckListItem(0, "Earth bar c/w proper labeling",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Earth pits condition",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Equipotential bonding of metallic trunking, metal conduits & water / gas pipe.",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Protection of fingers to direct live parts (at least IP2X)",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Incoming & outgoing lights, voltmeter & Ammeter",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Proper Neutral links sizing",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Sufficient support & mechanical protection for cables",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Labeling of circuits",
-                CheckValue.None, false, true, string.Empty));
-            item4.AddCheckItems(new CheckListItem(0, "Sign of Corrosion",
-                CheckValue.None, false, true, string.Empty));
+        var item4 = new CheckList(
+            "SWITCH-BOARD REQUIREMENTS",
+            "",
+            true
+        );
+        item4.AddCheckItems(new CheckListItem(0, "Earth bar c/w proper labeling",
+            CheckValue.None, false, true, string.Empty));
+        item4.AddCheckItems(new CheckListItem(0, "Earth pits condition",
+            CheckValue.None, false, true, string.Empty));
+        item4.AddCheckItems(new CheckListItem(0, "Equipotential bonding of metallic trunking, metal conduits & water / gas pipe.",
+            CheckValue.None, false, true, string.Empty));
+        item4.AddCheckItems(new CheckListItem(0, "Protection of fingers to direct live parts (at least IP2X)",
+            CheckValue.None, false, true, string.Empty));
+        item4.AddCheckItems(new CheckListItem(0, "Incoming & outgoing lights, voltmeter & Ammeter",
+            CheckValue.None, false, true, string.Empty));
+        item4.AddCheckItems(new CheckListItem(0, "Proper Neutral links sizing",
+            CheckValue.None, false, true, string.Empty));
+        item4.AddCheckItems(new CheckListItem(0, "Sufficient support & mechanical protection for cables",
+            CheckValue.None, false, true, string.Empty));
+        item4.AddCheckItems(new CheckListItem(0, "Labeling of circuits",
+            CheckValue.None, false, true, string.Empty));
+        item4.AddCheckItems(new CheckListItem(0, "Sign of Corrosion",
+            CheckValue.None, false, true, string.Empty));
 
-            var item6 = new CheckList(
-                       "OUTGOING DB / CIRCUITS",
-                       "",
-                       true
-                    );
-            item6.AddCheckItems(new CheckListItem(0, "Appropriate rated fittings/fixtures (i.e. outdoor IP rating, fire rated, explosion proof etc) ",
-                CheckValue.None, false, true, string.Empty));
-            item6.AddCheckItems(new CheckListItem(0, "30mA RCCBs in sensitive areas or public areas",
-                CheckValue.None, false, true, string.Empty));
-            item6.AddCheckItems(new CheckListItem(0, "Standby Generator",
-                CheckValue.None, false, true, string.Empty));
-            item6.AddCheckItems(new CheckListItem(0, "PV system / electric charger system",
-                CheckValue.None, false, true, string.Empty));
-            item6.AddCheckItems(new CheckListItem(0, "No unused wires/cables or illegal wiring",
-                CheckValue.None, false, true, string.Empty));
-            item6.AddCheckItems(new CheckListItem(0, "Function test of RCD (* power disruption)",
-                CheckValue.None, false, true, string.Empty));
+        var item6 = new CheckList(
+            "OUTGOING DB / CIRCUITS",
+            "",
+            true
+        );
+        item6.AddCheckItems(new CheckListItem(0, "Appropriate rated fittings/fixtures (i.e. outdoor IP rating, fire rated, explosion proof etc) ",
+            CheckValue.None, false, true, string.Empty));
+        item6.AddCheckItems(new CheckListItem(0, "30mA RCCBs in sensitive areas or public areas",
+            CheckValue.None, false, true, string.Empty));
+        item6.AddCheckItems(new CheckListItem(0, "Standby Generator",
+            CheckValue.None, false, true, string.Empty));
+        item6.AddCheckItems(new CheckListItem(0, "PV system / electric charger system",
+            CheckValue.None, false, true, string.Empty));
+        item6.AddCheckItems(new CheckListItem(0, "No unused wires/cables or illegal wiring",
+            CheckValue.None, false, true, string.Empty));
+        item6.AddCheckItems(new CheckListItem(0, "Function test of RCD (* power disruption)",
+            CheckValue.None, false, true, string.Empty));
 
-            return new CheckList[] { item1, item3, item4, item6 };
-        }
+        return new[] { item1, item3, item4, item6 };
     }
 }

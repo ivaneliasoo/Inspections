@@ -1,40 +1,35 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Inspections.API.Features.Reports.Commands;
 using Inspections.Core.Interfaces.Repositories;
 using MediatR;
 
-namespace Inspections.API.Features.Reports.Handlers
+namespace Inspections.API.Features.Reports.Handlers;
+
+public class EditNoteCommandHandler : IRequestHandler<EditNoteCommand, bool>
 {
-    public class EditNoteCommandHandler : IRequestHandler<EditNoteCommand, bool>
+    private readonly IReportsRepository _reportsRepository;
+
+    public EditNoteCommandHandler(IReportsRepository reportsRepository)
     {
-        private readonly IReportsRepository _reportsRepository;
+        this._reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
+    }
+    public async Task<bool> Handle(EditNoteCommand request, CancellationToken cancellationToken)
+    {
+        Guard.Against.Null(request, nameof(request));
+        var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
 
-        public EditNoteCommandHandler(IReportsRepository reportsRepository)
+        var note = report.Notes.FirstOrDefault(n => n.Id == request.Id);
+        if (note is not null)
         {
-            this._reportsRepository = reportsRepository ?? throw new ArgumentNullException(nameof(reportsRepository));
+            report.RemoveNote(note);
+
+            note.Text = request.Text;
+            note.Checked = request.Checked;
+
+            report.AddNote(note);
         }
-        public async Task<bool> Handle(EditNoteCommand request, CancellationToken cancellationToken)
-        {
-            Guard.Against.Null(request, nameof(request));
-            var report = await _reportsRepository.GetByIdAsync(request.ReportId).ConfigureAwait(false);
 
-            var note = report.Notes.Where(n => n.Id == request.Id).FirstOrDefault();
-            if (note is not null)
-            {
-                report.RemoveNote(note);
-
-                note.Text = request.Text;
-                note.Checked = request.Checked;
-
-                report.AddNote(note);
-            }
-
-            await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
-            return true;
-        }
+        await _reportsRepository.UpdateAsync(report).ConfigureAwait(false);
+        return true;
     }
 }

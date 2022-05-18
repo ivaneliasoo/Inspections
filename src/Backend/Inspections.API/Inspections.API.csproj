@@ -8,6 +8,7 @@
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>

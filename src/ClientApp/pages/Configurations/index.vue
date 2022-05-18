@@ -82,7 +82,7 @@ import { ReportConfiguration } from '~/types'
   }
 })
 export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
-  dialogRemove: boolean =false
+  dialogRemove: boolean = false
   selectedItem: ReportConfiguration = {} as ReportConfiguration
   filter: string = ''
   loading: boolean = false

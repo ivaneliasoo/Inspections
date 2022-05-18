@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { PermissionsAndroid, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import CameraRoll from '@react-native-community/cameraroll';
-import { Text, useTheme } from '@ui-kitten/components';
+import { useTheme } from '@ui-kitten/components';
 import PhotoLabeler from '../components/photorecords/PhotoLabeler';
 import { showMessage } from 'react-native-flash-message';
 import { usePhotoRecords } from '../hooks/usePhotoRecords';
@@ -132,7 +132,7 @@ export const CameraScreen = () => {
         }}
           onClose={() => setShowLabeler(false)}
           onSave={() => {
-            EnqueuePhotoUpload(workingReport!.id!, lastPhoto, lastLabel)
+            EnqueuePhotoUpload(workingReport!.id!, lastPhoto, lastLabel.length > 0 ? lastLabel : 'NO LABEL')
             setShowLabeler(false)
             showMessage({
               message: 'Photo Upload has been enqueued',

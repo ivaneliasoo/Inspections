@@ -21,6 +21,7 @@
             lg="3"
           >
             <v-card>
+              <span class="tw-text-xs">{{ photo.timestamp }}</span>
               <v-img
                 :src="`${photo.thumbnailUrl}`"
                 class="white--text align-end"
@@ -123,4 +124,9 @@ export default class PhotoRecordManager extends Vue {
 </script>
 
 <style scoped>
+span {
+  font-size: 0.8em;
+  color: #000;
+  top: 0;
+}
 </style>

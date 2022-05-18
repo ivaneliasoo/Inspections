@@ -119,24 +119,17 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col>
-                        <ValidationProvider
-                          v-slot="{ errors }"
-                          rules="required"
-                          immediate
-                        >
-                          <v-text-field
-                            v-model="license.contact"
-                            autocomplete="nope"
-                            :error-messages="errors"
-                            name="contact"
-                            label="Contact"
-                          />
-                        </ValidationProvider>
+                        <v-text-field
+                          v-model="license.contact"
+                          autocomplete="nope"
+                          name="contact"
+                          label="Contact"
+                        />
                       </v-col>
                       <v-col>
                         <ValidationProvider
                           v-slot="{ errors }"
-                          rules="required|email"
+                          rules="email"
                           immediate
                         >
                           <v-text-field

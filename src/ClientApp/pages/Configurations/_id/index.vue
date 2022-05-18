@@ -1,7 +1,7 @@
 <template>
   <div>
     <ValidationObserver ref="obs" v-slot="{ valid, dirty }" tag="form">
-      <v-row>
+      <v-row align="center">
         <v-col cols="12" xs="12" md="6">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-select
@@ -51,7 +51,7 @@
             />
           </ValidationProvider>
         </v-col>
-        <v-col cols="8">
+        <v-col cols="12" md="6">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-text-field
               id="txtRemarksLabelText"
@@ -61,35 +61,32 @@
             />
           </ValidationProvider>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="12" md="2">
           <v-switch v-model="newConfig.inactive" label="Inactive" />
         </v-col>
-        <v-col cols="12" sm="2">
-          <nuxt-link :to="`/Configurations/${newConfig.id}/additionalfields`">
+        <v-col cols="12" justify="space-between" md="4">
+          <nuxt-link :to="`/Configurations/${newConfig.id}/FormsSettingsList`">
             <v-btn color="primary" outlined>
-              Additional Fields
+              Configure Forms
             </v-btn>
           </nuxt-link>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" md="6">
-          <ValidationProvider v-slot="{ errors }" rules="required">
-            <v-select
-              id="checksDefinition"
-              v-model="newConfig.checksDefinition"
-              :error-messages="errors"
-              item-value="id"
-              item-text="text"
-              multiple
-              small-chips
-              deletable-chips
-              label="Include CheckLists"
-              :items="checks"
-              append-outer-icon="mdi-format-list-checks"
-              @click:append-outer="$router.push(`/checklists?configurationid=${newConfig.id}&configurationonly=true`)"
-            />
-          </ValidationProvider>
+          <v-select
+            id="checksDefinition"
+            v-model="newConfig.checksDefinition"
+            item-value="id"
+            item-text="text"
+            multiple
+            small-chips
+            deletable-chips
+            label="Include CheckLists"
+            :items="checks"
+            append-outer-icon="mdi-format-list-checks"
+            @click:append-outer="$router.push(`/checklists?configurationid=${newConfig.id}&configurationonly=true`)"
+          />
         </v-col>
         <v-col cols="12" md="6">
           <ValidationProvider v-slot="{ errors }" rules="required">
@@ -117,13 +114,23 @@
         <v-col>
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-select
-              v-model="display"
+              v-model="newConfig.display"
               :items="displayOptions"
               name="display"
               label="Checklists Display Orientation"
               :error-messages="errors"
               item-text="text"
-              item-value="id"
+              item-value="text"
+            />
+          </ValidationProvider>
+        </v-col>
+        <v-col>
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-text-field
+              id="txtTemplateName"
+              v-model="newConfig.templateName"
+              :error-messages="errors"
+              label="Print Template Name"
             />
           </ValidationProvider>
         </v-col>
@@ -199,12 +206,13 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
       type: this.newConfig.type,
       title: this.newConfig.title,
       formName: this.newConfig.formName,
-      remarksLabelText: this.newConfig.formName,
+      remarksLabelText: this.newConfig.remarksLabelText,
       inactive: this.newConfig.inactive,
       checksDefinition: this.newConfig.checksDefinition,
       signatureDefinitions: this.newConfig.signatureDefinitions,
       printSectionId: this.newConfig.printSectionId,
-      display: this.display
+      display: this.newConfig.display,
+      templateName: this.newConfig.templateName
     }
 
     if (parseInt(self.$route.params.id) > 0) {
@@ -240,7 +248,7 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
     if (id > 0) {
       const result = await store.dispatch('configurations/getConfigurationById', id, { root: true })
       newConfig = Object.assign({}, result)
-      display = parseInt(CheckListDisplay[result.checkListMetadata.display])
+      display = parseInt(result.checkListMetadata.display)
     } else { newConfig = { type: 0 } as ReportConfiguration }
     return { newConfig, display }
   }

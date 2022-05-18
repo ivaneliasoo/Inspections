@@ -45,8 +45,11 @@ namespace Inspections.API.Features.CostSheets
             return Ok(list);
         }
 
-        // GET: api/costsheet/sheet/{id}
-        [HttpGet("sheet/{id}")]
+        // GET: api/costsheet/{id}
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<CostSheet>> GetCostSheet(long id)
         {
             var costSheet = await _context.CostSheet.FindAsync(id);
@@ -64,6 +67,7 @@ namespace Inspections.API.Features.CostSheets
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> InsertCostSheet()
         {
             if (!this.Request.Body.CanSeek)
@@ -97,6 +101,7 @@ namespace Inspections.API.Features.CostSheets
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateCostSheet()
         {
             if (!this.Request.Body.CanSeek)
@@ -144,8 +149,11 @@ namespace Inspections.API.Features.CostSheets
             return Ok(prev);
         }
 
-        // DELETE: api/costsheet/sheet/{id}
-        [HttpDelete("sheet/{id}")]
+        // DELETE: api/costsheet/{id}
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> DeleteCostSheet(long id)
         {
             var todoItem = await _context.CostSheet.FindAsync(id);

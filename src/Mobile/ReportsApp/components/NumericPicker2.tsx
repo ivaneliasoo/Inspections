@@ -1,7 +1,6 @@
 import Picker from '@gregfrench/react-native-wheel-picker'
 import React, { useEffect, useMemo, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { setBasicAuthToObject } from 'services/api/common';
 
 const PickerItem = Picker.Item;
 

@@ -22,7 +22,7 @@
       link
       :to="menu.route.includes('http') ? '' : menu.route"
       @click="menu.route.includes('http') ? redirect(menu.route):''"
-      :disabled="!menu.route"
+      :disabled="!menu.route || menu.disabled"
     >
       <v-list-item-icon>
         <v-icon v-if="menu.icon" v-text="menu.icon"></v-icon>
@@ -44,7 +44,7 @@ export default class Menu extends Vue {
     {
       name: "LEW Licensing",
       parentName: "",
-      route: "",
+      route: "/lewlicensing",
       icon: "",
     },
     {
@@ -57,19 +57,22 @@ export default class Menu extends Vue {
       name: 'Energy Report',
       parentName: '',
       route: '/energyreport',
-      icon: 'mdi-graph'
+      icon: 'mdi-graph',
+      disabled: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
     },
     {
       name: 'Job Planner',
       parentName: '',
       route: '/jobplanner',
-      icon: 'mdi-calendar'
+      icon: 'mdi-calendar',
+      disabled: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
     },
     {
       name: 'Cost Sheets',
       parentName: '',
       route: '/costsheets',
-      icon: 'mdi-table-large'
+      icon: 'mdi-table-large',
+      disabled: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
     },
     {
       name: "Risk Assessment",
@@ -88,6 +91,7 @@ export default class Menu extends Vue {
       parentName: "",
       route: "",
       icon: "",
+      disabled: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
     },
     {
       name: "Master Setup",

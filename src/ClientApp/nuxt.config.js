@@ -48,6 +48,7 @@ export default {
     '@nuxtjs/device',
     '@vueuse/core/nuxt',
     '@braid/vue-formulate/nuxt',
+    'vue2-editor/nuxt',
     ['nuxt-compress',
       {
         gzip: {
@@ -64,7 +65,7 @@ export default {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
   pwa: {
     icon: {

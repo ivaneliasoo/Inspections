@@ -3,6 +3,9 @@
       <template v-slot:title="{}">
         New Report
       </template>
+      <div v-if="!creatingReport" class="tw-fixed tw-z-50 tw-bg-opacity-80 tw-bg-white">
+        <h2 >Please, Select a Configuration to Create a New Report</h2>
+      </div>
       <v-row
         v-if="creatingReport"
         class="fill-height"
@@ -25,8 +28,19 @@
             </v-col>
         </v-col>
       </v-row>
-      <h2 v-if="!creatingReport">Please, Select a Configuration to Create a New Report</h2>
-      <v-data-iterator
+      
+        <v-row justify="center" align="center" v-for="item in configurations"
+              :key="item.id">
+          <v-col>
+            <v-card class="tw-mx-5" ripple @click="configuration = item.id; createReport()">
+              <v-card-title>{{ item.title }}</v-card-title>
+              <v-card-subtitle>Creates a new Report With {{ item.title }} {{item.formName}} Configuration</v-card-subtitle>
+            </v-card>
+          </v-col>
+        </v-row>
+      
+      
+      <!-- <v-data-iterator
         v-if="!creatingReport"
         :items="configurations"
         :search="search"
@@ -62,7 +76,7 @@
             </v-col>
           </v-row>
         </template>
-      </v-data-iterator>
+      </v-data-iterator> -->
     </message-dialog>
 </template>
 
@@ -89,7 +103,8 @@ export default class NewReportDialog extends Vue {
   }
 
   async createReport () {
-    this.creatingReport =true
+    try {
+      this.creatingReport =true
     const reportId = await this.$store.dispatch('reportstrore/createReport', this.selectedConfiguration, { root: true })
       .then((resp) => {
         this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: true, descending: true }, { root: true })
@@ -97,7 +112,12 @@ export default class NewReportDialog extends Vue {
         this.$emit('report-created', resp)
       })
     await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: reportId }, { root: true })
-    this.creatingReport = false
+    } catch (error) {
+      console.log({ error })
+    } finally {
+      this.creatingReport = false
+    }
+    
   }
 
   get configurations (): ReportConfiguration[] {

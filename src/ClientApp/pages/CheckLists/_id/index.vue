@@ -157,7 +157,7 @@
               </v-icon>
             </v-btn>
           </v-card-subtitle>
-          <ValidationObserver v-slot="{ valid }" tag="form">
+          <ValidationObserver v-slot="{ invalid }" tag="form">
             <v-card-text>
               <v-row>
                 <v-col>
@@ -192,7 +192,7 @@
               </v-row>
             </v-card-text>
             <v-card-actions class="text-right">
-              <v-btn :disabled="!valid" color="success" text @click="saveItem">
+              <v-btn :disabled="invalid" color="success" text @click="saveItem">
                 <v-icon>mdi-check</v-icon>Save
               </v-btn>
             </v-card-actions>
@@ -317,7 +317,8 @@ export default defineComponent({
         checklistParams: []
       }
 
-      const isValid = await obsNew.value.validate()
+      const isValid = await obsNew.value?.validate()
+      alert(isValid)
 
       if (!isValid) {
         return
@@ -374,6 +375,7 @@ export default defineComponent({
     }
 
     return {
+      obsNew,
       dialogRemove,
       dialogNew,
       headers,

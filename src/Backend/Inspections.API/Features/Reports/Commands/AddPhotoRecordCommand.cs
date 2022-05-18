@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace Inspections.API.Features.Reports.Commands
 {
@@ -7,7 +6,7 @@ namespace Inspections.API.Features.Reports.Commands
     {
         public int ReportId { get; }
         public IFormFileCollection FormFiles { get; }
-        public string Label { get; }
+        public string? Label { get; }
 
         public AddPhotoRecordCommand(int reportId, IFormFileCollection formFiles, string? label)
         {

@@ -13,6 +13,7 @@
             :key="photo.id"
             class="tw-border-2 tw-border-indigo-200 tw-mx-2 tw-my-2"
           >
+            <span class="tw-text-xs tw-text-center">{{ photo.timestamp }}</span>
             <img style="width: 360px; max-height: 400px" :src="photo.photoBase64" />
             <span class="tw-font-bold tw-text-center">{{ photo.label }}</span>
           </div>

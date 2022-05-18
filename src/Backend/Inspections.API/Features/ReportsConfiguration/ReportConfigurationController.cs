@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Inspections.API.Features.ReportsConfiguration.Commands;
 using Inspections.API.Features.ReportsConfiguration.Model;
 using Inspections.Core.Interfaces.Queries;
@@ -9,7 +6,6 @@ using Inspections.Core.Interfaces.Repositories;
 using Inspections.Core.QueryModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inspections.API.Features.ReportsConfiguration
@@ -80,14 +76,14 @@ namespace Inspections.API.Features.ReportsConfiguration
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<ReportConfigurationDTO>> GetReportConfig(int id)
+        public async Task<ActionResult<ReportConfigurationDto>> GetReportConfig(int id)
         {
             var reportConfig = await _reportConfigurationsRepository.GetByIdAsync(id).ConfigureAwait(false);
 
             if (reportConfig is null)
                 return BadRequest();
 
-            return Ok(new ReportConfigurationDTO(reportConfig));
+            return Ok(new ReportConfigurationDto(reportConfig));
         }
 
         [HttpGet]
@@ -96,9 +92,9 @@ namespace Inspections.API.Features.ReportsConfiguration
         [ProducesDefaultResponseType]
         public ActionResult<IEnumerable<ResumenReportConfiguration>> GetReportsConfig(string? filter)
         {
-            var reportConfig = _reportConfigsQueries.GetByFilter(filter);
+            var reportConfig = _reportConfigsQueries.GetByFilter(filter).AsEnumerable();
 
-            if (reportConfig is null)
+            if (!reportConfig.Any())
                 return BadRequest();
 
             return Ok(reportConfig);
