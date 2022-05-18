@@ -15,9 +15,8 @@ public class CostSheet
 
     public string project { get; set; }
 
-        public bool isTemplate { get; set; }
-        
-        public DateTime? dateCreated { get; set; }
+    public bool isTemplate { get; set; }
+    
     public string location { get; set; }
 
     public DateTime? dateCreated { get; set; }
@@ -51,56 +50,53 @@ public class CostSheet
         this.LastEdit = new DateTimeOffset();
         this.LastEditUser = "";
     }
+}
 
-    [Table("CSTemplate")]
-    public class CSTemplate
+[Table("CSTemplate")]
+public class CSTemplate
+{
+    [Key]
+    public long id { get; set; }
+
+    public string project { get; set; }
+
+    public string location { get; set; }
+
+    public bool isTemplate { get; set; }
+    
+    public DateTime? dateCreated { get; set; }
+
+    public double materialMarkup { get; set; }
+
+    public double labourDailyRate { get; set; }
+
+    public double labourNightMultiplier { get; set; }
+
+    public double finalMarkup { get; set; }
+
+    [Column(TypeName = "jsonb")]
+    public Section[]? sections { get; set; }
+
+    [JsonConverter(typeof(JsonDateTimeConverter))]
+    public DateTime? lastUpdate { get; set; }
+
+    public bool updated { get; set; }
+
+    public DateTimeOffset LastEdit { get; set; }
+
+    public string LastEditUser { get; set; }
+
+    public CSTemplate()
     {
-        [Key]
-        public long id { get; set; }
+        this.id = 0;
+        this.project = "";
+        this.location = "";
 
-        public string project { get; set; }
-
-        public string location { get; set; }
-
-        public bool isTemplate { get; set; }
-        
-        public DateTime? dateCreated { get; set; }
-
-        public double materialMarkup { get; set; }
-
-        public double labourDailyRate { get; set; }
-
-        public double labourNightMultiplier { get; set; }
-
-        public double finalMarkup { get; set; }
-
-        [Column(TypeName = "jsonb")]
-        public Section[]? sections { get; set; }
-
-        [JsonConverter(typeof(JsonDateTimeConverter))]
-        public DateTime? lastUpdate { get; set; }
-
-        public bool updated { get; set; }
-
-        public DateTimeOffset LastEdit { get; set; }
-
-        public string LastEditUser { get; set; }
-
-        public CSTemplate()
-        {
-            this.id = 0;
-            this.project = "";
-            this.location = "";
-
-            this.LastEdit = new DateTimeOffset();
-            this.LastEditUser = "";
-        }
-
+        this.LastEdit = new DateTimeOffset();
+        this.LastEditUser = "";
     }
 
-    public class Section
-    {
-        public string secNumber { get; set; }
+}
 
 public class Section
 {

@@ -57,6 +57,7 @@ public class InspectionsContext : DbContext
     public DbSet<Team> Team { get; set; } = default!;
     public DbSet<Options> Options { get; set; } = default!;
     public DbSet<CostSheet> CostSheet { get; set; } = default!;
+    public DbSet<CSTemplate> CSTemplate { get; set; } = default!;
 
     //Queries
     public DbSet<ResumenCheckList> ResumenCheckLists { get; set; } = default!;
@@ -65,42 +66,6 @@ public class InspectionsContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-        public DbSet<Report> Reports { get; set;} = default!;
-        public DbSet<CheckList> CheckLists { get; set; } = default!;
-        public DbSet<CheckListItem> CheckListItems { get; set; } = default!;
-        public DbSet<Note> Notes { get; set; } = default!;
-        public DbSet<PhotoRecord> Photos { get; set; } = default!;
-        public DbSet<ReportConfiguration> ReportConfigurations { get; set; } = default!;
-        public DbSet<Signature> Signatures { get; set; } = default!;
-        public DbSet<User> Users { get; set; } = default!;
-        public DbSet<Address> Addresses { get; set; } = default!;
-        public DbSet<EMALicense> Licenses { get; set; } = default!;
-        public DbSet<OperationalReadings> OperationalReadings { get; set; } = default!;
-        public DbSet<PrintSection> PrintSections { get; set; } = default!;
-        public DbSet<CurrentTable> CurrentTable { get; set; } = default!;
-        public DbSet<Template> Template { get; set; } = default!;
-
-        public DbSet<SchedJob> SchedJob { get; set; } = default!;
-        public DbSet<Job> Job { get; set; } = default!;
-        public DbSet<Team> Team { get; set; } = default!;
-        public DbSet<Options> Options { get; set; } = default!;
-        public DbSet<CostSheet> CostSheet { get; set; } = default!;
-        public DbSet<CSTemplate> CSTemplate { get; set; } = default!;
-
-        //Queries
-        public DbSet<ResumenCheckList> ResumenCheckLists { get; set; } = default!;
-        public DbSet<ResumenReportConfiguration> ResumenReportConfigurations { get; set; } = default!;
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            if (entityType is ResumenReportConfiguration or EMALicense or DateTimeRange)
-                continue;
-
-            modelBuilder.Entity(entityType.Name).Property<DateTimeOffset>("LastEdit").IsRequired();
-            modelBuilder.Entity(entityType.Name).Property<string>("LastEditUser").IsRequired().HasMaxLength(20);
-        }
-
 
         modelBuilder.Entity<User>()
             .HasKey(p => p.UserName);
@@ -112,7 +77,6 @@ public class InspectionsContext : DbContext
             .Property(p => p.Name).IsRequired().HasMaxLength(50);
         modelBuilder.Entity<User>()
             .Property(p => p.LastName).IsRequired().HasMaxLength(50);
-
 
         modelBuilder.Entity<ResumenCheckList>().HasNoKey()
             .ToTable("ResumenCheckList", m => m.ExcludeFromMigrations());

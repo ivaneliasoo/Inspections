@@ -155,29 +155,7 @@ public class InspectionsSeed
                     };
                     context.AddRange(teams);
                 }
-
-                // var costSheets = context.CostSheet.Where( cs => cs.isTemplate );
-                // var sheetTemplates = new List<CSTemplate>();
-                // foreach(CostSheet costSheet in costSheets) {
-                //     var template = new CSTemplate();
-                //     template.project = costSheet.project;
-                //     template.location = costSheet.location;
-                //     template.isTemplate = costSheet.isTemplate;
-                //     template.dateCreated = costSheet.dateCreated;
-                //     template.materialMarkup = costSheet.materialMarkup;
-                //     template.labourDailyRate = costSheet.labourDailyRate;
-                //     template.labourNightMultiplier = costSheet.labourNightMultiplier;
-                //     template.finalMarkup = costSheet.finalMarkup;
-                //     template.sections = costSheet.sections;
-                //     template.lastUpdate = DateTime.Now;
-                //     template.updated = false;
-                //     sheetTemplates.Add(template);
-                // }
-                // context.AddRange(sheetTemplates);
-
-                await context.SaveChangesAsync();
-            }
-            
+          
             await context.SaveChangesAsync();
         }
         catch (Exception ex)
