@@ -52,12 +52,12 @@ public class InspectionsContext : DbContext
     public DbSet<CurrentTable> CurrentTable { get; set; } = default!;
     public DbSet<Template> Template { get; set; } = default!;
 
-    public DbSet<SchedJob> SchedJob { get; set; } = default!;
-    public DbSet<Job> Job { get; set; } = default!;
-    public DbSet<Team> Team { get; set; } = default!;
-    public DbSet<Options> Options { get; set; } = default!;
-    public DbSet<CostSheet> CostSheet { get; set; } = default!;
-    public DbSet<CSTemplate> CSTemplate { get; set; } = default!;
+        public DbSet<SchedJob> SchedJob { get; set; } = default!;
+        public DbSet<Job> Job { get; set; } = default!;
+        public DbSet<Team> Team { get; set; } = default!;
+        public DbSet<Options> Options { get; set; } = default!;
+        public DbSet<CostSheet> CostSheet { get; set; } = default!;
+        public DbSet<CSTemplate> CSTemplate { get; set; } = default!;
 
     //Queries
     public DbSet<ResumenCheckList> ResumenCheckLists { get; set; } = default!;
@@ -66,6 +66,16 @@ public class InspectionsContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(e => !e.IsOwned()))
+        {
+            if (entityType is ResumenReportConfiguration or EMALicense or DateTimeRange)
+                continue;
+
+            modelBuilder.Entity(entityType.Name).Property<DateTimeOffset>("LastEdit").IsRequired();
+            modelBuilder.Entity(entityType.Name).Property<string>("LastEditUser").IsRequired().HasMaxLength(20);
+        }
+
 
         modelBuilder.Entity<User>()
             .HasKey(p => p.UserName);
@@ -78,6 +88,7 @@ public class InspectionsContext : DbContext
         modelBuilder.Entity<User>()
             .Property(p => p.LastName).IsRequired().HasMaxLength(50);
 
+
         modelBuilder.Entity<ResumenCheckList>().HasNoKey()
             .ToTable("ResumenCheckList", m => m.ExcludeFromMigrations());
         modelBuilder.Entity<ResumenReportConfiguration>().HasNoKey()
@@ -87,6 +98,10 @@ public class InspectionsContext : DbContext
             .HasKey(sj => new { sj.team, sj.date });
 
         modelBuilder.Entity<CostSheet>()
+            .Property(p => p.id)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<CSTemplate>()
             .Property(p => p.id)
             .ValueGeneratedOnAdd();
 
