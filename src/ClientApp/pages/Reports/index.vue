@@ -287,7 +287,6 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
   async generatePdf (item: Report, printPhotos: boolean = false) {
     try {
       this.printing = true
-      console.log(this.selectedItem)
       const file = await this.$axios.$get(
         `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${item.reportConfigurationId}`,
         { responseType: 'blob' }

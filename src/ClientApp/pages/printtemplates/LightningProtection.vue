@@ -1,12 +1,12 @@
 <template>
   <div style="width: 900px">
-    This form may take you 5-8 minutes to complete. 
+    This form may take you 5-8 minutes to complete.
     <div class="vbox border-ltr">
       <div class="row-center bold space">
-          THE BUILDING CONTROL ACT (CAP 29)
+        THE BUILDING CONTROL ACT (CAP 29)
       </div>
       <div class="row-center bold space space-bottom">
-          CERTIFICATE OF DESIGN &amp; SUPERVISION OF LIGHTNING PROTECTION SYSTEM
+        CERTIFICATE OF DESIGN &amp; SUPERVISION OF LIGHTNING PROTECTION SYSTEM
       </div>
     </div>
     <div class="hbox border-ltr">
@@ -18,7 +18,7 @@
           Building &amp; Construction Authority
         </div>
         <div class="row space-left">
-          52 Jurong Gateway Road #11-01 
+          52 Jurong Gateway Road #11-01
         </div>
         <div class="row space-left">
           Singapore 608550
@@ -51,31 +51,31 @@
       </div>
 
       <div class="row space">
-          <label class="col1">
-            Project Ref. No.:
-          </label>
-          &lsqb;<input class="bg-yellow" type="text" v-model="certificate1.projectRefNo"/>&rsqb;
+        <label class="col1">
+          Project Ref. No.:
+        </label>
+        &lsqb;<input v-model="certificate1.projectRefNo" class="bg-yellow" type="text">&rsqb;
       </div>
-      
+
       <div class="row space">
-          <label class="col1">
-            Address: 
-          </label>
-          &lsqb;<input class="bg-yellow" type="text" v-model="certificate1.address"/>&rsqb;
+        <label class="col1">
+          Address:
+        </label>
+        &lsqb;<input v-model="certificate1.address" class="bg-yellow" type="text">&rsqb;
       </div>
-      
+
       <div class="row space">
         <label class="col1">
           TS/MK &amp; Lot/Plot:
         </label>
-        &lsqb;<input class="bg-yellow" type="text" v-model="certificate1.TS_MK_Lot_Plot"/>&rsqb;
+        &lsqb;<input v-model="certificate1.TS_MK_Lot_Plot" class="bg-yellow" type="text">&rsqb;
       </div>
-      
+
       <div class="row space space-bottom">
         <label class="col1">
           Remarks:
         </label>
-        &lsqb;<input class="bg-yellow" type="text" v-model="certificate1.remarks"/>&rsqb;
+        &lsqb;<input v-model="certificate1.remarks" class="bg-yellow" type="text">&rsqb;
       </div>
     </div>
 
@@ -88,7 +88,7 @@
     <div class="vbox border-ltr">
       <div class="row col space-left">
         <p class="left-align">
-          I certify that the design of the above-mentioned lightning protection system complies with the requirements 
+          I certify that the design of the above-mentioned lightning protection system complies with the requirements
           of the Building Control Regulations 2003, SS:555 and the relevant Singapore Standard Code of Practice.
         </p>
       </div>
@@ -101,8 +101,7 @@
         </label>
       </div>
       <div class="row col">
-        <label class="col20p">
-        </label>
+        <label class="col20p" />
         <label class="col80p">
           the Code of Practice for Protection Against Lightning - SS 555:2010; or <br>
           the Code of Practice for Protection Against Lightning - SS 555:2018.
@@ -117,28 +116,24 @@
         </label>
       </div>
       <div class="row col space">
-        <label class="col10p">
-        </label>
+        <label class="col10p" />
         <label class="col90p">
           Remarks and Alternative Solution provided:
         </label>
       </div>
       <div class="row col space">
-        <label class="col10p">
-        </label>
-        <textarea rows="4" class="col80p" v-model="certificate1.part1.remarks">
-        </textarea>
+        <label class="col10p" />
+        <textarea v-model="certificate1.part1.remarks" rows="4" class="col80p" />
       </div>
     </div>
-      
+
     <div class="hbox border-ltr">
       <div class="vbox col50p border-r space-bottom">
         <div class="row space-left">
           Address of Professional Engineer
         </div>
         <div class="row space-left">
-          <textarea rows="5" class="col95p" v-model="certificate1.part1.engineerAddress">
-          </textarea>
+          <textarea v-model="certificate1.part1.engineerAddress" rows="5" class="col95p" />
         </div>
       </div>
       <div class="vbox col50p space-left">
@@ -146,8 +141,7 @@
           Name, PE Registration Number &amp; Signature of Professional Engineer
         </div>
         <div class="row">
-          <textarea rows="4" class="col95p" v-model="certificate1.part1.engineerNameRegNumber">
-          </textarea>
+          <textarea v-model="certificate1.part1.engineerNameRegNumber" rows="4" class="col95p" />
         </div>
       </div>
     </div>
@@ -157,7 +151,7 @@
           <label class="col2">
             Tel No.:
           </label>
-          &lsqb;<input class="bg-yellow" type="text" v-model="certificate1.part1.telfNo"/>&rsqb;
+          &lsqb;<input v-model="certificate1.part1.telfNo" class="bg-yellow" type="text">&rsqb;
         </div>
       </div>
       <div class="vbox col50p space-left space-bottom">
@@ -165,7 +159,7 @@
           <label class="col2">
             Date:
           </label>
-          &lsqb;<input class="bg-yellow" type="text" v-model="certificate1.part1.date"/>&rsqb;
+          &lsqb;<input v-model="certificate1.part1.date" class="bg-yellow" type="text">&rsqb;
         </div>
       </div>
     </div>
@@ -180,24 +174,21 @@
     <div class="vbox border-ltr">
       <div class="row col space-left">
         <p class="left-align">
-          I have supervised the above-mentioned lightning protection installation and hereby certify the installation 
-          works complies with the requirements of the Building Control Regulations 2003, SS:555 and the relevant 
-          Singapore Standard Code of Practice. I further certify that the installation works has been inspected and 
+          I have supervised the above-mentioned lightning protection installation and hereby certify the installation
+          works complies with the requirements of the Building Control Regulations 2003, SS:555 and the relevant
+          Singapore Standard Code of Practice. I further certify that the installation works has been inspected and
           tested by me in accordance to relevant Singapore Standard Code of Practice.
         </p>
       </div>
       <div class="row col space">
-        <label class="col10p">
-        </label>
+        <label class="col10p" />
         <label class="col90p">
           Remarks:
         </label>
       </div>
       <div class="row col space">
-        <label class="col10p">
-        </label>
-        <textarea rows="6" class="col80p" v-model="certificate1.part2.remarks">
-        </textarea>
+        <label class="col10p" />
+        <textarea v-model="certificate1.part2.remarks" rows="6" class="col80p" />
       </div>
     </div>
 
@@ -207,8 +198,7 @@
           Address of Professional Engineer
         </div>
         <div class="row space-left">
-          <textarea rows="5" class="col95p" v-model="certificate1.part2.engineerAddress">
-          </textarea>
+          <textarea v-model="certificate1.part2.engineerAddress" rows="5" class="col95p" />
         </div>
       </div>
       <div class="vbox col50p space-left">
@@ -216,8 +206,7 @@
           Name, PE Registration Number &amp; Signature of Professional Engineer
         </div>
         <div class="row">
-          <textarea rows="4" class="col95p" v-model="certificate1.part2.engineerNameRegNumber">
-          </textarea>
+          <textarea v-model="certificate1.part2.engineerNameRegNumber" rows="4" class="col95p" />
         </div>
       </div>
     </div>
@@ -227,7 +216,7 @@
           <label class="col2">
             Tel No.:
           </label>
-          &lsqb;<input class="bg-yellow" type="text" v-model="certificate1.part2.telfNo"/>&rsqb;
+          &lsqb;<input v-model="certificate1.part2.telfNo" class="bg-yellow" type="text">&rsqb;
         </div>
       </div>
       <div class="vbox col50p space-left space-bottom">
@@ -235,7 +224,7 @@
           <label class="col2">
             Date:
           </label>
-          &lsqb;<input class="bg-yellow" type="text" v-model="certificate1.part2.date"/>&rsqb;
+          &lsqb;<input v-model="certificate1.part2.date" class="bg-yellow" type="text">&rsqb;
         </div>
       </div>
     </div>
@@ -243,11 +232,11 @@
     <br>
     <div class="vbox border-ltr">
       <div class="row-center bold space">
-          THE BUILDING CONTROL ACT (CAP 29)
+        THE BUILDING CONTROL ACT (CAP 29)
       </div>
       <div class="row-center bold space space-bottom">
-          CERTIFICATE OF DESIGN &amp; SUPERVISION OF LIGHTNING PROTECTION SYSTEM<br>
-          (Earth Resistance &amp; Electrical Continuity Test Form)
+        CERTIFICATE OF DESIGN &amp; SUPERVISION OF LIGHTNING PROTECTION SYSTEM<br>
+        (Earth Resistance &amp; Electrical Continuity Test Form)
       </div>
     </div>
     <div class="hbox border-ltr">
@@ -259,7 +248,7 @@
           Building &amp; Construction Authority
         </div>
         <div class="row space-left">
-          52 Jurong Gateway Road #11-01 
+          52 Jurong Gateway Road #11-01
         </div>
         <div class="row space-left">
           Singapore 608550
@@ -283,10 +272,10 @@
 
     <div class="vbox border-ltr">
       <div class="row space">
-          <label class="col1">
-            Project Ref. No.:
-          </label>
-          &lsqb;<input class="bg-yellow" type="text" v-model="certificate2.projectRefNo"/>&rsqb;
+        <label class="col1">
+          Project Ref. No.:
+        </label>
+        &lsqb;<input v-model="certificate2.projectRefNo" class="bg-yellow" type="text">&rsqb;
       </div>
     </div>
 
@@ -299,18 +288,18 @@
     <div class="hbox border-ltr">
       <div class="vbox col40p border-r">
         <div class="row space">
-            <label class="col1">
-              Address: 
-            </label>
-            &lsqb;<input class="bg-yellow" type="text" v-model="certificate2.address"/>&rsqb;
+          <label class="col1">
+            Address:
+          </label>
+          &lsqb;<input v-model="certificate2.address" class="bg-yellow" type="text">&rsqb;
         </div>
       </div>
       <div class="vbox col60p space-left">
         <div class="row space">
-            <label class="col1">
-              Test Date: 
-            </label>
-            &lsqb;<input class="bg-yellow" type="text" v-model="certificate2.testDate"/>&rsqb;
+          <label class="col1">
+            Test Date:
+          </label>
+          &lsqb;<input v-model="certificate2.testDate" class="bg-yellow" type="text">&rsqb;
         </div>
       </div>
     </div>
@@ -324,34 +313,41 @@
     <div class="hbox border-ltr">
       <div class="vbox col40p border-r">
         <div class="row space">
-            <label class="col2">
-              Brand &amp; Model 1:
-            </label>
-            &lsqb;
-            <input class="bg-yellow" type="text" style="width: 150px" 
-              v-model="certificate2.brandModel1"/>
-            &rsqb;
+          <label class="col2">
+            Brand &amp; Model 1:
+          </label>
+          &lsqb;
+          <input
+            v-model="certificate2.brandModel1"
+            class="bg-yellow"
+            type="text"
+            style="width: 150px"
+          >
+          &rsqb;
         </div>
       </div>
       <div class="vbox col30p border-r space-left">
         <div class="row space">
-            <label class="col1">
-              Serial No.: 
-            </label>
-            &lsqb;
-            <input class="bg-yellow" type="text" 
-              v-model="certificate2.serialNo1"/>
-            &rsqb;
+          <label class="col1">
+            Serial No.:
+          </label>
+          &lsqb;
+          <input
+            v-model="certificate2.serialNo1"
+            class="bg-yellow"
+            type="text"
+          >
+          &rsqb;
         </div>
       </div>
       <div class="vbox col30p space-left">
         <div class="row space">
-            <label class="col1">
-              Calibrated:
-            </label>
-            &lsqb;
-            <input class="bg-yellow" type="text" v-model="certificate2.calibrated1"/>
-            &rsqb;
+          <label class="col1">
+            Calibrated:
+          </label>
+          &lsqb;
+          <input v-model="certificate2.calibrated1" class="bg-yellow" type="text">
+          &rsqb;
         </div>
       </div>
     </div>
@@ -359,32 +355,31 @@
     <div class="hbox border-ltr">
       <div class="vbox col40p border-r">
         <div class="row space">
-            <label class="col2">
-              Brand &amp; Model 2:
-            </label>
-            &lsqb;<input class="bg-yellow" type="text" style="width: 150px" v-model="certificate2.brandModel2"/>&rsqb;
+          <label class="col2">
+            Brand &amp; Model 2:
+          </label>
+          &lsqb;<input v-model="certificate2.brandModel2" class="bg-yellow" type="text" style="width: 150px">&rsqb;
         </div>
       </div>
       <div class="vbox col30p border-r space-left">
         <div class="row space">
-            <label class="col1">
-              Serial No.: 
-            </label>
-            &lsqb;<input class="bg-yellow" type="text" v-model="certificate2.serialNo2"/>&rsqb;
+          <label class="col1">
+            Serial No.:
+          </label>
+          &lsqb;<input v-model="certificate2.serialNo2" class="bg-yellow" type="text">&rsqb;
         </div>
       </div>
       <div class="vbox col30p space-left">
         <div class="row space">
-            <label class="col1">
-              Calibrated:
-            </label>
-            &lsqb;<input class="bg-yellow" type="text" v-model="certificate2.calibrated2"/>&rsqb;
+          <label class="col1">
+            Calibrated:
+          </label>
+          &lsqb;<input v-model="certificate2.calibrated2" class="bg-yellow" type="text">&rsqb;
         </div>
       </div>
     </div>
 
     <div class="vbox space border-ltr border-b">
-
       <div class="row space bold">
         Table 1 : Earth Resistance System Test
       </div>
@@ -392,9 +387,15 @@
       <table class="table">
         <thead>
           <tr>
-            <th style="width: 15%">Type of Test</th>
-            <th colspan="12">Resistance of Earth Termination System [Ohm]</th>
-            <th rowspan="2">Remarks</th>
+            <th style="width: 15%">
+              Type of Test
+            </th>
+            <th colspan="12">
+              Resistance of Earth Termination System [Ohm]
+            </th>
+            <th rowspan="2">
+              Remarks
+            </th>
           </tr>
         </thead>
 
@@ -404,10 +405,10 @@
               Earth Electrode Point
             </td>
             <td v-for="index in 12" :key="index">
-              {{index}}
+              {{ index }}
             </td>
             <td>
-              <input type="text" v-model="certificate2.table1.tableRemarks[0]">
+              <input v-model="certificate2.table1.tableRemarks[0]" type="text">
             </td>
           </tr>
           <tr>
@@ -415,10 +416,10 @@
               Point Resistance [R &lt; N x 10Ω]
             </td>
             <td v-for="index in 12" :key="index">
-              <input type="text" v-model="certificate2.table1.pointResistance[index]">
+              <input v-model="certificate2.table1.pointResistance[index]" type="text">
             </td>
             <td>
-              <input type="text" v-model="certificate2.table1.tableRemarks[1]">
+              <input v-model="certificate2.table1.tableRemarks[1]" type="text">
             </td>
           </tr>
           <tr>
@@ -426,10 +427,10 @@
               Electrical Continuity Test Between N &amp; N+1
             </td>
             <td v-for="index in 12" :key="index">
-              <input type="text" v-model="certificate2.table1.electricalContinuity[index]">
+              <input v-model="certificate2.table1.electricalContinuity[index]" type="text">
             </td>
             <td>
-              <input type="text" v-model="certificate2.table1.tableRemarks[2]">
+              <input v-model="certificate2.table1.tableRemarks[2]" type="text">
             </td>
           </tr>
         </tbody>
@@ -440,10 +441,10 @@
               Earth Electrode Point
             </td>
             <td v-for="index in Array(12).fill(1).map( (_, i) => i+13)" :key="index">
-              {{index}}
+              {{ index }}
             </td>
             <td>
-              <input type="text" v-model="certificate2.table1.tableRemarks[3]">
+              <input v-model="certificate2.table1.tableRemarks[3]" type="text">
             </td>
           </tr>
           <tr>
@@ -451,10 +452,10 @@
               Point Resistance [R &lt; N x 10Ω]
             </td>
             <td v-for="index in Array(12).fill(1).map( (_, i) => i+13)" :key="index">
-              <input type="text" v-model="certificate2.table1.pointResistance[index]">
+              <input v-model="certificate2.table1.pointResistance[index]" type="text">
             </td>
             <td>
-              <input type="text" v-model="certificate2.table1.tableRemarks[4]">
+              <input v-model="certificate2.table1.tableRemarks[4]" type="text">
             </td>
           </tr>
           <tr>
@@ -462,10 +463,10 @@
               Electrical Continuity Test Between N &amp; N+1
             </td>
             <td v-for="index in Array(12).fill(1).map( (_, i) => i+13)" :key="index">
-              <input type="text" v-model="certificate2.table1.electricalContinuity[index]">
+              <input v-model="certificate2.table1.electricalContinuity[index]" type="text">
             </td>
             <td>
-              <input type="text" v-model="certificate2.table1.tableRemarks[5]">
+              <input v-model="certificate2.table1.tableRemarks[5]" type="text">
             </td>
           </tr>
         </tbody>
@@ -476,10 +477,10 @@
       </div>
 
       <div class="row space">
-          <label class="col1">
-            [Roverall &le; 10Ω]:
-          </label>
-          &lsqb;<input class="bg-yellow" type="text" v-model="certificate2.table1.overallResistance"/>&rsqb;
+        <label class="col1">
+          [Roverall &le; 10Ω]:
+        </label>
+        &lsqb;<input v-model="certificate2.table1.overallResistance" class="bg-yellow" type="text">&rsqb;
       </div>
 
       <div class="row col space">
@@ -488,8 +489,7 @@
         </label>
       </div>
       <div class="row col space">
-        <textarea rows="6" class="col90p" v-model="certificate2.table1.generalRemarks">
-        </textarea>
+        <textarea v-model="certificate2.table1.generalRemarks" rows="6" class="col90p" />
       </div>
     </div>
 
@@ -502,9 +502,15 @@
       <table class="table">
         <thead>
           <tr>
-            <th style="width: 15%">Type of Test</th>
-            <th colspan="12">Continuity Test for Down Conductor System [Ohm]</th>
-            <th rowspan="2">Remarks</th>
+            <th style="width: 15%">
+              Type of Test
+            </th>
+            <th colspan="12">
+              Continuity Test for Down Conductor System [Ohm]
+            </th>
+            <th rowspan="2">
+              Remarks
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -513,10 +519,10 @@
               Electrical Continuity Test
             </td>
             <td v-for="index in 12" :key="index">
-              {{index}}
+              {{ index }}
             </td>
             <td>
-              <input type="text" v-model="certificate2.table2.tableRemarks[0]">
+              <input v-model="certificate2.table2.tableRemarks[0]" type="text">
             </td>
           </tr>
 
@@ -525,10 +531,10 @@
               Overall value in Ohm [R &lt; 0.2Ω]
             </td>
             <td v-for="index in 12" :key="index">
-              <input type="text" v-model="certificate2.table1.electricalContinuity[index]">
+              <input v-model="certificate2.table1.electricalContinuity[index]" type="text">
             </td>
             <td>
-              <input type="text" v-model="certificate2.table2.tableRemarks[1]">
+              <input v-model="certificate2.table2.tableRemarks[1]" type="text">
             </td>
           </tr>
         </tbody>
@@ -538,10 +544,10 @@
               Electrical Continuity Test
             </td>
             <td v-for="index in Array(12).fill(1).map( (_, i) => i+13)" :key="index">
-              {{index}}
+              {{ index }}
             </td>
             <td>
-              <input type="text" v-model="certificate2.table2.tableRemarks[2]">
+              <input v-model="certificate2.table2.tableRemarks[2]" type="text">
             </td>
           </tr>
 
@@ -550,10 +556,10 @@
               Overall value in Ohm [R &lt; 0.2Ω]
             </td>
             <td v-for="index in 12" :key="index">
-              <input type="text" v-model="certificate2.table2.electricalContinuity[index]">
+              <input v-model="certificate2.table2.electricalContinuity[index]" type="text">
             </td>
             <td>
-              <input type="text" v-model="certificate2.table2.tableRemarks[3]">
+              <input v-model="certificate2.table2.tableRemarks[3]" type="text">
             </td>
           </tr>
         </tbody>
@@ -568,8 +574,7 @@
         </label>
       </div>
       <div class="row col space">
-        <textarea rows="7" class="col90p" v-model="certificate2.table2.generalRemarks">
-        </textarea>
+        <textarea v-model="certificate2.table2.generalRemarks" rows="7" class="col90p" />
       </div>
 
       <div class="row col space">
@@ -597,15 +602,70 @@
         </label>
       </div>
     </div>
-    <div style="height: 200px"></div>
+    <div style="height: 200px" />
     <div class="row space">
-      &lsqb;<input class="bg-yellow" type="text" v-model="certificate2.engineerNameRegNumber"/>&rsqb;
+      &lsqb;<input v-model="certificate2.engineerNameRegNumber" class="bg-yellow" type="text">&rsqb;
     </div>
     <div class="row space">
-      Signature/Name/PE Registration Number of Professional Engineer 
+      Signature/Name/PE Registration Number of Professional Engineer
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'LightningProtection',
+  data: () => ({
+    certificate1: {
+      // CERTIFICATE OF DESIGN & SUPERVISION OF LIGHTNING PROTECTION SYSTEM
+      projectRefNo: '',
+      address: '',
+      TS_MK_Lot_Plot: '',
+      remarks: '',
+      part1: {
+        remarks: '',
+        engineerAddress: '',
+        engineerNameRegNumber: '',
+        telfNo: '',
+        date: ''
+      },
+      part2: {
+        remarks: '',
+        engineerAddress: '',
+        engineerNameRegNumber: '',
+        telfNo: '',
+        date: ''
+      }
+    },
+    certificate2: {
+      // Earth Resistance & Electrical Continuity Test Form
+      projectRefNo: '',
+      address: '',
+      testDate: '',
+      brandModel1: '',
+      serialNo1: '',
+      calibrated1: '',
+      brandModel2: '',
+      serialNo2: '',
+      calibrated2: '',
+      table1: {
+        pointResistance: [],
+        electricalContinuity: [],
+        tableRemarks: [],
+        overallResistance: '',
+        generalRemarks: ''
+      },
+      table2: {
+        electricalContinuity: [],
+        tableRemarks: [],
+        generalRemarks: ''
+      },
+      engineerNameRegNumber: ''
+    }
+  })
+}
+</script>
+
 
 <style scoped>
 .table {
@@ -762,57 +822,3 @@ input:focus{
   text-decoration: underline;
 }
 </style>
-
-<script>
-  export default {
-    name: 'LightningProtection',
-    data: () => ({
-      certificate1: {
-        // CERTIFICATE OF DESIGN & SUPERVISION OF LIGHTNING PROTECTION SYSTEM
-        projectRefNo: "",
-        address: "",
-        TS_MK_Lot_Plot: "",
-        remarks: "",
-        part1: {
-          remarks: "",
-          engineerAddress: "",
-          engineerNameRegNumber: "",
-          telfNo: "",
-          date: ""
-        },
-        part2: {
-          remarks: "",
-          engineerAddress: "",
-          engineerNameRegNumber: "",
-          telfNo: "",
-          date: ""
-        }
-      },
-      certificate2: {
-        // Earth Resistance & Electrical Continuity Test Form
-        projectRefNo: "",
-        address: "",
-        testDate: "",
-        brandModel1: "",
-        serialNo1: "",
-        calibrated1: "",
-        brandModel2: "",
-        serialNo2: "",
-        calibrated2: "",
-        table1: { 
-          pointResistance: [],
-          electricalContinuity: [],
-          tableRemarks: [],
-          overallResistance: "",
-          generalRemarks: ""
-        },
-        table2: {
-          electricalContinuity: [],
-          tableRemarks: [],
-          generalRemarks: ""
-        },
-        engineerNameRegNumber: ""
-      }
-    })
-  }
-</script>
