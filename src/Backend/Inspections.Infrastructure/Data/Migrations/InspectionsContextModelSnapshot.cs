@@ -425,6 +425,52 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.ToTable("FormDefinition", "Inspections");
                 });
 
+            modelBuilder.Entity("Inspections.Core.Domain.Forms.FormDefinition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<JsonDocument>("DefaultValues")
+                        .HasColumnType("jsonb");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DynamicFields>("Fields")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FormsDefinitions");
+                });
+
             modelBuilder.Entity("Inspections.Core.Domain.Job", b =>
                 {
                     b.Property<int>("id")

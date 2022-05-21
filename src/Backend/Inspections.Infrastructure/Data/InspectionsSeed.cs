@@ -138,7 +138,6 @@ public class InspectionsSeed
                 await context.AddAsync(opt);
             }
 
-
             if (!await context.Team.AnyAsync())
                 {
                     var teams = new List<Team> {

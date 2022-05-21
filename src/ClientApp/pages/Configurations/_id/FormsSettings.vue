@@ -28,16 +28,6 @@
         <v-col>
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-text-field
-              id="txtOrder"
-              v-model.number="form.order"
-              :error-messages="errors"
-              label="Order"
-            />
-          </ValidationProvider>
-        </v-col>
-        <v-col>
-          <ValidationProvider v-slot="{ errors }" rules="required">
-            <v-text-field
               id="txtIcon"
               v-model="form.icon"
               :error-messages="errors"
@@ -63,9 +53,7 @@
         </v-col>
         <v-col cols="1" class="text-right">
           <v-btn small text title="Save" @click="handleSubmit">
-            <v-icon color="success">
-              mdi-content-save
-            </v-icon>
+            <v-icon color="success">mdi-content-save</v-icon>
             Save
           </v-btn>
         </v-col>
@@ -110,14 +98,10 @@
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-btn icon small color="red" @click="removeField(index)">
-                    <v-icon small>
-                      mdi-delete
-                    </v-icon>
+                    <v-icon small>mdi-delete</v-icon>
                   </v-btn>
                   <v-btn icon small color="info" @click="duplicateField(index)">
-                    <v-icon small>
-                      mdi-content-duplicate
-                    </v-icon>
+                    <v-icon small>mdi-content-duplicate</v-icon>
                   </v-btn>
                 </v-list-item-action>
               </v-list-item>
@@ -139,8 +123,7 @@ import {
   computed,
   useFetch,
   useContext,
-  useRouter,
-  watch
+  useRouter
 } from '@nuxtjs/composition-api'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import useGoBack from '~/composables/useGoBack'
@@ -166,7 +149,7 @@ export default defineComponent({
       name: '',
       title: '',
       icon: '',
-      enabled: true,
+      enabled: false,
       fields: {
         fieldsDefinitions: []
       }
@@ -199,12 +182,6 @@ export default defineComponent({
       },
       {
         type: 'text',
-        name: 'switchableSection',
-        label: 'SubSection (Enabled/Disabled)',
-        enabled: true
-      },
-      {
-        type: 'text',
         name: 'fieldName',
         label: 'Field Name',
         enabled: true,
@@ -222,7 +199,6 @@ export default defineComponent({
         options: [
           { value: 'text', label: 'Text input' },
           { value: 'textarea', label: 'Text Area' },
-          { value: 'richtext', label: 'Rich Text Field' },
           { value: 'number', label: 'Numeric Input' },
           { value: 'select', label: 'Select' },
           { value: 'checkbox', label: 'Checkbox' }
@@ -287,7 +263,7 @@ export default defineComponent({
         children: [
           {
             type: 'checkbox',
-            name: 'rollerOnMobile',
+            name: 'isRollerOnMobile',
             label: 'Is Roller On Mobile',
             cols: 1
           },
@@ -309,7 +285,6 @@ export default defineComponent({
     const addField = () => {
       form.value.fields.fieldsDefinitions.unshift({
         sectionTitle: '',
-        switchableSection: '',
         fieldName: '',
         label: '',
         inputType: '',
@@ -323,7 +298,7 @@ export default defineComponent({
         rollerOnMobile: true,
         rollerDigits: 3,
         visible: true,
-        defaultValue: '',
+        defaultValue: 0,
         order: form.value.fields.fieldsDefinitions.length + 1
       })
     }
@@ -334,7 +309,6 @@ export default defineComponent({
 
     const duplicateField = (index) => {
       form.value.fields.fieldsDefinitions.unshift(form.value.fields.fieldsDefinitions[index])
-      selectedListItem.value = 0
     }
 
     const selectedListItem = ref()
@@ -349,27 +323,6 @@ export default defineComponent({
       }
     })
 
-    watch(() => selectedField.value, (value, oldValue) => {
-      if (value && value.inputType === 'select') {
-        const optionsIndex = schema.findIndex(s => s.name === 'selectOptions')
-        const inputTypeIndex = schema.findIndex(s => s.name === 'inputType')
-        if (optionsIndex > -1 && oldValue && oldValue.inputType === 'select') {
-          schema.splice(optionsIndex, 1)
-        } else if (optionsIndex > -1 && oldValue && oldValue.inputType !== 'select') {
-          return
-        }
-
-        schema.splice(inputTypeIndex + 1, 0, {
-          type: 'text',
-          name: 'selectOptions',
-          label: 'Select Options',
-          enabled: true,
-          validation: 'required'
-        })
-      }
-    })
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleSubmit = async (data: any) => {
       const payload: NewFormDefinitionCommand = {
         ...form.value,
@@ -381,23 +334,6 @@ export default defineComponent({
         await $formsApi.addFormDefinition(payload)
         router.back()
       }
-    }
-
-    // creat a function to encode html string
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const htmlEncode = (str) => {
-      let s = ''
-      if (str.length === 0) {
-        return ''
-      }
-      s = str.replace(/&/g, '&amp;')
-      s = s.replace(/</g, '&lt;')
-      s = s.replace(/>/g, '&gt;')
-      s = s.replace(/ /g, '&nbsp;')
-      s = s.replace(/'/g, '&#39;')
-      s = s.replace(/"/g, '&quot;')
-      s = s.replace(/\n/g, '<br>')
-      return s
     }
 
     return {

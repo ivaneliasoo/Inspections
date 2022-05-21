@@ -671,7 +671,7 @@ export default defineComponent({
 
     const { notify } = useNotifications()
     const route = useRoute()
-    const { store, $auth, $axios, $reportsApi } = useContext()
+    const { store, $auth, $axios, $reportsApi, $formsApi } = useContext()
     const id = computed(() => route.value.params.id)
 
     onMounted(() => {

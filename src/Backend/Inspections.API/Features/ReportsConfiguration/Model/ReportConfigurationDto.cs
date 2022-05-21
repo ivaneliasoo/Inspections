@@ -3,7 +3,6 @@ using Inspections.API.Features.Forms;
 using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using JetBrains.Annotations;
-
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Inspections.API.Features.ReportsConfiguration.Model;

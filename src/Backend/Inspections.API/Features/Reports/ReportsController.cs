@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
