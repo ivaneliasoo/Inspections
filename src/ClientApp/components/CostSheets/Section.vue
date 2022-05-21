@@ -106,10 +106,18 @@
         </td>
       </tr>
 
+      <SelectSection v-if="template!==null"
+        :selectSectionDialog="selectSectionDialog"
+        :template="template"
+        @select-section="selectSection"
+        @select-item="selectItem"
+        @close="closeSelectSection">
+      </SelectSection>
+
       <tr v-show=false>
         <v-menu
           v-model="contextMenuVisible"
-          :close-on-content-click="true"
+          :close-on-content-click="false"
           :position-x="xcoord"
           :position-y="ycoord"
           absolute
@@ -127,19 +135,25 @@
               </v-list-item-title>
             </v-list-item>
             <v-divider></v-divider>
-            <v-list-item>
+            <!-- <v-list-item>
               <v-list-item-title @click="addSection('above')">
                 Add section above
               </v-list-item-title>
-            </v-list-item>
+            </v-list-item> -->
             <v-list-item>
               <v-list-item-title @click="addSection('below')">
-                Add section below
+                Add section
               </v-list-item-title>
             </v-list-item>
             <v-list-item>
               <v-list-item-title @click="delSection">
                 Delete section
+              </v-list-item-title>
+            </v-list-item>
+            <v-divider></v-divider>
+            <v-list-item v-if="template!==null">
+              <v-list-item-title @click="addFromTemplate">
+                Select from template
               </v-list-item-title>
             </v-list-item>
           </v-list>
@@ -189,14 +203,18 @@ export default {
   props: {
     section: Object,
     index: Number,
+    template: Object,
     triggerUpdate: Number
   },
   data: () => ({
     selected: null,
+    fromTemplate: false,
     contextMenuVisible: false,
+    selectSectionDialog: false,
     rowIndex: 0,
     xcoord: 0,
-    ycoord: 0
+    ycoord: 0,
+    newSectionPosition: "after"
   }),
   watch: { 
     triggerUpdate(newVal, oldVal) {
@@ -206,31 +224,65 @@ export default {
   methods: {
     showContextMenu(e, index) {
       e.preventDefault();
+      this.fromTemplate = false;
       this.xcoord = e.clientX
       this.ycoord = e.clientY
       this.rowIndex = index;
       this.contextMenuVisible = true;
     },
+    closeContextMenu() {
+      this.contextMenuVisible = false;
+    },
+    openSelectSection() {
+      this.selectSectionDialog = true;
+    },
+    selectSection(newSectionIndex) {
+      this.closeSelectSection();
+      this.$emit('add-section', this.index, this.newSectionPosition, newSectionIndex);
+    },
+    selectItem(newSecIndex, newItemIndex) {
+      this.closeSelectSection();
+      this.insertItem(newSecIndex, newItemIndex);
+    },
+    closeSelectSection() {
+      this.selectSectionDialog = false;
+    },
     addItem() {
-      if (this.rowIndex == this.section.items.length-1) {
-        this.section.items.push(new Item({ 
-          materialMarkup: this.section.materialMarkup
-        }));
+      this.closeContextMenu();
+      this.insertItem(-1, -1);
+    },
+    insertItem(newSecIndex, newItemIndex) {
+      let newItem;
+      if (newItemIndex > -1) {
+        newItem = this.template.sections[newSecIndex].items[newItemIndex];
       } else {
-        this.section.items.splice(this.rowIndex+1, 0, new Item({
-          materialMarkup: this.section.materialMarkup
-        }));
+        newItem = new Item({materialMarkup: this.section.materialMarkup});
       }
+      this.section.items.splice(this.rowIndex+1, 0, newItem);
       this.section.renumberItems();
     },
     delItem() {
+      this.closeContextMenu();
       this.section.items.splice(this.rowIndex, 1);
       this.section.renumberItems();
     },
+    addFromTemplate() {
+      this.closeContextMenu();
+      if (this.template == null) {
+        this.selectSectionDialog = false;
+        return;
+      }
+      this.open
+      this.fromTemplate = true;
+      this.newSectionPosition = 'below';
+      this.openSelectSection();
+    },
     addSection(position) {
-      this.$emit('add-section', this.index, position);
+      this.closeContextMenu();
+      this.$emit('add-section', this.index, position, -1);
     },
     delSection() {
+      this.closeContextMenu();
       this.$emit('del-section', this.index);
     }
   },

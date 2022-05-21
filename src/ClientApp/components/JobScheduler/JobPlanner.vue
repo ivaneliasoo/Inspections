@@ -2385,6 +2385,7 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
         }
 
         this.jobScheduleCount++;
+        this.$forceUpdate();
         this.jobDialog.open = false;
       },
       deleteScheduleEntry() {
@@ -2726,6 +2727,7 @@ import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMo
         schedJob.setLastUpdate();
 
         this.teamMemberDialog.open = false;
+        this.$forceUpdate();
       },      
       editOptions() {
         this.showOptionsDialog = true;
