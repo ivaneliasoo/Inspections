@@ -420,6 +420,8 @@ import pdfDocument from '../../composables/costsheets/pdf_util.js';
 import { Section, Item, CostSheet } 
     from '../../composables/costsheets/entity.js';
 
+pdfMake.vfs = pdfFonts.pdfMake.vfs
+
   export default {
     props: {
       costSheet: Object,
