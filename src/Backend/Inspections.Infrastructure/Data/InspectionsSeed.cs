@@ -139,23 +139,22 @@ public class InspectionsSeed
             }
 
 
-                if (!context.Team.Any())
+            if (!await context.Team.AnyAsync())
                 {
                     var teams = new List<Team> {
-                        new Team { foreman = "Kim", position = 1, teamMembers = "[]", lastUpdate = DateTime.Now },
-                        new Team { foreman = "Gan", position = 2, teamMembers = "[]", lastUpdate = DateTime.Now },
-                        new Team { foreman = "Liton", position = 3, teamMembers = "[]", lastUpdate = DateTime.Now },
-                        new Team { foreman = "Lee", position = 4, teamMembers = "[]", lastUpdate = DateTime.Now },
-                        new Team { foreman = "Hin", position = 5, teamMembers = "[]", lastUpdate = DateTime.Now },
-                        new Team { foreman = "Boomi", position = 6, teamMembers = "[]", lastUpdate = DateTime.Now },
-                        new Team { foreman = "Mani", position = 7, teamMembers = "[]", lastUpdate = DateTime.Now },
-                        new Team { foreman = "Hui", position = 8, teamMembers = "[]", lastUpdate = DateTime.Now },
-                        new Team { foreman = "Store", position = 100, teamMembers = "[]", lastUpdate = DateTime.Now },
-                        new Team { foreman = "On leave", position = 101, teamMembers = "[]", lastUpdate = DateTime.Now }
-                    };
-                    context.AddRange(teams);
-                }
-          
+                    new Team { foreman = "Kim", position = 1, teamMembers = "[]", lastUpdate = DateTime.Now },
+                    new Team { foreman = "Gan", position = 2, teamMembers = "[]", lastUpdate = DateTime.Now },
+                    new Team { foreman = "Liton", position = 3, teamMembers = "[]", lastUpdate = DateTime.Now },
+                    new Team { foreman = "Lee", position = 4, teamMembers = "[]", lastUpdate = DateTime.Now },
+                    new Team { foreman = "Hin", position = 5, teamMembers = "[]", lastUpdate = DateTime.Now },
+                    new Team { foreman = "Boomi", position = 6, teamMembers = "[]", lastUpdate = DateTime.Now },
+                    new Team { foreman = "Mani", position = 7, teamMembers = "[]", lastUpdate = DateTime.Now },
+                    new Team { foreman = "Hui", position = 8, teamMembers = "[]", lastUpdate = DateTime.Now },
+                    new Team { foreman = "Store", position = 100, teamMembers = "[]", lastUpdate = DateTime.Now },
+                    new Team { foreman = "On leave", position = 101, teamMembers = "[]", lastUpdate = DateTime.Now }
+                };
+                await context.AddRangeAsync(teams);
+            }
             await context.SaveChangesAsync();
         }
         catch (Exception ex)
