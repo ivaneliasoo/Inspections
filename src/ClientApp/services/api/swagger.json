@@ -1082,7 +1082,7 @@
         }
       }
     },
-    "/api/CostSheet": {
+    "/api/CostSheet/sheet": {
       "get": {
         "tags": [
           "CostSheet"
@@ -1140,9 +1140,6 @@
                 }
               }
             }
-          },
-          "200": {
-            "description": "Success"
           }
         }
       },
@@ -1193,14 +1190,11 @@
                 }
               }
             }
-          },
-          "200": {
-            "description": "Success"
           }
         }
       }
     },
-    "/api/CostSheet/{id}": {
+    "/api/CostSheet/sheet/{id}": {
       "get": {
         "tags": [
           "CostSheet"
@@ -1236,9 +1230,52 @@
                 }
               }
             }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CostSheet"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/CostSheet/template": {
+      "get": {
+        "tags": [
+          "CostSheet"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CostSheet"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
           },
-          "404": {
-            "description": "Not Found",
+          "400": {
+            "description": "Bad Request",
             "content": {
               "text/plain": {
                 "schema": {
@@ -1279,27 +1316,16 @@
           }
         }
       },
-      "delete": {
+      "put": {
         "tags": [
           "CostSheet"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
         ],
         "responses": {
           "204": {
             "description": "Success"
           },
-          "404": {
-            "description": "Not Found",
+          "400": {
+            "description": "Bad Request",
             "content": {
               "text/plain": {
                 "schema": {
@@ -1337,6 +1363,67 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/CostSheet/template/{id}": {
+      "get": {
+        "tags": [
+          "CostSheet"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CSTemplate"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CSTemplate"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CSTemplate"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CostSheet"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -2190,26 +2277,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormDefinitionResponse"
-                  }
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormDefinitionResponse"
-                  }
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormDefinitionResponse"
-                  }
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -2255,48 +2333,48 @@
           "204": {
             "description": "Success"
           },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
           "400": {
             "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
             "content": {
               "text/plain": {
                 "schema": {
@@ -2408,9 +2486,6 @@
                 }
               }
             }
-          },
-          "204": {
-            "description": "Success"
           }
         }
       },
@@ -2530,139 +2605,6 @@
                 "items": {
                   "$ref": "#/components/schemas/Job"
                 }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/JobSchedule/team": {
-      "put": {
-        "tags": [
-          "JobSchedule"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Team"
-                }
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Team"
-                }
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Team"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/JobSchedule/options": {
-      "put": {
-        "tags": [
-          "JobSchedule"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Options"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Options"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Options"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Success"
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/SchedJob"
-                }
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/SchedJob"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/PrintSection": {
-      "post": {
-        "tags": [
-          "PrintSection"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddPrintSectionCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddPrintSectionCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddPrintSectionCommand"
               }
             }
           }
@@ -3607,8 +3549,7 @@
             "name": "filter",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           },
           {
@@ -3766,37 +3707,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "closed",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "myReports",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "default": "date"
-            }
-          },
-          {
-            "name": "descending",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
           }
         ],
         "responses": {
@@ -3861,7 +3771,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Success"
           },
           "400": {
@@ -3966,6 +3876,9 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "Success"
           }
         }
       },
@@ -5748,6 +5661,10 @@
           "printSectionId": {
             "type": "integer",
             "format": "int32"
+          },
+          "templateName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5789,7 +5706,8 @@
           },
           "licenseId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "license": {
             "$ref": "#/components/schemas/EMALicense"
@@ -5826,7 +5744,8 @@
           },
           "licenseId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "number": {
             "type": "string",
@@ -5904,6 +5823,10 @@
           "order": {
             "type": "integer",
             "format": "int32"
+          },
+          "signature": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5932,11 +5855,10 @@
       },
       "CheckListDisplay": {
         "enum": [
-          0,
-          1
+          "Numbered",
+          "Inline"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "CheckListItemDTO": {
         "type": "object",
@@ -6069,6 +5991,9 @@
             "type": "string",
             "nullable": true
           },
+          "isTemplate": {
+            "type": "boolean"
+          },
           "dateCreated": {
             "type": "string",
             "format": "date-time",
@@ -6125,6 +6050,71 @@
           },
           "reportType": {
             "$ref": "#/components/schemas/ReportType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CSTemplate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "project": {
+            "type": "string",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "isTemplate": {
+            "type": "boolean"
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "materialMarkup": {
+            "type": "number",
+            "format": "double"
+          },
+          "labourDailyRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "labourNightMultiplier": {
+            "type": "number",
+            "format": "double"
+          },
+          "finalMarkup": {
+            "type": "number",
+            "format": "double"
+          },
+          "sections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Section"
+            },
+            "nullable": true
+          },
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updated": {
+            "type": "boolean"
+          },
+          "lastEdit": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastEditUser": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -6188,11 +6178,19 @@
             "type": "string",
             "nullable": true
           },
+          "switchableSection": {
+            "type": "string",
+            "nullable": true
+          },
           "label": {
             "type": "string",
             "nullable": true
           },
           "inputType": {
+            "type": "string",
+            "nullable": true
+          },
+          "selectOptions": {
             "type": "string",
             "nullable": true
           },
@@ -6234,8 +6232,7 @@
             "type": "boolean"
           },
           "defaultValue": {
-            "type": "integer",
-            "format": "int32"
+            "nullable": true
           },
           "order": {
             "type": "integer",
@@ -6452,6 +6449,10 @@
           },
           "enabled": {
             "type": "boolean"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -6664,38 +6665,32 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32",
-            "readOnly": true
+            "format": "int32"
           },
           "addressLine": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "addressLine2": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "unit": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "country": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "postalCode": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "licenseId": {
             "type": "integer",
             "format": "int32",
-            "readOnly": true
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -6715,6 +6710,10 @@
             "type": "string",
             "nullable": true
           },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
           "fields": {
             "$ref": "#/components/schemas/DynamicFields"
           },
@@ -6723,6 +6722,10 @@
           },
           "enabled": {
             "type": "boolean"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
           },
           "reports": {
             "type": "array",
@@ -6746,134 +6749,23 @@
       "NoteQueryResult": {
         "type": "object",
         "properties": {
-          "username": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "NewAddressDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "addressLine": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "addressLine2": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "unit": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "country": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "postalCode": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "licenseId": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "NewFormDefinitionCommand": {
-        "type": "object",
-        "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "name": {
+          "reportId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
             "type": "string",
             "nullable": true
           },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "icon": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "fields": {
-            "$ref": "#/components/schemas/DynamicFields"
-          },
-          "defaultValues": {
-            "nullable": true
-          },
-          "enabled": {
+          "checked": {
             "type": "boolean"
           },
-          "reports": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "nullable": true
-          },
-          "reportConfigurations": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "PrintSectionDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "code": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "content": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "isMainReport": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "status": {
-            "$ref": "#/components/schemas/PrintSectionStatus"
+          "needsCheck": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -6943,11 +6835,10 @@
       },
       "PrintSectionStatus": {
         "enum": [
-          0,
-          1
+          "Inactive",
+          "Active"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "ProblemDetails": {
         "type": "object",
@@ -7041,6 +6932,9 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
+          },
+          "display": {
+            "$ref": "#/components/schemas/CheckListDisplay"
           }
         },
         "additionalProperties": false
@@ -7142,21 +7036,19 @@
       },
       "ReportType": {
         "enum": [
-          0
+          "Inspection"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "ResponsibleType": {
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4
+          "Supervisor",
+          "Inspector",
+          "Witness",
+          "LEW",
+          "Other"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "ResumenReportConfiguration": {
         "type": "object",
