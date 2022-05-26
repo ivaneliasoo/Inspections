@@ -64,7 +64,6 @@ namespace Inspections.API.Features.CostSheets
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> InsertCostSheet()
         {
             if (!this.Request.Body.CanSeek)
@@ -98,7 +97,6 @@ namespace Inspections.API.Features.CostSheets
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateCostSheet()
         {
             if (!this.Request.Body.CanSeek)

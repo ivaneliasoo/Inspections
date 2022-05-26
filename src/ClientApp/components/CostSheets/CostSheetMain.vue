@@ -39,6 +39,7 @@
     <SelectTemplate
       :selectTemplateDialog="selectTemplateDialog"
       :templates="templates"
+      :costSheetVisible="costSheetVisible"
       :action="selectTemplateAction"
       @select-template="openTemplate"
       @close="closeSelectTemplate">
@@ -94,6 +95,24 @@ html {
   import { Section, Item, CostSheet } 
     from '../../composables/costsheets/entity.js';
 
+  // https://stackoverflow.com/questions/51086688/mutex-in-javascript-does-this-look-like-a-correct-implementation
+  function Mutex() {
+    let current = Promise.resolve();
+    this.lock = () => {
+        let _resolve;
+        const p = new Promise(resolve => {
+            _resolve = () => resolve();
+        });
+        // Caller gets a promise that resolves when the current outstanding
+        // lock resolves
+        const rv = current.then(() => _resolve);
+        // Don't allow the next request until the new promise is done
+        current = p;
+        // Return the new promise
+        return rv;
+    };
+  }
+
   export default {
     name: 'CostSheetMain',
     data: () => ({
@@ -109,6 +128,7 @@ html {
       deleteIndex: null,
       selectedSheet: new CostSheet(),
       selectedTemplate: null,
+      mutex: new Mutex(),
       newSheetDefaults: {
         id: 0,
         project: "",
@@ -254,25 +274,27 @@ html {
         });
       },
       saveCostSheet(sheet) {
-        console.log("Before");
-        sheet.sections.forEach( (s) => console.log( s.secNumber, ", ", s.description ));
-        var self = this;
-        this.$axios({
-          url: self.endpoint("sheet"),
-          method: "PUT",
-          data: sheet,
-          crossDomain: true,
-          responseType: 'json',
-          transformResponse: this.parseResponse
-        })
-        .then(function (response) {
-          console.log("Cost sheet updated");
-          response.data.sections.forEach( (s) => console.log( s.secNumber, ", ", s.description ));
-        })
-        .catch(function (error) {
-          console.log(error);
-          self.showMessage("There was a server error when saving the cost sheet");
-        });
+        (async () => {
+          var unlock = await this.mutex.lock();
+          var self = this;
+          this.$axios({
+            url: self.endpoint("sheet"),
+            method: "PUT",
+            data: sheet,
+            crossDomain: true,
+            responseType: 'json',
+            transformResponse: this.parseResponse
+          })
+          .then(function (response) {
+            //console.log("Cost sheet updated");
+            unlock();
+          })
+          .catch(function (error) {
+            console.log(error);
+            unlock();
+            self.showMessage("There was a server error when saving the cost sheet");
+          });
+        })();
       },
       saveSheet(sheet) {
         if (sheet.isTemplate) {
@@ -326,7 +348,7 @@ html {
       goBack() {
         this.costSheetVisible = false;
         if (this.currentPanel === "costSheetTable") {
-          console.log("currentPanel", this.currentPanel);
+          //console.log("currentPanel", this.currentPanel);
           this.getCostSheets(true);
         } else {
           this.getTemplates(true);
@@ -383,21 +405,26 @@ html {
       },
       saveTemplate(template) {
         var self = this;
-        this.$axios({
-          url: self.endpoint("template"),
-          method: "PUT",
-          data: template,
-          crossDomain: true,
-          responseType: 'json',
-          transformResponse: this.parseResponse
-        })
-        .then(function (response) {
-          console.log("Template updated");
-        })
-        .catch(function (error) {
-          console.log(error);
-          self.showMessage("There was a server error when saving the template");
-        });
+        (async () => {
+          var unlock = await this.mutex.lock();        
+          this.$axios({
+            url: self.endpoint("template"),
+            method: "PUT",
+            data: template,
+            crossDomain: true,
+            responseType: 'json',
+            transformResponse: this.parseResponse
+          })
+          .then(function (response) {
+            // console.log("Template updated");
+            unlock();
+          })
+          .catch(function (error) {
+            unlock();
+            console.log(error);
+            self.showMessage("There was a server error when saving the template");
+          });
+        })();
       },
       openTemplate(index, action) {
         console.log("openTemplate", index, action)

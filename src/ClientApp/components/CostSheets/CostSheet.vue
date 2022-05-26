@@ -1,6 +1,6 @@
 <template>
   <div id="costsheet-container">
-    <v-container v-show="costSheetVisible" class="my-n8 py-n8 mx-4 px-0 fill-height">
+    <v-container class="my-n8 py-n8 mx-4 px-0 fill-height">
       <v-row>
         <v-col class="mt-n4 pt-n4 mb-n3 pb-n3 text-left" cols="1">
           &nbsp;&nbsp;
@@ -420,6 +420,8 @@ import pdfDocument from '../../composables/costsheets/pdf_util.js';
 import { Section, Item, CostSheet } 
     from '../../composables/costsheets/entity.js';
 
+  pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
   export default {
     props: {
       costSheet: Object,
@@ -428,7 +430,6 @@ import { Section, Item, CostSheet }
     },
     data: () => ({
       version: 'v0.101',
-      costSheetVisible: true,
       selectSectionDialog: false,
       contextMenu: {
         visible: false,
@@ -458,7 +459,7 @@ import { Section, Item, CostSheet }
     },
     mounted() {
       this.timer = setInterval(this.saveSheet, 120 * 1000);
-      //console.log("Auto save started");
+      // console.log("Auto save started");
     },
     methods: {
       showContextMenu(e, index) {
@@ -483,6 +484,7 @@ import { Section, Item, CostSheet }
         clearInterval(this.timer);
         this.timer = null;
         this.$emit('go-back');
+        // console.log("Auto save stopped");
       },
       openSelectSection() {
         this.selectSectionDialog = true;
