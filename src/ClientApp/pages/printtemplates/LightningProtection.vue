@@ -666,7 +666,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .table {
   width: 100%;

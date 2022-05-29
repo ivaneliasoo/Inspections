@@ -41,13 +41,14 @@
           >Date & Time of Inspection: {{ formatedDate }}</span>
         </div>
         <PrintingReportsCheckLists
-          v-if="reportData.checkLists && configuration.checkListMetadata.display === 0"
+          v-if="reportData.checkLists && configuration.checkListMetadata.display === 'Numbered'"
           :check-lists="reportData.checkLists"
         />
-        <div v-if="reportData.checkLists && configuration.checkListMetadata.display === 1">
+        <div v-if="reportData.checkLists && configuration.checkListMetadata.display === 'Inline'">
           {{ reportData.checkLists.map(c => c.text) }}
         </div>
         <PrintingReportsOperationalReadings
+          v-if="operationalReadings"
           :readings="operationalReadings"
           :last-checks-count="lastChecksCount"
         />

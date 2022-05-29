@@ -1,11 +1,7 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Linq;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using Amazon.S3;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Users.Services;
@@ -19,14 +15,7 @@ using Inspections.Infrastructure.Queries;
 using Inspections.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -188,9 +177,7 @@ namespace Inspections.API
                 c.RoutePrefix = string.Empty;
             });
 
-
             app.UseRouting();
-
 
             app.UseExceptionsMiddleware();
 
@@ -217,16 +204,15 @@ namespace Inspections.API
         }
 
         private static bool ValidUserToken(TokenValidatedContext context, IServiceCollection services)
-
         {
             bool result = false;
 
-            var _userName = context.Principal?.Identity?.Name;
+            var userName = context.Principal?.Identity?.Name;
 
-            if (!string.IsNullOrWhiteSpace(_userName))
+            if (!string.IsNullOrWhiteSpace(userName))
             {
                 InspectionsContext usersRepo = services.BuildServiceProvider().GetRequiredService<InspectionsContext>();
-                var savedUser = usersRepo.Users.Where(u => u.UserName == _userName).FirstOrDefault();
+                var savedUser = usersRepo.Users.FirstOrDefault(u => u.UserName == userName);
                 if (savedUser != null)
                 {
                     result = true;
