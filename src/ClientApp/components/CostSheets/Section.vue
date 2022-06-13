@@ -10,7 +10,7 @@
         </td>
         <td class="col-group-2" colspan="4">
           <input 
-            class="text-caption table-input"
+            class="text-caption font-weight-bold table-input"
             type="text"
             v-model="section.description"
           />
@@ -19,7 +19,7 @@
         </td>
         <td class="col-group-1">
           <NumberField
-            v-model="section.materialMarkup" format="percent" @change="$emit('update-sheet')">
+            v-model="section.materialMarkup" format="percent" @change="updateMaterialMarkup">
           </NumberField>
         </td>
         <td class="col-group-2">
@@ -284,6 +284,10 @@ export default {
     delSection() {
       this.closeContextMenu();
       this.$emit('del-section', this.index);
+    },
+    updateMaterialMarkup() {
+      this.section.updateMaterialMarkup();
+      this.$emit('update-sheet')
     }
   },
 };

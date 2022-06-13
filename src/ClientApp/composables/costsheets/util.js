@@ -7,7 +7,7 @@ export function endpoint(p) {
 }
 
 export function fmt(value, decimals, fmt) {
-    value = value.toFixed(decimals);
+    value = Number(value).toFixed(decimals);
     if (!fmt) {
         return value;
     }

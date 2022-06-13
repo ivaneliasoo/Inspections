@@ -107,6 +107,16 @@ export class Section {
         }
     }
 
+    updateMaterialMarkup() {
+        const materialMarkup = this.materialMarkup;
+        const items = this.items;
+        if (items) {
+            for (const item of items) {
+                item.materialMarkup = materialMarkup;
+            }
+        }
+    }
+
     renumberItems() {
         const items = this.items;
         if (items) {
@@ -145,7 +155,9 @@ export class CostSheet {
     labourDailyRate;
     labourNightMultiplier;
     finalMarkup;
+    finalOverallMarkup;
     sections;
+    options;
     lastUpdate;
     updated;
 
@@ -159,6 +171,11 @@ export class CostSheet {
         this.labourDailyRate = 0;
         this.labourNightMultiplier = 0;
         this.finalMarkup = 0;
+        this.finalOverallMarkup = 0;
+        this.options = {
+            numberAlignment: 'center',
+            textAlignment: 'left'
+        }
 
         this.lastUpdate = null;
         this.updated = false;
@@ -167,6 +184,13 @@ export class CostSheet {
             const props = Object.getOwnPropertyNames(cs);
             for (const prop of props) {
                 this[prop] = cs[prop];
+            }
+        }
+
+        if (this.options === null) {
+            this.options = {
+                numberAlignment: 'center',
+                textAlignment: 'left'
             }
         }
 
@@ -193,9 +217,32 @@ export class CostSheet {
             labourDailyRate: parseFloat(this.labourDailyRate),
             labourNightMultiplier: parseFloat(this.labourNightMultiplier),
             finalMarkup: parseFloat(this.finalMarkup),
+            finalOverallMarkup: parseFloat(this.finalOverallMarkup),
             sections: this.sections,
+            options: this.options,
             lastUpdate: this.lastUpdate,
             updated: this.updated
+        }
+    }
+
+    updateMaterialMarkup() {
+        const materialMarkup = this.materialMarkup;
+        const sections = this.sections;
+        if (sections) {
+            for (const section of sections) {
+                section.materialMarkup = materialMarkup;
+                section.updateMaterialMarkup();
+            }
+        }
+    }
+
+    updateFinalMarkup() {
+        const finalMarkup = this.finalMarkup;
+        const sections = this.sections;
+        if (sections) {
+            for (const section of sections) {
+                section.finalMarkup = finalMarkup;
+            }
         }
     }
 
@@ -217,19 +264,16 @@ export class CostSheet {
     toQuotePrice() {
         // const x = this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0;
         // return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
-        return this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0;
+        const sum = this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0;
+        const finalMarkup = parseFloat(this.finalMarkup);
+        return sum * (1 + finalMarkup/100);
     }
-
-    // toQuotePriceRound5() {
-    //     let x = this.toQuotePrice();
-    //     return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
-    // }
 
     totalSales(delta) {
         if (!delta) {
             return this.toQuotePrice();
         }
-        const finalMarkup = parseFloat(this.finalMarkup);
+        const finalMarkup = parseFloat(this.finalOverallMarkup);
         return this.toQuotePrice() * (1+(finalMarkup+delta)/100) / (1+finalMarkup/100)
     }
 

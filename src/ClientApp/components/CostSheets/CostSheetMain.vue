@@ -29,6 +29,7 @@
           @go-back="goBack"
           @save-sheet="saveSheet"
           @open-select-template="openSelectTemplate"
+          @re-render="renderSheet"
           :costSheet="selectedSheet"
           :template="selectedTemplate"
           :triggerUpdate="updateSheet">
@@ -92,6 +93,7 @@ html {
 </style>
 
 <script>
+  import Vue from 'vue';
   import { Section, Item, CostSheet } 
     from '../../composables/costsheets/entity.js';
 
@@ -168,6 +170,13 @@ html {
         const param = p ? "/" + p : ""
         //return `http://localhost:5000/api/costsheet${param}`
         return `/costsheet/${resource}${param}`;
+      },
+      renderSheet() {
+        Vue.prototype.$numberAlignment = this.selectedSheet.options.numberAlignment;
+        this.costSheetVisible = false;
+        this.$nextTick(() => {
+          this.costSheetVisible = true;
+        });
       },
       showCostSheets() {
         this.templateTable = false;
@@ -255,9 +264,10 @@ html {
         this.selectedTemplate = null;
         this.costSheetTable = false;
         this.templateTable = false;
-        this.costSheetVisible = true;
+        // this.costSheetVisible = true;
         this.currentPanel = "costSheetTable";
-        this.updateSheet++;
+        // this.updateSheet++;
+        this.renderSheet();
       },
       editCostSheet(index) {
         this.$axios({
@@ -268,6 +278,7 @@ html {
           transformResponse: this.parseResponse
         }).then(response => {
           this.selectedSheet = new CostSheet(response.data);
+          console.log("selectedSheet.options", this.selectedSheet.options);
           this.showCostSheet();
         }).catch(function (error) {
           console.log(error);
@@ -286,7 +297,8 @@ html {
             transformResponse: this.parseResponse
           })
           .then(function (response) {
-            //console.log("Cost sheet updated");
+            self.selectedSheet = new CostSheet(response.data);
+            self.renderSheet();
             unlock();
           })
           .catch(function (error) {
@@ -401,6 +413,14 @@ html {
       },
       loadTemplate(template) {
         this.selectedTemplate = new CostSheet(template);
+        const newSheet = this.selectedSheet;
+
+        newSheet.materialMarkup = template.materialMarkup;
+        newSheet.labourDailyRate = template.labourDailyRate;
+        newSheet.labourNightMultiplier = template.labourNightMultiplier;
+        newSheet.finalMarkup = template.finalMarkup;
+        newSheet.sections = template.sections;
+
         this.closeSelectTemplate();
       },
       saveTemplate(template) {
@@ -417,6 +437,8 @@ html {
           })
           .then(function (response) {
             // console.log("Template updated");
+            self.selectedSheet = new CostSheet(response.data);
+            self.renderSheet();
             unlock();
           })
           .catch(function (error) {

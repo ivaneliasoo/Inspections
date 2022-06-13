@@ -2,8 +2,7 @@
   <div id="costsheet-container">
     <v-container class="my-n8 py-n8 mx-4 px-0 fill-height">
       <v-row>
-        <v-col class="mt-n4 pt-n4 mb-n3 pb-n3 text-left" cols="1">
-          &nbsp;&nbsp;
+        <v-col class="mt-n4 pt-n4 mb-n3 pb-n3 text-center" cols="1">
           <v-btn icon small @click="goBack">
             <v-icon>
               mdi-arrow-left
@@ -38,7 +37,46 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="mt-0 pt-0 mb-n5 pb-n5 text-left" cols="1">
+        <v-col class="mt-0 pt-0 mb-n5 pb-n5 text-center" cols="1">
+          <v-menu right bottom fixed>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon x-small
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-menu</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-subheader>Number Alignment</v-subheader>
+              <v-list-item-group
+                multiple
+                active-class=""
+              >
+                <v-list-item dense>
+                  <v-radio-group
+                    dense
+                    column
+                    v-model="costSheet.options.numberAlignment"
+                    @change="changeAlignment"
+                  >
+                    <v-radio
+                      label="Left"
+                      value="left"
+                    ></v-radio>
+                    <v-radio
+                      label="Center"
+                      value="center"
+                    ></v-radio>
+                    <v-radio
+                      label="Right"
+                      value="right"
+                    ></v-radio>
+                  </v-radio-group>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-menu>
         </v-col>
         <v-col v-if="!costSheet.isTemplate" class="mt-0 pt-0 mb-n5 pb-n5 text-left text-body" cols="1">
           Location:
@@ -115,7 +153,7 @@
                         <th colspan="4" class="title-3"></th>
                         <th class="text-caption font-weight-bold title-4">
                           <NumberField
-                            v-model="costSheet.materialMarkup" format="percent" @change="updateSheet">
+                            v-model="costSheet.materialMarkup" format="percent" @change="updateMaterialMarkup">
                           </NumberField>
                         </th>
 
@@ -126,7 +164,7 @@
                         <th class="text-caption font-weight-bold title-3"></th>
                         <th class="text-caption font-weight-bold title-3">
                           <NumberField
-                            v-model="costSheet.finalMarkup" format="percent" @change="updateSheet">
+                            v-model="costSheet.finalMarkup" format="percent" @change="updateFinalMarkup">
                           </NumberField>                            
                         </th>
                         <th class="text-caption font-weight-bold title-4"></th>
@@ -150,7 +188,7 @@
                     </td>
                     <td class="title-3">
                       <NumberField
-                        :value="costSheet.materialCost()" format="currency" :readOnly="true">
+                        :value="costSheet.materialCost()" format="currency"  :readOnly="true">
                       </NumberField>
                     </td>
                     <td colspan="2" class="text-right title-3">
@@ -196,7 +234,20 @@
                     </td>
                     <td class="text-caption font-weight-bold title-7 cs-section" style="background-color: #d1eee1;">
                       <NumberField
-                        v-model="costSheet.materialMarkup" format="percent" @change="updateSheet">
+                        v-model="costSheet.materialMarkup" format="percent" @change="updateMaterialMarkup">
+                      </NumberField>              
+                    </td>
+                    <td colspan="9" class="title-7">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="title-7"></td>
+                    <td colspan="2" class="text-body-2 text-left title-7">
+                      Set Final Mark Up:
+                    </td>
+                    <td class="text-caption font-weight-bold title-7 cs-section" style="background-color: #d1eee1;">
+                      <NumberField
+                        v-model="costSheet.finalMarkup" format="percent" @change="updateFinalMarkup">
                       </NumberField>              
                     </td>
                     <td colspan="9" class="title-7">
@@ -235,7 +286,7 @@
                     </td>
                     <td class="text-caption font-weight-bold title-7 cs-section" style="background-color: #d1eee1;">
                       <NumberField
-                        v-model="costSheet.finalMarkup" format="percent" @change="updateSheet">
+                        v-model="costSheet.finalOverallMarkup" format="percent" @change="updateSheet">
                       </NumberField>                            
                     </td>
                     <td colspan="9" class="title-7">
@@ -458,10 +509,15 @@ import { Section, Item, CostSheet }
       }
     },
     mounted() {
+      console.log("mounted", this.costSheet.options.numberAlignment);
+      // Vue.prototype.$numberAlignment = this.costSheet.options.numberAlignment;
       this.timer = setInterval(this.saveSheet, 120 * 1000);
-      // console.log("Auto save started");
     },
     methods: {
+      changeAlignment() {
+        //Vue.prototype.$numberAlignment = this.costSheet.options.numberAlignment;
+        this.$emit('re-render');
+      },
       showContextMenu(e, index) {
         e.preventDefault();
         this.contextMenu.xcoord = e.clientX
@@ -515,6 +571,14 @@ import { Section, Item, CostSheet }
         this.costSheet.renumberSections();
         this.costSheet.updated = true;
         this.$forceUpdate();
+      },
+      updateMaterialMarkup() {
+        this.costSheet.updateMaterialMarkup();
+        this.updateSheet();
+      },
+      updateFinalMarkup() {
+        this.costSheet.updateFinalMarkup();
+        this.updateSheet();
       },
       updateSheet() {
         this.costSheet.updated = true;
