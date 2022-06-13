@@ -24,30 +24,90 @@
       </v-row>
       <v-row>
         <v-col cols="12">
-            <div style="height: 80vh; width: 800px; overflow-y: auto;">
+            <div style="width: 800px; overflow-y: scroll;" class="invisible-scrollbar">
+                <table
+                    class="search-box"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                            <td style="width: 34%;" class="search-box">
+                                <searchField
+                                    :data="costSheets"
+                                    fieldName="project"
+                                    placeHolder="Search project"
+                                    :size=20
+                                    :compareFunc="compareFunc"
+                                    @scroll_to="scrollTo">
+                                </searchField>
+                            </td>
+                            <td style="width: 34%;" class="search-box">
+                                <searchField
+                                    :data="costSheets"
+                                    fieldName="location"
+                                    placeHolder="Search location"
+                                    :size=20
+                                    :compareFunc="compareFunc"
+                                    @scroll_to="scrollTo">
+                                </searchField>
+                            </td>
+                            <td style="width: 32%;" class="search-box">
+                                <searchField
+                                    :data="costSheets"
+                                    fieldName="dateCreated"
+                                    placeHolder="Search date"
+                                    :size=12
+                                    :compareFunc="compareFunc"
+                                    @scroll_to="scrollTo">
+                                </searchField>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="width: 800px; overflow-y: scroll;"  class="invisible-scrollbar">
+                <table width="100%">
+                    <tbody>
+                        <tr class="table-header">
+                            <td class="font-weight-bold text-center header-row" style="width:34%;"
+                                title="Click to sort by project"
+                                @click="sortByName" >
+                                Project
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:34%;"
+                                title="Click to sort by location"
+                                @click="sortByLocation" >
+                                Location
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:20%;"
+                                title="Click to sort by date"
+                                @click="sortByDate" >
+                                Date created
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:12%;"
+                                title="Click for original sort order"
+                                @click="sortById">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="height: 75vh; width: 800px; overflow-y: scroll;">
                 <table
                 id="cost-sheets"
                 class="costsheet-table">
-                    <thead>
-                        <tr>
-                            <th class="font-weight-bold" style="width:34%;">Project</th>
-                            <th class="font-weight-bold" style="width:34%;">Location</th>
-                            <th class="font-weight-bold" style="width:20%;">Date created</th>
-                            <th class="font-weight-bold" style="width:12%;">Actions</th>
-                        </tr>
-                    </thead>
                     <tbody>
                     <tr v-for="(sheet, index) in costSheets" :key="index" style="height: 0px;">
-                        <td class="text-caption text-left" style="width:34%;">
+                        <td class="text-caption text-left table-row" style="width:34%;">
                         {{sheet.project}}
                         </td>
-                        <td class="text-caption text-left" style="width:34%;">
+                        <td class="text-caption text-left table-row" style="width:34%;">
                         {{sheet.location}}
                         </td>
-                        <td class="text-caption text-center" style="width:20%;">
+                        <td class="text-caption text-center table-row" style="width:20%;">
                         {{sheet.dateCreated}}
                         </td>
-                        <td class="text-caption text-center" style="width:12%;">
+                        <td class="text-caption text-center table-row" style="width:12%;">
                         <v-btn icon small @click="editCostSheet(index)">
                             <v-icon>
                             mdi-pencil
@@ -75,11 +135,37 @@ html {
 
 .costsheet-table, td, th {
   width: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .costsheet-table td, .costsheet-table th {
   padding: 5px 5px 5px 5px;
+}
+
+.search-box {
+  border: 1px solid lightgray;
+}
+
+.table-row {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 5px 5px 5px 5px;
+}
+
+.table-header {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.header-row {
+  border-right: 1px solid black;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+  color: white;
 }
 </style>
 
@@ -93,6 +179,10 @@ html {
       costSheets: Array,
       triggerUpdate: Number
     },
+    data: () => ({
+        sortField: "none",
+        compareFunc: "includes"
+    }),
     methods: {
       showCostSheets() {
         this.$emit('show-cost-sheets');
@@ -111,6 +201,67 @@ html {
       },
       deleteCostSheet(index) {
         this.$emit('delete-sheet', index);
+      },
+
+      sortById() {
+          this.costSheets.sort((t1, t2) => t1.id - t2.id);
+      },
+      sortByName() {
+          this.sortField = "name";
+          // this.compareFunc = "startsWith";
+          this.costSheets.sort((t1, t2) => {
+              if (t1.project < t2.project) {
+                  return -1;
+              } else if (t1.project > t2.project) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          });
+      },
+      sortByLocation() {
+          this.sortField = "location";
+          this.costSheets.sort((t1, t2) => {
+              if (t1.location < t2.location) {
+                  return -1;
+              } else if (t1.location > t2.location) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          });
+      },
+      toIsoDate(date) {
+          const a = date.split("/");
+          return a[2]+'-'+a[1]+'-'+a[0];
+      },
+      sortByDate() {
+          this.sortField = "date";
+          // this.compareFunc = "startsWith";
+          this.costSheets.sort((t1, t2) => {
+              const d1 = this.toIsoDate(t1.dateCreated);
+              const d2 = this.toIsoDate(t2.dateCreated);
+              if (d1 < d2) {
+                  return -1;
+              } else if (d1 > d2) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          });
+      },
+      scrollTo(line) {
+          var rows = document.querySelectorAll('#cost-sheets tr');
+          const row = rows[line];
+          row.scrollIntoView({
+              behavior: 'auto',
+              block: 'start'
+          });
+          if (this.curRow) {
+              this.curRow.style.background = "white";
+          }
+          row.style.background = "lightgrey";
+          this.curRow = row;
       }
     }
   }

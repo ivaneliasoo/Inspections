@@ -6,6 +6,7 @@ using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -14,9 +15,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    partial class InspectionsContextModelSnapshot : ModelSnapshot
+    [Migration("20220608140630_add_costsheet_options_field")]
+    partial class add_costsheet_options_field
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -201,9 +203,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<double>("finalMarkup")
                         .HasColumnType("double precision");
 
-                    b.Property<double>("finalOverallMarkup")
-                        .HasColumnType("double precision");
-
                     b.Property<bool>("isTemplate")
                         .HasColumnType("boolean");
 
@@ -261,9 +260,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<double>("finalMarkup")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("finalOverallMarkup")
                         .HasColumnType("double precision");
 
                     b.Property<bool>("isTemplate")
@@ -435,52 +431,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FormDefinition", "Inspections");
-                });
-
-            modelBuilder.Entity("Inspections.Core.Domain.Forms.FormDefinition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<JsonDocument>("DefaultValues")
-                        .HasColumnType("jsonb");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DynamicFields>("Fields")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("jsonb")
-                        .HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("LastEdit")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("LastEditUser")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FormsDefinitions");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.Job", b =>

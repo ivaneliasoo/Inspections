@@ -14,13 +14,18 @@ export default function pdfDocument(sheet) {
             margin: [20, 0, 0, 0],
             stack: [
                 {   columns: [
-                        { text: 'Project:', width: 60, style: 'headline', bold: true }, 
-                        { text: sheet.project, width: 300, style: 'headline', bold: true },
-                        { text: "", width: 20, style: 'headline', bold: true },
-                        { text: "Costing Sheet", width: 90, style: 'headline', bold: true }
+                    sheet.isTemplate 
+                    ? { text: 'Name:', width: 60, style: 'headline', bold: true }
+                    : { text: 'Project:', width: 60, style: 'headline', bold: true },
+                    { text: sheet.project, width: 300, style: 'headline', bold: true },
+                    { text: "", width: 20, style: 'headline', bold: true },
+                    sheet.isTemplate 
+                        ? { text: "Template", width: 90, style: 'headline', bold: true }
+                        : { text: "Costing Sheet", width: 90, style: 'headline', bold: true }
                     ],
                     margin: [20,0,0,6]
                 },
+                sheet.isTemplate ? "" :
                 {   columns: [
                         { text: 'Location:', width: 60, style: 'headline2', bold: true }, 
                         { text: sheet.location, width: 300, style: 'headline2', bold: true }
@@ -273,6 +278,15 @@ export default function pdfDocument(sheet) {
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
     ]);
 
+    const date = new Date();
+    doc.content.push({
+        margin: [20, 0, 0, 20],
+        stack: [
+            { text: " " },
+            { text: `Generated on ${date.toLocaleString("en-SG")}`, width: 200, style: 'body', bold: true }
+        ]
+    })
+
     doc.styles = {
         headline: {
             fontSize: 14,
@@ -310,7 +324,7 @@ export default function pdfDocument(sheet) {
         },
         number: {
             fontSize: 9,
-            alignment: 'right'
+            alignment: sheet.options.numberAlignment
         },
         tableHeader: {
             bold: true,

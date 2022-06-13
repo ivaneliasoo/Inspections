@@ -19,29 +19,70 @@
       </v-row>
       <v-row>
           <v-col cols="12">
-            <div style="height: 80vh; width: 800px; overflow-y: auto;">
+            <div style="width: 800px; overflow-y: scroll;" class="invisible-scrollbar">
+                <table
+                    class="search-box"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                            <td style="width: 65%;" class="search-box">
+                                <searchField
+                                    :data="templates"
+                                    fieldName="project"
+                                    placeHolder="Search name"
+                                    :size=45
+                                    :compareFunc="compareFunc"
+                                    @scroll_to="scrollTo">
+                                </searchField>
+                            </td>
+                            <td style="width: 35%;" class="search-box">
+                                <searchField
+                                    :data="templates"
+                                    fieldName="dateCreated"
+                                    placeHolder="Search date"
+                                    :size=10
+                                    :compareFunc="compareFunc"
+                                    @scroll_to="scrollTo">
+                                </searchField>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="width: 800px; overflow-y: scroll;" class="invisible-scrollbar">
+                <table width="100%">
+                    <tbody>
+                        <tr class="table-header">
+                            <td class="font-weight-bold text-center header-row" style="width:65%;"
+                                title="Click to sort by name"
+                                @click="sortByName" >
+                                Template Name
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:20%;"
+                                title="Click to sort by date"
+                                @click="sortByDate" >
+                                Date created
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:15%;"
+                                title="Click for original sort order" @click="sortById">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="height: 75vh; width: 800px; overflow-y: auto;">
               <table
                 id="templates"
                 class="costsheet-table">
-                  <thead>
-                      <tr>
-                        <th class="font-weight-bold" style="width:68%;">Template Name</th>
-                        <th class="font-weight-bold" style="width:20%;">Date created</th>
-                        <th class="font-weight-bold" style="width:12%;">Actions</th>
-                      </tr>
-                  </thead>
                   <tbody>
                     <tr v-for="(sheet, index) in templates" :key="index" style="height: 0px;">
-                      <td class="text-caption text-left" style="width:34%;">
+                      <td class="text-caption text-left table-row" style="width:65%;">
                         {{sheet.project}}
                       </td>
-                      <!--td class="text-caption text-left" style="width:34%;">
-                        {{sheet.location}}
-                      </td-->
-                      <td class="text-caption text-center" style="width:20%;">
+                      <td class="text-caption text-center table-row" style="width:20%;">
                         {{sheet.dateCreated}}
                       </td>
-                      <td class="text-caption text-center" style="width:12%;">
+                      <td class="text-caption text-center table-row" style="width:15%;">
                         <v-btn icon small @click="editTemplate(index)">
                           <v-icon>
                             mdi-pencil
@@ -69,11 +110,38 @@ html {
 
 .costsheet-table, td, th {
   width: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .costsheet-table td, .costsheet-table th {
   padding: 5px 5px 5px 5px;
+}
+
+.search-box {
+  border: 1px solid lightgray;
+  /* border: none; */
+}
+
+.table-row {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 5px 5px 5px 5px;
+}
+
+.table-header {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.header-row {
+  border-right: 1px solid black;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+  color: white;
 }
 </style>
 
@@ -86,8 +154,10 @@ html {
     props: {
       templates: Array
     },
-    // data: () => ({
-    // }),
+    data: () => ({
+        sortField: "none",
+        compareFunc: "includes"
+    }),
     methods: {
       showCostSheets() {
         this.$emit('show-cost-sheets');
@@ -104,6 +174,54 @@ html {
       deleteTemplate(index) {
         this.$emit('delete-template', index);
       },
+      sortById() {
+          this.templates.sort((t1, t2) => t1.id - t2.id);
+      },
+      sortByName() {
+          this.sortField = "name";
+          // this.compareFunc = "startsWith";
+          this.templates.sort((t1, t2) => {
+              if (t1.project < t2.project) {
+                  return -1;
+              } else if (t1.project > t2.project) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          });
+      },
+      toIsoDate(date) {
+          const a = date.split("/");
+          return a[2]+'-'+a[1]+'-'+a[0];
+      },
+      sortByDate() {
+          this.sortField = "date";
+          // this.compareFunc = "startsWith";
+          this.templates.sort((t1, t2) => {
+              const d1 = this.toIsoDate(t1.dateCreated);
+              const d2 = this.toIsoDate(t2.dateCreated);
+              if (d1 < d2) {
+                  return -1;
+              } else if (d1 > d2) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          });
+      },
+      scrollTo(line) {
+          var rows = document.querySelectorAll('#templates tr');
+          const row = rows[line];
+          row.scrollIntoView({
+              behavior: 'auto',
+              block: 'start'
+          });
+          if (this.curRow) {
+              this.curRow.style.background = "white";
+          }
+          row.style.background = "lightgrey";
+          this.curRow = row;
+      }
     }
   }
 </script>

@@ -132,6 +132,10 @@ html {
   border-bottom: 1px solid black;
   padding: 5px 5px 5px 5px;
 }
+
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 </style>
 
 <script>

@@ -135,7 +135,9 @@ namespace Inspections.API.Features.CostSheets
                 prev.labourDailyRate = costSheet.labourDailyRate;
                 prev.labourNightMultiplier = costSheet.labourNightMultiplier;
                 prev.finalMarkup = costSheet.finalMarkup;
+                prev.finalOverallMarkup = costSheet.finalOverallMarkup;
                 prev.sections = costSheet.sections;
+                prev.options = costSheet.options;
                 prev.lastUpdate = DateTime.Now;
                 prev.updated = false;
                 await _context.SaveChangesAsync();
@@ -266,7 +268,9 @@ namespace Inspections.API.Features.CostSheets
                 prev.labourDailyRate = template.labourDailyRate;
                 prev.labourNightMultiplier = template.labourNightMultiplier;
                 prev.finalMarkup = template.finalMarkup;
+                prev.finalOverallMarkup = template.finalOverallMarkup;
                 prev.sections = template.sections;
+                prev.options = template.options;
                 prev.lastUpdate = DateTime.Now;
                 prev.updated = false;
                 await _context.SaveChangesAsync();

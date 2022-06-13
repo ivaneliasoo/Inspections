@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label v-if="value && format==='currency'" class="text-caption">$</label>
+    <label v-if="notNull() && format==='currency'" class="text-caption">$</label>
     <input
       ref="textbox"
       type="text"
@@ -42,6 +42,7 @@ function setInputFilter(textbox, inputFilter) {
     });
   });
 }
+
 export default {
   props: {
     value: {
@@ -62,6 +63,7 @@ export default {
     },
     style() {
       let width;
+      // let alignment = "center";
       if (this.format === "currency") {
         width = "80%";
       } else if (this.format === "percent") {
@@ -71,22 +73,35 @@ export default {
       } else {
         width = "100%";
       }
-      return `display: table-cell; text-align: right; width: ${width};`
+      return `display: table-cell; text-align: ${this.align()}; width: ${width};`
     },
     dataValue: {
       get() {
+        const value = this.value;
         if (this.editing) {
-          return this.value;
+          return value;
         }
         const dec = this.decimals ? this. decimals : 0;
-        if (isNaN(this.value)) {
+        if (isNaN(value)) {
           return "";
         }
-        return this.format === "currency" ? parseFloat(this.value).toFixed(2) : parseFloat(this.value).toFixed(dec); 
+        // return this.format === "currency" ? parseFloat(this.value).toFixed(2) : parseFloat(this.value).toFixed(dec);
+        return this.format === "currency" 
+            ? value.toLocaleString("en", {minimumFractionDigits: 2, maximumFractionDigits: 2}) 
+            : value.toLocaleString("en", {minimumFractionDigits: dec, maximumFractionDigits: dec});
       },
       set(v) {
         this.editing = true;
-        this.$emit('input', v);
+        const field = this.$refs.textbox;
+        const pos = field.selectionStart;
+
+        const value = (""+v).replace(/,/gi, '');
+        //const value = this.format === "currency" ? parseFloat(str).toFixed(2) : parseFloat(str).toFixed(dec);
+        console.log("NumberField set(v), pos", v, value, pos);
+        this.$emit('input', value);
+        
+        field.focus();
+        field.setSelectionRange(pos, pos);
       }
     }
   },
@@ -97,7 +112,8 @@ export default {
     }
     textBox.readOnly = this.readOnly;
     setInputFilter(textBox, function(value) {
-      return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
+      // Allow digits ',' and '.' only, using a RegExp
+      return /^\d*\,?\d*\.?\d*$/.test(value);
     })
   },
   updated() {
@@ -114,6 +130,14 @@ export default {
       if (this.$refs.textbox !== document.activeElement) {
         this.editing=false;
       }
+    },
+    align() {
+      return this.$numberAlignment ? this.$numberAlignment : "center";
+    },
+    notNull() {
+      const value = this.value;
+      const isNull = value === undefined || value === null || value === "";
+      return !isNull;
     }
   }
 };

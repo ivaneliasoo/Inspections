@@ -6,16 +6,12 @@
             v-model="searchValue" 
             @input="search"
             style="border: none; border-color: transparent; outline: none;">
-        <v-btn icon small @click="findPrevious">
-            <v-icon>
-                mdi-chevron-up
-            </v-icon>                                        
-        </v-btn>
-        <v-btn icon small @click="findNext">
-            <v-icon>
-                mdi-chevron-down
-            </v-icon>                                        
-        </v-btn>
+        <v-icon @click="findPrevious">
+            mdi-chevron-up
+        </v-icon>                                        
+        <v-icon @click="findNext">
+            mdi-chevron-down
+        </v-icon>                                        
     </div>
 </template>
 

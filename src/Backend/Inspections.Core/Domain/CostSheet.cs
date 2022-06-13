@@ -30,8 +30,13 @@ namespace Inspections.Core.Domain
 
         public double finalMarkup { get; set; }
 
+        public double finalOverallMarkup { get; set; }
+
         [Column(TypeName = "jsonb")]
         public Section[]? sections { get; set; }
+
+        [Column(TypeName = "jsonb")]
+        public CSOptions? options { get; set; }
 
         [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTime? lastUpdate { get; set; }
@@ -76,8 +81,13 @@ namespace Inspections.Core.Domain
 
         public double finalMarkup { get; set; }
 
+        public double finalOverallMarkup { get; set; }
+
         [Column(TypeName = "jsonb")]
         public Section[]? sections { get; set; }
+
+        [Column(TypeName = "jsonb")]
+        public CSOptions? options { get; set; }
 
         [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTime? lastUpdate { get; set; }
@@ -141,6 +151,17 @@ namespace Inspections.Core.Domain
         public Item() {
             this.itemNumber = "";
             this.description = "";
+        }
+    }
+
+    public class CSOptions
+    {
+        public string? numberAlignment { get; set; }
+        public string? textAlignment { get; set; }
+
+        public CSOptions() {
+            this.numberAlignment = "center";
+            this.textAlignment = "left";
         }
     }
 }
