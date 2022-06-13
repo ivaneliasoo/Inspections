@@ -18,11 +18,12 @@ public class ReportConfigurationDto
         FormName = reportConfiguration.FormName;
         Forms = reportConfiguration.Forms.Select(FormDefinitionResponse.CreateFromEntity);
         RemarksLabelText = reportConfiguration.RemarksLabelText;
-        ChecksDefinition = reportConfiguration.ChecksDefinition.Select(cd => cd.Id);
+        ChecksDefinition = reportConfiguration.ChecksDefinition?.Select(cd => cd.Id);
         SignatureDefinitions = reportConfiguration.SignatureDefinitions.Select(cd => cd.Id);
         PrintSectionId = reportConfiguration.PrintSectionId;
         CheckListMetadata = reportConfiguration.CheckListMetadata;
         TemplateName = reportConfiguration.TemplateName;
+        Display = reportConfiguration.CheckListMetadata.Display;
     }
 
     public int Id { [UsedImplicitly] get; }
@@ -30,10 +31,11 @@ public class ReportConfigurationDto
     public string Title { [UsedImplicitly] get; }
     public string FormName { [UsedImplicitly] get; }
     public string RemarksLabelText { [UsedImplicitly] get; }
-    public IEnumerable<int> ChecksDefinition { [UsedImplicitly] get; }
+    public IEnumerable<int>? ChecksDefinition { [UsedImplicitly] get; }
     public IEnumerable<int> SignatureDefinitions { [UsedImplicitly] get; }
     public IEnumerable<FormDefinitionResponse> Forms { [UsedImplicitly] get; }
     public CheckListPrintingMetadata CheckListMetadata { [UsedImplicitly] get; }
     public int? PrintSectionId { [UsedImplicitly] get; }
     public string? TemplateName { [UsedImplicitly] get; }
+    public CheckListDisplay Display { [UsedImplicitly] get;  }
 }

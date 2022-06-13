@@ -1,7 +1,6 @@
 import Picker from '@gregfrench/react-native-wheel-picker'
 import React, { useEffect, useMemo, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { setBasicAuthToObject } from 'services/api/common';
 
 const PickerItem = Picker.Item;
 
@@ -28,7 +27,7 @@ const NumericPicker = ({ defaultValue = [0,0,0], itemSelected, appendLabel = 'V'
   }, [firstDigit, secondDigit, thirdDigit])
 
   return (
-    <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginBottom: 10}}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginBottom: 0}}>
       <Text style={styles.label}>{preppendLabel}</Text>
       <Text>
         <Picker style={{ width: 30, height: 70 }}

@@ -59,12 +59,12 @@ public class Report : Entity<int>, IAggregateRoot
         RemarksLabelText = remarksLabelText;
     }
 
-    public void Edit(string name, string address, EMALicense license, DateTimeOffset date)
+    public void Edit(string name, string address, EMALicense? license, DateTimeOffset date)
     {
         Name = name;
         Address = address;
         License = license;
-        EMALicenseId = license.Id;
+        EMALicenseId = license?.Id;
         Date = date;
     }
 

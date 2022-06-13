@@ -7,9 +7,15 @@ public class NewAddressDto
 {
     public NewAddressDto()
     {
-            
+        Unit = string.Empty;
+        Country = string.Empty;
+        PostalCode = string.Empty;
+        AddressLine = string.Empty;
+        LicenseId = null;
     }
-    public NewAddressDto(int id, string addressLine, string? addressLine2, string unit, string country, string postalCode, int licenseId)
+
+    public NewAddressDto(int id, string addressLine, string? addressLine2, string unit, string country,
+        string postalCode, int licenseId)
     {
         Id = id;
         AddressLine = addressLine;
@@ -17,7 +23,7 @@ public class NewAddressDto
         Unit = unit;
         Country = country;
         PostalCode = postalCode;
-        LicenseId = licenseId;
+        LicenseId = LicenseId == 0 ? null : LicenseId;
     }
 
     public NewAddressDto(Address address)
@@ -30,14 +36,14 @@ public class NewAddressDto
         Unit = address.Unit;
         Country = address.Country;
         PostalCode = address.PostalCode;
-        LicenseId = address.LicenseId;
+        LicenseId = address.LicenseId == 0 ? null : address.LicenseId;
     }
 
     public int Id { get; init; }
-    public string AddressLine { get; init;}
-    public string? AddressLine2 { get; init;}
-    public string Unit { get; init;}
-    public string Country { get; init;}
-    public string PostalCode { get; init;}
-    public int LicenseId { get; init;}
+    public string AddressLine { get; init; }
+    public string? AddressLine2 { get; init; }
+    public string Unit { get; init; }
+    public string Country { get; init; }
+    public string PostalCode { get; init; }
+    public int? LicenseId { get; init; }
 }

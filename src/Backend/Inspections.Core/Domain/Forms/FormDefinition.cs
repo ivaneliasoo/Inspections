@@ -18,13 +18,12 @@ public sealed class FormDefinition : Entity<int>
         Title = title;
         Icon = icon;
         Fields = fields;
-        Ordern = order;
+        Order = order;
     }
     public string Name { get;  }
     public string Title { get; private set; }
     public string? Icon { get; set; }
     public DynamicFields Fields { get; private set; }
-    public short Ordern { get; }
     public bool Enabled { get; set; } = true;
     public short Order { get; set; }
     public List<ReportConfiguration> ReportConfigurations { get; } = new();

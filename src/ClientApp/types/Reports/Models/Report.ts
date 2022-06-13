@@ -18,4 +18,5 @@ export interface Report {
     checkList: CheckList[];
     photoRecords: PhotoRecord[];
     completed: boolean;
+    reportConfigurationId: number;
 }

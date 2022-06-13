@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
     [ProducesDefaultResponseType]
     public IActionResult CreateToken([FromBody] LoginModel loginModel)
     {
-        var user = _context.Users.FirstOrDefault(u => u.UserName == loginModel.Username && u.Password == loginModel.Password);
+        var user = _context.Users.FirstOrDefault(u => u.UserName == loginModel.username && u.Password == loginModel.password);
 
         if (user == null)
         {
@@ -43,6 +43,6 @@ public class AuthController : ControllerBase
 
 public class LoginModel
 {
-    public string Username { get; set; } = default!;
-    public string Password { get; set; } = default!;
+    public string username { get; set; } = default!;
+    public string password { get; set; } = default!;
 }

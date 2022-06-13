@@ -13,7 +13,7 @@ export interface Props {
 export const OptionsMenu = ({onChanged}: Props) => {
   const context = useContext(ThemeContext)
   const [showMenu, setShowMenu] = useState(false)
-  const { setFilter, getReports, reportsState: { myReports, isClosed, filter, descendingSort, orderBy } } = useReports()
+  const { setFilter, reportsState: { myReports, isClosed, filter, descendingSort, orderBy } } = useReports()
 
   const hide = () => {
     if(showMenu) setShowMenu(false)

@@ -9,13 +9,13 @@ public class ReportQueryResult
     public string Name { get; set; } = default!;
     public string Address { get; set; } = default!;
     public DateTimeOffset Date { get; set; }
-    public string? LicenseNumber { get; set; } = default!;
-    public string? LicenseName { get; set; } = default!;
-    public decimal? LicenseKVA { get; set; }
-    public decimal? LicenseVolt { get; set; }
-    public decimal? LicenseAmp { get; set; }
+    public string? LicenseNumber { get; set; } = "No Licensed";
+    public string? LicenseName { get; set; } = "No Licensed";
+    public decimal? LicenseKVA { get; set; } = 0;
+    public decimal? LicenseVolt { get; set; }= 0;
+    public decimal? LicenseAmp { get; set; }= 0;
     public int ReportConfigurationId { get; set; }
-    public DateTimeRange? LicenseValidity { get; set; } = default!;
+    public DateTimeRange? LicenseValidity { get; set; } = new ()!;
     public string Title { get; set; } = default!;
     public string FormName { get; set; } = default!;
     public string? RemarksLabelText { get; set; }

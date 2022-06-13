@@ -23,11 +23,16 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, b
         Guard.Against.Null(request, nameof(request));
         var report = await _reportsRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
         var reportName = $"{request.Date:yyyyMMdd}-{report.Title}-{request.LicenseNumber}-{request.Address}";
-        var license = _context.Licenses.AsNoTracking().FirstOrDefault(l => l.Number == request.LicenseNumber);
-        if (license is null)
-            throw new Exception($"Conflict. can't find License {request.LicenseNumber}");
 
-        report.Edit(reportName, request.Address, license, request.Date);
+        if (request.LicenseNumber is not null)
+        {
+            var license = _context.Licenses.AsNoTracking().FirstOrDefault(l => l.Number == request.LicenseNumber);
+            if (license is null)
+                throw new Exception($"Conflict. can't find License {request.LicenseNumber}");
+
+            report.Edit(reportName, request.Address, license, request.Date);
+        }
+        report.Edit(reportName, request.Address, null, request.Date);
         if (!report.IsClosed && request.IsClosed)
         {
             report.Close();

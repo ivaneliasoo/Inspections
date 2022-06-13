@@ -33,7 +33,7 @@ public class AddressDto
     public string Unit { get; set; } = default!;
     public string Country { get; set; } = default!;
     public string PostalCode { get; set; } = default!;
-    public int LicenseId { get; set; }
+    public int? LicenseId { get; set; }
     public string? Number { get; set; } = default!;
     public string Name { get; set; } = default!;
     public decimal Amp { get; set; }

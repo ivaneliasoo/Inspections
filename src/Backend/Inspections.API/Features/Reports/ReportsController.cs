@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -19,7 +19,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Inspections.API.Features.Reports
 {
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReportsController : ControllerBase
@@ -287,7 +287,8 @@ namespace Inspections.API.Features.Reports
             var reportConfig = _context.Set<ReportConfiguration>().Single(rc => rc.Id == reportConfigId);
 
             var exportData = new ExportDto(
-                $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Host}:{Environment.GetEnvironmentVariable("UIPORT")}/{reportConfig.TemplateName}?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}");
+                $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Host}:{Environment.GetEnvironmentVariable("UIPORT")}/{reportConfig.TemplateName}?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}",
+                8, reportConfig.Id);
             var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData))
                 .ConfigureAwait(false);
             return File(fileContent, "application/pdf", "prueba.pdf");

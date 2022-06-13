@@ -30,23 +30,7 @@ public class AddressesController : ControllerBase
                          EF.Functions.Like(ad.Country, $"%{filter}%") ||
                          EF.Functions.Like(ad.PostalCode, $"%{filter}%") ||
                          EF.Functions.Like(ad.License.Number, $"%{filter}%"))
-            .Select(a => new AddressDto
-            {
-                Id = a.Id,
-                AddressLine = a.AddressLine,
-                AddressLine2 = a.AddressLine2,
-                Unit = a.Unit,
-                Country = a.Country,
-                PostalCode = a.PostalCode,
-                LicenseId = a.LicenseId,
-                Number = a.License.Number,
-                Name = a.License.Name,
-                Amp = a.License.Amp,
-                KVA = a.License.KVA,
-                Volt = a.License.Volt,
-                Validity = a.License.Validity,
-                FormatedAddress = a.ToString()
-            })
+            .Select(a => new AddressDto(a))
             .AsNoTracking()
             .ToListAsync()
             .ConfigureAwait(false);

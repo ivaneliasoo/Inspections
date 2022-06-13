@@ -247,7 +247,22 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
   }
 
   get licenses () {
-    return (this.$store.state.licenses as LicensesState).licensesList
+    return [
+      {
+        licenseId: 0,
+        number: 'No Licensed',
+        Name: 'No Licensed',
+        PersonInCharge: '',
+        Contact: '',
+        Email: '',
+        Amp: 0,
+        Volt: 0,
+        KVA: 0,
+        validityStart: null,
+        validityEnd: null
+      },
+      ...(this.$store.state.licenses as LicensesState).licensesList
+    ]
   }
 
   selectItem (item: AddressDto): void {

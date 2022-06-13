@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { AuthContext } from '../contexts/AuthContext';
 import { useReports } from '../hooks/useReports';
-import { ReportsState } from '../contexts/ReportsContext';
 
 export const Home = ({ navigation }: any) => {
   const [isBusy, setIsBusy] = useState(false)

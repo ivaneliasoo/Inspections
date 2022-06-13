@@ -11,9 +11,10 @@ public class AddReportConfigurationCommand : IRequest<int>
         string title,
         string formName,
         string remarksLabelText,
-        List<int> checksDefinition,
+        List<int>? checksDefinition,
         List<int> signatureDefinitions,
-        int printSectionId, CheckListDisplay display)
+        int printSectionId, CheckListDisplay display, 
+        string templateName)
     {
         Guard.Against.Null(display, nameof(display));
             
@@ -25,7 +26,9 @@ public class AddReportConfigurationCommand : IRequest<int>
         SignatureDefinitions = signatureDefinitions;
         PrintSectionId = printSectionId;
         Display = display;
+        TemplateName = templateName;
     }
+
     private AddReportConfigurationCommand()
     {
         Display = CheckListDisplay.Numbered;
@@ -35,9 +38,10 @@ public class AddReportConfigurationCommand : IRequest<int>
     public string Title { get; } = default!;
     public string FormName { get; } = default!;
     public string RemarksLabelText { get; } = default!;
-    public List<int> ChecksDefinition { get; } = default!;
+    public List<int>? ChecksDefinition { get; }
     public List<int> SignatureDefinitions { get; } = default!;
     // ReSharper disable once MemberCanBePrivate.Global
     public CheckListDisplay Display { [UsedImplicitly] get; }
     public int PrintSectionId { get; }
+    public string? TemplateName { get; }
 }

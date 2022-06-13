@@ -1,5 +1,5 @@
 <template>
-  <LightningProtection />
+  <CostSheetMain />
 </template>
 
 <script>

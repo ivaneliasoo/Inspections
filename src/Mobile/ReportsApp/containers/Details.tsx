@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider, Text, Icon, TopNavigation, TopNavigationAction, useTheme } from '@ui-kitten/components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native';
@@ -10,8 +10,8 @@ import { Signatures } from '../components/reports/Signatures';
 import { ReportsContext } from '../contexts/ReportsContext';
 import { useContext } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import useMemo from 'react';
 import { useDownloader } from '../hooks/useDownloader';
+import DynamicForms from '../components/DynamicForms';
 
 type DetailsScreenNavigationProp = StackNavigationProp<any, any>
 
@@ -89,20 +89,16 @@ export const Details = ({ route, navigation }: Props) => {
     getReportById(reportId).finally(() => { setLoading(false) })
   }, [])
 
-
-
-
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
-      <TopNavigation title={`Report  `} alignment='center' accessoryRight={CompleteAction} accessoryLeft={BackAction} />
+      <TopNavigation title={``} alignment='center' accessoryRight={CompleteAction} accessoryLeft={BackAction} />
       <Divider />
       {workingReport && !loading ?
         <View style={styles.container}>
           <Navigator tabBarPosition='bottom' initialRouteName="Report" lazy={true} title='Editing Report' options={{ showIcon: true }}>
             <Screen name='Camera' component={CameraScreen} options={{ tabBarIcon: () => <Icon name="camera-outline" size={26} /> }} />
-            <Screen name='OperationalReadings' component={OperationalReading} options={{ title: 'Readings' }} />
             <Screen name='Report' component={ReportForm} />
-            <Screen name='Signature' component={Signatures} />
+            <Screen name='Additional Data' component={DynamicForms} options={{ title: 'Additional Data' }} />
           </Navigator>
         </View>
 
@@ -113,8 +109,6 @@ export const Details = ({ route, navigation }: Props) => {
       }
     </View>
   );
-
-
 };
 
 const styles = StyleSheet.create({

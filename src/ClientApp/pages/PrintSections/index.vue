@@ -14,13 +14,13 @@
           <v-row>
             <v-toolbar flat color="white">
               <v-spacer />
-              <v-switch v-model="ckEditorMode" inset label="CkEditor Mode" />
+              <v-switch v-model="ckEditorMode" inset label="Editor Mode" />
             </v-toolbar>
           </v-row>
           <v-card>
             <v-sheet v-if="ckEditorMode" height="450" style="overflow-y: scroll">
               <draggable>
-                <ckeditor id="myeditor" v-model="dataCKEditor" :editor="options.editor" />
+                <VueEditor id="myeditor" v-model="dataCKEditor" />
               </draggable>
             </v-sheet>
             <v-sheet v-if="!ckEditorMode" height="450" fluid>
@@ -179,8 +179,6 @@
 
 <script lang="ts">
 import { ref, defineComponent, reactive, computed, useStore, useFetch, watch } from '@nuxtjs/composition-api'
-import Vue from 'vue'
-import CKEditor from '@ckeditor/ckeditor5-vue2'
 import draggable from 'vuedraggable'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import ClassicEditor from '~/assets/ckeditor5.0.0/ckeditor'
@@ -188,7 +186,6 @@ import { PrintSectionState } from '~/store/printsection'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 import useGoBack from '~/composables/useGoBack'
 
-Vue.use(CKEditor)
 export default defineComponent({
   name: 'PrintSectionDetail',
   components: {

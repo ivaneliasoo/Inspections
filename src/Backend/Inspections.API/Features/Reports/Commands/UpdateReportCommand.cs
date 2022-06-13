@@ -9,7 +9,7 @@ namespace Inspections.API.Features.Reports.Commands
         public int Id { get;  }
         public string Name { [UsedImplicitly] get;  } = default!;
         public string Address { get;  } = default!;
-        public string LicenseNumber { get;  } = default!;
+        public string? LicenseNumber { get;  }
         public DateTimeOffset Date { get;  }
         public bool IsClosed { get;  }
         internal UpdateReportCommand()
@@ -17,7 +17,7 @@ namespace Inspections.API.Features.Reports.Commands
 
         }
 
-        public UpdateReportCommand(int id, string name, string address, string licenseNumber, DateTimeOffset date, bool isClosed)
+        public UpdateReportCommand(int id, string name, string address, string? licenseNumber, DateTimeOffset date, bool isClosed)
         {
             Name = name;
             Address = address;

@@ -3,7 +3,7 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react'
 import { useContext } from 'react';
 import { StyleSheet } from 'react-native';
-import { AddressDTO } from '../../services/api';
+import { AddressDto } from '../../services/api';
 import { ReportsContext } from '../../contexts/ReportsContext';
 import { useAddresses } from '../../hooks/useAddresses';
 
@@ -16,7 +16,7 @@ export interface AddressSelectedResult {
 export const AddressAutocomplete = ({ values, errors, flexType, onSelect }: any) => {
   const { addresses } = useAddresses()
 
-  const reanderOption = (item: AddressDTO, index: number) => {
+  const reanderOption = (item: AddressDto, index: number) => {
     return (<SelectItem
       key={index}
       title={`${item.formatedAddress} (${item.number} Expires on ${moment(item.validity?.end).format('DD/MM/YYYY')})`}

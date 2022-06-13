@@ -17,9 +17,11 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
         private readonly IReportConfigurationsRepository _reportConfigurationsRepository;
         private readonly InspectionsContext _context;
 
-        public UpdateReportConfigurationCommandHandler(IReportConfigurationsRepository reportConfigurationsRepository, InspectionsContext context)
+        public UpdateReportConfigurationCommandHandler(IReportConfigurationsRepository reportConfigurationsRepository,
+            InspectionsContext context)
         {
-            _reportConfigurationsRepository = reportConfigurationsRepository ?? throw new ArgumentNullException(nameof(reportConfigurationsRepository));
+            _reportConfigurationsRepository = reportConfigurationsRepository ??
+                                              throw new ArgumentNullException(nameof(reportConfigurationsRepository));
             _context = context;
         }
 
@@ -32,14 +34,23 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             if (reportConfig is null)
                 return false;
 
-            var checks = _context.Set<CheckList>()
-               .Where(s => request.ChecksDefinition.Contains(s.Id)) //TODO: Create Method in repository
-               .Include(p => p.Checks)
-               .ToList();
+            if (request.ChecksDefinition is { })
+            {
+                var checks = _context.Set<CheckList>()
+                    .Where(s => request.ChecksDefinition.Contains(s.Id)) //TODO: Create Method in repository
+                    .Include(p => p.Checks)
+                    .ToList();
+                reportConfig.ChecksDefinition = checks;
+            }
 
-            var signatures = _context.Signatures.Where(s => request.SignatureDefinitions.Contains(s.Id))
-                .Include(p => p.Responsible)
-                .ToList();//TODO: Create Method in repository
+
+            if (request.SignatureDefinitions is {})
+            {
+                var signatures = _context.Signatures.Where(s => request.SignatureDefinitions!.Contains(s.Id))
+                    .Include(p => p.Responsible)
+                    .ToList(); //TODO: Create Method in repository
+                reportConfig.SignatureDefinitions = signatures;
+            }
 
             reportConfig.Type = request.Type;
             reportConfig.RemarksLabelText = request.RemarksLabelText;
@@ -48,8 +59,6 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             reportConfig.PrintSectionId = request.PrintSectionId;
             reportConfig.CheckListMetadata.Display = request.Display;
             reportConfig.TemplateName = request.TemplateName;
-            reportConfig.ChecksDefinition =  checks;
-            reportConfig.SignatureDefinitions = signatures;
             await _reportConfigurationsRepository.UpdateAsync(reportConfig).ConfigureAwait(false);
             return true;
         }

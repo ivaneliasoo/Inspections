@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Text, Icon, Input, Card, List, ListItem, Button } from '@ui-kitten/components'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { SegmentedControlIOSComponent, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { CheckListQueryResult, CheckListItemQueryResult, CheckValue } from '../../services/api'
 
 const checkItemIcon = [
@@ -14,26 +14,26 @@ const checkItemIcon = [
 
 const computeCheckListValue = (checkList: CheckListQueryResult) => {
   const totalAcceptable = checkList.checks!.filter(ci => ci.checked === CheckValue.Acceptable).length
-  const totalNotAcceptable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAcceptable).length
-  const totalNotAplicable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAplicable || ci.checked === CheckValue.None).length
+  const totalNotAcceptable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotAcceptableFalse).length
+  const totalNotAplicable = checkList.checks!.filter(ci => ci.checked === CheckValue.NotApplicable || ci.checked === CheckValue.None).length
   const total = checkList.checks!.length
 
   if (total === totalAcceptable) return CheckValue.Acceptable
-  else if (total === totalNotAplicable) return CheckValue.NotAplicable
-  else if (total === totalNotAcceptable) return CheckValue.NotAcceptable
-  else return CheckValue.NotAplicable
+  else if (total === totalNotAplicable) return CheckValue.NotApplicable
+  else if (total === totalNotAcceptable) return CheckValue.NotAcceptableFalse
+  else return CheckValue.NotApplicable
 }
 
 const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
   const [showRemark, setShowRemarks] = useState(false)
   const [remark, setRemark] = useState(item.remarks)
-  const onPress = () => {
-    onCheckUpdated({...item, checked: item.checked, touched: true, remarks: remark})
+  const onPress = (remarksOnly: boolean) => {
+    onCheckUpdated(remarksOnly, {...item, checked: item.checked, touched: true, remarks: remark})
   }
 
   const RightActions = (props: any) => {
     return <>
-      <TouchableOpacity key={`check-${item.id}`} onPress={(e) => { e.preventDefault(); setShowRemarks(prev => !prev) }}>
+      <TouchableOpacity key={`check-${item.id}`} onPress={(e) => { e.preventDefault(); setShowRemarks(prev => !prev); return false; }}>
         <Icon name='message-square-outline' fill='black' style={styles.lineIcon} />
       </TouchableOpacity>
       <Icon key={`icon-${item.id}`} name={checkItemIcon[item.checked ?? 0].name} {...props} fill={checkItemIcon[item.checked ?? 0].color} style={styles.lineIcon} />
@@ -46,13 +46,14 @@ const CheckListItemCheck = ({ item, index, onCheckUpdated }: any) => {
         placeholder='type a remark'
         value={remark!}
         onChangeText={(text) => { setRemark(text) }}
-        onSubmitEditing={() => { setShowRemarks(prev => !prev); onPress(); }}
-        accessoryRight={() => <TouchableOpacity onPress={() => { setShowRemarks(prev => !prev); onPress(); }}><Icon name='close-outline' fill='black' style={styles.icon} /></TouchableOpacity>} />
+        onSubmitEditing={(e) => { e.preventDefault(); setShowRemarks(prev => !prev); onPress(true); return false; }}
+        accessoryRight={() => <TouchableOpacity onPress={(e) => { e.preventDefault(); setShowRemarks(prev => !prev); onPress(true); return false; }}><Icon name='close-outline' fill='black' style={styles.icon} /></TouchableOpacity>} />
     : <ListItem
+      style={{ marginHorizontal: -15, padding: 0 }}
       key={`text-${item.id}`}
-      title={() => <Text category='h6' status={!item.touched ? 'danger':''}>{`.${index + 1} - ${item.text}`}</Text>}
-      onPress={onPress}
-      description={() => <Text category='s1' appearance='hint'>{`Remarks: ${remark}`}</Text>}
+      title={() => <Text category='s2' status={!item.touched ? 'danger':''}>{`.${index + 1} - ${item.text}`}</Text>}
+      onPress={() => onPress(false)}
+      description={() => <Text category='s2' appearance='hint'>{`Remarks: ${remark}`}</Text>}
       accessoryRight={RightActions}
     />
 }
@@ -61,23 +62,23 @@ export interface CheckListItemProps {
   item: CheckListQueryResult;
   index: number;
   onChange: (checked: any) => any;
-  onCheckUpdated: (payload: CheckListItemQueryResult) => any
+  onCheckUpdated: (remarksOnly: boolean, payload: CheckListItemQueryResult) => any
 }
 const CheckListGroup = React.memo(({ item, index, onChange, onCheckUpdated, ...props }: CheckListItemProps) => {
   item.checked = computeCheckListValue(item)
   return (
     <Card 
       key={`list-${item.id}`}
-      style={{ marginVertical: 6, elevation: 3 }}
+      style={{ marginVertical: 3, elevation: 1, marginHorizontal: 0 }}
       header={() => <>
         <TouchableOpacity key={`touch-${item.id}`} onPress={(e) => { e.preventDefault(); onChange(item.checked) }} style={styles.line}>
-          <Text key={`title-${item.id}`} style={styles.checkListTitle} category='h6' >{`${index + 1} - ${item.text}`}</Text>
+          <Text key={`title-${item.id}`} style={styles.checkListTitle} category='s1' >{`${index + 1} - ${item.text}`}</Text>
           <Icon key={`titleicon-${item.id}`} name={checkItemIcon[item.checked].name} fill={checkItemIcon[item.checked].color} style={styles.icon} />
         </TouchableOpacity>
       </>}
     >
       {item && item.checks!.map((checkList, checkIndex) => {
-        return <CheckListItemCheck key={`checkItemsList-${checkList.id}`} item={checkList} index={checkIndex} onCheckUpdated={onCheckUpdated} />
+        return <CheckListItemCheck key={`checkItemsList-${checkList.id}`} item={checkList} index={checkIndex} onCheckUpdated={(a, b) => { onCheckUpdated(a,b)}} />
       })}
     </Card>
   )
@@ -96,8 +97,8 @@ const Checklists = ({ checkLists = [], onCheckListUpdated, onCheckListItemUpdate
           <CheckListGroup item={checkList} index={index} key={`checklist-${checkList.id}`} onChange={(checked) => {
             onCheckListUpdated({ reportId: checkList.reportId, checkListId: checkList.id, newValue: checked })
           }}
-            onCheckUpdated={(payload: CheckListItemQueryResult) => {
-              onCheckListItemUpdated(payload)
+            onCheckUpdated={(remarksOnly: boolean, payload: CheckListItemQueryResult) => {
+              onCheckListItemUpdated(remarksOnly, payload)
             }}
           />
         )
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    padding: 5,
+    paddingHorizontal: 5,
   },
   line: {
     flex: 1,
@@ -126,14 +127,15 @@ const styles = StyleSheet.create({
     fontWeight: '900'
   },
   icon: {
-    width: 40,
-    height: 40,
+    width: 24,
+    height: 24,
   },
   lineIcon: {
-    width: 35,
-    height: 35,
-    marginHorizontal: 5
+    width: 24,
+    height: 24,
+    marginStart: 14,
+    marginEnd: -10
   },
-  checkListTitle: { flex: 10 },
+  checkListTitle: { flex: 1, fontWeight: '900' },
   checkListSubtitle: { alignSelf: 'center', alignContent: 'center' },
 })

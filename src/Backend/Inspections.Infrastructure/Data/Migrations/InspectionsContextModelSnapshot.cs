@@ -75,7 +75,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int>("LicenseId")
+                    b.Property<int?>("LicenseId")
                         .HasColumnType("integer");
 
                     b.Property<string>("PostalCode")
@@ -201,6 +201,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<double>("finalMarkup")
                         .HasColumnType("double precision");
 
+                    b.Property<bool>("isTemplate")
+                        .HasColumnType("boolean");
+
                     b.Property<double>("labourDailyRate")
                         .HasColumnType("double precision");
 
@@ -230,6 +233,62 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.HasKey("id");
 
                     b.ToTable("CostSheet");
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.CSTemplate", b =>
+                {
+                    b.Property<long>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("id"));
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime?>("dateCreated")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<double>("finalMarkup")
+                        .HasColumnType("double precision");
+
+                    b.Property<bool>("isTemplate")
+                        .HasColumnType("boolean");
+
+                    b.Property<double>("labourDailyRate")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("labourNightMultiplier")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime?>("lastUpdate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("location")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<double>("materialMarkup")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("project")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Section[]>("sections")
+                        .HasColumnType("jsonb");
+
+                    b.Property<bool>("updated")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("id");
+
+                    b.ToTable("CSTemplate");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.CurrentTable", b =>
@@ -364,6 +423,52 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FormDefinition", "Inspections");
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.Forms.FormDefinition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<JsonDocument>("DefaultValues")
+                        .HasColumnType("jsonb");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DynamicFields>("Fields")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValueSql("'{ \"FieldsDefinitions\": null }'::jsonb");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FormsDefinitions");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.Job", b =>
@@ -1064,9 +1169,7 @@ namespace Inspections.Infrastructure.Data.Migrations
                 {
                     b.HasOne("Inspections.Core.Domain.EMALicense", "License")
                         .WithMany()
-                        .HasForeignKey("LicenseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LicenseId");
 
                     b.Navigation("License");
                 });

@@ -66,11 +66,11 @@ public class FormsController : ControllerBase
             return NotFound("formDef not found");
         }
             
-        //TODO: Update
         savedFormDefinition.Enabled = newFormDef.Enabled;
         savedFormDefinition.SetFields(newFormDef.Fields);
         savedFormDefinition.Icon = newFormDef.Icon;
         savedFormDefinition.SetTitle(newFormDef.Title);
+        savedFormDefinition.Order = newFormDef.Order; 
         _context.Entry(savedFormDefinition).State = EntityState.Modified;
 
         try

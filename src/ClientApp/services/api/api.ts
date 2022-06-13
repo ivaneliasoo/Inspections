@@ -217,6 +217,12 @@ export interface AddReportConfigurationCommand {
      * @memberof AddReportConfigurationCommand
      */
     printSectionId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AddReportConfigurationCommand
+     */
+    templateName?: string | null;
 }
 /**
  * 
@@ -290,6 +296,12 @@ export interface AddSignatureCommand {
      * @memberof AddSignatureCommand
      */
     order?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AddSignatureCommand
+     */
+    signature?: string | null;
 }
 /**
  * 
@@ -344,7 +356,7 @@ export interface Address {
      * @type {number}
      * @memberof Address
      */
-    licenseId?: number;
+    licenseId?: number | null;
     /**
      * 
      * @type {EMALicense}
@@ -399,7 +411,7 @@ export interface AddressDto {
      * @type {number}
      * @memberof AddressDto
      */
-    licenseId?: number;
+    licenseId?: number | null;
     /**
      * 
      * @type {string}
@@ -442,6 +454,97 @@ export interface AddressDto {
      * @memberof AddressDto
      */
     formatedAddress?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CSTemplate
+ */
+export interface CSTemplate {
+    /**
+     * 
+     * @type {number}
+     * @memberof CSTemplate
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CSTemplate
+     */
+    project?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CSTemplate
+     */
+    location?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CSTemplate
+     */
+    isTemplate?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CSTemplate
+     */
+    dateCreated?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CSTemplate
+     */
+    materialMarkup?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CSTemplate
+     */
+    labourDailyRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CSTemplate
+     */
+    labourNightMultiplier?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CSTemplate
+     */
+    finalMarkup?: number;
+    /**
+     * 
+     * @type {Array<Section>}
+     * @memberof CSTemplate
+     */
+    sections?: Array<Section> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CSTemplate
+     */
+    lastUpdate?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CSTemplate
+     */
+    updated?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CSTemplate
+     */
+    lastEdit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CSTemplate
+     */
+    lastEditUser?: string | null;
 }
 /**
  * 
@@ -682,6 +785,12 @@ export interface CostSheet {
     location?: string | null;
     /**
      * 
+     * @type {boolean}
+     * @memberof CostSheet
+     */
+    isTemplate?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof CostSheet
      */
@@ -851,7 +960,7 @@ export interface DynamicFieldMetadata {
      * @type {string}
      * @memberof DynamicFieldMetadata
      */
-     switchableSection?: string | null;
+    switchableSection?: string | null;
     /**
      * 
      * @type {string}
@@ -864,6 +973,12 @@ export interface DynamicFieldMetadata {
      * @memberof DynamicFieldMetadata
      */
     inputType?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof DynamicFieldMetadata
+     */
+    selectOptions?: string | null;
     /**
      * 
      * @type {string}
@@ -926,10 +1041,10 @@ export interface DynamicFieldMetadata {
     visible?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {any}
      * @memberof DynamicFieldMetadata
      */
-    defaultValue?: any;
+    defaultValue?: any | null;
     /**
      * 
      * @type {number}
@@ -1243,6 +1358,12 @@ export interface FormDefinitionResponse {
      * @memberof FormDefinitionResponse
      */
     enabled?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof FormDefinitionResponse
+     */
+    order?: number;
 }
 /**
  * 
@@ -1584,7 +1705,7 @@ export interface NewAddressDto {
      * @type {number}
      * @memberof NewAddressDto
      */
-    licenseId?: number;
+    licenseId?: number | null;
 }
 /**
  * 
@@ -1634,6 +1755,12 @@ export interface NewFormDefinitionCommand {
      * @memberof NewFormDefinitionCommand
      */
     enabled?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof NewFormDefinitionCommand
+     */
+    order?: number;
     /**
      * 
      * @type {Array<number>}
@@ -1891,6 +2018,12 @@ export interface ReportConfigurationDto {
      * @memberof ReportConfigurationDto
      */
     templateName?: string | null;
+    /**
+     * 
+     * @type {CheckListDisplay}
+     * @memberof ReportConfigurationDto
+     */
+    display?: CheckListDisplay;
 }
 /**
  * 
@@ -3910,8 +4043,8 @@ export const CostSheetApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCostSheetGet: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/CostSheet`;
+        apiCostSheetSheetGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CostSheet/sheet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3944,10 +4077,10 @@ export const CostSheetApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCostSheetIdDelete: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        apiCostSheetSheetIdDelete: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('apiCostSheetIdDelete', 'id', id)
-            const localVarPath = `/api/CostSheet/{id}`
+            assertParamExists('apiCostSheetSheetIdDelete', 'id', id)
+            const localVarPath = `/api/CostSheet/sheet/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3981,10 +4114,10 @@ export const CostSheetApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCostSheetIdGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        apiCostSheetSheetIdGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('apiCostSheetIdGet', 'id', id)
-            const localVarPath = `/api/CostSheet/{id}`
+            assertParamExists('apiCostSheetSheetIdGet', 'id', id)
+            const localVarPath = `/api/CostSheet/sheet/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4017,8 +4150,8 @@ export const CostSheetApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCostSheetPost: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/CostSheet`;
+        apiCostSheetSheetPost: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CostSheet/sheet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4050,8 +4183,181 @@ export const CostSheetApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCostSheetPut: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/CostSheet`;
+        apiCostSheetSheetPut: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CostSheet/sheet`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetTemplateGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CostSheet/template`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetTemplateIdDelete: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCostSheetTemplateIdDelete', 'id', id)
+            const localVarPath = `/api/CostSheet/template/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetTemplateIdGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCostSheetTemplateIdGet', 'id', id)
+            const localVarPath = `/api/CostSheet/template/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetTemplatePost: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CostSheet/template`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwt_auth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetTemplatePut: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CostSheet/template`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4093,8 +4399,8 @@ export const CostSheetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiCostSheetGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetGet(options);
+        async apiCostSheetSheetGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetSheetGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4103,8 +4409,8 @@ export const CostSheetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiCostSheetIdDelete(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetIdDelete(id, options);
+        async apiCostSheetSheetIdDelete(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetSheetIdDelete(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4113,8 +4419,8 @@ export const CostSheetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiCostSheetIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CostSheet>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetIdGet(id, options);
+        async apiCostSheetSheetIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CostSheet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetSheetIdGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4122,8 +4428,8 @@ export const CostSheetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiCostSheetPost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetPost(options);
+        async apiCostSheetSheetPost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetSheetPost(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4131,8 +4437,55 @@ export const CostSheetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiCostSheetPut(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetPut(options);
+        async apiCostSheetSheetPut(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetSheetPut(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCostSheetTemplateGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetTemplateGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCostSheetTemplateIdDelete(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetTemplateIdDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCostSheetTemplateIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CSTemplate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetTemplateIdGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCostSheetTemplatePost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetTemplatePost(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCostSheetTemplatePut(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCostSheetTemplatePut(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4150,8 +4503,8 @@ export const CostSheetApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCostSheetGet(options?: any): AxiosPromise<void> {
-            return localVarFp.apiCostSheetGet(options).then((request) => request(axios, basePath));
+        apiCostSheetSheetGet(options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetSheetGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4159,8 +4512,8 @@ export const CostSheetApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCostSheetIdDelete(id: number, options?: any): AxiosPromise<void> {
-            return localVarFp.apiCostSheetIdDelete(id, options).then((request) => request(axios, basePath));
+        apiCostSheetSheetIdDelete(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetSheetIdDelete(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4168,24 +4521,66 @@ export const CostSheetApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCostSheetIdGet(id: number, options?: any): AxiosPromise<CostSheet> {
-            return localVarFp.apiCostSheetIdGet(id, options).then((request) => request(axios, basePath));
+        apiCostSheetSheetIdGet(id: number, options?: any): AxiosPromise<CostSheet> {
+            return localVarFp.apiCostSheetSheetIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCostSheetPost(options?: any): AxiosPromise<void> {
-            return localVarFp.apiCostSheetPost(options).then((request) => request(axios, basePath));
+        apiCostSheetSheetPost(options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetSheetPost(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCostSheetPut(options?: any): AxiosPromise<void> {
-            return localVarFp.apiCostSheetPut(options).then((request) => request(axios, basePath));
+        apiCostSheetSheetPut(options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetSheetPut(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetTemplateGet(options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetTemplateGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetTemplateIdDelete(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetTemplateIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetTemplateIdGet(id: number, options?: any): AxiosPromise<CSTemplate> {
+            return localVarFp.apiCostSheetTemplateIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetTemplatePost(options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetTemplatePost(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCostSheetTemplatePut(options?: any): AxiosPromise<void> {
+            return localVarFp.apiCostSheetTemplatePut(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4203,8 +4598,8 @@ export class CostSheetApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CostSheetApi
      */
-    public apiCostSheetGet(options?: any) {
-        return CostSheetApiFp(this.configuration).apiCostSheetGet(options).then((request) => request(this.axios, this.basePath));
+    public apiCostSheetSheetGet(options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetSheetGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4214,8 +4609,8 @@ export class CostSheetApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CostSheetApi
      */
-    public apiCostSheetIdDelete(id: number, options?: any) {
-        return CostSheetApiFp(this.configuration).apiCostSheetIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    public apiCostSheetSheetIdDelete(id: number, options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetSheetIdDelete(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4225,8 +4620,8 @@ export class CostSheetApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CostSheetApi
      */
-    public apiCostSheetIdGet(id: number, options?: any) {
-        return CostSheetApiFp(this.configuration).apiCostSheetIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    public apiCostSheetSheetIdGet(id: number, options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetSheetIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4235,8 +4630,8 @@ export class CostSheetApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CostSheetApi
      */
-    public apiCostSheetPost(options?: any) {
-        return CostSheetApiFp(this.configuration).apiCostSheetPost(options).then((request) => request(this.axios, this.basePath));
+    public apiCostSheetSheetPost(options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetSheetPost(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4245,8 +4640,60 @@ export class CostSheetApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CostSheetApi
      */
-    public apiCostSheetPut(options?: any) {
-        return CostSheetApiFp(this.configuration).apiCostSheetPut(options).then((request) => request(this.axios, this.basePath));
+    public apiCostSheetSheetPut(options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetSheetPut(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CostSheetApi
+     */
+    public apiCostSheetTemplateGet(options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetTemplateGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CostSheetApi
+     */
+    public apiCostSheetTemplateIdDelete(id: number, options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetTemplateIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CostSheetApi
+     */
+    public apiCostSheetTemplateIdGet(id: number, options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetTemplateIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CostSheetApi
+     */
+    public apiCostSheetTemplatePost(options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetTemplatePost(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CostSheetApi
+     */
+    public apiCostSheetTemplatePut(options?: any) {
+        return CostSheetApiFp(this.configuration).apiCostSheetTemplatePut(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5499,7 +5946,7 @@ export const JobScheduleApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiJobScheduleOptionsPut: async (options?: Options, _options: any = {}): Promise<RequestArgs> => {
+        apiJobScheduleOptionsPut: async (_options?: Options, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/JobSchedule/options`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5520,9 +5967,9 @@ export const JobScheduleApiAxiosParamCreator = function (configuration?: Configu
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, _options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ..._options.headers};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(options, localVarRequestOptions, configuration)
 
             return {
