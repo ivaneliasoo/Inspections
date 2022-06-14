@@ -7,7 +7,8 @@ export function endpoint(p) {
 }
 
 export function fmt(value, decimals, fmt) {
-    value = Number(value).toFixed(decimals);
+    // value = Number(value).toFixed(decimals);
+    value = Number(value).toLocaleString("en", {minimumFractionDigits: decimals, maximumFractionDigits: decimals});
     if (!fmt) {
         return value;
     }
