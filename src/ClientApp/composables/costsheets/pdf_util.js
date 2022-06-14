@@ -91,7 +91,7 @@ export default function pdfDocument(sheet) {
         const section = sheet.sections[i];
         let row = [
             { border: bd.ltr, fillColor: '#eae4ef', style: "normal", text: section.secNumber },
-            { border: bd.top, fillColor: '#e1f5f7', style: "normal", colSpan: 4, text: section.description }, {}, {}, {},
+            { border: bd.top, fillColor: '#e1f5f7', style: "normalBold", colSpan: 4, text: section.description }, {}, {}, {},
             { border: bd.top, fillColor: '#eae4ef', style: "normal", text: "" },
             { border: bd.tr,  fillColor: '#eae4ef', style: "number", text: fmt(section.materialMarkup, 0, '%') },
             { border: bd.top, fillColor: '#e1f5f7', style: "normal", text: "" },
@@ -320,10 +320,16 @@ export default function pdfDocument(sheet) {
             fontSize: 9
         },
         normal: {
-            fontSize: 9
+            fontSize: 9,
+            bold: false
+        },
+        normalBold: {
+            fontSize: 9,
+            bold: true
         },
         number: {
             fontSize: 9,
+            bold: false,
             alignment: sheet.options.numberAlignment
         },
         tableHeader: {
