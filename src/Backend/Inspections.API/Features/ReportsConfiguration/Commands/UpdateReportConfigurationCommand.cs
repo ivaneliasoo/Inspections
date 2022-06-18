@@ -10,12 +10,15 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
                                              ReportType type,
                                              string title,
                                              string formName,
-                                             string remarksLabelText,
+                                             string? remarksLabelText,
                                              List<int>? checksDefinition,
                                              List<int> signatureDefinitions,
                                              int printSectionId, 
                                              CheckListDisplay display,
-                                             string templateName)
+                                             string templateName,
+                                             bool useNotes,
+                                             bool useCheckList,
+                                             bool usePhotoRecord)
         {
             Guard.Against.Null(display, nameof(display));
 
@@ -29,17 +32,24 @@ namespace Inspections.API.Features.ReportsConfiguration.Commands
             PrintSectionId = printSectionId;
             Display = display ;
             TemplateName = templateName;
+            UseNotes = useNotes;
+            UseCheckList = useCheckList;
+            UsePhotoRecord = usePhotoRecord;
         }
+
+        public bool UsePhotoRecord { get; set; }
 
         public int Id { get; set; }
         public ReportType Type { get; set; }
         public string Title { get; set; }
         public string FormName { get; set; }
-        public string RemarksLabelText { get; set; }
+        public string? RemarksLabelText { get; set; }
         public List<int>? ChecksDefinition { get; }
         public List<int>? SignatureDefinitions { get; }
         public int PrintSectionId { get; }
         public CheckListDisplay Display { get; }
         public string TemplateName { get; }
+        public bool UseNotes { get; }
+        public bool UseCheckList { get;  }
     }
 }

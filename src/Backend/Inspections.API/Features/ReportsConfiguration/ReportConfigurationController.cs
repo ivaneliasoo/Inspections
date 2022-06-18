@@ -7,6 +7,7 @@ using Inspections.Core.QueryModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace Inspections.API.Features.ReportsConfiguration
 {
@@ -90,12 +91,13 @@ namespace Inspections.API.Features.ReportsConfiguration
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<IEnumerable<ResumenReportConfiguration>> GetReportsConfig(string? filter)
         {
             var reportConfig = _reportConfigsQueries.GetByFilter(filter).AsEnumerable();
 
             if (!reportConfig.Any())
-                return BadRequest();
+                return NoContent();
 
             return Ok(reportConfig);
         }

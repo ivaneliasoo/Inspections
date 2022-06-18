@@ -17,6 +17,17 @@ public class Signature : Entity<int>, IAggregateRoot
     public int? ReportConfigurationId { get; set; }
     public string? DrawnSign { get; set; }
     public short Order { get; set; }
+    public ResponsibleType? DefaultResponsibleType { get; set; }
+    public bool UseLoggedInUserAsDefault { get; set; }
+
+    public void SetDefaultResponsible(string userName)
+    {
+        this.Responsible = new Responsible
+        {
+            Name = this.UseLoggedInUserAsDefault ? userName : string.Empty,
+            Type = this.DefaultResponsibleType ?? ResponsibleType.Inspector
+        };
+    }
 
     public Signature PrepareForNewReport(string userName)
     {
@@ -25,19 +36,10 @@ public class Signature : Entity<int>, IAggregateRoot
         newSignature.Id = 0;
         newSignature.ReportId = 0;
         newSignature.ReportConfigurationId = null;
-        newSignature.Date = DateTime.Now;
+        newSignature.Date = DateTimeOffset.Now;
         newSignature.IsConfiguration = false;
 
-        if (newSignature.Principal)
-            newSignature.Responsible = new Responsible { Name = userName, Type = ResponsibleType.Inspector };
-        else
-        {
-            ResponsibleType type = default!;
-            if (newSignature.Title.Contains("LEW"))
-                type = ResponsibleType.LEW;
-
-            newSignature.Responsible = new Responsible { Name = "", Type = type };
-        }
+        SetDefaultResponsible(userName);
 
         return newSignature;
     }
@@ -50,9 +52,8 @@ public class Signature : Entity<int>, IAggregateRoot
         newSignature.ReportId = null;
         newSignature.ReportConfigurationId = 0;
         newSignature.IsConfiguration = true;
-        newSignature.Responsible = new Responsible { Name = string.Empty, Type = ResponsibleType.Inspector };
+        newSignature.Responsible = new Responsible {Name = string.Empty, Type = ResponsibleType.Inspector};
 
         return newSignature;
     }
-
 }

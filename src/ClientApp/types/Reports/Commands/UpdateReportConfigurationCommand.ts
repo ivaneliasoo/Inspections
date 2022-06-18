@@ -15,4 +15,7 @@ export interface UpdateReportConfigurationCommand {
     printSectionId: number;
     display: CheckListDisplay | string;
     templateName: string;
+    useNotes: boolean;
+    useCheckList: boolean;
+    usePhotoRecord: boolean;
 }

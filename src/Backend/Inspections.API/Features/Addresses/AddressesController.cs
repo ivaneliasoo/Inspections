@@ -29,7 +29,7 @@ public class AddressesController : ControllerBase
                          EF.Functions.Like(ad.Unit, $"%{filter}%") ||
                          EF.Functions.Like(ad.Country, $"%{filter}%") ||
                          EF.Functions.Like(ad.PostalCode, $"%{filter}%") ||
-                         EF.Functions.Like(ad.License.Number, $"%{filter}%"))
+                         EF.Functions.Like(ad.License!.Number, $"%{filter}%"))
             .Select(a => new AddressDto(a))
             .AsNoTracking()
             .ToListAsync()

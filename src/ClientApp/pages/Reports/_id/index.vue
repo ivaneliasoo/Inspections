@@ -21,8 +21,12 @@
     <ValidationObserver ref="obs" v-slot="{ valid }" tag="form">
       <v-row dense justify="space-between">
         <v-col align-self="start" class="text-left">
-          <h4><strong>{{ currentReport.title }}</strong></h4>
-          <h6><strong>{{ currentReport.formName }}</strong></h6>
+          <h4>
+            <strong>{{ currentReport.title }}</strong>
+          </h4>
+          <h6>
+            <strong>{{ currentReport.formName }}</strong>
+          </h6>
         </v-col>
         <v-col class="text-right">
           <span v-if="currentReport.isClosed" class="tw-text-green-700">
@@ -48,11 +52,7 @@
       </v-row>
       <v-row dense align="center" justify="space-between">
         <v-col cols="12" md="3">
-          <ValidationProvider
-            v-slot="{ errors }"
-            rules="required"
-            immediate
-          >
+          <ValidationProvider v-slot="{ errors }" rules="required" immediate>
             <DatePickerBase
               v-model="currentReport.date"
               name="date"
@@ -63,11 +63,7 @@
           </ValidationProvider>
         </v-col>
         <v-col cols="12" md="9">
-          <ValidationProvider
-            v-slot="{ errors }"
-            rules="required"
-            immediate
-          >
+          <ValidationProvider v-slot="{ errors }" rules="required" immediate>
             <v-autocomplete
               v-model="currentReport.address"
               :error-messages="errors"
@@ -91,10 +87,25 @@
       </v-row>
       <v-row dense>
         <v-col>
-          <span class="tw-text-base tw-mx-4"><strong>Name: </strong> {{ currentReport.licenseName ? currentReport.licenseName : 'Not Licensed' }}</span>
-          <span class="tw-text-base tw-mx-4"><strong>License: </strong> {{ currentReport.licenseNumber ? currentReport.licenseNumber : 'Not Licensed' }}</span>
-          <span class="tw-text-base tw-mx-4"><strong>Approved Load: </strong> {{ currentReport.licenseAmp ? currentReport.licenseAmp : 0 }} A /{{ currentReport.licenseVolt ? currentReport.licenseVolt : 0 }} V</span>
-          <span class="tw-text-base tw-mx-4"><strong>kVA: </strong> {{ currentReport.licenseKVA ? currentReport.licenseKVA : 0 }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>Name: </strong>
+            {{
+              currentReport.licenseName
+                ? currentReport.licenseName
+                : "Not Licensed"
+            }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>License: </strong>
+            {{
+              currentReport.licenseNumber
+                ? currentReport.licenseNumber
+                : "Not Licensed"
+            }}</span>
+          <span class="tw-text-base tw-mx-4"><strong>Approved Load: </strong>
+            {{ currentReport.licenseAmp ? currentReport.licenseAmp : 0 }} A /{{
+              currentReport.licenseVolt ? currentReport.licenseVolt : 0
+            }}
+            V</span>
+          <span class="tw-text-base tw-mx-4"><strong>kVA: </strong>
+            {{ currentReport.licenseKVA ? currentReport.licenseKVA : 0 }}</span>
         </v-col>
       </v-row>
     </ValidationObserver>
@@ -103,6 +114,7 @@
         <v-tabs v-model="pageOptions.tabs" centered fixed-tabs icons-and-text>
           <v-tabs-slider />
           <v-tab
+            v-if="currentReport.checkLists && currentReport.checkLists.length > 0"
             href="#checklists"
             :class="
               hasUntouchedChecks ||
@@ -142,17 +154,25 @@
               mdi-message-bulleted
             </v-icon>
           </v-tab>
-          <v-tab href="#photos">
+          <v-tab v-if="currentReport.needsPhotoRecord" href="#photos">
             Photo Record
             <v-icon> mdi-folder-multiple-image </v-icon>
           </v-tab>
-          <v-tab v-for="form in forms.filter(f => f.enabled)" :key="`df-${form.id}`" eager>
+          <v-tab
+            v-for="form in forms.filter((f) => f.enabled)"
+            :key="`df-${form.id}`"
+            eager
+          >
             {{ form.title }}
             <v-icon> {{ form.icon }} </v-icon>
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="pageOptions.tabs" touchless>
-          <v-tab-item key="checklists" value="checklists">
+          <v-tab-item
+            v-if="currentReport.checkLists && currentReport.checkLists.length > 0"
+            key="checklists"
+            value="checklists"
+          >
             <v-expansion-panels
               multiple
               focusable
@@ -165,19 +185,25 @@
                 >
                   <span class="font-weight-black">Check List States: Not Acceptable (
                     <v-icon
-                      :color="hasUntouchedChecks ? 'white' : getCheckIconColor(0)"
+                      :color="
+                        hasUntouchedChecks ? 'white' : getCheckIconColor(0)
+                      "
                     >
                       mdi-{{ getCheckIcon(0) }}
                     </v-icon>
                     ) Acceptable (
                     <v-icon
-                      :color="hasUntouchedChecks ? 'white' : getCheckIconColor(1)"
+                      :color="
+                        hasUntouchedChecks ? 'white' : getCheckIconColor(1)
+                      "
                     >
                       mdi-{{ getCheckIcon(1) }}
                     </v-icon>
                     ) Not Aplicable (
                     <span
-                      :color="hasUntouchedChecks ? 'white' : getCheckIconColor(2)"
+                      :color="
+                        hasUntouchedChecks ? 'white' : getCheckIconColor(2)
+                      "
                     >
                       {{ getCheckIcon(2) }}
                     </span>
@@ -479,106 +505,116 @@
               </v-expansion-panel>
               <!-- End of Checklists -->
               <!-- Signatures -->
-              <v-expansion-panel>
-                <v-expansion-panel-header
-                  :style="HasNotesWithPendingChecks ? 'color: white;' : ''"
-                  :color="HasNotesWithPendingChecks ? 'red' : ''"
-                >
-                  <span class="font-weight-black">Notes</span>
-                  <v-row v-if="HasNotesWithPendingChecks" dense>
-                    <v-col>
-                      <v-icon dark>
-                        mdi-alert-circle
-                      </v-icon>
-                      <span style="color: white" class="font-weight-accent">
-                        there are items that need to be completed or checked
-                      </span>
-                    </v-col>
-                  </v-row>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <v-row justify="end" align="end" class="text-right">
-                    <v-col cols="12">
-                      <v-btn
-                        class="mx-2"
-                        x-small
-                        fab
-                        dark
-                        color="primary"
-                        title="Add note"
-                        @click="addNote"
-                      >
-                        <v-icon dark>
-                          mdi-plus
-                        </v-icon>
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                  <div
-                    v-for="(note, index) in currentReport.notes"
-                    :key="index"
-                  >
-                    <v-row dense align="center" justify="space-around">
-                      <v-col cols="1">
-                        <v-btn
-                          class="mx-2"
-                          title="delete this note"
-                          icon
-                          text
-                          :disabled="note.needsCheck"
-                          color="error"
-                          @click="removeNote(note)"
-                        >
-                          <v-icon dark>
-                            mdi-minus
-                          </v-icon>
-                        </v-btn>
-                      </v-col>
-                      <v-col cols="8">
-                        <v-text-field
-                          v-model="note.text"
-                          label="Note"
-                          @blur="saveNote(note)"
-                        />
-                      </v-col>
-                      <v-col cols="2">
-                        <v-checkbox
-                          v-model="note.checked"
-                          :label="note.needsCheck ? '(Check Required)' : ''"
-                          @change="saveNote(note)"
-                        />
-                      </v-col>
-                      <v-col />
-                    </v-row>
-                  </div>
-                  <v-row class="mt-10" />
-                </v-expansion-panel-content>
-              </v-expansion-panel>
             </v-expansion-panels>
-            <v-row>
-              <v-col>
-                <h2 class="text-left">
-                  Signatures
-                </h2>
-                <ValidationObserver ref="obsSignatures">
-                  <SignaturesForm
-                    v-model="signatures"
-                    :can-edit="currentReport.isClosed"
-                  />
-                </ValidationObserver>
-              </v-col>
-            </v-row>
           </v-tab-item>
-          <v-tab-item key="photos" value="photos">
+          <v-tab-item v-if="currentReport.needsPhotoRecord" key="photos" value="photos">
             <PhotoRecords
               :report-id="currentReport.id"
               @uploaded="saveAndLoad()"
             />
           </v-tab-item>
-          <v-tab-item v-for="form in forms.filter(f => f.enabled)" :key="`ti-${form.id}`">
-            <CustomForm v-model="form.values" :schema="form.fields.fieldsDefinitions" :form-id="form.id" @handle-submit="saveFormValues" />
+          <v-tab-item
+            v-for="form in forms.filter((f) => f.enabled)"
+            :key="`ti-${form.id}`"
+          >
+            <CustomForm
+              v-model="form.values"
+              :schema="form.fields.fieldsDefinitions"
+              :form-id="form.id"
+              @handle-submit="saveFormValues"
+            />
           </v-tab-item>
         </v-tabs-items>
+        <v-expansion-panel
+          v-if="currentReport.notes && currentReport.notes.lenght > 0"
+        >
+          <v-expansion-panel-header
+            :style="HasNotesWithPendingChecks ? 'color: white;' : ''"
+            :color="HasNotesWithPendingChecks ? 'red' : ''"
+          >
+            <span class="font-weight-black">Notes</span>
+            <v-row v-if="HasNotesWithPendingChecks" dense>
+              <v-col>
+                <v-icon dark>
+                  mdi-alert-circle
+                </v-icon>
+                <span style="color: white" class="font-weight-accent">
+                  there are items that need to be completed or checked
+                </span>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row justify="end" align="end" class="text-right">
+              <v-col cols="12">
+                <v-btn
+                  class="mx-2"
+                  x-small
+                  fab
+                  dark
+                  color="primary"
+                  title="Add note"
+                  @click="addNote"
+                >
+                  <v-icon dark>
+                    mdi-plus
+                  </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+            <div
+              v-for="(note, index) in currentReport.notes"
+              :key="index"
+            >
+              <v-row dense align="center" justify="space-around">
+                <v-col cols="1">
+                  <v-btn
+                    class="mx-2"
+                    title="delete this note"
+                    icon
+                    text
+                    :disabled="note.needsCheck"
+                    color="error"
+                    @click="removeNote(note)"
+                  >
+                    <v-icon dark>
+                      mdi-minus
+                    </v-icon>
+                  </v-btn>
+                </v-col>
+                <v-col cols="8">
+                  <v-text-field
+                    v-model="note.text"
+                    label="Note"
+                    @blur="saveNote(note)"
+                  />
+                </v-col>
+                <v-col cols="2">
+                  <v-checkbox
+                    v-model="note.checked"
+                    :label="note.needsCheck ? '(Check Required)' : ''"
+                    @change="saveNote(note)"
+                  />
+                </v-col>
+                <v-col />
+              </v-row>
+            </div>
+            <v-row class="mt-10" />
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-row>
+          <v-col>
+            <h2 class="text-left">
+              Signatures
+            </h2>
+            <ValidationObserver ref="obsSignatures">
+              <SignaturesForm
+                v-model="signatures"
+                :can-edit="currentReport.isClosed"
+              />
+            </ValidationObserver>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
     <message-dialog
@@ -635,7 +671,7 @@ import {
   ref,
   reactive,
   useRoute,
-  useFetch
+  useFetch,
 } from '@nuxtjs/composition-api'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { debouncedWatch } from '@vueuse/core'
@@ -652,7 +688,7 @@ import {
   SignatureQueryResult,
   NoteQueryResult,
   AddressDto,
-  FormDefinitionResponse
+  FormDefinitionResponse,
 } from '@/services/api'
 import { useNotifications } from '~/composables/use-notifications'
 import useGoBack from '~/composables/useGoBack'
@@ -662,16 +698,18 @@ export default defineComponent({
   name: 'ReportForm',
   components: {
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
   },
   setup () {
     useGoBack()
     const obs = ref<InstanceType<typeof ValidationObserver> | null>(null)
-    const obsSignatures = ref<InstanceType<typeof ValidationObserver> | null>(null)
+    const obsSignatures = ref<InstanceType<typeof ValidationObserver> | null>(
+      null
+    )
 
     const { notify } = useNotifications()
     const route = useRoute()
-    const { store, $auth, $axios, $reportsApi, $formsApi } = useContext()
+    const { store, $auth, $axios, $reportsApi } = useContext()
     const id = computed(() => route.value.params.id)
 
     onMounted(() => {
@@ -696,22 +734,21 @@ export default defineComponent({
       tabs: '',
       dialogClose: false,
       signaturesChanges: false,
-      search: ''
+      search: '',
     })
 
     const currentReport = ref<ReportQueryResult>({} as ReportQueryResult)
-    const signatures = computed(() => (currentReport.value.signatures || []))
+    const signatures = computed(() => currentReport.value.signatures || [])
 
     const forms = ref<FormDefinitionResponse[]>([])
 
     const { fetch } = useFetch(async () => {
-      console.log("*** useFetch ***");
       try {
         currentReport.value = await store.dispatch(
           'reportstrore/getReportById',
           id.value,
           {
-            root: true
+            root: true,
           }
         )
 
@@ -721,11 +758,11 @@ export default defineComponent({
             'users/setUserLastEditedReport',
             {
               userName: $auth.user.userName,
-              lastEditedReport: id.value
+              lastEditedReport: id.value,
             },
             { root: true }
           ),
-          $auth.fetchUser()
+          $auth.fetchUser(),
         ])
         forms.value = currentReport.value.forms || []
       } catch (error) {
@@ -746,8 +783,8 @@ export default defineComponent({
     const localAddress = computed((): AddressDto[] => {
       return [
         {
-          formatedAddress: currentReport.value.address
-        } as AddressDto
+          formatedAddress: currentReport.value.address,
+        } as AddressDto,
       ]
     })
 
@@ -781,7 +818,7 @@ export default defineComponent({
       if (currentReport.value.checkLists) {
         const result = currentReport.value.checkLists.filter(
           (cl: CheckListQueryResult) =>
-              cl.checks!.findIndex(c => !c.touched) >= 0
+            cl.checks!.findIndex(c => !c.touched) >= 0
         )
         return result.length > 0
       }
@@ -810,7 +847,10 @@ export default defineComponent({
       if (!currentReport) {
         return false
       }
-      if (!currentReport.value.notes) {
+      if (
+        !currentReport.value.notes ||
+        currentReport.value.notes.length === 0
+      ) {
         return false
       }
       return (
@@ -821,7 +861,12 @@ export default defineComponent({
     })
 
     const CanCloseReport = computed(() => {
-      return !hasUntouchedChecks.value && !HasNotesWithPendingChecks.value && PrincipalSignatureHasAResponsable.value && IsValidForm.value
+      return (
+        !hasUntouchedChecks.value &&
+        !HasNotesWithPendingChecks.value &&
+        PrincipalSignatureHasAResponsable.value &&
+        IsValidForm.value
+      )
     })
 
     const isMultiLine = computed(() => {
@@ -861,7 +906,7 @@ export default defineComponent({
             title: 'Reports',
             message: 'Error while saving the report',
             type: 'error',
-            error
+            error,
           })
         } finally {
           pageOptions.savingNewReport = false
@@ -870,7 +915,7 @@ export default defineComponent({
       },
       {
         debounce: 1000,
-        deep: true
+        deep: true,
       }
     )
 
@@ -895,7 +940,7 @@ export default defineComponent({
               remarks: signature.remarks,
               date: signature.date,
               principal: signature.principal,
-              drawnSign: signature.drawnSign
+              drawnSign: signature.drawnSign,
             }
             await $axios.$put(`signatures/${signature.id}`, command)
           })
@@ -904,7 +949,7 @@ export default defineComponent({
             title: 'Reports',
             message: 'Error while saving the report',
             type: 'error',
-            error
+            error,
           })
         } finally {
           pageOptions.savingNewReport = false
@@ -913,7 +958,7 @@ export default defineComponent({
       },
       {
         debounce: 1000,
-        deep: true
+        deep: true,
       }
     )
 
@@ -922,7 +967,7 @@ export default defineComponent({
         reportId: currentReport.value.id,
         text: '',
         checked: false,
-        needsCheck: false
+        needsCheck: false,
       }
       await $axios
         .$post(`reports/${route.value.params.id}/note`, newNote)
@@ -935,7 +980,7 @@ export default defineComponent({
     const removeNote = async (note: NoteQueryResult) => {
       const delNote = {
         reportId: id,
-        id: note.id ?? 0
+        id: note.id ?? 0,
       }
       await $axios
         .delete(`reports/${delNote.reportId}/note/${delNote.id}`)
@@ -979,7 +1024,7 @@ export default defineComponent({
         reportId: parseInt(route.value.params.id),
         id: note.id!,
         text: note.text!,
-        checked: note.checked!
+        checked: note.checked!,
       }
       $axios.put(`reports/${data.reportId}/note/${note.id}`, data)
     }
@@ -992,7 +1037,7 @@ export default defineComponent({
         required: checkItem.required!,
         checked: checkItem.checked as unknown as CheckValue,
         editable: checkItem.editable!,
-        remarks: checkItem.remarks!
+        remarks: checkItem.remarks!,
       }
       await $axios.put(
         `checklists/${command.checkListId}/items/${checkItem.id}`,
@@ -1008,7 +1053,7 @@ export default defineComponent({
         address: currentReport.address ?? pageOptions.search,
         date: currentReport.date,
         licenseNumber: currentReport.licenseNumber,
-        isClosed: currentReport.isClosed
+        isClosed: currentReport.isClosed,
       }
       await $axios.put(`reports/${route.value.params.id}`, update)
       store.dispatch('hasPendingChanges', false)
@@ -1037,7 +1082,7 @@ export default defineComponent({
         notify({
           title: 'Report Details',
           defaultMessage: 'Error Updating Checklist',
-          error
+          error,
         })
       }
     }
@@ -1125,9 +1170,9 @@ export default defineComponent({
       obsSignatures,
       signatures,
       forms,
-      saveFormValues
+      saveFormValues,
     }
-  }
+  },
 })
 </script>
 

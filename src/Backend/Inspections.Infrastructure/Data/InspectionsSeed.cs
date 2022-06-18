@@ -112,7 +112,11 @@ public class InspectionsSeed
                     MarginRight = "70px",
                     PrintSectionId = 1,
                     CheckListMetadata = new CheckListPrintingMetadata { Display = CheckListDisplay.Numbered },
-                    TemplateName = "print"
+                    TemplateName = "print",
+                    RemarksLabelText = "Remarks",
+                    UseNotes = false,
+                    Inactive = false,
+                    UsePhotoRecord = true,
                 });
             }
 
@@ -139,8 +143,8 @@ public class InspectionsSeed
             }
 
             if (!await context.Team.AnyAsync())
-                {
-                    var teams = new List<Team> {
+            {
+                var teams = new List<Team> {
                     new Team { foreman = "Kim", position = 1, teamMembers = "[]", lastUpdate = DateTime.Now },
                     new Team { foreman = "Gan", position = 2, teamMembers = "[]", lastUpdate = DateTime.Now },
                     new Team { foreman = "Liton", position = 3, teamMembers = "[]", lastUpdate = DateTime.Now },
@@ -177,22 +181,27 @@ public class InspectionsSeed
                 IsConfiguration = true,
                 Annotation = "",
                 Principal = true,
-                Order = 1
+                Order = 1,
+                DefaultResponsibleType = ResponsibleType.Inspector,
+                UseLoggedInUserAsDefault = true,
             },
             new Signature
             {
                 Title = "THE INSPECTION WAS WITNESSED BY REPRESENTATIVE OF THE LICENSEE",
                 IsConfiguration = true,
                 Annotation = "",
-                Order = 2
+                Order = 2,
+                DefaultResponsibleType = ResponsibleType.Witness,
+                UseLoggedInUserAsDefault = false,
             },
             new Signature
             {
                 Title = "DECLARATION BY LEW",
                 IsConfiguration = true,
-                Annotation = "I am satisfied that the electrical installation is fit for operation."
-                ,
-                Order = 3
+                Annotation = "I am satisfied that the electrical installation is fit for operation.",
+                Order = 3,
+                DefaultResponsibleType = ResponsibleType.LEW,
+                UseLoggedInUserAsDefault = false,
             }};
     }
 

@@ -6,10 +6,10 @@
       message="This operation will remove this signature and all data related"
       :code="selectedItem.id"
       :description="selectedItem.title"
-      @yes="deleteSignature();"
+      @yes="deleteSignature()"
     />
     <v-data-table
-      :class="$device.isTablet ? 'tablet-text':''"
+      :class="$device.isTablet ? 'tablet-text' : ''"
       :items="signatures"
       item-key="id"
       :search="filter.filterText"
@@ -29,21 +29,24 @@
             fab
             dark
             color="primary"
-            @click="item = {
-              title: '',
-              annotation: '',
-              responsableType: 0,
-              responsibleName: '',
-              date: new Date().toISOString(),
-              signature: '',
-              designation: '',
-              remarks: '',
-              date: null,
-              principal: true,
-              reportId: 0,
-              reportConfigurationId: 0,
-              order: 0
-            }; dialog = true"
+            @click="
+              item = {
+                title: '',
+                annotation: '',
+                responsableType: 0,
+                responsibleName: '',
+                date: new Date().toISOString(),
+                signature: '',
+                designation: '',
+                remarks: '',
+                date: null,
+                principal: true,
+                reportId: 0,
+                reportConfigurationId: filter.reportConfigurationId,
+                order: 0,
+              };
+              dialog = true;
+            "
           >
             <v-icon dark>
               mdi-plus
@@ -65,11 +68,16 @@
                   <v-container>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="6">
-                        <ValidationProvider v-slot="{ errors }" rules="required">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                        >
                           <v-text-field
                             v-model="item.title"
                             name="title"
-                            :readonly="item.report ? item.report.isClosed:false"
+                            :readonly="
+                              item.report ? item.report.isClosed : false
+                            "
                             :error-messages="errors"
                             label="Title"
                           />
@@ -78,7 +86,7 @@
                       <v-col cols="12" md="6">
                         <v-text-field
                           v-model="item.annotation"
-                          :readonly="item.report ? item.report.isClosed:false"
+                          :readonly="item.report ? item.report.isClosed : false"
                           name="annotation"
                           label="Annotation"
                         />
@@ -86,27 +94,41 @@
                     </v-row>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="4">
-                        <ValidationProvider v-slot="{ errors }" :rules="`${!item.reportConfigurationId ? 'required' : ''}`">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          :rules="`${
+                            !item.reportConfigurationId ? 'required' : ''
+                          }`"
+                        >
                           <v-autocomplete
                             v-model="item.reportId"
-                            :disabled="item.reportConfigurationId > 0 || item.id>0"
+                            :disabled="
+                              filter.reportConfigurationId > 0 || item.id > 0
+                            "
                             :error-messages="errors"
                             clearable
                             :items="reports"
                             item-text="name"
-                            :readonly="item.report ? item.report.isClosed:false"
+                            :readonly="
+                              item.report ? item.report.isClosed : false
+                            "
                             item-value="id"
                             label="Use in Report"
                           />
                         </ValidationProvider>
                       </v-col>
                       <v-col cols="12" md="4">
-                        <ValidationProvider v-slot="{ errors }" :rules="`${!item.reportId ? 'required' : ''}`">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          :rules="`${!item.reportId ? 'required' : ''}`"
+                        >
                           <v-autocomplete
                             v-model="item.reportConfigurationId"
-                            :disabled="item.reportId > 0 || item.id>0"
+                            :disabled="item.reportId > 0 || item.id > 0 || filter.reportConfigurationId > 0"
                             :error-messages="errors"
-                            :readonly="item.report ? item.report.isClosed:false"
+                            :readonly="
+                              item.report ? item.report.isClosed : false
+                            "
                             clearable
                             :items="configurations"
                             item-text="title"
@@ -118,9 +140,29 @@
                       <v-col cols="12" md="4">
                         <v-checkbox
                           v-model="item.principal"
-                          :disabled="item.report ? item.report.isClosed:false"
+                          :disabled="item.report ? item.report.isClosed : false"
                           name="principal"
                           label="Principal"
+                        />
+                      </v-col>
+                    </v-row>
+                    <v-row v-if="filter.reportConfigurationId > 0">
+                      <v-col cols="6">
+                        <v-select
+                          id="defaultResponsibleType"
+                          v-model="item.defaultResponsibleType"
+                          name="defaultResponsibleType"
+                          :items="responsibleTypesList"
+                          item-text="text"
+                          item-value="id"
+                          label="Default Representation Type"
+                        />
+                      </v-col>
+                      <v-col cols="6">
+                        <v-checkbox
+                          v-model="item.useLoggedInUserAsDefault"
+                          name="useLoggedInUserAsDefault"
+                          label="Use Logged In User as default responsible"
                         />
                       </v-col>
                     </v-row>
@@ -131,12 +173,22 @@
                   <v-btn
                     color="success"
                     text
-                    :disabled="item.report ? item.report.isClosed : false && !valid"
+                    :disabled="
+                      item.report ? item.report.isClosed : false && !valid
+                    "
                     @click="upsertSignature()"
                   >
                     Save
                   </v-btn>
-                  <v-btn color="default" text @click="reset(); item = { principal: false }; dialog = false">
+                  <v-btn
+                    color="default"
+                    text
+                    @click="
+                      reset();
+                      item = { principal: false };
+                      dialog = false;
+                    "
+                  >
                     Cancel
                   </v-btn>
                 </v-card-actions>
@@ -155,8 +207,11 @@
               clearable
             />
           </v-col>
-          <v-col cols="12" :md="filter.inConfigurationOnly ? 2:7">
-            <v-switch v-model="filter.inConfigurationOnly" label="In Configuration" />
+          <v-col cols="12" :md="filter.inConfigurationOnly ? 2 : 7">
+            <v-switch
+              v-model="filter.inConfigurationOnly"
+              label="In Configuration"
+            />
           </v-col>
           <v-col v-if="filter.inConfigurationOnly" cols="12" md="5">
             <v-autocomplete
@@ -170,20 +225,26 @@
           </v-col>
         </v-row>
       </template>
-      <template #item.actions="{ item }">
+      <template #[`item.actions`]="{ item }">
         <v-icon
           small
           color="primary"
           class="mr-2"
-          @click="selectItem(item); dialog = true"
+          @click="
+            selectItem(item);
+            dialog = true;
+          "
         >
           mdi-pencil
         </v-icon>
         <v-icon
           small
-          :disabled="item.report ? item.report.isClosed:false"
+          :disabled="item.report ? item.report.isClosed : false"
           color="error"
-          @click="selectItem(item); dialogRemove = true"
+          @click="
+            selectItem(item);
+            dialogRemove = true;
+          "
         >
           mdi-delete
         </v-icon>
@@ -201,12 +262,14 @@ import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
 import { Report, ReportConfiguration, FilterType, Signature } from '~/types'
 import { ReportConfigurationState } from '~/store/configurations'
 import { ReportsState } from '~/store/reportstrore'
+import { responsibleTypesString as responsibleTypes } from '@/types/Signatures'
+import { ResponsibleType } from '~/services/api'
 
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider
-  }
+    ValidationProvider,
+  },
 })
 export default class SignaturesPage extends mixins(InnerPageMixin) {
   dialog: boolean = false
@@ -216,47 +279,49 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
     filterText: '',
     inConfigurationOnly: undefined,
     reportId: undefined,
-    reportConfigurationId: undefined
+    reportConfigurationId: undefined,
   }
+
+  responsibleTypesList = responsibleTypes
 
   headers: any[] = [
     {
       text: 'Id',
       value: 'id',
       sortable: true,
-      align: 'center'
+      align: 'center',
     },
     {
       text: 'Title',
       value: 'title',
       sortable: true,
-      align: 'left'
+      align: 'left',
     },
     {
       text: 'Annotation',
       value: 'annotation',
       sortable: true,
-      align: 'left'
+      align: 'left',
     },
     {
       text: 'Principal',
       value: 'responsibleName',
       sortable: true,
-      align: 'center'
+      align: 'center',
     },
     {
       text: '',
       value: 'actions',
       sortable: false,
-      align: 'center'
-    }
+      align: 'center',
+    },
   ]
 
   selectedItem: Signature = {} as Signature
   item: any = {
     title: '',
     annotation: '',
-    responsableType: 0,
+    responsableType: ResponsibleType.Inspector,
     responsibleName: '',
     designation: '',
     remarks: '',
@@ -264,13 +329,14 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
     signature: '',
     principal: true,
     reportId: 0,
-    reportConfigurationId: 0,
-    order: 0
+    reportConfigurationId: this.filter?.reportConfigurationId ?? 0,
+    order: 0,
+    defaultResponsibleType: '',
+    useLoggedInUserAsDefault: false,
   }
 
   get reports (): Report[] {
-    return (this.$store.state.reportstrore as ReportsState)
-      .reportList
+    return (this.$store.state.reportstrore as ReportsState).reportList
   }
 
   get configurations (): ReportConfiguration[] {
@@ -279,59 +345,96 @@ export default class SignaturesPage extends mixins(InnerPageMixin) {
   }
 
   get signatures (): SignatureDTO[] {
-    return (this.$store.state.signatures as SignatureState)
-      .signaturesList
+    return (this.$store.state.signatures as SignatureState).signaturesList || []
   }
 
   selectItem (item: Signature): void {
     this.selectedItem = item
-    this.$store.dispatch('signatures/getSignatureById', this.selectedItem.id, { root: true })
-      .then((resp) => { this.item = resp })
+    this.$store
+      .dispatch('signatures/getSignatureById', this.selectedItem.id, {
+        root: true,
+      })
+      .then((resp) => {
+        this.item = resp
+      })
   }
 
-  asyncData ({ query }:any) {
+  asyncData ({ query }: any) {
     const filter: FilterType = {
       filterText: '',
-      inConfigurationOnly: query.configurationonly === 'true' ? true : false ?? true,
+      inConfigurationOnly:
+        query.configurationonly === 'true' ? true : false ?? true,
       reportId: query.reportid ? parseInt(query.reportid) : undefined,
-      reportConfigurationId: query.configurationid ? parseInt(query.configurationid) : undefined
+      reportConfigurationId: query.configurationid
+        ? parseInt(query.configurationid)
+        : undefined,
     }
     return {
-      filter
+      filter,
     }
   }
 
   async fetch () {
     this.loading = true
-    await Promise.all([this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: false, descending: true }, { root: true }),
-      this.$store.dispatch('configurations/getConfigurations', '', { root: true }),
-      this.$store.dispatch('signatures/getSignatures', this.filter, { root: true })])
+    await Promise.all([
+      this.$store.dispatch(
+        'reportstrore/getReports',
+        {
+          filter: '',
+          closed: this.$route.query.closed,
+          orderBy: 'date',
+          myreports: false,
+          descending: true,
+        },
+        { root: true }
+      ),
+      this.$store.dispatch('configurations/getConfigurations', '', {
+        root: true,
+      }),
+      this.$store.dispatch('signatures/getSignatures', this.filter, {
+        root: true,
+      }),
+    ])
     this.loading = false
   }
 
   @Watch('filter', { deep: true })
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async onFilterChanged (value: FilterType) {
-    await this.$store.dispatch('signatures/getSignatures', value, { root: true })
+    await this.$store.dispatch('signatures/getSignatures', value, {
+      root: true,
+    })
   }
 
   deleteSignature () {
-    this.$store.dispatch('signatures/deleteSignature', this.selectedItem.id, { root: true })
+    this.$store
+      .dispatch('signatures/deleteSignature', this.selectedItem.id, {
+        root: true,
+      })
       .then(() => {
         this.dialog = false
       })
   }
 
   async upsertSignature () {
-    if (this.item.id > 0) { await this.$store.dispatch('signatures/updateSignature', this.item, { root: true }) } else {
-      await this.$store.dispatch('signatures/createSignature', this.item, { root: true })
-      await this.$store.dispatch('signatures/getSignatures', {}, { root: true })
+    if (this.item.id > 0) {
+      await this.$store.dispatch('signatures/updateSignature', this.item, {
+        root: true,
+      })
+    } else {
+      await this.$store.dispatch('signatures/createSignature', this.item, {
+        root: true,
+      })
     }
+    await this.$store.dispatch(
+      'signatures/getSignatures',
+      this.filter,
+      { root: true }
+    )
     this.dialog = false
   }
 }
 </script>
 
 <style>
-
 </style>

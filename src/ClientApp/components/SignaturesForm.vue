@@ -124,7 +124,7 @@
 import { defineComponent } from '@nuxtjs/composition-api';
 import { oneOf } from 'vee-validate/dist/rules';
 import { ValidationProvider, extend } from 'vee-validate';
-import { ResponsibleType } from "@/services/api";
+import { responsibleTypes } from '@/types/Signatures';
 import { SignatureQueryResult } from "~/services/api";
 import { useVModel } from "@vueuse/core";
 
@@ -158,17 +158,6 @@ export default defineComponent({
         signatures.value.splice(index, 1, item);
       }
     };
-
-    const responsibleTypes: ({ id: string; text: any } | undefined)[] =
-      Object.keys(ResponsibleType)
-        .map((key: any) => {
-          if (!isNaN(Number(key.toString()))) {
-            return undefined;
-          }
-
-          return { id: ResponsibleType[key], text: key };
-        })
-        .filter((i) => i !== undefined);
 
     return {
       signatures,

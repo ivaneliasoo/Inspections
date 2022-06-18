@@ -53,12 +53,15 @@ namespace Inspections.API.Features.ReportsConfiguration.Handlers
             }
 
             reportConfig.Type = request.Type;
-            reportConfig.RemarksLabelText = request.RemarksLabelText;
+            reportConfig.RemarksLabelText = request.RemarksLabelText ?? "Remarks";
             reportConfig.Title = request.Title;
             reportConfig.FormName = request.FormName;
             reportConfig.PrintSectionId = request.PrintSectionId;
             reportConfig.CheckListMetadata.Display = request.Display;
             reportConfig.TemplateName = request.TemplateName;
+            reportConfig.UseNotes = request.UseNotes;
+            reportConfig.UseCheckList = request.UseCheckList;
+            reportConfig.UsePhotoRecord = request.UsePhotoRecord;
             await _reportConfigurationsRepository.UpdateAsync(reportConfig).ConfigureAwait(false);
             return true;
         }

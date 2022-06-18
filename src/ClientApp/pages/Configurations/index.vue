@@ -41,7 +41,7 @@
           </v-btn>
         </v-toolbar>
       </template>
-      <template #item.actions="{ item }">
+      <template #[`item.actions`]="{ item }">
         <v-icon
           color="primary"
           class="mr-2"
@@ -62,7 +62,7 @@
           mdi-page-previous-outline
         </v-icon>
       </template>
-      <template #item.type="{ item }">
+      <template #[`item.type`]="{ item }">
         {{ item.type === 0 ? 'Inspection':'Unkown' }}
       </template>
     </v-data-table>
@@ -160,7 +160,7 @@ export default class ReportsConfigurationPage extends mixins(InnerPageMixin) {
   ]
 
   get configs (): ReportConfiguration[] {
-    return (this.$store.state.configurations as ReportConfigurationState).configurations
+    return (this.$store.state.configurations as ReportConfigurationState).configurations || []
   }
 
   async deleteConfig () {

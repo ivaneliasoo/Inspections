@@ -15,9 +15,13 @@ public class ReportsBuilder
 
         _report = new Report(configuration.Title, configuration.FormName,
             string.IsNullOrWhiteSpace(configuration.RemarksLabelText) ? "Remarks" : configuration.RemarksLabelText,
-            configuration.Id);
+            configuration.Id, configuration.UsePhotoRecord);
+        
+        this.WithDefaultNotes(configuration.UseNotes);
 
-        _report.AddCheckList(configuration.ChecksDefinition);
+        if(configuration.ChecksDefinition is not null || configuration.UseCheckList)
+            _report.AddCheckList(configuration.ChecksDefinition!);
+        
         _report.AddSignature(configuration.SignatureDefinitions, userName);
     }
     
@@ -36,16 +40,15 @@ public class ReportsBuilder
         return this;
     }
 
-    public ReportsBuilder WithDefaultNotes(bool addDefaultNOtes)
+    private void WithDefaultNotes(bool addDefaultNotes)
     {
+        if(!addDefaultNotes) return;
         var note = new Note()
         {
             Text = "Premise owner to rectify items marked \"not acceptable\"", NeedsCheck = true, Checked = true
         };
 
         _report.AddNote(note);
-
-        return this;
     }
 
     private void Reset()

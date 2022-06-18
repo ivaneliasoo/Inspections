@@ -17,4 +17,7 @@ export interface ReportConfiguration {
     templateName: string;
     checkListPrintingMetadata: CheckListPrintingMetadata;
     display: string;
+    useNotes: boolean;
+    useCheckList: boolean;
+    usePhotoRecord: boolean;
 }

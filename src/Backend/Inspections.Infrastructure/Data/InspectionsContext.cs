@@ -34,8 +34,8 @@ public class InspectionsContext : DbContext
         _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
     }
 
-    public DbSet<Report> Reports { get; set;} = default!;
-    public DbSet<ReportForm> AvailableForms { get; set;} = default!;
+    public DbSet<Report> Reports { get; set; } = default!;
+    public DbSet<ReportForm> AvailableForms { get; set; } = default!;
     public DbSet<CheckList> CheckLists { get; set; } = default!;
     public DbSet<CheckListItem> CheckListItems { get; set; } = default!;
     public DbSet<Note> Notes { get; set; } = default!;
@@ -44,7 +44,9 @@ public class InspectionsContext : DbContext
     public DbSet<Signature> Signatures { get; set; } = default!;
     public DbSet<User> Users { get; set; } = default!;
     public DbSet<Address> Addresses { get; set; } = default!;
+
     public DbSet<EMALicense> Licenses { get; set; } = default!;
+
     // public DbSet<OperationalReadings> OperationalReadings { get; set; } = default!;
     public DbSet<PrintSection> PrintSections { get; set; } = default!;
 
@@ -52,12 +54,12 @@ public class InspectionsContext : DbContext
     public DbSet<CurrentTable> CurrentTable { get; set; } = default!;
     public DbSet<Template> Template { get; set; } = default!;
 
-        public DbSet<SchedJob> SchedJob { get; set; } = default!;
-        public DbSet<Job> Job { get; set; } = default!;
-        public DbSet<Team> Team { get; set; } = default!;
-        public DbSet<Options> Options { get; set; } = default!;
-        public DbSet<CostSheet> CostSheet { get; set; } = default!;
-        public DbSet<CSTemplate> CSTemplate { get; set; } = default!;
+    public DbSet<SchedJob> SchedJob { get; set; } = default!;
+    public DbSet<Job> Job { get; set; } = default!;
+    public DbSet<Team> Team { get; set; } = default!;
+    public DbSet<Options> Options { get; set; } = default!;
+    public DbSet<CostSheet> CostSheet { get; set; } = default!;
+    public DbSet<CSTemplate> CSTemplate { get; set; } = default!;
 
     //Queries
     public DbSet<ResumenCheckList> ResumenCheckLists { get; set; } = default!;
@@ -95,7 +97,7 @@ public class InspectionsContext : DbContext
             .ToTable("ResumenReportConfiguration", m => m.ExcludeFromMigrations());
 
         modelBuilder.Entity<SchedJob>()
-            .HasKey(sj => new { sj.team, sj.date });
+            .HasKey(sj => new {sj.team, sj.date});
 
         modelBuilder.Entity<CostSheet>()
             .Property(p => p.id)

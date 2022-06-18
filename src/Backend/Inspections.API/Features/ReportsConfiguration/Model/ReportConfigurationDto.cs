@@ -24,6 +24,9 @@ public class ReportConfigurationDto
         CheckListMetadata = reportConfiguration.CheckListMetadata;
         TemplateName = reportConfiguration.TemplateName;
         Display = reportConfiguration.CheckListMetadata.Display;
+        UseNotes = reportConfiguration.UseNotes;
+        UseCheckList = reportConfiguration.UseCheckList;
+        UsePhotoRecord = reportConfiguration.UsePhotoRecord;
     }
 
     public int Id { [UsedImplicitly] get; }
@@ -38,4 +41,7 @@ public class ReportConfigurationDto
     public int? PrintSectionId { [UsedImplicitly] get; }
     public string? TemplateName { [UsedImplicitly] get; }
     public CheckListDisplay Display { [UsedImplicitly] get;  }
+    public bool UseNotes { get; }
+    public bool UseCheckList { get;  }
+    public bool UsePhotoRecord { get; }
 }

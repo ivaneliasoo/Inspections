@@ -51,20 +51,34 @@
             />
           </ValidationProvider>
         </v-col>
-        <v-col cols="12" md="6">
-          <ValidationProvider v-slot="{ errors }" rules="required">
-            <v-text-field
-              id="txtRemarksLabelText"
-              v-model="newConfig.remarksLabelText"
-              :error-messages="errors"
-              label="Remarks Label Text"
-            />
+        <v-col cols="12" md="3">
+          <v-text-field
+            id="txtRemarksLabelText"
+            v-model="newConfig.remarksLabelText"
+            label="Remarks Label Text"
+          />
+        </v-col>
+        <v-col cols="12" md="2">
+          <ValidationProvider>
+            <v-switch v-model="newConfig.useCheckList" label="Use CheckList" />
           </ValidationProvider>
         </v-col>
         <v-col cols="12" md="2">
-          <v-switch v-model="newConfig.inactive" label="Inactive" />
+          <ValidationProvider>
+            <v-switch v-model="newConfig.usePhotoRecord" label="Use PhotoRecord" />
+          </ValidationProvider>
         </v-col>
-        <v-col cols="12" justify="space-between" md="4">
+        <v-col cols="12" md="2">
+          <ValidationProvider>
+            <v-switch v-model="newConfig.useNotes" label="Use Notes" />
+          </ValidationProvider>
+        </v-col>
+        <v-col cols="12" md="1">
+          <ValidationProvider>
+            <v-switch v-model="newConfig.inactive" label="Inactive" />
+          </ValidationProvider>
+        </v-col>
+        <v-col cols="12" justify="space-between" md="2">
           <nuxt-link :to="`/Configurations/${newConfig.id}/FormsSettingsList`">
             <v-btn color="primary" outlined>
               Configure Forms
@@ -212,7 +226,10 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
       signatureDefinitions: this.newConfig.signatureDefinitions,
       printSectionId: this.newConfig.printSectionId,
       display: this.newConfig.display,
-      templateName: this.newConfig.templateName
+      templateName: this.newConfig.templateName,
+      useNotes: this.newConfig.useNotes,
+      useCheckList: this.newConfig.useCheckList,
+      usePhotoRecord: this.newConfig.usePhotoRecord
     }
 
     if (parseInt(self.$route.params.id) > 0) {

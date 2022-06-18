@@ -38,6 +38,10 @@ namespace Inspections.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog((hostContext, loggerConfiguration) =>
+                {
+                    loggerConfiguration.ReadFrom.Configuration(hostContext.Configuration);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
@@ -45,10 +49,7 @@ namespace Inspections.API
                     .UseUrls("http://0.0.0.0:5000")
                     //.UseUrls("https://0.0.0.0:443", "http://0.0.0.0:80", "https://0.0.0.0:5001", "http://0.0.0.0:5000")
 #endif
-                    .UseSerilog((hostContext, loggerConfiguration) =>
-                    {
-                        loggerConfiguration.ReadFrom.Configuration(hostContext.Configuration);
-                    })
+                    
                     .UseStartup<Startup>();
                 });
     }

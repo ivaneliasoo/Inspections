@@ -20,6 +20,8 @@ public class SignatureDto
     public int? ReportId { get; }
     public int? ReportConfigurationId { get; }
     public short Order { get; }
+    public ResponsibleType? DefaultResponsibleType { get; }
+    public bool UseLoggedInUserAsDefault { get; }
 
     public SignatureDto(Signature signature)
     {
@@ -40,5 +42,7 @@ public class SignatureDto
         Order = signature.Order;
         ReportConfigurationId = signature.ReportConfigurationId;
         ReportId = signature.ReportId;
+        UseLoggedInUserAsDefault = signature.UseLoggedInUserAsDefault;
+        DefaultResponsibleType = signature.DefaultResponsibleType;
     }
 }

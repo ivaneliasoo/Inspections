@@ -17,7 +17,9 @@ namespace Inspections.API.Features.Signatures.Commands
                                    DateTimeOffset date,
                                    bool principal,
                                    string drawnSign,
-                                   short order)
+                                   short order,
+                                   ResponsibleType? defaultResponsibleType,
+                                   bool useLoggedInUserAsDefault)
         {
             Id = id;
             Title = title;
@@ -30,6 +32,8 @@ namespace Inspections.API.Features.Signatures.Commands
             Principal = principal;
             DrawnSign = drawnSign;
             Order = order;
+            DefaultResponsibleType = defaultResponsibleType;
+            UseLoggedInUserAsDefault = useLoggedInUserAsDefault;
         }
 
         private EditSignatureCommand() { }
@@ -46,5 +50,7 @@ namespace Inspections.API.Features.Signatures.Commands
         public string? DrawnSign { get; }
         // ReSharper disable once MemberCanBePrivate.Global
         public short Order { [UsedImplicitly] get; }
+        public ResponsibleType? DefaultResponsibleType { get; }
+        public bool UseLoggedInUserAsDefault { get; }
     }
 }

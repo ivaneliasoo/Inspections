@@ -32,7 +32,7 @@ public class AddReportConfigurationCommandHandler : IRequestHandler<AddReportCon
         var repoConfig = new ReportConfiguration()
         {
             Type = request.Type,
-            RemarksLabelText = request.RemarksLabelText,
+            RemarksLabelText = request.RemarksLabelText ?? "Remarks",
             Title = request.Title,
             FormName = request.FormName,
             SignatureDefinitions = PrepareForConfiguration(signatures),
@@ -50,6 +50,9 @@ public class AddReportConfigurationCommandHandler : IRequestHandler<AddReportCon
             MarginRight = "70px",
             PrintSectionId = request.PrintSectionId,
             TemplateName = request.TemplateName,
+            UseNotes = request.UseNotes,
+            UseCheckList = request.UseCheckList,
+            UsePhotoRecord = request.UsePhotoRecord,
         };
         
         if (request.ChecksDefinition is {})

@@ -20,6 +20,7 @@ public class ReportQueryResult
     public string FormName { get; set; } = default!;
     public string? RemarksLabelText { get; set; }
     public bool IsClosed { get; set; }
+    public bool NeedsPhotoRecord { get; set; }
     public IEnumerable<FormResult> Forms { get; set; } = default!;
     public IEnumerable<SignatureQueryResult> Signatures { get; set; } = default!;
     public IEnumerable<CheckListQueryResult> CheckLists { get; set; } = default!;

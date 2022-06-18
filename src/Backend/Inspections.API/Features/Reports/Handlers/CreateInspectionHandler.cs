@@ -42,7 +42,6 @@ public class CreateInspectionHandler : IRequestHandler<CreateReportCommand, int>
 
         var reportsBuilder = new ReportsBuilder(cfg, _userNameResolver.FullName);
         var newReport = reportsBuilder
-            .WithDefaultNotes(false)
             .WithName(reportName)
             .WithForms(cfgForms)
             .Build();

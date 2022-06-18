@@ -2,6 +2,7 @@
 using Inspections.API.Features.Signatures.Commands;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Core.Interfaces.Repositories;
+using Inspections.Infrastructure.ApplicationServices;
 using MediatR;
 
 namespace Inspections.API.Features.Signatures.Handlers;
@@ -9,10 +10,12 @@ namespace Inspections.API.Features.Signatures.Handlers;
 public class EditSignatureCommandHandler : IRequestHandler<EditSignatureCommand, bool>
 {
     private readonly ISignaturesRepository _signaturesRepository;
+    private readonly IUserNameResolver _userNameResolver;
 
-    public EditSignatureCommandHandler(ISignaturesRepository signaturesRepository)
+    public EditSignatureCommandHandler(ISignaturesRepository signaturesRepository, IUserNameResolver userNameResolver)
     {
         _signaturesRepository = signaturesRepository ?? throw new ArgumentNullException(nameof(signaturesRepository));
+        _userNameResolver = userNameResolver ?? throw new ArgumentNullException(nameof(userNameResolver));
     }
 
     public async Task<bool> Handle(EditSignatureCommand request, CancellationToken cancellationToken)
@@ -25,10 +28,10 @@ public class EditSignatureCommandHandler : IRequestHandler<EditSignatureCommand,
         newSignature.Designation = request.Designation;
         newSignature.Date = request.Date;
         newSignature.Principal = request.Principal;
-        var determinedResponsibleType = request.Title.Contains("LEW", StringComparison.OrdinalIgnoreCase) ? ResponsibleType.LEW : request.ResponsibleType;
-        newSignature.Responsible = new Responsible() { Name = request.ResponsibleName, Type = determinedResponsibleType };
-        newSignature.IsConfiguration = false;
         newSignature.DrawnSign = request.DrawnSign;
+        newSignature.DefaultResponsibleType = request.DefaultResponsibleType;
+        newSignature.UseLoggedInUserAsDefault = request.UseLoggedInUserAsDefault;
+        newSignature.SetDefaultResponsible(_userNameResolver.FullName);
 
         await _signaturesRepository.UpdateAsync(newSignature).ConfigureAwait(false);
 

@@ -51,7 +51,12 @@ public class ReportsRepository : IReportsRepository
 
     public async Task<Report> AddAsync(Report entity)
     {
+        // FIX: Temporal fix. need to focus on more important things
+        var tmpSignatures = entity.CloneSignatures();
+        entity.ClearSignatures();
         await _context.AddAsync(entity);
+        await _context.SaveChangesAsync();
+        entity.AddSignature(tmpSignatures);
         await _context.SaveChangesAsync();
 
         return entity;
@@ -93,8 +98,8 @@ public class ReportsRepository : IReportsRepository
                 .ToListAsync();
 
         return await query.AsNoTracking()
-            .Where(r => (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName))
-                        && (EF.Functions.Like(r.Name, $"%{filter}%") || EF.Functions.Like(r.License!.Name, $"%{filter}%")))
+            .Where(r => (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)))
+            .Where (r => (EF.Functions.Like(r.Name, $"%{filter}%") || EF.Functions.Like(r.License!.Name, $"%{filter}%")))
             .ProjectTo<ReportListItem>(config)
             .ToListAsync();
     }

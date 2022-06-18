@@ -10,7 +10,7 @@ namespace Inspections.API.Features.Reports.Commands
         {
             Guard.Against.NegativeOrZero(reportId, nameof(reportId));
             Guard.Against.NegativeOrZero(checkListId, nameof(checkListId));
-            Guard.Against.OutOfRange<CheckValue>(newValue, nameof(newValue));
+            Guard.Against.EnumOutOfRange<CheckValue>(newValue, nameof(newValue));
             ReportId = reportId;
             CheckListId = checkListId;
             NewValue = (CheckValue)newValue;

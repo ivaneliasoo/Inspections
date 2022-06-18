@@ -10,8 +10,8 @@ export type SignatureState = ReturnType<typeof state>
 
 export const mutations: MutationTree<SignatureState> = {
   SET_SIGNATURES_LIST: (state, value: SignatureDTO[]) => (state.signaturesList = value),
-  REMOVE_SIGNATURE: (state, value: number) => (state.signaturesList = state.signaturesList.filter(s => s.id !== value)),
-  ADD_SIGNATURE: (state, value: SignatureDTO) => (state.signaturesList.splice(0, 0, value)),
+  REMOVE_SIGNATURE: (state, value: number) => (state.signaturesList = state.signaturesList?.filter(s => s.id !== value)),
+  ADD_SIGNATURE: (state, value: SignatureDTO) => (state.signaturesList?.splice(0, 0, value)),
   UPDATE_SIGNATURE: (state, value: SignatureDTO) => {
     const index = state.signaturesList.findIndex(s => s.id === value.id)
     state.signaturesList.splice(index, 1, value)

@@ -1,6 +1,5 @@
 using Ardalis.GuardClauses;
 using Inspections.Core.Domain.CheckListAggregate;
-using Inspections.Core.Domain.Forms;
 using Inspections.Core.Domain.SignaturesAggregate;
 using Inspections.Shared;
 
@@ -13,11 +12,12 @@ public class Report : Entity<int>, IAggregateRoot
     public string Address { get; private set; } = default!;
     public int? EMALicenseId { get; set; }
     public EMALicense? License { get; private set; }
-    public DateTimeOffset Date { get; private set; } = default!;
-    public bool IsClosed { get; private set; } = default!;
-    public string Title { get; private set; } = default!;
-    public string FormName { get; private set; } = default!;
-    public string? RemarksLabelText { get; private set; }
+    public DateTimeOffset Date { get; private set; }
+    public bool IsClosed { get; private set; }
+    public string Title { get; } = default!;
+    public string FormName { get; } = default!;
+    public string? RemarksLabelText { get; }
+    public bool NeedsPhotoRecord { get; }
     private readonly List<Signature> signatures = new();
     public IReadOnlyCollection<Signature> Signatures => signatures;
     private readonly List<Note> notes = new();
@@ -28,13 +28,12 @@ public class Report : Entity<int>, IAggregateRoot
 
     private readonly List<PhotoRecord> photoRecords = new();
     public IReadOnlyCollection<PhotoRecord> PhotoRecords => photoRecords;
-    
+
     private readonly List<ReportForm> _availableForms = new();
     public IReadOnlyCollection<ReportForm> AvailableForms => _availableForms;
 
     internal Report()
     {
-
     }
 
     public Report(string name, string address, EMALicense? license, DateTimeOffset date, int reportConfigurationId)
@@ -51,12 +50,14 @@ public class Report : Entity<int>, IAggregateRoot
         Name = name;
     }
 
-    public Report(string title, string formName, string remarksLabelText, int reportConfigurationId)
+    public Report(string title, string formName, string remarksLabelText, int reportConfigurationId,
+        bool needsPhotoRecord)
         : this(string.Empty, string.Empty, null, DateTimeOffset.UtcNow, reportConfigurationId)
     {
         Title = title;
         FormName = formName;
         RemarksLabelText = remarksLabelText;
+        NeedsPhotoRecord = needsPhotoRecord;
     }
 
     public void Edit(string name, string address, EMALicense? license, DateTimeOffset date)
@@ -66,6 +67,11 @@ public class Report : Entity<int>, IAggregateRoot
         License = license;
         EMALicenseId = license?.Id;
         Date = date;
+    }
+
+    public void ClearSignatures()
+    {
+        this.signatures.Clear();
     }
 
     public bool Completed => checkList.All(c => c.Completed);
@@ -100,21 +106,20 @@ public class Report : Entity<int>, IAggregateRoot
         photoRecords.Remove(photo);
     }
 
-    internal void AddCheckList(IEnumerable<CheckList> checkList)
+    internal void AddCheckList(IEnumerable<CheckList> newCheckList)
     {
-        foreach (var check in checkList)
+        foreach (var check in newCheckList)
         {
             this.checkList.Add(check.CloneForReport());
         }
-
     }
 
-    internal void RemoveCheckList(CheckList checkList)
+    internal void RemoveCheckList(CheckList newCheckList)
     {
-        this.checkList.Remove(checkList);
+        this.checkList.Remove(newCheckList);
     }
 
-    internal void AddSignature(IEnumerable<Signature> signature, string userName = "")
+    public void AddSignature(IEnumerable<Signature> signature, string userName = "")
     {
         foreach (var sign in signature)
         {
@@ -139,5 +144,10 @@ public class Report : Entity<int>, IAggregateRoot
     {
         Guard.Against.Null(configurationForms, nameof(configurationForms));
         _availableForms.AddRange(configurationForms);
+    }
+
+    public IList<Signature> CloneSignatures()
+    {
+        return new List<Signature>(signatures);
     }
 }

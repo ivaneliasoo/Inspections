@@ -56,7 +56,8 @@ namespace Inspections.Infrastructure.Queries
                     FROM ""Inspections"".""PrintSections""
                 ) AS ""P""
                     ON ""P"".""PrintSectionId"" = Config.""PrintSectionId""
-                    WHERE 1=1
+                    WHERE 1=1 
+                    AND Config.""Inactive"" = True
             ").Where(p => !p.Inactive && (EF.Functions.Like(p.Title, $" %{filter ?? string.Empty}%") || EF.Functions.Like(p.FormName, $"%{filter ?? string.Empty}%")));
         }
     }
