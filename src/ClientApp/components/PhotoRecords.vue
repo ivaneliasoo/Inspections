@@ -1,11 +1,13 @@
 <template>
   <v-card class="mx-auto" flat>
-    <v-row justify="space-around" align="end">
-      <v-col cols="6" class="text-right">
+    <v-row justify="center" align="end">
+      <!-- <v-col cols="6" class="text-right">
         Tap Camera Icon To Add Photos to report
-      </v-col>
-      <v-col :cols="2">
+      </v-col> -->
+      <v-col :cols="12">
         <v-file-input
+          class="input-file"
+          name="fileInputElement"
           ref="fileInputElement"
           color="primary accent-4"
           counter
@@ -14,7 +16,7 @@
           hide-input
           messages="Add Photos to Report"
           placeholder="Select your files"
-          prepend-icon="mdi-camera-plus"
+          prepend-icon="mdi-camera"
           outlined
           accept="image/*"
           :show-size="1000"
@@ -22,7 +24,7 @@
           @click:clear="filesUrls = []"
         />
       </v-col>
-      <v-col cols="4" />
+      <!-- <v-col cols="4" /> -->
     </v-row>
     <v-divider />
     <v-row>
@@ -169,4 +171,10 @@ export default class PhotoRecords extends Vue {
 </script>
 
 <style scoped>
+::v-deep .input-file {
+  justify-content: center;
+}
+::v-deep button.v-icon.notranslate.v-icon--link.mdi.mdi-camera.theme--light {
+    font-size: 58px;
+}
 </style>

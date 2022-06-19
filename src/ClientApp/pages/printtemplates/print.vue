@@ -96,10 +96,13 @@ export default {
       const pagesLength = Math.ceil(photoRecords.length / 8)
       const photoRecordsPages = [[]]
       let currentPage = 0
-      photoRecords.forEach((photo, index) => {
-        if (index > 0 && (index) % 8 === 0) { photoRecordsPages.push([]); currentPage++ }
-        if (photoRecordsPages[currentPage]) { photoRecordsPages[currentPage].push(photo) }
-      })
+
+      if (photoRecords && photoRecords.length > 0) {
+        photoRecords.forEach((photo, index) => {
+          if (index > 0 && (index) % 8 === 0) { photoRecordsPages.push([]); currentPage++ }
+          if (photoRecordsPages[currentPage]) { photoRecordsPages[currentPage].push(photo) }
+        })
+      }
 
       if (pagesLength % 2 !== 0) {
         photoRecordsPages[currentPage].push({ thumbnailBase64: '', label: '' })
@@ -107,7 +110,10 @@ export default {
 
       let operationalReadings = {}
       if (result) {
-        operationalReadings = result.forms.filter(f => f.name === 'OperationalReadings')[0].values
+        const ors = result.forms.filter(f => f.name === 'OperationalReadings')
+        if (ors && ors.length > 0) {
+          operationalReadings = ors[0].data
+        }
       }
 
       return {

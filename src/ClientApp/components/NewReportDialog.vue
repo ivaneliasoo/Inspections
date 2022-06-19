@@ -1,5 +1,5 @@
 <template>
-  <message-dialog v-model="value" :actions="[]">
+  <message-dialog v-model="localValue" :actions="[]">
       <template v-slot:title="{}">
         New Report
       </template>
@@ -28,7 +28,7 @@
             </v-col>
         </v-col>
       </v-row>
-      
+
         <v-row justify="center" align="center" v-for="item in configurations"
               :key="item.id">
           <v-col>
@@ -38,45 +38,6 @@
             </v-card>
           </v-col>
         </v-row>
-      
-      
-      <!-- <v-data-iterator
-        v-if="!creatingReport"
-        :items="configurations"
-        :search="search"
-        :disable-pagination="configurations.length<=3"
-        :hide-default-footer="configurations.length<=3"
-      >
-        <template v-slot:default="props">
-          <v-row>
-            <v-col
-              v-for="item in props.items"
-              :key="item.id"
-              cols="12"
-              sm="6"
-              md="4"
-              lg="3"
-            >
-              <v-card ripple @click="configuration = item.id; createReport()">
-                <v-card-title class="text-center">
-                  <v-row>
-                    <v-col class="text-center">
-                      {{ item.title }}
-                    </v-col>
-                  </v-row>
-                </v-card-title>
-                <v-card-subtitle>
-                  <v-row>
-                    <v-col class="text-center">
-                      Creates a new Report With {{ item.title }} {{item.formName}} Configuration
-                    </v-col>
-                  </v-row>
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-          </v-row>
-        </template>
-      </v-data-iterator> -->
     </message-dialog>
 </template>
 
@@ -108,7 +69,7 @@ export default class NewReportDialog extends Vue {
     const reportId = await this.$store.dispatch('reportstrore/createReport', this.selectedConfiguration, { root: true })
       .then((resp) => {
         this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: true, descending: true }, { root: true })
-        this.$emit('input', false)
+        this.localValue = false
         this.$emit('report-created', resp)
       })
     await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: reportId }, { root: true })
@@ -117,7 +78,7 @@ export default class NewReportDialog extends Vue {
     } finally {
       this.creatingReport = false
     }
-    
+
   }
 
   get configurations (): ReportConfiguration[] {
@@ -127,6 +88,14 @@ export default class NewReportDialog extends Vue {
   get selectedConfiguration() {
     return { reportType: 0, configurationId: this.configuration }
   }
+
+  get localValue() {
+    return this.value
+  }
+  set localValue(value: boolean) {
+    this.$emit('input', value)
+  }
+
 }
 </script>
 

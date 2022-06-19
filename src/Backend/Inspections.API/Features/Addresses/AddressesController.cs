@@ -25,6 +25,7 @@ public class AddressesController : ControllerBase
     public async Task<ActionResult<IEnumerable<AddressDto>>> GetAddresses(string? filter)
     {
         var result = await _context.Addresses
+            .Include(p => p.License)
             .Where(ad => EF.Functions.Like(ad.AddressLine, $"%{filter}%") ||
                          EF.Functions.Like(ad.Unit, $"%{filter}%") ||
                          EF.Functions.Like(ad.Country, $"%{filter}%") ||

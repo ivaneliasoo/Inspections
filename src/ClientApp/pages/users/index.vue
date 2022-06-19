@@ -6,10 +6,10 @@
       message="This operation will remove this User and all data related"
       :code="selectedItem.id"
       :description="selectedItem.title"
-      @yes="deleteUser();"
+      @yes="deleteUser()"
     />
     <v-data-table
-      :class="$device.isTablet ? 'tablet-text':''"
+      :class="$device.isTablet ? 'tablet-text' : ''"
       :items="users"
       item-key="userName"
       :search="filter.filterText"
@@ -29,7 +29,11 @@
             fab
             dark
             color="primary"
-            @click="dialog = true; isNew = true; item = { isAdmin: false }"
+            @click="
+              dialog = true;
+              isNew = true;
+              item = { isAdmin: false };
+            "
           >
             <v-icon dark>
               mdi-plus
@@ -51,7 +55,10 @@
                   <v-container>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="6">
-                        <ValidationProvider v-slot="{ errors }" rules="required">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                        >
                           <v-text-field
                             v-model="item.userName"
                             name="title"
@@ -62,7 +69,11 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col cols="12" md="6">
-                        <v-checkbox v-model="item.isAdmin" name="isAdmin" label="Administrator" />
+                        <v-checkbox
+                          v-model="item.isAdmin"
+                          name="isAdmin"
+                          label="Administrator"
+                        />
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
@@ -99,7 +110,10 @@
                     </v-row>
                     <v-row align="center" justify="space-between">
                       <v-col cols="12" md="6">
-                        <ValidationProvider v-slot="{ errors }" rules="required">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                        >
                           <v-text-field
                             v-model="item.name"
                             :error-messages="errors"
@@ -109,7 +123,10 @@
                         </ValidationProvider>
                       </v-col>
                       <v-col cols="12" md="6">
-                        <ValidationProvider v-slot="{ errors }" rules="required">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                        >
                           <v-text-field
                             v-model="item.lastName"
                             :error-messages="errors"
@@ -117,6 +134,22 @@
                             label="Last Name"
                           />
                         </ValidationProvider>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col>
+                        <v-btn color="primary" @click="showSignature = !showSignature">
+                          {{ showSignature ? 'Hide':'Show' }} Sign
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                    <v-row align="center" justify="center">
+                      <v-col>
+                        <SignaturePad
+                          v-if="showSignature"
+                          v-model="item.signature"
+                          :saved-data="item.signature"
+                        />
                       </v-col>
                     </v-row>
                   </v-container>
@@ -127,7 +160,13 @@
                     color="success"
                     text
                     :loading="loading"
-                    :disabled="item.report ? item.report.isClosed ? true:false : false && !valid"
+                    :disabled="
+                      item.report
+                        ? item.report.isClosed
+                          ? true
+                          : false
+                        : false && !valid
+                    "
                     @click="upsertUser()"
                   >
                     Save
@@ -135,7 +174,12 @@
                   <v-btn
                     color="default"
                     text
-                    @click="reset(); item = { principal: false }; dialog = false"
+                    @click="
+                      reset();
+                      item = { principal: false };
+                      showSignature = false;
+                      dialog = false;
+                    "
                   >
                     Cancel
                   </v-btn>
@@ -145,14 +189,18 @@
           </v-dialog>
         </v-toolbar>
       </template>
-      <template #item.actions="{ item }">
+      <template #[`item.actions`]="{ item }">
         <v-tooltip v-if="$auth.user.isAdmin" top>
           <template #activator="{ on }">
             <v-icon
               color="primary"
               class="mr-2"
               v-on="on"
-              @click="selectItem(item); isNew = false; dialog = true"
+              @click="
+                selectItem(item);
+                isNew = false;
+                dialog = true;
+              "
             >
               mdi-pencil
             </v-icon>
@@ -165,7 +213,10 @@
               :disabled="item.userName === $auth.user.userName"
               color="error"
               v-on="on"
-              @click="selectItem(item); dialogRemove = true"
+              @click="
+                selectItem(item);
+                dialogRemove = true;
+              "
             >
               mdi-delete
             </v-icon>
@@ -173,7 +224,7 @@
           <span>Delete</span>
         </v-tooltip>
       </template>
-      <template #item.isAdmin="{ item }">
+      <template #[`item.isAdmin`]="{ item }">
         <v-simple-checkbox v-model="item.isAdmin" disabled />
       </template>
     </v-data-table>
@@ -191,22 +242,23 @@ extend('password', {
   validate (value, { target }: any) {
     return value === target
   },
-  message: 'Password confirmation does not match'
+  message: 'Password confirmation does not match',
 })
 
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider
-  }
+    ValidationProvider,
+  },
 })
 export default class UserAdmin extends mixins(InnerPageMixin) {
   dialog: boolean = false
   dialogRemove: boolean = false
   loading: boolean = false
   confirmPassword: string = ''
+  showSignature: boolean = false
   filter: any = {
-    filterText: ''
+    filterText: '',
   }
 
   headers: any[] = [
@@ -214,32 +266,32 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
       text: 'UserName',
       value: 'userName',
       sortable: true,
-      align: 'left'
+      align: 'left',
     },
     {
       text: 'Name',
       value: 'name',
       sortable: true,
-      align: 'left'
+      align: 'left',
     },
     {
       text: 'Last Name',
       value: 'lastName',
       sortable: true,
-      align: 'left'
+      align: 'left',
     },
     {
       text: 'Admin',
       value: 'isAdmin',
       sortable: true,
-      align: 'center'
+      align: 'center',
     },
     {
       text: '',
       value: 'actions',
       sortable: false,
-      align: 'left'
-    }
+      align: 'left',
+    },
   ]
 
   selectedItem: User = {} as User
@@ -254,13 +306,15 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
     this.selectedItem = item
     this.$store
       .dispatch('users/getUserByName', this.selectedItem.userName, {
-        root: true
+        root: true,
       })
       .then(resp => (this.item = resp))
   }
 
   async fetch ({ error, $auth, store }: any) {
-    if (!$auth.user.isAdmin) { error({ statusCode: 403, message: 'Forbbiden' }) }
+    if (!$auth.user.isAdmin) {
+      error({ statusCode: 403, message: 'Forbbiden' })
+    }
     this.loading = true
     await store.dispatch('users/getUsers', {}, { root: true })
     this.loading = false
@@ -276,7 +330,9 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
 
   async upsertUser () {
     this.loading = true
-    if (!this.isNew) { await this.$store.dispatch('users/updateUser', this.item, { root: true }) } else {
+    if (!this.isNew) {
+      await this.$store.dispatch('users/updateUser', this.item, { root: true })
+    } else {
       await this.$store.dispatch('users/createUser', this.item, { root: true })
       await this.$store.dispatch('users/getUsers', {}, { root: true })
     }
@@ -288,7 +344,7 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
           userName: this.item.userName,
           currentPassword: '',
           newPassword: this.item.password,
-          newPasswordConfirmation: this.confirmPassword
+          newPasswordConfirmation: this.confirmPassword,
         } as ChangePasswordDTO,
         { root: true }
       )
@@ -297,6 +353,7 @@ export default class UserAdmin extends mixins(InnerPageMixin) {
     this.dialog = false
     this.isNew = true
     this.loading = false
+    this.showSignature = false
   }
 }
 </script>

@@ -94,6 +94,7 @@ public class UsersController : ControllerBase
             editedUser.LastName = user.LastName;
             editedUser.IsAdmin = user.IsAdmin;
             editedUser.LastEditedReport = user.LastEditedReport;
+            editedUser.Signature = user.Signature;
             _context.Entry(editedUser).State = EntityState.Modified;
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
@@ -125,7 +126,8 @@ public class UsersController : ControllerBase
             LastName = user.LastName,
             IsAdmin = user.IsAdmin,
             LastEditedReport = user.LastEditedReport,
-            Password = string.Empty
+            Password = string.Empty,
+            Signature = user.Signature
         };
         _context.Users.Add(newUser);
         try

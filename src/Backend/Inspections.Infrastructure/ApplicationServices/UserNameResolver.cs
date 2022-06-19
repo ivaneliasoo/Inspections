@@ -12,5 +12,6 @@ public class UserNameResolver : IUserNameResolver
     }
     public string UserName => _httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "pruebas";
     public string FullName => _httpContextAccessor.HttpContext?.User?.FindFirst("fullName")?.Value ?? "usuario pruebas";
+    public string Signature => _httpContextAccessor.HttpContext?.User?.FindFirst("fullName")?.Value ?? "usuario pruebas";
     public bool IsAdmin => _httpContextAccessor.HttpContext?.User?.HasClaim("IsAdmin", "true") ?? false;
 }

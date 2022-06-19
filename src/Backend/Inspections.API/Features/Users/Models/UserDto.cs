@@ -10,6 +10,7 @@ namespace Inspections.API.Features.Users.Models
         public string LastName { get; set; } = default!;
         public int? LastEditedReport { get; set; }
         public bool IsAdmin { get; set; }
+        public string? Signature { get; set; }
         public UserDto()
         {
 
@@ -23,6 +24,7 @@ namespace Inspections.API.Features.Users.Models
             LastName = user.LastName;
             LastEditedReport = user.LastEditedReport;
             IsAdmin = user.IsAdmin;
+            Signature = user.Signature;
         }
     }
 }

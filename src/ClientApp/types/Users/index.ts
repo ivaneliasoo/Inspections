@@ -11,4 +11,5 @@ export interface User {
   lastName: string;
   lastEditedReport: number | null;
   isAdmin: boolean;
+  signature?: string;
 }

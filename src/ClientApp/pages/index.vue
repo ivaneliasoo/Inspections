@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <v-row>
@@ -19,10 +18,10 @@
             :items="expiring"
             @dblclick:row="goToLicenses"
           >
-            <template #item.validityStart="{ item }">
+            <template #[`item.validityStart`]="{ item }">
               {{ parseDate(item.validityStart) }}
             </template>
-            <template #item.validityEnd="{ item }">
+            <template #[`item.validityEnd`]="{ item }">
               {{ parseDate(item.validityEnd) }}
             </template>
           </v-data-table>
@@ -43,10 +42,10 @@
             :items="expired"
             @dblclick:row="goToLicenses"
           >
-            <template #item.validityStart="{ item }">
+            <template #[`item.validityStart`]="{ item }">
               {{ parseDate(item.validityStart) }}
             </template>
-            <template #item.validityEnd="{ item }">
+            <template #[`item.validityEnd`]="{ item }">
               {{ parseDate(item.validityEnd) }}
             </template>
           </v-data-table>
@@ -128,8 +127,6 @@ export default class IndexPage extends Vue {
   }
 
   goToNewReport (event: any) {
-    console.log("event", event);
-    console.log("event", JSON.stringify(event));
     this.$router.push(`/reports/${event}`)
   }
 
@@ -164,3 +161,4 @@ export default class IndexPage extends Vue {
   color: #FF8F00 !important;
   background-color: rgb(255, 242, 242) !important;
 }
+</style>

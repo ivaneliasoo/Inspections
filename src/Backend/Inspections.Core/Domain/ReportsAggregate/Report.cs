@@ -17,7 +17,7 @@ public class Report : Entity<int>, IAggregateRoot
     public string Title { get; } = default!;
     public string FormName { get; } = default!;
     public string? RemarksLabelText { get; }
-    public bool NeedsPhotoRecord { get; }
+    public bool NeedsPhotoRecord { get; set; }
     private readonly List<Signature> signatures = new();
     public IReadOnlyCollection<Signature> Signatures => signatures;
     private readonly List<Note> notes = new();

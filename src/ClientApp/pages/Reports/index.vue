@@ -47,7 +47,7 @@
           </v-btn>
         </v-toolbar>
       </template>
-      <template #item.actions="{ item }">
+      <template #[`item.actions`]="{ item }">
         <v-tooltip top>
           <template #activator="{ on }">
             <v-btn
@@ -151,25 +151,25 @@
           <span>Edit Signatures Configuration for this report</span>
         </v-tooltip>
       </template>
-      <template #item.date="{ item }">
+      <template #[`item.date`]="{ item }">
         {{ formatDate(item.date) }}
       </template>
-      <template #item.photoRecords="{ item }">
+      <template #[`item.photoRecords`]="{ item }">
         {{ item.photoRecords.length }}
       </template>
-      <template #item.notes="{ item }">
+      <template #[`item.notes`]="{ item }">
         {{ item.notes.length }}
       </template>
-      <template #item.checkList="{ item }">
+      <template #[`item.checkList`]="{ item }">
         {{ item.checkList.length }}
       </template>
-      <template #item.signatures="{ item }">
+      <template #[`item.signatures`]="{ item }">
         {{ item.signatures.length }}
       </template>
-      <template #item.completed="{ item }">
+      <template #[`item.completed`]="{ item }">
         <v-simple-checkbox v-model="item.completed" disabled />
       </template>
-      <template #item.isClosed="{ item }">
+      <template #[`item.isClosed`]="{ item }">
         <v-simple-checkbox v-model="item.isClosed" disabled />
       </template>
     </v-data-table>

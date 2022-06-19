@@ -19,6 +19,10 @@ public class AddressDto
         LicenseId = address.LicenseId;
         Number = address.License?.Number;
         Validity = address.License?.Validity;
+        Name = address.License?.Name ?? string.Empty;
+        Amp = address.License?.Amp ?? 0;
+        Volt = address.License?.Volt ?? 0;
+        KVA = address.License?.KVA ?? 0;
         FormatedAddress = address.ToString();
     }
 

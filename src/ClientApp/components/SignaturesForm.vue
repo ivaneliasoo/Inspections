@@ -90,7 +90,6 @@
               <SignaturePad
                 v-if="signature.viewSign"
                 v-model="signature.drawnSign"
-                :signature-id="signature.id"
                 :saved-data="signature.drawnSign"
                 @input="viewSign(index, signature)"
                 @close="viewSign(index, signature)"

@@ -26,6 +26,15 @@ public class ReportConfiguration : Entity<int>, IAggregateRoot
     public bool UsePhotoRecord { get; set; }
     public bool UseCheckList { get; set; }
 
-    private readonly List<FormDefinition> forms = new();
+    public ReportConfiguration(List<FormDefinition> forms)
+    {
+        forms.AddRange(forms);
+    }
+    public ReportConfiguration()
+    {
+        
+    }
+
+    internal readonly List<FormDefinition> forms = new();
     public IReadOnlyCollection<FormDefinition> Forms => forms;
 }

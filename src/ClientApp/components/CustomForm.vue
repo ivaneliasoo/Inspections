@@ -9,8 +9,13 @@
         <h1 class="text-h6 text-left">{{ section }}</h1>
         <v-row align="center" justify="center">
           <v-col
-            :cols="field.inputType.includes('textarea') || field.inputType.includes('richtext') ? 12 : 3"
-            v-for="field in sections[section].sort(f =>f.order)"
+            :cols="
+              field.inputType.includes('textarea') ||
+              field.inputType.includes('richtext')
+                ? 12
+                : 3
+            "
+            v-for="field in sections[section].sort((f) => f.order)"
             :key="field.fieldName"
           >
             <v-text-field
@@ -37,7 +42,7 @@
               @blur="handleSubmit"
             />
             <client-only>
-              <VueEditor 
+              <VueEditor
                 v-if="field.inputType === 'richtext'"
                 v-model="values[field.fieldName]"
                 v-show="field.visible"
@@ -46,7 +51,7 @@
                 :prefix="field.preffix"
                 @blur="handleSubmit"
               />
-            </client-only> 
+            </client-only>
             <v-select
               v-if="field.inputType === 'select'"
               v-show="field.visible"
@@ -68,6 +73,20 @@
               @checked="handleSubmit"
               @change="handleSubmit"
             />
+            <v-range-slider
+              v-if="field.inputType === 'slider-range'"
+              v-show="field.visible"
+              v-model="values[field.fieldName]"
+              :label="field.label"
+              :suffix="field.suffix"
+              :prefix="field.preffix"
+              @blur="handleSubmit"
+              @checked="handleSubmit"
+              @change="handleSubmit"
+              :max="field.max"
+              :min="field.min"
+              hide-details
+            ></v-range-slider>
           </v-col>
         </v-row>
       </div>
@@ -94,40 +113,44 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const defaultValues = props.schema.sort((a, b) => {
-      if (a.order > b.order) {
-        return 1;
-      }
-      if (a.order < b.order) {
-        return -1;
-      }
-      return 0;
-    }).reduce((acc, value) => {
-      if (!acc[value.fieldName]) {
-        acc[value.fieldName] = "";
-      }
-      acc[value.fieldName] = value.defaultValue;
-      return acc;
-    }, {});
+    const defaultValues = props.schema
+      .sort((a, b) => {
+        if (a.order > b.order) {
+          return 1;
+        }
+        if (a.order < b.order) {
+          return -1;
+        }
+        return 0;
+      })
+      .reduce((acc, value) => {
+        if (!acc[value.fieldName]) {
+          acc[value.fieldName] = "";
+        }
+        acc[value.fieldName] = value.inputType !== "slider-range" ? value.defaultValue : value.defaultValue.split(",");
+        return acc;
+      }, {});
 
     const savedValues = props.value || defaultValues;
 
     const values = ref<any>(savedValues);
 
     const sections = computed(() => {
-      return props.schema.filter(s => s.enabled).reduce((acc, value) => {
-        if (!acc[value.sectionTitle]) {
-          acc[value.sectionTitle] = [];
-        }
-        acc[value.sectionTitle].push(value);
-        return acc;
-      }, {});
+      return props.schema
+        .filter((s) => s.enabled)
+        .reduce((acc, value) => {
+          if (!acc[value.sectionTitle]) {
+            acc[value.sectionTitle] = [];
+          }
+          acc[value.sectionTitle].push(value);
+          return acc;
+        }, {});
     });
 
     const handleSubmit = () => {
-      emit("handle-submit", {values: values.value, formId: props.formId});
+      emit("handle-submit", { values: values.value, formId: props.formId });
       emit("input", values.value);
-    }
+    };
 
     return { sections, values, handleSubmit };
   },

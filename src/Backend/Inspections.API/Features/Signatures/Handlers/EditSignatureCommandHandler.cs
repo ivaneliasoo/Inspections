@@ -29,9 +29,18 @@ public class EditSignatureCommandHandler : IRequestHandler<EditSignatureCommand,
         newSignature.Date = request.Date;
         newSignature.Principal = request.Principal;
         newSignature.DrawnSign = request.DrawnSign;
-        newSignature.DefaultResponsibleType = request.DefaultResponsibleType;
-        newSignature.UseLoggedInUserAsDefault = request.UseLoggedInUserAsDefault;
-        newSignature.SetDefaultResponsible(_userNameResolver.FullName);
+        newSignature.Responsible = new Responsible
+        {
+            Name = request.ResponsibleName,
+            Type = request.ResponsibleType,
+        };
+
+        if (newSignature.IsConfiguration)
+        {
+            newSignature.DefaultResponsibleType = request.DefaultResponsibleType;
+            newSignature.UseLoggedInUserAsDefault = request.UseLoggedInUserAsDefault;
+            newSignature.SetDefaultResponsible(_userNameResolver.FullName);
+        } 
 
         await _signaturesRepository.UpdateAsync(newSignature).ConfigureAwait(false);
 

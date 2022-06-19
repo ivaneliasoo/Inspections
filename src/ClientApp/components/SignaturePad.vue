@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-row align="center" dense class="mb-10">
+    <v-row align="center" dense class="mb-10" justify="center">
       <v-col cols="12" class="text-center">
         <v-btn
           class="mx-2"
@@ -52,8 +52,8 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row align="center" dense class="mb-10">
-      <v-col cols="6" class="text-left">
+    <v-row align="center" dense class="mb-10" justify="center">
+      <v-col cols="6">
         <VueSignaturePad
           id="pad"
           ref="signaturePad"
@@ -70,11 +70,6 @@
 export default {
   name: 'SignaturePad',
   props: {
-    signatureId: {
-      type: Number,
-      required: true,
-      default: () => 0
-    },
     savedData: {
       type: String,
       default: () => undefined

@@ -1,4 +1,5 @@
-﻿using Ardalis.GuardClauses;
+﻿using System.ComponentModel;
+using Ardalis.GuardClauses;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Inspections.Core.Domain.CheckListAggregate;
@@ -21,7 +22,7 @@ public class ReportsRepository : IReportsRepository
     private readonly ILogger<ReportsRepository> _logger;
     private readonly IUserNameResolver _userNameResolver;
 
-    private readonly MapperConfiguration config = new MapperConfiguration(cfg =>
+    private readonly MapperConfiguration config = new(cfg =>
     {
         cfg.CreateMap<Signature, SignatureQueryResult>();
         cfg.CreateMap<ReportForm, FormResult>();
@@ -29,6 +30,7 @@ public class ReportsRepository : IReportsRepository
         cfg.CreateMap<CheckListItem, CheckListItemQueryResult>();
         cfg.CreateMap<CheckList, CheckListQueryResult>().ForMember(m => m.Checks, opt => opt.MapFrom(src => src.Checks));
         cfg.CreateMap<Report, ReportQueryResult>()
+            .ForMember(m => m.LicenseAmp, opt => opt.MapFrom(m => m.License.Amp))
             .ForMember(m => m.Signatures, opt => opt.MapFrom(src => src.Signatures.OrderBy(ob => ob.Order)))
             .ForMember(m => m.CheckLists, opt => opt.MapFrom(src => src.CheckList))
             .ForMember(m => m.Forms, opt => opt.MapFrom(src => src.AvailableForms.OrderBy(f => f.Order)));
