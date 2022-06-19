@@ -201,7 +201,9 @@ export default defineComponent({
           { value: 'textarea', label: 'Text Area' },
           { value: 'number', label: 'Numeric Input' },
           { value: 'select', label: 'Select' },
-          { value: 'checkbox', label: 'Checkbox' }
+          { value: 'checkbox', label: 'Checkbox' },
+          { value: 'slider-range', label: 'Slider Range' },
+          { value: 'slider', label: 'Slider' }
         ],
         name: 'inputType',
         placeholder: 'Select an input type',
