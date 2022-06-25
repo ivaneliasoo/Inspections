@@ -1,4 +1,4 @@
-import { toIsoDate, isSunday } from "./jp_util";
+import { toIsoDate, isSunday, isSaturday } from "./jp_util";
 
 export const JobState = {
     upcoming: "upcoming",
@@ -362,7 +362,6 @@ export class SchedJob {
     }
 
     getTeamMembers() {
-        //return this.teamMembers.length > 0 ? this.teamMembers : ["-"];
         return this.teamMembers;
     }
 
@@ -373,6 +372,16 @@ export class SchedJob {
     set teamMembers(tm) {
         this.#teamMembers = tm;
         this.setLastUpdate();
+    }
+
+    teamSize() {
+        if (this.excludeSaturday && isSaturday(this.date)) {
+            return 0;
+        }
+        if (this.excludeSunday && isSunday(this.date)) {
+            return 0;
+        }
+        return this.teamMembers ? this.teamMembers.length : 0;
     }
 
     get excludeSaturday() {
@@ -460,21 +469,32 @@ export class Day {
         }
     }
 
-    teamSize(teamMembers) {
-        if (!teamMembers) {
-            return 0;
-        }
-        return (teamMembers.length == 0 || (teamMembers.length == 1 && teamMembers[0] == "-")) ? 0 : teamMembers.length;
-    }
+    // teamSize(teamMembers) {
+    //     if (!teamMembers) {
+    //         return 0;
+    //     }
+    //     return teamMembers.length;
+    // }
 
-    manPowerTotals() {
-        const onLeave = this.jobs["onLeave"] ? this.teamSize(this.jobs["onLeave"].teamMembers) : 0;
+    manPowerTotals(teams) {
+        if (teams.length === 0) {
+            return { manPower: 0, onLeave: 0 };
+        }
+        const teamMap = {};
+        for (const team of teams) {
+            teamMap[team.id] = team;
+        }
+        let onLeave = 0;
         var manPower = 0;
-        Object.values(this.jobs).forEach( job => {
-            if (job.foreman != "Store" && job.foreman != "onLeave") {
-                manPower += this.teamSize(job.teamMembers);
+        for (const schedJob of Object.values(this.jobs)) {
+            const foreman = teamMap[schedJob.team].foreman;
+            if (foreman.toLowerCase().trim() === "on leave" || 
+                    schedJob.job1.toLowerCase().trim().includes("on leave")) {
+                onLeave += schedJob.teamSize();
+            } else {
+                manPower += schedJob.teamSize();
             }
-        })
+        }
         return { manPower: manPower, onLeave: onLeave }
     }
 }

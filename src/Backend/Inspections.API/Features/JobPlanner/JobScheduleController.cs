@@ -198,15 +198,16 @@ namespace Inspections.API.Features.JobPlanner
             _context.SaveChanges();
         }
 
-        [HttpPut("options")]
+        [HttpPut("jobplanner-options")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateOptions(Options options)
+        public async Task<IActionResult> UpdateOptions(Options jpOptions)
         {
             Options opt = new Options();
             opt.id = 1;
-            opt.scheduleWeeks = options.scheduleWeeks;
-            opt.autosaveInterval = options.autosaveInterval;
+            opt.scheduleWeeks = jpOptions.scheduleWeeks;
+            opt.autosaveInterval = jpOptions.autosaveInterval;
+            opt.showContextMenu = jpOptions.showContextMenu;
 
             _context.Update(opt);
 

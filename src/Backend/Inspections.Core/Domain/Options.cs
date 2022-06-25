@@ -15,6 +15,8 @@ public class Options
 
     public int autosaveInterval { get; set; }
 
+    public Boolean showContextMenu { get; set; }
+
     [JsonConverter(typeof(JsonDateTimeConverter))]
     public DateTime lastUpdate { get; set; }
 
@@ -27,6 +29,7 @@ public class Options
         this.id = 1;
         this.scheduleWeeks = 1;
         this.autosaveInterval = 120;
+        this.showContextMenu = false;
         this.LastEdit = new DateTimeOffset();
         this.LastEditUser = "";
     }
@@ -36,6 +39,7 @@ public class Options
         this.id = id;
         this.scheduleWeeks = scheduleWeeks;
         this.autosaveInterval = autosaveInterval;
+        this.showContextMenu = false;
         this.LastEdit = new DateTimeOffset();
         this.LastEditUser = "";
     }

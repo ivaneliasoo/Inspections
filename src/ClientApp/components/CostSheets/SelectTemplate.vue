@@ -44,13 +44,19 @@
                             <tr class="table-header">
                                 <td class="font-weight-bold text-center header-row" style="width:65%;"
                                     title="Click to sort by name"
-                                    @click="sortByName" >
+                                    @click="sortByProject" >
                                     Template Name
+                                    <v-icon small v-show="sortField==='project'">
+                                        {{ sortIcon('project') }}
+                                    </v-icon>
                                 </td>
                                 <td class="font-weight-bold text-center header-row" style="width:20%;"
                                     title="Click to sort by date"
                                     @click="sortByDate" >
                                     Date created
+                                    <v-icon small v-show="sortField==='date'">
+                                        {{ sortIcon('date') }}
+                                    </v-icon>
                                 </td>
                                 <td class="font-weight-bold text-center header-row" style="width:15%;"
                                     title="Click for original sort order">
@@ -153,7 +159,11 @@ export default {
     data: () => ({
         templates_: null,
         sortField: "none",
-        compareFunc: "includes"
+        compareFunc: "includes",
+        sortDescending: {
+          project: false,
+          date: false
+        }
     }),
     watch: {
         selectTemplateDialog(oldValue, newValue) {
@@ -177,20 +187,16 @@ export default {
             this.$emit("close");
         },
         sortById() {
+            this.sortField = "id";
             this.templates.sort((t1, t2) => t1.id - t2.id);
         },
-        sortByName() {
-            this.sortField = "name";
-            // this.compareFunc = "startsWith";
-            this.templates.sort((t1, t2) => {
-                if (t1.project < t2.project) {
-                    return -1;
-                } else if (t1.project > t2.project) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
+        sortIcon(field) {
+            return this.sortDescending[field] ? "mdi-arrow-up-thin" : "mdi-arrow-down-thin"
+        },
+        sortByProject() {
+            this.sortField = "project";
+            this.sortDescending.project = !this.sortDescending.project;
+            this.sortTable("project", (row) => row.project);
         },
         toIsoDate(date) {
             const a = date.split("/");
@@ -198,18 +204,29 @@ export default {
         },
         sortByDate() {
             this.sortField = "date";
-            // this.compareFunc = "startsWith";
-            this.templates.sort((t1, t2) => {
-                const d1 = this.toIsoDate(t1.dateCreated);
-                const d2 = this.toIsoDate(t2.dateCreated);
-                if (d1 < d2) {
-                    return -1;
-                } else if (d1 > d2) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
+            this.sortDescending.date = !this.sortDescending.date;
+            this.sortTable("date", (row) => this.toIsoDate(row.dateCreated));
+        },
+        sortTable(field, getValue) {
+            console.log("field", field)
+            this.templates.sort((r1, r2) => {
+            let v1, v2;
+            console.log(v1, v2);
+            if (this.sortDescending[field]) {
+                v1 = getValue(r1);
+                v2 = getValue(r2);
+            } else {
+                v1 = getValue(r2);
+                v2 = getValue(r1);
+            }
+            if (v1 < v2) {
+                return -1;
+            } else if (v1 > v2) {
+                return 1;
+            } else {
+                return 0;
+            }
+            })
         },
         scrollTo(line) {
             var rows = document.querySelectorAll('#select-template tr');
