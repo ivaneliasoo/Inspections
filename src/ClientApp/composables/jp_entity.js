@@ -469,13 +469,6 @@ export class Day {
         }
     }
 
-    // teamSize(teamMembers) {
-    //     if (!teamMembers) {
-    //         return 0;
-    //     }
-    //     return teamMembers.length;
-    // }
-
     manPowerTotals(teams) {
         if (teams.length === 0) {
             return { manPower: 0, onLeave: 0 };
@@ -488,8 +481,7 @@ export class Day {
         var manPower = 0;
         for (const schedJob of Object.values(this.jobs)) {
             const foreman = teamMap[schedJob.team].foreman;
-            if (foreman.toLowerCase().trim() === "on leave" || 
-                    schedJob.job1.toLowerCase().trim().includes("on leave")) {
+            if (foreman.toLowerCase().trim() === "on leave") {
                 onLeave += schedJob.teamSize();
             } else {
                 manPower += schedJob.teamSize();

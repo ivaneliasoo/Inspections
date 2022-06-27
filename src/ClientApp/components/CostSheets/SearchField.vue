@@ -42,7 +42,7 @@ export default {
             return dataValue.startsWith(searchValue);
         },
         includes(dataValue, searchValue) {
-            return dataValue.includes(searchValue);
+            return dataValue.toLowerCase().includes(searchValue.toLowerCase());
         },
         search() {
             const compareFunc = this.compareFunc;
