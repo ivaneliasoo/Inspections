@@ -57,7 +57,7 @@
               <label for="">
                 Drawing No:
               </label>
-              <input v-model="reportData.forms.filter(f => f.name === 'AdditionalFieldsTT')[0].values.DrawingNo" class="special-input" type="text">
+              <input v-model="additionalFields.DrawingNo" class="special-input" type="text">
             </div>
           </div>
         </div>
@@ -533,20 +533,12 @@ export default {
 
       let beforeTurnOn = {}
       let afterTurnOn = {}
+      let additionalFields = {}
       if (result) {
         beforeTurnOn = result.forms.filter(f => f.name === 'BEFORETURNON')[0].values
         afterTurnOn = result.forms.filter(f => f.name === 'AFTERTURNON ')[0].values
+        additionalFields = result.forms.filter(f => f.name === 'AdditionalFieldsTT')[0].values
       }
-      // console.log({
-      //   reportId: id,
-      //   reportData: result,
-      //   printPhotos,
-      //   isCompoundedPhotoRecord,
-      //   isPrintable: false,
-      //   beforeTurnOn,
-      //   afterTurnOn,
-      //   configuration
-      // })
 
       return {
         reportId: id,
@@ -556,7 +548,8 @@ export default {
         isPrintable: false,
         beforeTurnOn,
         afterTurnOn,
-        configuration
+        configuration,
+        additionalFields
       }
     }
   },
