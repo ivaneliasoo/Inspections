@@ -25,7 +25,17 @@
                     width="100%">
                     <tbody>
                         <tr>
-                            <td style="width: 65%;" class="search-box">
+                            <td colspan="2" class="search-box">
+                                <searchField
+                                    :data="templates"
+                                    :fieldNames="['project', 'dateCreated']"
+                                    placeHolder="Search"
+                                    :size=52
+                                    :compareFunc="compareFunc"
+                                    @scroll_to="scrollTo">
+                                </searchField>
+                            </td>
+                            <!-- <td style="width: 65%;" class="search-box">
                                 <searchField
                                     :data="templates"
                                     fieldName="project"
@@ -44,7 +54,7 @@
                                     :compareFunc="compareFunc"
                                     @scroll_to="scrollTo">
                                 </searchField>
-                            </td>
+                            </td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -53,7 +63,29 @@
                 <table width="100%">
                     <tbody>
                         <tr class="table-header">
+
                             <td class="font-weight-bold text-center header-row" style="width:65%;"
+                                title="Click to sort by project"
+                                @click="sortByField('project')" >
+                                Project
+                                <v-icon>
+                                    {{ sortIcon('project') }}
+                                </v-icon>
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:20%;"
+                                title="Click to sort by date"
+                                @click="sortByField('date')" >
+                                Date created
+                                <v-icon>
+                                    {{ sortIcon('date') }}
+                                </v-icon>
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:15%;"
+                                title="Click for original sort order"
+                                @click="sortById">
+                            </td>
+
+                            <!-- <td class="font-weight-bold text-center header-row" style="width:65%;"
                                 title="Click to sort by name"
                                 @click="sortByProject" >
                                 Name
@@ -72,7 +104,7 @@
                             <td class="font-weight-bold text-center header-row" style="width:15%;"
                                 title="Click for original sort order"
                                 @click="sortById">
-                            </td>
+                            </td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -164,12 +196,30 @@ html {
     data: () => ({
         sortField: "",
         compareFunc: "includes",
-        sortDescending: {
+        sorted: {
           project: false,
+          location: false,
           date: false
+        },
+        descending: {
+          project: true,
+          location: true,
+          date: true
         }
     }),
     methods: {
+      resetSortState() {
+          this.sorted = {
+          project: false,
+          location: false,
+          date: false
+          };
+          this.descending = {
+          project: true,
+          location: true,
+          date: true
+          };
+      },
       showCostSheets() {
         this.$emit('show-cost-sheets');
       },
@@ -185,48 +235,99 @@ html {
       deleteTemplate(index) {
         this.$emit('delete-template', index);
       },
-      sortById() {
-        this.sortField = "id";
-        this.templates.sort((t1, t2) => t1.id - t2.id);
-      },
+
       sortIcon(field) {
-        return this.sortDescending[field] ? "mdi-arrow-up-thin" : "mdi-arrow-down-thin"
+          return (this.sorted[field] && this.descending[field]) ? "mdi-arrow-down-thin" : "mdi-arrow-up-thin";
       },
-      sortByProject() {
-        this.sortField = "project";
-        this.sortDescending.project = !this.sortDescending.project;
-        this.sortTable("project", (row) => row.project);
+      sortById() {
+          this.sortField = "id";
+          this.resetSortState();
+          this.templates.sort((t1, t2) => t1.id - t2.id);
+          this.$forceUpdate();
+      },
+      sortByField(field) {
+          this.sortField = field;
+          const sorted = this.sorted[field];
+          const descending = this.descending[field];
+          this.resetSortState();
+          if (sorted && descending) {
+              this.descending[field] = false;
+          } else {
+              this.descending[field] = true;
+          }
+          this.sorted[field] = true;
+          const getValue = (field === "date")
+                  ? (row) => this.toIsoDate(row.dateCreated)
+                  : (row) => row[field];
+          this.sortTable(field, getValue);
       },
       toIsoDate(date) {
-        const a = date.split("/");
-        return a[2]+'-'+a[1]+'-'+a[0];
-      },
-      sortByDate() {
-        this.sortField = "date";
-        this.sortDescending.date = !this.sortDescending.date;
-        this.sortTable("date", (row) => this.toIsoDate(row.dateCreated));
+          const a = date.split("/");
+          return a[2]+'-'+a[1]+'-'+a[0];
       },
       sortTable(field, getValue) {
-        console.log("field", field)
-        this.templates.sort((r1, r2) => {
-          let v1, v2;
-          console.log(v1, v2);
-          if (this.sortDescending[field]) {
-            v1 = getValue(r1);
-            v2 = getValue(r2);
-          } else {
-            v1 = getValue(r2);
-            v2 = getValue(r1);
-          }
-          if (v1 < v2) {
-              return -1;
-          } else if (v1 > v2) {
-              return 1;
-          } else {
-              return 0;
-          }
-        })
+          this.templates.sort((r1, r2) => {
+              let v1, v2;
+              if (this.descending[field]) {
+                  v1 = getValue(r1);
+                  v2 = getValue(r2);
+              } else {
+                  v1 = getValue(r2);
+                  v2 = getValue(r1);
+              }
+              if (v1 < v2) {
+                  return -1;
+              } else if (v1 > v2) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          })
       },
+
+
+      // sortById() {
+      //   this.sortField = "id";
+      //   this.templates.sort((t1, t2) => t1.id - t2.id);
+      // },
+      // sortIcon(field) {
+      //   return this.sortDescending[field] ? "mdi-arrow-up-thin" : "mdi-arrow-down-thin"
+      // },
+      // sortByProject() {
+      //   this.sortField = "project";
+      //   this.sortDescending.project = !this.sortDescending.project;
+      //   this.sortTable("project", (row) => row.project);
+      // },
+      // toIsoDate(date) {
+      //   const a = date.split("/");
+      //   return a[2]+'-'+a[1]+'-'+a[0];
+      // },
+      // sortByDate() {
+      //   this.sortField = "date";
+      //   this.sortDescending.date = !this.sortDescending.date;
+      //   this.sortTable("date", (row) => this.toIsoDate(row.dateCreated));
+      // },
+      // sortTable(field, getValue) {
+      //   console.log("field", field)
+      //   this.templates.sort((r1, r2) => {
+      //     let v1, v2;
+      //     console.log(v1, v2);
+      //     if (this.sortDescending[field]) {
+      //       v1 = getValue(r1);
+      //       v2 = getValue(r2);
+      //     } else {
+      //       v1 = getValue(r2);
+      //       v2 = getValue(r1);
+      //     }
+      //     if (v1 < v2) {
+      //         return -1;
+      //     } else if (v1 > v2) {
+      //         return 1;
+      //     } else {
+      //         return 0;
+      //     }
+      //   })
+      // },
       scrollTo(line) {
           var rows = document.querySelectorAll('#templates tr');
           const row = rows[line];

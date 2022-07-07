@@ -30,32 +30,12 @@
                     width="100%">
                     <tbody>
                         <tr>
-                            <td style="width: 34%;" class="search-box">
+                            <td colspan="2" class="search-box">
                                 <searchField
                                     :data="costSheets"
-                                    fieldName="project"
-                                    placeHolder="Search project"
-                                    :size=20
-                                    :compareFunc="compareFunc"
-                                    @scroll_to="scrollTo">
-                                </searchField>
-                            </td>
-                            <td style="width: 34%;" class="search-box">
-                                <searchField
-                                    :data="costSheets"
-                                    fieldName="location"
-                                    placeHolder="Search location"
-                                    :size=20
-                                    :compareFunc="compareFunc"
-                                    @scroll_to="scrollTo">
-                                </searchField>
-                            </td>
-                            <td style="width: 32%;" class="search-box">
-                                <searchField
-                                    :data="costSheets"
-                                    fieldName="dateCreated"
-                                    placeHolder="Search date"
-                                    :size=12
+                                    :fieldNames="['project', 'location', 'dateCreated']"
+                                    placeHolder="Search"
+                                    :size=52
                                     :compareFunc="compareFunc"
                                     @scroll_to="scrollTo">
                                 </searchField>
@@ -70,25 +50,25 @@
                         <tr class="table-header">
                             <td class="font-weight-bold text-center header-row" style="width:34%;"
                                 title="Click to sort by project"
-                                @click="sortByProject" >
+                                @click="sortByField('project')" >
                                 Project
-                                <v-icon v-show="sortField==='project'">
+                                <v-icon>
                                     {{ sortIcon('project') }}
                                 </v-icon>
                             </td>
                             <td class="font-weight-bold text-center header-row" style="width:34%;"
                                 title="Click to sort by location"
-                                @click="sortByLocation" >
+                                @click="sortByField('location')" >
                                 Location
-                                <v-icon v-show="sortField==='location'">
+                                <v-icon>
                                     {{ sortIcon('location') }}
                                 </v-icon>
                             </td>
                             <td class="font-weight-bold text-center header-row" style="width:20%;"
                                 title="Click to sort by date"
-                                @click="sortByDate" >
+                                @click="sortByField('date')" >
                                 Date created
-                                <v-icon v-show="sortField==='date'">
+                                <v-icon>
                                     {{ sortIcon('date') }}
                                 </v-icon>
                             </td>
@@ -100,7 +80,6 @@
                     </tbody>
                 </table>
             </div>
-
             <div style="height: 75vh; width: 800px; overflow-y: scroll;">
                 <table
                 id="cost-sheets"
@@ -191,13 +170,30 @@ html {
     data: () => ({
         sortField: "",
         compareFunc: "includes",
-        sortDescending: {
+        sorted: {
           project: false,
           location: false,
           date: false
+        },
+        descending: {
+          project: true,
+          location: true,
+          date: true
         }
     }),
     methods: {
+      resetSortState() {
+        this.sorted = {
+          project: false,
+          location: false,
+          date: false
+        };
+        this.descending = {
+          project: true,
+          location: true,
+          date: true
+        };
+      },
       showCostSheets() {
         this.$emit('show-cost-sheets');
       },
@@ -217,35 +213,38 @@ html {
         this.$emit('delete-sheet', index);
       },
       sortIcon(field) {
-        return this.sortDescending[field] ? "mdi-arrow-up-thin" : "mdi-arrow-down-thin"
+        return (this.sorted[field] && this.descending[field]) ? "mdi-arrow-down-thin" : "mdi-arrow-up-thin";
       },
       sortById() {
         this.sortField = "id";
+        this.resetSortState();
         this.costSheets.sort((t1, t2) => t1.id - t2.id);
+        this.$forceUpdate();
       },
-      sortByProject() {
-        this.sortField = "project";
-        this.sortDescending.project = !this.sortDescending.project;
-        this.sortTable("project", (row) => row.project);
-      },
-      sortByLocation() {
-        this.sortField = "location";
-        this.sortDescending.location = !this.sortDescending.location;
-        this.sortTable("location", (row) => row.location);
+      sortByField(field) {
+        this.sortField = field;
+        const sorted = this.sorted[field];
+        const descending = this.descending[field];
+        this.resetSortState();
+        if (sorted && descending) {
+          this.descending[field] = false;
+        } else {
+          this.descending[field] = true;
+        }
+        this.sorted[field] = true;
+        const getValue = (field === "date")
+                ? (row) => this.toIsoDate(row.dateCreated)
+                : (row) => row[field];
+        this.sortTable(field, getValue);
       },
       toIsoDate(date) {
         const a = date.split("/");
         return a[2]+'-'+a[1]+'-'+a[0];
       },
-      sortByDate() {
-        this.sortField = "date";
-        this.sortDescending.date = !this.sortDescending.date;
-        this.sortTable("date", (row) => this.toIsoDate(row.dateCreated));
-      },
       sortTable(field, getValue) {
         this.costSheets.sort((r1, r2) => {
           let v1, v2;
-          if (this.sortDescending[field]) {
+          if (this.descending[field]) {
             v1 = getValue(r1);
             v2 = getValue(r2);
           } else {

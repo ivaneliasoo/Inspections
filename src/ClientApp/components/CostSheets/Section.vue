@@ -1,25 +1,21 @@
 <template>
-    <tbody class="cs-section">
+    <tbody ref="body" class="cs-section">
       <tr @contextmenu="showContextMenu($event, -1)">
-        <td class="col-group-1"  style="width: 60px">
-          <input
-            class="text-caption table-input"
-            type="text"
-            v-model="section.secNumber"
-          />
+        <td class="col-group-1">
+          <TextField 
+            v-model="section.secNumber" :col="0">
+          </TextField>
         </td>
         <td class="col-group-2" colspan="4">
-          <input 
-            class="text-caption font-weight-bold table-input"
-            type="text"
-            v-model="section.description"
-          />
+          <TextField class="font-weight-bold table-input"
+            v-model="section.description" :col="1">
+          </TextField>
         </td>
         <td class="col-group-4">
         </td>
         <td class="col-group-1">
           <NumberField
-            v-model="section.materialMarkup" format="percent" @change="updateMaterialMarkup">
+            v-model="section.materialMarkup" format="percent" @change="updateMaterialMarkup" :col="6">
           </NumberField>
         </td>
         <td class="col-group-2">
@@ -30,33 +26,31 @@
         </td>
         <td class="text-caption col-group-1">
           <NumberField 
-            :value="section.summation()" format="currency" :readOnly="true">
+            :value="section.summation()" format="currency" :readOnly="true" :col="10">
           </NumberField>
         </td>
         <td class="text-caption col-group-1">
           <NumberField
-            v-model="section.finalMarkup" format="percent" @change="$emit('update-sheet')">
+            v-model="section.finalMarkup" format="percent" @change="$emit('update-sheet')" :col="11">
           </NumberField>
         </td>
         <td class="text-caption col-group-1">
           <NumberField 
-            :value="section.toQuotePrice()" format="currency" :readObly="true">
+            :value="section.toQuotePrice()" format="currency" :readObly="true" :col="12">
           </NumberField>
         </td>
       </tr>
       <tr v-for="(item, index) in section.items" :key="index"
           @contextmenu="showContextMenu($event, index)">
         <td class="col-group-1" style="padding-left: 25px;">
-          <input
-            class="text-caption table-input"
-            type="text"
-            v-model="item.itemNumber"
-          >
+          <TextField
+            v-model="item.itemNumber">
+          </TextField>
         </td>
         <td class="col-group-3">
-          <TextField 
+          <TextArea 
             v-model="item.description" @change="$emit('update-sheet')">
-          </TextField>
+          </TextArea>
         </td>
         <td class="col-group-2">
           <NumberField
@@ -105,15 +99,6 @@
         <td class="col-group-1 text-caption" style="width: 100px;">
         </td>
       </tr>
-
-      <SelectSection v-if="template!==null"
-        :selectSectionDialog="selectSectionDialog"
-        :template="template"
-        @select-section="selectSection"
-        @select-item="selectItem"
-        @close="closeSelectSection">
-      </SelectSection>
-
       <tr v-show=false>
         <v-menu
           v-model="contextMenuVisible"
@@ -135,11 +120,6 @@
               </v-list-item-title>
             </v-list-item>
             <v-divider></v-divider>
-            <!-- <v-list-item>
-              <v-list-item-title @click="addSection('above')">
-                Add section above
-              </v-list-item-title>
-            </v-list-item> -->
             <v-list-item>
               <v-list-item-title @click="addSection('below')">
                 Add section

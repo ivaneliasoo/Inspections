@@ -7,7 +7,10 @@
       class="text-caption text-bold table-input"
       :style="style"
       v-model="dataValue"
+      :data-col="col"
       @change="$emit('change', $event.target.value);"
+      @focusout="onExit"
+      @keydown="keyDown"
     />
     <label v-if="value" class="text-caption">{{suffixStr}}</label>
   </div>
@@ -24,6 +27,8 @@ input {
 </style>
 
 <script>
+import { EventBus, Key } from '../../composables/costsheets/event_bus.js';
+
 // Restricts input for the given textbox to the given inputFilter function.
 // https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input
 function setInputFilter(textbox, inputFilter) {
@@ -44,6 +49,7 @@ function setInputFilter(textbox, inputFilter) {
 }
 
 export default {
+  // components: { EventBus },
   props: {
     value: {
       required: true,
@@ -52,7 +58,8 @@ export default {
     readOnly: Boolean,
     decimals: Number,
     suffix: String,
-    bold: Boolean
+    bold: Boolean,
+    col: Number
   },
   computed: {
     suffixStr() {
@@ -122,9 +129,31 @@ export default {
       tx.focus(); 
     }
   },
+  data: () => {
+    return {
+      editing: false
+    }
+  },
   methods: {
+    keyDown(event) {
+      if (event.keyCode === Key.up) {
+          EventBus.$emit('move', this.$refs.textbox, Key.up);
+      } else if (event.keyCode === Key.down) {
+          EventBus.$emit('move', this.$refs.textbox, Key.down);
+      } else if (event.keyCode === Key.enter) {
+          EventBus.$emit('move', this.$refs.textbox, Key.enter);
+      } else if (!this.editing) {
+          if (event.keyCode === Key.left) {
+              EventBus.$emit('move', this.$refs.textbox, Key.left);
+          } else if (event.keyCode === Key.right) {
+              EventBus.$emit('move', this.$refs.textbox, Key.right);
+          } else {
+              this.editing = true;
+          }
+      }
+    },
     onClick() {
-      this.editing=true;
+      this.editing = true;
     },
     onExit() {
       if (this.$refs.textbox !== document.activeElement) {
