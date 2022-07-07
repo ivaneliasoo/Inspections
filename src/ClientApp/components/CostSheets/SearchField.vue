@@ -27,12 +27,13 @@ import { toIsoDate } from '~/composables/jp_util.js';
 export default {
     props: {
         data: Array,
-        fieldName: String,
+        fieldNames: Array,
         placeHolder: String,
         size: Number,
         compareFunc: String
     },
     data: () => ({
+        // fieldName: "project",
         searchValue: "",
         searchIndex: -1,
         curRow: null
@@ -48,10 +49,12 @@ export default {
             const compareFunc = this.compareFunc;
             this.searchIndex = -1;
             for (let i=0; i<this.data.length; i++) {
-                if (this[compareFunc](this.data[i][this.fieldName], this.searchValue)) {
-                    this.scrollTo(i);
-                    this.searchIndex = i;
-                    break;
+                for (const field of this.fieldNames) {
+                    if (this[compareFunc](this.data[i][field], this.searchValue)) {
+                        this.scrollTo(i);
+                        this.searchIndex = i;
+                        return;
+                    }
                 }
             };
         },
@@ -61,13 +64,15 @@ export default {
             }
             const compareFunc = this.compareFunc;
             for (let i=this.searchIndex+1; i<this.data.length; i++) {
-                if (this[compareFunc](this.data[i][this.fieldName], this.searchValue)) {
-                    this.scrollTo(i);
-                    this.searchIndex = i;
-                    break;
-                }
-                if (i >= this.data.length-1) {
-                    i=0;
+                for (const field of this.fieldNames) {
+                    if (this[compareFunc](this.data[i][field], this.searchValue)) {
+                        this.scrollTo(i);
+                        this.searchIndex = i;
+                        return;
+                    }
+                    if (i >= this.data.length-1) {
+                        i=0;
+                    }
                 }
             };
         },
@@ -77,13 +82,15 @@ export default {
             }
             const compareFunc = this.compareFunc;
             for (let i=this.searchIndex-1; i>=0; i--) {
-                if (this[compareFunc](this.data[i][this.fieldName], this.searchValue)) {
-                    this.scrollTo(i);
-                    this.searchIndex = i;
-                    break;
-                }
-                if (i <= 0) {
-                    i=this.data.length-1;
+                for (const field of this.fieldNames) {
+                    if (this[compareFunc](this.data[i][field], this.searchValue)) {
+                        this.scrollTo(i);
+                        this.searchIndex = i;
+                        return;
+                    }
+                    if (i <= 0) {
+                        i=this.data.length-1;
+                    }
                 }
             };
         },

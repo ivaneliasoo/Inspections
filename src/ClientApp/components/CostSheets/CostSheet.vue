@@ -1,43 +1,45 @@
 <template>
   <div id="costsheet-container">
-    <v-container class="my-n8 py-n8 mx-4 px-0 fill-height">
+    <v-container class="my-n8 py-n8 ml-n4 pl-n4 mr-2 pr-2 fill-height">
       <v-row>
-        <v-col class="mt-n4 pt-n4 mb-n3 pb-n3 text-center" cols="1">
+        <v-col class="mt-n4 pt-n4 mb-n6 pb-n6 text-center" cols="1">
           <v-btn icon small @click="goBack">
             <v-icon>
               mdi-arrow-left
             </v-icon>
           </v-btn>
         </v-col>
-        <v-col class="mt-n4 pt-n4 mb-n3 pb-n3 text-left text-h6" cols="1">
+        <v-col class="mt-n4 pt-n4 mb-n6 pb-n6 text-h6 text-center" cols="3">
+            {{ title }}
+        </v-col>
+        <v-col class="mt-n4 pt-n4 mb-n6 pb-n6 text-left text-h6" cols="1">
           {{ fieldName }}
         </v-col>
-        <v-col class="mt-n4 pt-n4 mb-n3 pb-n3 text-left" cols="4">
-          <input
-            class="text-h6 table-input"
-            type="text"
-            v-model="costSheet.project"
-          />
-        </v-col>
-        <v-col class="mt-n4 pt-n4 mb-n3 pb-n3" cols="2">
-          <div class="text-center text-h6">
-              {{ title }}
+        <v-col class="mt-n4 pt-n4 mb-n6 pb-n6 text-left text-h6" cols="4">
+          <div class="header-fields">
+            <input
+              class="table-input"
+              type="text"
+              size="100"
+              v-model="costSheet.project"
+            />
           </div>
         </v-col>
-        <v-col class="mt-n4 pt-n4 mb-n3 pb-n3 text-center" cols="3">
-            <v-btn small @click="saveSheet">
-              Save
+        <v-col class="mt-n4 pt-n4 mb-n6 pb-n6 text-center" cols="3">
+            <v-spacer></v-spacer>
+            <v-btn title="Save" icon large @click="saveSheet">
+              <v-icon>mdi-content-save</v-icon>
             </v-btn>
-            <v-btn v-if="!costSheet.isTemplate" small @click="openSelectTemplate">
-              L.Template
+            <v-btn title="Load template" v-if="!costSheet.isTemplate" icon large @click="openSelectTemplate">
+              <v-icon>mdi-folder-open</v-icon>
             </v-btn>
-            <v-btn small @click="createPDF">
-              Gen.PDF
+            <v-btn title="Generate PDF" icon large @click="createPDF">
+              <v-icon>mdi-file-pdf-box</v-icon>
             </v-btn>
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="mt-0 pt-0 mb-n5 pb-n5 text-center" cols="1">
+        <v-col class="mt-n2 pt-n2 mb-n5 pb-n5 text-center" cols="1">
           <v-menu right bottom fixed>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon x-small
@@ -78,28 +80,29 @@
             </v-list>
           </v-menu>
         </v-col>
-        <v-col v-if="!costSheet.isTemplate" class="mt-0 pt-0 mb-n5 pb-n5 text-left text-body" cols="1">
+        <v-col class="mt-n2 pt-n2 mb-n5 pb-n5" cols="3">
+          <div class="text-center text-h6">
+              &nbsp;
+          </div>
+        </v-col>
+        <v-col v-if="!costSheet.isTemplate" class="mt-n2 pt-n2 mb-n5 pb-n5 text-left text-body" cols="1">
           Location:
         </v-col>
-        <v-col class="mt-0 pt-0 mb-n5 pb-n5 text-left text-body" cols="5">
-          <input  v-if="!costSheet.isTemplate"
-            class="table-input"
-            type="text"
-            v-model="costSheet.location"
-          />
-        </v-col>
-        <v-col v-if="!costSheet.isTemplate && template" class="mt-0 pt-0 mb-n5 pb-n5 text-center text-body" cols="1">
-          Template: 
-        </v-col>
-        <v-col v-if="!costSheet.isTemplate && template" class="mt-0 pt-0 mb-n5 pb-n5 text-center text-body" cols="4">
-          <input size="15" type="text" readonly v-model="templateName">
+        <v-col class="mt-n2 pt-n2 mb-n5 pb-n5 text-left text-body" cols="4">
+          <div class="header-fields">
+            <input v-if="!costSheet.isTemplate"
+              class="table-input"
+              type="text"
+              v-model="costSheet.location"
+            />
+          </div>
         </v-col>
       </v-row>
       <v-row>
         <v-col class="my-0 py-0">
           <div class="container">
             <div class="table-container">
-              <table id="cost-sheets" class="cost-sheet">
+              <table ref="costsheet" id="cost-sheets" class="cost-sheet" style="max-width: 80%">
                 <thead class="cs-section">
                     <tr style="border-bottom: 1px solid;">
                         <th colspan="2" class="text-h5 title-2">Descriptions(s)</th>
@@ -113,14 +116,14 @@
 
                         <th class="text-caption font-weight-bold title-3">No. of Cables<br>(Apply to cables)</th>
                         <th class="text-caption font-weight-bold title-3">Unit cost</th>
-                        <th class="text-caption font-weight-bold title-3">Unit(s) (m/nos/pcs/lot)</th>
+                        <th class="text-caption font-weight-bold title-3">Unit(s)<br>(m/nos/pcs/lot)</th>
                         <th class="text-caption font-weight-bold title-3">Material Cost</th>
-                        <th class="text-caption font-weight-bold title-4">Mark up on Material</th>
+                        <th class="text-caption font-weight-bold title-4">Mark up<br>on Material</th>
 
-                        <th class="text-caption font-weight-bold title-1">Labour Cost to do the work per unit</th>
+                        <th class="text-caption font-weight-bold title-1">Labour Cost to do<br>the work per unit</th>
                         <th class="text-caption font-weight-bold title-2">Labour Cost</th>
 
-                        <th class="text-caption font-weight-bold title-3">Price to do the work</th>
+                        <th class="text-caption font-weight-bold title-3">Price to do<br>the work</th>
                         <th class="text-caption font-weight-bold title-3">Summation</th>
                         <th class="text-caption font-weight-bold title-3">Final Mark Up</th>
                         <th class="text-caption font-weight-bold title-4">To Quote price</th>
@@ -153,7 +156,7 @@
                         <th colspan="4" class="title-3"></th>
                         <th class="text-caption font-weight-bold title-4">
                           <NumberField
-                            v-model="costSheet.materialMarkup" format="percent" @change="updateMaterialMarkup">
+                            v-model="costSheet.materialMarkup" format="percent" @change="updateMaterialMarkup" :col="6">
                           </NumberField>
                         </th>
 
@@ -164,13 +167,15 @@
                         <th class="text-caption font-weight-bold title-3"></th>
                         <th class="text-caption font-weight-bold title-3">
                           <NumberField
-                            v-model="costSheet.finalMarkup" format="percent" @change="updateFinalMarkup">
+                            v-model="costSheet.finalMarkup" format="percent" @change="updateFinalMarkup" :col="11">
                           </NumberField>                            
                         </th>
                         <th class="text-caption font-weight-bold title-4"></th>
                     </tr>
                 </thead>
-                <Section v-for="(section, index) in costSheet.sections" :key="index" style="height: 0px;"
+                <Section v-for="(section, index) in costSheet.sections" :key="index"
+                  :ref="'section'+index"
+                  style="height: 0px;"
                   :section="section"
                   :index="index"
                   :template="template"
@@ -181,14 +186,18 @@
                 </Section>
                 <tbody class="cs-section">
                   <tr>
-                    <td colspan="2" class="title-4">
+                    <td class="title-4">
                     </td>
-                    <td colspan="3" class="text-right title-3">
+                    <td class="title-4">
+                    </td>
+                    <td class="title-3"></td>
+                    <td class="title-3"></td>
+                    <td class="title-3">
                       Material Cost
                     </td>
                     <td class="title-3">
                       <NumberField
-                        :value="costSheet.materialCost()" format="currency"  :readOnly="true">
+                        :value="costSheet.materialCost()" format="currency"  :readOnly="true" :col="5">
                       </NumberField>
                     </td>
                     <td colspan="2" class="text-right title-3">
@@ -196,7 +205,7 @@
                     </td>
                     <td class="title-3">
                       <NumberField
-                        :value="costSheet.labourCost()" format="currency" :readOnly="true">
+                        :value="costSheet.labourCost()" format="currency" :readOnly="true" :col="8">
                       </NumberField>
                     </td>
                     <td colspan="3" class="text-right title-3">
@@ -204,7 +213,7 @@
                     </td>
                     <td class="text-right title-3">
                       <NumberField
-                        :value="costSheet.toQuotePrice()" format="currency" :readOnly="true">
+                        :value="costSheet.toQuotePrice()" format="currency" :readOnly="true" :col="12">
                       </NumberField>
                     </td>
                   </tr>
@@ -285,7 +294,7 @@
                       Final Overall Markup:
                     </td>
                     <td class="text-caption font-weight-bold title-7 cs-section" style="background-color: #d1eee1;">
-                      <NumberField
+                      <NumberField ref="finalOverallMarkup" 
                         v-model="costSheet.finalOverallMarkup" format="percent" @change="updateSheet">
                       </NumberField>                            
                     </td>
@@ -314,7 +323,7 @@
                               Translate to number of days to complete:
                             </td>
                             <td class="text-caption font-weight-bold title-7">
-                              <NumberField
+                              <NumberField ref="daysToComplete" 
                                 :value="costSheet.numberOfDaysComplete()" :decimals="2" suffix=" " :readOnly="true">
                               </NumberField>                            
                             </td>
@@ -377,14 +386,6 @@
           </div>
         </v-col>
       </v-row>
-
-      <SelectSection v-if="template!==null"
-        :selectSectionDialog="selectSectionDialog"
-        :template="template"
-        @select-section="selectSection"
-        @close="closeSelectSection">
-      </SelectSection>
-
     </v-container>
   </div>
 </template>
@@ -394,18 +395,34 @@ html {
   overflow-y: auto;
 }
 
-/* https://stackoverflow.com/questions/41539803/html-table-wont-scroll-horizontal */
-.container {
-  width: 100%;
+.table-container {
+  overflow-x: auto;
+  margin-right: 12px;
 }
 
-.table-container {
-	overflow-x: auto;
+@media screen and (max-width:960px) {
+  .header-fields {
+    width: 300px; 
+    background-color: #e1f5f7;
+  }
+  .container {
+    max-width: 850px;
+    white-space: nowrap;
+  }
+}
+
+.header-fields {
+  max-width: 500px; 
+  background-color: #e1f5f7;
+}
+
+.container {
+  min-width: 94vw;
+  white-space: nowrap;
 }
 
 .cost-sheet {
-	width: 100%;
-	max-width: 100%;
+  width: 100%;
 	margin-bottom: 10px;
 }
 
@@ -470,6 +487,8 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import pdfDocument from '../../composables/costsheets/pdf_util.js';
 import { Section, Item, CostSheet } 
     from '../../composables/costsheets/entity.js';
+import { EventBus, Key }
+    from '../../composables/costsheets/event_bus.js';
 
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -509,14 +528,115 @@ import { Section, Item, CostSheet }
       }
     },
     mounted() {
-      console.log("mounted", this.costSheet.options.numberAlignment);
-      // Vue.prototype.$numberAlignment = this.costSheet.options.numberAlignment;
+      EventBus.$on('move', this.moveCursor);
       this.timer = setInterval(this.saveSheet, 120 * 1000);
+    },
+    beforeDestroy() {  
+      EventBus.$off('move');
     },
     methods: {
       changeAlignment() {
-        //Vue.prototype.$numberAlignment = this.costSheet.options.numberAlignment;
         this.$emit('re-render');
+      },
+      moveCursor(fld, key) {
+        let table = fld.closest('table');
+        while (table) {
+          table = this.move(table, key);
+        }
+      },
+      fieldColumn(field) {
+        var cell = field.closest('td');
+        return cell.cellIndex;
+      },
+      closestField(field, fields) {
+        let d = 1000;
+        let closest;
+        let p = field.getAttribute('data-col');
+        if (!p) {
+          p = this.fieldColumn(field);
+        }
+        for (let i=0; i<fields.length; i++) {
+          let col = fields[i].getAttribute('data-col');
+          if (!col) {
+            col = this.fieldColumn(fields[i]);
+          }
+          const d1 = Math.abs(p-col);
+          if (d1 < d) {
+            d = d1;
+            closest = fields[i]; 
+            console.log("closestField", i, d);
+          }
+        }
+        return closest;
+      },
+      move(table, key) {
+        const rows = table.querySelectorAll('tr');
+        const noRows = rows.length;
+        for (let i=0; i<noRows; ++i) {
+          const fields = rows[i].querySelectorAll('input, textarea');
+          if (fields.length === 0) {
+            continue;
+          }
+          for (let j=0; j<fields.length; j++) {
+            const fld = fields[j];
+            if (fld.closest('table') != table) {
+              return fld.closest('table');
+            }
+            if (fld === document.activeElement) {
+              if (key === Key.down) {
+                if (i+1<noRows) {
+                  for (let m=i+1; m<noRows; m++) {
+                    const newFields = rows[m].querySelectorAll('input');
+                    if (newFields.length > 0) {
+                      if (newFields.length !== fields.length) {
+                        const closest = this.closestField(fld, newFields);
+                        if (closest) {
+                          closest.focus();
+                        }
+                      } else {
+                        newFields[j].focus();
+                      }
+                      return;
+                    }
+                  }
+                  return;
+                } else {
+                  const fld = this.$refs.daysToComplete.$el.querySelector('input');
+                  fld.focus();
+                }
+              } else if (key === Key.up) {
+                if (i > 0) {
+                  for (let m=i-1; m >= 0; m--) {
+                    const newFields = rows[m].querySelectorAll('input');
+                    if (newFields.length > 0) {
+                      if (newFields.length !== fields.length) {
+                        const closest = this.closestField(fld, newFields);
+                        if (closest) {
+                          closest.focus();
+                        }
+                      } else {
+                          newFields[j].focus();
+                      }
+                      return;
+                    }
+                  }
+                } else {
+                  const fld = this.$refs.finalOverallMarkup.$el.querySelector('input');
+                  fld.focus();
+                }
+              } else if (key === Key.left && j>0) {
+                fields[j-1].focus();
+                return;
+              } else if (key === Key.right && j<fields.length-1) {
+                fields[j+1].focus();
+                return;
+              } else if (key === Key.enter && j<fields.length-1) {
+                fields[j+1].focus();
+                return;
+              }
+            }
+          }
+        }
       },
       showContextMenu(e, index) {
         e.preventDefault();

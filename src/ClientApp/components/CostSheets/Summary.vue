@@ -1,12 +1,12 @@
 <template>
   <td colspan="7">
-    <table>
-      <thead class="header">
+    <table id="summary">
+      <tbody class="header">
         <th class="text-body2 text-left">Final Markup</th>
         <th class="text-body2" colspan="2">5.00%</th>
         <th class="text-body2" colspan="2">10%</th>
         <th class="text-body2" colspan="2">15%</th>	
-      </thead>
+      </tbody>
       <tbody class="cs-section">
         <SummaryRow
           :costSheet="costSheet"
