@@ -484,7 +484,7 @@ import moment from 'moment';
             <td>Point Resistance [R &lt; N x 10Ω]</td>
             <td v-for="index in 12" :key="index">
               <input
-                v-model="certificate2.table1.pointResistance[index]"
+                :value="resistanceofEarthTerminationSystem[index] ? 'X' : ''"
                 type="text"
               >
             </td>
@@ -499,7 +499,7 @@ import moment from 'moment';
             <td>Electrical Continuity Test Between N &amp; N+1</td>
             <td v-for="index in 12" :key="index">
               <input
-                v-model="certificate2.table1.electricalContinuity[index]"
+                :value="electricalContinuityTest[index] ? 'X' : ''"
                 type="text"
               >
             </td>
@@ -539,7 +539,7 @@ import moment from 'moment';
               :key="index"
             >
               <input
-                v-model="certificate2.table1.pointResistance[index]"
+                :value="resistanceofEarthTerminationSystem[index] ? 'X' : ''"
                 type="text"
               >
             </td>
@@ -559,7 +559,7 @@ import moment from 'moment';
               :key="index"
             >
               <input
-                v-model="certificate2.table1.electricalContinuity[index]"
+                :value="electricalContinuityTest[index] ? 'X' : ''"
                 type="text"
               >
             </td>
@@ -636,7 +636,7 @@ import moment from 'moment';
             <td>Overall value in Ohm [R &lt; 0.2Ω]</td>
             <td v-for="index in 12" :key="index">
               <input
-                v-model="certificate2.table1.electricalContinuity[index]"
+                :value="ETSOverallResistance[index] ? 'X' : ''"
                 type="text"
               >
             </td>
@@ -671,7 +671,7 @@ import moment from 'moment';
             <td>Overall value in Ohm [R &lt; 0.2Ω]</td>
             <td v-for="index in 12" :key="index">
               <input
-                v-model="certificate2.table2.electricalContinuity[index]"
+                :value="ETSOverallResistance[index] ? 'X' : ''"
                 type="text"
               >
             </td>
@@ -745,6 +745,7 @@ import moment from 'moment';
 import moment from 'moment'
 export default {
   name: 'LightningProtection',
+  layout: 'printlayout',
   async asyncData ({ route, $axios }) {
     if (route && route.query && route.query.id) {
       const id = parseInt(route.query.id)
@@ -771,6 +772,23 @@ export default {
         electricalTest = result.forms.filter(f => f.name === 'ElectricalTest')[0].values
       }
 
+      const resistanceofEarthTerminationSystem = Array(24).fill(false)
+      const electricalContinuityTest = Array(24).fill(false)
+      const ETSOverallResistance = Array(24).fill(false)
+
+      const prValues = electricalTest.PointResistance
+      const ectValues = electricalTest.ElectricalContinuityTest
+      const etsValues = electricalTest.ETSOverallResistance
+
+      resistanceofEarthTerminationSystem[prValues[0]] = true
+      resistanceofEarthTerminationSystem[prValues[1]] = true
+
+      electricalContinuityTest[ectValues[0]] = true
+      electricalContinuityTest[ectValues[1]] = true
+
+      ETSOverallResistance[etsValues[0]] = true
+      ETSOverallResistance[etsValues[1]] = true
+
       return {
         reportId: id,
         reportData: result,
@@ -780,6 +798,9 @@ export default {
         approvedInfo,
         electricalTest,
         configuration,
+        resistanceofEarthTerminationSystem,
+        electricalContinuityTest,
+        ETSOverallResistance
       }
     }
   },
@@ -787,6 +808,9 @@ export default {
     return {
       reportId: -1,
       reportData: {},
+      resistanceofEarthTerminationSystem: [],
+      electricalContinuityTest: [],
+      ETSOverallResistance: [],
       certificate1: {
       // CERTIFICATE OF DESIGN & SUPERVISION OF LIGHTNING PROTECTION SYSTEM
         projectRefNo: '',
@@ -810,15 +834,6 @@ export default {
       },
       certificate2: {
       // Earth Resistance & Electrical Continuity Test Form
-        projectRefNo: '',
-        address: '',
-        testDate: '',
-        brandModel1: '',
-        serialNo1: '',
-        calibrated1: '',
-        brandModel2: '',
-        serialNo2: '',
-        calibrated2: '',
         table1: {
           pointResistance: [],
           electricalContinuity: [],

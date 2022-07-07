@@ -85,7 +85,8 @@
               @change="handleSubmit"
               :max="field.max"
               :min="field.min"
-              hide-details
+              :hint="`${values[field.fieldName][0]} - ${values[field.fieldName][1]}`"
+              persistent-hint
             ></v-range-slider>
           </v-col>
         </v-row>

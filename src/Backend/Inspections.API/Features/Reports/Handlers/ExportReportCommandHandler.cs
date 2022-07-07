@@ -32,7 +32,7 @@ public class ExportReportCommandHandler : IRequestHandler<ExportReportCommand, b
 
         var browserFetcher = new BrowserFetcher();
         await browserFetcher.DownloadAsync();
-        // TODO-IVAN: --no-sandbox is an insecure workaround. I'll take a look into this next time
+        // TODO-IVAN: --no-sandbox is an insecure workaround. I'll take a look into this some time in the future
         await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true, Args = new[] { "--no-sandbox" } });
         await using var page = await browser.NewPageAsync();
 

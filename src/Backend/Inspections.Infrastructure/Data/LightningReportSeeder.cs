@@ -11,7 +11,7 @@ public static class LightningReportSeeder
 {
     public static async Task CreateLightningReportConfiguration(InspectionsContext context, ILoggerFactory logger)
     {
-        if (!await context.ReportConfigurations.AnyAsync(rc=> rc.FormName == "Lightning Inspections Form"))
+        if (!await context.ReportConfigurations.AnyAsync(rc=> rc.FormName == "LPS-CSC-2019 (1)"))
         {
             var forms = AddForms();
             await context.AddRangeAsync(forms);
