@@ -2,64 +2,139 @@
   <div>
     <v-row>
       <new-report-dialog v-model="dialog" @report-created="goToNewReport($event)" />
-      <OptionsCards :options="cardOptions" />
+      <!-- <OptionsCards :options="cardOptions" /> -->
     </v-row>
-    <v-row v-if="$auth.user.isAdmin">
-      <v-col cols="12" md="6" sm="12">
-        <v-card>
-          <v-card-title class="justify-center">
-            <h3>Licenses Expiring Soon</h3>
-          </v-card-title>
-          <v-data-table
-            :headers="licensesHeader"
-            :item-class="() => 'expiring-row'"
-            item-key="licenseId"
-            dense
-            :items="expiring"
-            @dblclick:row="goToLicenses"
+    <v-data-table
+      :class="$device.isTablet ? 'tablet-text' : ''"
+      :items="reportList"
+      item-key="id"
+      :search="filter"
+      dense
+      :headers="headers"
+      :loading="loading"
+    >
+      <template #top="{}">
+        <v-toolbar flat color="white">
+          <v-toolbar-title>Reports</v-toolbar-title>
+          <v-divider class="mx-4" inset vertical />
+          <grid-filter :filter.sync="filter" />
+          <v-spacer />
+          <v-btn
+            v-if="!$route.query.closed"
+            class="mx-2"
+            x-small
+            fab
+            dark
+            color="primary"
+            @click="dialog = true"
           >
-            <template #[`item.validityStart`]="{ item }">
-              {{ parseDate(item.validityStart) }}
-            </template>
-            <template #[`item.validityEnd`]="{ item }">
-              {{ parseDate(item.validityEnd) }}
-            </template>
-          </v-data-table>
-        </v-card>
-      </v-col>
-      <v-col cols="12" md="6" sm="12">
-        <v-card>
-          <v-card-title class="justify-center">
-            <h3>
-              Expired Licenses
-            </h3>
-          </v-card-title>
-          <v-data-table
-            :headers="licensesHeader"
-            :item-class="() => 'expired-row'"
-            item-key="licenseId"
-            dense
-            :items="expired"
-            @dblclick:row="goToLicenses"
-          >
-            <template #[`item.validityStart`]="{ item }">
-              {{ parseDate(item.validityStart) }}
-            </template>
-            <template #[`item.validityEnd`]="{ item }">
-              {{ parseDate(item.validityEnd) }}
-            </template>
-          </v-data-table>
-        </v-card>
-      </v-col>
-    </v-row>
+            <v-icon dark>
+              mdi-plus
+            </v-icon>
+          </v-btn>
+        </v-toolbar>
+      </template>
+      <template #[`item.actions`]="{ item }">
+        <v-tooltip top>
+          <template #activator="{ on }">
+            <v-btn
+              icon
+              :loading="printing"
+              :disabled="!item.isClosed || !(item.photosCount > 0)"
+              color="primary"
+              class="mr-2"
+              v-on="on"
+              @click="generatePdf(item, true)"
+            >
+              <v-icon>
+                mdi-camera
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>Print Inspection Report With Photos</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template #activator="{ on }">
+            <v-btn
+              icon
+              :loading="printing"
+              :disabled="!item.isClosed"
+              color="primary"
+              class="mr-2"
+              v-on="on"
+              @click="generatePdf(item)"
+            >
+              <v-icon> mdi-printer </v-icon>
+            </v-btn>
+          </template>
+          <span>Print Inspections Report without Photos</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template #activator="{ on }">
+            <v-btn
+              icon
+              color="primary"
+              class="mr-2"
+              v-on="on"
+              @click="
+                $router.push({ name: 'Reports-id', params: { id: item.id } })
+              "
+            >
+              <v-icon> mdi-pencil </v-icon>
+            </v-btn>
+          </template>
+          <span>Edit</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template #activator="{ on }">
+            <v-icon
+              :disabled="item.isClosed"
+              color="error"
+              v-on="on"
+              @click="
+                selectItem(item);
+                dialogRemove = true;
+              "
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          <span>Delete</span>
+        </v-tooltip>
+      </template>
+      <template #[`item.date`]="{ item }">
+        {{ formatDate(item.date) }}
+      </template>
+      <template #[`item.photoRecords`]="{ item }">
+        {{ item.photoRecords.length }}
+      </template>
+      <template #[`item.notes`]="{ item }">
+        {{ item.notes.length }}
+      </template>
+      <template #[`item.checkList`]="{ item }">
+        {{ item.checkList.length }}
+      </template>
+      <template #[`item.signatures`]="{ item }">
+        {{ item.signatures.length }}
+      </template>
+      <template #[`item.completed`]="{ item }">
+        <v-simple-checkbox v-model="item.completed" disabled />
+      </template>
+      <template #[`item.isClosed`]="{ item }">
+        <v-simple-checkbox v-model="item.isClosed" disabled />
+      </template>
+    </v-data-table>
   </div>
 </template>
 
 <script lang="ts">
+import moment from 'moment'
 import { Vue, Component } from 'nuxt-property-decorator'
 import { DateTime } from 'luxon'
 import { LicensesState } from 'store/licenses'
-import { CardOption } from '~/types'
+import { CardOption, Report } from '~/types'
+import { PrintHelper } from '~/Helpers'
+import { ReportsState } from '~/store/reportstrore'
 
 @Component({
   layout: 'default'
@@ -67,6 +142,16 @@ import { CardOption } from '~/types'
 export default class IndexPage extends Vue {
   dialog: boolean = false
   self = this
+
+  loading: boolean = false
+  printing: boolean = false
+  printHelper!: PrintHelper
+  dialogRemove: Boolean = false
+  selectedItem: Report = {} as Report
+  filter: String = ''
+  showOnlyMyReports: Boolean = false
+  hostName: string = this.$axios!.defaults!.baseURL!.replace('/api', '')
+
   cardOptions: CardOption[] = [
     {
       name: 'new',
@@ -77,54 +162,7 @@ export default class IndexPage extends Vue {
       path: '',
       action: () => this.createReport()
     },
-    {
-      name: 'edit',
-      text: 'Edit Report',
-      helpText: 'Click one of the Options bellow',
-      icon: 'mdi-pencil',
-      color: 'accent',
-      path: '/reports'
-    },
-    {
-      name: 'view',
-      text: 'View or Export Report',
-      helpText: 'Allows to View CLOSED Reports and Photo Records and Export in PDF formats',
-      icon: 'mdi-file-chart',
-      color: 'accent',
-      path: '/reports?closed=true'
-    }
   ]
-
-  licensesHeader = [
-    {
-      text: 'ID',
-      value: 'licenseId',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'License',
-      value: 'number',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'Valid From',
-      value: 'validityStart',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'Valid To',
-      value: 'validityEnd',
-      sortable: true,
-      align: 'left'
-    }
-  ]
-
-  async asyncData ({ store }: any) {
-    await store.dispatch('licenses/getLicensesDashboard', null, { root: true })
-  }
 
   goToNewReport (event: any) {
     this.$router.push(`/reports/${event}`)
@@ -134,20 +172,102 @@ export default class IndexPage extends Vue {
     this.dialog = false; this.dialog = true
   }
 
-  get expiring () {
-    return (this.$store.state.licenses as LicensesState).dashboard.expiring
+  headers: any[] = [
+    {
+      text: 'Date',
+      value: 'date',
+      sortable: true,
+      align: 'center'
+    },
+    {
+      text: 'Location',
+      value: 'address',
+      sortable: true,
+      align: 'left'
+    },
+    {
+      text: 'Report Type',
+      value: 'title',
+      sortable: true,
+      align: 'left'
+    },
+    {
+      text: '',
+      value: 'actions',
+      sortable: false,
+      align: 'center'
+    }
+  ]
+
+  get reportList (): Report[] {
+    return (this.$store.state.reportstrore as ReportsState).reportList || []
   }
 
-  get expired () {
-    return (this.$store.state.licenses as LicensesState).dashboard.expired
+  async fetch () {
+    // this.loading = true
+    // TODO: Save filters state on store
+    await this.$store.dispatch(
+      'reportstrore/getReports',
+      {
+        filter: '',
+        closed: this.$route.query.closed,
+        orderBy: 'date',
+        myreports: this.showOnlyMyReports,
+        descending: true
+      },
+      { root: true }
+    )
+
+    this.loading = false
   }
 
-  parseDate (date: string) {
-    return DateTime.fromISO(date).toLocaleString()
+  mounted () {
+    this.printHelper = new PrintHelper(this.$store)
   }
 
-  goToLicenses (_:any, row: any) {
-    this.$router.push(`/licenses?id=${row.item.licenseId}`)
+  selectItem (item: Report): void {
+    this.selectedItem = item
+  }
+
+  formatDate (date: string): string {
+    return moment(date).format('YYYY-MM-DD HH:mm')
+  }
+
+  deleteReport () {
+    this.$store
+      .dispatch('reportstrore/deleteReport', this.selectedItem.id, {
+        root: true
+      })
+      .then(() => {
+        this.dialogRemove = false
+      })
+  }
+
+  async generatePdf (item: Report, printPhotos: boolean = false) {
+    try {
+      this.printing = true
+      const file = await this.$axios.$get(
+        `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${item.reportConfigurationId}`,
+        { responseType: 'blob' }
+      )
+      this.downloadFile(
+        file,
+        printPhotos
+          ? `compunded_photo_record_${item.name}`
+          : `report_${item.name}`
+      )
+    } catch (e) {
+    } finally {
+      this.printing = false
+    }
+  }
+
+  downloadFile (blob: Blob, name: any): void {
+    const link = document.createElement('a')
+    link.target = '_blank'
+    link.href = window.URL.createObjectURL(blob)
+    link.download = `${name}`
+    link.click()
   }
 }
 </script>

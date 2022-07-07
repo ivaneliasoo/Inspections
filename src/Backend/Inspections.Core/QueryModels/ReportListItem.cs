@@ -13,6 +13,7 @@ public class ReportListItem
     public decimal? LicenseKVA { get; set; }
     public decimal? LicenseVolt { get; set; }
     public decimal? LicenseAmp { get; set; }
+    public string Title { get; set; }
     public DateTime? LicenseValidityStart { get; set; } = default!;
     public DateTime? LicenseValidityEnd { get; set; } = default!;
     public bool IsClosed { get; set; }

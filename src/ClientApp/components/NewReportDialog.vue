@@ -1,5 +1,5 @@
 <template>
-  <message-dialog v-model="localValue" :actions="[]">
+  <message-dialog v-if="configurations" v-model="localValue" :actions="[]">
       <template v-slot:title="{}">
         New Report
       </template>
@@ -29,15 +29,17 @@
         </v-col>
       </v-row>
 
-        <v-row justify="center" align="center" v-for="item in configurations"
-              :key="item.id">
-          <v-col>
-            <v-card class="tw-mx-5" ripple @click="configuration = item.id; createReport()">
-              <v-card-title>{{ item.title }}</v-card-title>
-              <v-card-subtitle>Creates a new Report With {{ item.title }} {{item.formName}} Configuration</v-card-subtitle>
-            </v-card>
-          </v-col>
-        </v-row>
+        <div v-if="configurations && configurations.length > 0">
+          <v-row justify="center" align="center" v-for="(item, index) in configurations"
+                :key="`reportconfig${index}`">
+            <v-col v-if="item">
+              <v-card class="tw-mx-5" ripple @click="configuration = item.id; createReport()">
+                <v-card-title>{{ item.title }}</v-card-title>
+                <v-card-subtitle>Creates a new Report With {{ item.title }} {{item.formName}} Configuration</v-card-subtitle>
+              </v-card>
+            </v-col>
+          </v-row>
+        </div>
     </message-dialog>
 </template>
 
@@ -59,6 +61,12 @@ export default class NewReportDialog extends Vue {
   creatingReport: boolean = false
   search: string = ''
   configuration: number = 0
+
+  async asyncData() {
+    await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
+    return {}
+  }
+
   async fetch() {
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
   }
@@ -82,7 +90,10 @@ export default class NewReportDialog extends Vue {
   }
 
   get configurations (): ReportConfiguration[] {
-    return (this.$store.state.configurations as ReportConfigurationState).configurations
+    let all = (this.$store.state.configurations as ReportConfigurationState).configurations.filter(c => c.formName !== 'Incidents Report')
+    let incident = (this.$store.state.configurations as ReportConfigurationState).configurations.filter(c => c.formName === 'Incidents Report')
+    all.unshift(incident[0])
+    return all || []
   }
 
   get selectedConfiguration() {

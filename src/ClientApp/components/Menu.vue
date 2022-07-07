@@ -17,12 +17,12 @@
     </v-list-item>
     <v-divider />
     <v-list-item
-      v-for="(menu, index) in menuDefinition.filter(m=>m.parentName==='')"
+      v-for="(menu, index) in menuDefinition.filter(m=>m.parentName==='' && !m.visible)"
       :key="`${menu.name}${index}`"
       link
       :to="menu.route.includes('http') ? '' : menu.route"
       @click="menu.route.includes('http') ? redirect(menu.route):''"
-      :disabled="!menu.route || menu.disabled"
+      :visible="!menu.route || menu.visible"
     >
       <v-list-item-icon>
         <v-icon v-if="menu.icon" v-text="menu.icon"></v-icon>
@@ -58,40 +58,42 @@ export default class Menu extends Vue {
       parentName: '',
       route: '/energyreport',
       icon: 'mdi-graph',
-      disabled: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
+      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
     },
     {
       name: 'Job Planner',
       parentName: '',
       route: '/jobplanner',
       icon: 'mdi-calendar',
-      disabled: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
+      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
     },
     {
       name: 'Cost Sheets',
       parentName: '',
       route: '/costsheets',
       icon: 'mdi-table-large',
-      disabled: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
+      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
     },
     {
       name: "Risk Assessment",
       parentName: "",
       route: "",
       icon: "",
+      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
     },
     {
       name: "Method of Statement",
       parentName: "",
       route: "",
       icon: "",
+      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
     },
     {
       name: "Manpower Scheduling",
       parentName: "",
       route: "",
       icon: "",
-      disabled: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
+      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
     },
     {
       name: "Master Setup",
