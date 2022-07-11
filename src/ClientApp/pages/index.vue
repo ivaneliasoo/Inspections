@@ -1,5 +1,14 @@
 <template>
   <div>
+    <alert-dialog
+      v-model="dialogRemove"
+      title="Remove Reports"
+      message="This operation will remove this report and all data related"
+      :code="selectedItem.id"
+      :description="selectedItem.name"
+      @yes="deleteReport()"
+      @no="dialogRemove = false"
+    />
     <v-row>
       <new-report-dialog v-model="dialog" @report-created="goToNewReport($event)" />
       <!-- <OptionsCards :options="cardOptions" /> -->
