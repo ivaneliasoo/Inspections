@@ -676,7 +676,10 @@ import { EventBus, Key }
         // console.log("addSection", position, newSectionIndex)
         let newSection;
         if (newSectionIndex === -1) {
-          newSection = new Section({materialMarkup: this.costSheet.materialMarkup});
+          newSection = new Section({
+            materialMarkup: this.costSheet.materialMarkup,
+            finalMarkup: this.costSheet.finalMarkup
+          });
         } else {
           newSection = new Section(this.template.sections[newSectionIndex]);
         }

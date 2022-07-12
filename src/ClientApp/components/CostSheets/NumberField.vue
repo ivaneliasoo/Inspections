@@ -104,7 +104,6 @@ export default {
 
         const value = (""+v).replace(/,/gi, '');
         //const value = this.format === "currency" ? parseFloat(str).toFixed(2) : parseFloat(str).toFixed(dec);
-        console.log("NumberField set(v), pos", v, value, pos);
         this.$emit('input', value);
         
         field.focus();
