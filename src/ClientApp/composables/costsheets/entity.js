@@ -30,13 +30,11 @@ export class Item {
             itemNumber: this.itemNumber,
             description: this.description,
 
-            noCables: parseFloat(this.noCables),
-            unitCost: parseFloat(this.unitCost),
-            units: parseFloat(this.units),
-            labourCostUnit: parseFloat(this.labourCostUnit),
-            materialMarkup: parseFloat(this.materialMarkup),
-
-            items: this.items
+            noCables: Number(this.noCables),
+            unitCost: Number(this.unitCost),
+            units: Number(this.units),
+            labourCostUnit: Number(this.labourCostUnit),
+            materialMarkup: Number(this.materialMarkup),
         }
     }
 
@@ -45,6 +43,9 @@ export class Item {
     }
 
     labourCost() {
+        if (this.materialCost() === 0 && this.units === 0 && this.labourCostUnit > 0) {
+            this.units = 1;
+        }
         return this.units * this.labourCostUnit;
     }
 
@@ -98,11 +99,12 @@ export class Section {
     }
 
     toJSON() {
+        console.log(JSON.stringify(this.items));
         return {
             secNumber: this.secNumber,
             description: this.description,
-            materialMarkup: parseFloat(this.materialMarkup),
-            finalMarkup: parseFloat(this.finalMarkup),
+            materialMarkup: Number(this.materialMarkup),
+            finalMarkup: Number(this.finalMarkup),
             items: this.items
         }
     }
@@ -213,11 +215,11 @@ export class CostSheet {
             location: this.location,
             isTemplate: this.isTemplate,
             dateCreated: this.dateCreated.toISOString(),
-            materialMarkup: parseFloat(this.materialMarkup),
-            labourDailyRate: parseFloat(this.labourDailyRate),
-            labourNightMultiplier: parseFloat(this.labourNightMultiplier),
-            finalMarkup: parseFloat(this.finalMarkup),
-            finalOverallMarkup: parseFloat(this.finalOverallMarkup),
+            materialMarkup: Number(this.materialMarkup),
+            labourDailyRate: Number(this.labourDailyRate),
+            labourNightMultiplier: Number(this.labourNightMultiplier),
+            finalMarkup: Number(this.finalMarkup),
+            finalOverallMarkup: Number(this.finalOverallMarkup),
             sections: this.sections,
             options: this.options,
             lastUpdate: this.lastUpdate,
@@ -265,7 +267,7 @@ export class CostSheet {
         // const x = this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0;
         // return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
         const sum = this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0;
-        const finalMarkup = parseFloat(this.finalMarkup);
+        const finalMarkup = Number(this.finalMarkup);
         return sum * (1 + finalMarkup/100);
     }
 
@@ -273,7 +275,7 @@ export class CostSheet {
         if (!delta) {
             return this.toQuotePrice();
         }
-        const finalMarkup = parseFloat(this.finalOverallMarkup);
+        const finalMarkup = Number(this.finalOverallMarkup);
         return this.toQuotePrice() * (1+(finalMarkup+delta)/100) / (1+finalMarkup/100)
     }
 
