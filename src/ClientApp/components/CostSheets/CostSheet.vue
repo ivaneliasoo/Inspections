@@ -18,10 +18,13 @@
         <v-col class="mt-n4 pt-n4 mb-n6 pb-n6 text-left text-h6" cols="4">
           <div class="header-fields">
             <input
+              ref="project"
+              name="project"
               class="table-input"
               type="text"
               size="100"
               v-model="costSheet.project"
+              @keydown="keyDown"
             />
           </div>
         </v-col>
@@ -91,9 +94,12 @@
         <v-col class="mt-n2 pt-n2 mb-n5 pb-n5 text-left text-body" cols="4">
           <div class="header-fields">
             <input v-if="!costSheet.isTemplate"
+              ref="location"
+              name="location"
               class="table-input"
               type="text"
               v-model="costSheet.location"
+              @keydown="keyDown"
             />
           </div>
         </v-col>
@@ -538,6 +544,20 @@ import { EventBus, Key }
       changeAlignment() {
         this.$emit('re-render');
       },
+      keyDown(event) {
+        if (event.target.getAttribute("name") === "project") {
+          if (event.keyCode === Key.down || event.keyCode === Key.enter) {
+            this.$refs.location.focus();
+          }
+        } else if (event.target.getAttribute("name") === "location") {
+          if (event.keyCode === Key.up) {
+            this.$refs.project.focus();
+          } else if (event.keyCode === Key.down || event.keyCode === Key.enter) {
+            const firstField = this.$refs.costsheet.querySelector('input');
+            firstField.focus();
+          }
+        }
+      },
       moveCursor(fld, key) {
         let table = fld.closest('table');
         while (table) {
@@ -563,8 +583,7 @@ import { EventBus, Key }
           const d1 = Math.abs(p-col);
           if (d1 < d) {
             d = d1;
-            closest = fields[i]; 
-            console.log("closestField", i, d);
+            closest = fields[i];
           }
         }
         return closest;
@@ -620,6 +639,7 @@ import { EventBus, Key }
                       return;
                     }
                   }
+                  this.$refs.location.focus();
                 } else {
                   const fld = this.$refs.finalOverallMarkup.$el.querySelector('input');
                   fld.focus();

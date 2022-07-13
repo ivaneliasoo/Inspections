@@ -99,7 +99,6 @@ export class Section {
     }
 
     toJSON() {
-        console.log(JSON.stringify(this.items));
         return {
             secNumber: this.secNumber,
             description: this.description,

@@ -161,8 +161,6 @@ html {
     },
     methods: {
       init() {
-        console.log("init")
-        //this.costSheets = inMemorySheets;
         this.getCostSheets(true);
         this.getTemplates(false);
       },
@@ -278,7 +276,7 @@ html {
           transformResponse: this.parseResponse
         }).then(response => {
           this.selectedSheet = new CostSheet(response.data);
-          console.log("selectedSheet.options", this.selectedSheet.options);
+          // console.log("selectedSheet.options", this.selectedSheet.options);
           this.showCostSheet();
         }).catch(function (error) {
           console.log(error);
