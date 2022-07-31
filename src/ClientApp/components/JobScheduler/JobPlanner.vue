@@ -1120,9 +1120,9 @@ import 'flatpickr/dist/flatpickr.css'
 import 'flatpickr/dist/themes/material_blue.css'
 
 import { Job, SchedJob, Team, Shift, Selection, Clipboard, JobStatus, Day, JobState }
-  from '../../composables/jp_entity.js'
+  from '../../utils/jp_entity.js'
 import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMonday, addDays2Date }
-  from '../../composables/jp_util.js'
+  from '../../utils/jp_util.js'
 
 const priorityColors = [
   'tomato', 'tomato', 'orange', 'orange', 'yellow', 'yellow', 'lightgreen', 'lightgreen', 'limegreen', 'limegreen'

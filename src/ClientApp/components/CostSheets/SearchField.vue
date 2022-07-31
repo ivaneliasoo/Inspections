@@ -20,9 +20,9 @@
 
 <script>
 import { Section, Item, CostSheet }
-  from '../../composables/costsheets/entity.js'
-import { endpoint } from '../../composables/costsheets/util.js'
-import { toIsoDate } from '~/composables/jp_util.js'
+  from '../../utils/costsheets/entity.js'
+import { endpoint } from '../../utils/costsheets/util.js'
+import { toIsoDate } from '~/utils/jp_util.js'
 
 export default {
   props: {
