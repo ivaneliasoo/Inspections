@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { EventBus, Key } from '../../composables/costsheets/event_bus.js'
+import { EventBus, Key } from '../../utils/costsheets/event_bus.js'
 
 // Restricts input for the given textbox to the given inputFilter function.
 // https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input

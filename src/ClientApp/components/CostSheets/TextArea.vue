@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { EventBus, Key } from '../../composables/costsheets/event_bus.js'
+import { EventBus, Key } from '../../utils/costsheets/event_bus.js'
 
 export default {
   props: {

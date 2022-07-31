@@ -98,7 +98,7 @@
 <script>
 import { Section, Item, CostSheet }
   from '../../utils/costsheets/entity.js'
-import { endpoint } from '../../composables/costsheets/util.js'
+import { endpoint } from '../../utils/costsheets/util.js'
 
 export default {
   props: {
