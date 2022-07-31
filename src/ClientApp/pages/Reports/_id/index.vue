@@ -675,7 +675,7 @@ import {
 } from '@nuxtjs/composition-api'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 // eslint-disable-next-line import/named
-import { watchDebounced } from '@vueuse/core'
+import { watchDebounced, WatchDebouncedOptions } from '@vueuse/core'
 import {
   AddNoteCommand,
   CheckListItemQueryResult,
@@ -892,7 +892,7 @@ export default defineComponent({
 
     watchDebounced(
       currentReport,
-      async (newValue: ReportQueryResult) => {
+      (newValue: ReportQueryResult) => {
         if (!IsValidForm.value || !formHasChanged.value) {
           return
         }
@@ -900,7 +900,7 @@ export default defineComponent({
           if (pageOptions.loadingReport) {
             return
           }
-          await saveReportChanges(newValue)
+          saveReportChanges(newValue)
         } catch (error) {
           notify({
             title: 'Reports',
@@ -915,7 +915,9 @@ export default defineComponent({
       },
       {
         debounce: 1000,
-      }
+        maxWait: 5000,
+        deep: true
+      } as WatchDebouncedOptions<true>
     )
 
     watchDebounced(
@@ -957,7 +959,9 @@ export default defineComponent({
       },
       {
         debounce: 1000,
-      }
+        maxWait: 5000,
+        deep: true
+      } as WatchDebouncedOptions<true>
     )
 
     const addNote = async () => {
