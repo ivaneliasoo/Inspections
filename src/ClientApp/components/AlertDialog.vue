@@ -27,7 +27,14 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn color="error" text @click="$emit('yes'); $emit('input', false)">
+        <v-btn
+          color="error"
+          text
+          @click="
+            $emit('yes');
+            $emit('input', false);
+          "
+        >
           Yes
         </v-btn>
         <v-btn color="default" text @click="$emit('input', false)">
@@ -38,24 +45,48 @@
   </v-dialog>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Model } from 'nuxt-property-decorator'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-@Component
-export default class AlertDialog extends Vue {
-  @Model('input', { type: Boolean, required: true }) visible: Boolean = false
-  // @Prop({ required: true, default: false }) show: Boolean | undefined
-  @Prop({ required: true, default: '' }) message: String | undefined
-  @Prop({ required: true, default: '' }) title: String | undefined
-  @Prop({ required: true, default: '' }) code: String | undefined
-  @Prop({ required: true, default: '' }) description: String | undefined
+export default defineComponent({
+  model: {
+    prop: 'visible',
+    event: 'input',
+  },
+  props: {
+    visible: {
+      type: [Boolean, undefined],
+      default: false,
+    },
+    message: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    code: {
+      type: [String, Number],
+      default: ''
+    },
+    description: {
+      type: String,
+      default: ''
+    },
+  },
+  setup (props) {
+    const dialog = computed(() => {
+      return props.visible
+    })
 
-  get dialog () {
-    return this.visible
+    return {
+      dialog
+    }
   }
-}
+})
 </script>
 <style>
 .title {
-    color: white;
+  color: white;
 }
 </style>

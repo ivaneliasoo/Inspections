@@ -13,24 +13,19 @@
         {{ selectedItem.text }} Items
       </template>
       <template #subtitle="{}">
-        <v-list
-          subheader
-          two-line
-          flat
-        >
+        <v-list subheader two-line flat>
           <v-subheader>Items &amp; Params</v-subheader>
           <v-list-item v-for="item in checkItems" :key="item.id">
             <template #default="{ toggle }">
               <v-list-item-action>
-                <v-checkbox
-                  color="primary"
-                  @click="toggle"
-                />
+                <v-checkbox color="primary" @click="toggle" />
               </v-list-item-action>
 
               <v-list-item-content>
                 <v-list-item-title>{{ item.text }}</v-list-item-title>
-                <v-list-item-subtitle>Required {{ item.required }}</v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  Required {{ item.required }}
+                </v-list-item-subtitle>
               </v-list-item-content>
             </template>
           </v-list-item>
@@ -38,7 +33,7 @@
       </template>
     </message-dialog>
     <v-data-table
-      :class="$device.isTablet ? 'tablet-text':''"
+      :class="$device.isTablet ? 'tablet-text' : ''"
       :items="checks"
       item-key="id"
       dense
@@ -76,8 +71,11 @@
               clearable
             />
           </v-col>
-          <v-col cols="12" :md="filter.inConfigurationOnly ? 2:7">
-            <v-switch v-model="filter.inConfigurationOnly" label="In Configuration" />
+          <v-col cols="12" :md="filter.inConfigurationOnly ? 2 : 7">
+            <v-switch
+              v-model="filter.inConfigurationOnly"
+              label="In Configuration"
+            />
           </v-col>
           <v-col v-if="filter.inConfigurationOnly" cols="12" md="5">
             <v-autocomplete
@@ -91,17 +89,27 @@
           </v-col>
         </v-row>
       </template>
-      <template #item.actions="{ item }">
+      <template #[`item.actions`]="{ item }">
         <v-icon
           color="primary"
           class="mr-2"
-          @click="selectItem(item); $router.push({ name: 'CheckLists-id', params: { id: selectedItem.id }}); dialog = true"
+          @click="
+            selectItem(item);
+            router.push({
+              name: 'CheckLists-id',
+              params: { id: selectedItem.id },
+            });
+            dialog = true;
+          "
         >
           mdi-pencil
         </v-icon>
         <v-icon
           color="error"
-          @click="selectItem(item); dialogRemove = true"
+          @click="
+            selectItem(item);
+            dialogRemove = true;
+          "
         >
           mdi-delete
         </v-icon>
@@ -111,129 +119,138 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, mixins } from 'nuxt-property-decorator'
-import { CheckListsState } from 'store/checklists'
-import { ReportConfigurationState } from '@/store/configurations'
-import { ReportsState } from '@/store/reportstrore'
+import { defineComponent, reactive, useRoute, ref, watch, useFetch, useRouter } from '@nuxtjs/composition-api'
+import { useChecklistStore } from '~/composables/useChecklistStore'
+import { useConfigurationStore } from '~/composables/useConfigurationStore'
+import { useReportsStore } from '~/composables/useReportsStore'
 import { CheckList, CheckListItem, FilterType, ReportConfiguration, Report } from '@/types'
-import InnerPageMixin from '@/mixins/innerpage'
+import useGoBack from '~/composables/useGoBack'
 
-@Component
-export default class CheckListsPage extends mixins(InnerPageMixin) {
-  dialog: Boolean = false
-  dialogRemove: boolean = false
-  dialogItems: Boolean = false
-  loading: boolean = false
-  filter: FilterType = {
-    filterText: '',
-    inConfigurationOnly: true,
-    reportId: 1001,
-    reportConfigurationId: 1
-  }
+export default defineComponent({
+  setup () {
+    useGoBack()
+    const checklistsStore = useChecklistStore()
+    const configurationsStore = useConfigurationStore()
+    const reportsStore = useReportsStore()
+    const route = useRoute()
+    const router = useRouter()
 
-  selectedItem: CheckList = {} as CheckList
+    const headers = [
+      {
+        text: 'Id',
+        value: 'id',
+        sortable: true,
+        align: 'center',
+        class: 'secundary'
+      },
+      {
+        text: 'Text',
+        value: 'text',
+        sortable: true,
+        align: 'left',
+        class: 'secundary'
+      },
+      {
+        text: 'Annotation',
+        value: 'annotation',
+        sortable: true,
+        align: 'left',
+        class: 'secundary'
+      },
+      {
+        text: 'Child Items',
+        value: 'totalItems',
+        sortable: true,
+        align: 'center',
+        class: 'secundary'
+      },
+      {
+        text: '',
+        value: 'actions',
+        sortable: false,
+        align: 'center',
+        class: 'secundary'
+      }
+    ]
 
-  headers: any[] = [
-    {
-      text: 'Id',
-      value: 'id',
-      sortable: true,
-      align: 'center',
-      class: 'secundary'
-    },
-    {
-      text: 'Text',
-      value: 'text',
-      sortable: true,
-      align: 'left',
-      class: 'secundary'
-    },
-    {
-      text: 'Annotation',
-      value: 'annotation',
-      sortable: true,
-      align: 'left',
-      class: 'secundary'
-    },
-    {
-      text: 'Child Items',
-      value: 'totalItems',
-      sortable: true,
-      align: 'center',
-      class: 'secundary'
-    },
-    {
-      text: '',
-      value: 'actions',
-      sortable: false,
-      align: 'center',
-      class: 'secundary'
-    }
-  ]
-
-  get checks (): CheckList[] {
-    return (this.$store.state.checklists as CheckListsState)
-      .checkLists
-  }
-
-  get reports (): Report[] {
-    return (this.$store.state.reportstrore as ReportsState)
-      .reportList
-  }
-
-  get configurations (): ReportConfiguration[] {
-    return (this.$store.state.configurations as ReportConfigurationState)
-      .configurations
-  }
-
-  get checkItems (): CheckListItem[] {
-    return (this.$store.state.checklists as CheckListsState)
-      .currentCheckList.checks
-  }
-
-  asyncData ({ query }:any) {
     const filter: FilterType = {
       filterText: '',
-      inConfigurationOnly: query.configurationonly === 'true' ? true : false ?? true,
-      reportId: query.reportid ? parseInt(query.reportid) : undefined,
-      reportConfigurationId: query.configurationid ? parseInt(query.configurationid) : undefined
+      inConfigurationOnly: route.value.query.configurationonly === 'true' ? true : false ?? true,
+      reportId: route.value.query.reportid ? parseInt(route.value.query.reportid as string) : 1001,
+      reportConfigurationId: route.value.query.configurationid ? parseInt(route.value.query.configurationid as string) : 1
     }
+
+    const selectedItem = ref<CheckList>({} as CheckList)
+
+    const state = reactive({
+      dialog: false,
+      dialogRemove: false,
+      dialogItems: false,
+      loading: false,
+    })
+
+    useFetch(async () => {
+      state.loading = true
+
+      await Promise.all([reportsStore.getReports({ filter: '', closed: route.value.query.closed, orderBy: 'date', myreports: false, descending: true }),
+        configurationsStore.getConfigurations(''),
+        checklistsStore.getChecklists(filter)])
+
+      state.loading = false
+    })
+
+    const selectItem = (item: CheckList): void => {
+      try {
+        selectedItem.value = item
+        state.loading = true
+        checklistsStore.getCheckListItemsById(selectedItem.value.id)
+      } catch (error) {
+        state.loading = false
+      }
+    }
+
+    const removeCheckList = async (item: CheckList) => {
+      state.loading = true
+      await checklistsStore.deleteCheckList({ idCheckList: item.id })
+      state.loading = false
+    }
+
+    watch(() => filter, (value) => {
+      state.loading = true
+      checklistsStore.getChecklists(value)
+        .finally(() => { state.loading = false })
+    }, { deep: true })
+
+    const checks = (): CheckList[] => {
+      return checklistsStore.$state.checkLists
+    }
+
+    const reports = (): Report[] => {
+      return reportsStore.reportList
+    }
+
+    const configurations = (): ReportConfiguration[] => {
+      return configurationsStore.configurations
+    }
+
+    const checkItems = (): CheckListItem[] => {
+      return checklistsStore.$state.currentCheckList.checks
+    }
+
     return {
-      filter
+      checks,
+      checkItems,
+      headers,
+      configurations,
+      reports,
+      filter,
+      selectedItem,
+      selectItem,
+      removeCheckList,
+      state,
+      route,
+      router,
     }
   }
-
-  async fetch () {
-    this.loading = true
-
-    Promise.all([await this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: false, descending: true }, { root: true }),
-      await this.$store.dispatch('configurations/getConfigurations', '', { root: true }),
-      await this.$store.dispatch('checklists/getChecklists', this.filter, { root: true })])
-
-    this.loading = false
-  }
-
-  selectItem (item: CheckList): void {
-    try {
-      this.selectedItem = item
-      this.loading = true
-      this.$store.dispatch('checklists/getCheckListItemsById', this.selectedItem.id, { root: false })
-    } catch (error) {
-      this.loading = false
-    }
-  }
-
-  @Watch('filter', { deep: true })
-  onFilterChanged (value: FilterType) {
-    this.loading = true
-    this.$store.dispatch('checklists/getChecklists', value, { root: true })
-      .finally(() => { this.loading = false })
-  }
-
-  async removeCheckList (item: CheckList) {
-    this.loading = true
-    await this.$store.dispatch('checklists/deleteCheckList', { idCheckList: item.id }, { root: true })
-    this.loading = false
-  }
-}
+})
 </script>

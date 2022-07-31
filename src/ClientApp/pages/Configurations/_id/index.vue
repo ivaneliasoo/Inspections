@@ -6,7 +6,7 @@
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-select
               id="selReportType"
-              v-model="newConfig.type"
+              v-model="componentState.newConfig.type"
               :error-messages="errors"
               disabled
               item-value="id"
@@ -20,7 +20,7 @@
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-text-field
               id="txtTitle"
-              v-model="newConfig.title"
+              v-model="componentState.newConfig.title"
               :error-messages="errors"
               label="Report Title"
             />
@@ -30,7 +30,7 @@
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-text-field
               id="txtFormName"
-              v-model="newConfig.formName"
+              v-model="componentState.newConfig.formName"
               :error-messages="errors"
               label="Report Form Name/Number"
             />
@@ -40,7 +40,7 @@
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-select
               id="printSectionId"
-              v-model="newConfig.printSectionId"
+              v-model="componentState.newConfig.printSectionId"
               :error-messages="errors"
               item-value="id"
               item-text="code"
@@ -54,32 +54,32 @@
         <v-col cols="12" md="3">
           <v-text-field
             id="txtRemarksLabelText"
-            v-model="newConfig.remarksLabelText"
+            v-model="componentState.newConfig.remarksLabelText"
             label="Remarks Label Text"
           />
         </v-col>
         <v-col cols="12" md="2">
           <ValidationProvider>
-            <v-switch v-model="newConfig.useCheckList" label="Use CheckList" />
+            <v-switch v-model="componentState.newConfig.useCheckList" label="Use CheckList" />
           </ValidationProvider>
         </v-col>
         <v-col cols="12" md="2">
           <ValidationProvider>
-            <v-switch v-model="newConfig.usePhotoRecord" label="Use PhotoRecord" />
+            <v-switch v-model="componentState.newConfig.usePhotoRecord" label="Use PhotoRecord" />
           </ValidationProvider>
         </v-col>
         <v-col cols="12" md="2">
           <ValidationProvider>
-            <v-switch v-model="newConfig.useNotes" label="Use Notes" />
+            <v-switch v-model="componentState.newConfig.useNotes" label="Use Notes" />
           </ValidationProvider>
         </v-col>
         <v-col cols="12" md="1">
           <ValidationProvider>
-            <v-switch v-model="newConfig.inactive" label="Inactive" />
+            <v-switch v-model="componentState.newConfig.inactive" label="Inactive" />
           </ValidationProvider>
         </v-col>
         <v-col cols="12" justify="space-between" md="2">
-          <nuxt-link :to="`/Configurations/${newConfig.id}/FormsSettingsList`">
+          <nuxt-link :to="`/Configurations/${componentState.newConfig.id}/FormsSettingsList`">
             <v-btn color="primary" outlined>
               Configure Forms
             </v-btn>
@@ -90,7 +90,7 @@
         <v-col cols="12" md="6">
           <v-select
             id="checksDefinition"
-            v-model="newConfig.checksDefinition"
+            v-model="componentState.newConfig.checksDefinition"
             item-value="id"
             item-text="text"
             multiple
@@ -99,14 +99,14 @@
             label="Include CheckLists"
             :items="checks"
             append-outer-icon="mdi-format-list-checks"
-            @click:append-outer="$router.push(`/checklists?configurationid=${newConfig.id}&configurationonly=true`)"
+            @click:append-outer="$router.push(`/checklists?configurationid=${componentState.newConfig.id}&configurationonly=true`)"
           />
         </v-col>
         <v-col cols="12" md="6">
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-select
               id="signatureDefinitions"
-              v-model="newConfig.signatureDefinitions"
+              v-model="componentState.newConfig.signatureDefinitions"
               :error-messages="errors"
               item-value="id"
               item-text="title"
@@ -116,7 +116,7 @@
               label="Include Signatures"
               :items="signatures"
               append-outer-icon="mdi-draw"
-              @click:append-outer="$router.push(`/signatures?configurationid=${newConfig.id}&configurationonly=true`)"
+              @click:append-outer="$router.push(`/signatures?configurationid=${componentState.newConfig.id}&configurationonly=true`)"
             />
           </ValidationProvider>
         </v-col>
@@ -128,8 +128,8 @@
         <v-col>
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-select
-              v-model="newConfig.display"
-              :items="displayOptions"
+              v-model="componentState.newConfig.display"
+              :items="componentState.displayOptions"
               name="display"
               label="Checklists Display Orientation"
               :error-messages="errors"
@@ -142,7 +142,7 @@
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-text-field
               id="txtTemplateName"
-              v-model="newConfig.templateName"
+              v-model="componentState.newConfig.templateName"
               :error-messages="errors"
               label="Print Template Name"
             />
@@ -151,7 +151,7 @@
       </v-row>
       <v-fab-transition>
         <v-btn
-          v-show="hasPendingChanges"
+          v-show="componentState.hasPendingChanges"
           :disabled="!dirty || !valid"
           color="success"
           fab
@@ -170,83 +170,39 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import InnerPageMixin from '@/mixins/innerpage'
+import { defineComponent, reactive, useRoute, useRouter, computed } from '@nuxtjs/composition-api'
 import { ReportConfiguration, ReportType, CheckList, FilterType, UpdateReportConfigurationCommand, ChecklistDisplayList, CheckListDisplay } from '@/types'
-import { CheckListsState } from '@/store/checklists'
-import { SignatureState } from '@/store/signatures'
+import { useChecklistStore } from '~/composables/useChecklistStore'
+import { useSignaturesStore } from '~/composables/useSignaturesStore'
 import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
 import { PrintSectionDTO } from '~/types/PrintSections/ViewModels/PrintSectionDTO'
-import { PrintSectionState } from '~/store/printsection'
+import { usePrintSectionsStore } from '~/composables/usePrintSectionsStore'
+import useGoBack from '~/composables/useGoBack'
+import { useConfigurationStore } from '~/composables/useConfigurationStore'
 
-@Component({
+export default defineComponent({
   components: {
     ValidationObserver,
     ValidationProvider
-  }
-})
-export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
-  defaultType: ReportType = ReportType.Inspection
-  newConfig!: ReportConfiguration
+  },
+  setup () {
+    useGoBack()
+    const componentState = reactive({
+      defaultType: ReportType.Inspection,
+      newConfig: {} as ReportConfiguration,
+      display: CheckListDisplay.Numbered,
+      displayOptions: ChecklistDisplayList,
+    })
 
-  display: CheckListDisplay = CheckListDisplay.Numbered
-  displayOptions = ChecklistDisplayList
+    const checklistsStore = useChecklistStore()
+    const signaturesStore = useSignaturesStore()
+    const printSectionsStore = usePrintSectionsStore()
+    const configurationStore = useConfigurationStore()
+    const route = useRoute()
+    const router = useRouter()
 
-  get checks (): CheckList[] {
-    return (this.$store.state.checklists as CheckListsState)
-      .checkLists
-  }
-
-  get printSections (): PrintSectionDTO[] {
-    return (this.$store.state.printsection as PrintSectionState)
-      .printSectionsList.filter(c => c.isMainReport === true)
-  }
-
-  get signatures (): SignatureDTO[] {
-    return (this.$store.state.signatures as SignatureState)
-      .signaturesList
-  }
-
-  get hasPendingChanges () {
-    return true
-  }
-
-  async saveChanges () {
-    const self = this
-
-    const command: UpdateReportConfigurationCommand = {
-      id: parseInt(self.$route.params.id),
-      type: this.newConfig.type,
-      title: this.newConfig.title,
-      formName: this.newConfig.formName,
-      remarksLabelText: this.newConfig.remarksLabelText,
-      inactive: this.newConfig.inactive,
-      checksDefinition: this.newConfig.checksDefinition,
-      signatureDefinitions: this.newConfig.signatureDefinitions,
-      printSectionId: this.newConfig.printSectionId,
-      display: this.newConfig.display,
-      templateName: this.newConfig.templateName,
-      useNotes: this.newConfig.useNotes,
-      useCheckList: this.newConfig.useCheckList,
-      usePhotoRecord: this.newConfig.usePhotoRecord
-    }
-
-    if (parseInt(self.$route.params.id) > 0) {
-      await this.$store.dispatch('configurations/updateConfiguration', command, { root: true })
-        .then(() => {
-          this.$store.dispatch('configurations/getConfigurationById', self.$route.params.id, { root: true })
-        })
-    } else {
-      await this.$store.dispatch('configurations/createConfiguration', this.newConfig, { root: true })
-        .then((resp) => {
-          if (parseInt(self.$route.params.id) > 0) { this.$store.dispatch('configurations/getConfigurationById', self.$route.params.id, { root: true }) } else { this.$router.push({ name: 'Configurations-id', params: { id: resp } }) }
-        })
-    }
-  }
-
-  async asyncData ({ store, params }: any) {
-    const id: number = parseInt(params.id)
+    const id: number = parseInt(route.value.params.id)
     const filter: FilterType = {
       filterText: '',
       inConfigurationOnly: true,
@@ -254,22 +210,76 @@ export default class AddEditReportConiguration extends mixins(InnerPageMixin) {
       reportConfigurationId: undefined
     }
 
-    await Promise.all([
-      store.dispatch('checklists/getChecklists', filter, { root: true }),
-      store.dispatch('signatures/getSignatures', filter, { root: true }),
-      store.dispatch('printsection/getPrintSections', filter, { root: true })
+    Promise.all([
+      checklistsStore.getChecklists(filter),
+      signaturesStore.getSignatures(filter),
+      printSectionsStore.getPrintSections(filter)
     ])
 
-    let newConfig: ReportConfiguration
-    let display: number
     if (id > 0) {
-      const result = await store.dispatch('configurations/getConfigurationById', id, { root: true })
-      newConfig = Object.assign({}, result)
-      display = parseInt(result.checkListMetadata.display)
-    } else { newConfig = { type: 0 } as ReportConfiguration }
-    return { newConfig, display }
-  }
-}
+      configurationStore.getConfigurationById(id).then((result) => {
+        componentState.newConfig = Object.assign({}, result)
+        componentState.display = parseInt(result.checkListMetadata.display)
+      })
+    } else { componentState.newConfig = { type: 0 } as ReportConfiguration }
+
+    const checks = computed((): CheckList[] => {
+      return checklistsStore.checkLists
+    })
+
+    const printSections = computed((): PrintSectionDTO[] => {
+      return printSectionsStore.printSectionsList.filter(c => c.isMainReport === true)
+    })
+
+    const signatures = computed((): SignatureDTO[] => {
+      return signaturesStore.signaturesList
+    })
+
+    const hasPendingChanges = () => {
+      return true
+    }
+    const saveChanges = async () => {
+      const command: UpdateReportConfigurationCommand = {
+        id: parseInt(route.value.params.id),
+        type: componentState.newConfig.type,
+        title: componentState.newConfig.title,
+        formName: componentState.newConfig.formName,
+        remarksLabelText: componentState.newConfig.remarksLabelText,
+        inactive: componentState.newConfig.inactive,
+        checksDefinition: componentState.newConfig.checksDefinition,
+        signatureDefinitions: componentState.newConfig.signatureDefinitions,
+        printSectionId: componentState.newConfig.printSectionId,
+        display: componentState.newConfig.display,
+        templateName: componentState.newConfig.templateName,
+        useNotes: componentState.newConfig.useNotes,
+        useCheckList: componentState.newConfig.useCheckList,
+        usePhotoRecord: componentState.newConfig.usePhotoRecord
+      }
+
+      if (parseInt(route.value.params.id) > 0) {
+        await configurationStore.updateConfiguration(command)
+          .then(() => {
+            configurationStore.getConfigurationById(route.value.params.id)
+          })
+      } else {
+        await configurationStore.createConfiguration(componentState.newConfig)
+          .then((resp) => {
+            if (parseInt(route.value.params.id) > 0) { configurationStore.getConfigurationById(route.value.params.id) } else { router.push({ name: 'Configurations-id', params: { id: resp } }) }
+          })
+      }
+    }
+
+    return {
+      componentState,
+      checks,
+      signatures,
+      printSections,
+      hasPendingChanges,
+      saveChanges,
+
+    }
+  },
+})
 </script>
 
 <style scoped>

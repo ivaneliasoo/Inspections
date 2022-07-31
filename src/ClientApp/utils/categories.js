@@ -1,4 +1,3 @@
-// import { getInstanceByDom } from "echarts";
 import md5 from 'blueimp-md5'
 
 export function getColumns (catTemplate) {

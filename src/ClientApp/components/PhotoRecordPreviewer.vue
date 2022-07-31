@@ -17,7 +17,7 @@
             height="200px"
           >
             <v-card-title class="text-uppercase">
-              {{ photo ? photo.label : '' }}
+              {{ photo ? photo.label : "" }}
             </v-card-title>
           </v-img>
           <v-card-actions>
@@ -43,9 +43,13 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-dialog v-model="showCarousel">
-      <v-carousel v-model="currentPhoto" height="80%">
-        <v-carousel-item v-for="(photo, index) in urls" :key="index" :src="photo.url">
+    <v-dialog v-model="state.showCarousel">
+      <v-carousel v-model="state.currentPhoto" height="80%">
+        <v-carousel-item
+          v-for="(photo, index) in urls"
+          :key="index"
+          :src="photo.url"
+        >
           <span>{{ photo }} {{ index }}</span>
         </v-carousel-item>
       </v-carousel>
@@ -54,23 +58,52 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model, PropSync, Prop } from 'vue-property-decorator'
+import { defineComponent, computed, reactive } from '@nuxtjs/composition-api'
 
-@Component
-export default class PhotoRecordPreviewer extends Vue {
-  @Model('input') urls: string[] | undefined
-  @PropSync('files', { required: true }) filesSync: File[] | undefined
-  @Prop({ type: Number }) progress!: number
+export default defineComponent({
+  model: {
+    prop: 'urls',
+    event: 'input',
+  },
+  props: {
+    urls: {
+      type: Array,
+      required: true,
+    },
+    files: {
+      type: Array as () => File[],
+      required: true,
+    },
+    progress: {
+      type: Number,
+      required: true,
+    },
+  },
+  setup (props, { emit }) {
+    const state = reactive({
+      showCarousel: false,
+      currentPhoto: 0,
+    })
 
-  showCarousel: boolean = false
-  currentPhoto: number = 0
-  showLabelEdit: number[] = []
+    const filesSync = computed({
+      get: () => props.files,
+      set: (files) => {
+        emit('input', files)
+      },
+    })
 
-  removePhoto (id: number) {
-    this.filesSync!.splice(id, 1)
-    this.urls!.splice(id, 1)
+    const removePhoto = (id: number) => {
+    filesSync!.value.splice(id, 1)
+    props.urls!.splice(id, 1)
+    }
+
+    return {
+      filesSync,
+      removePhoto,
+      state
+    }
   }
-}
+})
 </script>
 
 <style scoped>

@@ -53,85 +53,94 @@
 </template>
 
 <script lang="ts">
-import { DateTime } from 'luxon'
-import { Component, Vue } from 'vue-property-decorator'
+import { defineComponent, computed, useAsync, useRouter, useContext } from '@nuxtjs/composition-api'
+import useDateTime from '../../composables/useDateTime'
 import { CardOption } from '~/types'
-import { LicensesState } from '~/store/licenses'
+import { useLicensesStore } from '~/composables/useLicensesStore'
 
-  @Component
-export default class LewLicensing extends Vue {
-  cardOptions: CardOption[] = [
-    {
-      name: 'addresses',
-      text: 'Address Management',
-      helpText: 'Allows to create, update, delete address',
-      icon: 'mdi-cog-outline',
-      color: 'accent',
-      path: '/addresses'
-    },
-    {
-      name: 'licenses',
-      text: 'Licenses Management',
-      helpText: 'Allows to create, update, delete licenses',
-      icon: 'mdi-license',
-      color: 'accent',
-      path: '/licenses'
+export default defineComponent({
+  setup () {
+    const licensesStore = useLicensesStore()
+    const router = useRouter()
+    const { $auth } = useContext()
+    const { parseDate } = useDateTime()
+
+    const cardOptions: CardOption[] = [
+      {
+        name: 'addresses',
+        text: 'Address Management',
+        helpText: 'Allows to create, update, delete address',
+        icon: 'mdi-cog-outline',
+        color: 'accent',
+        path: '/addresses'
+      },
+      {
+        name: 'licenses',
+        text: 'Licenses Management',
+        helpText: 'Allows to create, update, delete licenses',
+        icon: 'mdi-license',
+        color: 'accent',
+        path: '/licenses'
+      }
+    ]
+
+    const licensesHeader = [
+      {
+        text: 'ID',
+        value: 'licenseId',
+        sortable: true,
+        align: 'left'
+      },
+      {
+        text: 'License',
+        value: 'number',
+        sortable: true,
+        align: 'left'
+      },
+      {
+        text: 'Valid From',
+        value: 'validityStart',
+        sortable: true,
+        align: 'left'
+      },
+      {
+        text: 'Valid To',
+        value: 'validityEnd',
+        sortable: true,
+        align: 'left'
+      }
+    ]
+
+    useAsync(() => licensesStore.getLicensesDashboard())
+
+    const expiring = computed(() => {
+      return licensesStore.dashboard.expiring
+    })
+
+    const expired = computed(() => {
+      return licensesStore.dashboard.expired
+    })
+
+    const goToLicenses = (_:any, row: any) => {
+      router.push(`/licenses?id=${row.item.licenseId}`)
     }
-  ]
 
-  licensesHeader = [
-    {
-      text: 'ID',
-      value: 'licenseId',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'License',
-      value: 'number',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'Valid From',
-      value: 'validityStart',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'Valid To',
-      value: 'validityEnd',
-      sortable: true,
-      align: 'left'
+    const options = computed(() => {
+      if (!$auth.user.isAdmin) { return cardOptions.filter(co => co.name !== 'settings') }
+
+      return cardOptions
+    })
+
+    return {
+      options,
+      licensesHeader,
+      expiring,
+      expired,
+      parseDate,
+      goToLicenses,
     }
-  ]
-
-  async asyncData ({ store }: any) {
-    await store.dispatch('licenses/getLicensesDashboard', null, { root: true })
   }
-
-  get expiring () {
-    return (this.$store.state.licenses as LicensesState).dashboard.expiring
-  }
-
-  get expired () {
-    return (this.$store.state.licenses as LicensesState).dashboard.expired
-  }
-
-  parseDate (date: string) {
-    return DateTime.fromISO(date).toLocaleString()
-  }
-
-  goToLicenses (_:any, row: any) {
-    this.$router.push(`/licenses?id=${row.item.licenseId}`)
-  }
-
-  get options () {
-    if (!this.$auth.user.isAdmin) { return this.cardOptions.filter(co => co.name !== 'settings') }
-
-    return this.cardOptions
-  }
-}
+})
 </script>
 
 <style scoped>

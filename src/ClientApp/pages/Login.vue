@@ -1,24 +1,10 @@
 <template>
   <v-app id="inspire">
     <v-main>
-      <v-parallax
-        dark
-        height="900"
-        src="/LoginBackground.jpg"
-      >
-        <v-container
-          class="fill-height"
-          fluid
-        >
-          <v-row
-            align="center"
-            justify="center"
-          >
-            <v-col
-              cols="12"
-              sm="8"
-              md="4"
-            >
+      <v-parallax dark height="900" src="/LoginBackground.jpg">
+        <v-container class="fill-height" fluid>
+          <v-row align="center" justify="center">
+            <v-col cols="12" sm="8" md="4">
               <v-card class="elevation-12">
                 <v-row>
                   <v-col cols="12" class="text-center">
@@ -32,7 +18,7 @@
                   <v-card-text>
                     <v-text-field
                       id="username"
-                      v-model="userName"
+                      v-model="state.userName"
                       label="UserName"
                       name="userName"
                       autocomplete="username"
@@ -42,7 +28,7 @@
 
                     <v-text-field
                       id="password"
-                      v-model="password"
+                      v-model="state.password"
                       label="Password"
                       autocomplete="current-password"
                       name="password"
@@ -52,14 +38,19 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer />
-                    <v-btn color="primary" :loading="loading" type="submit" @click.prevent="login">
+                    <v-btn
+                      color="primary"
+                      :loading="state.loading"
+                      type="submit"
+                      @click.prevent="login"
+                    >
                       Login
                     </v-btn>
                   </v-card-actions>
                 </v-form>
                 <v-row>
                   <v-alert
-                    :value="hasError"
+                    :value="state.hasError"
                     color="pink"
                     dark
                     border="top"
@@ -79,26 +70,36 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { useContext, defineComponent, reactive } from '@nuxtjs/composition-api'
 
-  @Component({
-    layout: 'guest'
-  })
-export default class LoginPage extends Vue {
-  userName: string = ''
-  password: string = ''
-  loading: Boolean = false
-  hasError: Boolean = false
+export default defineComponent({
+  layout: 'guest',
+  setup () {
+    const state = reactive({
+      userName: '',
+      password: '',
+      loading: false,
+      hasError: false,
+    })
 
-  async login () {
-    this.loading = true
-    await this.$auth.login({ data: { userName: this.userName, password: this.password } })
-      .catch(() => {
-        this.hasError = true
+    const { $auth } = useContext()
 
-        setTimeout(() => { this.hasError = false }, 3000)
-      })
-      .finally(() => { this.loading = false })
+    const login = async () => {
+      state.loading = true
+      await $auth.login({ data: { userName: state.userName, password: state.password } })
+        .catch((error) => {
+          console.log(error)
+          state.hasError = true
+
+          setTimeout(() => { state.hasError = false }, 3000)
+        })
+        .finally(() => { state.loading = false })
+    }
+
+    return {
+      login,
+      state,
+    }
   }
-}
+})
 </script>

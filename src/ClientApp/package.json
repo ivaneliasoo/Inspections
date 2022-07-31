@@ -24,11 +24,10 @@
   },
   "dependencies": {
     "@braid/vue-formulate": "^2.5.3",
-    "@nuxtjs/auth": "^4.9.1",
+    "@nuxtjs/auth-next": "5.0.0-1648802546.c9880dc",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/composition-api": "^0.33.0",
     "@pinia/nuxt": "0.2.1",
-    "@vue/composition-api": "^1.7.0",
     "@vueuse/nuxt": "9.0.2",
     "blueimp-md5": "^2.18.0",
     "d3": "^6.7.0",
@@ -51,8 +50,7 @@
     "vue-papa-parse": "^2.0.0",
     "vue-signature-pad": "3.0.2",
     "vue2-editor": "^2.10.3",
-    "vuedraggable": "^2.24.3",
-    "vuex": "^3.6.2"
+    "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
     "@nuxt/image": "^0.7.1",

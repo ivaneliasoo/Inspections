@@ -5,7 +5,8 @@ import { FormsApi, ReportConfigurationApi, ReportsApi } from '@/services/api'
 const apiClient: Plugin = ({ $auth, $config }, inject) => {
   if (!$auth?.user) { return }
   const config: Configuration = {
-    accessToken: `${$auth.getToken('local').replace('bearer ', '')}`,
+    // @ts-ignore
+    accessToken: `${$auth.strategy.token.get().replace('bearer ', '')}`,
     basePath: $config.axios.baseURL.replace('/api', ''),
     isJsonMime: () => false
   }

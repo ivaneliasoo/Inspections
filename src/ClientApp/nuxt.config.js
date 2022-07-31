@@ -43,7 +43,7 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/tailwindcss',
     '@nuxt/image',
-    '@nuxtjs/auth',
+    '@nuxtjs/auth-next',
     '@nuxtjs/pwa',
     '@nuxtjs/device',
     '@braid/vue-formulate/nuxt',
@@ -81,26 +81,35 @@ export default {
     }
   },
   auth: {
+    localStorage: false,
     redirect: {
       login: '/Login',
       logout: '/Login',
-      home: '/Reports'
+      home: '/'
     },
     cookie: {
+      prefix: 'auth.',
       options: {
-        sameSite: 'lax'
+        sameSite: 'lax',
       }
+    },
+    token: {
+      prefix: '_token.',
+      global: true,
     },
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/auth/token', method: 'post', propertyName: false },
+          login: { url: '/auth/token', method: 'post' },
           logout: false,
-          user: { url: '/Users/active', method: 'get', propertyName: false }
+          user: { url: '/Users/active', method: 'get' },
+        },
+        user: {
+          property: false,
+          autofecth: true,
         },
         tokenRequired: true,
         tokenType: 'bearer',
-        autoFetchUser: true
       }
     },
     plugins: ['~/plugins/api-client']

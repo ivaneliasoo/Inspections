@@ -98,8 +98,7 @@
 </template>
 
 <script lang="ts">
-import { ref, computed } from '@vue/composition-api'
-import { defineComponent } from '@nuxtjs/composition-api'
+import { ref, computed, defineComponent } from '@nuxtjs/composition-api'
 import { DynamicFieldMetadata } from '~/services/api'
 
 export default defineComponent({

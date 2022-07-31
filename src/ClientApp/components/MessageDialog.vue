@@ -37,33 +37,62 @@
   </v-dialog>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Model } from 'nuxt-property-decorator'
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 
-@Component
-export default class MessageDialog extends Vue {
-  @Model('input', { type: Boolean, required: true }) visible: Boolean = false
-  @Prop({ default: () => { return ['yes', 'no', 'cancel'] } }) actions!: Array<string>
-  @Prop({ default: 'Ok' }) yesText!: string
-  @Prop({ default: 'No' }) noText!: string
+export default defineComponent({
+  model: {
+    prop: 'visible',
+    event: 'input',
+  },
+  props: {
+    visible: {
+      type: Boolean,
+      required: true,
+    },
+    yesText: {
+      type: String,
+      default: 'Ok',
+    },
+    noText: {
+      type: String,
+      default: 'No',
+    },
+    actions: {
+      type: Array,
+      default: () => { return ['yes', 'no', 'cancel'] }
+    },
+    required: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup (props) {
+    const loading = ref(false)
+    const dialog = computed(() => {
+      return props.visible
+    })
 
-  @Prop({ required: false }) loading!: boolean
+    const showYes = computed(() => {
+      return props.actions.includes('yes')
+    })
 
-  get dialog (): Boolean {
-    return this.visible
+    const showNo = computed(() => {
+      return props.actions.includes('no')
+    })
+
+    const showCancel = computed(() => {
+      return props.actions.includes('cancel')
+    })
+
+    return {
+      dialog,
+      showYes,
+      showNo,
+      showCancel,
+      loading,
+    }
   }
-
-  get showYes () {
-    return this.actions.includes('yes')
-  }
-
-  get showNo () {
-    return this.actions.includes('no')
-  }
-
-  get showCancel () {
-    return this.actions.includes('cancel')
-  }
-}
+})
 </script>
 <style>
 .title {

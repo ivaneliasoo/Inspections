@@ -28,7 +28,8 @@
       "@nuxt/vue-app",
       "@nuxtjs/vuetify",
       "@nuxtjs/axios",
-      "@pinia/nuxt"
+      "@nuxtjs/auth-next",
+      "@pinia/nuxt",
     ]
   },
   "exclude": [

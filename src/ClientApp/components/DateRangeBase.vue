@@ -17,34 +17,57 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
-// import DatePickerBase from '@/components/DatePickerBase.vue'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 
-@Component
-export default class DateRangeBase extends Vue {
-    @Prop() value:any
-    @Prop({ default: false }) showIcon:Boolean | undefined
-    @Prop({ default: 'Desde' }) tituloDesde:String | undefined
-    @Prop({ default: 'Hasta' }) tituloHasta:String | undefined
-    @Prop() max:String | undefined
+export default defineComponent({
+  props: {
+    value: {
+      type: Object,
+      required: true
+    },
+    showIcon: {
+      type: Boolean,
+      default: false
+    },
+    tituloDesde: {
+      type: String,
+      default: 'Desde'
+    },
+    tituloHasta: {
+      type: String,
+      default: 'Hasta'
+    },
+    max: {
+      type: String,
+      required: false,
+      default: ''
+    },
+  },
+  setup (props, { emit }) {
+    const desdeMax = computed(() => {
+      return props.value && props.value.hasta ? props.value.hasta : ''
+    })
 
-    get desdeMax () {
-      return this.value && this.value.hasta ? this.value.hasta : ''
+    const hastaMin = computed(() => {
+      return props.value && props.value.desde ? props.value.desde : ''
+    })
+
+    const maxHasta = computed(() => {
+      return props.max || props.max === '' ? props.max : undefined
+    })
+
+    const updateFechas = () => {
+      emit('input', props.value)
     }
 
-    get hastaMin () {
-      return this.value && this.value.desde ? this.value.desde : ''
+    return {
+      desdeMax,
+      hastaMin,
+      maxHasta,
+      updateFechas
     }
-
-    get maxHasta () {
-      return this.max || this.max === '' ? this.max : undefined
-    }
-
-    updateFechas () {
-      this.$emit('input', this.value)
-    }
-}
-
+  }
+})
 </script>
 
 <style>

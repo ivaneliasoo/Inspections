@@ -1,5 +1,3 @@
-import { HTML5_FMT } from 'moment'
-
 export function endpoint (p) {
   const param = p ? '/' + p : ''
   // return `http://localhost:5000/api/costsheet${param}`

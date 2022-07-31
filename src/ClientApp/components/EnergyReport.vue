@@ -1238,7 +1238,7 @@ import 'echarts/lib/component/grid'
 import 'echarts/lib/component/legend'
 import { MarkLineComponent } from 'echarts/components'
 import * as d3 from 'd3'
-import { lineChartOptions, sepLineChartOptions, histogramOptions, barChartOptions, minMax2 }
+import { lineChartOptions, sepLineChartOptions, histogramOptions, barChartOptions }
   from '../utils/charts.js'
 import { adjustData, adjustDates } from '../utils/util.js'
 
@@ -1254,10 +1254,6 @@ echarts.use([MarkLineComponent])
 //  replaced by spread operator {...object}
 function copyOf (obj) {
   return JSON.parse(JSON.stringify(obj))
-}
-
-function sleep (ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 const suffix = ' '

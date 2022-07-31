@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
-      v-model="drawer"
+      v-model="state.drawer"
       expand-on-hover
       :mini-variant="!$device.isMobile"
       clipped
@@ -11,15 +11,9 @@
       <Menu v-if="$auth.user" />
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      color="indigo"
-      clipped-left
-      dense
-      dark
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn v-if="canGoBack" icon @click.stop="$router.go(-1)">
+    <v-app-bar app color="indigo" clipped-left dense dark>
+      <v-app-bar-nav-icon @click.stop="state.drawer = !state.drawer" />
+      <v-btn v-if="state.canGoBack" icon @click.stop="router.go(-1)">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-toolbar-title>Reporting</v-toolbar-title>
@@ -31,7 +25,7 @@
     </v-app-bar>
     <v-fab-transition>
       <v-btn
-        v-show="showScrollUpFab"
+        v-show="state.showScrollUpFab"
         color="primary"
         fab
         x-small
@@ -46,58 +40,63 @@
       </v-btn>
     </v-fab-transition>
     <v-main>
-      <v-container
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
+      <v-container fluid>
+        <v-row align="center" justify="center">
           <v-col class="text-center">
             <nuxt v-scroll="onScroll" />
           </v-col>
         </v-row>
       </v-container>
     </v-main>
-    <v-footer
-      v-show="false"
-      color="indigo"
-      app
-    >
-      <span class="white--text">&copy; 2020</span>
+    <v-footer v-show="false" color="indigo" app>
+      <span class="white--text">&copy; 2022</span>
     </v-footer>
   </v-app>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
-import { RootState } from '@/store'
+import { useStore, defineComponent, useContext, useRouter, computed, ref } from '@nuxtjs/composition-api'
 
-@Component
-export default class Default extends Vue {
-  drawer: boolean | null = null
-  mini: boolean = false
-  showScrollUpFab: boolean = false
-  fab: boolean = false
+export default defineComponent({
+  setup () {
+    const store = useStore()
+    const router = useRouter()
+    const { $auth } = useContext()
 
-  onScroll (e: any) {
-    if (typeof window === 'undefined') { return }
-    const top = window.pageYOffset || e.target.scrollTop || 0
-    this.showScrollUpFab = top > 20
+    const state = ref({
+      drawer: null,
+      mini: false,
+      showScrollUpFab: false,
+      fab: false,
+    })
+
+    function onScroll (e: any) {
+      if (typeof window === 'undefined') { return }
+      const top = window.pageYOffset || e.target.scrollTop || 0
+      state.value.showScrollUpFab = top > 20
+    }
+
+    async function logout () {
+      await $auth.logout()
+    }
+
+    const canGoBack = computed(() => {
+      return (store.state as any).canGoBack
+    })
+
+    return {
+      state,
+      canGoBack,
+      logout,
+      onScroll,
+      router,
+      $auth
+    }
   }
-
-  async logout () {
-    await this.$auth.logout()
-  }
-
-  get canGoBack () {
-    return (this.$store.state as RootState).canGoBack
-  }
-}
+})
 </script>
 <style scoped>
 .v-btn--example {
-    bottom: 0;
-    margin: 0 0 16px 16px;
-  }
-
+  bottom: 0;
+  margin: 0 0 16px 16px;
+}
 </style>

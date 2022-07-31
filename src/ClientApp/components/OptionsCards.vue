@@ -39,18 +39,30 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { useRouter } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { CardOption } from '~/types'
 
-  @Component
-export default class OptionsCards extends Vue {
-    @Prop({ required: true, type: Array, default: () => [] }) options !: CardOption[]
-
-    onCardClick (option: CardOption) {
+export default defineComponent({
+  props: {
+    options: {
+      type: Array as () => CardOption[],
+      default: () => [],
+      required: true
+    },
+  },
+  setup () {
+    const router = useRouter()
+    const onCardClick = (option: CardOption) => {
       const path = typeof option.path === 'function' ? option.path() : option.path
-      if (path) { this.$router.push(path) } else if (option.action) { option.action() }
+      if (path) { router.push(path) } else if (option.action) { option.action() }
     }
-}
+
+    return {
+      onCardClick,
+    }
+  }
+})
 </script>
 
 <style scoped>

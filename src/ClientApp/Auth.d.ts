@@ -24,31 +24,31 @@ export interface Storage {
   getLocalStorage(key: string, isJson?: boolean): any;
 }
 
-export interface Auth {
-  ctx: any;
-  $state: any;
-  $storage: Storage;
-  user: any;
-  loggedIn: boolean;
-  loginWith(strategyName: string, ...args: any): Promise<void>;
-  login(...args: any): Promise<void>;
-  logout(): Promise<void>;
-  setUserToken(token: string): Promise<void>;
-  fetchUser(): Promise<void>;
-  fetchUserOnce(): Promise<void>;
-  hasScope(scopeName: string): boolean;
-  setToken(strategyName: string, token?: string): string;
-  getToken(strategyName: string): string;
-  syncToken(strategyName: string): string;
-  onError(handler: (error: Error, name: string, endpoint: any) => void): any;
-  setUser(user?: any): any;
-  reset(): Promise<void>;
-  redirect(name: string): any;
-}
+// export interface Auth {
+//   ctx: any;
+//   $state: any;
+//   $storage: Storage;
+//   user: any;
+//   loggedIn: boolean;
+//   loginWith(strategyName: string, ...args: any): Promise<void>;
+//   login(...args: any): Promise<void>;
+//   logout(): Promise<void>;
+//   setUserToken(token: string): Promise<void>;
+//   fetchUser(): Promise<void>;
+//   fetchUserOnce(): Promise<void>;
+//   hasScope(scopeName: string): boolean;
+//   setToken(strategyName: string, token?: string): string;
+//   getToken(strategyName: string): string;
+//   syncToken(strategyName: string): string;
+//   onError(handler: (error: Error, name: string, endpoint: any) => void): any;
+//   setUser(user?: any): any;
+//   reset(): Promise<void>;
+//   redirect(name: string): any;
+// }
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $auth: Auth;
+    // $auth: Auth;
     $notificationsHub: any;
     $reportsApi: ReportsApi;
     $formsApi: FormsApi;
@@ -61,7 +61,7 @@ declare module 'vue/types/vue' {
 
 declare module '@nuxt/types' {
   interface Context {
-    $auth: Auth;
+    // $auth: Auth;
     $reportsApi: ReportsApi;
     $formsApi: FormsApi;
     $reportsConfigApi: ReportConfigurationApi;

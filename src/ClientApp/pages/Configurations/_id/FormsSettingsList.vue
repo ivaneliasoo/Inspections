@@ -37,7 +37,7 @@
           </v-btn>
         </v-toolbar>
       </template>
-      <template #item[actions]="{ item }">
+      <template #[`item.actions`]="{ item }">
         <v-tooltip v-if="isAdmin" top>
           <template #activator="{ on }">
             <v-icon

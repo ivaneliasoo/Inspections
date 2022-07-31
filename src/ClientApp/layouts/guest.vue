@@ -2,9 +2,8 @@
   <nuxt />
 </template>
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { defineComponent } from '@nuxtjs/composition-api'
 
-@Component
-export default class Guest extends Vue {
-}
+export default defineComponent({
+})
 </script>

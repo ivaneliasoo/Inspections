@@ -186,10 +186,10 @@
 
 <script lang="ts">
 // eslint-disable-next-line import/named
-import { ref, defineComponent, computed, useStore, useFetch, watch } from '@nuxtjs/composition-api'
+import { ref, defineComponent, computed, useFetch, watch } from '@nuxtjs/composition-api'
 import draggable from 'vuedraggable'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { PrintSectionState } from '~/store/printsection'
+import { usePrintSectionsStore } from '~/composables/usePrintSectionsStore'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 import useGoBack from '~/composables/useGoBack'
 
@@ -203,7 +203,7 @@ export default defineComponent({
   layout: undefined,
   setup () {
     useGoBack()
-    const store = useStore()
+    const printSectionsStore = usePrintSectionsStore()
     const dialogRemove = ref<boolean>(false)
     const loading = ref<boolean>(false)
     const editorMode = ref<boolean>(true)
@@ -214,25 +214,20 @@ export default defineComponent({
     const printSection = ref({ id: 0, code: '', description: '', content: '', isMainReport: false, status: 0 } as PrintSectionDTO)
 
     const selectPrintSection = (item: PrintSectionDTO): void => {
-      store.dispatch('printsection/getPrintSectionById', item.id, { root: true })
+      printSectionsStore.getPrintSectionById(item.id)
         .then(resp => (printSection.value = resp))
     }
 
     const printSections = computed((): PrintSectionDTO[] => {
-      return ((store.state as any).printsection as PrintSectionState).printSectionsList
+      return printSectionsStore.$state.printSectionsList
     })
 
     const getPrintSections = async (filter: string) => {
-      await store.dispatch(
-        'printsection/getPrintSections',
-        { filter },
-        { root: true }
-      )
+      await printSectionsStore.getPrintSections({ filter })
     }
 
     const deletePrintSection = (id :number) => {
-      store
-        .dispatch('printsection/deletePrintSection', id, { root: true })
+      printSectionsStore.deletePrintSection(id)
         .then(() => {
           reset()
         })
@@ -247,11 +242,11 @@ export default defineComponent({
       loading.value = true
       printSection.value.content = editorContent.value.toString()
       if (printSection.value.id > 0) {
-        await store.dispatch('printsection/updatePrintSection', printSection.value, { root: true })
+        await printSectionsStore.updatePrintSection(printSection.value)
         selectPrintSection(printSection.value)
       } else {
-        await store.dispatch('printsection/createPrintSection', printSection.value, { root: true })
-        await store.dispatch('printsection/getPrintSections', filter.value, { root: true })
+        await printSectionsStore.createPrintSection(printSection.value)
+        await printSectionsStore.getPrintSections(filter.value)
         const lastElement = printSections.value[printSections.value.length - 1]
         selectPrintSection(lastElement)
       }
@@ -261,7 +256,7 @@ export default defineComponent({
     }
 
     useFetch(async () => {
-      await store.dispatch('printsection/getPrintSections', filter.value, { root: true })
+      await printSectionsStore.getPrintSections(filter.value)
     })
 
     watch(filter, () => {
@@ -273,7 +268,6 @@ export default defineComponent({
     }, { immediate: true, deep: true })
 
     return {
-      // options,
       dialogRemove,
       loading,
       isNew,

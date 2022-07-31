@@ -114,7 +114,9 @@
         <v-tabs v-model="pageOptions.tabs" centered fixed-tabs icons-and-text>
           <v-tabs-slider />
           <v-tab
-            v-if="currentReport.checkLists && currentReport.checkLists.length > 0"
+            v-if="
+              currentReport.checkLists && currentReport.checkLists.length > 0
+            "
             href="#checklists"
             :class="
               hasUntouchedChecks ||
@@ -169,7 +171,9 @@
         </v-tabs>
         <v-tabs-items v-model="pageOptions.tabs" touchless>
           <v-tab-item
-            v-if="currentReport.checkLists && currentReport.checkLists.length > 0"
+            v-if="
+              currentReport.checkLists && currentReport.checkLists.length > 0
+            "
             key="checklists"
             value="checklists"
           >
@@ -507,7 +511,11 @@
               <!-- Signatures -->
             </v-expansion-panels>
           </v-tab-item>
-          <v-tab-item v-if="currentReport.needsPhotoRecord" key="photos" value="photos">
+          <v-tab-item
+            v-if="currentReport.needsPhotoRecord"
+            key="photos"
+            value="photos"
+          >
             <PhotoRecords
               :report-id="currentReport.id"
               @uploaded="saveAndLoad()"
@@ -562,10 +570,7 @@
                 </v-btn>
               </v-col>
             </v-row>
-            <div
-              v-for="(note, index) in currentReport.notes"
-              :key="index"
-            >
+            <div v-for="(note, index) in currentReport.notes" :key="index">
               <v-row dense align="center" justify="space-around">
                 <v-col cols="1">
                   <v-btn
@@ -668,8 +673,6 @@ import {
   onMounted,
   ref,
   reactive,
-} from '@vue/composition-api'
-import {
   defineComponent,
   useContext,
   useRoute,
@@ -678,6 +681,7 @@ import {
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 // eslint-disable-next-line import/named
 import { watchDebounced, WatchDebouncedOptions } from '@vueuse/core'
+import { useAddressStore } from '../../../composables/useAddressStore'
 import {
   AddNoteCommand,
   CheckListItemQueryResult,
@@ -695,7 +699,9 @@ import {
 } from '@/services/api'
 import { useNotifications } from '~/composables/use-notifications'
 import useGoBack from '~/composables/useGoBack'
-import { AddressesState } from '@/store/addresses'
+import { useReportsStore } from '~/composables/useReportsStore'
+import { useUsersStore } from '~/composables/useUsersStore'
+
 export default defineComponent({
   name: 'ReportForm',
   components: {
@@ -704,6 +710,10 @@ export default defineComponent({
   },
   setup () {
     useGoBack()
+    const addressStore = useAddressStore()
+    const reportsStore = useReportsStore()
+    const usersStore = useUsersStore()
+
     const obs = ref<InstanceType<typeof ValidationObserver> | null>(null)
     const obsSignatures = ref<InstanceType<typeof ValidationObserver> | null>(
       null
@@ -712,7 +722,7 @@ export default defineComponent({
     const { notify } = useNotifications()
     const route = useRoute()
     const { store, $auth, $axios, $reportsApi } = useContext()
-    const id = computed(() => route.value.params.id)
+    const id = computed(() => parseInt(route.value.params.id))
 
     onMounted(() => {
       if (obs.value && obsSignatures.value) {
@@ -746,24 +756,14 @@ export default defineComponent({
 
     const { fetch } = useFetch(async () => {
       try {
-        currentReport.value = await store.dispatch(
-          'reportstrore/getReportById',
-          id.value,
-          {
-            root: true,
-          }
-        )
+        currentReport.value = await reportsStore.getReportById(id.value)
 
         Promise.all([
           getSuggestedAddresses(''),
-          store.dispatch(
-            'users/setUserLastEditedReport',
-            {
-              userName: $auth.user.userName,
-              lastEditedReport: id.value,
-            },
-            { root: true }
-          ),
+          usersStore.setUserLastEditedReport({
+            userName: $auth.user.userName as string,
+            lastEditedReport: id.value,
+          }),
           $auth.fetchUser(),
         ])
         forms.value = currentReport.value.forms || []
@@ -775,11 +775,7 @@ export default defineComponent({
     const loadReport = () => fetch()
 
     const getSuggestedAddresses = async (filter: string) => {
-      await store.dispatch(
-        'addresses/getAddresses',
-        { filter },
-        { root: true }
-      )
+      await addressStore.getAddresses({ filter })
     }
 
     const localAddress = computed((): AddressDto[] => {
@@ -791,8 +787,7 @@ export default defineComponent({
     })
 
     const addresses = computed((): AddressDto[] => {
-      const dbAddressses = (store.state.addresses as AddressesState)
-        .addressList
+      const dbAddressses = addressStore.$state.addressList
 
       if (dbAddressses.length > 0) {
         return dbAddressses
@@ -918,7 +913,7 @@ export default defineComponent({
       {
         debounce: 1000,
         maxWait: 5000,
-        deep: true
+        deep: true,
       } as WatchDebouncedOptions<true>
     )
 
@@ -962,7 +957,7 @@ export default defineComponent({
       {
         debounce: 1000,
         maxWait: 5000,
-        deep: true
+        deep: true,
       } as WatchDebouncedOptions<true>
     )
 

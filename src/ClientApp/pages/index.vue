@@ -1,35 +1,34 @@
 <template>
   <div>
-    <alert-dialog
-      v-model="dialogRemove"
+    <!-- <alert-dialog
+      v-model="componentState.dialogRemove"
       title="Remove Reports"
       message="This operation will remove this report and all data related"
-      :code="selectedItem.id"
-      :description="selectedItem.name"
+      :code="componentState.selectedItem.id"
+      :description="componentState.selectedItem.name"
       @yes="deleteReport()"
-      @no="dialogRemove = false"
-    />
+      @no="componentState.dialogRemove = false"
+    /> -->
     <v-row>
-      <new-report-dialog v-model="dialog" @report-created="goToNewReport($event)" />
-      <!-- <OptionsCards :options="cardOptions" /> -->
+      <new-report-dialog v-model="componentState.dialog" @report-created="goToNewReport($event)" />
     </v-row>
     <v-data-table
       :class="$device.isTablet ? 'tablet-text' : ''"
-      :items="reportList"
+      :items="reports"
       item-key="id"
-      :search="filter"
+      :search="componentState.filter"
       dense
       :headers="headers"
-      :loading="loading"
+      :loading="componentState.loading"
     >
       <template #top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Reports</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
-          <grid-filter :filter.sync="filter" />
+          <grid-filter :filter.sync="componentState.filter" />
           <v-spacer />
           <v-btn
-            v-if="!$route.query.closed"
+            v-if="!route.query.closed"
             class="mx-2"
             x-small
             fab
@@ -48,7 +47,7 @@
           <template #activator="{ on }">
             <v-btn
               icon
-              :loading="printing"
+              :loading="componentState.printing"
               :disabled="!item.isClosed || !(item.photosCount > 0)"
               color="primary"
               class="mr-2"
@@ -66,7 +65,7 @@
           <template #activator="{ on }">
             <v-btn
               icon
-              :loading="printing"
+              :loading="componentState.printing"
               :disabled="!item.isClosed"
               color="primary"
               class="mr-2"
@@ -86,7 +85,7 @@
               class="mr-2"
               v-on="on"
               @click="
-                $router.push({ name: 'Reports-id', params: { id: item.id } })
+                router.push({ name: 'Reports-id', params: { id: item.id } })
               "
             >
               <v-icon> mdi-pencil </v-icon>
@@ -102,7 +101,7 @@
               v-on="on"
               @click="
                 selectItem(item);
-                dialogRemove = true;
+                componentState.dialogRemove = true;
               "
             >
               mdi-delete
@@ -138,139 +137,140 @@
 
 <script lang="ts">
 import moment from 'moment'
-import { Vue, Component } from 'nuxt-property-decorator'
-import { CardOption, Report } from '~/types'
-import { ReportsState } from '~/store/reportstrore'
+import { useContext, useRouter, defineComponent, reactive, computed, useFetch, useRoute } from '@nuxtjs/composition-api'
+import { Report } from '~/types'
+import { useReportsStore } from '~/composables/useReportsStore'
 
-@Component({
-  layout: 'default'
-})
-export default class IndexPage extends Vue {
-  dialog: boolean = false
-  self = this
-
-  loading: boolean = false
-  printing: boolean = false
-  dialogRemove: Boolean = false
-  selectedItem: Report = {} as Report
-  filter: String = ''
-  showOnlyMyReports: Boolean = false
-  hostName: string = this.$axios!.defaults!.baseURL!.replace('/api', '')
-
-  cardOptions: CardOption[] = [
-    {
-      name: 'new',
-      text: 'New Report',
-      helpText: 'Creates a configured and empty report',
-      icon: 'mdi-plus',
-      color: 'accent',
-      path: '',
-      action: () => this.createReport()
-    },
-  ]
-
-  goToNewReport (event: any) {
-    this.$router.push(`/reports/${event}`)
-  }
-
-  createReport () {
-    this.dialog = false; this.dialog = true
-  }
-
-  headers: any[] = [
-    {
-      text: 'Date',
-      value: 'date',
-      sortable: true,
-      align: 'center'
-    },
-    {
-      text: 'Location',
-      value: 'address',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'Report Type',
-      value: 'title',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: '',
-      value: 'actions',
-      sortable: false,
-      align: 'center'
-    }
-  ]
-
-  get reportList (): Report[] {
-    return (this.$store.state.reportstrore as ReportsState).reportList || []
-  }
-
-  async fetch () {
-    // this.loading = true
-    // TODO: Save filters state on store
-    await this.$store.dispatch(
-      'reportstrore/getReports',
+export default defineComponent({
+  layout: 'default',
+  setup () {
+    const headers: any[] = [
       {
-        filter: '',
-        closed: this.$route.query.closed,
-        orderBy: 'date',
-        myreports: this.showOnlyMyReports,
-        descending: true
+        text: 'Date',
+        value: 'date',
+        sortable: true,
+        align: 'center'
       },
-      { root: true }
-    )
+      {
+        text: 'Location',
+        value: 'address',
+        sortable: true,
+        align: 'left'
+      },
+      {
+        text: 'Report Type',
+        value: 'title',
+        sortable: true,
+        align: 'left'
+      },
+      {
+        text: '',
+        value: 'actions',
+        sortable: false,
+        align: 'center'
+      }
+    ]
 
-    this.loading = false
-  }
+    const reportsStore = useReportsStore()
 
-  selectItem (item: Report): void {
-    this.selectedItem = item
-  }
+    const { $axios: axios } = useContext()
 
-  formatDate (date: string): string {
-    return moment(date).format('YYYY-MM-DD HH:mm')
-  }
+    const route = useRoute()
+    const router = useRouter()
 
-  deleteReport () {
-    this.$store
-      .dispatch('reportstrore/deleteReport', this.selectedItem.id, {
-        root: true
-      })
-      .then(() => {
-        this.dialogRemove = false
-      })
-  }
+    const componentState = reactive({
+      dialog: false,
+      loading: false,
+      printing: false,
+      dialogRemove: false,
+      selectedItem: { id: 0 },
+      filter: '',
+      showOnlyMyReports: false,
+      hostName: axios!.defaults!.baseURL!.replace('/api', '')
+    })
 
-  async generatePdf (item: Report, printPhotos: boolean = false) {
-    try {
-      this.printing = true
-      const file = await this.$axios.$get(
+    const selectItem = (item: Report): void => {
+      componentState.selectedItem = item
+    }
+
+    const formatDate = (date: string): string => {
+      return moment(date).format('YYYY-MM-DD HH:mm')
+    }
+
+    const deleteReport = () => {
+      reportsStore.deleteReport(componentState.selectedItem.id)
+        .then(() => {
+          componentState.dialogRemove = false
+        })
+    }
+
+    const generatePdf = async (item: Report, printPhotos: boolean = false) => {
+      try {
+        componentState.printing = true
+        const file = await axios.$get(
         `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${item.reportConfigurationId}`,
         { responseType: 'blob' }
-      )
-      this.downloadFile(
-        file,
-        printPhotos
-          ? `compunded_photo_record_${item.name}`
-          : `report_${item.name}`
-      )
-    } catch (e) {
-    } finally {
-      this.printing = false
+        )
+        downloadFile(
+          file,
+          printPhotos
+            ? `compunded_photo_record_${item.name}`
+            : `report_${item.name}`
+        )
+      } catch (e) {
+      } finally {
+        componentState.printing = false
+      }
+    }
+
+    const downloadFile = (blob: Blob, name: any): void => {
+      const link = document.createElement('a')
+      link.target = '_blank'
+      link.href = window.URL.createObjectURL(blob)
+      link.download = `${name}`
+      link.click()
+    }
+    const goToNewReport = (event: any) => {
+      router.push(`/reports/${event}`)
+    }
+
+    const createReport = () => {
+      componentState.dialog = false; componentState.dialog = true
+    }
+    const reports = computed(() => reportsStore.reportList)
+
+    useFetch(async () => {
+      componentState.loading = true
+      // TODO: Save filters state on store
+      await reportsStore.getReports(
+        {
+          filter: '',
+          closed: route.value.query.closed,
+          orderBy: 'date',
+          myreports: componentState.showOnlyMyReports,
+          descending: true
+        })
+
+      componentState.loading = false
+    })
+
+    return {
+      headers,
+      reports,
+      selectItem,
+      formatDate,
+      deleteReport,
+      generatePdf,
+      downloadFile,
+      goToNewReport,
+      createReport,
+      componentState,
+      router,
+      route
     }
   }
+})
 
-  downloadFile (blob: Blob, name: any): void {
-    const link = document.createElement('a')
-    link.target = '_blank'
-    link.href = window.URL.createObjectURL(blob)
-    link.download = `${name}`
-    link.click()
-  }
-}
 </script>
 
 <style lang="scss" scoped>

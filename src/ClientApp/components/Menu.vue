@@ -46,86 +46,94 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { useContext } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
-@Component
-export default class Menu extends Vue {
-  menuDefinition: any[] = [
-    {
-      name: 'LEW Licensing',
-      parentName: '',
-      route: '/lewlicensing',
-      icon: '',
-    },
-    {
-      name: 'Reporting',
-      parentName: '',
-      route: '/',
-      icon: 'mdi-file',
-    },
-    {
-      name: 'Energy Report',
-      parentName: '',
-      route: '/energyreport',
-      icon: 'mdi-graph',
-      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
-    },
-    {
-      name: 'Job Planner',
-      parentName: '',
-      route: '/jobplanner',
-      icon: 'mdi-calendar',
-      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
-    },
-    {
-      name: 'Cost Sheets',
-      parentName: '',
-      route: '/costsheets',
-      icon: 'mdi-table-large',
-      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
-    },
-    {
-      name: 'Risk Assessment',
-      parentName: '',
-      route: '',
-      icon: '',
-      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
-    },
-    {
-      name: 'Method of Statement',
-      parentName: '',
-      route: '',
-      icon: '',
-      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
-    },
-    {
-      name: 'Manpower Scheduling',
-      parentName: '',
-      route: '',
-      icon: '',
-      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
-    },
-    {
-      name: 'Master Setup',
-      parentName: '',
-      route: '/master',
-      icon: 'mdi-cog',
-    },
-  ]
+export default defineComponent({
+  setup () {
+    const { $auth } = useContext()
+    const menuDefinition: any[] = [
+      {
+        name: 'LEW Licensing',
+        parentName: '',
+        route: '/lewlicensing',
+        icon: '',
+      },
+      {
+        name: 'Reporting',
+        parentName: '',
+        route: '/',
+        icon: 'mdi-file',
+      },
+      {
+        name: 'Energy Report',
+        parentName: '',
+        route: '/energyreport',
+        icon: 'mdi-graph',
+        visible: !!($auth.user && $auth.user.userName === 'reports'),
+      },
+      {
+        name: 'Job Planner',
+        parentName: '',
+        route: '/jobplanner',
+        icon: 'mdi-calendar',
+        visible: !!($auth.user && $auth.user.userName === 'reports'),
+      },
+      {
+        name: 'Cost Sheets',
+        parentName: '',
+        route: '/costsheets',
+        icon: 'mdi-table-large',
+        visible: !!($auth.user && $auth.user.userName === 'reports'),
+      },
+      {
+        name: 'Risk Assessment',
+        parentName: '',
+        route: '',
+        icon: '',
+        visible: !!($auth.user && $auth.user.userName === 'reports'),
+      },
+      {
+        name: 'Method of Statement',
+        parentName: '',
+        route: '',
+        icon: '',
+        visible: !!($auth.user && $auth.user.userName === 'reports'),
+      },
+      {
+        name: 'Manpower Scheduling',
+        parentName: '',
+        route: '',
+        icon: '',
+        visible: !!($auth.user && $auth.user.userName === 'reports'),
+      },
+      {
+        name: 'Master Setup',
+        parentName: '',
+        route: '/master',
+        icon: 'mdi-cog',
+      },
+    ]
 
-  get defaultPage () {
-    return '/'
+    const defaultPage = '/'
+
+    const initials = (menu: any) => {
+      const words = menu.name.split(' ')
+      return words[0][0] + words[1][0]
+    }
+
+    const redirect = (route: string) => {
+      window.open(route, '_blank')
+    }
+
+    return {
+      menuDefinition,
+      defaultPage,
+      initials,
+      redirect,
+    }
   }
-
-  initials (menu: any) {
-    const words = menu.name.split(' ')
-    return words[0][0] + words[1][0]
-  }
-
-  redirect (route: string) {
-    window.open(route, '_blank')
-  }
-}
+})
 </script>
 
 <style>

@@ -254,186 +254,169 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { SignatureState } from 'store/signatures'
-import InnerPageMixin from '@/mixins/innerpage'
+import { useFetch, useRoute, watch, defineComponent, reactive, computed, ref } from '@nuxtjs/composition-api'
+import { useSignaturesStore } from '~/composables/useSignaturesStore'
 import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
 import { Report, ReportConfiguration, FilterType, Signature } from '~/types'
-import { ReportConfigurationState } from '~/store/configurations'
-import { ReportsState } from '~/store/reportstrore'
+import { useConfigurationStore } from '~/composables/useConfigurationStore'
+import { useReportsStore } from '~/composables/useReportsStore'
 import { responsibleTypesString as responsibleTypes } from '@/types/Signatures'
 import { ResponsibleType } from '~/services/api'
 
-@Component({
+export default defineComponent({
   components: {
     ValidationObserver,
     ValidationProvider,
   },
-})
-export default class SignaturesPage extends mixins(InnerPageMixin) {
-  dialog: boolean = false
-  dialogRemove: boolean = false
-  loading: boolean = false
-  filter: FilterType = {
-    filterText: '',
-    inConfigurationOnly: undefined,
-    reportId: undefined,
-    reportConfigurationId: undefined,
-  }
+  setup () {
+    const route = useRoute()
+    const signaturesStore = useSignaturesStore()
+    const configurationStore = useConfigurationStore()
+    const reportsStore = useReportsStore()
 
-  responsibleTypesList = responsibleTypes
+    const responsibleTypesList = responsibleTypes
 
-  headers: any[] = [
-    {
-      text: 'Id',
-      value: 'id',
-      sortable: true,
-      align: 'center',
-    },
-    {
-      text: 'Title',
-      value: 'title',
-      sortable: true,
-      align: 'left',
-    },
-    {
-      text: 'Annotation',
-      value: 'annotation',
-      sortable: true,
-      align: 'left',
-    },
-    {
-      text: 'Principal',
-      value: 'responsibleName',
-      sortable: true,
-      align: 'center',
-    },
-    {
-      text: '',
-      value: 'actions',
-      sortable: false,
-      align: 'center',
-    },
-  ]
+    const headers = [
+      {
+        text: 'Id',
+        value: 'id',
+        sortable: true,
+        align: 'center',
+      },
+      {
+        text: 'Title',
+        value: 'title',
+        sortable: true,
+        align: 'left',
+      },
+      {
+        text: 'Annotation',
+        value: 'annotation',
+        sortable: true,
+        align: 'left',
+      },
+      {
+        text: 'Principal',
+        value: 'responsibleName',
+        sortable: true,
+        align: 'center',
+      },
+      {
+        text: '',
+        value: 'actions',
+        sortable: false,
+        align: 'center',
+      },
+    ]
 
-  selectedItem: Signature = {} as Signature
-  item: any = {
-    title: '',
-    annotation: '',
-    responsableType: ResponsibleType.Inspector,
-    responsibleName: '',
-    designation: '',
-    remarks: '',
-    date: new Date().toISOString(),
-    signature: '',
-    principal: true,
-    reportId: 0,
-    reportConfigurationId: this.filter?.reportConfigurationId ?? 0,
-    order: 0,
-    defaultResponsibleType: '',
-    useLoggedInUserAsDefault: false,
-  }
-
-  get reports (): Report[] {
-    return (this.$store.state.reportstrore as ReportsState).reportList
-  }
-
-  get configurations (): ReportConfiguration[] {
-    return (this.$store.state.configurations as ReportConfigurationState)
-      .configurations
-  }
-
-  get signatures (): SignatureDTO[] {
-    return (this.$store.state.signatures as SignatureState).signaturesList || []
-  }
-
-  selectItem (item: Signature): void {
-    this.selectedItem = item
-    this.$store
-      .dispatch('signatures/getSignatureById', this.selectedItem.id, {
-        root: true,
-      })
-      .then((resp) => {
-        this.item = resp
-      })
-  }
-
-  asyncData ({ query }: any) {
-    const filter: FilterType = {
+    const filter = ref<FilterType>({
       filterText: '',
       inConfigurationOnly:
-        query.configurationonly === 'true' ? true : false ?? true,
-      reportId: query.reportid ? parseInt(query.reportid) : undefined,
-      reportConfigurationId: query.configurationid
-        ? parseInt(query.configurationid)
+        route.value.query.configurationonly === 'true' ? true : false ?? true,
+      reportId: route.value.query.reportid ? parseInt(route.value.query.reportid as string) : undefined,
+      reportConfigurationId: route.value.query.configurationid
+        ? parseInt(route.value.query.configurationid as string)
         : undefined,
-    }
-    return {
-      filter,
-    }
-  }
-
-  async fetch () {
-    this.loading = true
-    await Promise.all([
-      this.$store.dispatch(
-        'reportstrore/getReports',
-        {
-          filter: '',
-          closed: this.$route.query.closed,
-          orderBy: 'date',
-          myreports: false,
-          descending: true,
-        },
-        { root: true }
-      ),
-      this.$store.dispatch('configurations/getConfigurations', '', {
-        root: true,
-      }),
-      this.$store.dispatch('signatures/getSignatures', this.filter, {
-        root: true,
-      }),
-    ])
-    this.loading = false
-  }
-
-  @Watch('filter', { deep: true })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async onFilterChanged (value: FilterType) {
-    await this.$store.dispatch('signatures/getSignatures', value, {
-      root: true,
     })
-  }
 
-  deleteSignature () {
-    this.$store
-      .dispatch('signatures/deleteSignature', this.selectedItem.id, {
-        root: true,
-      })
-      .then(() => {
-        this.dialog = false
-      })
-  }
+    const componentState = reactive({
+      dialog: false,
+      dialogRemove: false,
+      loading: false,
+      selectedItem: {} as Signature,
+      item: {
+        id: 0,
+        title: '',
+        annotation: '',
+        responsableType: ResponsibleType.Inspector,
+        responsibleName: '',
+        designation: '',
+        remarks: '',
+        date: new Date().toISOString(),
+        signature: '',
+        principal: true,
+        reportId: 0,
+        reportConfigurationId: filter.value?.reportConfigurationId ?? 0,
+        order: 0,
+        defaultResponsibleType: '',
+        useLoggedInUserAsDefault: false,
+      }
+    })
 
-  async upsertSignature () {
-    if (this.item.id > 0) {
-      await this.$store.dispatch('signatures/updateSignature', this.item, {
-        root: true,
-      })
-    } else {
-      await this.$store.dispatch('signatures/createSignature', this.item, {
-        root: true,
-      })
+    useFetch(async () => {
+      componentState.loading = true
+      await Promise.all([
+        reportsStore.getReports(
+          {
+            filter: '',
+            closed: route.value.query.closed,
+            orderBy: 'date',
+            myreports: false,
+            descending: true,
+          }),
+        configurationStore.getConfigurations(''),
+        signaturesStore.getSignatures(filter.value),
+      ])
+      componentState.loading = false
+    })
+
+    const selectItem = (item: Signature): void => {
+      componentState.selectedItem = item
+      signaturesStore.getSignatureById(componentState.selectedItem.id)
+        .then((resp) => {
+          componentState.item = resp
+        })
     }
-    await this.$store.dispatch(
-      'signatures/getSignatures',
-      this.filter,
-      { root: true }
-    )
-    this.dialog = false
+
+    const deleteSignature = () => {
+      signaturesStore.deleteSignature(componentState.selectedItem.id)
+        .then(() => {
+          componentState.dialog = false
+        })
+    }
+
+    const upsertSignature = async () => {
+      if (componentState.item.id > 0) {
+        await signaturesStore.updateSignature(componentState.item)
+      } else {
+        await signaturesStore.createSignature(componentState.item)
+      }
+      await signaturesStore.getSignatures(filter.value)
+      componentState.dialog = false
+    }
+
+    watch(() => filter, async (value) => {
+      await signaturesStore.getSignatures(value)
+    }, { deep: true })
+
+    const reports = computed((): Report[] => {
+      return reportsStore.reportList
+    })
+
+    const configurations = computed((): ReportConfiguration[] => {
+      return configurationStore.configurations
+    })
+
+    const signatures = computed((): SignatureDTO[] => {
+      return signaturesStore.signaturesList || []
+    })
+
+    return {
+      reports,
+      configurations,
+      signatures,
+      headers,
+      filter,
+      componentState,
+      selectItem,
+      deleteSignature,
+      upsertSignature,
+      responsibleTypesList,
+    }
   }
-}
+
+})
 </script>
 
 <style>

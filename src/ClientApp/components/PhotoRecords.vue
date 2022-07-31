@@ -20,7 +20,10 @@
           outlined
           accept="image/*"
           :show-size="1000"
-          @change="showPreview($event); uploadFiles()"
+          @change="
+            showPreview($event);
+            uploadFiles();
+          "
           @click:clear="filesUrls = []"
         />
       </v-col>
@@ -62,112 +65,128 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
 import reduce from 'image-blob-reduce'
-import { Prop } from 'nuxt-property-decorator'
-import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
+import { defineComponent } from '@nuxtjs/composition-api'
+import { reactive, computed } from '@nuxtjs/composition-api'
+import { useContext, useFetch, useRoute } from '@nuxtjs/composition-api'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
+import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 
-@Component({
+export default defineComponent({
   components: {
     PhotoRecordPreviewer,
     PhotoRecordManager,
   },
-})
-export default class PhotoRecords extends Vue {
-  @Prop({ required: true, type: Number }) reportId!: number
-  files: File[] = []
-  filesUrls: { url: string; id: number; label: string }[] = []
-  loadingPhotos: boolean = false
-  photoRecords: any[] = []
-
-  selectedPhotoComponent: string = 'PhotoRecordManager'
-  dialogUploading: boolean = false
-  percentCompleted: number = 0
-
-  testurl = ''
-  testurlproc = ''
-
-  async fetch () {
-    try {
-      this.loadingPhotos = true
-      const result: any = await this.$reportsApi.apiReportsIdPhotorecordGet(
-        this.reportId
-      )
-      if (result.data) {
-        this.photoRecords = result.data as any[]
-      }
-    } catch (error) {
-    } finally {
-      this.loadingPhotos = false
+  props: {
+    reportId: {
+      type: Number,
+      required: true,
     }
-  }
+  },
+  setup (props, { emit }) {
+    const state = reactive({
+      files: [],
+      filesUrls: [],
+      loadingPhotos: false,
+      photoRecords: [],
+      selectedPhotoComponent: 'PhotoRecordManager',
+      dialogUploading: false,
+      percentCompleted: 0,
 
-  async uploadFiles () {
-    const Pthis = this
-    const formData = new FormData()
-    this.dialogUploading = true
-    const config = {
-      onUploadProgress (progressEvent: any) {
-        Pthis.percentCompleted = Math.round(
-          (progressEvent.loaded * 100) / progressEvent.total
-        )
-      },
-    }
-
-    for (let i = 0; i < this.files.length; i++) {
-      const file = this.files[i]
-      const blob = await reduce().toBlob(file, { max: 1000 })
-      const newFile = new File([blob], file.name)
-      this.testurlproc = URL.createObjectURL(newFile)
-      formData.append(
-        'files',
-        newFile,
-        `${file.name}|${this.filesUrls[i].label}`
-      )
-    }
-
-    formData.append('label', 'archivos de Prueba')
-
-    await this.$axios
-      .post(`reports/${this.$route.params.id}/photorecord`, formData, config)
-      .then(() => {
-        this.files = []
-        this.filesUrls = []
-        this.$emit('uploaded')
-        this.selectedPhotoComponent = 'PhotoRecordManager'
-        this.percentCompleted = 0
-        this.files = []
-      })
-
-    const result: any = await this.$reportsApi.apiReportsIdPhotorecordGet(
-      this.reportId
-    )
-    if (result.data) {
-      this.photoRecords = result.data as any[]
-    }
-
-    this.dialogUploading = false
-  }
-
-  showPreview (filesAdded: File[]) {
-    filesAdded.forEach((file, index) => {
-      this.files.push(file)
-      const url = URL.createObjectURL(file)
-      this.filesUrls.push({ url, id: index, label: '' })
+      testurl: '',
+      testurlproc: '',
     })
 
-    this.selectedPhotoComponent = 'PhotoRecordPreviewer'
-  }
+    const { $reportsApi, $axios } = useContext()
+    const route = useRoute()
 
-  get source () {
-    if (this.filesUrls.length > 0) {
-      return this.filesUrls
+    useFetch(async () => {
+      try {
+        state.loadingPhotos = true
+        const result: any = await $reportsApi.apiReportsIdPhotorecordGet(
+          props.reportId
+        )
+        if (result.data) {
+          state.photoRecords = result.data as any[]
+        }
+      } catch (error) {
+      } finally {
+        state.loadingPhotos = false
+      }
+    })
+
+    const uploadFiles = async () => {
+      const formData = new FormData()
+      state.dialogUploading = true
+      const config = {
+        onUploadProgress (progressEvent: any) {
+          state.percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          )
+        },
+      }
+
+      for (let i = 0; i < state.files.length; i++) {
+        const file = state.files[i]
+        const blob = await reduce().toBlob(file, { max: 1000 })
+        const newFile = new File([blob], file.name)
+        state.testurlproc = URL.createObjectURL(newFile)
+        formData.append(
+          'files',
+          newFile,
+        `${file.name}|${state.filesUrls[i].label}`
+        )
+      }
+
+      formData.append('label', 'archivos de Prueba')
+
+      await $axios
+        .post(`reports/${route.value.params.id}/photorecord`, formData, config)
+        .then(() => {
+          state.files = []
+          state.filesUrls = []
+          emit('uploaded')
+          state.selectedPhotoComponent = 'PhotoRecordManager'
+          state.percentCompleted = 0
+          state.files = []
+        })
+
+      const result: any = await $reportsApi.apiReportsIdPhotorecordGet(
+        props.reportId
+      )
+      if (result.data) {
+        state.photoRecords = result.data as any[]
+      }
+
+      state.dialogUploading = false
     }
 
-    return this.photoRecords
+    const showPreview = (filesAdded: File[]) => {
+      filesAdded.forEach((file, index) => {
+        state.files.push(file)
+        const url = URL.createObjectURL(file)
+        state.filesUrls.push({ url, id: index, label: '' })
+      })
+
+      state.selectedPhotoComponent = 'PhotoRecordPreviewer'
+    }
+
+    const source = computed(() => {
+      if (state.filesUrls.length > 0) {
+        return state.filesUrls
+      }
+
+      return state.photoRecords
+    })
+
+    return {
+      state,
+      uploadFiles,
+      showPreview,
+      source,
+    }
   }
-}
+})
 </script>
 
 <style scoped>
@@ -175,6 +194,6 @@ export default class PhotoRecords extends Vue {
   justify-content: center;
 }
 :deep(button.v-icon.notranslate.v-icon--link.mdi.mdi-camera.theme--light) {
-    font-size: 58px;
+  font-size: 58px;
 }
 </style>

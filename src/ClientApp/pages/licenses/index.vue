@@ -258,7 +258,7 @@
           </v-dialog>
         </v-toolbar>
       </template>
-      <template #item[actions]="{ item }">
+      <template #[`item.actions`]="{ item }">
         <v-tooltip v-if="$auth.user.isAdmin" top>
           <template #activator="{ on }">
             <v-icon
@@ -292,23 +292,22 @@
           <span>Delete</span>
         </v-tooltip>
       </template>
-      <template #item[validityStart]="{ item }">
+      <template #[`item.validityStart`]="{ item }">
         {{ parseDate(item.validityStart) }}
       </template>
-      <template #item[validityEnd]="{ item }">
+      <template #[`item.validityEnd`]="{ item }">
         {{ parseDate(item.validityEnd) }}
       </template>
     </v-data-table>
   </div>
 </template>
 <script lang="ts">
-// eslint-disable-next-line import/named
-import { ref, computed, defineComponent, useStore, useFetch, useContext, useRoute } from '@nuxtjs/composition-api'
+import { ref, computed, defineComponent, useFetch, useContext, useRoute } from '@nuxtjs/composition-api'
 
 import { email } from 'vee-validate/dist/rules'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
-import { DateTime } from 'luxon'
-import { LicensesState } from 'store/licenses'
+import useDateTime from '../../composables/useDateTime'
+import { useLicensesStore } from '~/composables/useLicensesStore'
 import { LicenseDTO } from '@/types/Licenses'
 import useGoBack from '~/composables/useGoBack'
 
@@ -330,7 +329,10 @@ export default defineComponent({
   },
   setup () {
     useGoBack()
-    const store = useStore()
+    const { parseDate } = useDateTime()
+
+    const licensesStore = useLicensesStore()
+
     const route = useRoute()
     const { $auth, error } = useContext()
     const headers = ref([
@@ -378,24 +380,21 @@ export default defineComponent({
     })
 
     const Licenses = computed((): LicenseDTO[] => {
-      return ((store.state as any).licenses as LicensesState).licensesList
+      return licensesStore.licensesList
     })
 
     const selectLicense = (item: LicenseDTO): void => {
       selectedLicense.value = item
-      store.dispatch('licenses/getLicenseById', selectedLicense.value.licenseId, { root: true })
+      licensesStore.getLicenseById(selectedLicense.value.licenseId)
         .then(resp => (license.value = resp))
     }
 
     useFetch(async () => {
       if (!$auth.user.isAdmin) { error({ statusCode: 403, message: 'Forbidden' }) }
-      await store.dispatch('licenses/getLicenses', {}, { root: true })
+      await licensesStore.getLicenses({})
 
       if (route.value.query.id) {
-        store
-          .dispatch('licenses/getLicenseById', route.value.query.id, {
-            root: true
-          })
+        licensesStore.getLicenseById(route.value.query.id)
           .then(resp => (license.value = resp))
         isNew.value = false
         dialog.value = true
@@ -403,8 +402,7 @@ export default defineComponent({
     })
 
     const deleteLicense = () => {
-      store
-        .dispatch('licenses/deleteLicense', selectedLicense.value.licenseId, { root: true })
+      licensesStore.deleteLicense(selectedLicense.value.licenseId)
         .then(() => {
           dialog.value = false
         })
@@ -412,18 +410,15 @@ export default defineComponent({
 
     const upsertLicense = async () => {
       loading.value = true
-      if (!isNew.value) { await store.dispatch('licenses/updateLicense', license.value, { root: true }) } else {
-        await store.dispatch('licenses/createLicense', license.value, { root: true })
-        await store.dispatch('licenses/getLicenses', {}, { root: true })
+      if (!isNew.value) { await licensesStore.updateLicense(license.value) } else {
+        await licensesStore.createLicense(license.value)
+        await licensesStore.getLicenses({})
       }
       dialog.value = false
       isNew.value = true
       loading.value = false
     }
 
-    const parseDate = (date: string) => {
-      return DateTime.fromISO(date).toLocaleString()
-    }
     return {
       headers,
       dialog,

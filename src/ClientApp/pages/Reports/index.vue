@@ -1,31 +1,31 @@
 <template>
   <div>
     <alert-dialog
-      v-model="dialogRemove"
+      v-model="state.dialogRemove"
       title="Remove Reports"
       message="This operation will remove this report and all data related"
       :code="selectedItem.id"
       :description="selectedItem.name"
       @yes="deleteReport()"
-      @no="dialogRemove = false"
+      @no="state.dialogRemove = false"
     />
-    <new-report-dialog v-model="dialog" />
+    <new-report-dialog v-model="state.dialog" />
     <v-data-table
       :class="$device.isTablet ? 'tablet-text' : ''"
-      :items="reportList"
+      :items="reports"
       item-key="id"
-      :search="filter"
+      :search="state.filter"
       dense
       :headers="headers"
-      :loading="loading"
+      :loading="state.loading"
     >
       <template #top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Inspection Reports</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
-          <grid-filter :filter.sync="filter" />
+          <grid-filter :filter.sync="state.filter" />
           <v-switch
-            v-model="showOnlyMyReports"
+            v-model="state.showOnlyMyReports"
             class="tw-mx-4"
             messages="Show only my reports"
             dense
@@ -33,13 +33,13 @@
           />
           <v-spacer />
           <v-btn
-            v-if="!$route.query.closed"
+            v-if="!route.query.closed"
             class="mx-2"
             x-small
             fab
             dark
             color="primary"
-            @click="dialog = true"
+            @click="state.dialog = true"
           >
             <v-icon dark>
               mdi-plus
@@ -52,7 +52,7 @@
           <template #activator="{ on }">
             <v-btn
               icon
-              :loading="printing"
+              :loading="state.printing"
               :disabled="!item.isClosed || !(item.photosCount > 0)"
               color="primary"
               class="mr-2"
@@ -70,7 +70,7 @@
           <template #activator="{ on }">
             <v-btn
               icon
-              :loading="printing"
+              :loading="state.printing"
               :disabled="!item.isClosed"
               color="primary"
               class="mr-2"
@@ -90,7 +90,7 @@
               class="mr-2"
               v-on="on"
               @click="
-                $router.push({ name: 'Reports-id', params: { id: item.id } })
+                router.push({ name: 'Reports-id', params: { id: item.id } })
               "
             >
               <v-icon> mdi-pencil </v-icon>
@@ -106,7 +106,7 @@
               v-on="on"
               @click="
                 selectItem(item);
-                dialogRemove = true;
+                state.dialogRemove = true;
               "
             >
               mdi-delete
@@ -114,15 +114,15 @@
           </template>
           <span>Delete</span>
         </v-tooltip>
-        <v-tooltip v-if="$auth.user.isAdmin" top>
+        <v-tooltip v-if="isAdmin" top>
           <template #activator="{ on }">
             <v-icon
-              v-if="$auth.user.isAdmin"
+              v-if="isAdmin"
               :disabled="item.isClosed"
               color="primary"
               v-on="on"
               @click="
-                $router.push(
+                router.push(
                   `/checklists?&configurationonly=false&reportid=${item.id}`
                 )
               "
@@ -132,15 +132,15 @@
           </template>
           <span>Edit Checklist Configuration for this report</span>
         </v-tooltip>
-        <v-tooltip v-if="$auth.user.isAdmin" top>
+        <v-tooltip v-if="isAdmin" top>
           <template #activator="{ on }">
             <v-icon
-              v-if="$auth.user.isAdmin"
+              v-if="isAdmin"
               :disabled="item.isClosed"
               color="primary"
               v-on="on"
               @click="
-                $router.push(
+                router.push(
                   `/signatures?&configurationonly=false&reportid=${item.id}`
                 )
               "
@@ -177,134 +177,141 @@
 </template>
 
 <script lang="ts">
-import moment from 'moment'
-import { Component, mixins } from 'nuxt-property-decorator'
-
-import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { ReportsState } from 'store/reportstrore'
-import InnerPageMixin from '@/mixins/innerpage'
-import CreateReportDialog from '@/components/NewReportDialog.vue'
+import { defineComponent, reactive, useContext, ref, useFetch, useRoute, computed, useRouter } from '@nuxtjs/composition-api'
+import { useReportsStore } from '~/composables/useReportsStore'
 import { Report } from '~/types'
+import useDateTime from '~/composables/useDateTime'
 
-@Component({
-  components: {
-    ValidationObserver,
-    ValidationProvider,
-    CreateReportDialog
+export default defineComponent({
+  setup () {
+    const headers: any[] = [
+      {
+        text: 'Id',
+        value: 'id',
+        sortable: true,
+        align: 'center'
+      },
+      {
+        text: 'Date',
+        value: 'date',
+        sortable: true,
+        align: 'center'
+      },
+      {
+        text: 'Report Name',
+        value: 'name',
+        sortable: true,
+        align: 'left'
+      },
+      {
+        text: 'Completed With Signatures',
+        value: 'isClosed',
+        sortable: true,
+        align: 'center'
+      },
+      {
+        text: '',
+        value: 'actions',
+        sortable: false,
+        align: 'center'
+      }
+    ]
+
+    const reportsStore = useReportsStore()
+    const { $auth, $axios } = useContext()
+    const route = useRoute()
+    const router = useRouter()
+
+    const { formatDate } = useDateTime()
+
+    const selectedItem = ref<Report>({ id: 0 } as Report)
+
+    const state = reactive({
+      loading: false,
+      printing: false,
+      dialogRemove: false,
+      dialog: false,
+      filter: '',
+      showOnlyMyReports: false,
+      hostName: $axios!.defaults!.baseURL!.replace('/api', '')
+    })
+
+    useFetch(async () => {
+      state.loading = true
+      // TODO: Save filters state on store
+      await reportsStore.getReports(
+        {
+          filter: '',
+          closed: route.value.query.closed,
+          orderBy: 'date',
+          myreports: state.showOnlyMyReports,
+          descending: true
+        })
+
+      state.loading = false
+    })
+
+    const reports = computed((): Report[] => reportsStore.reportList)
+
+    const selectItem = (item: Report): void => {
+      selectedItem.value = item
+    }
+
+    const deleteReport = () => {
+      reportsStore.deleteReport(selectedItem.value.id)
+        .then(() => {
+          state.dialogRemove = false
+        })
+    }
+
+    const generatePdf = async (item: Report, printPhotos: boolean = false) => {
+      try {
+        state.printing = true
+        const file = await $axios.$get(
+        `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${item.reportConfigurationId}`,
+        { responseType: 'blob' }
+        )
+        downloadFile(
+          file,
+          printPhotos
+            ? `compunded_photo_record_${item.name}`
+            : `report_${item.name}`
+        )
+      } catch (e) {
+      } finally {
+        state.printing = false
+      }
+    }
+
+    const isAdmin = computed(() => $auth.user.isAdmin)
+
+    const downloadFile = (blob: Blob, name: any): void => {
+      const link = document.createElement('a')
+      link.target = '_blank'
+      link.href = window.URL.createObjectURL(blob)
+      link.download = `${name}`
+      link.click()
+    }
+
+    return {
+      state,
+      reports,
+      selectItem,
+      formatDate,
+      deleteReport,
+      generatePdf,
+      selectedItem,
+      headers,
+      router,
+      route,
+      isAdmin,
+    }
   },
   head: {
     title: 'Reports List'
   }
+
 })
-export default class ReportsPage extends mixins(InnerPageMixin) {
-  loading: boolean = false
-  printing: boolean = false
-  dialogRemove: Boolean = false
-  dialog: Boolean = false
-  selectedItem: Report = {} as Report
-  filter: String = ''
-  showOnlyMyReports: Boolean = false
-  hostName: string = this.$axios!.defaults!.baseURL!.replace('/api', '')
-  headers: any[] = [
-    {
-      text: 'Id',
-      value: 'id',
-      sortable: true,
-      align: 'center'
-    },
-    {
-      text: 'Date',
-      value: 'date',
-      sortable: true,
-      align: 'center'
-    },
-    {
-      text: 'Report Name',
-      value: 'name',
-      sortable: true,
-      align: 'left'
-    },
-    {
-      text: 'Completed With Signatures',
-      value: 'isClosed',
-      sortable: true,
-      align: 'center'
-    },
-    {
-      text: '',
-      value: 'actions',
-      sortable: false,
-      align: 'center'
-    }
-  ]
-
-  get reportList (): Report[] {
-    return (this.$store.state.reportstrore as ReportsState).reportList || []
-  }
-
-  async fetch () {
-    this.loading = true
-    // TODO: Save filters state on store
-    await this.$store.dispatch(
-      'reportstrore/getReports',
-      {
-        filter: '',
-        closed: this.$route.query.closed,
-        orderBy: 'date',
-        myreports: this.showOnlyMyReports,
-        descending: true
-      },
-      { root: true }
-    )
-
-    this.loading = false
-  }
-
-  selectItem (item: Report): void {
-    this.selectedItem = item
-  }
-
-  formatDate (date: string): string {
-    return moment(date).format('YYYY-MM-DD HH:mm')
-  }
-
-  deleteReport () {
-    this.$store
-      .dispatch('reportstrore/deleteReport', this.selectedItem.id, {
-        root: true
-      })
-      .then(() => {
-        this.dialogRemove = false
-      })
-  }
-
-  async generatePdf (item: Report, printPhotos: boolean = false) {
-    try {
-      this.printing = true
-      const file = await this.$axios.$get(
-        `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${item.reportConfigurationId}`,
-        { responseType: 'blob' }
-      )
-      this.downloadFile(
-        file,
-        printPhotos
-          ? `compunded_photo_record_${item.name}`
-          : `report_${item.name}`
-      )
-    } catch (e) {
-    } finally {
-      this.printing = false
-    }
-  }
-
-  downloadFile (blob: Blob, name: any): void {
-    const link = document.createElement('a')
-    link.target = '_blank'
-    link.href = window.URL.createObjectURL(blob)
-    link.download = `${name}`
-    link.click()
-  }
-}
 </script>
 
 <style>

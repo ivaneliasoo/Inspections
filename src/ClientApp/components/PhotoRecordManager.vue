@@ -34,26 +34,26 @@
               </v-img>
               <v-card-actions>
                 <v-text-field
-                  v-if="showLabelEdit.findIndex(l => l===index)>=0"
+                  v-if="state.showLabelEdit.findIndex(l => l===index)>=0"
                   v-model="photo.label"
                   label="Photo Label"
                 />
                 <v-btn
-                  v-if="showLabelEdit.findIndex(l => l===index)>=0"
+                  v-if="state.showLabelEdit.findIndex(l => l===index)>=0"
                   icon
-                  @click="savePhoto(photo); showLabelEdit.splice(showLabelEdit.findIndex(l => l===index),1)"
+                  @click="savePhoto(photo); state.showLabelEdit.splice(state.showLabelEdit.findIndex(l => l===index),1)"
                 >
                   <v-icon>mdi-check</v-icon>
                 </v-btn>
                 <v-spacer />
                 <v-btn
-                  v-if="showLabelEdit.findIndex(l => l===index)===-1"
+                  v-if="state.showLabelEdit.findIndex(l => l===index)===-1"
                   icon
                   @click="editPhotoLabel(index)"
                 >
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
-                <v-btn icon @click="currentPhoto=index; showCarousel=true">
+                <v-btn icon @click="state.currentPhoto=index; state.showCarousel=true">
                   <v-icon>mdi-eye</v-icon>
                 </v-btn>
                 <v-btn icon @click="removePhoto(photo.id)">
@@ -65,62 +65,87 @@
         </v-row>
       </template>
     </v-data-iterator>
-    <v-dialog v-model="showCarousel">
-      <v-carousel v-model="currentPhoto" height="80%">
-        <v-carousel-item v-for="(photo, index) in photos" :key="index" :src="`${photo.photoUrl}`" />
+    <v-dialog v-model="state.showCarousel">
+      <v-carousel v-model="state.currentPhoto" height="80%">
+        <v-carousel-item v-for="(photo, index) in localPhotos" :key="index" :src="`${photo.photoUrl}`" />
       </v-carousel>
     </v-dialog>
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model, Prop } from 'nuxt-property-decorator'
+import { useContext, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, reactive } from '@nuxtjs/composition-api'
 import { DeletePhotoRecordCommand, PhotoRecord, EditPhotoRecordCommand } from '~/types'
 
-@Component
-export default class PhotoRecordManager extends Vue {
-  @Model('input') photos: PhotoRecord[] | undefined
+export default defineComponent({
+  model: {
+    prop: 'photos',
+    event: 'input'
+  },
+  props: {
+    photos: {
+      type: Array as () => PhotoRecord[] | undefined,
+      required: true
+    },
+    reportId: {
+      type: Number,
+      required: true
+    },
+  },
+  setup (props) {
+    const { $axios } = useContext()
+    const route = useRoute()
+    const state = reactive({
+      showCarousel: false,
+      currentPhoto: 0,
+      showLabelEdit: [],
+      hostName: $axios!.defaults!.baseURL!.replace('/api', ''),
+      itemsPerPage: 8,
+      localPhotos: [],
+    })
 
-  @Prop({ required: true, type: Number }) reportId!: number
-  showCarousel: boolean = false
-  currentPhoto: number = 0
-  showLabelEdit: number[] = []
-  hostName: string = this.$axios!.defaults!.baseURL!.replace('/api', '')
-
-  itemsPerPage: number = 8
-
-  removePhoto (id: number) {
-    const delPhoto: DeletePhotoRecordCommand = {
-      reportId: this.reportId!,
-      id
+    const removePhoto = (id: number) => {
+      const delPhoto: DeletePhotoRecordCommand = {
+        reportId: props.reportId!,
+        id
+      }
+      $axios
+        .delete(`reports/${delPhoto.reportId}/photorecord/${delPhoto.id}`)
+        .then(() => {
+          // eslint-disable-next-line vue/no-mutating-props
+          state.localPhotos = props.photos!.filter(
+            p => p.id !== id
+          )
+        })
     }
-    this.$axios
-      .delete(`reports/${delPhoto.reportId}/photorecord/${delPhoto.id}`)
-      .then(() => {
-        this.photos = this.photos!.filter(
-          p => p.id !== id
-        )
-      })
-  }
 
-  editPhotoLabel (currentIndex: number) {
-    const index = this.showLabelEdit.findIndex(l => l === index)
-    if (index >= 0) {
-      this.showLabelEdit.splice(index, 1)
-      return
+    const editPhotoLabel = (currentIndex: number) => {
+      const index = state.showLabelEdit.findIndex(l => l === index)
+      if (index >= 0) {
+        state.showLabelEdit.splice(index, 1)
+        return
+      }
+      state.showLabelEdit.push(currentIndex)
     }
-    this.showLabelEdit.push(currentIndex)
-  }
 
-  savePhoto (photo: PhotoRecord) {
-    const data:EditPhotoRecordCommand = {
-      reportId: parseInt(this.$route.params.id),
-      label: photo.label,
-      id: photo.id
+    const savePhoto = (photo: PhotoRecord) => {
+      const data:EditPhotoRecordCommand = {
+        reportId: parseInt(route.value.params.id),
+        label: photo.label,
+        id: photo.id
+      }
+      $axios.put(`reports/${data.reportId}/photorecord/${data.id}`, data)
     }
-    this.$axios.put(`reports/${data.reportId}/photorecord/${data.id}`, data)
+
+    return {
+      state,
+      removePhoto,
+      editPhotoLabel,
+      savePhoto,
+    }
   }
-}
+})
 </script>
 
 <style scoped>

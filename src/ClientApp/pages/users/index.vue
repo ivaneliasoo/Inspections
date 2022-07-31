@@ -1,27 +1,27 @@
 <template>
   <div>
     <alert-dialog
-      v-model="dialogRemove"
+      v-model="componentState.dialogRemove"
       title="Remove Users"
       message="This operation will remove this User and all data related"
-      :code="selectedItem.id"
-      :description="selectedItem.title"
+      :code="componentState.selectedItem.id"
+      :description="componentState.selectedItem.title"
       @yes="deleteUser()"
     />
     <v-data-table
       :class="$device.isTablet ? 'tablet-text' : ''"
       :items="users"
       item-key="userName"
-      :search="filter.filterText"
+      :search="componentState.filter.filterText"
       dense
-      :loading="loading"
+      :loading="componentState.loading"
       :headers="headers"
     >
       <template #top="{}">
         <v-toolbar flat color="white">
           <v-toolbar-title>Users</v-toolbar-title>
           <v-divider class="mx-4" inset vertical />
-          <grid-filter :filter.sync="filter.filterText" />
+          <grid-filter :filter.sync="componentState.filter.filterText" />
           <v-spacer />
           <v-btn
             class="mx-2"
@@ -30,9 +30,9 @@
             dark
             color="primary"
             @click="
-              dialog = true;
-              isNew = true;
-              item = { isAdmin: false };
+              componentState.dialog = true;
+              componentState.isNew = true;
+              componentState.item = { isAdmin: false };
             "
           >
             <v-icon dark>
@@ -40,7 +40,7 @@
             </v-icon>
           </v-btn>
           <v-dialog
-            v-model="dialog"
+            v-model="componentState.dialog"
             persistent
             scrollable
             :fullscreen="$vuetify.breakpoint.smAndDown"
@@ -60,9 +60,9 @@
                           rules="required"
                         >
                           <v-text-field
-                            v-model="item.userName"
+                            v-model="componentState.item.userName"
                             name="title"
-                            :disabled="!isNew"
+                            :disabled="!componentState.isNew"
                             :error-messages="errors"
                             label="User Name"
                           />
@@ -70,7 +70,7 @@
                       </v-col>
                       <v-col cols="12" md="6">
                         <v-checkbox
-                          v-model="item.isAdmin"
+                          v-model="componentState.item.isAdmin"
                           name="isAdmin"
                           label="Administrator"
                         />
@@ -84,7 +84,7 @@
                           rules="required|password:@confirm"
                         >
                           <v-text-field
-                            v-model="item.password"
+                            v-model="componentState.item.password"
                             :error-messages="errors"
                             type="password"
                             name="password"
@@ -99,7 +99,7 @@
                           rules="required|password:@pass"
                         >
                           <v-text-field
-                            v-model="confirmPassword"
+                            v-model="componentState.confirmPassword"
                             :error-messages="errors"
                             type="password"
                             name="confirmPassword"
@@ -115,7 +115,7 @@
                           rules="required"
                         >
                           <v-text-field
-                            v-model="item.name"
+                            v-model="componentState.item.name"
                             :error-messages="errors"
                             name="Name"
                             label="Name"
@@ -128,7 +128,7 @@
                           rules="required"
                         >
                           <v-text-field
-                            v-model="item.lastName"
+                            v-model="componentState.item.lastName"
                             :error-messages="errors"
                             name="lastName"
                             label="Last Name"
@@ -138,17 +138,17 @@
                     </v-row>
                     <v-row>
                       <v-col>
-                        <v-btn color="primary" @click="showSignature = !showSignature">
-                          {{ showSignature ? 'Hide':'Show' }} Sign
+                        <v-btn color="primary" @click="componentState.showSignature = !componentState.showSignature">
+                          {{ componentState.showSignature ? 'Hide':'Show' }} Sign
                         </v-btn>
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="center">
                       <v-col>
                         <SignaturePad
-                          v-if="showSignature"
-                          v-model="item.signature"
-                          :saved-data="item.signature"
+                          v-if="componentState.showSignature"
+                          v-model="componentState.item.signature"
+                          :saved-data="componentState.item.signature"
                         />
                       </v-col>
                     </v-row>
@@ -159,10 +159,10 @@
                   <v-btn
                     color="success"
                     text
-                    :loading="loading"
+                    :loading="componentState.loading"
                     :disabled="
-                      item.report
-                        ? item.report.isClosed
+                      componentState.item.report
+                        ? componentState.item.report.isClosed
                           ? true
                           : false
                         : false && !valid
@@ -176,9 +176,9 @@
                     text
                     @click="
                       reset();
-                      item = { principal: false };
-                      showSignature = false;
-                      dialog = false;
+                      componentState.item = { principal: false };
+                      componentState.showSignature = false;
+                      componentState.dialog = false;
                     "
                   >
                     Cancel
@@ -198,8 +198,8 @@
               v-on="on"
               @click="
                 selectItem(item);
-                isNew = false;
-                dialog = true;
+                componentState.isNew = false;
+                componentState.dialog = true;
               "
             >
               mdi-pencil
@@ -215,7 +215,7 @@
               v-on="on"
               @click="
                 selectItem(item);
-                dialogRemove = true;
+                componentState.dialogRemove = true;
               "
             >
               mdi-delete
@@ -231,11 +231,11 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
+import { defineComponent, reactive, computed, useFetch } from '@nuxtjs/composition-api'
 import { User, ChangePasswordDTO } from '../../types/Users'
-import InnerPageMixin from '@/mixins/innerpage'
-import { UserState } from 'store/users'
+import { useUsersStore } from '~/composables/useUsersStore'
+import useGoBack from '~/composables/useGoBack'
 
 extend('password', {
   params: ['target'],
@@ -245,115 +245,122 @@ extend('password', {
   message: 'Password confirmation does not match',
 })
 
-@Component({
+export default defineComponent({
   components: {
     ValidationObserver,
     ValidationProvider,
   },
-})
-export default class UserAdmin extends mixins(InnerPageMixin) {
-  dialog: boolean = false
-  dialogRemove: boolean = false
-  loading: boolean = false
-  confirmPassword: string = ''
-  showSignature: boolean = false
-  filter: any = {
-    filterText: '',
-  }
+  setup () {
+    useGoBack()
 
-  headers: any[] = [
-    {
-      text: 'UserName',
-      value: 'userName',
-      sortable: true,
-      align: 'left',
-    },
-    {
-      text: 'Name',
-      value: 'name',
-      sortable: true,
-      align: 'left',
-    },
-    {
-      text: 'Last Name',
-      value: 'lastName',
-      sortable: true,
-      align: 'left',
-    },
-    {
-      text: 'Admin',
-      value: 'isAdmin',
-      sortable: true,
-      align: 'center',
-    },
-    {
-      text: '',
-      value: 'actions',
-      sortable: false,
-      align: 'left',
-    },
-  ]
+    const usersStore = useUsersStore()
 
-  selectedItem: User = {} as User
-  item: any = { principal: false }
-  isNew: boolean = false
+    const headers = [
+      {
+        text: 'UserName',
+        value: 'userName',
+        sortable: true,
+        align: 'left',
+      },
+      {
+        text: 'Name',
+        value: 'name',
+        sortable: true,
+        align: 'left',
+      },
+      {
+        text: 'Last Name',
+        value: 'lastName',
+        sortable: true,
+        align: 'left',
+      },
+      {
+        text: 'Admin',
+        value: 'isAdmin',
+        sortable: true,
+        align: 'center',
+      },
+      {
+        text: '',
+        value: 'actions',
+        sortable: false,
+        align: 'left',
+      },
+    ]
 
-  get users (): User[] {
-    return (this.$store.state.users as UserState).users
-  }
+    const componentState = reactive({
+      dialog: false,
+      dialogRemove: false,
+      loading: false,
+      confirmPassword: '',
+      showSignature: false,
+      filter: {
+        filterText: '',
+      },
+      selectedItem: { id: 0, title: '' } as unknown as User,
+      item: { principal: false, password: '' } as any,
+      isNew: false,
+    })
 
-  selectItem (item: User): void {
-    this.selectedItem = item
-    this.$store
-      .dispatch('users/getUserByName', this.selectedItem.userName, {
-        root: true,
-      })
-      .then(resp => (this.item = resp))
-  }
+    const users = computed(() => {
+      return usersStore.$state.users
+    })
 
-  async fetch ({ error, $auth, store }: any) {
-    if (!$auth.user.isAdmin) {
-      error({ statusCode: 403, message: 'Forbbiden' })
-    }
-    this.loading = true
-    await store.dispatch('users/getUsers', {}, { root: true })
-    this.loading = false
-  }
-
-  deleteUser () {
-    this.$store
-      .dispatch('users/deleteUser', this.selectedItem.userName, { root: true })
-      .then(() => {
-        this.dialog = false
-      })
-  }
-
-  async upsertUser () {
-    this.loading = true
-    if (!this.isNew) {
-      await this.$store.dispatch('users/updateUser', this.item, { root: true })
-    } else {
-      await this.$store.dispatch('users/createUser', this.item, { root: true })
-      await this.$store.dispatch('users/getUsers', {}, { root: true })
+    const selectItem = (item: User): void => {
+      componentState.selectedItem = item
+      usersStore.getUserByName(componentState.selectedItem.userName)
+        .then(resp => (componentState.item = resp))
     }
 
-    if (this.item.password === this.confirmPassword) {
-      await this.$store.dispatch(
-        'users/changePassword',
+    useFetch(async ({ error, $auth }: any) => {
+      if (!$auth.user.isAdmin) {
+        error({ statusCode: 403, message: 'Forbbiden' })
+      }
+      componentState.loading = true
+      await usersStore.getUsers()
+      componentState.loading = false
+    })
+
+    const deleteUser = () => {
+      usersStore.deleteUser(componentState.selectedItem.userName)
+        .then(() => {
+          componentState.dialog = false
+        })
+    }
+
+    const upsertUser = async () => {
+      componentState.loading = true
+      if (!componentState.isNew) {
+        await usersStore.updateUser(componentState.item as unknown as User)
+      } else {
+        await usersStore.createUser(componentState.item as unknown as User)
+        await usersStore.getUsers()
+      }
+
+      if (componentState.item.password === componentState.confirmPassword) {
+        await usersStore.changePassword(
         {
-          userName: this.item.userName,
+          userName: componentState.item.userName,
           currentPassword: '',
-          newPassword: this.item.password,
-          newPasswordConfirmation: this.confirmPassword,
-        } as ChangePasswordDTO,
-        { root: true }
-      )
+          newPassword: componentState.item.password,
+          newPasswordConfirmation: componentState.confirmPassword,
+        } as ChangePasswordDTO)
+      }
+
+      componentState.dialog = false
+      componentState.isNew = true
+      componentState.loading = false
+      componentState.showSignature = false
     }
 
-    this.dialog = false
-    this.isNew = true
-    this.loading = false
-    this.showSignature = false
+    return {
+      headers,
+      users,
+      selectItem,
+      deleteUser,
+      upsertUser,
+      componentState
+    }
   }
-}
+})
 </script>

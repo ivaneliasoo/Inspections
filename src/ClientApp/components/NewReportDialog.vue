@@ -3,29 +3,24 @@
     <template #title="{}">
       New Report
     </template>
-    <div v-if="!creatingReport" class="tw-fixed tw-z-50 tw-bg-opacity-80 tw-bg-white">
+    <div
+      v-if="!componentState.creatingReport"
+      class="tw-fixed tw-z-50 tw-bg-opacity-80 tw-bg-white"
+    >
       <h2>Please, Select a Configuration to Create a New Report</h2>
     </div>
     <v-row
-      v-if="creatingReport"
+      v-if="componentState.creatingReport"
       class="fill-height"
       align-content="center"
       justify="center"
     >
       <v-col>
-        <v-col
-          class="subtitle-1 text-center"
-          cols="12"
-        >
+        <v-col class="subtitle-1 text-center" cols="12">
           Creating a New report. Please Wait
         </v-col>
         <v-col cols="12">
-          <v-progress-linear
-            color="indigo"
-            indeterminate
-            rounded
-            height="6"
-          />
+          <v-progress-linear color="indigo" indeterminate rounded height="6" />
         </v-col>
       </v-col>
     </v-row>
@@ -38,9 +33,19 @@
         align="center"
       >
         <v-col v-if="item">
-          <v-card class="tw-mx-5" ripple @click="configuration = item.id; createReport()">
+          <v-card
+            class="tw-mx-5"
+            ripple
+            @click="
+              componentState.configuration = item.id;
+              createReport();
+            "
+          >
             <v-card-title>{{ item.title }}</v-card-title>
-            <v-card-subtitle>Creates a new Report With {{ item.title }} {{ item.formName }} Configuration</v-card-subtitle>
+            <v-card-subtitle>
+              Creates a new Report With {{ item.title }}
+              {{ item.formName }} Configuration
+            </v-card-subtitle>
           </v-card>
         </v-col>
       </v-row>
@@ -49,70 +54,80 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
-import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { ReportConfigurationState } from 'store/configurations'
+import { defineComponent, reactive, computed, useFetch, useRoute, useContext } from '@nuxtjs/composition-api'
+import { useConfigurationStore } from '~/composables/useConfigurationStore'
+import { useReportsStore } from '~/composables/useReportsStore'
+import { useUsersStore } from '~/composables/useUsersStore'
 
 import { ReportConfiguration } from '~/types'
 
-@Component({
-  components: {
-    ValidationObserver,
-    ValidationProvider
-  }
-})
-export default class NewReportDialog extends Vue {
-  @Prop() value!: boolean
-  creatingReport: boolean = false
-  search: string = ''
-  configuration: number = 0
+export default defineComponent({
+  props: {
+    value: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup (props, { emit }) {
+    const componentState = reactive({
+      creatingReport: false,
+      search: '',
+      configuration: 0
+    })
 
-  async asyncData () {
-    await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
-    return {}
-  }
+    const configurationStore = useConfigurationStore()
+    const reportsStore = useReportsStore()
+    const usersStore = useUsersStore()
+    useFetch(() => configurationStore.getConfigurations(''))
+    const route = useRoute()
+    const { $auth } = useContext()
 
-  async fetch () {
-    await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
-  }
+    const selectedConfiguration = computed(() => {
+      return { reportType: 0, configurationId: componentState.configuration }
+    })
 
-  async createReport () {
-    try {
-      this.creatingReport = true
-      const reportId = await this.$store.dispatch('reportstrore/createReport', this.selectedConfiguration, { root: true })
-        .then((resp) => {
-          this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: true, descending: true }, { root: true })
-          this.localValue = false
-          this.$emit('report-created', resp)
-        })
-      await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: reportId }, { root: true })
-    } catch (error) {
+    const localValue = computed({
+      get: () => {
+        return props.value
+      },
+      set: (value: boolean) => {
+        emit('input', value)
+      }
+    })
+
+    const createReport = async () => {
+      try {
+        componentState.creatingReport = true
+        const reportId = await reportsStore.createReport(selectedConfiguration.value)
+          .then((resp) => {
+            reportsStore.getReports({ filter: '', closed: route.value.query.closed, orderBy: 'date', myreports: true, descending: true })
+            localValue.value = false
+            emit('report-created', resp)
+          }) as number
+        await usersStore.setUserLastEditedReport({ userName: $auth.user.userName as string, lastEditedReport: reportId })
+      } catch (error) {
       // eslint-disable-next-line no-console
-      console.log({ error })
-    } finally {
-      this.creatingReport = false
+        console.log({ error })
+      } finally {
+        componentState.creatingReport = false
+      }
+    }
+
+    const configurations = computed((): ReportConfiguration[] => {
+      const all = configurationStore.configurations.filter(c => c.formName !== 'Incidents Report')
+      const incident = configurationStore.configurations.filter(c => c.formName === 'Incidents Report')
+      all.unshift(incident[0])
+      return all || []
+    })
+
+    return {
+      componentState,
+      createReport,
+      configurations,
+      localValue,
     }
   }
-
-  get configurations (): ReportConfiguration[] {
-    const all = (this.$store.state.configurations as ReportConfigurationState).configurations.filter(c => c.formName !== 'Incidents Report')
-    const incident = (this.$store.state.configurations as ReportConfigurationState).configurations.filter(c => c.formName === 'Incidents Report')
-    all.unshift(incident[0])
-    return all || []
-  }
-
-  get selectedConfiguration () {
-    return { reportType: 0, configurationId: this.configuration }
-  }
-
-  get localValue () {
-    return this.value
-  }
-
-  set localValue (value: boolean) {
-    this.$emit('input', value)
-  }
-}
+})
 </script>
 
 <style scoped>

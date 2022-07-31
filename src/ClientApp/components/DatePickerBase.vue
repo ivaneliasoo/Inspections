@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-menu v-model="menu1" :disabled="disabled" :close-on-content-click="false" max-width="290" offset-y>
+    <v-menu
+      v-model="menu1"
+      :disabled="disabled"
+      :close-on-content-click="false"
+      max-width="290"
+      offset-y
+    >
       <template #activator="{ on }">
         <v-text-field
           v-model="fechaComputed"
@@ -24,69 +30,106 @@
         :max="max || max === '' ? max : fechaHoy"
         :min="min ? min : ''"
         first-day-of-week="1"
-        @change="menu1 = false;"
+        @change="menu1 = false"
       />
     </v-menu>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
 import moment from 'moment'
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 
-@Component
-export default class DatePickerBase extends Vue {
-  @Prop({ required: true }) value:any
-  @Prop({ default: 'Date' }) titulo:any
+export default defineComponent({
+  props: {
+    value: {
+      type: [Object, Array, String],
+      required: false,
+      default: ''
+    },
+    titulo: {
+      type: String,
+      default: 'Date'
+    },
+    min: {
+      type: [Object, Array, Number, String],
+      default: ''
+    },
+    max: {
+      type: [Object, Array, Number, String],
+      default: ''
+    },
+    showIcon: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+  },
+  // @Prop({ required: true }) value:any
+  // @Prop({ default: 'Date' }) titulo:any
 
-  @Prop() min:any
-  @Prop() max:any
-  @Prop({ default: false }) showIcon:Boolean | undefined
-  @Prop({ default: false }) disabled:Boolean | undefined
+  // @Prop() min:any
+  // @Prop() max:any
+  // @Prop({ default: false }) showIcon:Boolean | undefined
+  // @Prop({ default: false }) disabled:Boolean | undefined
+  setup (props, { emit }) {
+    const menu1 = ref(false)
 
-  menu1:Boolean = false
+    const fechaPickerModel = computed({
+      get: (): string | null => {
+        if (props.value) {
+          return fDateToYMD(props.value)
+        } else {
+          emit('input', fechaHoy.value)
+          return null
+        }
+      },
+      set: (valor) => {
+        if (valor !== '') { emit('input', fDateToYMD(valor)) }
 
-  get fechaPickerModel (): string | null {
-    if (this.value) {
-      return this.fDateToYMD(this.value)
-    } else {
-      this.$emit('input', this.fechaHoy)
-      return null
+        emit('input', valor)
+      }
+    })
+
+    const fechaHoy = computed(() => {
+      return fDateToYMD(new Date())
+    })
+
+    const fechaComputed = computed(() => {
+      return (fechaPickerModel.value !== null && fechaPickerModel.value !== undefined) ? fDateToDMY(fechaPickerModel.value) : ''
+    })
+
+    const emitEvent = (valor:any) => {
+      emit('input', valor ?? '')
+    }
+
+    const fDateToDMY = (dateValue:any) => {
+      return moment(dateValue).format('DD/MM/YYYY')
+    }
+
+    const fDateToYMD = (dateValue:any) => {
+      return moment(dateValue).format('YYYY-MM-DD')
+    }
+
+    const limpiar = () => {
+      emit('input', '')
+    }
+
+    return {
+      menu1,
+      fechaPickerModel,
+      fechaHoy,
+      fechaComputed,
+      emitEvent,
+      limpiar,
     }
   }
 
-  set fechaPickerModel (valor) {
-    if (valor !== '') { this.$emit('input', this.fDateToYMD(valor)) }
-
-    this.$emit('input', valor)
-  }
-
-  get fechaHoy () {
-    return this.fDateToYMD(new Date())
-  }
-
-  get fechaComputed () {
-    return (this.fechaPickerModel !== null && this.fechaPickerModel !== undefined) ? this.fDateToDMY(this.fechaPickerModel) : ''
-  }
-
-  emitEvent (valor:any) {
-    this.$emit('input', valor ?? '')
-  }
-
-  fDateToDMY (dateValue:any) {
-    return moment(dateValue).format('DD/MM/YYYY')
-  }
-
-  fDateToYMD (dateValue:any) {
-    return moment(dateValue).format('YYYY-MM-DD')
-  }
-
-  limpiar () {
-    this.$emit('input', '')
-  }
-}
+})
 </script>
 
 <style>
-
 </style>

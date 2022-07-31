@@ -206,12 +206,9 @@
 import {
   ref,
   watch,
-  computed
-} from '@vue/composition-api'
-import {
+  computed,
   defineComponent,
   useRouter,
-  useStore,
   useRoute,
   useFetch,
 } from '@nuxtjs/composition-api'
@@ -227,7 +224,7 @@ import {
   AddCheckListCommand
 } from '~/types'
 import useGoBack from '~/composables/useGoBack'
-import { CheckListsState } from '~/store/checklists'
+import { useChecklistStore } from '~/composables/useChecklistStore'
 
 export default defineComponent({
   name: 'AddEditCheckList',
@@ -239,7 +236,7 @@ export default defineComponent({
     useGoBack()
     const router = useRouter()
     const route = useRoute()
-    const store = useStore()
+    const checklistStore = useChecklistStore()
 
     const obsNew = ref<InstanceType<typeof ValidationObserver>>(null)
 
@@ -275,17 +272,15 @@ export default defineComponent({
 
     const { fetch } = useFetch(async () => {
       if (parseInt(route.value.params.id) > 0) {
-        const result = await store.dispatch(
-          'checklists/getCheckListItemsById',
-          route.value.params.id,
-          { root: false }
+        const result = await checklistStore.getCheckListItemsById(
+          route.value.params.id
         )
         currentCheckList.value = Object.assign({}, result)
       }
     })
 
     const checkList = computed(() => {
-      return ((store.state as any).checklists as CheckListsState).currentCheckList
+      return checklistStore.$state.currentCheckList
     })
 
     watch(() => selectedItem.value,
@@ -303,9 +298,7 @@ export default defineComponent({
         required: selectedItemData.value!.required,
         remarks: selectedItemData.value!.remarks
       }
-      await store.dispatch('checklists/updateCheckListItem', command, {
-        root: false
-      })
+      await checklistStore.updateCheckListItem(command)
     }
 
     const addItem = async () => {
@@ -326,9 +319,7 @@ export default defineComponent({
         return
       }
 
-      await store.dispatch('checklists/createCheckListItem', command, {
-        root: false
-      })
+      await checklistStore.createCheckListItem(command)
       fetch()
       dialogNew.value = false
     }
@@ -339,9 +330,7 @@ export default defineComponent({
         idCheckList: parseInt(route.value.params.id)
       }
       selectedItem.value -= 1
-      await store.dispatch('checklists/deleteCheckListItem', command, {
-        root: false
-      })
+      await checklistStore.deleteCheckListItem(command)
     }
 
     const saveCheckList = async () => {
@@ -362,13 +351,9 @@ export default defineComponent({
 
       try {
         if (command.idCheckList > 0) {
-          await store.dispatch('checklists/updateCheckList', command, {
-            root: false
-          })
+          await checklistStore.updateCheckList(command)
         } else {
-          await store.dispatch('checklists/createCheckList', addCommand, {
-            root: false
-          })
+          await checklistStore.createCheckList(addCommand)
         }
       } catch (error) {
       } finally {

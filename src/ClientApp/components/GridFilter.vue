@@ -11,43 +11,51 @@
     placeholder="enter search text here.."
     @keydown="keydown"
     @click:append="$emit('filter', filterText)"
-    @click:clear="filterText=''; $emit('filter', filterText); $emit('clear', filterText)"
+    @click:clear="
+      filterText = '';
+      $emit('filter', filterText);
+      $emit('clear', filterText);
+    "
   />
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-@Component
-export default class GridFilter extends Vue {
-  @Prop({
-    type: String,
-    default: ''
-  })
-    filter!: String
+export default defineComponent({
+  props: {
+    filter: {
+      type: String,
+      default: '',
+    },
+    placeholder: {
+      type: String,
+      default: 'enter text',
+    },
+  },
+  setup (props, { emit }) {
+    const placeholderText = computed(() => props.placeholder)
 
-  @Prop({
-    type: String,
-    default: 'enter text'
-  })
-    placeholder!: String
+    const filterText = computed({
+      get: () => props.filter,
+      set: (value) => {
+        emit('update:filter', value)
+      },
+    })
 
-  placeholderText: String = this.placeholder
-
-  get filterText () {
-    return this.filter
-  }
-
-  set filterText (value) {
-    this.$emit('update:filter', value)
-  }
-
-  keydown (event: any) {
-    if (event.code === 'NumpadEnter' || event.code === 'Enter') {
-      this.$emit('filter', this.filter)
+    const keydown = (event: any) => {
+      if (event.code === 'NumpadEnter' || event.code === 'Enter') {
+        emit('filter', props.filter)
+      }
     }
-  }
-}
+
+    return {
+      filterText,
+      placeholderText,
+      keydown,
+    }
+  },
+})
 </script>
 
 <style>
