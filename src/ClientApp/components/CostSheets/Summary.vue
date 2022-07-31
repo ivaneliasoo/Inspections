@@ -2,53 +2,94 @@
   <td colspan="7">
     <table id="summary">
       <tbody class="header">
-        <th class="text-body2 text-left">Final Markup</th>
-        <th class="text-body2" colspan="2">5.00%</th>
-        <th class="text-body2" colspan="2">10%</th>
-        <th class="text-body2" colspan="2">15%</th>	
+        <th class="text-body2 text-left">
+          Final Markup
+        </th>
+        <th class="text-body2" colspan="2">
+          5.00%
+        </th>
+        <th class="text-body2" colspan="2">
+          10%
+        </th>
+        <th class="text-body2" colspan="2">
+          15%
+        </th>
       </tbody>
       <tbody class="cs-section">
         <SummaryRow
-          :costSheet="costSheet"
+          :cost-sheet="costSheet"
           title="Total Sales:"
-          valueMethod="totalSales"
-          percentMethod="totalSalesPercent"
-          :lowerPercent="-5"
-          :higherPercent="5"
-          :triggerUpdate="updateRow">
-        </SummaryRow>
+          value-method="totalSales"
+          percent-method="totalSalesPercent"
+          :lower-percent="-5"
+          :higher-percent="5"
+          :trigger-update="updateRow"
+        />
         <SummaryRow
-          :costSheet="costSheet"
+          :cost-sheet="costSheet"
           title="Material Cost:"
-          valueMethod="materialCost"
-          percentMethod="materialCostPercent"
-          :lowerPercent="-5"
-          :higherPercent="5"
-          :triggerUpdate="updateRow">
-        </SummaryRow>
+          value-method="materialCost"
+          percent-method="materialCostPercent"
+          :lower-percent="-5"
+          :higher-percent="5"
+          :trigger-update="updateRow"
+        />
         <SummaryRow
-          :costSheet="costSheet"
+          :cost-sheet="costSheet"
           title="Labour Cost:"
-          valueMethod="labourCost"
-          percentMethod="labourCostPercent"
-          :lowerPercent="-5"
-          :higherPercent="5"
-          :triggerUpdate="updateRow">
-        </SummaryRow>
+          value-method="labourCost"
+          percent-method="labourCostPercent"
+          :lower-percent="-5"
+          :higher-percent="5"
+          :trigger-update="updateRow"
+        />
         <SummaryRow
-          :costSheet="costSheet"
+          :cost-sheet="costSheet"
           title="Gross Profit:"
-          valueMethod="grossProfit"
-          percentMethod="grossProfitPercent"
-          :lowerPercent="-5"
-          :higherPercent="5"
+          value-method="grossProfit"
+          percent-method="grossProfitPercent"
+          :lower-percent="-5"
+          :higher-percent="5"
           :highlight="true"
-          :triggerUpdate="updateRow">
-        </SummaryRow>
+          :trigger-update="updateRow"
+        />
       </tbody>
     </table>
   </td>
 </template>
+
+<script>
+import { Section, Item }
+  from '../../composables/costsheets/entity.js'
+
+export default {
+  props: {
+    costSheet: Object,
+    triggerUpdate: Number
+  },
+  data: () => ({
+    selected: null,
+    updateRow: 0
+  }),
+  computed: {
+    toQuotePrice () {
+      return 0
+    },
+    summation () {
+      return 0
+    }
+  },
+  watch: {
+    triggerUpdate (newVal, oldVal) {
+      this.$forceUpdate()
+    }
+  },
+  mounted () {
+  },
+  methods: {
+  }
+}
+</script>
 
 <style scoped>
 input {
@@ -76,36 +117,3 @@ td {
 }
 
 </style>
-
-<script>
-import { Section, Item } 
-    from '../../composables/costsheets/entity.js';
-
-export default {
-  props: {
-    costSheet: Object,
-    triggerUpdate: Number
-  },
-  data: () => ({
-    selected: null,
-    updateRow: 0
-  }),
-  computed: {
-    toQuotePrice() {
-      return 0;
-    },
-    summation() {
-      return 0;
-    }
-  },
-  watch: { 
-    triggerUpdate(newVal, oldVal) {
-      this.$forceUpdate();
-    }
-  },
-  mounted() {
-  },
-  methods: {
-  }
-};
-</script>

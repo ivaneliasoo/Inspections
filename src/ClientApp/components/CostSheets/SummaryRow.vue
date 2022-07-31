@@ -1,54 +1,58 @@
 <template>
   <tr>
     <td style="width: 200px" class="text-body-2 text-left">
-      {{title}}
+      {{ title }}
     </td>
     <td class="text-caption font-weight-bold title-7">
       <NumberField
-        :value="costSheet[valueMethod](lowerPercent)" format="currency" :readOnly="true">
-      </NumberField>
+        :value="costSheet[valueMethod](lowerPercent)"
+        format="currency"
+        :read-only="true"
+      />
     </td>
     <td class="text-caption font-weight-bold title-7" :style="style">
       <NumberField
-        :value="costSheet[percentMethod](lowerPercent)" format="percent" :readOnly="true">
-      </NumberField>
+        :value="costSheet[percentMethod](lowerPercent)"
+        format="percent"
+        :read-only="true"
+      />
     </td>
     <td class="text-caption font-weight-bold title-7">
       <NumberField
-        :value="costSheet[valueMethod]()" format="currency" :bold="true" :readOnly="true">
-      </NumberField>
+        :value="costSheet[valueMethod]()"
+        format="currency"
+        :bold="true"
+        :read-only="true"
+      />
     </td>
     <td class="text-caption font-weight-bold title-7" :style="style">
       <NumberField
-        :value="costSheet[percentMethod]()" format="percent" :bold="true" :readOnly="true">
-      </NumberField>
+        :value="costSheet[percentMethod]()"
+        format="percent"
+        :bold="true"
+        :read-only="true"
+      />
     </td>
     <td class="text-caption font-weight-bold title-7">
       <NumberField
-        :value="costSheet[valueMethod](higherPercent)" format="currency" :readOnly="true">
-      </NumberField>
+        :value="costSheet[valueMethod](higherPercent)"
+        format="currency"
+        :read-only="true"
+      />
     </td>
     <td class="text-caption font-weight-bold title-7" :style="style">
       <NumberField
-        :value="costSheet[percentMethod](higherPercent)" format="percent" :readOnly="true">
-      </NumberField>
+        :value="costSheet[percentMethod](higherPercent)"
+        format="percent"
+        :read-only="true"
+      />
     </td>
   </tr>
 </template>
 
-<style scoped>
-input {
-  width: 100%;
-}
-
-td {
-  border: 1px solid black;
-}
-</style>
-
 <script>
-import { Section, Item } 
-    from '../../composables/costsheets/entity.js';
+import { Section, Item }
+  from '../../composables/costsheets/entity.js'
 
 export default {
   props: {
@@ -69,18 +73,28 @@ export default {
     ycoord: 0,
     inactive: true
   }),
-  watch: { 
-    triggerUpdate(newVal, oldVal) {
-      this.$forceUpdate();
+  computed: {
+    style () {
+      if (this.highlight) {
+        return 'background-color: #9eedca;'
+      }
+      return ''
     }
   },
-  computed: {
-    style() {
-      if (this.highlight) {
-        return "background-color: #9eedca;"
-      }
-      return "";
+  watch: {
+    triggerUpdate (newVal, oldVal) {
+      this.$forceUpdate()
     }
   }
-};
+}
 </script>
+
+<style scoped>
+input {
+  width: 100%;
+}
+
+td {
+  border: 1px solid black;
+}
+</style>

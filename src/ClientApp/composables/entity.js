@@ -440,7 +440,7 @@ export default function colors () {
     },
     {
       hex: '#9D81BA',
-      name: "Purple Mountain's Majesty",
+      name: 'Purple Mountain\'s Majesty',
       rgb: '(157, 129, 186)'
     },
     {
@@ -490,7 +490,7 @@ export default function colors () {
     },
     {
       hex: '#1FCECB',
-      name: "Robin's Egg Blue",
+      name: 'Robin\'s Egg Blue',
       rgb: '(31, 206, 203)'
     },
     {
@@ -510,7 +510,7 @@ export default function colors () {
     },
     {
       hex: '#76FF7A',
-      name: "Screamin' Green",
+      name: 'Screamin\' Green',
       rgb: '(118, 255, 122)'
     },
     {
