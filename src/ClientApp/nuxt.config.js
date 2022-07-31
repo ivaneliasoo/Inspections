@@ -48,6 +48,7 @@ export default {
     '@nuxtjs/device',
     '@braid/vue-formulate/nuxt',
     'vue2-editor/nuxt',
+    ['@pinia/nuxt', { disableVuex: false }],
   ],
   /*
   ** Nuxt.js modules

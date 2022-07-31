@@ -87,6 +87,7 @@ export default class NewReportDialog extends Vue {
         })
       await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: reportId }, { root: true })
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log({ error })
     } finally {
       this.creatingReport = false

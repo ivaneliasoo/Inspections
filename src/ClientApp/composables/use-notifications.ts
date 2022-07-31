@@ -73,7 +73,6 @@ const notificationErrorParser = function (defaultErrorMessage?: string, notFound
 
       //  else if (error.status === 500) {
       //   // Caso (2). cuando es solo una exception, solo se devuelve un mensaje en "data.message"
-      //   console.log({ errorMessage: error.detail})
       //   var msg = error.response.detail
       //   msgResp.type = error.status === 500 ? 'error' : 'warn'
 
