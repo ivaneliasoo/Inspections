@@ -52,7 +52,7 @@
 
 <script>
 import { Section, Item }
-  from '../../composables/costsheets/entity.js'
+  from '../../utils/costsheets/entity.js'
 
 export default {
   props: {

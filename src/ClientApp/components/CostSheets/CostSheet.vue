@@ -466,11 +466,11 @@
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 
-import pdfDocument from '../../composables/costsheets/pdf_util.js'
+import pdfDocument from '../../utils/costsheets/pdf_util.js'
 import { Section, Item, CostSheet }
-  from '../../composables/costsheets/entity.js'
+  from '../../utils/costsheets/entity.js'
 import { EventBus, Key }
-  from '../../composables/costsheets/event_bus.js'
+  from '../../utils/costsheets/event_bus.js'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 

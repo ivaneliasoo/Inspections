@@ -130,7 +130,7 @@
 
 <script>
 import { Section, Item, CostSheet }
-  from '../../composables/costsheets/entity.js'
+  from '../../utils/costsheets/entity.js'
 import { endpoint } from '../../composables/costsheets/util.js'
 
 export default {

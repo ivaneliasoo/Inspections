@@ -89,7 +89,7 @@
 <script>
 import Vue from 'vue'
 import { Section, Item, CostSheet }
-  from '../../composables/costsheets/entity.js'
+  from '../../utils/costsheets/entity.js'
 
 // https://stackoverflow.com/questions/51086688/mutex-in-javascript-does-this-look-like-a-correct-implementation
 function Mutex () {
