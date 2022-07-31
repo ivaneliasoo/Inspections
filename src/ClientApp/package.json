@@ -10,7 +10,17 @@
     "generate": "nuxt generate",
     "start": "nuxt start",
     "serve": "nuxt serve",
-    "lint": "eslint --ext \".ts,.js,.vue\" --ignore-path .gitignore ."
+    "lint": "eslint --ext \".ts,.js,.vue\" --ignore-path .gitignore .",
+    "prepare": "cd .. && cd .. && husky install .husky"
+  },
+  "lint-staged": {
+    "*.{ts,js,vue}": "eslint"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
     "@braid/vue-formulate": "^2.5.3",
@@ -18,6 +28,7 @@
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/composition-api": "^0.33.0",
     "@vue/composition-api": "^1.7.0",
+    "@vueuse/nuxt": "9.0.2",
     "blueimp-md5": "^2.18.0",
     "d3": "^6.7.0",
     "echarts": "^5.1.0",
@@ -39,7 +50,6 @@
     "vue-signature-pad": "3.0.2",
     "vue2-editor": "^2.10.3",
     "vuedraggable": "^2.24.3",
-    "@vueuse/nuxt": "9.0.2",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
@@ -50,7 +60,6 @@
     "@nuxtjs/eslint-config-typescript": "^10.0.0",
     "@nuxtjs/eslint-module": "^3.1.0",
     "@nuxtjs/pwa": "^3.3.5",
-    "@nuxtjs/tailwindcss": "^5.3.1",
     "@nuxtjs/vuetify": "^1.12.3",
     "@types/luxon": "^3.0.0",
     "@types/pdfmake": "^0.2.0",
@@ -59,6 +68,8 @@
     "eslint": "^8.20.0",
     "eslint-plugin-nuxt": "^3.2.0",
     "eslint-plugin-vue": "^9.3.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "postcss": "^8.4.14",
     "sass": "~1.54.0",
     "tailwindcss": "^3.1.7"
