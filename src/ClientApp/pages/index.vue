@@ -140,7 +140,6 @@
 import moment from 'moment'
 import { Vue, Component } from 'nuxt-property-decorator'
 import { CardOption, Report } from '~/types'
-import { PrintHelper } from '~/Helpers'
 import { ReportsState } from '~/store/reportstrore'
 
 @Component({
@@ -152,7 +151,6 @@ export default class IndexPage extends Vue {
 
   loading: boolean = false
   printing: boolean = false
-  printHelper!: PrintHelper
   dialogRemove: Boolean = false
   selectedItem: Report = {} as Report
   filter: String = ''
@@ -226,10 +224,6 @@ export default class IndexPage extends Vue {
     )
 
     this.loading = false
-  }
-
-  mounted () {
-    this.printHelper = new PrintHelper(this.$store)
   }
 
   selectItem (item: Report): void {

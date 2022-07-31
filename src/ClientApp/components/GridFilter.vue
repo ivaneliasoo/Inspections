@@ -24,15 +24,15 @@ export default class GridFilter extends Vue {
     type: String,
     default: ''
   })
-  filter!: String;
+    filter!: String
 
   @Prop({
     type: String,
     default: 'enter text'
   })
-  placeholder!: String;
+    placeholder!: String
 
-  placeholderText: String = this.placeholder;
+  placeholderText: String = this.placeholder
 
   get filterText () {
     return this.filter

@@ -24,7 +24,8 @@ export const actions: ActionTree<PrintSectionState, RootState> = {
     commit('SET_PRINT_SECTION_LIST', printSect)
   },
 
-  async getPrintSectionById ({ commit }, payload) {
+  // eslint-disable-next-line no-empty-pattern
+  async getPrintSectionById ({ }, payload) {
     return await this.$axios.$get(`printsection/${payload}`)
   },
 

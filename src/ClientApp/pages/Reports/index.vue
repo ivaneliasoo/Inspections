@@ -183,7 +183,6 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { ReportsState } from 'store/reportstrore'
 import InnerPageMixin from '@/mixins/innerpage'
-import { PrintHelper } from '@/Helpers'
 import CreateReportDialog from '@/components/NewReportDialog.vue'
 import { Report } from '~/types'
 
@@ -200,7 +199,6 @@ import { Report } from '~/types'
 export default class ReportsPage extends mixins(InnerPageMixin) {
   loading: boolean = false
   printing: boolean = false
-  printHelper!: PrintHelper
   dialogRemove: Boolean = false
   dialog: Boolean = false
   selectedItem: Report = {} as Report
@@ -260,10 +258,6 @@ export default class ReportsPage extends mixins(InnerPageMixin) {
     )
 
     this.loading = false
-  }
-
-  mounted () {
-    this.printHelper = new PrintHelper(this.$store)
   }
 
   selectItem (item: Report): void {

@@ -37,7 +37,7 @@
           </v-btn>
         </v-toolbar>
       </template>
-      <template #item.actions="{ item }">
+      <template #item[actions]="{ item }">
         <v-tooltip v-if="isAdmin" top>
           <template #activator="{ on }">
             <v-icon
@@ -74,6 +74,7 @@
 </template>
 
 <script lang="ts">
+// eslint-disable-next-line import/named
 import { defineComponent, useContext, ref, useAsync, useRoute, useRouter } from '@nuxtjs/composition-api'
 import useGoBack from '~/composables/useGoBack'
 import { useNotifications } from '~/composables/use-notifications'

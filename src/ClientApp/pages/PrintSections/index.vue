@@ -185,10 +185,10 @@
 </template>
 
 <script lang="ts">
+// eslint-disable-next-line import/named
 import { ref, defineComponent, computed, useStore, useFetch, watch } from '@nuxtjs/composition-api'
 import draggable from 'vuedraggable'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-// import ClassicEditor from '~/assets/ckeditor5.0.0/ckeditor'
 import { PrintSectionState } from '~/store/printsection'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 import useGoBack from '~/composables/useGoBack'

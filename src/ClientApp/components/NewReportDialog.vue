@@ -1,54 +1,59 @@
 <template>
   <message-dialog v-if="configurations" v-model="localValue" :actions="[]">
-      <template v-slot:title="{}">
-        New Report
-      </template>
-      <div v-if="!creatingReport" class="tw-fixed tw-z-50 tw-bg-opacity-80 tw-bg-white">
-        <h2 >Please, Select a Configuration to Create a New Report</h2>
-      </div>
+    <template #title="{}">
+      New Report
+    </template>
+    <div v-if="!creatingReport" class="tw-fixed tw-z-50 tw-bg-opacity-80 tw-bg-white">
+      <h2>Please, Select a Configuration to Create a New Report</h2>
+    </div>
+    <v-row
+      v-if="creatingReport"
+      class="fill-height"
+      align-content="center"
+      justify="center"
+    >
+      <v-col>
+        <v-col
+          class="subtitle-1 text-center"
+          cols="12"
+        >
+          Creating a New report. Please Wait
+        </v-col>
+        <v-col cols="12">
+          <v-progress-linear
+            color="indigo"
+            indeterminate
+            rounded
+            height="6"
+          />
+        </v-col>
+      </v-col>
+    </v-row>
+
+    <div v-if="configurations && configurations.length > 0">
       <v-row
-        v-if="creatingReport"
-        class="fill-height"
-        align-content="center"
-        justify="center">
-        <v-col>
-            <v-col
-              class="subtitle-1 text-center"
-              cols="12"
-            >
-              Creating a New report. Please Wait
-            </v-col>
-            <v-col cols="12">
-              <v-progress-linear
-                color="indigo"
-                indeterminate
-                rounded
-                height="6"
-              ></v-progress-linear>
-            </v-col>
+        v-for="(item, index) in configurations"
+        :key="`reportconfig${index}`"
+        justify="center"
+        align="center"
+      >
+        <v-col v-if="item">
+          <v-card class="tw-mx-5" ripple @click="configuration = item.id; createReport()">
+            <v-card-title>{{ item.title }}</v-card-title>
+            <v-card-subtitle>Creates a new Report With {{ item.title }} {{ item.formName }} Configuration</v-card-subtitle>
+          </v-card>
         </v-col>
       </v-row>
-
-        <div v-if="configurations && configurations.length > 0">
-          <v-row justify="center" align="center" v-for="(item, index) in configurations"
-                :key="`reportconfig${index}`">
-            <v-col v-if="item">
-              <v-card class="tw-mx-5" ripple @click="configuration = item.id; createReport()">
-                <v-card-title>{{ item.title }}</v-card-title>
-                <v-card-subtitle>Creates a new Report With {{ item.title }} {{item.formName}} Configuration</v-card-subtitle>
-              </v-card>
-            </v-col>
-          </v-row>
-        </div>
-    </message-dialog>
+    </div>
+  </message-dialog>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { ReportConfigurationState } from 'store/configurations'
 
-import { CreateReport, ReportConfiguration, CardOption} from '~/types'
-import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import { ReportConfiguration } from '~/types'
 
 @Component({
   components: {
@@ -62,51 +67,50 @@ export default class NewReportDialog extends Vue {
   search: string = ''
   configuration: number = 0
 
-  async asyncData() {
+  async asyncData () {
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
     return {}
   }
 
-  async fetch() {
+  async fetch () {
     await this.$store.dispatch('configurations/getConfigurations', '', { root: true })
   }
 
   async createReport () {
     try {
-      this.creatingReport =true
-    const reportId = await this.$store.dispatch('reportstrore/createReport', this.selectedConfiguration, { root: true })
-      .then((resp) => {
-        this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: true, descending: true }, { root: true })
-        this.localValue = false
-        this.$emit('report-created', resp)
-      })
-    await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: reportId }, { root: true })
+      this.creatingReport = true
+      const reportId = await this.$store.dispatch('reportstrore/createReport', this.selectedConfiguration, { root: true })
+        .then((resp) => {
+          this.$store.dispatch('reportstrore/getReports', { filter: '', closed: this.$route.query.closed, orderBy: 'date', myreports: true, descending: true }, { root: true })
+          this.localValue = false
+          this.$emit('report-created', resp)
+        })
+      await this.$store.dispatch('users/setUserLastEditedReport', { userName: this.$auth.user.userName, lastEditedReport: reportId }, { root: true })
     } catch (error) {
       console.log({ error })
     } finally {
       this.creatingReport = false
     }
-
   }
 
   get configurations (): ReportConfiguration[] {
-    let all = (this.$store.state.configurations as ReportConfigurationState).configurations.filter(c => c.formName !== 'Incidents Report')
-    let incident = (this.$store.state.configurations as ReportConfigurationState).configurations.filter(c => c.formName === 'Incidents Report')
+    const all = (this.$store.state.configurations as ReportConfigurationState).configurations.filter(c => c.formName !== 'Incidents Report')
+    const incident = (this.$store.state.configurations as ReportConfigurationState).configurations.filter(c => c.formName === 'Incidents Report')
     all.unshift(incident[0])
     return all || []
   }
 
-  get selectedConfiguration() {
+  get selectedConfiguration () {
     return { reportType: 0, configurationId: this.configuration }
   }
 
-  get localValue() {
+  get localValue () {
     return this.value
   }
-  set localValue(value: boolean) {
+
+  set localValue (value: boolean) {
     this.$emit('input', value)
   }
-
 }
 </script>
 

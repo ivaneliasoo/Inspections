@@ -39,16 +39,14 @@
           </span>
         </div>
         <div class="tw-flex-col tw-flex-wrap tw-text-left">
-          <span class="text-line tw-flex-col tw-text-center"
-            >{{
-              itemList.responsibleTypeName === "LEW"
-                ? "License No"
-                : "Designation"
-            }}:
+          <span class="text-line tw-flex-col tw-text-center">{{
+            itemList.responsibleTypeName === "LEW"
+              ? "License No"
+              : "Designation"
+          }}:
             {{
               itemList.designation ? itemList.designation.padEnd(30 - itemList.designation.length, "_") : ''
-            }}</span
-          >
+            }}</span>
         </div>
       </div>
       <div
@@ -66,15 +64,13 @@
             </div>
           </div>
         </div>
-        <span class="text-line tw-flex-col tw-text-center"
-          >Date: {{ formatDate(itemList.date) ? formatDate(itemList.date).padEnd(32 - formatDate(itemList.date).length, '_') : '' }}</span
-        >
+        <span class="text-line tw-flex-col tw-text-center">Date: {{ formatDate(itemList.date) ? formatDate(itemList.date).padEnd(32 - formatDate(itemList.date).length, '_') : '' }}</span>
       </div>
       <br>
       <div class="tw-flex-col tw-flex-wrap tw-text-left tw--mt-10">
         <ul>
           <li class="tw-h-2 tw-mb-5 tw-mt-2">
-            <span class="text-line tw-flex-col tw-text-center">{{ 'Remarks:'.padEnd(97 - 'Remarks:'.length, '_')}}</span>
+            <span class="text-line tw-flex-col tw-text-center">{{ 'Remarks:'.padEnd(97 - 'Remarks:'.length, '_') }}</span>
           </li>
           <li>
             _________________________________________________________________________________________
@@ -89,8 +85,10 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment'
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
+  name: 'Signatures',
   props: {
     signatures: {
       type: Array,
@@ -103,14 +101,14 @@ export default {
     },
   },
   methods: {
-    formatDate(date) {
+    formatDate (date) {
       if (date) {
-        return moment(date).format("DD-MM-YYYY");
+        return moment(date).format('DD-MM-YYYY')
       }
-      return "";
+      return ''
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

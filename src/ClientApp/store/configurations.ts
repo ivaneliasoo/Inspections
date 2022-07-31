@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import { ActionTree, MutationTree } from 'vuex'
 import { RootState } from 'store'
 import { ReportConfiguration, AddReportConfigurationCommand, UpdateReportConfigurationCommand } from '~/types'
@@ -20,13 +21,13 @@ export const actions: ActionTree<ReportConfigurationState, RootState> = {
     const configs = await this.$axios.$get(`reportconfiguration?${payload ?? ''}`)
     commit('SET_CONFIGURATIONS', configs)
   },
-  async getConfigurationById ({ commit }, payload) {
+  async getConfigurationById ({ }, payload) {
     return await this.$axios.$get(`reportconfiguration/${payload}`)
   },
-  async createConfiguration ({ commit }, payload: AddReportConfigurationCommand) {
+  async createConfiguration ({ }, payload: AddReportConfigurationCommand) {
     return await this.$axios.$post('reportconfiguration', payload)
   },
-  async updateConfiguration ({ commit }, payload: UpdateReportConfigurationCommand) {
+  async updateConfiguration ({ }, payload: UpdateReportConfigurationCommand) {
     return await this.$axios.$put(`reportconfiguration/${payload.id}`, payload)
   },
   async deleteConfiguration ({ commit }, payload: number) {

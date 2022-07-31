@@ -5,7 +5,6 @@
       :key="itemList.id"
       class="tw-mt-5"
     >
-
       <div class="tw-flex tw-justify-between">
         <div class="tw-inline-block">
           <PrintingSubTitle>
@@ -38,7 +37,7 @@
             </div>
           </div>
           <div class="tw-flex-col tw-text-left">
-            <div class="tw-w-20"></div>
+            <div class="tw-w-20" />
           </div>
           <div class="tw-flex-col tw-text-right tw-w-90">
             <div class="tw-inline-flex tw-align-middle">
@@ -94,7 +93,7 @@ export default {
       required: true,
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

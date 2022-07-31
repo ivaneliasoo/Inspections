@@ -20,6 +20,7 @@ import Vue from 'vue'
 import { CheckListItem } from '~/types'
 
 export default Vue.extend({
+  // eslint-disable-next-line vue/require-prop-types
   props: ['item', 'index'],
   computed: {
     localItem (): CheckListItem {

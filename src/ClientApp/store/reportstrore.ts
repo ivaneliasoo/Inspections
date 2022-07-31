@@ -18,10 +18,12 @@ export const actions: ActionTree<ReportsState, RootState> = {
     const configs = await this.$axios.$get('reports', { params: payload })
     commit('SET_REPORT_LIST', configs)
   },
+  // eslint-disable-next-line no-empty-pattern
   async getReportById ({ }, payload) {
     const report = await this.$axios.$get(`reports/${payload}`)
     return report
   },
+  // eslint-disable-next-line no-empty-pattern
   async getReportPhotos ({ }, payload) {
     const photos = await this.$axios.$get(`reports/${payload}/photorecord`)
     return photos

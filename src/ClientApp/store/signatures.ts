@@ -24,7 +24,8 @@ export const actions: ActionTree<SignatureState, RootState> = {
     commit('SET_SIGNATURES_LIST', sign)
   },
 
-  async getSignatureById ({ commit }, payload) {
+  // eslint-disable-next-line no-empty-pattern
+  async getSignatureById ({ }, payload) {
     return await this.$axios.$get(`signatures/${payload}`)
   },
 

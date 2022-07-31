@@ -79,13 +79,13 @@ import { DeletePhotoRecordCommand, PhotoRecord, EditPhotoRecordCommand } from '~
 
 @Component
 export default class PhotoRecordManager extends Vue {
-  @Model('input') photos: PhotoRecord[] | undefined;
+  @Model('input') photos: PhotoRecord[] | undefined
 
   @Prop({ required: true, type: Number }) reportId!: number
   showCarousel: boolean = false
-  currentPhoto: number = 0;
-  showLabelEdit: number[] = [];
-  hostName: string= this.$axios!.defaults!.baseURL!.replace('/api', '')
+  currentPhoto: number = 0
+  showLabelEdit: number[] = []
+  hostName: string = this.$axios!.defaults!.baseURL!.replace('/api', '')
 
   itemsPerPage: number = 8
 

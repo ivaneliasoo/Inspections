@@ -2,11 +2,17 @@
   <v-list dense>
     <v-list-item class="px-2">
       <v-list-item-avatar>
-        <v-icon large color="indigo">mdi-account-circle</v-icon>
+        <v-icon large color="indigo">
+          mdi-account-circle
+        </v-icon>
       </v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title class="text-uppercase">{{$auth.user.userName}}</v-list-item-title>
-        <v-list-item-subtitle class="text-uppercase">{{ $auth.user.name }} {{ $auth.user.lastName }} {{ $auth.user.isAdmin ? '(admin)':'' }}</v-list-item-subtitle>
+        <v-list-item-title class="text-uppercase">
+          {{ $auth.user.userName }}
+        </v-list-item-title>
+        <v-list-item-subtitle class="text-uppercase">
+          {{ $auth.user.name }} {{ $auth.user.lastName }} {{ $auth.user.isAdmin ? '(admin)':'' }}
+        </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
     <v-list-item :to="defaultPage" link>
@@ -21,98 +27,102 @@
       :key="`${menu.name}${index}`"
       link
       :to="menu.route.includes('http') ? '' : menu.route"
-      @click="menu.route.includes('http') ? redirect(menu.route):''"
       :visible="!menu.route || menu.visible"
+      @click="menu.route.includes('http') ? redirect(menu.route):''"
     >
       <v-list-item-icon>
-        <v-icon v-if="menu.icon" v-text="menu.icon"></v-icon>
-        <span class="font-weight-black text-uppercase" v-else>{{ initials(menu) }}</span>
+        <v-icon v-if="menu.icon">
+          {{ menu.icon }}
+        </v-icon>
+        <span v-else class="font-weight-black text-uppercase">{{ initials(menu) }}</span>
       </v-list-item-icon>
       <v-list-item-content>
-        <v-list-item-title v-text="menu.name" />
+        <v-list-item-title>
+          {{ menu.name }}
+        </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
   </v-list>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "nuxt-property-decorator";
+import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
 export default class Menu extends Vue {
   menuDefinition: any[] = [
     {
-      name: "LEW Licensing",
-      parentName: "",
-      route: "/lewlicensing",
-      icon: "",
+      name: 'LEW Licensing',
+      parentName: '',
+      route: '/lewlicensing',
+      icon: '',
     },
     {
-      name: "Reporting",
-      parentName: "",
-      route: "/",
-      icon: "mdi-file",
+      name: 'Reporting',
+      parentName: '',
+      route: '/',
+      icon: 'mdi-file',
     },
     {
       name: 'Energy Report',
       parentName: '',
       route: '/energyreport',
       icon: 'mdi-graph',
-      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
+      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
     },
     {
       name: 'Job Planner',
       parentName: '',
       route: '/jobplanner',
       icon: 'mdi-calendar',
-      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
+      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
     },
     {
       name: 'Cost Sheets',
       parentName: '',
       route: '/costsheets',
       icon: 'mdi-table-large',
-      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
+      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
     },
     {
-      name: "Risk Assessment",
-      parentName: "",
-      route: "",
-      icon: "",
-      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
+      name: 'Risk Assessment',
+      parentName: '',
+      route: '',
+      icon: '',
+      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
     },
     {
-      name: "Method of Statement",
-      parentName: "",
-      route: "",
-      icon: "",
-      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
+      name: 'Method of Statement',
+      parentName: '',
+      route: '',
+      icon: '',
+      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
     },
     {
-      name: "Manpower Scheduling",
-      parentName: "",
-      route: "",
-      icon: "",
-      visible: this.$auth.user && this.$auth.user.userName == 'reports' ? true : false,
+      name: 'Manpower Scheduling',
+      parentName: '',
+      route: '',
+      icon: '',
+      visible: !!(this.$auth.user && this.$auth.user.userName === 'reports'),
     },
     {
-      name: "Master Setup",
-      parentName: "",
-      route: "/master",
-      icon: "mdi-cog",
+      name: 'Master Setup',
+      parentName: '',
+      route: '/master',
+      icon: 'mdi-cog',
     },
-  ];
+  ]
 
-  get defaultPage() {
-    return "/";
+  get defaultPage () {
+    return '/'
   }
 
-  initials(menu: any) {
+  initials (menu: any) {
     const words = menu.name.split(' ')
     return words[0][0] + words[1][0]
   }
 
-  redirect(route: string) {
+  redirect (route: string) {
     window.open(route, '_blank')
   }
 }

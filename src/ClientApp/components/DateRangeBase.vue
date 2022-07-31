@@ -22,17 +22,17 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 @Component
 export default class DateRangeBase extends Vue {
-    @Prop() value:any;
-    @Prop({ default: false }) showIcon:Boolean | undefined;
-    @Prop({ default: 'Desde' }) tituloDesde:String | undefined;
-    @Prop({ default: 'Hasta' }) tituloHasta:String | undefined;
-    @Prop() max:String | undefined;
+    @Prop() value:any
+    @Prop({ default: false }) showIcon:Boolean | undefined
+    @Prop({ default: 'Desde' }) tituloDesde:String | undefined
+    @Prop({ default: 'Hasta' }) tituloHasta:String | undefined
+    @Prop() max:String | undefined
 
-    get desdeMax() {
+    get desdeMax () {
       return this.value && this.value.hasta ? this.value.hasta : ''
     }
 
-    get hastaMin() {
+    get hastaMin () {
       return this.value && this.value.desde ? this.value.desde : ''
     }
 
@@ -40,7 +40,7 @@ export default class DateRangeBase extends Vue {
       return this.max || this.max === '' ? this.max : undefined
     }
 
-    updateFechas() {
+    updateFechas () {
       this.$emit('input', this.value)
     }
 }

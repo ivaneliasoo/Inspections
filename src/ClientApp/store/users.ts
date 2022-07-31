@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import { ActionTree, MutationTree } from 'vuex'
 import { RootState } from 'store'
 import { User, ChangePasswordDTO } from '~/types/Users'
@@ -16,26 +17,26 @@ export const mutations: MutationTree<UserState> = {
 }
 
 export const actions: ActionTree<UserState, RootState> = {
-  async getUsers ({ commit }, payload) {
+  async getUsers ({ commit }, _) {
     const users = await this.$axios.$get('users')
     commit('SET_USERS', users)
   },
-  async getUserByName ({ commit }, payload) {
+  async getUserByName ({ }, payload) {
     return await this.$axios.$get(`users/${payload}`)
   },
-  async createUser ({ commit }, payload: User) {
+  async createUser ({ }, payload: User) {
     const reportId: number = await this.$axios.$post('users', payload)
     return reportId
   },
-  async updateUser ({ commit }, payload: User) {
+  async updateUser ({ }, payload: User) {
     return await this.$axios.$put(`users/${payload.userName}`, payload)
   },
-  async setUserLastEditedReport ({ commit }, payload: { userName: string, lastEditedReport: number}) {
+  async setUserLastEditedReport ({ }, payload: { userName: string, lastEditedReport: number}) {
     const userData: User = await this.$axios.$get(`users/${payload.userName}`)
     userData.lastEditedReport = payload.lastEditedReport
     return await this.$axios.$put(`users/${userData.userName}`, userData)
   },
-  async changePassword ({ commit }, payload: ChangePasswordDTO) {
+  async changePassword ({ }, payload: ChangePasswordDTO) {
     return await this.$axios.$patch(`users/${payload.userName}`, payload)
   },
   async deleteUser ({ commit }, payload: string) {

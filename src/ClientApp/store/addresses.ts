@@ -24,7 +24,8 @@ export const actions: ActionTree<AddressesState, RootState> = {
     commit('SET_ADDRESSES_LIST', sign)
   },
 
-  async getAddressById ({ commit }, payload) {
+  // eslint-disable-next-line no-empty-pattern
+  async getAddressById ({ }, payload) {
     return await this.$axios.$get(`addresses/${payload}`)
   },
 

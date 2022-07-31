@@ -1,4 +1,5 @@
-import { onMounted, onUnmounted, useStore } from '@nuxtjs/composition-api'
+import { onMounted, onUnmounted, } from '@vue/composition-api'
+import { useStore } from '@nuxtjs/composition-api'
 
 const useGoBack = () => {
   const store = useStore()

@@ -58,13 +58,13 @@ import { Component, Vue, Model, PropSync, Prop } from 'vue-property-decorator'
 
 @Component
 export default class PhotoRecordPreviewer extends Vue {
-  @Model('input') urls: string[] | undefined;
+  @Model('input') urls: string[] | undefined
   @PropSync('files', { required: true }) filesSync: File[] | undefined
   @Prop({ type: Number }) progress!: number
 
   showCarousel: boolean = false
-  currentPhoto: number = 0;
-  showLabelEdit: number[] = [];
+  currentPhoto: number = 0
+  showLabelEdit: number[] = []
 
   removePhoto (id: number) {
     this.filesSync!.splice(id, 1)

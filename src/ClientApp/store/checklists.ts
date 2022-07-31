@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import { ActionTree, MutationTree } from 'vuex'
 import { RootState } from 'store'
 import {
@@ -61,14 +62,14 @@ export const actions: ActionTree<CheckListsState, RootState> = {
     await this.$axios.$put(`checklists/${payload.idCheckList}`, payload)
     commit('UPDATE_CHECKLIST', payload)
   },
-  async createCheckList ({ commit }, payload: AddCheckListCommand) {
+  async createCheckList ({ }, payload: AddCheckListCommand) {
     return await this.$axios.$post('checklists', payload)
   },
   async deleteCheckList ({ commit }, payload) {
     await this.$axios.$delete(`checklists/${payload.idCheckList}`)
     commit('DELETE_CHECKLIST', payload.id)
   },
-  async createCheckListItem ({ commit }, payload: AddCheckListItemCommand) {
+  async createCheckListItem ({ }, payload: AddCheckListItemCommand) {
     await this.$axios.$post(
       `checklists/${payload.idCheckList}/items/`,
       payload
@@ -87,7 +88,7 @@ export const actions: ActionTree<CheckListsState, RootState> = {
     )
     commit('DELETE_CHECKLIST_ITEM', payload.idCheckListItem)
   },
-  async updateCheckListItemParams ({ commit }, payload) {
+  async updateCheckListItemParams ({ }, payload) {
     await this.$axios.$put(
       `checklists/${payload.idCheckList}/items/${payload.idCheckListItem}`,
       payload

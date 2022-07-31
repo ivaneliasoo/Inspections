@@ -663,13 +663,15 @@
 
 <script lang="ts">
 import {
-  defineComponent,
   watch,
   computed,
-  useContext,
   onMounted,
   ref,
   reactive,
+} from '@vue/composition-api'
+import {
+  defineComponent,
+  useContext,
   useRoute,
   useFetch,
 } from '@nuxtjs/composition-api'
@@ -827,7 +829,7 @@ export default defineComponent({
     })
 
     const PrincipalSignatureHasAResponsable = computed(() => {
-      if (!currentReport) {
+      if (!currentReport.value) {
         return true
       }
       if (!currentReport!.value.signatures) {
@@ -844,7 +846,7 @@ export default defineComponent({
     })
 
     const HasNotesWithPendingChecks = computed(() => {
-      if (!currentReport) {
+      if (!currentReport.value) {
         return false
       }
       if (

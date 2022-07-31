@@ -146,7 +146,7 @@
           </v-dialog>
         </v-toolbar>
       </template>
-      <template #item.actions="{ item }">
+      <template #item[actions]="{ item }">
         <v-tooltip v-if="$auth.user.isAdmin" top>
           <template #activator="{ on }">
             <v-icon
@@ -293,14 +293,14 @@ export default class AddressesAdmin extends mixins(InnerPageMixin) {
     try {
       this.loading = true
       if (!this.isNew) {
-        console.log({ item: this.item })
         await this.$store.dispatch('addresses/updateAddress', this.item, { root: true })
       } else {
         await this.$store.dispatch('addresses/createAddress', this.item, { root: true })
         await this.$store.dispatch('addresses/getAddresses', {}, { root: true })
       }
     } catch (error) {
-      console.log({ error })
+      // eslint-disable-next-line no-console
+      console.debug({ error })
     } finally {
       this.dialog = false
       this.isNew = true

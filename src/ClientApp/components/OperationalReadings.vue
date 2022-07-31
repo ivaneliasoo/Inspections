@@ -1,6 +1,8 @@
 <template>
   <div class="tw-text-left">
-    <h4 class="tw-font-semibold">Voltage</h4>
+    <h4 class="tw-font-semibold">
+      Voltage
+    </h4>
     <div class="tw-flex tw-flex-row tw-flex-wrap tw-mx-1 tw-justify-evenly">
       <div class="tw-flex tw-items-center">
         <v-text-field
@@ -72,7 +74,9 @@
         </v-text-field>
       </div>
     </div>
-    <h4 class="tw-font-semibold">Running Load</h4>
+    <h4 class="tw-font-semibold">
+      Running Load
+    </h4>
     <div class="tw-flex tw-flex-row tw-flex-wrap tw-mx-1 tw-justify-evenly">
       <div class="tw-flex tw-items-center">
         <v-text-field
@@ -108,7 +112,9 @@
         </v-text-field>
       </div>
     </div>
-    <h4 class="tw-font-semibold">Main Breaker Details</h4>
+    <h4 class="tw-font-semibold">
+      Main Breaker Details
+    </h4>
     <v-row align="end">
       <v-col>
         <v-text-field
@@ -129,7 +135,9 @@
           item-value="id"
           item-text="id"
         >
-          <template #append> Poles </template>
+          <template #append>
+            Poles
+          </template>
         </v-select>
       </v-col>
       <v-col>
@@ -139,7 +147,9 @@
           item-value="id"
           item-text="id"
         >
-          <template #append> kA </template>
+          <template #append>
+            kA
+          </template>
         </v-text-field>
       </v-col>
       <v-col>
@@ -154,11 +164,13 @@
         </v-text-field>
       </v-col>
     </v-row>
-    <h4 class="tw-font-semibold">Over Current</h4>
+    <h4 class="tw-font-semibold">
+      Over Current
+    </h4>
     <div class="tw-flex tw-flex-wrap tw-justify-between tw-items-center">
       <v-checkbox
         v-model="report.operationalReadingsOverCurrentDirectActingEnabled"
-      ></v-checkbox>
+      />
       <div
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
@@ -171,7 +183,7 @@
       </div>
       <v-checkbox
         v-model="report.operationalReadingsOverCurrentDTLEnabled"
-      ></v-checkbox>
+      />
       <div
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
@@ -198,7 +210,7 @@
       </div>
       <v-checkbox
         v-model="report.operationalReadingsOverCurrentIDTMLEnabled"
-      ></v-checkbox>
+      />
       <div
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
@@ -224,11 +236,13 @@
         </v-text-field>
       </div>
     </div>
-    <h4 class="tw-font-semibold">Earth Fault</h4>
+    <h4 class="tw-font-semibold">
+      Earth Fault
+    </h4>
     <div class="tw-flex tw-flex-wrap tw-justify-between tw-items-center">
       <v-checkbox
         v-model="report.operationalReadingsEarthFaultRoobEnabled"
-      ></v-checkbox>
+      />
       <div
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
@@ -246,7 +260,7 @@
       </div>
       <v-checkbox
         v-model="report.operationalReadingsEarthFaultEIREnabled"
-      ></v-checkbox>
+      />
       <div
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
@@ -273,7 +287,7 @@
       </div>
       <v-checkbox
         v-model="report.operationalReadingsEarthFaultEFEnabled"
-      ></v-checkbox>
+      />
       <div
         class="tw-border tw-shadow-sm tw-shadow-sm tw-rounded-md tw-my-2 tw-p-3"
       >
@@ -305,11 +319,11 @@
 <script lang="ts">
 import {
   defineComponent,
-} from "@nuxtjs/composition-api";
+} from '@nuxtjs/composition-api'
+import { useVModel } from '@vueuse/core'
 import {
   ReportQueryResult,
-} from "~/services/api";
-import { useVModel } from "@vueuse/core";
+} from '~/services/api'
 
 export default defineComponent({
   props: {
@@ -322,13 +336,13 @@ export default defineComponent({
       default: true,
     },
   },
-  setup(props, { emit }) {
+  setup (props, { emit }) {
     const report = useVModel(props, 'value', emit)
     return {
       report
-    };
+    }
   },
-});
+})
 </script>
 
 <style scoped>

@@ -1,12 +1,12 @@
 <template>
   <div style="width: 900px">
-    This form may take you 5-8 minutes to complete. 
+    This form may take you 5-8 minutes to complete.
     <div class="vbox border-ltr">
       <div class="row spaced">
-          THE BUILDING CONTROL ACT (CAP 29)
+        THE BUILDING CONTROL ACT (CAP 29)
       </div>
       <div class="row spaced">
-          CERTIFICATE OF DESIGN &amp; SUPERVISION OF LIGHTNING PROTECTION SYSTEM
+        CERTIFICATE OF DESIGN &amp; SUPERVISION OF LIGHTNING PROTECTION SYSTEM
       </div>
     </div>
     <div class="hbox border-ltr">
@@ -18,7 +18,7 @@
           Building &amp; Construction Authority
         </div>
         <div class="row">
-          52 Jurong Gateway Road #11-01 
+          52 Jurong Gateway Road #11-01
         </div>
         <div class="row">
           Singapore 608550
@@ -49,37 +49,43 @@
           This Certificate relates to the lightning protection system installed in the building(s) approved under: -
         </label>
       </div>
-      
+
       <div class="row spaced">
-          <label class="col1">
-            Project Ref. No.:
-          </label>
-          <input type="text"/>
+        <label class="col1">
+          Project Ref. No.:
+        </label>
+        <input type="text">
       </div>
-      
+
       <div class="row spaced">
-          <label class="col1">
-            Address: 
-          </label>
-          <input type="text"/>
+        <label class="col1">
+          Address:
+        </label>
+        <input type="text">
       </div>
-      
+
       <div class="row spaced">
         <label class="col1">
           TS/MK &amp; Lot/Plot:
         </label>
-        <input type="text"/>
+        <input type="text">
       </div>
-      
+
       <div class="row spaced spc-bottom">
         <label class="col1">
           Remarks:
         </label>
-        <input type="text"/>
+        <input type="text">
       </div>
-    </div>   
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'LightningProtection'
+}
+</script>
 
 <style scoped>
 .table {
@@ -161,9 +167,3 @@ input{
 }
 
 </style>
-
-<script>
-  export default {
-    name: 'LightningProtection'
-  }
-</script>

@@ -45,8 +45,8 @@ export default class MessageDialog extends Vue {
   @Prop({ default: () => { return ['yes', 'no', 'cancel'] } }) actions!: Array<string>
   @Prop({ default: 'Ok' }) yesText!: string
   @Prop({ default: 'No' }) noText!: string
-  
-  @Prop({ required: false }) loading!: boolean 
+
+  @Prop({ required: false }) loading!: boolean
 
   get dialog (): Boolean {
     return this.visible

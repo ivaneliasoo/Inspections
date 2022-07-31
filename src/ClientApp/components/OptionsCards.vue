@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12" lg="4" md="4" v-for="(option, index) in options" :key="index">
+    <v-col v-for="(option, index) in options" :key="index" cols="12" lg="4" md="4">
       <v-card min-height="250" min-width="200" class="pt-10" :ripple="option.innerActions ? false:true" @click="option.innerActions ? 0:onCardClick(option)">
         <v-btn v-if="!option.innerActions || !option.icon" fab :class="option.color" dark>
           <v-icon>
@@ -23,7 +23,7 @@
         </v-card-subtitle>
         <v-card-actions>
           <v-row>
-            <v-col cols="6" v-for="(action, index) in option.innerActions" :key="index">
+            <v-col v-for="(action, actionIndex) in option.innerActions" :key="actionIndex" cols="6">
               <v-btn :color="action.color" tile :block="$vuetify.breakpoint.smAndDown" :disabled="!$auth.user.lastEditedReport && action.text === 'Edit Last' " @click.stop="action.action()">
                 <v-icon>
                   {{ action.icon }}
@@ -39,24 +39,18 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue, Prop } from 'vue-property-decorator';
-  import { CardOption } from '~/types';
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { CardOption } from '~/types'
 
   @Component
-  export default class OptionsCards extends Vue {
-    @Prop({ required: true, type: Array, default: () => [] }) options !:  CardOption[]
+export default class OptionsCards extends Vue {
+    @Prop({ required: true, type: Array, default: () => [] }) options !: CardOption[]
 
-    onCardClick(option: CardOption) {
-    let path = typeof option.path === 'function' ? option.path(): option.path
-    if(path)
-      this.$router.push(path)
-    else {
-      if(option.action)
-        option.action()
+    onCardClick (option: CardOption) {
+      const path = typeof option.path === 'function' ? option.path() : option.path
+      if (path) { this.$router.push(path) } else if (option.action) { option.action() }
     }
-    }
-   
-  }
+}
 </script>
 
 <style scoped>

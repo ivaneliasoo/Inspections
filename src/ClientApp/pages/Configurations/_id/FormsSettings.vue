@@ -53,7 +53,9 @@
         </v-col>
         <v-col cols="1" class="text-right">
           <v-btn small text title="Save" @click="handleSubmit">
-            <v-icon color="success">mdi-content-save</v-icon>
+            <v-icon color="success">
+              mdi-content-save
+            </v-icon>
             Save
           </v-btn>
         </v-col>
@@ -89,19 +91,25 @@
                 <v-list-item-content>
                   <v-list-item-subtitle
                     class="text--primary text-left font-weight-bold"
-                    v-text="`${item.fieldName} - ${item.sectionTitle}`"
-                  />
+                  >
+                    {{ `${item.fieldName} - ${item.sectionTitle}` }}
+                  </v-list-item-subtitle>
                   <v-list-item-subtitle
                     class="text-left"
-                    v-text="`${item.label} (type: ${item.inputType})`"
-                  />
+                  >
+                    {{ `${item.label} (type: ${item.inputType})` }}
+                  </v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-btn icon small color="red" @click="removeField(index)">
-                    <v-icon small>mdi-delete</v-icon>
+                    <v-icon small>
+                      mdi-delete
+                    </v-icon>
                   </v-btn>
                   <v-btn icon small color="info" @click="duplicateField(index)">
-                    <v-icon small>mdi-content-duplicate</v-icon>
+                    <v-icon small>
+                      mdi-content-duplicate
+                    </v-icon>
                   </v-btn>
                 </v-list-item-action>
               </v-list-item>
@@ -118,8 +126,10 @@
 import { AxiosResponse } from 'axios'
 import {
   defineComponent,
+  // eslint-disable-next-line import/named
   ref,
   useRoute,
+  // eslint-disable-next-line import/named
   computed,
   useFetch,
   useContext,
@@ -325,6 +335,7 @@ export default defineComponent({
       }
     })
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleSubmit = async (data: any) => {
       const payload: NewFormDefinitionCommand = {
         ...form.value,

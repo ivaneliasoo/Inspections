@@ -204,14 +204,16 @@
 </template>
 <script lang="ts">
 import {
-  defineComponent,
   ref,
+  watch,
+  computed
+} from '@vue/composition-api'
+import {
+  defineComponent,
   useRouter,
   useStore,
   useRoute,
   useFetch,
-  watch,
-  computed
 } from '@nuxtjs/composition-api'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import {

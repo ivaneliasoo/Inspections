@@ -258,7 +258,7 @@
           </v-dialog>
         </v-toolbar>
       </template>
-      <template #item.actions="{ item }">
+      <template #item[actions]="{ item }">
         <v-tooltip v-if="$auth.user.isAdmin" top>
           <template #activator="{ on }">
             <v-icon
@@ -292,18 +292,19 @@
           <span>Delete</span>
         </v-tooltip>
       </template>
-      <template #item.validityStart="{ item }">
+      <template #item[validityStart]="{ item }">
         {{ parseDate(item.validityStart) }}
       </template>
-      <template #item.validityEnd="{ item }">
+      <template #item[validityEnd]="{ item }">
         {{ parseDate(item.validityEnd) }}
       </template>
     </v-data-table>
   </div>
 </template>
 <script lang="ts">
+// eslint-disable-next-line import/named
 import { ref, computed, defineComponent, useStore, useFetch, useContext, useRoute } from '@nuxtjs/composition-api'
-// import { Component, mixins } from 'nuxt-property-decorator'
+
 import { email } from 'vee-validate/dist/rules'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
 import { DateTime } from 'luxon'
