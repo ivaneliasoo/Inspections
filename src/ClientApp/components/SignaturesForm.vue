@@ -169,7 +169,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-::v-deep .v-card {
+:deep(.v-card) {
   margin: 20px;
 }
 </style>

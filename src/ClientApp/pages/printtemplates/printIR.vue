@@ -286,7 +286,7 @@ ol {
 .my_table {
   width: 100%;
 }
-::v-deep > .ql-container.ql-snow {
+:deep(.ql-container.ql-snow) {
     border: none !important;
 }
 </style>

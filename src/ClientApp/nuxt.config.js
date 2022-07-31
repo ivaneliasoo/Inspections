@@ -46,26 +46,16 @@ export default {
     '@nuxtjs/auth',
     '@nuxtjs/pwa',
     '@nuxtjs/device',
-    '@vueuse/core/nuxt',
     '@braid/vue-formulate/nuxt',
     'vue2-editor/nuxt',
-    ['nuxt-compress',
-      {
-        gzip: {
-          cache: true
-        },
-        brotli: {
-          threshold: 10240
-        }
-      }
-    ]
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@vueuse/nuxt',
   ],
   pwa: {
     icon: {
@@ -116,7 +106,6 @@ export default {
   },
   router: {
     middleware: ['auth']
-    // base: '/client/'
   },
   /*
      ** vuetify module configuration

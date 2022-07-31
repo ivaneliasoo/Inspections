@@ -674,7 +674,8 @@ import {
   useFetch,
 } from '@nuxtjs/composition-api'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { debouncedWatch } from '@vueuse/core'
+// eslint-disable-next-line import/named
+import { watchDebounced } from '@vueuse/core'
 import {
   AddNoteCommand,
   CheckListItemQueryResult,
@@ -693,7 +694,6 @@ import {
 import { useNotifications } from '~/composables/use-notifications'
 import useGoBack from '~/composables/useGoBack'
 import { AddressesState } from '@/store/addresses'
-
 export default defineComponent({
   name: 'ReportForm',
   components: {
@@ -890,7 +890,7 @@ export default defineComponent({
       }
     )
 
-    debouncedWatch(
+    watchDebounced(
       currentReport,
       async (newValue: ReportQueryResult) => {
         if (!IsValidForm.value || !formHasChanged.value) {
@@ -915,11 +915,10 @@ export default defineComponent({
       },
       {
         debounce: 1000,
-        deep: true,
       }
     )
 
-    debouncedWatch(
+    watchDebounced(
       signatures,
       (newValue: any) => {
         if (!formHasSignaturesChanged.value) {
@@ -958,7 +957,6 @@ export default defineComponent({
       },
       {
         debounce: 1000,
-        deep: true,
       }
     )
 

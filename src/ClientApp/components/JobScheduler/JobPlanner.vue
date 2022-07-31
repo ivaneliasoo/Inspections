@@ -1138,7 +1138,7 @@ html {
   outline: none;
 }
 
-.v-expansion-panel-content>>> .v-expansion-panel-content__wrap {
+.v-expansion-panel-content :deep(.v-expansion-panel-content__wrap) {
   padding: 0 !important;
 }
 </style>

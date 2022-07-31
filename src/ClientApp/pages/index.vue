@@ -139,8 +139,6 @@
 <script lang="ts">
 import moment from 'moment'
 import { Vue, Component } from 'nuxt-property-decorator'
-import { DateTime } from 'luxon'
-import { LicensesState } from 'store/licenses'
 import { CardOption, Report } from '~/types'
 import { PrintHelper } from '~/Helpers'
 import { ReportsState } from '~/store/reportstrore'
@@ -282,11 +280,11 @@ export default class IndexPage extends Vue {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .expired-row {
+:deep(.expired-row) {
   color: #C62828 !important;
   background-color: rgb(255, 242, 242) !important;
 }
-::v-deep .expiring-row {
+:deep(.expiring-row) {
   color: #FF8F00 !important;
   background-color: rgb(255, 242, 242) !important;
 }

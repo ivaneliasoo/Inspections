@@ -111,7 +111,7 @@ export default class NewReportDialog extends Vue {
 </script>
 
 <style scoped>
-::v-deep .v-card {
+:deep(.v-card) {
   cursor: pointer;
 }
 </style>

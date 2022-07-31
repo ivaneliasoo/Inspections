@@ -14,16 +14,16 @@
           <v-row>
             <v-toolbar flat color="white">
               <v-spacer />
-              <v-switch v-model="ckEditorMode" inset label="Editor Mode" />
+              <v-switch v-model="editorMode" inset label="Editor Mode" />
             </v-toolbar>
           </v-row>
           <v-card>
-            <v-sheet v-if="ckEditorMode" height="450" style="overflow-y: scroll">
+            <v-sheet v-if="editorMode" height="450" style="overflow-y: scroll">
               <draggable>
-                <VueEditor id="myeditor" v-model="dataCKEditor" />
+                <VueEditor id="myeditor" v-model="editorContent" />
               </draggable>
             </v-sheet>
-            <v-sheet v-if="!ckEditorMode" height="450" fluid>
+            <v-sheet v-if="!editorMode" height="450" fluid>
               <v-row class="pl-4">
                 <v-col
                   cols="12"
@@ -74,7 +74,7 @@
                   md="12"
                 >
                   <v-textarea
-                    v-model="dataCKEditor"
+                    v-model="editorContent"
                     type="text"
                     label="Content"
                   />
@@ -119,7 +119,7 @@
               <v-btn icon @click="getPrintSections(filter)">
                 <v-icon>mdi-magnify</v-icon>
               </v-btn>
-              <v-btn icon @click="isNew=true;reset(); dataCKEditor='';ckEditorMode = false">
+              <v-btn icon @click="isNew=true;reset(); editorContent='';editorMode = false">
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </v-toolbar>
@@ -130,15 +130,20 @@
                 <draggable v-model="printSections">
                   <template v-for="(item, index) in printSections">
                     <v-list-item :key="item.code + index">
-                      <v-list-item-content @click="selectPrintSection(item); dataCKEditor = item.content;isNew = false">
+                      <v-list-item-content @click="selectPrintSection(item); editorContent = item.content;isNew = false">
                         <v-list-item-subtitle
                           class="text--primary text-left font-weight-bold"
-                          v-text="'#' + item.code"
-                        />
-                        <v-list-item-subtitle class="text-left" v-text="item.description" />
+                        >
+                          #{{ item.code }}
+                        </v-list-item-subtitle>
+                        <v-list-item-subtitle class="text-left">
+                          {{ item.description }}
+                        </v-list-item-subtitle>
                       </v-list-item-content>
                       <v-list-item-action>
-                        <v-list-item-action-text v-text="'Is Main Report'" />
+                        <v-list-item-action-text>
+                          {{ 'Is Main Report' }}
+                        </v-list-item-action-text>
                         <v-icon
                           v-if="!item.isMainReport"
                           class="mr-6"
@@ -155,7 +160,9 @@
                         </v-icon>
                       </v-list-item-action>
                       <v-list-item-action>
-                        <v-list-item-action-text v-text="'Delete'" />
+                        <v-list-item-action-text>
+                          {{ 'Delete' }}
+                        </v-list-item-action-text>
                         <v-btn icon color="red" :disabled="item.isMainReport" @click=" dialogRemove = true;printSection.id=item.id">
                           <v-icon>mdi-delete</v-icon>
                         </v-btn>
@@ -178,10 +185,10 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, reactive, computed, useStore, useFetch, watch } from '@nuxtjs/composition-api'
+import { ref, defineComponent, computed, useStore, useFetch, watch } from '@nuxtjs/composition-api'
 import draggable from 'vuedraggable'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import ClassicEditor from '~/assets/ckeditor5.0.0/ckeditor'
+// import ClassicEditor from '~/assets/ckeditor5.0.0/ckeditor'
 import { PrintSectionState } from '~/store/printsection'
 import { PrintSectionDTO } from '@/types/PrintSections/ViewModels/PrintSectionDTO'
 import useGoBack from '~/composables/useGoBack'
@@ -199,15 +206,12 @@ export default defineComponent({
     const store = useStore()
     const dialogRemove = ref<boolean>(false)
     const loading = ref<boolean>(false)
-    const ckEditorMode = ref<boolean>(true)
+    const editorMode = ref<boolean>(true)
     const isNew = ref<boolean>(false)
     const selectedTab = ref<string>('basicTab')
     const filter = ref<String>('')
-    const dataCKEditor = ref<String>('')
+    const editorContent = ref<String>('')
     const printSection = ref({ id: 0, code: '', description: '', content: '', isMainReport: false, status: 0 } as PrintSectionDTO)
-    const options = reactive({
-      editor: ClassicEditor
-    })
 
     const selectPrintSection = (item: PrintSectionDTO): void => {
       store.dispatch('printsection/getPrintSectionById', item.id, { root: true })
@@ -235,13 +239,13 @@ export default defineComponent({
     }
 
     const reset = () => {
-      dataCKEditor.value = ''
+      editorContent.value = ''
       printSection.value = { id: 0, code: '', description: '', content: '', isMainReport: false, status: 0 }
     }
 
     const upsertPrintSection = async () => {
       loading.value = true
-      printSection.value.content = dataCKEditor.value.toString()
+      printSection.value.content = editorContent.value.toString()
       if (printSection.value.id > 0) {
         await store.dispatch('printsection/updatePrintSection', printSection.value, { root: true })
         selectPrintSection(printSection.value)
@@ -269,18 +273,18 @@ export default defineComponent({
     }, { immediate: true, deep: true })
 
     return {
-      options,
+      // options,
       dialogRemove,
       loading,
       isNew,
       filter,
-      ckEditorMode,
+      editorMode,
       reset,
       selectedTab,
       selectPrintSection,
       printSection,
       printSections,
-      dataCKEditor,
+      editorContent,
       deletePrintSection,
       upsertPrintSection,
       getPrintSections

@@ -171,10 +171,10 @@ export default class PhotoRecords extends Vue {
 </script>
 
 <style scoped>
-::v-deep .input-file {
+:deep(.input-file) {
   justify-content: center;
 }
-::v-deep button.v-icon.notranslate.v-icon--link.mdi.mdi-camera.theme--light {
+:deep(button.v-icon.notranslate.v-icon--link.mdi.mdi-camera.theme--light) {
     font-size: 58px;
 }
 </style>
