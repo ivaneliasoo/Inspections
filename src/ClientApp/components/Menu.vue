@@ -54,7 +54,7 @@ export default class Menu extends Vue {
       icon: "mdi-file",
     },
     {
-      name: 'Energy Report',
+      name: 'Power Analyzer Report',
       parentName: '',
       route: '/energyreport',
       icon: 'mdi-graph',
