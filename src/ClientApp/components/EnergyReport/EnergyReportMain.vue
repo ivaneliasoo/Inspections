@@ -1,162 +1,307 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Energy Report
-        </h1>
-
-        <v-card height="550" width="890" class="pa-md-4 mx-auto">
-          <v-row>
-            <v-col cols="4">
-              <v-navigation-drawer permanent>
-                <v-list-item class="text-left">
-                  <v-list-item-content>
-                    <v-list-item-title class="title">
-                      Actions
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list dense flat class="text-left">
-                  <v-list-item @click="openReportDialog">
-                    <v-list-item-icon>
-                      <v-icon>mdi-file-pdf-box</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title>Report</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="newTemplate">
-                    <v-list-item-icon>
-                      <v-icon>mdi-new-box</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title>New template</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="loadTemplate">
-                    <v-list-item-icon>
-                      <v-icon>mdi-open-in-new</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title>Load template</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="openPage2">
-                    <v-list-item-icon>
-                      <v-icon>mdi-pencil</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title>Report Summary</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="openCalcColumns">
-                    <v-list-item-icon>
-                      <v-icon>mdi-pencil</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title>Calculated Columns</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="doReport">
-                    <v-list-item-icon>
-                      <v-icon>mdi-view-dashboard</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title>Generate Report</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="openCurrentTableDialog">
-                    <v-list-item-icon>
-                      <v-icon>mdi-view-dashboard</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title>Generate Current Table</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-navigation-drawer>
-            </v-col>
-
-            <v-col cols="8">
-              <v-row justify="center">
-                <v-col class="my-0 py-0">
-                  <v-toolbar flat>
-                    <div class="text-body-2">
-                      <v-icon small @click="editTemplateName" v-show="template.description">
-                        mdi-pencil
-                      </v-icon>
-                      {{template.description}}
-                    </div>
-                    <v-spacer />
-                    <v-btn small @click="newItem">
-                      New Section
-                    </v-btn>
-                  </v-toolbar>
-                </v-col>
-              </v-row>
-              <v-row justify="center">
-                <v-col class="my-n2 py-n2">
-                  <v-simple-table class="simple-table" height="400px"
-                      style="max-width: 100%; overflow-x: hidden; overflow-y: auto"
-                      dense fixed-header>
-                    <colgroup>
-                      <col style="width:8%;">
-                      <col style="width:76%;">
-                      <col style="width:16%;">
-                    </colgroup>
-                    <thead class="text-caption">
-                      <tr>
-                        <th>
-                          Num
-                        </th>
-                        <th>
-                          Title
-                        </th>
-                        <th>
-                          Actions
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody class="text-caption text-left">
-                      <tr v-for="(category, index) in template.categories" :key="index"
-                          draggable="true"
-                          @dragover="dragoverHandler($event)"
-                          @dragstart="dragstartHandler($event, index)"
-                          @drop="dropHandler($event, index)"
-                      >
-                        <td style="border: 1px solid lightgray;">
-                          {{index+1}}
-                        </td>
-                        <td style="border: 1px solid lightgray;">
-                          {{category.title}}
-                        </td>
-                        <td class="mx-4 px-4" style="border: 1px solid lightgray;">
-                          <v-icon small class="mx-1" @click="editItem(category)">
-                            mdi-pencil
-                          </v-icon>
-                          <v-label>
-                            {{ category.disabled ? "x" : "" }}
-                          </v-label>
-                        </td>
+    <div v-if="reportTableVisible">
+      <v-row>
+        <v-col cols="1" class="my-0 py-0 text-left" >
+        </v-col>          
+        <v-col cols="5" class="my-0 py-0 text-left text-h5">
+          Power Analyzer Report
+        </v-col>
+        <!-- <v-col cols="3" class="my-0 py-0 text-center">
+        </v-col> -->
+        <v-col cols="4" class="my-0 py-0 text-center">
+          <v-btn small @click="editTemplates">
+            Edit Templates
+          </v-btn>
+          <v-btn small @click="newReport">
+            New From Template
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+            <div style="width: 1024px; overflow-y: scroll;" class="invisible-scrollbar">
+                <table
+                    class="search-box"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                            <td class="search-box" style="width: 100%">
+                              <EnergyReportSearch
+                                  :data="reports"
+                                  :templates="templates"
+                                  :fieldNames="['name', 'location', 'template', 'circuit', 'dateCreated']"
+                                  placeHolder="Search"
+                                  :size=52
+                                  :compareFunc="compareFunc">
+                              </EnergyReportSearch>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="width: 1024px; overflow-y: scroll;"  class="invisible-scrollbar">
+                <table width="100%">
+                    <tbody>
+                        <tr class="table-header">
+                            <td class="font-weight-bold text-center header-row" style="width:18%;"
+                                title="Click to sort by project"
+                                @click="sortByField('name')" >
+                                Project
+                                <v-icon>
+                                    {{ sortIcon('project') }}
+                                </v-icon>
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:18%;"
+                                title="Click to sort by location"
+                                @click="sortByField('location')" >
+                                Location
+                                <v-icon>
+                                    {{ sortIcon('location') }}
+                                </v-icon>
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:16%;"
+                                title="Click to sort by location"
+                                @click="sortByField('template')" >
+                                Template
+                                <v-icon>
+                                    {{ sortIcon('template') }}
+                                </v-icon>
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:16%;"
+                                title="Click to sort by location"
+                                @click="sortByField('circuit')" >
+                                Circuit Board
+                                <v-icon>
+                                    {{ sortIcon('circuit') }}
+                                </v-icon>
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:14%;"
+                                title="Click to sort by date"
+                                @click="sortByField('date')" >
+                                Date created
+                                <v-icon>
+                                    {{ sortIcon('date') }}
+                                </v-icon>
+                            </td>
+                            <td class="font-weight-bold text-center header-row" style="width:20%;"
+                                title="Click for original sort order"
+                                @click="sortById">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="height: 75vh; width: 1024px; overflow-y: scroll;">
+                <table
+                  id="reports"
+                  class="report-table">
+                    <tbody>
+                      <tr v-for="(report, index) in reports" :key="index" style="height: 0px;">
+                          <td class="text-caption text-left table-row" style="width:18%;">
+                          {{report.name}}
+                          </td>
+                          <td class="text-caption text-left table-row" style="width:18%;">
+                          {{report.location}}
+                          </td>
+                          <td class="text-caption text-left table-row" style="width:16%;">
+                          {{(templates && Object.keys(templates).length > 0 > 0 && report.template > 0) ? templates[report.template].description : ""}}
+                          </td>
+                          <td class="text-caption text-left table-row" style="width:16%;">
+                          {{report.circuit}}
+                          </td>
+                          <td class="text-caption text-center table-row" style="width:14%;">
+                          {{report.dateCreated}}
+                          </td>
+                          <td class="text-caption text-center table-row" style="width: 20%;">
+                            <v-icon dense @click="editReport(index)">
+                              mdi-pencil
+                            </v-icon>
+                            &nbsp;
+                            <v-icon dense @click="editCover(index)">
+                              mdi-book-edit
+                            </v-icon>
+                            &nbsp;
+                            <v-icon dense @click="getReport(report.id, doReport)">
+                              mdi-file-pdf-box
+                            </v-icon>
+                            <v-icon large @click="getReport(report.id, genCurrentTable)">
+                              mdi-alpha-i
+                            </v-icon>
+                            <v-icon dense  @click="deleteReport(index)">
+                              mdi-delete
+                            </v-icon>
+                          </td>
                       </tr>
                     </tbody>
-                  </v-simple-table>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="10"> </v-col>
-            <v-col cols="2">
-              <p justify="end" style="font-size: small;">
-                Version {{ version }}
-              </p>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-col>
-    </v-row>
+                </table>
+            </div>
+        </v-col>
+      </v-row>
+    </div>
+
+    <div v-if="templateTableVisible">
+      <v-row>
+        <v-col cols="1" class="my-0 py-0 text-center" >
+          <v-btn icon small @click="goBack">
+            <v-icon>
+              mdi-arrow-left
+            </v-icon>
+          </v-btn>
+        </v-col>          
+        <v-col cols="11" class="my-0 py-0 text-left text-h5">
+          Power Analyzer Report - Edit Templates
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="mb-4">
+          <v-card height="550" width="920" class="pa-md-4">
+            <v-row>
+              <v-col cols="4">
+                <v-navigation-drawer permanent>
+                  <v-list-item class="text-left">
+                    <v-list-item-content>
+                      <v-list-item-title class="title">
+                        Actions
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list dense flat class="text-left">
+                    <!-- <v-list-item @click="newTemplate">
+                      <v-list-item-icon>
+                        <v-icon>mdi-new-box</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>New template</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item> -->
+                    <v-list-item @click="loadTemplate">
+                      <v-list-item-icon>
+                        <v-icon>mdi-open-in-new</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>Load template</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item @click="openPage2">
+                      <v-list-item-icon>
+                        <v-icon>mdi-pencil</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>Report Summary</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item @click="openCalcColumns">
+                      <v-list-item-icon>
+                        <v-icon>mdi-pencil</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>Calculated Columns</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item @click="doTestReport">
+                      <v-list-item-icon>
+                        <v-icon>mdi-view-dashboard</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>Generate Test Report</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item @click="genTestCurrentTable">
+                      <v-list-item-icon>
+                        <v-icon>mdi-view-dashboard</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>Generate Test Current Table</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item @click="checkSaveTemplates">
+                      <v-list-item-icon>
+                        <v-icon>mdi-view-dashboard</v-icon>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>Save Templates</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </v-navigation-drawer>
+              </v-col>
+              <v-col cols="8">
+                <v-row justify="center">
+                  <v-col class="my-0 py-0">
+                    <v-toolbar flat>
+                      <div class="text-body-2">
+                        <v-icon small @click="editTemplateName" v-show="template.description">
+                          mdi-pencil
+                        </v-icon>
+                        {{template.description}}
+                      </div>
+                      <v-spacer />
+                      <v-btn small @click="newItem">
+                        New Section
+                      </v-btn>
+                    </v-toolbar>
+                  </v-col>
+                </v-row>
+                <v-row justify="center">
+                  <v-col class="my-n2 py-n2">
+                    <v-simple-table class="simple-table" height="400px"
+                        style="width: 100%; overflow-x: hidden; overflow-y: auto"
+                        dense fixed-header>
+                      <thead class="text-caption">
+                        <tr>
+                          <th style="width: 10%">
+                            Num
+                          </th>
+                          <th style="width: 80%">
+                            Title
+                          </th>
+                          <th style="width: 10%">
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="text-caption text-left">
+                        <tr v-for="(category, index) in template.categories" :key="index"
+                            draggable="true"
+                            @dragover="dragoverHandler($event)"
+                            @dragstart="dragstartHandler($event, index)"
+                            @drop="dropHandler($event, index)"
+                        >
+                          <td style="border: 1px solid lightgray; width: 10%">
+                            {{index+1}}
+                          </td>
+                          <td style="border: 1px solid lightgray; width: 80%">
+                            {{category.title}}
+                          </td>
+                          <td class="mx-4 px-4" style="border: 1px solid lightgray; width: 10">
+                            <v-icon small class="mx-1" @click="editItem(category)">
+                              mdi-pencil
+                            </v-icon>
+                            <v-label>
+                              {{ category.disabled ? "x" : "" }}
+                            </v-label>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </v-simple-table>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+            <!-- <v-row>
+              <v-col cols="10"> </v-col>
+              <v-col cols="2">
+                <p justify="end" style="font-size: small;">
+                  Version {{ version }}
+                </p>
+              </v-col>
+            </v-row> -->
+          </v-card>
+
+        </v-col>
+      </v-row>
+    </div>
 
     <v-dialog v-model="dialog" max-width="1000px">
       <v-card>
@@ -270,23 +415,23 @@
                   dense fixed-header>
                     <thead>
                       <tr class="my-0 py-0">
-                        <th class="text-left"></th>
-                        <th class="text-left" width="9%" style="border: 2px solid lightgray;">% Time</th>
-                        <th class="text-left" width="12%" style="border: 2px solid lightgray;">Min value</th>
-                        <th class="text-left" width="12%" style="border: 2px solid lightgray;">Max value</th>
-                        <th class="text-left" width="22%" style="border: 2px solid lightgray;">
+                        <th class="text-left" style="width:10%; border: 2px solid lightgray;"></th>
+                        <th class="text-left" style="width:10%; border: 2px solid lightgray;">% Time</th>
+                        <th class="text-left" style="width:10%; border: 2px solid lightgray;">Min value</th>
+                        <th class="text-left" style="width:10%; border: 2px solid lightgray;">Max value</th>
+                        <th class="text-left" style="width:20%; border: 2px solid lightgray;">
                           <v-text-field
                             flat solo hide-details
                             v-model="editedItem.text.reqHeader1"
                           ></v-text-field>
                         </th>
-                        <th class="text-left" width="22%" style="border: 2px solid lightgray;">
+                        <th class="text-left" style="width:20%; border: 2px solid lightgray;">
                           <v-text-field
                             flat solo hide-details
                             v-model="editedItem.text.reqHeader2"
                           ></v-text-field>
                         </th>
-                        <th class="text-left" width="22%" style="border: 2px solid lightgray;">
+                        <th class="text-left" style="width:20%; border: 2px solid lightgray;">
                           <v-text-field
                             flat solo hide-details
                             v-model="editedItem.text.reqHeader3"
@@ -299,29 +444,29 @@
                         v-for="item in editedItem.text.requirements"
                         :key="item.num"
                       >
-                        <td style="border: 2px solid lightgray;">
+                        <td style="width:10%; border: 2px solid lightgray;">
                           <v-checkbox
                             flat solo hide-details
                             class="ma-0 pa-0"
                             v-model="item.include"></v-checkbox>
                         </td>
-                        <td style="border: 2px solid lightgray;">
+                        <td style="width:10%; border: 2px solid lightgray;">
                           <v-text-field
                             flat solo hide-details
                             v-model="item.timePercent"
                           ></v-text-field>
                         </td>
-                        <td style="border: 2px solid lightgray;">
+                        <td style="width:10%; border: 2px solid lightgray;">
                           <v-text-field
                             flat solo hide-details
                             v-model="item.ymin"></v-text-field>
                         </td>
-                        <td style="border: 2px solid lightgray;">
+                        <td style="width:10%; border: 2px solid lightgray;">
                           <v-text-field
                             flat solo hide-details
                             v-model="item.ymax"></v-text-field>
                         </td>
-                        <td style="border: 2px solid lightgray;">
+                        <td style="width:20%; border: 2px solid lightgray;">
                           <v-select
                             dense flat solo hide-details
                             class="ma-0 pa-0"
@@ -330,7 +475,7 @@
                           >
                           </v-select>
                         </td>
-                        <td style="border: 2px solid lightgray;">
+                        <td style="width:20%; border: 2px solid lightgray;">
                           <v-select
                             dense flat solo hide-details
                             class="ma-0 pa-0"
@@ -339,7 +484,7 @@
                           >
                           </v-select>
                         </td>
-                        <td style="border: 2px solid lightgray;">
+                        <td style="width:20%; border: 2px solid lightgray;">
                           <v-select
                             dense flat solo hide-details
                             class="ma-0 pa-0"
@@ -471,10 +616,10 @@
                       dense fixed-header height="270">
                       <thead>
                         <tr>
-                          <th class="text-left" width="26%" style="border: 1px solid lightgray;">Parameter</th>
-                          <th class="text-left" width="29%" style="border: 1px solid lightgray;">Column</th>
-                          <th class="text-left" width="8%" style="border: 1px solid lightgray;">Peaks</th>
-                          <th class="text-left" width="20%" style="border: 1px solid lightgray;">Color</th>
+                          <th class="text-left" style="width:26%; border: 1px solid lightgray;">Parameter</th>
+                          <th class="text-left" style="width:29%; border: 1px solid lightgray;">Column</th>
+                          <th class="text-left" style="width:8%; border: 1px solid lightgray;">Peaks</th>
+                          <th class="text-left" style="width:20%; border: 1px solid lightgray;">Color</th>
                           <th class="text-left" style="border: 1px solid lightgray;"></th>
                           <th class="text-left" style="border: 1px solid lightgray;"></th>
                         </tr>
@@ -485,14 +630,14 @@
                           v-for="(item, index) in editedItem.mappings"
                           :key="item.series"
                         >
-                          <td style="border: 1px solid lightgray;">
+                          <td style="width:26%; border: 1px solid lightgray;">
                             <v-text-field
                               dense flat solo hide-details
                               v-model="item.param"
                             >
                           </v-text-field>
                           </td>
-                          <td style="border: 1px solid lightgray;">
+                          <td style="width:29%; border: 1px solid lightgray;">
                             <v-select
                               dense flat solo hide-details
                               :items="csvColumns"
@@ -500,13 +645,13 @@
                             >
                             </v-select>
                           </td>
-                          <td style="border: 1px solid lightgray;">
+                          <td style="width:8%; border: 1px solid lightgray;">
                             <v-checkbox
                               dense flat solo hide-details
                               v-model="item.showPeaks"
                             ></v-checkbox>
                           </td>
-                          <td style="border: 1px solid lightgray;">
+                          <td style="width:20%; border: 1px solid lightgray;">
                             <v-select
                               :items="colors"
                               dense flat solo hide-details
@@ -569,9 +714,9 @@
               dense fixed-header>
               <thead class="my-0 py-0">
                 <tr class="my-0 py-0">
-                  <th class="text-left" width="10%" style="border: 1px solid lightgray;">Num.</th>
-                  <th class="text-left" width="45%" style="border: 1px solid lightgray;">Title</th>
-                  <th class="text-left" width="45%" style="border: 1px solid lightgray;">Remarks</th>
+                  <th class="text-left" style="width: 10%; border: 1px solid lightgray;">Num.</th>
+                  <th class="text-left" style="width: 45%; border: 1px solid lightgray;">Title</th>
+                  <th class="text-left" style="width: 45%; border: 1px solid lightgray;">Remarks</th>
                 </tr>
               </thead>
               <tbody>
@@ -579,13 +724,13 @@
                   v-for="item in editedPage2.requirements"
                   :key="item.num"
                 >
-                  <td style="border: 1px solid lightgray;">
+                  <td style="width: 10%; border: 1px solid lightgray;">
                     {{ item.num }}
                   </td>
-                  <td style="border: 1px solid lightgray;">
+                  <td style="width: 45%; border: 1px solid lightgray;">
                     {{ requirementTableTitle(item.num) }}
                   </td>
-                  <td style="border: 1px solid lightgray;">
+                  <td style="width: 45%; border: 1px solid lightgray;">
                     <input class="text-caption table-input" type="text" size="40"
                       v-model="item.remarks"
                     >
@@ -595,13 +740,13 @@
                   v-for="item in editedPage2.additionalInfo"
                   :key="item.num"
                 >
-                  <td style="height=20px; border: 1px solid lightgray;">
+                  <td style="width: 10%; height=20px; border: 1px solid lightgray;">
                     {{ item.num }}
                   </td>
-                  <td style="height=20px; border: 1px solid lightgray;">
+                  <td style="width: 45%; height=20px; border: 1px solid lightgray;">
                     {{ requirementTableTitle(item.num) }}
                   </td>
-                  <td style="border: 1px solid lightgray;">
+                  <td style="width: 45%; border: 1px solid lightgray;">
                     <input class="text-caption table-input" type="text" size="40"
                       v-model="item.remarks"
                     >
@@ -647,8 +792,8 @@
                       <v-simple-table class="simple-table" dense fixed-header>
                         <thead>
                           <tr>
-                            <th class="text-left">Param name</th>
-                            <th class="text-left">CSV column</th>
+                            <th class="text-left" style="width: 50%;">Param name</th>
+                            <th class="text-left" style="width: 50%;">CSV column</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -656,10 +801,10 @@
                             v-for="(param, j) in calcColumn.params"
                             :key="j"
                           >
-                            <td width="120" style="border: 1px solid lightgray;">
+                            <td style="width: 50%; border: 1px solid lightgray;">
                               {{ param.name }}
                             </td>
-                            <td width="120" style="border: 1px solid lightgray;">
+                            <td style="width: 50%; border: 1px solid lightgray;">
                               <v-select
                                 :items="csvColumns"
                                 dense flat solo hide-details
@@ -681,51 +826,6 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="closeCalcColumns">
-            Close
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="showNewReport" max-width="800px" height="400px">
-      <v-card class="mx-auto">
-        <v-card-title>
-          <span class="headline">New Template</span>
-        </v-card-title>
-
-        <v-card-text>
-          <v-text-field
-            v-model="newReportDescription"
-            label="Description"
-          ></v-text-field>
-          <v-checkbox
-            class="py-0 mt-4"
-            label="Blank template"
-            v-model="newBlankReport"
-          ></v-checkbox>
-          <v-select
-            class="my-4"
-            label="Copy selected template (optional)"
-            dense
-            flat
-            :items="templatesAsList"
-            v-model="selectedTemplate"
-            :disabled="newBlankReport"
-          >
-          </v-select>
-          <v-file-input
-            ref="fileInput"
-            v-model="inputfile"
-            accept="text/csv"
-            label="CSV File"
-            @change="createReport"
-          >
-          </v-file-input>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="closeNewTemplate">
             Close
           </v-btn>
         </v-card-actions>
@@ -787,222 +887,160 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="showNewReportDialog" max-width="600px">
-      <v-card>
-        <v-card-title>
-          New Report
-        </v-card-title>
-        <v-card-text>
-          <v-text-field
-            label="Report name"
-            v-model="newReportName"
-          ></v-text-field>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="showNewReportDialog=false">
-            Cancel
-          </v-btn>
-          <v-btn @click="newReport">
-            OK
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="showDeleteReportDialog" max-width="500px">
-      <v-card class="mx-auto">
-        <v-card-title>
-          <span class="text-body-1"></span>
-          <v-spacer></v-spacer>
-        </v-card-title>
-        <v-card-text class="header3">Delete {{report.name}}?</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="deleteReport">Yes</v-btn>
-          <v-btn @click="showDeleteReportDialog=false">No</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog class="report-dialog" v-model="showReportDialog" max-width="900px">
+    <v-dialog class="report-dialog" v-model="reportDialog.showReportInfo" max-width="900px">
       <v-card>
         <v-card-title>
           <span class="headline">Reports</span>
         </v-card-title>
         <v-card-text>
           <v-row>
-            <v-col cols="3">
-              <v-list dense>
-                <v-list-item-group
-                  color="primary"
-                  v-model="selectedReport"
-                >
-                  <v-list-item
-                    v-for="(report, index) in templates.reports"
-                    :key="index"
-                    @click="selectReport(index)"
-                  >
-                    <v-list-item-content>
-                      <v-list-item-title v-text="report.name"></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
+            <v-col>
+              <v-form>
+                <v-row>
+                  <v-col class="mt-4 pt-4 mb-0 pb-0">
+                    <v-text-field
+                      v-model="report.name"
+                      label="Project"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="mt-0 pt-0 mb-2 pb-2">
+                    <v-text-field
+                      v-model="report.location"
+                      label="Site location"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row >
+                  <v-col class="my-0 py-0">
+                    <v-select
+                      label="Select report template"
+                      dense
+                      flat
+                      :items="templatesAsList"
+                      v-model="report.template"
+                    >
+                    </v-select>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="mt-2 pt-2 mb-0 pb-0">
+                    <h4>File name: &nbsp; {{report.fileName}}</h4>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="my-0 py-0">
+                    <v-file-input
+                      ref="fileInput"
+                      v-model="inputfile"
+                      accept="text/csv"
+                      label="CSV File"
+                      @change="readCSVFile"
+                    >
+                    </v-file-input>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="my-0 py-0">
+                    <v-text-field
+                      v-model="report.circuit"
+                      label="Circuit"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="mt-3 pt-3 mb-3 pb-3">
+                    <v-select
+                      label="Chart Legends"
+                      dense
+                      flat
+                      :items="chartLegendOptions"
+                      v-model="report.chartLegendOption"
+                    >
+                    </v-select>
+                  </v-col>
+                </v-row>
+              </v-form>
             </v-col>
-            <v-col cols="9">
-              <v-form :disabled="reportTabsDisabled">
-              <v-tabs class="mx-1 pt-0"
-                  v-model="reportTabs">
-                <v-tab> Report info </v-tab>
-                <v-tab> Cover </v-tab>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="saveReport(report)"> Save &amp; close </v-btn>
+          <v-btn @click="cancelReportDialog"> Cancel </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-                <v-tab-item>
-                  <v-row>
-                    <v-col class="mt-4 pt-4 mb-2 pb-2">
-                      <v-text-field
-                        v-model="report.name"
-                        label="Description"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row >
-                    <v-col class="my-0 py-0">
-                      <v-select
-                        label="Select report template"
-                        dense
-                        flat
-                        :items="templatesAsList"
-                        v-model="selectedTemplate"
-                        @change="updateReportTemplate"
-                      >
-                      </v-select>
-                    </v-col>
-                  </v-row>
+    <v-dialog class="report-dialog" v-model="reportDialog.showReportCover" max-width="900px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Report Cover</span>
+        </v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col>
+              <v-form>
+                <v-container class="report-form">
                   <v-row>
                     <v-col class="mt-2 pt-2 mb-0 pb-0">
-                      <h4>File name: &nbsp; {{report.fileName}}</h4>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col class="my-0 py-0">
-                      <v-file-input
-                        ref="fileInput"
-                        v-model="inputfile"
-                        accept="text/csv"
-                        label="CSV File"
-                        @change="readCSVFile"
-                      >
-                      </v-file-input>
+                      <v-text-field
+                        v-model="report.cover.title"
+                        label="Title"
+                      ></v-text-field>
                     </v-col>
                   </v-row>
                   <v-row>
                     <v-col class="my-0 py-0">
                       <v-text-field
-                        v-model="report.circuit"
-                        label="Circuit"
+                        v-model="report.cover.client"
+                        label="Client"
                       ></v-text-field>
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col class="mt-3 pt-3 mb-3 pb-3">
-                      <v-select
-                        label="Chart Legends"
-                        dense
-                        flat
-                        :items="chartLegendOptions"
-                        v-model="report.chartLegendOption"
-                      >
-                      </v-select>
+                    <v-col class="my-0 py-0">
+                      <v-text-field
+                        v-model="report.cover.separation"
+                        label="Separation"
+                      ></v-text-field>
                     </v-col>
                   </v-row>
-                  <v-row v-for="n in 3" :key="n">
-                    <v-col class="my-1 py-1">
-                      <p style="color:white;">.</p>
+                  <v-row>
+                    <v-col class="my-0 py-0">
+                      <v-text-field
+                        v-model="report.cover.instrumentUsed"
+                        label="Instrument used"
+                      ></v-text-field>
                     </v-col>
                   </v-row>
-                </v-tab-item>
-
-                <v-tab-item>
-                  <v-container class="report-form">
-                    <v-row>
-                      <v-col class="mt-2 pt-2 mb-0 pb-0">
-                        <v-text-field
-                          v-model="report.cover.title"
-                          label="Title"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="my-0 py-0">
-                        <v-text-field
-                          v-model="report.cover.client"
-                          label="Client"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="my-0 py-0">
-                        <v-text-field
-                          v-model="report.cover.siteLocation"
-                          label="Site location"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="my-0 py-0">
-                        <v-text-field
-                          v-model="report.cover.separation"
-                          label="Separation"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="my-0 py-0">
-                        <v-text-field
-                          v-model="report.cover.instrumentUsed"
-                          label="Instrument used"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="my-0 py-0">
-                        <v-text-field
-                          v-model="report.cover.serialNumber"
-                          label="serialNumber"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="my-0 py-0">
-                        <v-text-field
-                          v-model="report.cover.reportDate"
-                          label="Report date"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="mt-0 pt-0 mb-0 pb-0">
-                        <v-text-field
-                          v-model="report.cover.reportAuthor"
-                          label="Report author"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-tab-item>
-              </v-tabs>
+                  <v-row>
+                    <v-col class="my-0 py-0">
+                      <v-text-field
+                        v-model="report.cover.serialNumber"
+                        label="serialNumber"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="mt-0 pt-0 mb-0 pb-0">
+                      <v-text-field
+                        v-model="report.cover.reportAuthor"
+                        label="Report author"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
               </v-form>
             </v-col>
           </v-row>
         </v-card-text>
 
         <v-card-actions>
-          <v-btn @click="deleteReportDialog"> Delete report </v-btn>
           <v-spacer></v-spacer>
-          <v-btn @click="newReportDialog"> New report </v-btn>
-          <v-btn @click="saveReport"> Save </v-btn>
-          <v-btn @click="cancelReportDialog"> Close </v-btn>
+          <v-btn @click="saveReport(report)"> Save &amp; close </v-btn>
+          <v-btn @click="cancelCoverDialog"> Cancel </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -1019,51 +1057,6 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="currentTableDialog.show" max-width="720px">
-      <v-card>
-        <v-card-title>
-          <span class="mx-2 headline">Generate Current Table</span>
-        </v-card-title>
-        <v-card-text>
-          <v-row class="my-0 py-n0">
-            <v-col>
-              <div id="flatpickr" class="mt-2 pt-1 mb-2 pb-2 rounded text-body-2"
-                style="padding: 3px; box-shadow: 1px 3px lightgrey;">
-                <flat-pickr
-                    v-model="currentTableDialog.startDate"
-                    :config="dateConfig"
-                    class="calendar"
-                    placeholder="Start date"
-                    name="startDate"/>
-              </div>
-            </v-col>
-          </v-row>
-          <v-row class="my-0 py-n0">
-            <v-col>
-              <div id="flatpickr" class="mt-2 pt-1 mb-0 pb-0 rounded text-body-2"
-                style="padding: 3px; box-shadow: 1px 3px lightgrey;">
-                <flat-pickr
-                    v-model="currentTableDialog.endDate"
-                    :config="dateConfig"
-                    class="calendar"
-                    placeholder="End date"
-                    name="endtDate"/>
-              </div>
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeCurrentTableDialog">
-            Close
-          </v-btn>
-          <v-btn color="blue darken-1" text @click="genCurrentTable">
-            Generate
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
     <v-dialog v-model="alert" max-width="600px">
       <v-card>
         <v-card-title class="text-body-1"></v-card-title>
@@ -1074,6 +1067,20 @@
           <v-spacer></v-spacer>
           <v-btn @click="closeMessage">OK</v-btn>
           <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="confirm" max-width="600px">
+      <v-card>
+        <v-card-title class="text-body-1"></v-card-title>
+        <v-card-text>
+          <p class="header3" style="white-space: pre-wrap;">{{ userMessage }}</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="confirmOk">OK</v-btn>
+          <v-btn @click="confirmCancel">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -1116,7 +1123,7 @@
   border-style: hidden;
 }
 
-.simple-table th, td {
+.simple-table th, .simple-table td {
   border: 1px solid lightgray;
   padding: 4px 4px 4px 4px;
 }
@@ -1139,6 +1146,45 @@
   width: 1%;
   height: 30px;
   background-color: royalblue;
+}
+
+html {
+  overflow-y: auto;
+}
+
+.report-table, td, th {
+  width: 100%;
+  /* border: 1px solid black; */
+}
+
+.report-table td, .report-table th {
+  padding: 5px 5px 5px 5px;
+}
+
+.search-box {
+  border: 1px solid lightgray;
+}
+
+.table-row {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 5px 5px 5px 5px;
+}
+
+.table-header {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.header-row {
+  border-right: 1px solid black;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+  color: white;
 }
 </style>
 
@@ -1163,14 +1209,15 @@ import 'echarts/lib/component/legend'
 import { MarkLineComponent } from 'echarts/components'
 import * as d3 from 'd3'
 import { lineChartOptions, sepLineChartOptions, histogramOptions, barChartOptions, minMax2 }
-  from '../composables/charts.js'
-import { adjustData, adjustDates } from '../composables/util.js'
+  from '../../composables/charts.js'
+import { adjustData, adjustDates, getColName } from '../../composables/util.js'
 
-import colors from '../composables/entity.js'
-import document from '../composables/document.js'
-import currentTable from '../composables/currentTable.js'
+import colors from '../../composables/colors.js'
+import { EnergyReport, Mapping, Param, Histogram, RequirementValue } from '../../composables/entity.js'
+import document from '../../composables/document.js'
+import currentTable from '../../composables/currentTable.js'
 import { getColumns, getCalcColumns, checkTemplate }
-  from '../composables/categories.js'
+  from '../../composables/categories.js'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 echarts.use([MarkLineComponent])
@@ -1186,24 +1233,6 @@ function sleep(ms) {
 
 const suffix = ' '
 
-function newReport() {
-  return {
-    id: 0,
-    name: "",
-    template: null,
-    chartLegendOption: "use-param-name",
-    cover: {
-      title: "",
-      client: "",
-      siteLocation: "",
-      instrumentUsed: "",
-      serialNumber: "",
-      reportDate: "",
-      reportAuthor: "",
-    },
-  }
-}
-
 export default {
   name: "EnergyReport",
   components: {
@@ -1213,16 +1242,23 @@ export default {
     return {
       tabs: null,
       reportTabs: null,
+      reports: [],
       colors: colors(),
       version: "1.0",
       alert: false,
+      confirm: false,
       choiceDialog: false,
       waitDialog: false,
       userMessage: "",
       waitMessage: "",
       dialog: false,
-      showReportDialog: false,
-      reportTabsDisabled: true,
+      reportDialog: {
+        showReportInfo: false,
+        showReportCover: false,
+        newReport: false
+      },
+      templateTableVisible: false,
+      reportTableVisible: true,
       showNewReportDialog: false,
       showDeleteReportDialog: false,
       genReportDialog: false,
@@ -1239,11 +1275,6 @@ export default {
           altInput: true,
           dateFormat: 'Y-m-d'
       },
-      currentTableDialog: {
-        show: false,
-        startDate: "",
-        endDate: ""
-      },
       columnDefs: [
         { text: "Num", value: "rank", width: "15%" },
         { text: "Title", value: "title", width: "62%" },
@@ -1254,6 +1285,7 @@ export default {
       rowData: [],
       csvData: [],
       csvColumns: [],
+      templateCols: [],
       minMax: {},
       templates: {},
       energyData: {
@@ -1269,7 +1301,7 @@ export default {
       ],
       newReportName: "",
       selectedReport: -1,
-      report: newReport(),
+      report: new EnergyReport(),
       emptyTemplate: {
         description: "",
         bins: "",
@@ -1420,6 +1452,18 @@ export default {
       histograms: new Array(10),
       background: "",
       reportFinished: false,
+      sortField: "",
+      compareFunc: "includes",
+      sorted: {
+        project: false,
+        location: false,
+        date: false
+      },
+      descending: {
+        project: true,
+        location: true,
+        date: true
+      }
     };
   },
   computed: {
@@ -1433,7 +1477,13 @@ export default {
     templatesAsList() {
       return Object.keys(this.templates)
         .filter((key) => key !== "model" && key !== "reports")
-        .map((key) => ({ text: this.templates[key].description, value: key }));
+        .map((key) => ({ text: this.templates[key].description, value: parseInt(key) }));
+    },
+    reportName() {
+      if (!this.reports || this.reports.length === 0) {
+        return "";
+      }
+      return this.selectedReport === -1 ? "" : this.reports[this.selectedReport].name;
     }
   },
   watch: {
@@ -1447,10 +1497,85 @@ export default {
   beforeCreate() {
     this.template = this.emptyTemplate;
   },
-  created() {
+  mounted() {
     this.initialize();
   },
   methods: {
+    editTemplates() {
+      this.templateTableVisible=true;
+      this.reportTableVisible=false;
+    },
+    goBack() {
+      this.templateTableVisible=false;
+      this.reportTableVisible=true;
+    },
+    resetSortState() {
+      this.sorted = {
+        project: false,
+        location: false,
+        date: false
+      };
+      this.descending = {
+        project: true,
+        location: true,
+        date: true
+      };
+    },
+    sortIcon(field) {
+      return (this.sorted[field] && this.descending[field]) ? "mdi-arrow-down-thin" : "mdi-arrow-up-thin";
+    },
+    sortById() {
+      this.sortField = "id";
+      this.resetSortState();
+      this.reports.sort((t1, t2) => t1.id - t2.id);
+      this.$forceUpdate();
+    },
+    sortByField(field) {
+      this.sortField = field;
+      const sorted = this.sorted[field];
+      const descending = this.descending[field];
+      this.resetSortState();
+      if (sorted && descending) {
+        this.descending[field] = false;
+      } else {
+        this.descending[field] = true;
+      }
+      this.sorted[field] = true;
+      let getValue;
+      if (field === "date") {
+        getValue = (row) => this.toIsoDate(row.dateCreated)
+      } else if (field === "template") {
+        getValue = (row) => (this.templates && Object.keys(this.templates).length > 0 && row.template > 0) 
+            ? this.templates[row.template].description : "";
+      } else {
+        getValue = (row) => row[field];
+      }
+
+      this.sortTable(field, getValue);
+    },
+    toIsoDate(date) {
+      const a = date.split("/");
+      return a[2]+'-'+a[1]+'-'+a[0];
+    },
+    sortTable(field, getValue) {
+      this.reports.sort((r1, r2) => {
+        let v1, v2;
+        if (this.descending[field]) {
+          v1 = getValue(r1);
+          v2 = getValue(r2);
+        } else {
+          v1 = getValue(r2);
+          v2 = getValue(r1);
+        }
+        if (v1 < v2) {
+            return -1;
+        } else if (v1 > v2) {
+            return 1;
+        } else {
+            return 0;
+        }
+      })
+    },
     getLastId() {
       var max = 0;
 
@@ -1463,15 +1588,12 @@ export default {
 
       return (parseInt(max) + 1).toString();
     },
-    newTemplate() {
-      this.inputfile = null;
-      this.newReportDescription = "";
-      this.selectedTemplate = "";
-      this.showNewReport = true;
-    },
-    closeNewTemplate() {
-      this.showNewReport = false;
-    },
+    // newTemplate() {
+    //   this.inputfile = null;
+    //   this.selectedTemplate = "";
+    //   this.template = this.emptyTemplate;
+    //   this.$forceUpdate();
+    // },
     loadTemplate() {
       this.readTemplates().then((result) => {
         this.templates = result;
@@ -1483,74 +1605,6 @@ export default {
     },
     closeLoadReport() {
       this.showLoadReport = false;
-    },
-    createReport (file) {
-      // TODO: do not log in producion mode
-      console.log('createReport')
-      if (!file) {
-        console.log("file is null or undefined");
-        return;
-      }
-      if (!this.newReportDescription || this.newReportDescription === "") {
-        this.showMessage("You must enter a report description");
-        return;
-      }
-
-      // Copy existing template
-      if (this.selectedTemplate) {
-        var id = this.getLastId();
-        console.log(
-          "Making a copy of existing template: ",
-          this.selectedTemplate
-        );
-        this.templates[id] = copyOf(this.templates[this.selectedTemplate]);
-        this.templates[id].description = this.newReportDescription;
-        this.templates[id].cover = copyOf(this.emptyTemplate.cover);
-        this.templates[id].page2 = copyOf(this.emptyTemplate.page2);
-        this.selectedTemplate = id;
-        this.readFile(file);
-        this.showNewReport = false;
-        return;
-      }
-
-      // Create blank tempalte
-      const reader = new FileReader();
-      var self = this;
-      reader.onload = function (e) {
-        console.log("Loading csv file");
-
-        var text = e.target.result;
-
-        const rawData = Papa.parse(text);
-        const allcols = self.headerCols(rawData);
-        if (allcols.length == 0) {
-          this.showMessage("File has no column definitions");
-          return;
-        }
-
-        self.clearAll();
-        var id = self.getLastId();
-
-        self.template = copyOf(self.templates["model"]);
-        self.template.description = self.newReportDescription;
-
-        if (self.newBlankReport) {
-          self.template.cover = copyOf(self.emptyTemplate.cover);
-          self.template.page2 = copyOf(self.emptyTemplate.page2);
-          self.template.categories = [];
-        }
-
-        self.templates[id] = self.template;
-        const csvColumns = allcols.filter(
-          (entry) => entry.trim() != "" && entry != "Date" && entry != "Time"
-        );
-        const calcColumns = getCalcColumns(self.template);
-        self.csvColumns = csvColumns.concat(calcColumns);
-        self.csvData = [];
-      };
-
-      reader.readAsText(file);
-      this.showNewReport = false;
     },
     updateHistoColor() {
       this.$forceUpdate();
@@ -1577,6 +1631,25 @@ export default {
       this.waitMessage = "";
       this.waitDialog = false;
     },
+    showConfirmMessage(msg, action) {
+      this.userMessage = msg;
+      this.confirm = true;
+      this.confirmAction = action;
+    },
+    confirmOk() {
+      this.userMessage = "";
+      this.confirm = false;
+      if (this.confirmAction) {
+        this.confirmAction("ok");
+      }
+    },
+    confirmCancel() {
+      this.userMessage = "";
+      this.confirm = false;
+      if (this.confirmAction) {
+        this.confirmAction("cancel");
+      }
+    },
     endpoint (op) {
       //return `http://localhost:5000/api/energyreport/${op}`
       return `/energyreport/${op}`;
@@ -1584,24 +1657,23 @@ export default {
     readTemplates() {
       const self = this;
       return new Promise(function (resolve) {
-        self.$axios.$get(self.endpoint('category'))
-          .then((response) => {
-            resolve(response)
-          })
+        self.$axios({
+          url: self.endpoint("category"),
+          method: "GET",
+          crossDomain: true,
+          responseType: 'json'
+        })
+        .then((response) => {
+          resolve(response.data);
+        })
       })
     },
-    initialize () {
-      this.getTemplates();
-    },
-    getTemplates() {
+    initialize() {
+      console.log("getTemplates");
       const self = this;
-      self.$axios.$get(this.endpoint('category'))
+      self.readTemplates()
         .then((response) => {
-          self.templates = response
-          if (!self.templates.reports) {
-            self.templates.reports = []
-          }
-
+          self.templates = response;
           for (let i = 0; i < 10; i++) {
             let chartRef = this.$refs['line' + (i + 1)]
             this.lineCharts[i] = echarts.init(chartRef, undefined, { width: 800, height: 380 })
@@ -1609,35 +1681,109 @@ export default {
             this.histograms[i] = echarts.init(chartRef, undefined, { width: 800, height: 380 })
           }
         })
-        .then(
-          self.$axios.$get(this.endpoint('background'))
-            .then((response) => {
-              self.background = response
-            })
+        .then(self.getReports)
+        .then(self.$axios.$get(this.endpoint('background'))
+          .then((response) => {
+            self.background = response;
+          })
         )
     },
-    migrateTemplates() {
-      const configHeaders = {
-        'content-type': 'text/plain',
-        Accept: 'text/plain'
-      }
+    getReports() {
       this.$axios({
-        url: this.endpoint('category/migrate'),
-        method: 'post',
-        data: "",
-        headers: configHeaders
+        url: this.endpoint("report"),
+        method: "GET",
+        crossDomain: true,
+        responseType: 'json',
+        transformResponse: (response) => {
+          return JSON.parse(response, (key, value) =>{
+            if (key == "dateCreated") {
+              return new Intl.DateTimeFormat('en-SG').format(new Date(value))
+            } 
+            return value;
+          })
+        }
+      }).then(response => {
+        this.reports = response.data;
+        if (this.reports.length === 0 && self.templates.reports) {
+          self.migrateReports();
+        }
+      }).catch(function (error) {
+        console.log(error);
       })
-        .then(() => {
-          console.log("Templates migrated from file to database");
-          this.getTemplates();
-        })
-        .catch((error) => {
-          this.errorMessage = error.message
-          // TODO: Do not log in production mode
-          console.error('There was an error when migrating templates from file to database! ', error)
-        })
     },
-    saveTemplates (showMessage) {
+    migrateReports() {
+      for (let i=0; i<this.templates.reports.length; i++) {
+        let oldReport = this.templates.reports[i];
+        let report = new EnergyReport({
+          name: oldReport.name,
+          location: oldReport.cover.siteLocation,
+          template: oldReport.template,
+          // dateCreated: oldReport.cover.reportDate,
+          fileName: oldReport.fileName,
+          circuit: oldReport.circuit,
+          chartLegendOption: oldReport.chartLegendOption,
+          //csvData: { columns: [], rows: [] },
+          rawCsvData: [],
+          cover: {
+            title: oldReport.cover.title,
+            client: oldReport.cover.client,
+            separation: oldReport.cover.separation,
+            reportAuthor: oldReport.cover.reportAuthor,
+            instrumentUsed: oldReport.cover.instrumentUsed, 
+            serialNumber: oldReport.cover.serialNumber
+          }
+        });
+        this.reportDialog.newReport = true;
+        this.saveReport(report);
+      }
+    },
+    checkSaveTemplates() {
+      const templates = this.templates;
+      for (const key of Object.keys(templates)) {
+        if (key==="reports") {
+          continue;
+        }
+        const template = templates[key];
+
+        const calcColumns = template.calcColumns;
+        for (const calcColumn of calcColumns) {
+          for (const param of calcColumn.params) {
+            param.col = param.col.replace(" ", "-").toUpperCase();
+          }
+        }
+
+        const categories = template.categories;
+        for (const category of categories) {
+          if (calcColumns.findIndex(c => c.name === category.histogram) === -1) {
+            category.histogram = category.histogram.replace(" ", "-").toUpperCase();
+          }
+          const mappings = category.mappings;
+          for (const mapping of mappings) {
+            if (calcColumns.findIndex(c => c.name === mapping.col) === -1) {
+              mapping.col = mapping.col.replace(" ", "-").toUpperCase();
+            }
+          }
+          if (category.text) {
+            const requirements = category.text.requirements;
+            if (requirements) {
+              for (const req of requirements) {
+                if (req.value1) {
+                  req.value1 = req.value1.replace(" ", "-").toUpperCase();
+                }
+                if (req.value2) {
+                  req.value2 = req.value2.replace(" ", "-").toUpperCase();
+                }
+                if (req.value3) {
+                  req.value3 = req.value3.replace(" ", "-").toUpperCase();
+                }
+              }
+            }
+          }
+        }
+      }
+      this.saveTemplates(true);
+    },
+    saveTemplates(showMessage) {
       const configHeaders = {
         'content-type': 'text/plain',
         Accept: 'text/plain'
@@ -1696,9 +1842,9 @@ export default {
       const minMax = this.minMax
 
       if (category.separateCharts) {
-        chart.setOption(sepLineChartOptions(csvData, minMax, category, suffix, legendOpt))
+        chart.setOption(sepLineChartOptions(csvData, minMax, category, suffix, legendOpt, this.template.useHyphen))
       } else {
-        chart.setOption(lineChartOptions(csvData, minMax, category, suffix, legendOpt))
+        chart.setOption(lineChartOptions(csvData, minMax, category, suffix, legendOpt, this.template.useHyphen))
       }
       chart.resize()
 
@@ -1718,7 +1864,7 @@ export default {
     },
     histoParamName(category) {
       const mappings = category.mappings;
-      const idx = mappings.findIndex( column => column.col === category.histogram );
+      const idx = mappings.findIndex( column => column.col === category.histogram.toString() );
       return idx > -1 ? mappings[idx].param : mappings[idx].col;
     },
     createHistogram (index) {
@@ -1815,7 +1961,143 @@ export default {
       })
       return promise
     },
+    doTestReport () {
+      if (!this.template) {
+        this.showMessage("No template loaded");
+        return;
+      }
+      if (Object.keys(this.template).length === 0) {
+        this.showMessage("No template loaded");
+        return;
+      }
+      if (this.csvColumns.length === 0 || this.csvData.length === 0) {
+        this.showMessage('No data available. Please load an approriate CSV file')
+        return
+      }
+      this.genReport();
+    },
+    doReport(index) {
+      if (this.report.template) {
+        this.selectedTemplate = this.report.template;
+        this.template = this.templates[this.report.template];
+      } else {
+        this.showMessage('No report template selected. You must select a report template');
+        return;
+      }
+      // console.log("report.rawCsvData", this.report.rawCsvData);
+      this.rawData = this.report.rawCsvData;
+      if (!this.rawData || this.rawData.length === 0) {
+        this.showMessage('No data available. Please load an approriate CSV file')
+        return
+      }
+
+      this.genReport();
+    },
+    updateProgress(value) {
+      const progress = this.reportProgress + value;
+      this. reportProgress = progress < 100 ? progress : 100;
+      this.$refs.myBar.style.width = this.reportProgress + "%";
+    },
+    async genReport() {
+      this.genReportDialog = true;
+      await new Promise(resolve => setTimeout(resolve, 100));
+      this.reportProgress = 0;
+      this.updateProgress(0);
+
+      // Parse the data again to include new sections
+      this.parseData(getColumns(this.template));
+
+      if (this.csvColumns.length === 0 || this.csvData.length === 0) {
+        this.showMessage('No data available. Please load an approriate CSV file')
+        return
+      }
+
+      this.reportProgress = 10;
+      const promises = [];
+      for (var i = 0; i < this.template.categories.length; i++) {
+        const lineChart = this.createLineChart(i)
+        promises.push(lineChart);
+        this.updateProgress(5);
+        await new Promise(resolve => setTimeout(resolve, 100));
+        if (this.template.categories[i].dailyTotals) {
+          const chart = this.createBarChart(i)
+          promises.push(chart);
+        } else {
+          const chart = this.createHistogram(i)
+          promises.push(chart);
+        }
+        this.updateProgress(5);
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+
+      const charts = await Promise.all(promises);
+
+      this.genReportDialog = false;
+      await new Promise(resolve => setTimeout(resolve, 100));
+      this.reportProgress = 0;
+      this.updateProgress(0);
+
+      // console.log(JSON.stringify(this.template.categories));
+      var doc = document(
+        this.report,
+        this.template.page2,
+        this.background,
+        this.reportPeriod(),
+        this.template.categories,
+        charts,
+        this.dataInterval(),
+        this.csvData,
+        this.minMax,
+        suffix
+      );
+      const pdf = pdfMake.createPdf(doc);
+      pdf.download(this.report.cover.title+".pdf");
+      //pdf.open();
+      //console.log("PDF created");
+    },
+    genCurrentTable() {
+      if (this.report.template) {
+        this.selectedTemplate = this.report.template;
+        this.template = this.templates[this.report.template];
+      } else {
+        this.showMessage('No report template selected. You must select a report template');
+        return;
+      }
+      this.rawData = this.report.rawCsvData;
+      if (!this.rawData || this.rawData.length === 0) {
+        this.showMessage('No data available. Please load an approriate CSV file')
+        return
+      }
+      this.generateCurrentTable(this.report.circuit);
+    },
+    genTestCurrentTable() {
+      if (!this.template) {
+        this.showMessage("No template loaded");
+        return;
+      }
+      if (Object.keys(this.template).length === 0) {
+        this.showMessage("No template loaded");
+        return;
+      }
+      if (this.csvColumns.length === 0 || this.csvData.length === 0) {
+        this.showMessage('No data available. Please load an approriate CSV file')
+        return
+      }
+      this.generateCurrentTable("TestCurrentTable");
+    },
+    generateCurrentTable(circuit) {
+      const ct = this.createCurrentTable(circuit);
+      var doc = currentTable([ct]);
+      const pdf = pdfMake.createPdf(doc);
+      pdf.download(`Current table, ${ct.circuit}.pdf`);
+    },
     createCurrentTable(circuit) {
+      this.parseData(getColumns(this.template));
+      if (this.csvColumns.length === 0 || this.csvData.length === 0) {
+        this.showMessage('No data available. Please load an approriate CSV file')
+        return
+      }
+
       const catIndex = this.template.categories.findIndex(cat => cat.chartTitle === "Current");
       if (catIndex === -1) {
         return;
@@ -1824,7 +2106,9 @@ export default {
       // ISO 8601: yyy-mm-dd
       const dtf = new Intl.DateTimeFormat('sv-SE', {year: 'numeric', month: '2-digit', day: '2-digit'});
       const dtf2 = Intl.DateTimeFormat('en-SG', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
       var data = this.csvData;
+
       const params = {};
       for (const mapping of category.mappings) {
         params[mapping.param] = mapping.col;
@@ -1863,112 +2147,6 @@ export default {
       currentTable.currentData = JSON.stringify(currentData);
 
       return currentTable;
-    },
-    saveCurrentTable(currentTable) {
-      //console.log("currentTable", JSON.stringify(currentTable));
-      this.$axios({
-        url: this.endpoint('current-table'),
-        method: 'post',
-        data: currentTable,
-        // headers: configHeaders
-      })
-        .then(() => {
-          console.log("current table saved")
-        })
-        .catch((error) => {
-          this.errorMessage = error.message
-          // TODO: Do not log in production mode
-          console.error('There was an error! ', error)
-        })
-    },
-    doReport () {
-      if (!this.template) {
-        this.showMessage("No template loaded");
-        return;
-      }
-      if (Object.keys(this.template).length === 0) {
-        this.showMessage("No template loaded");
-        return;
-      }
-      if (this.csvColumns.length === 0 || this.csvData.length === 0) {
-        this.showMessage('No data available. Please load an approriate CSV file')
-        return
-      }
-      this.genReport();
-      const currentTable = this.createCurrentTable(this.report.circuit);
-      this.saveCurrentTable(currentTable);
-    },
-    updateProgress(value) {
-      const progress = this.reportProgress + value;
-      this. reportProgress = progress < 100 ? progress : 100;
-      this.$refs.myBar.style.width = this.reportProgress + "%";
-    },
-    async genReport() {
-      console.log("Generating PDF");
-
-      this.genReportDialog = true;
-      await new Promise(resolve => setTimeout(resolve, 100));
-      this.reportProgress = 0;
-      this.updateProgress(0);
-
-      // Parse the data again to include new sections
-      this.parseData(getColumns(this.template));
-      this.reportProgress = 10;
-      const promises = [];
-      for (var i = 0; i < this.template.categories.length; i++) {
-        const lineChart = this.createLineChart(i)
-        promises.push(lineChart);
-        this.updateProgress(5);
-        await new Promise(resolve => setTimeout(resolve, 100));
-        if (this.template.categories[i].dailyTotals) {
-          const chart = this.createBarChart(i)
-          promises.push(chart);
-        } else {
-          const chart = this.createHistogram(i)
-          promises.push(chart);
-        }
-        this.updateProgress(5);
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-
-      const charts = await Promise.all(promises);
-
-      this.genReportDialog = false;
-      await new Promise(resolve => setTimeout(resolve, 100));
-      this.reportProgress = 0;
-      this.updateProgress(0);
-
-      var doc = document(
-        this.report,
-        this.template.page2,
-        this.background,
-        this.reportPeriod(),
-        this.template.categories,
-        charts,
-        this.dataInterval(),
-        this.csvData,
-        this.minMax,
-        suffix
-      );
-      const pdf = pdfMake.createPdf(doc);
-      pdf.download(this.report.cover.title+".pdf");
-      //pdf.open();
-      //console.log("PDF created");
-    },
-    genCurrentTable() {
-      const self = this
-      const path = `current-table/${this.currentTableDialog.startDate}/${this.currentTableDialog.endDate}`
-      self.$axios.$get(this.endpoint(path))
-        .then((response) => {
-          //console.log("response", JSON.stringify(response));
-          const tbl = response;
-
-          var doc = currentTable(tbl);
-          const pdf = pdfMake.createPdf(doc);
-          pdf.download(`Current table, ${this.currentTableDialog.startDate} to ${this.currentTableDialog.endDate}.pdf`);
-
-          self.closeCurrentTableDialog();
-        })
     },
     dateTime(dateStr, timeStr) {
       // console.log(dateStr, timeStr)
@@ -2033,6 +2211,8 @@ export default {
           if (firstRow > 0) {
             rawData.data.splice(0, firstRow);
           }
+          const headerRow = rows[0].map(col => getColName(col));
+          rows[0] = headerRow;
           return rows[0];
         }
         firstRow++;
@@ -2062,10 +2242,8 @@ export default {
     },
     parseData: function(cols) {
         const self = this;
-
         self.minMax = {};
         const calcColumns = self.template.calcColumns;
-
         const text = Papa.unparse(this.rawData);
         const data = [];
         let index = 0;
@@ -2134,7 +2312,7 @@ export default {
 
         self.showLoadReport = false;
     },
-    readFile: function (file) {
+    readFile: function (file, action) {
       if (!file) {
         return;
       }
@@ -2142,14 +2320,11 @@ export default {
       const reader = new FileReader();
       var self = this;
       reader.onload = function (e) {
-        console.log("Loading csv file");
-
         var text = e.target.result;
-
         const rawData = Papa.parse(text);
-        const allcols = self.headerCols(rawData);
-        if (allcols.length == 0) {
-          this.showMessage("File has no column definitions");
+        const csvCols = self.headerCols(rawData);
+        if (csvCols.length == 0) {
+          self.showMessage("File has no column definitions");
           return;
         }
 
@@ -2158,9 +2333,9 @@ export default {
         self.clearAll();
         self.template = self.templates[self.selectedTemplate];
 
-        const cols = getColumns(self.template);
+        this.templateCols = getColumns(self.template);
 
-        const missingColumns = checkTemplate(self.template, allcols, cols);
+        const missingColumns = checkTemplate(self.template, csvCols, this.templateCols);
         if (missingColumns.length) {
           let msg = "This CSV file is missing the following columns present in the template\n\n" +
               missingColumns.join(", ") +
@@ -2168,8 +2343,12 @@ export default {
           self.showMessage(msg);
         }
 
-        self.parseData(cols);
+        self.parseData(this.templateCols);
         self.closeWaitMessage();
+
+        if (action) {
+          action();
+        }
       };
       reader.readAsText(file);
     },
@@ -2266,100 +2445,134 @@ export default {
     closeCurrentTableDialog() {
       this.currentTableDialog.show = false;
     },
-    openReportDialog() {
-      this.reportTabs = "Report info";
-      this.showReportDialog = true;
-    },
     newReportDialog() {
       this.newReportName = "";
       this.showNewReportDialog = true;
     },
-    deleteReportDialog() {
-      if (this.selectedReport > -1) {
-        this.showDeleteReportDialog = true;
-      }
-    },
-    deleteReport() {
-      if (this.selectedReport === -1) {
-        return;
-      }
-      this.templates.reports.splice(this.selectedReport, 1);
-      if (this.templates.reports.length > 0) {
-        this.selectReport(0);
-      }  else {
-        this.selectedReport = -1;
-        this.report = newReport();
-        this.selectedTemplate = null;
-        this.template = {};
-        this.inputfile = null;
-        this.reportTabsDisabled = true;
-      }
-      this.showDeleteReportDialog = false;
-      this.reportTabs = "Report info";
+    deleteReport(index) {
+      this.showConfirmMessage(`Are you sure you want to delete report: ${this.reports[index].name}`,
+        (result) => {
+          if (result === "ok") {
+            (async () => {
+              var self = this;
+              const id = this.reports[index].id;
+              this.$axios({
+                url: self.endpoint("report/"+id),
+                method: "DELETE",
+                crossDomain: true,
+              })
+              .then(function (response) {
+                self.getReports();
+              })
+              .catch(function (error) {
+                console.log(error);
+                self.showMessage("There was a server error when loading the report");
+              });
+            })();
+          }
+        }
+      )
     },
     updateReportTemplate() {
       this.report.template = this.selectedTemplate;
     },
     readCSVFile(file) {
-      this.readFile(file);
       this.report.fileName = file.name;
-    },
-    nextReportId() {
-      const reports = this.templates.reports
-      if (reports.length === 0) {
-        return 0
-      }
-      return reports[reports.length-1].id + 1
+      this.selectedTemplate = this.report.template; 
+      this.readFile(file, () => {
+        this.report.rawCsvData = this.rawData;
+      });
     },
     newReport() {
-      const report = newReport();
-      report.id = this.nextReportId();
-      report.name = this.newReportName;
-
-      this.templates.reports.push(report);
-      this.report = report;
-      this.selectedReport = this.templates.reports.length-1;
-      this.selectedTemplate = null;
-      this.template = {};
-      this.inputfile = null;
-      this.showNewReportDialog = false;
-      this.reportTabs = "Report info";
-      this.reportTabsDisabled = false;
+      this.report = new EnergyReport();
+      this.report.chartLegendOption = "use-param-name";
+      this.openReportDialog(true);
     },
-    selectReport(index) {
-      if (this.selectedReport === index) {
-        return;
-      }
+    editReport(index) {
       this.selectedReport = index;
-      this.report = this.templates.reports[index];
-      if (this.report.template) {
-        this.selectedTemplate = this.report.template;
-        this.template = this.templates[this.report.template];
-      } else {
-        this.selectedTemplate = null;
-        this.template = {};
-      }
-      this.inputfile = null;
-      this.reportTabs = "Report info";
-      this.reportTabsDisabled = false;
+      this.getReport(this.reports[index].id, this.openReportDialog);
+    },
+    editCover(index) {
+      this.selectedReport = index;
+      this.getReport(this.reports[index].id, this.openCoverDialog);
     },
     cancelReportDialog() {
-      if (this.templates.reports.length > 0 && this.selectedReport > -1) {
-        if (!this.selectedTemplate || !this.inputfile) {
-          this.showMessage("To generate PDFs and edit templates, you must select a template and a CSV file");
-        }
-      }
-      this.showReportDialog = false;
+      this.reportDialog.showReportInfo = false;
       this.$forceUpdate();
     },
-    saveReport() {
-      if (this.templates.reports.length > 0 && this.selectedReport > -1) {
-        if (!this.selectedTemplate || !this.inputfile) {
-          this.showMessage("To generate PDFs and edit templates, you must select a template and a CSV file");
+    cancelCoverDialog() {
+      this.reportDialog.showReportCover = false;
+      this.$forceUpdate();
+    },
+    openReportDialog(isNewReport) {
+      this.reportDialog.newReport = isNewReport ? true : false;
+      this.reportDialog.showReportInfo = true;
+      this.reportDialog.showReportCover = false;
+    },
+    openCoverDialog() {
+      this.reportDialog.newReport = false;
+      this.reportDialog.showReportInfo = false;
+      this.reportDialog.showReportCover = true;
+    },
+    getReport(id, action, param) {
+      (async () => {
+        var self = this;
+        this.$axios({
+          url: self.endpoint("report/"+id),
+          method: "GET",
+          crossDomain: true,
+          responseType: 'json',
+          transformResponse: this.parseResponse
+        })
+        .then(function (response) {
+          self.report = new EnergyReport(response.data);
+          if (action) {
+            action(param);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.showMessage("There was a server error when loading the report");
+        });
+      })();
+    },
+    parseResponse(response) {
+      const report = JSON.parse(response, (key, value) =>{
+        if (key == "dateCreated") {
+          return new Date(value);
+        } else if (key == "rawCsvData") {
+          return JSON.parse(value);
         }
-      }
+        return value;
+      });
+      return report;
+    },
+    saveReport(report, showMessage) {
+      (async () => {
+        var self = this;
+        this.$axios({
+          url: self.endpoint("report"),
+          method: this.reportDialog.newReport ? "POST" : "PUT",
+          data: report,
+          crossDomain: true,
+          responseType: 'json',
+          transformResponse: this.parseResponse
+        })
+        .then(function (response) {
+          self.getReports();
+          self.reportDialog.showReportInfo = false;
+          self.reportDialog.showReportCover = false;
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.showMessage("There was a server error when saving the report");
+        });
+      })();
+    },
+    saveCover() {
       this.saveTemplates();
       this.$forceUpdate();
+      this.showReportCover = false;
     },
     loadReport() {
       const reader = new FileReader();

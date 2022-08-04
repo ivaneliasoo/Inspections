@@ -96,3 +96,10 @@ export function expandData(data, idx) {
     }
     return r
 }
+
+export function getColName(colName) {
+    if (colName === "Date" || colName === "Time" || colName === "DateTime") {
+        return colName;
+    }
+    return colName.replace(" ", "-").toUpperCase();
+}

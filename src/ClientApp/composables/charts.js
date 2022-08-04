@@ -1,4 +1,3 @@
-
 export function minMax(data, limits) {
   if (data.min < limits.min) {
     limits.min = data.min;

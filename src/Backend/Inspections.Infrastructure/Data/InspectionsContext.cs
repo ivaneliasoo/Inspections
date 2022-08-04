@@ -52,12 +52,13 @@ public class InspectionsContext : DbContext
     public DbSet<CurrentTable> CurrentTable { get; set; } = default!;
     public DbSet<Template> Template { get; set; } = default!;
 
-        public DbSet<SchedJob> SchedJob { get; set; } = default!;
-        public DbSet<Job> Job { get; set; } = default!;
-        public DbSet<Team> Team { get; set; } = default!;
-        public DbSet<Options> Options { get; set; } = default!;
-        public DbSet<CostSheet> CostSheet { get; set; } = default!;
-        public DbSet<CSTemplate> CSTemplate { get; set; } = default!;
+    public DbSet<SchedJob> SchedJob { get; set; } = default!;
+    public DbSet<Job> Job { get; set; } = default!;
+    public DbSet<Team> Team { get; set; } = default!;
+    public DbSet<Options> Options { get; set; } = default!;
+    public DbSet<CostSheet> CostSheet { get; set; } = default!;
+    public DbSet<CSTemplate> CSTemplate { get; set; } = default!;
+    public DbSet<PowerAnalyzerReport> PowerAnalyzerReport { get; set; } = default;
 
     //Queries
     public DbSet<ResumenCheckList> ResumenCheckLists { get; set; } = default!;
@@ -98,6 +99,10 @@ public class InspectionsContext : DbContext
             .HasKey(sj => new { sj.team, sj.date });
 
         modelBuilder.Entity<CostSheet>()
+            .Property(p => p.id)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<PowerAnalyzerReport>()
             .Property(p => p.id)
             .ValueGeneratedOnAdd();
 
