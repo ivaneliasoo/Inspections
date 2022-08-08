@@ -1,14 +1,13 @@
 <template>
-  <EnergyReport />
+  <EnergyReportMain />
 </template>
 
 <script>
-import EnergyReport from '~/components/EnergyReport.vue'
 
 export default {
-  components: {
-    EnergyReport
-  },
+  name: 'EnergyReport',
   layout: 'default'
 }
+
 </script>
+

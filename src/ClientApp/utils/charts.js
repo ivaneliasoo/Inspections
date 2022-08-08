@@ -1,4 +1,3 @@
-
 export function minMax (data, limits) {
   if (data.min < limits.min) {
     limits.min = data.min
@@ -77,11 +76,11 @@ export function sepLineChartOptions (csvData, minMaxData, category, suffix, lege
     if (category.text.includeRequirements) {
       const req = category.text.requirements
       if (req[0].include) {
-        markLine.data.push({ yAxis: parseFloat(req[0].ymin), lineStyle: { color: 'red', type: 'solid' } }),
+        markLine.data.push({ yAxis: parseFloat(req[0].ymin), lineStyle: { color: 'red', type: 'solid' } })
         markLine.data.push({ yAxis: parseFloat(req[0].ymax), lineStyle: { color: 'red', type: 'solid' } })
       }
       if (req[1].include) {
-        markLine.data.push({ yAxis: parseFloat(req[1].ymin), lineStyle: { color: 'blue', type: 'solid' } }),
+        markLine.data.push({ yAxis: parseFloat(req[1].ymin), lineStyle: { color: 'blue', type: 'solid' } })
         markLine.data.push({ yAxis: parseFloat(req[1].ymax), lineStyle: { color: 'blue', type: 'solid' } })
       }
     }
@@ -94,7 +93,7 @@ export function sepLineChartOptions (csvData, minMaxData, category, suffix, lege
     minMax(minMaxData[col], limits)
 
     if (markLine.data.length == 0) {
-      markLine.data.push({ yAxis: limits.min, lineStyle: { color: 'red', type: 'solid' } }),
+      markLine.data.push({ yAxis: limits.min, lineStyle: { color: 'red', type: 'solid' } })
       markLine.data.push({ yAxis: limits.max, lineStyle: { color: 'red', type: 'solid' } })
     } else if (markLine.data.length == 2) {
       limits.min = Math.min(limits.min, markLine.data[0].yAxis)
@@ -174,11 +173,11 @@ export function lineChartOptions (csvData, minMaxData, category, suffix, legendO
   if (category.text.includeRequirements) {
     const req = category.text.requirements
     if (req[0].include) {
-      markLine.data.push({ yAxis: parseFloat(req[0].ymin), lineStyle: { color: 'red', type: 'solid' } }),
+      markLine.data.push({ yAxis: parseFloat(req[0].ymin), lineStyle: { color: 'red', type: 'solid' } })
       markLine.data.push({ yAxis: parseFloat(req[0].ymax), lineStyle: { color: 'red', type: 'solid' } })
     }
     if (req[1].include) {
-      markLine.data.push({ yAxis: parseFloat(req[1].ymin), lineStyle: { color: 'blue', type: 'solid' } }),
+      markLine.data.push({ yAxis: parseFloat(req[1].ymin), lineStyle: { color: 'blue', type: 'solid' } })
       markLine.data.push({ yAxis: parseFloat(req[1].ymax), lineStyle: { color: 'blue', type: 'solid' } })
     }
   }
@@ -222,7 +221,7 @@ export function lineChartOptions (csvData, minMaxData, category, suffix, legendO
   }
 
   if (markLine.data.length == 0) {
-    markLine.data.push({ yAxis: limits.min, lineStyle: { color: 'red', type: 'solid' } }),
+    markLine.data.push({ yAxis: limits.min, lineStyle: { color: 'red', type: 'solid' } })
     markLine.data.push({ yAxis: limits.max, lineStyle: { color: 'red', type: 'solid' } })
   } else if (markLine.data.length == 2) {
     limits.min = Math.min(limits.min, markLine.data[0].yAxis)

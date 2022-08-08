@@ -1,4 +1,3 @@
-
 import { minMax, timePercent } from './charts.js'
 
 function showPeaks (cat) {
@@ -274,7 +273,8 @@ export default function document (report, page2, background, period, categories,
           const reqText = req.timePercent + percentLabel + reqLimits.min + units + ' ~ ' + reqLimits.max + units
           const reqRow = [{ text: reqText, bold: false }]
           let pass = true;
-          [req.value1, req.value2, req.value3].forEach((value) => {
+          [req.value1, req.value2, req.value3].forEach((val) => {
+            const value = val ? val.toString() : null
             if (value && value.trim() !== '') {
               const limits = { min: Number.MAX_VALUE, max: Number.MIN_VALUE }
               const col = cat.factor ? value + suffix : value

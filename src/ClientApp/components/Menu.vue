@@ -46,8 +46,7 @@
 </template>
 
 <script lang="ts">
-import { useContext } from '@nuxtjs/composition-api'
-import { defineComponent } from '@nuxtjs/composition-api'
+import { useContext, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup () {
@@ -66,7 +65,7 @@ export default defineComponent({
         icon: 'mdi-file',
       },
       {
-        name: 'Energy Report',
+        name: 'Power Analyzer Report',
         parentName: '',
         route: '/energyreport',
         icon: 'mdi-graph',

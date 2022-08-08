@@ -40,7 +40,6 @@ export function checkTemplate (template, csvCols, templateCols) {
   for (let j = 0; j < templateCols.length; j++) {
     const col = templateCols[j].name
     if (!columns[col] && !calcColumns[col]) {
-      // console.log("Column not found: ", templateCols[j].name);
       missingColumns.push(col)
     }
   }

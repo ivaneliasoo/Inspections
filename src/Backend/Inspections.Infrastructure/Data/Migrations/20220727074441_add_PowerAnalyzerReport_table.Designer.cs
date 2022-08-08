@@ -6,6 +6,7 @@ using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -14,13 +15,14 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    partial class InspectionsContextModelSnapshot : ModelSnapshot
+    [Migration("20220727074441_add_PowerAnalyzerReport_table")]
+    partial class add_PowerAnalyzerReport_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -698,15 +700,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("UseCheckList")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("UseNotes")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("UsePhotoRecord")
-                        .HasColumnType("boolean");
-
                     b.HasKey("Id");
 
                     b.ToTable("ReportsConfiguration", "Inspections");
@@ -834,9 +827,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("NeedsPhotoRecord")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("RemarksLabelText")
                         .IsRequired()
@@ -972,9 +962,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<DateTimeOffset>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("DefaultResponsibleType")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Designation")
                         .HasColumnType("text");
 
@@ -1010,9 +997,6 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("UseLoggedInUserAsDefault")
-                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -1115,9 +1099,6 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Signature")
                         .HasColumnType("text");
 
                     b.HasKey("UserName");

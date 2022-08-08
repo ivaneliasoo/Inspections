@@ -60,6 +60,7 @@ public class InspectionsContext : DbContext
     public DbSet<Options> Options { get; set; } = default!;
     public DbSet<CostSheet> CostSheet { get; set; } = default!;
     public DbSet<CSTemplate> CSTemplate { get; set; } = default!;
+    public DbSet<PowerAnalyzerReport> PowerAnalyzerReport { get; set; } = default;
 
     //Queries
     public DbSet<ResumenCheckList> ResumenCheckLists { get; set; } = default!;
@@ -100,6 +101,10 @@ public class InspectionsContext : DbContext
             .HasKey(sj => new {sj.team, sj.date});
 
         modelBuilder.Entity<CostSheet>()
+            .Property(p => p.id)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<PowerAnalyzerReport>()
             .Property(p => p.id)
             .ValueGeneratedOnAdd();
 
