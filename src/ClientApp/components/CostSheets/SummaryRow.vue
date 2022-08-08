@@ -51,8 +51,7 @@
 </template>
 
 <script>
-import { Section, Item }
-  from '../../utils/costsheets/entity.js'
+import { Section, Item } from '../../utils/costsheets/entity.js'
 
 export default {
   props: {
@@ -63,7 +62,7 @@ export default {
     lowerPercent: Number,
     higherPercent: Number,
     highlight: Boolean,
-    triggerUpdate: Number
+    triggerUpdate: Number,
   },
   data: () => ({
     selected: null,
@@ -71,21 +70,21 @@ export default {
     rowIndex: 0,
     xcoord: 0,
     ycoord: 0,
-    inactive: true
+    inactive: true,
   }),
   computed: {
-    style () {
+    style() {
       if (this.highlight) {
         return 'background-color: #9eedca;'
       }
       return ''
-    }
+    },
   },
   watch: {
-    triggerUpdate (newVal, oldVal) {
+    triggerUpdate(newVal, oldVal) {
       this.$forceUpdate()
-    }
-  }
+    },
+  },
 }
 </script>
 

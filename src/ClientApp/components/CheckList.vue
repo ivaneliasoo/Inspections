@@ -1,10 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <div
-        v-for="checklistItem in checkList"
-        :key="checklistItem.checkListId"
-      >
+      <div v-for="checklistItem in checkList" :key="checklistItem.checkListId">
         <div v-for="(check, index) in checklistItem.checks" :key="index">
           <check-item
             :item.sync="list"
@@ -25,22 +22,18 @@ export default Vue.extend({
   props: {
     checkList: {
       required: true,
-      type: Array as () => CheckList[]
-    }
+      type: Array as () => CheckList[],
+    },
   },
   computed: {
     list: {
-      get () {
+      get() {
         return this.checkList
       },
-      set (value) {
+      set(value) {
         this.$emit('update:checkList', value)
-      }
-    }
-  }
+      },
+    },
+  },
 })
 </script>
-
-<style scoped>
-
-</style>

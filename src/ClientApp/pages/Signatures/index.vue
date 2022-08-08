@@ -44,13 +44,11 @@
                 reportId: 0,
                 reportConfigurationId: filter.reportConfigurationId,
                 order: 0,
-              };
-              dialog = true;
+              }
+              dialog = true
             "
           >
-            <v-icon dark>
-              mdi-plus
-            </v-icon>
+            <v-icon dark> mdi-plus </v-icon>
           </v-btn>
           <v-dialog
             v-model="dialog"
@@ -124,7 +122,11 @@
                         >
                           <v-autocomplete
                             v-model="item.reportConfigurationId"
-                            :disabled="item.reportId > 0 || item.id > 0 || filter.reportConfigurationId > 0"
+                            :disabled="
+                              item.reportId > 0 ||
+                              item.id > 0 ||
+                              filter.reportConfigurationId > 0
+                            "
                             :error-messages="errors"
                             :readonly="
                               item.report ? item.report.isClosed : false
@@ -184,9 +186,9 @@
                     color="default"
                     text
                     @click="
-                      reset();
-                      item = { principal: false };
-                      dialog = false;
+                      reset()
+                      item = { principal: false }
+                      dialog = false
                     "
                   >
                     Cancel
@@ -231,8 +233,8 @@
           color="primary"
           class="mr-2"
           @click="
-            selectItem(item);
-            dialog = true;
+            selectItem(item)
+            dialog = true
           "
         >
           mdi-pencil
@@ -242,8 +244,8 @@
           :disabled="item.report ? item.report.isClosed : false"
           color="error"
           @click="
-            selectItem(item);
-            dialogRemove = true;
+            selectItem(item)
+            dialogRemove = true
           "
         >
           mdi-delete
@@ -255,7 +257,15 @@
 
 <script lang="ts">
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { useFetch, useRoute, watch, defineComponent, reactive, computed, ref } from '@nuxtjs/composition-api'
+import {
+  useFetch,
+  useRoute,
+  watch,
+  defineComponent,
+  reactive,
+  computed,
+  ref,
+} from '@nuxtjs/composition-api'
 import { useSignaturesStore } from '~/composables/useSignaturesStore'
 import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
 import { Report, ReportConfiguration, FilterType, Signature } from '~/types'
@@ -269,7 +279,7 @@ export default defineComponent({
     ValidationObserver,
     ValidationProvider,
   },
-  setup () {
+  setup() {
     const route = useRoute()
     const signaturesStore = useSignaturesStore()
     const configurationStore = useConfigurationStore()
@@ -314,7 +324,9 @@ export default defineComponent({
       filterText: '',
       inConfigurationOnly:
         route.value.query.configurationonly === 'true' ? true : false ?? true,
-      reportId: route.value.query.reportid ? parseInt(route.value.query.reportid as string) : undefined,
+      reportId: route.value.query.reportid
+        ? parseInt(route.value.query.reportid as string)
+        : undefined,
       reportConfigurationId: route.value.query.configurationid
         ? parseInt(route.value.query.configurationid as string)
         : undefined,
@@ -341,20 +353,19 @@ export default defineComponent({
         order: 0,
         defaultResponsibleType: '',
         useLoggedInUserAsDefault: false,
-      }
+      },
     })
 
     useFetch(async () => {
       componentState.loading = true
       await Promise.all([
-        reportsStore.getReports(
-          {
-            filter: '',
-            closed: route.value.query.closed,
-            orderBy: 'date',
-            myreports: false,
-            descending: true,
-          }),
+        reportsStore.getReports({
+          filter: '',
+          closed: route.value.query.closed,
+          orderBy: 'date',
+          myreports: false,
+          descending: true,
+        }),
         configurationStore.getConfigurations(''),
         signaturesStore.getSignatures(filter.value),
       ])
@@ -363,14 +374,16 @@ export default defineComponent({
 
     const selectItem = (item: Signature): void => {
       componentState.selectedItem = item
-      signaturesStore.getSignatureById(componentState.selectedItem.id)
+      signaturesStore
+        .getSignatureById(componentState.selectedItem.id)
         .then((resp) => {
           componentState.item = resp
         })
     }
 
     const deleteSignature = () => {
-      signaturesStore.deleteSignature(componentState.selectedItem.id)
+      signaturesStore
+        .deleteSignature(componentState.selectedItem.id)
         .then(() => {
           componentState.dialog = false
         })
@@ -386,9 +399,13 @@ export default defineComponent({
       componentState.dialog = false
     }
 
-    watch(() => filter, async (value) => {
-      await signaturesStore.getSignatures(value)
-    }, { deep: true })
+    watch(
+      () => filter,
+      async (value) => {
+        await signaturesStore.getSignatures(value)
+      },
+      { deep: true }
+    )
 
     const reports = computed((): Report[] => {
       return reportsStore.reportList
@@ -414,10 +431,6 @@ export default defineComponent({
       upsertSignature,
       responsibleTypesList,
     }
-  }
-
+  },
 })
 </script>
-
-<style>
-</style>

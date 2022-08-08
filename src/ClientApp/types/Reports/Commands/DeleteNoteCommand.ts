@@ -1,4 +1,4 @@
 export interface DeleteNoteCommand {
-    reportId: number;
-    id: number;
+  reportId: number
+  id: number
 }

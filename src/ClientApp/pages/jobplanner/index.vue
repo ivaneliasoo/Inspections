@@ -5,6 +5,6 @@
 <script>
 export default {
   name: 'JobScheduler',
-  layout: 'default'
+  layout: 'default',
 }
 </script>

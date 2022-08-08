@@ -1,4 +1,3 @@
-
 export interface DeleteSignatureCommand {
-    id: number;
+  id: number
 }

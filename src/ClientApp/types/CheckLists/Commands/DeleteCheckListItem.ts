@@ -1,5 +1,4 @@
-
 export interface DeleteCheckListItem {
-    idCheckList: number;
-    idCheckListItem: number;
+  idCheckList: number
+  idCheckListItem: number
 }

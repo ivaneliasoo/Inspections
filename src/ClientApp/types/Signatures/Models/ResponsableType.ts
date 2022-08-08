@@ -1,8 +1,7 @@
-
 export enum ResponsableType {
-    Supervisor,
-    Inspector,
-    Witness,
-    LEW,
-    Other
+  Supervisor,
+  Inspector,
+  Witness,
+  LEW,
+  Other,
 }

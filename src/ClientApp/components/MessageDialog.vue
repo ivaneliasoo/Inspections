@@ -23,13 +23,24 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn v-show="showYes" color="success" :loading="loading" text @click="$emit('yes')">
+        <v-btn
+          v-show="showYes"
+          color="success"
+          :loading="loading"
+          text
+          @click="$emit('yes')"
+        >
           {{ yesText }}
         </v-btn>
         <v-btn v-show="showNo" color="error" text @click="$emit('no')">
           {{ noText }}
         </v-btn>
-        <v-btn v-show="showCancel" color="default" text @click="$emit('cancel')">
+        <v-btn
+          v-show="showCancel"
+          color="default"
+          text
+          @click="$emit('cancel')"
+        >
           Cancel
         </v-btn>
       </v-card-actions>
@@ -59,14 +70,16 @@ export default defineComponent({
     },
     actions: {
       type: Array,
-      default: () => { return ['yes', 'no', 'cancel'] }
+      default: () => {
+        return ['yes', 'no', 'cancel']
+      },
     },
     required: {
       type: Boolean,
       default: false,
     },
   },
-  setup (props) {
+  setup(props) {
     const loading = ref(false)
     const dialog = computed(() => {
       return props.visible
@@ -91,7 +104,7 @@ export default defineComponent({
       showCancel,
       loading,
     }
-  }
+  },
 })
 </script>
 <style>

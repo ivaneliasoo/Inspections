@@ -1,4 +1,3 @@
-
 export interface DeletePrintSectionCommand {
-    id: number;
+  id: number
 }

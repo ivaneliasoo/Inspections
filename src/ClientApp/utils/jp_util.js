@@ -1,7 +1,6 @@
-
 export const millisInDay = 60 * 60 * 24 * 1000
 
-export function datediff (date1, date2) {
+export function datediff(date1, date2) {
   // Take the difference between the dates and divide by milliseconds per day.
   // Round to nearest whole number to deal with DST.
   const d1 = string2date(date1)
@@ -9,62 +8,74 @@ export function datediff (date1, date2) {
   return Math.round((d2.getTime() - d1.getTime()) / millisInDay)
 }
 
-export function dateWithoutTime (dateTime) {
+export function dateWithoutTime(dateTime) {
   const date = new Date(dateTime)
   date.setHours(0, 0, 0, 0)
   return date.getTime()
 }
 
-export function dateString (etime) {
+export function dateString(etime) {
   const d = new Date(etime)
   return date2string(d)
 }
 
-export function date2string (d) {
-  return Intl.DateTimeFormat('en-CA', { month: 'numeric', day: 'numeric', year: 'numeric' }).format(d)
+export function date2string(d) {
+  return Intl.DateTimeFormat('en-CA', {
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(d)
 }
 
-export function toIsoDate (date) {
-  const str = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON()
-  return (str.substr(str.length - 1) === 'Z') ? str.substring(0, str.length - 1) : str
+export function toIsoDate(date) {
+  const str = new Date(
+    date.getTime() - date.getTimezoneOffset() * 60000
+  ).toJSON()
+  return str.substr(str.length - 1) === 'Z'
+    ? str.substring(0, str.length - 1)
+    : str
 }
 
-export function string2date (s) {
+export function string2date(s) {
   const b = s.split(/\D+/)
   return new Date(b[0], b[1] - 1, b[2])
 }
 
-export function addDays (date, days) {
+export function addDays(date, days) {
   const result = new Date(date)
   result.setDate(result.getDate() + days)
   return result
 }
 
-export function addDays2Date (date, days) {
+export function addDays2Date(date, days) {
   const d = addDays(string2date(date), days)
   return date2string(d)
 }
 
-export function* dateIterator (startDate, endDate) {
-  for (let i = string2date(startDate); i <= string2date(endDate); i = addDays(i, 1)) {
+export function* dateIterator(startDate, endDate) {
+  for (
+    let i = string2date(startDate);
+    i <= string2date(endDate);
+    i = addDays(i, 1)
+  ) {
     yield date2string(i)
   }
   return null
 }
 
-export function isMonday (strDate) {
+export function isMonday(strDate) {
   return string2date(strDate).getDay() == 1
 }
 
-export function isSunday (strDate) {
+export function isSunday(strDate) {
   return string2date(strDate).getDay() == 0
 }
 
-export function isSaturday (strDate) {
+export function isSaturday(strDate) {
   return string2date(strDate).getDay() == 6
 }
 
-export function printGroups (schedJobGroups) {
+export function printGroups(schedJobGroups) {
   console.log('printGroups')
   for (const groupId of Object.keys(schedJobGroups)) {
     const group = schedJobGroups[groupId]

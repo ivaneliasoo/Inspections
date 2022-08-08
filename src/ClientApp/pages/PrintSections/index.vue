@@ -8,7 +8,7 @@
           message="This operation will remove this Print Section. If Proceed, you no longer get it suggested again"
           :code="printSection.id"
           :description="printSection.description"
-          @yes="deletePrintSection(printSection.id);"
+          @yes="deletePrintSection(printSection.id)"
         />
         <v-col cols="12" md="8" sm="12">
           <v-row>
@@ -25,11 +25,7 @@
             </v-sheet>
             <v-sheet v-if="!editorMode" height="450" fluid>
               <v-row class="pl-4">
-                <v-col
-                  cols="12"
-                  sm="6"
-                  md="4"
-                >
+                <v-col cols="12" sm="6" md="4">
                   <ValidationProvider
                     v-slot="{ errors }"
                     rules="required"
@@ -44,15 +40,14 @@
                   </ValidationProvider>
                 </v-col>
                 <v-col cols="2">
-                  <v-switch v-model="printSection.isMainReport" label="Is Main Report" />
+                  <v-switch
+                    v-model="printSection.isMainReport"
+                    label="Is Main Report"
+                  />
                 </v-col>
               </v-row>
               <v-row class="pl-4">
-                <v-col
-                  cols="12"
-                  sm="6"
-                  md="12"
-                >
+                <v-col cols="12" sm="6" md="12">
                   <ValidationProvider
                     v-slot="{ errors }"
                     rules="required"
@@ -68,11 +63,7 @@
                 </v-col>
               </v-row>
               <v-row class="pl-4">
-                <v-col
-                  cols="12"
-                  sm="6"
-                  md="12"
-                >
+                <v-col cols="12" sm="6" md="12">
                   <v-textarea
                     v-model="editorContent"
                     type="text"
@@ -88,49 +79,50 @@
                 color="success"
                 text
                 :disabled="!valid"
-                @click="upsertPrintSection();"
+                @click="upsertPrintSection()"
               >
                 Save
               </v-btn>
-              <v-btn
-                color="default"
-                text
-              >
-                Cancel
-              </v-btn>
+              <v-btn color="default" text> Cancel </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
         <v-col cols="12" md="4" sm="12">
           <v-card height="568" style="overflow-y: scroll">
-            <v-toolbar
-              color="indigo"
-              dark
-            >
+            <v-toolbar color="indigo" dark>
               <v-toolbar-title>Print Sections</v-toolbar-title>
 
               <v-spacer />
               <v-col cols="12" md="6" sm="12" class="mt-3">
-                <v-text-field
-                  v-model="filter"
-                  type="text"
-                />
+                <v-text-field v-model="filter" type="text" />
               </v-col>
               <v-btn icon @click="getPrintSections(filter)">
                 <v-icon>mdi-magnify</v-icon>
               </v-btn>
-              <v-btn icon @click="isNew=true;reset(); editorContent='';editorMode = false">
+              <v-btn
+                icon
+                @click="
+                  isNew = true
+                  reset()
+                  editorContent = ''
+                  editorMode = false
+                "
+              >
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </v-toolbar>
             <v-list two-line>
-              <v-list-item-group
-                active-class="indigo--text"
-              >
+              <v-list-item-group active-class="indigo--text">
                 <draggable v-model="printSections">
                   <template v-for="(item, index) in printSections">
                     <v-list-item :key="item.code + index">
-                      <v-list-item-content @click="selectPrintSection(item); editorContent = item.content;isNew = false">
+                      <v-list-item-content
+                        @click="
+                          selectPrintSection(item)
+                          editorContent = item.content
+                          isNew = false
+                        "
+                      >
                         <v-list-item-subtitle
                           class="text--primary text-left font-weight-bold"
                         >
@@ -151,11 +143,7 @@
                         >
                           mdi-key-star
                         </v-icon>
-                        <v-icon
-                          v-else
-                          class="mr-6"
-                          color="green darken-3"
-                        >
+                        <v-icon v-else class="mr-6" color="green darken-3">
                           mdi-key-star
                         </v-icon>
                       </v-list-item-action>
@@ -163,7 +151,15 @@
                         <v-list-item-action-text>
                           {{ 'Delete' }}
                         </v-list-item-action-text>
-                        <v-btn icon color="red" :disabled="item.isMainReport" @click=" dialogRemove = true;printSection.id=item.id">
+                        <v-btn
+                          icon
+                          color="red"
+                          :disabled="item.isMainReport"
+                          @click="
+                            dialogRemove = true
+                            printSection.id = item.id
+                          "
+                        >
                           <v-icon>mdi-delete</v-icon>
                         </v-btn>
                       </v-list-item-action>
@@ -186,7 +182,13 @@
 
 <script lang="ts">
 // eslint-disable-next-line import/named
-import { ref, defineComponent, computed, useFetch, watch } from '@nuxtjs/composition-api'
+import {
+  ref,
+  defineComponent,
+  computed,
+  useFetch,
+  watch,
+} from '@nuxtjs/composition-api'
 import draggable from 'vuedraggable'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { usePrintSectionsStore } from '~/composables/usePrintSectionsStore'
@@ -198,10 +200,10 @@ export default defineComponent({
   components: {
     draggable,
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
   },
   layout: undefined,
-  setup () {
+  setup() {
     useGoBack()
     const printSectionsStore = usePrintSectionsStore()
     const dialogRemove = ref<boolean>(false)
@@ -211,11 +213,19 @@ export default defineComponent({
     const selectedTab = ref<string>('basicTab')
     const filter = ref<String>('')
     const editorContent = ref<String>('')
-    const printSection = ref({ id: 0, code: '', description: '', content: '', isMainReport: false, status: 0 } as PrintSectionDTO)
+    const printSection = ref({
+      id: 0,
+      code: '',
+      description: '',
+      content: '',
+      isMainReport: false,
+      status: 0,
+    } as PrintSectionDTO)
 
     const selectPrintSection = (item: PrintSectionDTO): void => {
-      printSectionsStore.getPrintSectionById(item.id)
-        .then(resp => (printSection.value = resp))
+      printSectionsStore
+        .getPrintSectionById(item.id)
+        .then((resp) => (printSection.value = resp))
     }
 
     const printSections = computed((): PrintSectionDTO[] => {
@@ -226,16 +236,22 @@ export default defineComponent({
       await printSectionsStore.getPrintSections({ filter })
     }
 
-    const deletePrintSection = (id :number) => {
-      printSectionsStore.deletePrintSection(id)
-        .then(() => {
-          reset()
-        })
+    const deletePrintSection = (id: number) => {
+      printSectionsStore.deletePrintSection(id).then(() => {
+        reset()
+      })
     }
 
     const reset = () => {
       editorContent.value = ''
-      printSection.value = { id: 0, code: '', description: '', content: '', isMainReport: false, status: 0 }
+      printSection.value = {
+        id: 0,
+        code: '',
+        description: '',
+        content: '',
+        isMainReport: false,
+        status: 0,
+      }
     }
 
     const upsertPrintSection = async () => {
@@ -259,13 +275,17 @@ export default defineComponent({
       await printSectionsStore.getPrintSections(filter.value)
     })
 
-    watch(filter, () => {
-      if (!filter) {
-        return
-      }
+    watch(
+      filter,
+      () => {
+        if (!filter) {
+          return
+        }
 
-      getPrintSections(filter.value.toString())
-    }, { immediate: true, deep: true })
+        getPrintSections(filter.value.toString())
+      },
+      { immediate: true, deep: true }
+    )
 
     return {
       dialogRemove,
@@ -281,11 +301,8 @@ export default defineComponent({
       editorContent,
       deletePrintSection,
       upsertPrintSection,
-      getPrintSections
+      getPrintSections,
     }
-  }
+  },
 })
 </script>
-<style>
-
-</style>

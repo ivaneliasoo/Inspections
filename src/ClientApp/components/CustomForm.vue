@@ -15,7 +15,7 @@
             :key="field.fieldName"
             :cols="
               field.inputType.includes('textarea') ||
-                field.inputType.includes('richtext')
+              field.inputType.includes('richtext')
                 ? 12
                 : 3
             "
@@ -84,7 +84,9 @@
               :prefix="field.preffix"
               :max="field.max"
               :min="field.min"
-              :hint="`${values[field.fieldName][0]} - ${values[field.fieldName][1]}`"
+              :hint="`${values[field.fieldName][0]} - ${
+                values[field.fieldName][1]
+              }`"
               persistent-hint
               @blur="handleSubmit"
               @checked="handleSubmit"
@@ -116,7 +118,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     // eslint-disable-next-line vue/no-mutating-props
     const defaultValues = props.schema
       .sort((a, b) => {
@@ -132,7 +134,10 @@ export default defineComponent({
         if (!acc[value.fieldName]) {
           acc[value.fieldName] = ''
         }
-        acc[value.fieldName] = value.inputType !== 'slider-range' ? value.defaultValue : value.defaultValue.split(',')
+        acc[value.fieldName] =
+          value.inputType !== 'slider-range'
+            ? value.defaultValue
+            : value.defaultValue.split(',')
         return acc
       }, {})
 
@@ -142,7 +147,7 @@ export default defineComponent({
 
     const sections = computed(() => {
       return props.schema
-        .filter(s => s.enabled)
+        .filter((s) => s.enabled)
         .reduce((acc, value) => {
           if (!acc[value.sectionTitle]) {
             acc[value.sectionTitle] = []
@@ -161,5 +166,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style></style>

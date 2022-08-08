@@ -1,8 +1,25 @@
 <template>
   <v-row>
-    <v-col v-for="(option, index) in options" :key="index" cols="12" lg="4" md="4">
-      <v-card min-height="250" min-width="200" class="pt-10" :ripple="option.innerActions ? false:true" @click="option.innerActions ? 0:onCardClick(option)">
-        <v-btn v-if="!option.innerActions || !option.icon" fab :class="option.color" dark>
+    <v-col
+      v-for="(option, index) in options"
+      :key="index"
+      cols="12"
+      lg="4"
+      md="4"
+    >
+      <v-card
+        min-height="250"
+        min-width="200"
+        class="pt-10"
+        :ripple="option.innerActions ? false : true"
+        @click="option.innerActions ? 0 : onCardClick(option)"
+      >
+        <v-btn
+          v-if="!option.innerActions || !option.icon"
+          fab
+          :class="option.color"
+          dark
+        >
           <v-icon>
             {{ option.icon }}
           </v-icon>
@@ -23,8 +40,20 @@
         </v-card-subtitle>
         <v-card-actions>
           <v-row>
-            <v-col v-for="(action, actionIndex) in option.innerActions" :key="actionIndex" cols="6">
-              <v-btn :color="action.color" tile :block="$vuetify.breakpoint.smAndDown" :disabled="!$auth.user.lastEditedReport && action.text === 'Edit Last' " @click.stop="action.action()">
+            <v-col
+              v-for="(action, actionIndex) in option.innerActions"
+              :key="actionIndex"
+              cols="6"
+            >
+              <v-btn
+                :color="action.color"
+                tile
+                :block="$vuetify.breakpoint.smAndDown"
+                :disabled="
+                  !$auth.user.lastEditedReport && action.text === 'Edit Last'
+                "
+                @click.stop="action.action()"
+              >
                 <v-icon>
                   {{ action.icon }}
                 </v-icon>
@@ -39,8 +68,7 @@
 </template>
 
 <script lang="ts">
-import { useRouter } from '@nuxtjs/composition-api'
-import { defineComponent } from '@nuxtjs/composition-api'
+import { useRouter, defineComponent } from '@nuxtjs/composition-api'
 import { CardOption } from '~/types'
 
 export default defineComponent({
@@ -48,23 +76,24 @@ export default defineComponent({
     options: {
       type: Array as () => CardOption[],
       default: () => [],
-      required: true
+      required: true,
     },
   },
-  setup () {
+  setup() {
     const router = useRouter()
     const onCardClick = (option: CardOption) => {
-      const path = typeof option.path === 'function' ? option.path() : option.path
-      if (path) { router.push(path) } else if (option.action) { option.action() }
+      const path =
+        typeof option.path === 'function' ? option.path() : option.path
+      if (path) {
+        router.push(path)
+      } else if (option.action) {
+        option.action()
+      }
     }
 
     return {
       onCardClick,
     }
-  }
+  },
 })
 </script>
-
-<style scoped>
-
-</style>

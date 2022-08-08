@@ -3,9 +3,7 @@
     <header>
       <PrintingLogo />
       <div class="content">
-        <h2 class="subtitle">
-          EI(R1) REPORT
-        </h2>
+        <h2 class="subtitle">EI(R1) REPORT</h2>
       </div>
     </header>
     <div class="wrapper">
@@ -47,11 +45,11 @@
           <span> PARTICULARS OF INSTALLATION </span>
           <div class="particular-inputs">
             <label for=""> Name of Installation: </label>
-            <input v-model="reportData.name" type="text">
+            <input v-model="reportData.name" type="text" />
           </div>
           <div class="particular-inputs">
             <label for=""> Address of Installation: </label>
-            <input v-model="reportData.address" type="text">
+            <input v-model="reportData.address" type="text" />
           </div>
           <div class="particular-inputs">
             <label for=""> Licence No: </label>
@@ -59,41 +57,39 @@
               v-model="reportData.licenseNumber"
               class="special-input"
               type="text"
-            >
+            />
             <label for=""> Date of Inspection: </label>
-            <input v-model="formatedDate" class="special-input" type="text">
+            <input v-model="formatedDate" class="special-input" type="text" />
           </div>
         </div>
       </div>
       <PrintingReportsCheckLists
         v-if="
           reportData.checkLists &&
-            configuration.checkListMetadata &&
-            configuration.checkListMetadata.display === 'Numbered'
+          configuration.checkListMetadata &&
+          configuration.checkListMetadata.display === 'Numbered'
         "
         :check-lists="reportData.checkLists"
       />
       <div
         v-if="
           reportData.checkLists &&
-            configuration.checkListMetadata &&
-            configuration.checkListMetadata.display === 'Inline'
+          configuration.checkListMetadata &&
+          configuration.checkListMetadata.display === 'Inline'
         "
       >
         {{ reportData.checkLists.map((c) => c.text) }}
       </div>
       <div class="row">
-        <table class="my_table">
+        <table class="my-able">
           <tr>
-            <th style="text-align: left">
-              DECLARATION BY LEW
-            </th>
+            <th style="text-align: left">DECLARATION BY LEW</th>
             <th style="text-align: right" />
           </tr>
           <tr>
             <td>
               I have carried out inspection on
-              <input v-model="formatedDate" type="text"> (date of inspection),
+              <input v-model="formatedDate" type="text" /> (date of inspection),
               witnessed by the representative of the licensee and hereby I
               declare that the electrical installation is fit and safe for
               operation.
@@ -109,17 +105,17 @@
               v-model="reportData.signatures[0].responsibleName"
               class="special-input"
               type="text"
-            >
+            />
             <label for=""> Licence No: </label>
             <input
               v-model="reportData.licenseNumber"
               class="special-input"
               type="text"
-            >
+            />
           </div>
           <div class="particular-inputs">
             <label for=""> Signature: </label>
-            <img :src="reportData.signatures[0].drawnSign" width="120" alt="">
+            <img :src="reportData.signatures[0].drawnSign" width="120" alt="" />
           </div>
         </div>
       </div>
@@ -133,15 +129,15 @@
             <input
               v-model="reportData.signatures[1].responsibleName"
               type="text"
-            >
+            />
           </div>
           <div class="particular-inputs">
             <label for=""> Designation: </label>
-            <input v-model="reportData.signatures[1].designation" type="text">
+            <input v-model="reportData.signatures[1].designation" type="text" />
           </div>
           <div class="particular-inputs">
             <label for=""> Signature: </label>
-            <img :src="reportData.signatures[1].drawnSign" width="120" alt="">
+            <img :src="reportData.signatures[1].drawnSign" width="120" alt="" />
           </div>
         </div>
       </div>
@@ -156,7 +152,7 @@ import moment from 'moment'
 export default {
   name: 'PrintingReports',
   layout: 'printlayout',
-  async asyncData ({ route, $axios }) {
+  async asyncData({ route, $axios }) {
     if (route && route.query && route.query.id) {
       const id = parseInt(route.query.id)
       const token = route.query.token
@@ -171,21 +167,21 @@ export default {
           : false
       const result = await $axios.$get(`reports/${id}`, {
         headers: {
-          Authorization: `bearer ${token}`
-        }
+          Authorization: `bearer ${token}`,
+        },
       })
       const photoRecords = await $axios.$get(`reports/${id}/photorecord`, {
         headers: {
-          Authorization: `bearer ${token}`
-        }
+          Authorization: `bearer ${token}`,
+        },
       })
 
       const configuration = await $axios.$get(
         `reportconfiguration/${result.reportConfigurationId}`,
         {
           headers: {
-            Authorization: `bearer ${token}`
-          }
+            Authorization: `bearer ${token}`,
+          },
         }
       )
 
@@ -207,14 +203,14 @@ export default {
         if (pagesLength % 2 !== 0) {
           photoRecordsPages[currentPage].push({
             thumbnailBase64: '',
-            label: ''
+            label: '',
           })
         }
       }
 
       let operationalReadings = {}
       const orform = result.forms.filter(
-        f => f.name === 'OperationalReadings'
+        (f) => f.name === 'OperationalReadings'
       )
       if (result && orform && orform.length > 0) {
         operationalReadings = orform[0].values
@@ -228,102 +224,111 @@ export default {
         isCompoundedPhotoRecord,
         isPrintable: false,
         operationalReadings,
-        configuration
+        configuration,
       }
     }
   },
-  data () {
+  data() {
     return {
       reportId: -1,
       reportData: {},
       photoRecords: [],
-      photoRecordsPages: []
+      photoRecordsPages: [],
     }
   },
   computed: {
-    formatedDate () {
+    formatedDate() {
       if (this.reportData && this.reportData.date) {
         return moment(this.reportData.date).format('DD-MM-YYYY HH:mm')
       }
       return ''
     },
-    lastChecksCount () {
+    lastChecksCount() {
       if (this.reportData && this.reportData.checkLists) {
         return this.reportData.checkLists.length
       }
       return 0
-    }
+    },
   },
   auth: false,
-  mounted () {
+  mounted() {
     window.isPrintable = true
-  }
+  },
 }
 </script>
 
 <style>
-header .container {
-  display: flex;
-  align-items: center;
-}
 .container {
   padding: 20px;
   justify-content: end;
 }
+
+header .container {
+  display: flex;
+  align-items: center;
+}
+
 .wrapper {
   display: flex;
+
   /* align-items: center; */
   flex-direction: column;
   padding: 20px;
   gap: 10px;
 }
+
 .row {
   display: flex;
   flex-wrap: wrap;
 }
+
 .cell {
   overflow: hidden;
   padding: 20px;
   background: #ddd;
   width: 50vw;
 }
+
 .description {
   padding: 20px;
   border: 1px solid black;
 }
+
 .note {
   display: flex;
   flex-direction: column;
 }
+
 .note span {
   text-decoration: underline;
 }
+
 .instructions {
   font-weight: bold;
 }
+
 .instructions span {
   text-decoration: underline;
 }
+
 .particulars {
   width: 100%;
 }
+
 .particulars span {
   font-weight: bold;
   text-decoration: underline;
 }
+
 .particular-inputs {
   display: flex;
-  padding: 20px 0px;
+  padding: 20px 0;
 }
+
 .particular-inputs label {
   width: 150px;
 }
-.particular-inputs input {
-  width: 100%;
-}
-.special-input {
-  width: 50%;
-}
+
 input {
   background-color: transparent;
   border: none;
@@ -331,45 +336,64 @@ input {
   color: #555;
   box-sizing: border-box;
 }
+
+.particular-inputs input {
+  width: 100%;
+}
+
+.special-input {
+  width: 50%;
+}
+
 input:focus {
   outline: none;
 }
+
 .ordered-cell {
   overflow: hidden;
   padding: 20px;
+
   /* margin: 2px 1em; */
   background: #ddd;
+
   /* flex: 1; */
   width: 100%;
   align-items: center;
 }
+
 ol {
   counter-reset: section;
   list-style-type: none;
 }
+
 /* li::before {
     counter-increment: section;
     content: counters(section,".") ". ";
     } */
 .ordered-cell ol {
-  padding: 0px;
+  padding: 0;
 }
+
 .ordered-cell ol li {
   display: flex;
+
   /* justify-content: space-between;
         align-items: center; */
 }
+
 .ordered-cell ol li span {
   text-decoration: underline;
   font-weight: bold;
 }
+
 .list-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
-.my_table {
+
+.my-able {
   width: 100%;
 }
 </style>

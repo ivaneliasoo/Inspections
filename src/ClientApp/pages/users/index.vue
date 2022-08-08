@@ -30,14 +30,12 @@
             dark
             color="primary"
             @click="
-              componentState.dialog = true;
-              componentState.isNew = true;
-              componentState.item = { isAdmin: false };
+              componentState.dialog = true
+              componentState.isNew = true
+              componentState.item = { isAdmin: false }
             "
           >
-            <v-icon dark>
-              mdi-plus
-            </v-icon>
+            <v-icon dark> mdi-plus </v-icon>
           </v-btn>
           <v-dialog
             v-model="componentState.dialog"
@@ -138,8 +136,15 @@
                     </v-row>
                     <v-row>
                       <v-col>
-                        <v-btn color="primary" @click="componentState.showSignature = !componentState.showSignature">
-                          {{ componentState.showSignature ? 'Hide':'Show' }} Sign
+                        <v-btn
+                          color="primary"
+                          @click="
+                            componentState.showSignature =
+                              !componentState.showSignature
+                          "
+                        >
+                          {{ componentState.showSignature ? 'Hide' : 'Show' }}
+                          Sign
                         </v-btn>
                       </v-col>
                     </v-row>
@@ -175,10 +180,10 @@
                     color="default"
                     text
                     @click="
-                      reset();
-                      componentState.item = { principal: false };
-                      componentState.showSignature = false;
-                      componentState.dialog = false;
+                      reset()
+                      componentState.item = { principal: false }
+                      componentState.showSignature = false
+                      componentState.dialog = false
                     "
                   >
                     Cancel
@@ -197,9 +202,9 @@
               class="mr-2"
               v-on="on"
               @click="
-                selectItem(item);
-                componentState.isNew = false;
-                componentState.dialog = true;
+                selectItem(item)
+                componentState.isNew = false
+                componentState.dialog = true
               "
             >
               mdi-pencil
@@ -214,8 +219,8 @@
               color="error"
               v-on="on"
               @click="
-                selectItem(item);
-                componentState.dialogRemove = true;
+                selectItem(item)
+                componentState.dialogRemove = true
               "
             >
               mdi-delete
@@ -232,14 +237,19 @@
 </template>
 <script lang="ts">
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
-import { defineComponent, reactive, computed, useFetch } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  reactive,
+  computed,
+  useFetch,
+} from '@nuxtjs/composition-api'
 import { User, ChangePasswordDTO } from '../../types/Users'
 import { useUsersStore } from '~/composables/useUsersStore'
 import useGoBack from '~/composables/useGoBack'
 
 extend('password', {
   params: ['target'],
-  validate (value, { target }: any) {
+  validate(value, { target }: any) {
     return value === target
   },
   message: 'Password confirmation does not match',
@@ -250,7 +260,7 @@ export default defineComponent({
     ValidationObserver,
     ValidationProvider,
   },
-  setup () {
+  setup() {
     useGoBack()
 
     const usersStore = useUsersStore()
@@ -308,8 +318,9 @@ export default defineComponent({
 
     const selectItem = (item: User): void => {
       componentState.selectedItem = item
-      usersStore.getUserByName(componentState.selectedItem.userName)
-        .then(resp => (componentState.item = resp))
+      usersStore
+        .getUserByName(componentState.selectedItem.userName)
+        .then((resp) => (componentState.item = resp))
     }
 
     useFetch(async ({ error, $auth }: any) => {
@@ -322,10 +333,9 @@ export default defineComponent({
     })
 
     const deleteUser = () => {
-      usersStore.deleteUser(componentState.selectedItem.userName)
-        .then(() => {
-          componentState.dialog = false
-        })
+      usersStore.deleteUser(componentState.selectedItem.userName).then(() => {
+        componentState.dialog = false
+      })
     }
 
     const upsertUser = async () => {
@@ -338,8 +348,7 @@ export default defineComponent({
       }
 
       if (componentState.item.password === componentState.confirmPassword) {
-        await usersStore.changePassword(
-        {
+        await usersStore.changePassword({
           userName: componentState.item.userName,
           currentPassword: '',
           newPassword: componentState.item.password,
@@ -359,8 +368,8 @@ export default defineComponent({
       selectItem,
       deleteUser,
       upsertUser,
-      componentState
+      componentState,
     }
-  }
+  },
 })
 </script>

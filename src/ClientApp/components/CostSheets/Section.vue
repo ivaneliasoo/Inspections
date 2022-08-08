@@ -2,10 +2,7 @@
   <tbody ref="body" class="cs-section">
     <tr @contextmenu="showContextMenu($event, -1)">
       <td class="col-group-1">
-        <TextField
-          v-model="section.secNumber"
-          :col="0"
-        />
+        <TextField v-model="section.secNumber" :col="0" />
       </td>
       <td class="col-group-2" colspan="4">
         <TextField
@@ -56,22 +53,14 @@
       :key="index"
       @contextmenu="showContextMenu($event, index)"
     >
-      <td class="col-group-1" style="padding-left: 25px;">
-        <TextField
-          v-model="item.itemNumber"
-        />
+      <td class="col-group-1" style="padding-left: 25px">
+        <TextField v-model="item.itemNumber" />
       </td>
       <td class="col-group-3">
-        <TextArea
-          v-model="item.description"
-          @change="$emit('update-sheet')"
-        />
+        <TextArea v-model="item.description" @change="$emit('update-sheet')" />
       </td>
       <td class="col-group-2">
-        <NumberField
-          v-model="item.noCables"
-          @change="$emit('update-sheet')"
-        />
+        <NumberField v-model="item.noCables" @change="$emit('update-sheet')" />
       </td>
       <td class="col-group-2">
         <NumberField
@@ -81,10 +70,7 @@
         />
       </td>
       <td class="col-group-2">
-        <NumberField
-          v-model="item.units"
-          @change="$emit('update-sheet')"
-        />
+        <NumberField v-model="item.units" @change="$emit('update-sheet')" />
       </td>
       <td class="col-group-4 text-caption">
         <NumberField
@@ -93,7 +79,7 @@
           :read-only="true"
         />
       </td>
-      <td class="col-group-1  text-caption">
+      <td class="col-group-1 text-caption">
         <NumberField
           v-model="item.materialMarkup"
           format="percent"
@@ -121,9 +107,9 @@
           :read-only="true"
         />
       </td>
-      <td class="col-group-1 text-caption" style="width: 100px;" />
-      <td class="col-group-1 text-caption" style="width: 100px;" />
-      <td class="col-group-1 text-caption" style="width: 100px;" />
+      <td class="col-group-1 text-caption" style="width: 100px" />
+      <td class="col-group-1 text-caption" style="width: 100px" />
+      <td class="col-group-1 text-caption" style="width: 100px" />
     </tr>
     <tr v-show="false">
       <v-menu
@@ -136,9 +122,7 @@
       >
         <v-list dense>
           <v-list-item>
-            <v-list-item-title @click="addItem">
-              Add item
-            </v-list-item-title>
+            <v-list-item-title @click="addItem"> Add item </v-list-item-title>
           </v-list-item>
           <v-list-item>
             <v-list-item-title @click="delItem">
@@ -157,7 +141,7 @@
             </v-list-item-title>
           </v-list-item>
           <v-divider />
-          <v-list-item v-if="template!==null">
+          <v-list-item v-if="template !== null">
             <v-list-item-title @click="addFromTemplate">
               Select from template
             </v-list-item-title>
@@ -169,15 +153,14 @@
 </template>
 
 <script>
-import { Section, Item }
-  from '../../utils/costsheets/entity.js'
+import { Section, Item } from '../../utils/costsheets/entity.js'
 
 export default {
   props: {
     section: Object,
     index: Number,
     template: Object,
-    triggerUpdate: Number
+    triggerUpdate: Number,
   },
   data: () => ({
     selected: null,
@@ -187,15 +170,15 @@ export default {
     rowIndex: 0,
     xcoord: 0,
     ycoord: 0,
-    newSectionPosition: 'after'
+    newSectionPosition: 'after',
   }),
   watch: {
-    triggerUpdate (newVal, oldVal) {
+    triggerUpdate(newVal, oldVal) {
       this.$forceUpdate()
-    }
+    },
   },
   methods: {
-    showContextMenu (e, index) {
+    showContextMenu(e, index) {
       e.preventDefault()
       this.fromTemplate = false
       this.xcoord = e.clientX
@@ -203,28 +186,33 @@ export default {
       this.rowIndex = index
       this.contextMenuVisible = true
     },
-    closeContextMenu () {
+    closeContextMenu() {
       this.contextMenuVisible = false
     },
-    openSelectSection () {
+    openSelectSection() {
       this.selectSectionDialog = true
     },
-    selectSection (newSectionIndex) {
+    selectSection(newSectionIndex) {
       this.closeSelectSection()
-      this.$emit('add-section', this.index, this.newSectionPosition, newSectionIndex)
+      this.$emit(
+        'add-section',
+        this.index,
+        this.newSectionPosition,
+        newSectionIndex
+      )
     },
-    selectItem (newSecIndex, newItemIndex) {
+    selectItem(newSecIndex, newItemIndex) {
       this.closeSelectSection()
       this.insertItem(newSecIndex, newItemIndex)
     },
-    closeSelectSection () {
+    closeSelectSection() {
       this.selectSectionDialog = false
     },
-    addItem () {
+    addItem() {
       this.closeContextMenu()
       this.insertItem(-1, -1)
     },
-    insertItem (newSecIndex, newItemIndex) {
+    insertItem(newSecIndex, newItemIndex) {
       let newItem
       if (newItemIndex > -1) {
         newItem = this.template.sections[newSecIndex].items[newItemIndex]
@@ -234,12 +222,12 @@ export default {
       this.section.items.splice(this.rowIndex + 1, 0, newItem)
       this.section.renumberItems()
     },
-    delItem () {
+    delItem() {
       this.closeContextMenu()
       this.section.items.splice(this.rowIndex, 1)
       this.section.renumberItems()
     },
-    addFromTemplate () {
+    addFromTemplate() {
       this.closeContextMenu()
       if (this.template == null) {
         this.selectSectionDialog = false
@@ -250,18 +238,18 @@ export default {
       this.newSectionPosition = 'below'
       this.openSelectSection()
     },
-    addSection (position) {
+    addSection(position) {
       this.closeContextMenu()
       this.$emit('add-section', this.index, position, -1)
     },
-    delSection () {
+    delSection() {
       this.closeContextMenu()
       this.$emit('del-section', this.index)
     },
-    updateMaterialMarkup () {
+    updateMaterialMarkup() {
       this.section.updateMaterialMarkup()
       this.$emit('update-sheet')
-    }
+    },
   },
 }
 </script>

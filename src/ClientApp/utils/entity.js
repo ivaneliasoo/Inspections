@@ -14,7 +14,7 @@ export class EnergyReport {
   lastUpdate
   updated
 
-  constructor (er) {
+  constructor(er) {
     this.id = 0
     this.name = ''
     this.location = ''
@@ -42,14 +42,14 @@ export class EnergyReport {
         separation: 0,
         reportAuthor: '',
         instrumentUsed: '',
-        serialNumber: ''
+        serialNumber: '',
       }
     }
 
     this.cover.separation = parseInt(this.cover.separation)
   }
 
-  toJSON () {
+  toJSON() {
     return {
       id: this.id,
       name: this.name,
@@ -62,7 +62,7 @@ export class EnergyReport {
       cover: this.cover,
       rawCsvData: JSON.stringify(this.rawCsvData),
       lastUpdate: this.lastUpdate,
-      updated: this.updated
+      updated: this.updated,
     }
   }
 }
@@ -73,7 +73,7 @@ export class Mapping {
   color
   param
 
-  constructor (m) {
+  constructor(m) {
     if (m) {
       const props = Object.getOwnPropertyNames(m)
       for (const prop of props) {
@@ -82,11 +82,11 @@ export class Mapping {
     }
   }
 
-  get col () {
+  get col() {
     return getColName(this.#col)
   }
 
-  set col (c) {
+  set col(c) {
     this.#col = c
   }
 }
@@ -95,7 +95,7 @@ export class Param {
   name
   #col
 
-  constructor (p) {
+  constructor(p) {
     if (p) {
       const props = Object.getOwnPropertyNames(p)
       for (const prop of props) {
@@ -104,11 +104,11 @@ export class Param {
     }
   }
 
-  get col () {
+  get col() {
     return getColName(this.#col)
   }
 
-  set col (c) {
+  set col(c) {
     this.#col = c
   }
 }

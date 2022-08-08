@@ -30,14 +30,16 @@
             dark
             color="primary"
             @click="
-              componentState.dialog = true;
-              componentState.isNew = true;
-              componentState.item = { id: 0, country: 'Singapore', addressLine2: '' };
+              componentState.dialog = true
+              componentState.isNew = true
+              componentState.item = {
+                id: 0,
+                country: 'Singapore',
+                addressLine2: '',
+              }
             "
           >
-            <v-icon dark>
-              mdi-plus
-            </v-icon>
+            <v-icon dark> mdi-plus </v-icon>
           </v-btn>
           <v-dialog
             v-model="componentState.dialog"
@@ -157,9 +159,13 @@
                     color="default"
                     text
                     @click="
-                      reset();
-                      componentState.item = { id: 0, country: 'Singapore', addressLine2: '' };
-                      componentState.dialog = false;
+                      reset()
+                      componentState.item = {
+                        id: 0,
+                        country: 'Singapore',
+                        addressLine2: '',
+                      }
+                      componentState.dialog = false
                     "
                   >
                     Cancel
@@ -178,9 +184,9 @@
               class="mr-2"
               v-on="on"
               @click="
-                selectItem(item);
-                componentState.isNew = false;
-                componentState.dialog = true;
+                selectItem(item)
+                componentState.isNew = false
+                componentState.dialog = true
               "
             >
               mdi-pencil
@@ -194,8 +200,8 @@
               color="error"
               v-on="on"
               @click="
-                selectItem(item);
-                componentState.dialogRemove = true;
+                selectItem(item)
+                componentState.dialogRemove = true
               "
             >
               mdi-delete
@@ -209,7 +215,13 @@
 </template>
 <script lang="ts">
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { computed, useFetch, reactive, useContext, defineComponent } from '@nuxtjs/composition-api'
+import {
+  computed,
+  useFetch,
+  reactive,
+  useContext,
+  defineComponent,
+} from '@nuxtjs/composition-api'
 import { AddressDto } from '@/types/Addresses'
 import { useAddressStore } from '~/composables/useAddressStore'
 import { useLicensesStore } from '~/composables/useLicensesStore'
@@ -217,9 +229,10 @@ import useGoBack from '~/composables/useGoBack'
 
 export default defineComponent({
   components: {
-    ValidationObserver, ValidationProvider
+    ValidationObserver,
+    ValidationProvider,
   },
-  setup () {
+  setup() {
     useGoBack()
     const addressStore = useAddressStore()
     const licensesStore = useLicensesStore()
@@ -230,38 +243,38 @@ export default defineComponent({
         text: 'ID',
         value: 'id',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Address',
         value: 'addressLine',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Unit',
         value: 'unit',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Country',
         value: 'country',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Postal Code',
         value: 'postalCode',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: '',
         value: 'actions',
         sortable: false,
-        align: 'left'
-      }
+        align: 'left',
+      },
     ]
 
     const componentState = reactive({
@@ -269,7 +282,7 @@ export default defineComponent({
       dialogRemove: false,
       loading: false,
       filter: {
-        filterText: ''
+        filterText: '',
       },
       selectedItem: {} as AddressDto,
       item: { principal: false },
@@ -295,23 +308,28 @@ export default defineComponent({
           Volt: 0,
           KVA: 0,
           validityStart: null,
-          validityEnd: null
+          validityEnd: null,
         },
-        ...licensesStore.licensesList
+        ...licensesStore.licensesList,
       ]
     })
 
     useFetch(async () => {
-      if (!$auth.user.isAdmin) { error({ statusCode: 403, message: 'Forbidden' }) }
+      if (!$auth.user.isAdmin) {
+        error({ statusCode: 403, message: 'Forbidden' })
+      }
 
-      await Promise.all([addressStore.getAddresses({}),
-        licensesStore.getLicenses({})])
+      await Promise.all([
+        addressStore.getAddresses({}),
+        licensesStore.getLicenses({}),
+      ])
     })
 
     const selectItem = (item: AddressDto): void => {
       componentState.selectedItem = item
-      addressStore.getAddressById(componentState.selectedItem.id)
-        .then(resp => (componentState.item = resp))
+      addressStore
+        .getAddressById(componentState.selectedItem.id)
+        .then((resp) => (componentState.item = resp))
     }
 
     const deleteAddress = async () => {
@@ -328,7 +346,7 @@ export default defineComponent({
           await addressStore.getAddresses({})
         }
       } catch (error) {
-      // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console
         console.debug({ error })
       } finally {
         componentState.dialog = false
@@ -347,7 +365,6 @@ export default defineComponent({
       licenses,
       isAdmin,
     }
-  }
-
+  },
 })
 </script>

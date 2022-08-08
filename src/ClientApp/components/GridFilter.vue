@@ -12,9 +12,9 @@
     @keydown="keydown"
     @click:append="$emit('filter', filterText)"
     @click:clear="
-      filterText = '';
-      $emit('filter', filterText);
-      $emit('clear', filterText);
+      filterText = ''
+      $emit('filter', filterText)
+      $emit('clear', filterText)
     "
   />
 </template>
@@ -33,7 +33,7 @@ export default defineComponent({
       default: 'enter text',
     },
   },
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const placeholderText = computed(() => props.placeholder)
 
     const filterText = computed({
@@ -57,6 +57,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style>
-</style>

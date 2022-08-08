@@ -15,9 +15,7 @@
       yes-text="Save"
       @yes="addItem"
     >
-      <template #title="">
-        Create CheckList Item
-      </template>
+      <template #title=""> Create CheckList Item </template>
       <ValidationObserver ref="obsNew" tag="form">
         <v-row>
           <v-col>
@@ -100,9 +98,7 @@
     <v-row>
       <v-col v-if="!$vuetify.breakpoint.smAndDown" cols="5" class="text-left">
         <v-list nav dense>
-          <v-subheader class="text-h6">
-            Checklist Items
-          </v-subheader>
+          <v-subheader class="text-h6"> Checklist Items </v-subheader>
           <v-subheader>
             Select an item to view/edit
             <v-spacer />
@@ -114,18 +110,14 @@
               color="primary"
               @click="dialogNew = true"
             >
-              <v-icon dark>
-                mdi-plus
-              </v-icon>
+              <v-icon dark> mdi-plus </v-icon>
             </v-btn>
           </v-subheader>
           <v-list-item-group v-model="selectedItem" color="primary">
             <v-list-item v-for="(item, i) in checkList.checks" :key="i">
               <v-list-item-content>
                 <v-list-item-title>
-                  <v-chip v-if="item.required" x-small>
-                    required
-                  </v-chip>
+                  <v-chip v-if="item.required" x-small> required </v-chip>
                   {{ item.text }}
                 </v-list-item-title>
               </v-list-item-content>
@@ -140,9 +132,7 @@
             {{ selectedItemData.text }}
           </v-card-title>
           <v-card-subtitle v-if="selectedItemData !== null" class="text-left">
-            <v-chip v-if="selectedItemData.required" x-small>
-              required
-            </v-chip>
+            <v-chip v-if="selectedItemData.required" x-small> required </v-chip>
 
             <v-btn
               class="mx-2"
@@ -152,9 +142,7 @@
               color="error"
               @click="dialogRemove = true"
             >
-              <v-icon dark>
-                mdi-minus
-              </v-icon>
+              <v-icon dark> mdi-minus </v-icon>
             </v-btn>
           </v-card-subtitle>
           <ValidationObserver v-slot="{ invalid }" tag="form">
@@ -221,7 +209,7 @@ import {
   UpdateCheckListItemCommand,
   CheckListParam,
   AddCheckListItemCommand,
-  AddCheckListCommand
+  AddCheckListCommand,
 } from '~/types'
 import useGoBack from '~/composables/useGoBack'
 import { useChecklistStore } from '~/composables/useChecklistStore'
@@ -230,9 +218,9 @@ export default defineComponent({
   name: 'AddEditCheckList',
   components: {
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
   },
-  setup () {
+  setup() {
     useGoBack()
     const router = useRouter()
     const route = useRoute()
@@ -245,7 +233,7 @@ export default defineComponent({
     const selectedItem = ref(-1)
     const selectedItemData = ref<CheckListItem | null>(null)
     const newItemData = ref<CheckListItem | null>({
-      textParams: [] as CheckListParam[]
+      textParams: [] as CheckListParam[],
     } as CheckListItem)
     const currentCheckList = ref<CheckList>({} as CheckList)
 
@@ -254,20 +242,20 @@ export default defineComponent({
         text: 'Key',
         value: 'key',
         sortable: true,
-        align: 'center'
+        align: 'center',
       },
       {
         text: 'Value',
         value: 'value',
         sortable: true,
-        align: 'center'
+        align: 'center',
       },
       {
         text: 'Type',
         value: 'type',
         sortable: true,
-        align: 'center'
-      }
+        align: 'center',
+      },
     ])
 
     const { fetch } = useFetch(async () => {
@@ -283,10 +271,12 @@ export default defineComponent({
       return checklistStore.$state.currentCheckList
     })
 
-    watch(() => selectedItem.value,
+    watch(
+      () => selectedItem.value,
       (item, _) => {
         selectedItemData.value = Object.assign({}, checkList.value.checks[item])
-      })
+      }
+    )
 
     const saveItem = async () => {
       const command: UpdateCheckListItemCommand = {
@@ -296,7 +286,7 @@ export default defineComponent({
         checked: selectedItemData.value!.checked ? 1 : 0,
         editable: selectedItemData.value!.editable,
         required: selectedItemData.value!.required,
-        remarks: selectedItemData.value!.remarks
+        remarks: selectedItemData.value!.remarks,
       }
       await checklistStore.updateCheckListItem(command)
     }
@@ -309,7 +299,7 @@ export default defineComponent({
         editable: newItemData.value!.editable,
         required: newItemData.value!.required,
         remarks: newItemData.value!.remarks,
-        checklistParams: []
+        checklistParams: [],
       }
 
       const isValid = await obsNew.value?.validate()
@@ -327,7 +317,7 @@ export default defineComponent({
     const removeItem = async () => {
       const command: DeleteCheckListItem = {
         idCheckListItem: selectedItemData.value!.id,
-        idCheckList: parseInt(route.value.params.id)
+        idCheckList: parseInt(route.value.params.id),
       }
       selectedItem.value -= 1
       await checklistStore.deleteCheckListItem(command)
@@ -338,7 +328,7 @@ export default defineComponent({
         idCheckList: parseInt(route.value.params.id),
         text: currentCheckList.value.text,
         annotation: currentCheckList.value.annotation,
-        isConfiguration: currentCheckList.value.isConfiguration
+        isConfiguration: currentCheckList.value.isConfiguration,
       }
 
       const addCommand: AddCheckListCommand = {
@@ -346,7 +336,7 @@ export default defineComponent({
         annotation: currentCheckList.value.annotation,
         isConfiguration: currentCheckList.value.isConfiguration,
         textParams: [],
-        items: []
+        items: [],
       }
 
       try {
@@ -374,8 +364,8 @@ export default defineComponent({
       saveItem,
       addItem,
       removeItem,
-      saveCheckList
+      saveCheckList,
     }
-  }
+  },
 })
 </script>

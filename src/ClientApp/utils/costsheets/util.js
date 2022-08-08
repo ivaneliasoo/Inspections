@@ -1,12 +1,15 @@
-export function endpoint (p) {
+export function endpoint(p) {
   const param = p ? '/' + p : ''
   // return `http://localhost:5000/api/costsheet${param}`
   return `/costsheet${param}`
 }
 
-export function fmt (value, decimals, fmt) {
+export function fmt(value, decimals, fmt) {
   // value = Number(value).toFixed(decimals);
-  value = Number(value).toLocaleString('en', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+  value = Number(value).toLocaleString('en', {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  })
   if (!fmt) {
     return value
   }
@@ -36,5 +39,5 @@ export const border = {
   tr: [false, true, true, false],
   right: [false, false, true, false],
   rb: [false, false, true, true],
-  bottom: [false, false, false, true]
+  bottom: [false, false, false, true],
 }

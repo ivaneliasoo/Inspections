@@ -1,8 +1,17 @@
+const dateFormat = Intl.DateTimeFormat('en-SG', {
+  month: 'numeric',
+  day: 'numeric',
+  year: 'numeric',
+  hourCycle: 'h23',
+})
+const timeFormat = Intl.DateTimeFormat('en-SG', {
+  hour: 'numeric',
+  minute: 'numeric',
+  second: 'numeric',
+  hourCycle: 'h23',
+})
 
-const dateFormat = Intl.DateTimeFormat('en-SG', { month: 'numeric', day: 'numeric', year: 'numeric', hourCycle: 'h23' })
-const timeFormat = Intl.DateTimeFormat('en-SG', { hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23' })
-
-function excluded (col, exclude) {
+function excluded(col, exclude) {
   for (const excol of exclude) {
     if (col === excol.name) {
       return true
@@ -11,7 +20,7 @@ function excluded (col, exclude) {
   return false
 }
 
-function copyRow (row, exclude) {
+function copyRow(row, exclude) {
   const r = {}
   for (const prop of Object.keys(row)) {
     if (prop !== 'DateTime' && !excluded(prop, exclude)) {
@@ -28,12 +37,12 @@ function copyRow (row, exclude) {
   return r
 }
 
-export function adjustData (data, idx, exclude) {
+export function adjustData(data, idx, exclude) {
   // console.log(JSON.stringify(data[0]))
   const r = new Array(data.length)
   let t1 = data[0].DateTime.getTime()
   let t2 = data[idx].DateTime.getTime()
-  const delta = (data[2].DateTime.getTime() - data[1].DateTime.getTime())
+  const delta = data[2].DateTime.getTime() - data[1].DateTime.getTime()
   for (let i = 0, j = idx; i < idx; i++, j++) {
     const row1 = copyRow(data[i], exclude)
     const d = new Date(t1)
@@ -54,11 +63,11 @@ export function adjustData (data, idx, exclude) {
   return r
 }
 
-export function adjustDates (data, startDate, exclude) {
+export function adjustDates(data, startDate, exclude) {
   // console.log(JSON.stringify(data[0]))
   const r = new Array(data.length)
   // let t1 = data[0].DateTime.getTime()
-  const delta = (data[2].DateTime.getTime() - data[1].DateTime.getTime())
+  const delta = data[2].DateTime.getTime() - data[1].DateTime.getTime()
   let t1 = startDate.getTime()
   for (let i = 0; i < data.length; i++) {
     const row1 = copyRow(data[i], exclude)
@@ -71,11 +80,11 @@ export function adjustDates (data, startDate, exclude) {
   return r
 }
 
-export function expandData (data, idx) {
+export function expandData(data, idx) {
   // console.log(JSON.stringify(data[0]))
   const r = []
   let t = data[0].DateTime.getTime()
-  const delta = (data[2].DateTime.getTime() - data[1].DateTime.getTime())
+  const delta = data[2].DateTime.getTime() - data[1].DateTime.getTime()
   for (let i = 0; i < idx; i++) {
     const row1 = copyRow(data[i])
     // delete row1.index
@@ -97,7 +106,7 @@ export function expandData (data, idx) {
   return r
 }
 
-export function getColName (colName) {
+export function getColName(colName) {
   if (colName === 'Date' || colName === 'Time' || colName === 'DateTime') {
     return colName
   }

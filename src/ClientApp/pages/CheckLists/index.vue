@@ -9,9 +9,7 @@
       @yes="removeCheckList(selectedItem)"
     />
     <message-dialog v-model="dialogItems" :actions="[]">
-      <template #title="{}">
-        {{ selectedItem.text }} Items
-      </template>
+      <template #title="{}"> {{ selectedItem.text }} Items </template>
       <template #subtitle="{}">
         <v-list subheader two-line flat>
           <v-subheader>Items &amp; Params</v-subheader>
@@ -55,9 +53,7 @@
             color="primary"
             @click="$router.push({ name: 'CheckLists-id', params: { id: -1 } })"
           >
-            <v-icon dark>
-              mdi-plus
-            </v-icon>
+            <v-icon dark> mdi-plus </v-icon>
           </v-btn>
         </v-toolbar>
         <v-row justify="space-around" class="ml-2 mr-2">
@@ -94,12 +90,12 @@
           color="primary"
           class="mr-2"
           @click="
-            selectItem(item);
+            selectItem(item)
             router.push({
               name: 'CheckLists-id',
               params: { id: selectedItem.id },
-            });
-            dialog = true;
+            })
+            dialog = true
           "
         >
           mdi-pencil
@@ -107,8 +103,8 @@
         <v-icon
           color="error"
           @click="
-            selectItem(item);
-            dialogRemove = true;
+            selectItem(item)
+            dialogRemove = true
           "
         >
           mdi-delete
@@ -119,15 +115,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, useRoute, ref, watch, useFetch, useRouter } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  reactive,
+  useRoute,
+  ref,
+  watch,
+  useFetch,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { useChecklistStore } from '~/composables/useChecklistStore'
 import { useConfigurationStore } from '~/composables/useConfigurationStore'
 import { useReportsStore } from '~/composables/useReportsStore'
-import { CheckList, CheckListItem, FilterType, ReportConfiguration, Report } from '@/types'
+import {
+  CheckList,
+  CheckListItem,
+  FilterType,
+  ReportConfiguration,
+  Report,
+} from '@/types'
 import useGoBack from '~/composables/useGoBack'
 
 export default defineComponent({
-  setup () {
+  setup() {
     useGoBack()
     const checklistsStore = useChecklistStore()
     const configurationsStore = useConfigurationStore()
@@ -141,43 +151,48 @@ export default defineComponent({
         value: 'id',
         sortable: true,
         align: 'center',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Text',
         value: 'text',
         sortable: true,
         align: 'left',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Annotation',
         value: 'annotation',
         sortable: true,
         align: 'left',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Child Items',
         value: 'totalItems',
         sortable: true,
         align: 'center',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: '',
         value: 'actions',
         sortable: false,
         align: 'center',
-        class: 'secundary'
-      }
+        class: 'secundary',
+      },
     ]
 
     const filter: FilterType = {
       filterText: '',
-      inConfigurationOnly: route.value.query.configurationonly === 'true' ? true : false ?? true,
-      reportId: route.value.query.reportid ? parseInt(route.value.query.reportid as string) : 1001,
-      reportConfigurationId: route.value.query.configurationid ? parseInt(route.value.query.configurationid as string) : 1
+      inConfigurationOnly:
+        route.value.query.configurationonly === 'true' ? true : false ?? true,
+      reportId: route.value.query.reportid
+        ? parseInt(route.value.query.reportid as string)
+        : 1001,
+      reportConfigurationId: route.value.query.configurationid
+        ? parseInt(route.value.query.configurationid as string)
+        : 1,
     }
 
     const selectedItem = ref<CheckList>({} as CheckList)
@@ -192,9 +207,17 @@ export default defineComponent({
     useFetch(async () => {
       state.loading = true
 
-      await Promise.all([reportsStore.getReports({ filter: '', closed: route.value.query.closed, orderBy: 'date', myreports: false, descending: true }),
+      await Promise.all([
+        reportsStore.getReports({
+          filter: '',
+          closed: route.value.query.closed,
+          orderBy: 'date',
+          myreports: false,
+          descending: true,
+        }),
         configurationsStore.getConfigurations(''),
-        checklistsStore.getChecklists(filter)])
+        checklistsStore.getChecklists(filter),
+      ])
 
       state.loading = false
     })
@@ -215,11 +238,16 @@ export default defineComponent({
       state.loading = false
     }
 
-    watch(() => filter, (value) => {
-      state.loading = true
-      checklistsStore.getChecklists(value)
-        .finally(() => { state.loading = false })
-    }, { deep: true })
+    watch(
+      () => filter,
+      (value) => {
+        state.loading = true
+        checklistsStore.getChecklists(value).finally(() => {
+          state.loading = false
+        })
+      },
+      { deep: true }
+    )
 
     const checks = (): CheckList[] => {
       return checklistsStore.$state.checkLists
@@ -251,6 +279,6 @@ export default defineComponent({
       route,
       router,
     }
-  }
+  },
 })
 </script>

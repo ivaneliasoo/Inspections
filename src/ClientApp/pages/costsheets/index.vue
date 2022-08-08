@@ -5,6 +5,6 @@
 <script>
 export default {
   name: 'CostSheets',
-  layout: 'default'
+  layout: 'default',
 }
 </script>

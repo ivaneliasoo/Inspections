@@ -17,7 +17,7 @@
             height="200px"
           >
             <v-card-title class="text-uppercase">
-              {{ photo ? photo.label : "" }}
+              {{ photo ? photo.label : '' }}
             </v-card-title>
           </v-img>
           <v-card-actions>
@@ -79,7 +79,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const state = reactive({
       showCarousel: false,
       currentPhoto: 0,
@@ -93,18 +93,15 @@ export default defineComponent({
     })
 
     const removePhoto = (id: number) => {
-    filesSync!.value.splice(id, 1)
-    props.urls!.splice(id, 1)
+      filesSync!.value.splice(id, 1)
+      props.urls!.splice(id, 1)
     }
 
     return {
       filesSync,
       removePhoto,
-      state
+      state,
     }
-  }
+  },
 })
 </script>
-
-<style scoped>
-</style>

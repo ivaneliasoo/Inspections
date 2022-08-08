@@ -3,12 +3,12 @@ import { required, email } from 'vee-validate/dist/rules'
 
 extend('required', {
   ...required,
-  message: 'Required Field'
+  message: 'Required Field',
 })
 
 extend('email', {
   ...email,
-  message: 'Invalid Email'
+  message: 'Invalid Email',
 })
 
 extend('precedesDate', {
@@ -16,7 +16,7 @@ extend('precedesDate', {
     return dateTo >= dateFrom
   },
   message: 'Invalid Dates Range',
-  params: [{ name: 'dateFrom', isTarget: true }]
+  params: [{ name: 'dateFrom', isTarget: true }],
 })
 
 extend('password', {
@@ -24,5 +24,5 @@ extend('password', {
   validate: (value, { other }: any) => {
     return value === other
   },
-  message: 'Passwords do not match.'
+  message: 'Passwords do not match.',
 })

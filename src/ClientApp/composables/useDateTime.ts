@@ -5,7 +5,10 @@ const useDateTime = () => {
     return DateTime.fromISO(date).toLocaleString()
   }
 
-  const formatDate = (date: string, format: string = 'yyyy-MM-dd HH:mm'): string => {
+  const formatDate = (
+    date: string,
+    format: string = 'yyyy-MM-dd HH:mm'
+  ): string => {
     return DateTime.fromISO(date).toFormat(format)
   }
 

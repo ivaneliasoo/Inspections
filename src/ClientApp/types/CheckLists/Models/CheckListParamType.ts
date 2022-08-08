@@ -1,7 +1,6 @@
-
 export enum CheckListParamType {
-    IntParam,
-    StringParam,
-    BooleanParam,
-    DateParam
+  IntParam,
+  StringParam,
+  BooleanParam,
+  DateParam,
 }

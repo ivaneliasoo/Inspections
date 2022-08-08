@@ -6,21 +6,16 @@
       type="search"
       :size="size"
       :placeholder="placeHolder"
-      style="border: none; border-color: transparent; outline: none;"
+      style="border: none; border-color: transparent; outline: none"
       @input="search"
-    >
-    <v-icon @click="findPrevious">
-      mdi-chevron-up
-    </v-icon>
-    <v-icon @click="findNext">
-      mdi-chevron-down
-    </v-icon>
+    />
+    <v-icon @click="findPrevious"> mdi-chevron-up </v-icon>
+    <v-icon @click="findNext"> mdi-chevron-down </v-icon>
   </div>
 </template>
 
 <script>
-import { Section, Item, CostSheet }
-  from '../../utils/costsheets/entity.js'
+import { Section, Item, CostSheet } from '../../utils/costsheets/entity.js'
 import { endpoint } from '../../utils/costsheets/util.js'
 import { toIsoDate } from '~/utils/jp_util.js'
 
@@ -30,22 +25,22 @@ export default {
     fieldNames: Array,
     placeHolder: String,
     size: Number,
-    compareFunc: String
+    compareFunc: String,
   },
   data: () => ({
     // fieldName: "project",
     searchValue: '',
     searchIndex: -1,
-    curRow: null
+    curRow: null,
   }),
   methods: {
-    startsWith (dataValue, searchValue) {
+    startsWith(dataValue, searchValue) {
       return dataValue.startsWith(searchValue)
     },
-    includes (dataValue, searchValue) {
+    includes(dataValue, searchValue) {
       return dataValue.toLowerCase().includes(searchValue.toLowerCase())
     },
-    search () {
+    search() {
       const compareFunc = this.compareFunc
       this.searchIndex = -1
       for (let i = 0; i < this.data.length; i++) {
@@ -56,9 +51,9 @@ export default {
             return
           }
         }
-      };
+      }
     },
-    findNext () {
+    findNext() {
       if (this.searchIndex === -1) {
         return
       }
@@ -74,9 +69,9 @@ export default {
             i = 0
           }
         }
-      };
+      }
     },
-    findPrevious () {
+    findPrevious() {
       if (this.searchIndex === -1) {
         return
       }
@@ -92,15 +87,12 @@ export default {
             i = this.data.length - 1
           }
         }
-      };
+      }
     },
-    scrollTo (line) {
+    scrollTo(line) {
       // console.log("scrollTo", line);
       this.$emit('scroll_to', line)
-    }
-  }
+    },
+  },
 }
 </script>
-
-<style scoped>
-</style>

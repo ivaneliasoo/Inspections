@@ -1,4 +1,3 @@
-
 export class Item {
   itemNumber
   description
@@ -8,7 +7,7 @@ export class Item {
   materialMarkup
   labourCostUnit
 
-  constructor (item) {
+  constructor(item) {
     this.itemNumber = ''
     this.description = ''
     this.noCables = 0
@@ -25,7 +24,7 @@ export class Item {
     }
   }
 
-  toJSON () {
+  toJSON() {
     return {
       itemNumber: this.itemNumber,
       description: this.description,
@@ -38,19 +37,27 @@ export class Item {
     }
   }
 
-  materialCost () {
-    return (this.noCables && this.noCables !== 0) ? this.noCables * this.units * this.unitCost : this.units * this.unitCost
+  materialCost() {
+    return this.noCables && this.noCables !== 0
+      ? this.noCables * this.units * this.unitCost
+      : this.units * this.unitCost
   }
 
-  labourCost () {
-    if (this.materialCost() === 0 && this.units === 0 && this.labourCostUnit > 0) {
+  labourCost() {
+    if (
+      this.materialCost() === 0 &&
+      this.units === 0 &&
+      this.labourCostUnit > 0
+    ) {
       this.units = 1
     }
     return this.units * this.labourCostUnit
   }
 
-  workPrice () {
-    return this.materialCost() * (1 + this.materialMarkup / 100) + this.labourCost()
+  workPrice() {
+    return (
+      this.materialCost() * (1 + this.materialMarkup / 100) + this.labourCost()
+    )
   }
 }
 
@@ -61,7 +68,7 @@ export class Section {
   finalMarkup
   items
 
-  constructor (sec) {
+  constructor(sec) {
     this.secNumber = ''
     this.description = ''
     this.materialMarkup = 0
@@ -83,32 +90,32 @@ export class Section {
           units: 0,
           unitCost: 0.0,
           labourCostUnit: 0.0,
-          materialMarkup: this.materialMarkup
-        })
+          materialMarkup: this.materialMarkup,
+        }),
       ]
     }
   }
 
-  get secNumber () {
+  get secNumber() {
     return this.#secNumber
   }
 
-  set secNumber (sn) {
+  set secNumber(sn) {
     this.#secNumber = sn
     this.renumberItems()
   }
 
-  toJSON () {
+  toJSON() {
     return {
       secNumber: this.secNumber,
       description: this.description,
       materialMarkup: Number(this.materialMarkup),
       finalMarkup: Number(this.finalMarkup),
-      items: this.items
+      items: this.items,
     }
   }
 
-  updateMaterialMarkup () {
+  updateMaterialMarkup() {
     const materialMarkup = this.materialMarkup
     const items = this.items
     if (items) {
@@ -118,7 +125,7 @@ export class Section {
     }
   }
 
-  renumberItems () {
+  renumberItems() {
     const items = this.items
     if (items) {
       for (let i = 0; i < items.length; i++) {
@@ -127,22 +134,28 @@ export class Section {
     }
   }
 
-  materialCost () {
-    return this.items ? this.items.reduce((sum, item, index) => sum + item.materialCost(), 0) : 0
+  materialCost() {
+    return this.items
+      ? this.items.reduce((sum, item, index) => sum + item.materialCost(), 0)
+      : 0
   }
 
-  labourCost () {
-    return this.items ? this.items.reduce((sum, item, index) => sum + item.labourCost(), 0) : 0
+  labourCost() {
+    return this.items
+      ? this.items.reduce((sum, item, index) => sum + item.labourCost(), 0)
+      : 0
   }
 
-  summation () {
-    return this.items ? this.items.reduce((sum, item, index) => sum + item.workPrice(), 0) : 0
+  summation() {
+    return this.items
+      ? this.items.reduce((sum, item, index) => sum + item.workPrice(), 0)
+      : 0
   }
 
-  toQuotePrice () {
+  toQuotePrice() {
     const finalMarkup = this.finalMarkup ? this.finalMarkup : 0
     const x = this.summation() * (1 + finalMarkup / 100)
-    return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5
+    return x % 5 >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5
   }
 }
 
@@ -162,7 +175,7 @@ export class CostSheet {
   lastUpdate
   updated
 
-  constructor (cs) {
+  constructor(cs) {
     this.id = 0
     this.project = ''
     this.location = ''
@@ -175,7 +188,7 @@ export class CostSheet {
     this.finalOverallMarkup = 0
     this.options = {
       numberAlignment: 'center',
-      textAlignment: 'left'
+      textAlignment: 'left',
     }
 
     this.lastUpdate = null
@@ -191,24 +204,25 @@ export class CostSheet {
     if (this.options === null) {
       this.options = {
         numberAlignment: 'center',
-        textAlignment: 'left'
+        textAlignment: 'left',
       }
     }
 
     if (!this.sections || this.sections.length == 0) {
-      this.sections = [new Section({
-        secNumber: '',
-        description: '',
-        labourDailyRate: 0,
-        labourNightMultiplier: 0,
-        materialMarkup: this.materialMarkup,
-        finalMarkup: this.finalMarkup
-      })
+      this.sections = [
+        new Section({
+          secNumber: '',
+          description: '',
+          labourDailyRate: 0,
+          labourNightMultiplier: 0,
+          materialMarkup: this.materialMarkup,
+          finalMarkup: this.finalMarkup,
+        }),
       ]
     }
   }
 
-  toJSON () {
+  toJSON() {
     return {
       id: this.id,
       project: this.project,
@@ -223,11 +237,11 @@ export class CostSheet {
       sections: this.sections,
       options: this.options,
       lastUpdate: this.lastUpdate,
-      updated: this.updated
+      updated: this.updated,
     }
   }
 
-  updateMaterialMarkup () {
+  updateMaterialMarkup() {
     const materialMarkup = this.materialMarkup
     const sections = this.sections
     if (sections) {
@@ -238,7 +252,7 @@ export class CostSheet {
     }
   }
 
-  updateFinalMarkup () {
+  updateFinalMarkup() {
     const finalMarkup = this.finalMarkup
     const sections = this.sections
     if (sections) {
@@ -248,62 +262,82 @@ export class CostSheet {
     }
   }
 
-  renumberSections () {
+  renumberSections() {
     const sections = this.sections
     for (let i = 0; i < sections.length; i++) {
       sections[i].secNumber = (i + 1).toString()
     }
   }
 
-  materialCost () {
-    return this.sections ? this.sections.reduce((sum, section, index) => sum + section.materialCost(), 0) : 0
+  materialCost() {
+    return this.sections
+      ? this.sections.reduce(
+          (sum, section, index) => sum + section.materialCost(),
+          0
+        )
+      : 0
   }
 
-  labourCost () {
-    return this.sections ? this.sections.reduce((sum, section, index) => sum + section.labourCost(), 0) : 0
+  labourCost() {
+    return this.sections
+      ? this.sections.reduce(
+          (sum, section, index) => sum + section.labourCost(),
+          0
+        )
+      : 0
   }
 
-  toQuotePrice () {
+  toQuotePrice() {
     // const x = this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0;
     // return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
-    const sum = this.sections ? this.sections.reduce((sum, section, index) => sum + section.toQuotePrice(), 0) : 0
+    const sum = this.sections
+      ? this.sections.reduce(
+          (sum, section, index) => sum + section.toQuotePrice(),
+          0
+        )
+      : 0
     const finalMarkup = Number(this.finalMarkup)
     return sum * (1 + finalMarkup / 100)
   }
 
-  totalSales (delta) {
+  totalSales(delta) {
     if (!delta) {
       return this.toQuotePrice()
     }
     const finalMarkup = Number(this.finalOverallMarkup)
-    return this.toQuotePrice() * (1 + (finalMarkup + delta) / 100) / (1 + finalMarkup / 100)
+    return (
+      (this.toQuotePrice() * (1 + (finalMarkup + delta) / 100)) /
+      (1 + finalMarkup / 100)
+    )
   }
 
-  grossProfit (delta) {
+  grossProfit(delta) {
     return this.totalSales(delta) - this.materialCost() - this.labourCost()
   }
 
-  totalSalesPercent () {
+  totalSalesPercent() {
     return 100
   }
 
-  materialCostPercent (delta) {
+  materialCostPercent(delta) {
     return (this.materialCost() * 100) / this.totalSales(delta)
   }
 
-  labourCostPercent (delta) {
+  labourCostPercent(delta) {
     return (this.labourCost() * 100) / this.totalSales(delta)
   }
 
-  grossProfitPercent (delta) {
+  grossProfitPercent(delta) {
     return (this.grossProfit(delta) * 100) / this.totalSales(delta)
   }
 
-  numberOfDaysComplete () {
+  numberOfDaysComplete() {
     return this.labourCost() / this.labourDailyRate
   }
 
-  numberOfNightsComplete () {
-    return this.labourCost() / (this.labourDailyRate * this.labourNightMultiplier)
+  numberOfNightsComplete() {
+    return (
+      this.labourCost() / (this.labourDailyRate * this.labourNightMultiplier)
+    )
   }
 }

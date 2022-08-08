@@ -3,17 +3,19 @@
     <v-data-iterator
       key="id"
       :items="photos"
-      :footer-props="{ itemsPerPageAllText: 'todos',
-                       showFirstLastPage: true,
-                       itemsPerPageText: 'Photos by page',
-                       itemsPerPageOptions: [8, 16]}"
+      :footer-props="{
+        itemsPerPageAllText: 'todos',
+        showFirstLastPage: true,
+        itemsPerPageText: 'Photos by page',
+        itemsPerPageOptions: [8, 16],
+      }"
       :items-per-page.sync="itemsPerPage"
       no-results-text="No photos"
     >
       <template #default="props">
         <v-row>
           <v-col
-            v-for="photo, index in props.items"
+            v-for="(photo, index) in props.items"
             :key="index"
             cols="12"
             sm="6"
@@ -34,26 +36,40 @@
               </v-img>
               <v-card-actions>
                 <v-text-field
-                  v-if="state.showLabelEdit.findIndex(l => l===index)>=0"
+                  v-if="state.showLabelEdit.findIndex((l) => l === index) >= 0"
                   v-model="photo.label"
                   label="Photo Label"
                 />
                 <v-btn
-                  v-if="state.showLabelEdit.findIndex(l => l===index)>=0"
+                  v-if="state.showLabelEdit.findIndex((l) => l === index) >= 0"
                   icon
-                  @click="savePhoto(photo); state.showLabelEdit.splice(state.showLabelEdit.findIndex(l => l===index),1)"
+                  @click="
+                    savePhoto(photo)
+                    state.showLabelEdit.splice(
+                      state.showLabelEdit.findIndex((l) => l === index),
+                      1
+                    )
+                  "
                 >
                   <v-icon>mdi-check</v-icon>
                 </v-btn>
                 <v-spacer />
                 <v-btn
-                  v-if="state.showLabelEdit.findIndex(l => l===index)===-1"
+                  v-if="
+                    state.showLabelEdit.findIndex((l) => l === index) === -1
+                  "
                   icon
                   @click="editPhotoLabel(index)"
                 >
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
-                <v-btn icon @click="state.currentPhoto=index; state.showCarousel=true">
+                <v-btn
+                  icon
+                  @click="
+                    state.currentPhoto = index
+                    state.showCarousel = true
+                  "
+                >
                   <v-icon>mdi-eye</v-icon>
                 </v-btn>
                 <v-btn icon @click="removePhoto(photo.id)">
@@ -67,33 +83,45 @@
     </v-data-iterator>
     <v-dialog v-model="state.showCarousel">
       <v-carousel v-model="state.currentPhoto" height="80%">
-        <v-carousel-item v-for="(photo, index) in localPhotos" :key="index" :src="`${photo.photoUrl}`" />
+        <v-carousel-item
+          v-for="(photo, index) in localPhotos"
+          :key="index"
+          :src="`${photo.photoUrl}`"
+        />
       </v-carousel>
     </v-dialog>
   </v-container>
 </template>
 
 <script lang="ts">
-import { useContext, useRoute } from '@nuxtjs/composition-api'
-import { defineComponent, reactive } from '@nuxtjs/composition-api'
-import { DeletePhotoRecordCommand, PhotoRecord, EditPhotoRecordCommand } from '~/types'
+import {
+  useContext,
+  useRoute,
+  defineComponent,
+  reactive,
+} from '@nuxtjs/composition-api'
+import {
+  DeletePhotoRecordCommand,
+  PhotoRecord,
+  EditPhotoRecordCommand,
+} from '~/types'
 
 export default defineComponent({
   model: {
     prop: 'photos',
-    event: 'input'
+    event: 'input',
   },
   props: {
     photos: {
       type: Array as () => PhotoRecord[] | undefined,
-      required: true
+      required: true,
     },
     reportId: {
       type: Number,
-      required: true
+      required: true,
     },
   },
-  setup (props) {
+  setup(props) {
     const { $axios } = useContext()
     const route = useRoute()
     const state = reactive({
@@ -108,20 +136,18 @@ export default defineComponent({
     const removePhoto = (id: number) => {
       const delPhoto: DeletePhotoRecordCommand = {
         reportId: props.reportId!,
-        id
+        id,
       }
       $axios
         .delete(`reports/${delPhoto.reportId}/photorecord/${delPhoto.id}`)
         .then(() => {
           // eslint-disable-next-line vue/no-mutating-props
-          state.localPhotos = props.photos!.filter(
-            p => p.id !== id
-          )
+          state.localPhotos = props.photos!.filter((p) => p.id !== id)
         })
     }
 
     const editPhotoLabel = (currentIndex: number) => {
-      const index = state.showLabelEdit.findIndex(l => l === index)
+      const index = state.showLabelEdit.findIndex((l) => l === index)
       if (index >= 0) {
         state.showLabelEdit.splice(index, 1)
         return
@@ -130,10 +156,10 @@ export default defineComponent({
     }
 
     const savePhoto = (photo: PhotoRecord) => {
-      const data:EditPhotoRecordCommand = {
+      const data: EditPhotoRecordCommand = {
         reportId: parseInt(route.value.params.id),
         label: photo.label,
-        id: photo.id
+        id: photo.id,
       }
       $axios.put(`reports/${data.reportId}/photorecord/${data.id}`, data)
     }
@@ -144,7 +170,7 @@ export default defineComponent({
       editPhotoLabel,
       savePhoto,
     }
-  }
+  },
 })
 </script>
 

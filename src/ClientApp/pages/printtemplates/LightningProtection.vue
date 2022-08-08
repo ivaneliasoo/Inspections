@@ -3,39 +3,26 @@ import moment from 'moment';
   <div style="width: 900px">
     This form may take you 5-8 minutes to complete.
     <div class="vbox border-ltr">
-      <div class="row-center bold space">
-        THE BUILDING CONTROL ACT (CAP 29)
-      </div>
+      <div class="row-center bold space">THE BUILDING CONTROL ACT (CAP 29)</div>
       <div class="row-center bold space space-bottom">
         CERTIFICATE OF DESIGN &amp; SUPERVISION OF LIGHTNING PROTECTION SYSTEM
       </div>
     </div>
     <div class="hbox border-ltr">
       <div class="vbox col50p border-r">
-        <div class="row space-left">
-          Commissioner of Building Control
-        </div>
-        <div class="row space-left">
-          Building &amp; Construction Authority
-        </div>
-        <div class="row space-left">
-          52 Jurong Gateway Road #11-01
-        </div>
-        <div class="row space-left">
-          Singapore 608550
-        </div>
+        <div class="row space-left">Commissioner of Building Control</div>
+        <div class="row space-left">Building &amp; Construction Authority</div>
+        <div class="row space-left">52 Jurong Gateway Road #11-01</div>
+        <div class="row space-left">Singapore 608550</div>
         <div class="row space-left space-bottom">
           Website:
-          <a
-            href="http://www.bca.gov.sg/"
-            class="text_"
-          >http://www.bca.gov.sg/</a>
+          <a href="http://www.bca.gov.sg/" class="text_"
+            >http://www.bca.gov.sg/</a
+          >
         </div>
       </div>
       <div class="vbox col50p space-left">
-        <div class="row">
-          <span class="underline">INSTRUCTIONS</span>:
-        </div>
+        <div class="row"><span class="underline">INSTRUCTIONS</span>:</div>
         <div class="row">
           (1)<span>&nbsp;&nbsp;&nbsp;</span>One copy is to be submitted
         </div>
@@ -63,7 +50,7 @@ import moment from 'moment';
           v-model="approvedInfo.ProjectRefNo"
           class="bg-yellow"
           type="text"
-        >&rsqb;
+        />&rsqb;
       </div>
 
       <div class="row space">
@@ -72,7 +59,7 @@ import moment from 'moment';
           v-model="reportData.address"
           class="bg-yellow"
           type="text"
-        >&rsqb;
+        />&rsqb;
       </div>
 
       <div class="row space">
@@ -81,7 +68,7 @@ import moment from 'moment';
           v-model="approvedInfo.TSMKLotPlot"
           class="bg-yellow"
           type="text"
-        >&rsqb;
+        />&rsqb;
       </div>
 
       <div class="row space space-bottom">
@@ -90,7 +77,7 @@ import moment from 'moment';
           v-model="approvedInfo.MainRemarks"
           class="bg-yellow"
           type="text"
-        >&rsqb;
+        />&rsqb;
       </div>
     </div>
 
@@ -119,7 +106,7 @@ import moment from 'moment';
         <label class="col20p" />
         <label class="col80p">
           the Code of Practice for Protection Against Lightning - SS 555:2010;
-          or <br>
+          or <br />
           the Code of Practice for Protection Against Lightning - SS 555:2018.
         </label>
       </div>
@@ -148,9 +135,7 @@ import moment from 'moment';
 
     <div class="hbox border-ltr">
       <div class="vbox col50p border-r space-bottom">
-        <div class="row space-left">
-          Address of Professional Engineer
-        </div>
+        <div class="row space-left">Address of Professional Engineer</div>
         <div class="row space-left">
           <textarea
             v-model="approvedInfo.DesignAddressOfProfessionalEngineer"
@@ -165,11 +150,20 @@ import moment from 'moment';
         </div>
         <div class="row">
           <div>
-            <img :src="reportData.signatures[0].drawnSign" style="margin-left: 15px;object-fit: cover;width: 200px; height: 100px" alt="">
+            <img
+              :src="reportData.signatures[0].drawnSign"
+              style="
+                margin-left: 15px;
+                object-fit: cover;
+                width: 200px;
+                height: 100px;
+              "
+              alt=""
+            />
             <input
               v-model="approvedInfo.DesignPhoneNumberOfProfessionalEngineer"
               class="col95p"
-            >
+            />
           </div>
         </div>
       </div>
@@ -182,7 +176,7 @@ import moment from 'moment';
             v-model="approvedInfo.DesignPhoneNumberOfProfessionalEngineer"
             class="bg-yellow"
             type="text"
-          >&rsqb;
+          />&rsqb;
         </div>
       </div>
       <div class="vbox col50p space-left space-bottom">
@@ -192,11 +186,11 @@ import moment from 'moment';
             v-model="formatedDate"
             class="bg-yellow"
             type="text"
-          >&rsqb;
+          />&rsqb;
         </div>
       </div>
     </div>
-    <br>
+    <br />
 
     <div class="vbox border-ltr">
       <div class="row space bold">
@@ -231,9 +225,7 @@ import moment from 'moment';
 
     <div class="hbox border-ltr">
       <div class="vbox col50p border-r space-bottom">
-        <div class="row space-left">
-          Address of Professional Engineer
-        </div>
+        <div class="row space-left">Address of Professional Engineer</div>
         <div class="row space-left">
           <textarea
             v-model="approvedInfo.SupervisionAddressOfProfessionalEngineer"
@@ -248,11 +240,22 @@ import moment from 'moment';
         </div>
         <div class="row">
           <div>
-            <img :src="reportData.signatures[0].drawnSign" style="margin-left: 15px;object-fit: cover;width: 200px; height: 100px" alt="">
+            <img
+              :src="reportData.signatures[0].drawnSign"
+              style="
+                margin-left: 15px;
+                object-fit: cover;
+                width: 200px;
+                height: 100px;
+              "
+              alt=""
+            />
             <input
-              v-model="approvedInfo.SupervisionPhoneNumberOfProfessionalEngineer"
+              v-model="
+                approvedInfo.SupervisionPhoneNumberOfProfessionalEngineer
+              "
               class="col95p"
-            >
+            />
           </div>
         </div>
       </div>
@@ -265,7 +268,7 @@ import moment from 'moment';
             v-model="approvedInfo.SupervisionPhoneNumberOfProfessionalEngineer"
             class="bg-yellow"
             type="text"
-          >&rsqb;
+          />&rsqb;
         </div>
       </div>
       <div class="vbox col50p space-left space-bottom">
@@ -275,48 +278,35 @@ import moment from 'moment';
             v-model="formatedDate"
             class="bg-yellow"
             type="text"
-          >&rsqb;
+          />&rsqb;
         </div>
       </div>
     </div>
 
-    <br>
+    <br />
     <div class="vbox border-ltr">
-      <div class="row-center bold space">
-        THE BUILDING CONTROL ACT (CAP 29)
-      </div>
+      <div class="row-center bold space">THE BUILDING CONTROL ACT (CAP 29)</div>
       <div class="row-center bold space space-bottom">
         CERTIFICATE OF DESIGN &amp; SUPERVISION OF LIGHTNING PROTECTION
-        SYSTEM<br>
+        SYSTEM<br />
         (Earth Resistance &amp; Electrical Continuity Test Form)
       </div>
     </div>
     <div class="hbox border-ltr">
       <div class="vbox col50 border-r">
-        <div class="row space-left">
-          Commissioner of Building Control
-        </div>
-        <div class="row space-left">
-          Building &amp; Construction Authority
-        </div>
-        <div class="row space-left">
-          52 Jurong Gateway Road #11-01
-        </div>
-        <div class="row space-left">
-          Singapore 608550
-        </div>
+        <div class="row space-left">Commissioner of Building Control</div>
+        <div class="row space-left">Building &amp; Construction Authority</div>
+        <div class="row space-left">52 Jurong Gateway Road #11-01</div>
+        <div class="row space-left">Singapore 608550</div>
         <div class="row space-left space-bottom">
           Website:
-          <a
-            href="http://www.bca.gov.sg/"
-            class="text_"
-          >http://www.bca.gov.sg/</a>
+          <a href="http://www.bca.gov.sg/" class="text_"
+            >http://www.bca.gov.sg/</a
+          >
         </div>
       </div>
       <div class="vbox col50 space-left">
-        <div class="row">
-          <span class="underline">INSTRUCTIONS</span>:
-        </div>
+        <div class="row"><span class="underline">INSTRUCTIONS</span>:</div>
         <div class="row">
           (1)<span>&nbsp;&nbsp;&nbsp;</span>One copy is to be submitted
         </div>
@@ -334,7 +324,7 @@ import moment from 'moment';
           v-model="approvedInfo.ProjectRefNo"
           class="bg-yellow"
           type="text"
-        >&rsqb;
+        />&rsqb;
       </div>
     </div>
 
@@ -352,7 +342,7 @@ import moment from 'moment';
             v-model="reportData.address"
             class="bg-yellow"
             type="text"
-          >&rsqb;
+          />&rsqb;
         </div>
       </div>
       <div class="vbox col60p space-left">
@@ -362,15 +352,13 @@ import moment from 'moment';
             v-model="electricalTest.TestDate"
             class="bg-yellow"
             type="text"
-          >&rsqb;
+          />&rsqb;
         </div>
       </div>
     </div>
 
     <div class="vbox border-ltr">
-      <div class="row space bold">
-        Test Instrument Details
-      </div>
+      <div class="row space bold">Test Instrument Details</div>
     </div>
 
     <div class="hbox border-ltr">
@@ -383,7 +371,7 @@ import moment from 'moment';
             class="bg-yellow"
             type="text"
             style="width: 150px"
-          >
+          />
           &rsqb;
         </div>
       </div>
@@ -395,7 +383,7 @@ import moment from 'moment';
             v-model="electricalTest.Serial1"
             class="bg-yellow"
             type="text"
-          >
+          />
           &rsqb;
         </div>
       </div>
@@ -407,7 +395,7 @@ import moment from 'moment';
             v-model="electricalTest.Calibrated1"
             class="bg-yellow"
             type="text"
-          >
+          />
           &rsqb;
         </div>
       </div>
@@ -422,7 +410,7 @@ import moment from 'moment';
             class="bg-yellow"
             type="text"
             style="width: 150px"
-          >&rsqb;
+          />&rsqb;
         </div>
       </div>
       <div class="vbox col30p border-r space-left">
@@ -432,7 +420,7 @@ import moment from 'moment';
             v-model="electricalTest.Serial2"
             class="bg-yellow"
             type="text"
-          >&rsqb;
+          />&rsqb;
         </div>
       </div>
       <div class="vbox col30p space-left">
@@ -442,28 +430,20 @@ import moment from 'moment';
             v-model="electricalTest.Calibrated2"
             class="bg-yellow"
             type="text"
-          >&rsqb;
+          />&rsqb;
         </div>
       </div>
     </div>
 
     <div class="vbox space border-ltr border-b">
-      <div class="row space bold">
-        Table 1 : Earth Resistance System Test
-      </div>
+      <div class="row space bold">Table 1 : Earth Resistance System Test</div>
 
       <table class="table">
         <thead>
           <tr>
-            <th style="width: 15%">
-              Type of Test
-            </th>
-            <th colspan="12">
-              Resistance of Earth Termination System [Ohm]
-            </th>
-            <th rowspan="2">
-              Remarks
-            </th>
+            <th style="width: 15%">Type of Test</th>
+            <th colspan="12">Resistance of Earth Termination System [Ohm]</th>
+            <th rowspan="2">Remarks</th>
           </tr>
         </thead>
 
@@ -477,7 +457,7 @@ import moment from 'moment';
               <input
                 v-model="certificate2.table1.tableRemarks[0]"
                 type="text"
-              >
+              />
             </td>
           </tr>
           <tr>
@@ -486,13 +466,13 @@ import moment from 'moment';
               <input
                 :value="resistanceofEarthTerminationSystem[index] ? 'X' : ''"
                 type="text"
-              >
+              />
             </td>
             <td>
               <input
                 v-model="certificate2.table1.tableRemarks[1]"
                 type="text"
-              >
+              />
             </td>
           </tr>
           <tr>
@@ -501,13 +481,13 @@ import moment from 'moment';
               <input
                 :value="electricalContinuityTest[index] ? 'X' : ''"
                 type="text"
-              >
+              />
             </td>
             <td>
               <input
                 v-model="certificate2.table1.tableRemarks[2]"
                 type="text"
-              >
+              />
             </td>
           </tr>
         </tbody>
@@ -527,7 +507,7 @@ import moment from 'moment';
               <input
                 v-model="certificate2.table1.tableRemarks[3]"
                 type="text"
-              >
+              />
             </td>
           </tr>
           <tr>
@@ -541,13 +521,13 @@ import moment from 'moment';
               <input
                 :value="resistanceofEarthTerminationSystem[index] ? 'X' : ''"
                 type="text"
-              >
+              />
             </td>
             <td>
               <input
                 v-model="certificate2.table1.tableRemarks[4]"
                 type="text"
-              >
+              />
             </td>
           </tr>
           <tr>
@@ -561,13 +541,13 @@ import moment from 'moment';
               <input
                 :value="electricalContinuityTest[index] ? 'X' : ''"
                 type="text"
-              >
+              />
             </td>
             <td>
               <input
                 v-model="certificate2.table1.tableRemarks[5]"
                 type="text"
-              >
+              />
             </td>
           </tr>
         </tbody>
@@ -583,22 +563,18 @@ import moment from 'moment';
           v-model="electricalTest.ETSOverallResistance"
           class="bg-yellow"
           type="text"
-        >&rsqb;
+        />&rsqb;
       </div>
 
       <div class="row col space">
         <label class="col90p"> Remarks: </label>
       </div>
       <div class="row col space">
-        <textarea
-          v-model="electricalTest.ETSRemarks"
-          rows="6"
-          class="col90p"
-        />
+        <textarea v-model="electricalTest.ETSRemarks" rows="6" class="col90p" />
       </div>
     </div>
 
-    <br>
+    <br />
     <div class="vbox space border-ltr border-b">
       <div class="row space bold">
         Table 2 : Natural Down Conductor Electrical Resistance Test
@@ -607,15 +583,11 @@ import moment from 'moment';
       <table class="table">
         <thead>
           <tr>
-            <th style="width: 15%">
-              Type of Test
-            </th>
+            <th style="width: 15%">Type of Test</th>
             <th colspan="12">
               Continuity Test for Down Conductor System [Ohm]
             </th>
-            <th rowspan="2">
-              Remarks
-            </th>
+            <th rowspan="2">Remarks</th>
           </tr>
         </thead>
         <tbody>
@@ -628,7 +600,7 @@ import moment from 'moment';
               <input
                 v-model="electricalTest.ContinuityTestRemarks"
                 type="text"
-              >
+              />
             </td>
           </tr>
 
@@ -638,13 +610,13 @@ import moment from 'moment';
               <input
                 :value="ETSOverallResistance[index] ? 'X' : ''"
                 type="text"
-              >
+              />
             </td>
             <td>
               <input
                 v-model="certificate2.table2.tableRemarks[1]"
                 type="text"
-              >
+              />
             </td>
           </tr>
         </tbody>
@@ -663,7 +635,7 @@ import moment from 'moment';
               <input
                 v-model="certificate2.table2.tableRemarks[2]"
                 type="text"
-              >
+              />
             </td>
           </tr>
 
@@ -673,13 +645,13 @@ import moment from 'moment';
               <input
                 :value="ETSOverallResistance[index] ? 'X' : ''"
                 type="text"
-              >
+              />
             </td>
             <td>
               <input
                 v-model="certificate2.table2.tableRemarks[3]"
                 type="text"
-              >
+              />
             </td>
           </tr>
         </tbody>
@@ -727,12 +699,21 @@ import moment from 'moment';
     <div style="height: 200px" />
     <div class="row space">
       <div>
-        <img :src="reportData.signatures[0].drawnSign" style="margin-left: 15px;object-fit: cover;width: 300px; height: 200px" alt="">
+        <img
+          :src="reportData.signatures[0].drawnSign"
+          style="
+            margin-left: 15px;
+            object-fit: cover;
+            width: 300px;
+            height: 200px;
+          "
+          alt=""
+        />
         &lsqb;<input
           v-model="reportData.signatures[0].responsibleName"
           class="bg-yellow"
           type="text"
-        >&rsqb;
+        />&rsqb;
       </div>
     </div>
     <div class="row space">
@@ -746,30 +727,42 @@ import moment from 'moment'
 export default {
   name: 'LightningProtection',
   layout: 'printlayout',
-  async asyncData ({ route, $axios }) {
+  async asyncData({ route, $axios }) {
     if (route && route.query && route.query.id) {
       const id = parseInt(route.query.id)
       const token = route.query.token
 
-      const printPhotos = route.query && route.query.printPhotos ? route.query.printPhotos === 'true' : false
-      const isCompoundedPhotoRecord = route.query && route.query.compoundedPhotoRecord ? route.query.compoundedPhotoRecord === 'true' : false
+      const printPhotos =
+        route.query && route.query.printPhotos
+          ? route.query.printPhotos === 'true'
+          : false
+      const isCompoundedPhotoRecord =
+        route.query && route.query.compoundedPhotoRecord
+          ? route.query.compoundedPhotoRecord === 'true'
+          : false
       const result = await $axios.$get(`reports/${id}`, {
         headers: {
-          Authorization: `bearer ${token}`
-        }
+          Authorization: `bearer ${token}`,
+        },
       })
 
-      const configuration = await $axios.$get(`reportconfiguration/${result.reportConfigurationId}`, {
-        headers: {
-          Authorization: `bearer ${token}`
+      const configuration = await $axios.$get(
+        `reportconfiguration/${result.reportConfigurationId}`,
+        {
+          headers: {
+            Authorization: `bearer ${token}`,
+          },
         }
-      })
+      )
 
       let approvedInfo = {}
       let electricalTest = {}
       if (result) {
-        approvedInfo = result.forms.filter(f => f.name === 'ApprovedInfo')[0].values
-        electricalTest = result.forms.filter(f => f.name === 'ElectricalTest')[0].values
+        approvedInfo = result.forms.filter((f) => f.name === 'ApprovedInfo')[0]
+          .values
+        electricalTest = result.forms.filter(
+          (f) => f.name === 'ElectricalTest'
+        )[0].values
       }
 
       const resistanceofEarthTerminationSystem = Array(24).fill(false)
@@ -800,11 +793,11 @@ export default {
         configuration,
         resistanceofEarthTerminationSystem,
         electricalContinuityTest,
-        ETSOverallResistance
+        ETSOverallResistance,
       }
     }
   },
-  data () {
+  data() {
     return {
       reportId: -1,
       reportData: {},
@@ -812,7 +805,7 @@ export default {
       electricalContinuityTest: [],
       ETSOverallResistance: [],
       certificate1: {
-      // CERTIFICATE OF DESIGN & SUPERVISION OF LIGHTNING PROTECTION SYSTEM
+        // CERTIFICATE OF DESIGN & SUPERVISION OF LIGHTNING PROTECTION SYSTEM
         projectRefNo: '',
         address: '',
         TS_MK_Lot_Plot: '',
@@ -822,47 +815,46 @@ export default {
           engineerAddress: '',
           engineerNameRegNumber: '',
           telfNo: '',
-          date: ''
+          date: '',
         },
         part2: {
           remarks: '',
           engineerAddress: '',
           engineerNameRegNumber: '',
           telfNo: '',
-          date: ''
-        }
+          date: '',
+        },
       },
       certificate2: {
-      // Earth Resistance & Electrical Continuity Test Form
+        // Earth Resistance & Electrical Continuity Test Form
         table1: {
           pointResistance: [],
           electricalContinuity: [],
           tableRemarks: [],
           overallResistance: '',
-          generalRemarks: ''
-
+          generalRemarks: '',
         },
         table2: {
           electricalContinuity: [],
           tableRemarks: [],
-          generalRemarks: ''
+          generalRemarks: '',
         },
-        engineerNameRegNumber: ''
-      }
+        engineerNameRegNumber: '',
+      },
     }
   },
   computed: {
-    formatedDate () {
+    formatedDate() {
       if (this.reportData && this.reportData.date) {
         return moment(this.reportData.date).format('DD-MM-YYYY HH:mm')
       }
       return ''
-    }
+    },
   },
   auth: false,
-  mounted () {
+  mounted() {
     window.isPrintable = true
-  }
+  },
 }
 </script>
 

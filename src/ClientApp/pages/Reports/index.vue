@@ -41,9 +41,7 @@
             color="primary"
             @click="state.dialog = true"
           >
-            <v-icon dark>
-              mdi-plus
-            </v-icon>
+            <v-icon dark> mdi-plus </v-icon>
           </v-btn>
         </v-toolbar>
       </template>
@@ -59,9 +57,7 @@
               v-on="on"
               @click="generatePdf(item, true)"
             >
-              <v-icon>
-                mdi-camera
-              </v-icon>
+              <v-icon> mdi-camera </v-icon>
             </v-btn>
           </template>
           <span>Print Inspection Report With Photos</span>
@@ -105,8 +101,8 @@
               color="error"
               v-on="on"
               @click="
-                selectItem(item);
-                state.dialogRemove = true;
+                selectItem(item)
+                state.dialogRemove = true
               "
             >
               mdi-delete
@@ -177,44 +173,53 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, useContext, ref, useFetch, useRoute, computed, useRouter } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  reactive,
+  useContext,
+  ref,
+  useFetch,
+  useRoute,
+  computed,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { useReportsStore } from '~/composables/useReportsStore'
 import { Report } from '~/types'
 import useDateTime from '~/composables/useDateTime'
 
 export default defineComponent({
-  setup () {
+  setup() {
     const headers: any[] = [
       {
         text: 'Id',
         value: 'id',
         sortable: true,
-        align: 'center'
+        align: 'center',
       },
       {
         text: 'Date',
         value: 'date',
         sortable: true,
-        align: 'center'
+        align: 'center',
       },
       {
         text: 'Report Name',
         value: 'name',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Completed With Signatures',
         value: 'isClosed',
         sortable: true,
-        align: 'center'
+        align: 'center',
       },
       {
         text: '',
         value: 'actions',
         sortable: false,
-        align: 'center'
-      }
+        align: 'center',
+      },
     ]
 
     const reportsStore = useReportsStore()
@@ -233,20 +238,19 @@ export default defineComponent({
       dialog: false,
       filter: '',
       showOnlyMyReports: false,
-      hostName: $axios!.defaults!.baseURL!.replace('/api', '')
+      hostName: $axios!.defaults!.baseURL!.replace('/api', ''),
     })
 
     useFetch(async () => {
       state.loading = true
       // TODO: Save filters state on store
-      await reportsStore.getReports(
-        {
-          filter: '',
-          closed: route.value.query.closed,
-          orderBy: 'date',
-          myreports: state.showOnlyMyReports,
-          descending: true
-        })
+      await reportsStore.getReports({
+        filter: '',
+        closed: route.value.query.closed,
+        orderBy: 'date',
+        myreports: state.showOnlyMyReports,
+        descending: true,
+      })
 
       state.loading = false
     })
@@ -258,18 +262,17 @@ export default defineComponent({
     }
 
     const deleteReport = () => {
-      reportsStore.deleteReport(selectedItem.value.id)
-        .then(() => {
-          state.dialogRemove = false
-        })
+      reportsStore.deleteReport(selectedItem.value.id).then(() => {
+        state.dialogRemove = false
+      })
     }
 
     const generatePdf = async (item: Report, printPhotos: boolean = false) => {
       try {
         state.printing = true
         const file = await $axios.$get(
-        `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${item.reportConfigurationId}`,
-        { responseType: 'blob' }
+          `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${item.reportConfigurationId}`,
+          { responseType: 'blob' }
         )
         downloadFile(
           file,
@@ -308,11 +311,7 @@ export default defineComponent({
     }
   },
   head: {
-    title: 'Reports List'
-  }
-
+    title: 'Reports List',
+  },
 })
 </script>
-
-<style>
-</style>

@@ -11,12 +11,8 @@
           <v-col class="text-left">
             <h3>{{ signature.title }}</h3>
             <h5>{{ signature.annotation }}</h5>
-            <v-chip v-if="signature.principal">
-              Principal Sign
-            </v-chip>
-            <v-chip v-if="signature.drawnSign" color="success">
-              Signed
-            </v-chip>
+            <v-chip v-if="signature.principal"> Principal Sign </v-chip>
+            <v-chip v-if="signature.drawnSign" color="success"> Signed </v-chip>
           </v-col>
         </v-row>
         <v-row align="center" justify="space-around" dense>
@@ -112,7 +108,7 @@
               @click="viewSign(index, signature)"
             >
               <v-icon dark>
-                {{ signature.viewSign ? "mdi-close" : "mdi-draw" }}
+                {{ signature.viewSign ? 'mdi-close' : 'mdi-draw' }}
               </v-icon>
               Sign
             </v-btn>
@@ -131,7 +127,7 @@ import { useVModel } from '@vueuse/core'
 import { responsibleTypes } from '@/types/Signatures'
 import { SignatureQueryResult } from '~/services/api'
 
-extend('oneOf', { ...oneOf },)
+extend('oneOf', { ...oneOf })
 
 export default defineComponent({
   components: {
@@ -147,7 +143,7 @@ export default defineComponent({
       default: false,
     },
   },
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const signatures = useVModel(props, 'value', emit)
 
     const isLEW = (signature: SignatureQueryResult) => {

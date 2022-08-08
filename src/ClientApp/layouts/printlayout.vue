@@ -37,7 +37,7 @@ header h1.title {
 header h2.subtitle {
   margin: 0;
   font-weight: normal;
-  font-size: .75em;
+  font-size: 0.75em;
   text-decoration: underline;
   text-align: right;
 }

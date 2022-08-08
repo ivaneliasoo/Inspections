@@ -2,16 +2,15 @@
   <v-list dense>
     <v-list-item class="px-2">
       <v-list-item-avatar>
-        <v-icon large color="indigo">
-          mdi-account-circle
-        </v-icon>
+        <v-icon large color="indigo"> mdi-account-circle </v-icon>
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="text-uppercase">
           {{ $auth.user.userName }}
         </v-list-item-title>
         <v-list-item-subtitle class="text-uppercase">
-          {{ $auth.user.name }} {{ $auth.user.lastName }} {{ $auth.user.isAdmin ? '(admin)':'' }}
+          {{ $auth.user.name }} {{ $auth.user.lastName }}
+          {{ $auth.user.isAdmin ? '(admin)' : '' }}
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
@@ -23,18 +22,22 @@
     </v-list-item>
     <v-divider />
     <v-list-item
-      v-for="(menu, index) in menuDefinition.filter(m=>m.parentName==='' && !m.visible)"
+      v-for="(menu, index) in menuDefinition.filter(
+        (m) => m.parentName === '' && !m.visible
+      )"
       :key="`${menu.name}${index}`"
       link
       :to="menu.route.includes('http') ? '' : menu.route"
       :visible="!menu.route || menu.visible"
-      @click="menu.route.includes('http') ? redirect(menu.route):''"
+      @click="menu.route.includes('http') ? redirect(menu.route) : ''"
     >
       <v-list-item-icon>
         <v-icon v-if="menu.icon">
           {{ menu.icon }}
         </v-icon>
-        <span v-else class="font-weight-black text-uppercase">{{ initials(menu) }}</span>
+        <span v-else class="font-weight-black text-uppercase">{{
+          initials(menu)
+        }}</span>
       </v-list-item-icon>
       <v-list-item-content>
         <v-list-item-title>
@@ -49,7 +52,7 @@
 import { useContext, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup () {
+  setup() {
     const { $auth } = useContext()
     const menuDefinition: any[] = [
       {
@@ -131,9 +134,6 @@ export default defineComponent({
       initials,
       redirect,
     }
-  }
+  },
 })
 </script>
-
-<style>
-</style>

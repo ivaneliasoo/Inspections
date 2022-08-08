@@ -1,9 +1,6 @@
 <template>
   <v-card class="mx-auto" flat>
     <v-row justify="center" align="end">
-      <!-- <v-col cols="6" class="text-right">
-        Tap Camera Icon To Add Photos to report
-      </v-col> -->
       <v-col :cols="12">
         <v-file-input
           ref="fileInputElement"
@@ -21,8 +18,8 @@
           accept="image/*"
           :show-size="1000"
           @change="
-            showPreview($event);
-            uploadFiles();
+            showPreview($event)
+            uploadFiles()
           "
           @click:clear="filesUrls = []"
         />
@@ -66,9 +63,14 @@
 
 <script lang="ts">
 import reduce from 'image-blob-reduce'
-import { defineComponent } from '@nuxtjs/composition-api'
-import { reactive, computed } from '@nuxtjs/composition-api'
-import { useContext, useFetch, useRoute } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  reactive,
+  computed,
+  useContext,
+  useFetch,
+  useRoute,
+} from '@nuxtjs/composition-api'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 
@@ -81,9 +83,9 @@ export default defineComponent({
     reportId: {
       type: Number,
       required: true,
-    }
+    },
   },
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const state = reactive({
       files: [],
       filesUrls: [],
@@ -119,7 +121,7 @@ export default defineComponent({
       const formData = new FormData()
       state.dialogUploading = true
       const config = {
-        onUploadProgress (progressEvent: any) {
+        onUploadProgress(progressEvent: any) {
           state.percentCompleted = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
           )
@@ -134,7 +136,7 @@ export default defineComponent({
         formData.append(
           'files',
           newFile,
-        `${file.name}|${state.filesUrls[i].label}`
+          `${file.name}|${state.filesUrls[i].label}`
         )
       }
 
@@ -185,15 +187,16 @@ export default defineComponent({
       showPreview,
       source,
     }
-  }
+  },
 })
 </script>
 
 <style scoped>
-:deep(.input-file) {
+:deep(.input-file) {/* stylelint-disable-line */
   justify-content: center;
 }
-:deep(button.v-icon.notranslate.v-icon--link.mdi.mdi-camera.theme--light) {
+
+:deep(button.v-icon.notranslate.v-icon--link.mdi.mdi-camera.theme--light) {/* stylelint-disable-line */
   font-size: 58px;
 }
 </style>

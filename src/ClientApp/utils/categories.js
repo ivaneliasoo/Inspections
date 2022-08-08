@@ -1,6 +1,6 @@
 import md5 from 'blueimp-md5'
 
-export function getColumns (catTemplate) {
+export function getColumns(catTemplate) {
   const cats = catTemplate.categories
   const cols = []
   for (var i = 0; i < cats.length; i++) {
@@ -26,7 +26,7 @@ export function getColumns (catTemplate) {
   return cols
 }
 
-export function checkTemplate (template, csvCols, templateCols) {
+export function checkTemplate(template, csvCols, templateCols) {
   const columns = {}
   for (var i = 0; i < csvCols.length; i++) {
     columns[csvCols[i]] = true
@@ -46,7 +46,7 @@ export function checkTemplate (template, csvCols, templateCols) {
   return missingColumns
 }
 
-export function findCategoryTemplate (templates, cols) {
+export function findCategoryTemplate(templates, cols) {
   if (!cols || cols.length < 6) {
     return null
   }
@@ -70,7 +70,7 @@ export function findCategoryTemplate (templates, cols) {
   return null
 }
 
-export function categoryTemplateFrom (aCatTemplate) {
+export function categoryTemplateFrom(aCatTemplate) {
   const catTemplate = Object.assign({}, aCatTemplate)
   const cats = catTemplate.categories
   for (var i = 0; i < cats.length; i++) {
@@ -90,7 +90,7 @@ export function categoryTemplateFrom (aCatTemplate) {
   return catTemplate
 }
 
-export function getCalcColumns (template) {
+export function getCalcColumns(template) {
   const cols = []
   const calcColumns = template.calcColumns
   for (let i = 0; i < calcColumns.length; i++) {
@@ -99,7 +99,7 @@ export function getCalcColumns (template) {
   return cols
 }
 
-export function getID (columns) {
+export function getID(columns) {
   const str = columns.reduce((a, b) => a + b)
   const hash = md5(str)
   console.log('hash:', hash)

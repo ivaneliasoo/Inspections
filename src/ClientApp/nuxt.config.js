@@ -1,44 +1,36 @@
 export default {
   ssr: false,
-  // server: {
-  //   host: '0.0.0.0'
-  // },
-  /*
-  ** Headers of the page
-  */
   head: {
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      {
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || '',
+      },
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: { color: '#fff' },
   /*
-  ** Global CSS
-  */
-  css: [
-    '@/assets/main.css'
-  ],
+   ** Global CSS
+   */
+  css: ['@/assets/main.css'],
   /*
-  ** Plugins to load before mounting the App
-  */
-  plugins: [
-    '~/plugins/vee-validate',
-    '~/plugins/vue-signature-pad'
-  ],
+   ** Plugins to load before mounting the App
+   */
+  plugins: ['~/plugins/vee-validate', '~/plugins/vue-signature-pad'],
   /*
-  ** Nuxt.js dev-modules
-  */
+   ** Nuxt.js dev-modules
+   */
   buildModules: [
     '@nuxt/typescript-build',
+    '@nuxtjs/stylelint-module',
     '@nuxtjs/composition-api/module',
     '@nuxtjs/vuetify',
     '@nuxtjs/tailwindcss',
@@ -51,8 +43,8 @@ export default {
     ['@pinia/nuxt', { disableVuex: false }],
   ],
   /*
-  ** Nuxt.js modules
-  */
+   ** Nuxt.js modules
+   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
@@ -61,37 +53,38 @@ export default {
   pwa: {
     icon: {
       /* icon options */
-    }
+    },
   },
   components: [
     '~/components',
     '~/components/JobScheduler',
-    '~/components/CostSheets'
+    '~/components/CostSheets',
   ],
   /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
+   ** Axios module configuration
+   ** See https://axios.nuxtjs.org/options
+   */
   // axios: {
   // },
   publicRuntimeConfig: {
     axios: {
       baseURL: `${process.env.BASE_URL}/api` || 'http://localhost:5000/api',
-      browserBaseURL: `${process.env.BASE_URL}/api` || 'http://localhost:5000/api'
-    }
+      browserBaseURL:
+        `${process.env.BASE_URL}/api` || 'http://localhost:5000/api',
+    },
   },
   auth: {
     localStorage: false,
     redirect: {
       login: '/Login',
       logout: '/Login',
-      home: '/'
+      home: '/',
     },
     cookie: {
       prefix: 'auth.',
       options: {
         sameSite: 'lax',
-      }
+      },
     },
     token: {
       prefix: '_token.',
@@ -110,33 +103,38 @@ export default {
         },
         tokenRequired: true,
         tokenType: 'bearer',
-      }
+      },
     },
-    plugins: ['~/plugins/api-client']
+    plugins: ['~/plugins/api-client'],
   },
   router: {
-    middleware: ['auth']
+    middleware: ['auth'],
   },
   /*
-     ** vuetify module configuration
-     ** https://github.com/nuxt-community/vuetify-module
-     */
+   ** vuetify module configuration
+   ** https://github.com/nuxt-community/vuetify-module
+   */
   vuetify: {
     // customVariables: ['~/assets/variables.scss'],
-    optionsPath: './vuetify.options.js'
+    optionsPath: './vuetify.options.js',
   },
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
-    transpile: ['vee-validate/dist/rules', 'vuex-module-decorators', '@nuxtjs/auth', 'q'],
+    transpile: [
+      'vee-validate/dist/rules',
+      'vuex-module-decorators',
+      '@nuxtjs/auth',
+      'q',
+    ],
     terser: false,
     babel: {
       plugins: [
         ['@babel/plugin-proposal-class-properties', { loose: true }],
         ['@babel/plugin-proposal-private-methods', { loose: true }],
-        ['@babel/plugin-proposal-private-property-in-object', { loose: true }]
-      ]
-    }
-  }
+        ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
+      ],
+    },
+  },
 }

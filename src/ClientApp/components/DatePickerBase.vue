@@ -45,27 +45,27 @@ export default defineComponent({
     value: {
       type: [Object, Array, String],
       required: false,
-      default: ''
+      default: '',
     },
     titulo: {
       type: String,
-      default: 'Date'
+      default: 'Date',
     },
     min: {
       type: [Object, Array, Number, String],
-      default: ''
+      default: '',
     },
     max: {
       type: [Object, Array, Number, String],
-      default: ''
+      default: '',
     },
     showIcon: {
       type: Boolean,
-      default: false
+      default: false,
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   // @Prop({ required: true }) value:any
@@ -75,7 +75,7 @@ export default defineComponent({
   // @Prop() max:any
   // @Prop({ default: false }) showIcon:Boolean | undefined
   // @Prop({ default: false }) disabled:Boolean | undefined
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const menu1 = ref(false)
 
     const fechaPickerModel = computed({
@@ -88,10 +88,12 @@ export default defineComponent({
         }
       },
       set: (valor) => {
-        if (valor !== '') { emit('input', fDateToYMD(valor)) }
+        if (valor !== '') {
+          emit('input', fDateToYMD(valor))
+        }
 
         emit('input', valor)
-      }
+      },
     })
 
     const fechaHoy = computed(() => {
@@ -99,18 +101,21 @@ export default defineComponent({
     })
 
     const fechaComputed = computed(() => {
-      return (fechaPickerModel.value !== null && fechaPickerModel.value !== undefined) ? fDateToDMY(fechaPickerModel.value) : ''
+      return fechaPickerModel.value !== null &&
+        fechaPickerModel.value !== undefined
+        ? fDateToDMY(fechaPickerModel.value)
+        : ''
     })
 
-    const emitEvent = (valor:any) => {
+    const emitEvent = (valor: any) => {
       emit('input', valor ?? '')
     }
 
-    const fDateToDMY = (dateValue:any) => {
+    const fDateToDMY = (dateValue: any) => {
       return moment(dateValue).format('DD/MM/YYYY')
     }
 
-    const fDateToYMD = (dateValue:any) => {
+    const fDateToYMD = (dateValue: any) => {
       return moment(dateValue).format('YYYY-MM-DD')
     }
 
@@ -126,10 +131,6 @@ export default defineComponent({
       emitEvent,
       limpiar,
     }
-  }
-
+  },
 })
 </script>
-
-<style>
-</style>

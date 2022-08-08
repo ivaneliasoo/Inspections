@@ -53,9 +53,7 @@
         </v-col>
         <v-col cols="1" class="text-right">
           <v-btn small text title="Save" @click="handleSubmit">
-            <v-icon color="success">
-              mdi-content-save
-            </v-icon>
+            <v-icon color="success"> mdi-content-save </v-icon>
             Save
           </v-btn>
         </v-col>
@@ -69,9 +67,7 @@
           :schema="schema"
           @submit="handleSubmit"
         />
-        <h6 v-else>
-          Select a Field or create a new one in the list to edit
-        </h6>
+        <h6 v-else>Select a Field or create a new one in the list to edit</h6>
       </v-col>
       <v-col cols="4">
         <v-toolbar color="indigo" dark>
@@ -94,22 +90,16 @@
                   >
                     {{ `${item.fieldName} - ${item.sectionTitle}` }}
                   </v-list-item-subtitle>
-                  <v-list-item-subtitle
-                    class="text-left"
-                  >
+                  <v-list-item-subtitle class="text-left">
                     {{ `${item.label} (type: ${item.inputType})` }}
                   </v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-btn icon small color="red" @click="removeField(index)">
-                    <v-icon small>
-                      mdi-delete
-                    </v-icon>
+                    <v-icon small> mdi-delete </v-icon>
                   </v-btn>
                   <v-btn icon small color="info" @click="duplicateField(index)">
-                    <v-icon small>
-                      mdi-content-duplicate
-                    </v-icon>
+                    <v-icon small> mdi-content-duplicate </v-icon>
                   </v-btn>
                 </v-list-item-action>
               </v-list-item>
@@ -133,24 +123,29 @@ import {
   computed,
   useFetch,
   useContext,
-  useRouter
+  useRouter,
 } from '@nuxtjs/composition-api'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import useGoBack from '~/composables/useGoBack'
-import { FormDefinitionResponse, NewFormDefinitionCommand } from '~/services/api'
+import {
+  FormDefinitionResponse,
+  NewFormDefinitionCommand,
+} from '~/services/api'
 
 export default defineComponent({
   components: {
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
   },
-  setup () {
+  setup() {
     useGoBack()
     const route = useRoute()
     const router = useRouter()
 
     const id = computed(() => parseInt(route.value.query.id.toString()))
-    const reportConfigurationId = computed(() => parseInt(route.value.params.id.toString()))
+    const reportConfigurationId = computed(() =>
+      parseInt(route.value.params.id.toString())
+    )
 
     const { $formsApi } = useContext()
 
@@ -161,23 +156,22 @@ export default defineComponent({
       icon: '',
       enabled: false,
       fields: {
-        fieldsDefinitions: []
-      }
+        fieldsDefinitions: [],
+      },
     })
 
     useFetch(async () => {
-      const result = await $formsApi.getFormDefinition(id.value) as unknown as AxiosResponse<FormDefinitionResponse>
-      if (
-        result.data.fields &&
-        result.data.fields.fieldsDefinitions
-      ) {
+      const result = (await $formsApi.getFormDefinition(
+        id.value
+      )) as unknown as AxiosResponse<FormDefinitionResponse>
+      if (result.data.fields && result.data.fields.fieldsDefinitions) {
         form.value = result.data
       } else {
         form.value = {
           ...result.data,
           fields: {
-            fieldsDefinitions: []
-          }
+            fieldsDefinitions: [],
+          },
         }
       }
     })
@@ -188,20 +182,20 @@ export default defineComponent({
         name: 'sectionTitle',
         label: 'Section Title',
         enabled: true,
-        validation: 'required'
+        validation: 'required',
       },
       {
         type: 'text',
         name: 'fieldName',
         label: 'Field Name',
         enabled: true,
-        validation: 'required'
+        validation: 'required',
       },
       {
         type: 'text',
         name: 'label',
         label: 'Label',
-        validation: 'required'
+        validation: 'required',
       },
       {
         type: 'select',
@@ -213,61 +207,61 @@ export default defineComponent({
           { value: 'select', label: 'Select' },
           { value: 'checkbox', label: 'Checkbox' },
           { value: 'slider-range', label: 'Slider Range' },
-          { value: 'slider', label: 'Slider' }
+          { value: 'slider', label: 'Slider' },
         ],
         name: 'inputType',
         placeholder: 'Select an input type',
-        validation: 'required'
+        validation: 'required',
       },
       {
         type: 'text',
         name: 'preffix',
-        label: 'Preffix'
+        label: 'Preffix',
       },
       {
         type: 'text',
         name: 'suffix',
-        label: 'Suffix'
+        label: 'Suffix',
       },
       {
         type: 'number',
         name: 'min',
-        label: 'Min'
+        label: 'Min',
       },
       {
         type: 'number',
         name: 'max',
-        label: 'Max'
+        label: 'Max',
       },
       {
         type: 'number',
         name: 'step',
-        label: 'Step'
+        label: 'Step',
       },
       {
         type: 'number',
         name: 'maxLength',
-        label: 'Max Length'
+        label: 'Max Length',
       },
       {
         type: 'checkbox',
         name: 'enabled',
-        label: 'Enabled'
+        label: 'Enabled',
       },
       {
         type: 'checkbox',
         name: 'visible',
-        label: 'Visible'
+        label: 'Visible',
       },
       {
         type: 'text',
         name: 'defaultValue',
-        label: 'Default Value'
+        label: 'Default Value',
       },
       {
         type: 'number',
         name: 'order',
-        label: 'Field Painting Order'
+        label: 'Field Painting Order',
       },
       {
         component: 'div',
@@ -277,21 +271,21 @@ export default defineComponent({
             type: 'checkbox',
             name: 'isRollerOnMobile',
             label: 'Is Roller On Mobile',
-            cols: 1
+            cols: 1,
           },
           {
             type: 'number',
             clasification: 'number',
             name: 'rollerDigits',
             label: 'Roller Digits',
-            cols: 1
-          }
-        ]
+            cols: 1,
+          },
+        ],
       },
       {
         type: 'submit',
-        label: 'Save Field'
-      }
+        label: 'Save Field',
+      },
     ]
 
     const addField = () => {
@@ -311,7 +305,7 @@ export default defineComponent({
         rollerDigits: 3,
         visible: true,
         defaultValue: 0,
-        order: form.value.fields.fieldsDefinitions.length + 1
+        order: form.value.fields.fieldsDefinitions.length + 1,
       })
     }
 
@@ -320,7 +314,9 @@ export default defineComponent({
     }
 
     const duplicateField = (index) => {
-      form.value.fields.fieldsDefinitions.unshift(form.value.fields.fieldsDefinitions[index])
+      form.value.fields.fieldsDefinitions.unshift(
+        form.value.fields.fieldsDefinitions[index]
+      )
     }
 
     const selectedListItem = ref()
@@ -332,14 +328,14 @@ export default defineComponent({
       set: (value) => {
         const index = selectedListItem.value
         form.value.fields.fieldsDefinitions.splice(index, 1, value)
-      }
+      },
     })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleSubmit = async (data: any) => {
       const payload: NewFormDefinitionCommand = {
         ...form.value,
-        reportConfigurations: [reportConfigurationId.value]
+        reportConfigurations: [reportConfigurationId.value],
       }
       if (id.value > 0) {
         await $formsApi.updateFormDefinition(id.value, payload)
@@ -358,13 +354,13 @@ export default defineComponent({
       selectedField,
       addField,
       removeField,
-      duplicateField
+      duplicateField,
     }
-  }
+  },
 })
 </script>
 <style lang="scss">
-@import "../../../node_modules/@braid/vue-formulate/themes/snow/snow.scss";
+@import '../../../node_modules/@braid/vue-formulate/themes/snow/snow.scss';
 .double-wide {
   display: flex;
 }

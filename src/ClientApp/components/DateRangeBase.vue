@@ -1,7 +1,13 @@
 <template>
   <v-row>
     <v-col cols="6">
-      <DatePickerBase v-model="value.desde" :titulo="tituloDesde" :max="desdeMax" :show-icon="showIcon" @input="updateFechas" />
+      <DatePickerBase
+        v-model="value.desde"
+        :titulo="tituloDesde"
+        :max="desdeMax"
+        :show-icon="showIcon"
+        @input="updateFechas"
+      />
     </v-col>
     <v-col cols="6">
       <DatePickerBase
@@ -23,27 +29,27 @@ export default defineComponent({
   props: {
     value: {
       type: Object,
-      required: true
+      required: true,
     },
     showIcon: {
       type: Boolean,
-      default: false
+      default: false,
     },
     tituloDesde: {
       type: String,
-      default: 'Desde'
+      default: 'Desde',
     },
     tituloHasta: {
       type: String,
-      default: 'Hasta'
+      default: 'Hasta',
     },
     max: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
   },
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const desdeMax = computed(() => {
       return props.value && props.value.hasta ? props.value.hasta : ''
     })
@@ -64,12 +70,8 @@ export default defineComponent({
       desdeMax,
       hastaMin,
       maxHasta,
-      updateFechas
+      updateFechas,
     }
-  }
+  },
 })
 </script>
-
-<style>
-
-</style>

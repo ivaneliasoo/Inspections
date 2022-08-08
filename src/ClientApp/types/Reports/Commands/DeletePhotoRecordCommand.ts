@@ -1,4 +1,4 @@
 export interface DeletePhotoRecordCommand {
-    reportId: number;
-    id: number;
+  reportId: number
+  id: number
 }

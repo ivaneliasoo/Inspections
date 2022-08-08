@@ -18,7 +18,7 @@
       </v-btn>
       <v-toolbar-title>Reporting</v-toolbar-title>
       <v-spacer />
-      <img src="/Logo.jpeg" height="30px" width="110px">
+      <img src="/Logo.jpeg" height="30px" width="110px" />
       <v-btn icon @click="logout">
         <v-icon>mdi-logout</v-icon>
       </v-btn>
@@ -33,7 +33,7 @@
         dark
         bottom
         right
-        class="v-btn--example"
+        class="v-btn-example"
         @click="$vuetify.goTo(0)"
       >
         <v-icon>mdi-chevron-up</v-icon>
@@ -54,10 +54,17 @@
   </v-app>
 </template>
 <script lang="ts">
-import { useStore, defineComponent, useContext, useRouter, computed, ref } from '@nuxtjs/composition-api'
+import {
+  useStore,
+  defineComponent,
+  useContext,
+  useRouter,
+  computed,
+  ref,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup () {
+  setup() {
     const store = useStore()
     const router = useRouter()
     const { $auth } = useContext()
@@ -69,13 +76,15 @@ export default defineComponent({
       fab: false,
     })
 
-    function onScroll (e: any) {
-      if (typeof window === 'undefined') { return }
+    function onScroll(e: any) {
+      if (typeof window === 'undefined') {
+        return
+      }
       const top = window.pageYOffset || e.target.scrollTop || 0
       state.value.showScrollUpFab = top > 20
     }
 
-    async function logout () {
+    async function logout() {
       await $auth.logout()
     }
 
@@ -89,13 +98,13 @@ export default defineComponent({
       logout,
       onScroll,
       router,
-      $auth
+      $auth,
     }
-  }
+  },
 })
 </script>
 <style scoped>
-.v-btn--example {
+.v-btn-example {
   bottom: 0;
   margin: 0 0 16px 16px;
 }

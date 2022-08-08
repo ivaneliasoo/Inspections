@@ -6,24 +6,15 @@
       type="search"
       :size="size"
       :placeholder="placeHolder"
-      style="border: none; border-color: transparent; outline: none;"
+      style="border: none; border-color: transparent; outline: none"
       @input="search"
-    >
-    <v-icon @click="findPrevious">
-      mdi-chevron-up
-    </v-icon>
-    <v-icon @click="findNext">
-      mdi-chevron-down
-    </v-icon>
+    />
+    <v-icon @click="findPrevious"> mdi-chevron-up </v-icon>
+    <v-icon @click="findNext"> mdi-chevron-down </v-icon>
   </div>
 </template>
 
 <script>
-import { Section, Item, CostSheet }
-  from '../../utils/costsheets/entity.js'
-import { endpoint } from '../../utils/costsheets/util.js'
-import { toIsoDate } from '~/utils/jp_util.js'
-
 export default {
   props: {
     data: Array,
@@ -31,92 +22,92 @@ export default {
     fieldNames: Array,
     placeHolder: String,
     size: Number,
-    compareFunc: String
+    compareFunc: String,
   },
   data: () => ({
     // fieldName: "project",
     searchValue: '',
     searchIndex: -1,
-    curRow: null
+    curRow: null,
   }),
   methods: {
-    startsWith (dataValue, searchValue) {
+    startsWith(dataValue, searchValue) {
       return dataValue.startsWith(searchValue)
     },
-    includes (dataValue, searchValue) {
+    includes(dataValue, searchValue) {
       if (!dataValue || typeof dataValue !== 'string') {
         return false
       }
       return dataValue.toLowerCase().includes(searchValue.toLowerCase())
     },
-    search () {
+    search() {
       const compareFunc = this.compareFunc
       this.searchIndex = -1
       for (let i = 0; i < this.data.length; i++) {
         for (const field of this.fieldNames) {
-          const dataValue = (field === 'template')
-            ? this.templates['' + this.data[i].template].description
-            : this.data[i][field]
+          const dataValue =
+            field === 'template'
+              ? this.templates['' + this.data[i].template].description
+              : this.data[i][field]
           if (this[compareFunc](dataValue, this.searchValue)) {
             this.scrollTo(i)
             this.searchIndex = i
             return
           }
         }
-      };
+      }
     },
-    findNext () {
+    findNext() {
       if (this.searchIndex === -1) {
         return
       }
       const compareFunc = this.compareFunc
       for (let i = this.searchIndex + 1; i < this.data.length; i++) {
         for (const field of this.fieldNames) {
-          const dataValue = (field === 'template')
-            ? this.templates['' + this.data[i].template].description
-            : this.data[i][field]
+          const dataValue =
+            field === 'template'
+              ? this.templates['' + this.data[i].template].description
+              : this.data[i][field]
           if (this[compareFunc](dataValue, this.searchValue)) {
             this.scrollTo(i)
             this.searchIndex = i
             return
           }
         }
-      };
+      }
     },
-    findPrevious () {
+    findPrevious() {
       if (this.searchIndex === -1) {
         return
       }
       const compareFunc = this.compareFunc
       for (let i = this.searchIndex - 1; i >= 0; i--) {
         for (const field of this.fieldNames) {
-          const dataValue = (field === 'template')
-            ? this.templates['' + this.data[i].template].description
-            : this.data[i][field]
+          const dataValue =
+            field === 'template'
+              ? this.templates['' + this.data[i].template].description
+              : this.data[i][field]
           if (this[compareFunc](dataValue, this.searchValue)) {
             this.scrollTo(i)
             this.searchIndex = i
             return
           }
         }
-      };
+      }
     },
-    scrollTo (line) {
+    scrollTo(line) {
       const rows = document.querySelectorAll('#reports tr')
       const row = rows[line]
       row.scrollIntoView({
         behavior: 'auto',
-        block: 'start'
+        block: 'start',
       })
       if (this.curRow) {
         this.curRow.style.background = 'white'
       }
       row.style.background = 'lightgrey'
       this.curRow = row
-    }
-  }
+    },
+  },
 }
 </script>
-
-<style scoped>
-</style>

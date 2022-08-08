@@ -10,7 +10,10 @@
       @no="componentState.dialogRemove = false"
     /> -->
     <v-row>
-      <new-report-dialog v-model="componentState.dialog" @report-created="goToNewReport($event)" />
+      <new-report-dialog
+        v-model="componentState.dialog"
+        @report-created="goToNewReport($event)"
+      />
     </v-row>
     <v-data-table
       :class="$device.isTablet ? 'tablet-text' : ''"
@@ -36,9 +39,7 @@
             color="primary"
             @click="dialog = true"
           >
-            <v-icon dark>
-              mdi-plus
-            </v-icon>
+            <v-icon dark> mdi-plus </v-icon>
           </v-btn>
         </v-toolbar>
       </template>
@@ -54,9 +55,7 @@
               v-on="on"
               @click="generatePdf(item, true)"
             >
-              <v-icon>
-                mdi-camera
-              </v-icon>
+              <v-icon> mdi-camera </v-icon>
             </v-btn>
           </template>
           <span>Print Inspection Report With Photos</span>
@@ -100,8 +99,8 @@
               color="error"
               v-on="on"
               @click="
-                selectItem(item);
-                componentState.dialogRemove = true;
+                selectItem(item)
+                componentState.dialogRemove = true
               "
             >
               mdi-delete
@@ -137,38 +136,46 @@
 
 <script lang="ts">
 import moment from 'moment'
-import { useContext, useRouter, defineComponent, reactive, computed, useFetch, useRoute } from '@nuxtjs/composition-api'
+import {
+  useContext,
+  useRouter,
+  defineComponent,
+  reactive,
+  computed,
+  useFetch,
+  useRoute,
+} from '@nuxtjs/composition-api'
 import { Report } from '~/types'
 import { useReportsStore } from '~/composables/useReportsStore'
 
 export default defineComponent({
   layout: 'default',
-  setup () {
+  setup() {
     const headers: any[] = [
       {
         text: 'Date',
         value: 'date',
         sortable: true,
-        align: 'center'
+        align: 'center',
       },
       {
         text: 'Location',
         value: 'address',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Report Type',
         value: 'title',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: '',
         value: 'actions',
         sortable: false,
-        align: 'center'
-      }
+        align: 'center',
+      },
     ]
 
     const reportsStore = useReportsStore()
@@ -186,7 +193,7 @@ export default defineComponent({
       selectedItem: { id: 0 },
       filter: '',
       showOnlyMyReports: false,
-      hostName: axios!.defaults!.baseURL!.replace('/api', '')
+      hostName: axios!.defaults!.baseURL!.replace('/api', ''),
     })
 
     const selectItem = (item: Report): void => {
@@ -198,18 +205,17 @@ export default defineComponent({
     }
 
     const deleteReport = () => {
-      reportsStore.deleteReport(componentState.selectedItem.id)
-        .then(() => {
-          componentState.dialogRemove = false
-        })
+      reportsStore.deleteReport(componentState.selectedItem.id).then(() => {
+        componentState.dialogRemove = false
+      })
     }
 
     const generatePdf = async (item: Report, printPhotos: boolean = false) => {
       try {
         componentState.printing = true
         const file = await axios.$get(
-        `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${item.reportConfigurationId}`,
-        { responseType: 'blob' }
+          `reports/${item.id}/export?printPhotos=${printPhotos}&reportConfigurationId=${item.reportConfigurationId}`,
+          { responseType: 'blob' }
         )
         downloadFile(
           file,
@@ -235,21 +241,21 @@ export default defineComponent({
     }
 
     const createReport = () => {
-      componentState.dialog = false; componentState.dialog = true
+      componentState.dialog = false
+      componentState.dialog = true
     }
     const reports = computed(() => reportsStore.reportList)
 
     useFetch(async () => {
       componentState.loading = true
       // TODO: Save filters state on store
-      await reportsStore.getReports(
-        {
-          filter: '',
-          closed: route.value.query.closed,
-          orderBy: 'date',
-          myreports: componentState.showOnlyMyReports,
-          descending: true
-        })
+      await reportsStore.getReports({
+        filter: '',
+        closed: route.value.query.closed,
+        orderBy: 'date',
+        myreports: componentState.showOnlyMyReports,
+        descending: true,
+      })
 
       componentState.loading = false
     })
@@ -266,20 +272,19 @@ export default defineComponent({
       createReport,
       componentState,
       router,
-      route
+      route,
     }
-  }
+  },
 })
-
 </script>
 
 <style lang="scss" scoped>
 :deep(.expired-row) {
-  color: #C62828 !important;
+  color: #c62828 !important;
   background-color: rgb(255, 242, 242) !important;
 }
 :deep(.expiring-row) {
-  color: #FF8F00 !important;
+  color: #ff8f00 !important;
   background-color: rgb(255, 242, 242) !important;
 }
 </style>

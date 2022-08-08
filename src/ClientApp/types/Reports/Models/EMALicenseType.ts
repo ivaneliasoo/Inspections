@@ -1,6 +1,5 @@
-
 export enum EMALicenseType {
-    E,
-    ET,
-    EE
+  E,
+  ET,
+  EE,
 }

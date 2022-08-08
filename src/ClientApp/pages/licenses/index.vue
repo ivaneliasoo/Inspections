@@ -31,14 +31,12 @@
             dark
             color="primary"
             @click="
-              dialog = true;
-              isNew = true;
-              license = { licenseId: 0, validity: { start: '', end: '' } };
+              dialog = true
+              isNew = true
+              license = { licenseId: 0, validity: { start: '', end: '' } }
             "
           >
-            <v-icon dark>
-              mdi-plus
-            </v-icon>
+            <v-icon dark> mdi-plus </v-icon>
           </v-btn>
           <v-dialog
             v-model="dialog"
@@ -245,9 +243,9 @@
                     color="default"
                     text
                     @click="
-                      reset();
-                      license = { id: 0 };
-                      dialog = false;
+                      reset()
+                      license = { id: 0 }
+                      dialog = false
                     "
                   >
                     Cancel
@@ -266,9 +264,9 @@
               class="mr-2"
               v-on="on"
               @click="
-                selectLicense(item);
-                isNew = false;
-                dialog = true;
+                selectLicense(item)
+                isNew = false
+                dialog = true
               "
             >
               mdi-pencil
@@ -282,8 +280,8 @@
               color="error"
               v-on="on"
               @click="
-                selectLicense(item);
-                dialogRemove = true;
+                selectLicense(item)
+                dialogRemove = true
               "
             >
               mdi-delete
@@ -302,7 +300,14 @@
   </div>
 </template>
 <script lang="ts">
-import { ref, computed, defineComponent, useFetch, useContext, useRoute } from '@nuxtjs/composition-api'
+import {
+  ref,
+  computed,
+  defineComponent,
+  useFetch,
+  useContext,
+  useRoute,
+} from '@nuxtjs/composition-api'
 
 import { email } from 'vee-validate/dist/rules'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
@@ -316,7 +321,7 @@ extend('precedesDate', {
     return dateTo >= dateFrom
   },
   message: 'end validity date cant be a date before than start validity date',
-  params: [{ name: 'dateFrom', isTarget: true }]
+  params: [{ name: 'dateFrom', isTarget: true }],
 })
 
 extend('email', { ...email })
@@ -325,9 +330,9 @@ export default defineComponent({
   name: 'LicensesIndex',
   components: {
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
   },
-  setup () {
+  setup() {
     useGoBack()
     const { parseDate } = useDateTime()
 
@@ -340,43 +345,47 @@ export default defineComponent({
         text: 'ID',
         value: 'licenseId',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'License',
         value: 'number',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Valid From',
         value: 'validityStart',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Valid To',
         value: 'validityEnd',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: '',
         value: 'actions',
         sortable: false,
-        align: 'left'
-      }
+        align: 'left',
+      },
     ])
     const isNew = ref<boolean>(false)
     const dialog = ref<boolean>(false)
     const dialogRemove = ref<boolean>(false)
-    const license = ref({ licenseId: 0, validityStart: '', validityEnd: '' } as LicenseDTO)
+    const license = ref({
+      licenseId: 0,
+      validityStart: '',
+      validityEnd: '',
+    } as LicenseDTO)
     const selectedLicense = ref({} as LicenseDTO)
     const loading = ref<boolean>(false)
     const startVisible = ref(false)
     const endVisible = ref(false)
     const filter = ref({
-      filterText: ''
+      filterText: '',
     })
 
     const Licenses = computed((): LicenseDTO[] => {
@@ -385,32 +394,37 @@ export default defineComponent({
 
     const selectLicense = (item: LicenseDTO): void => {
       selectedLicense.value = item
-      licensesStore.getLicenseById(selectedLicense.value.licenseId)
-        .then(resp => (license.value = resp))
+      licensesStore
+        .getLicenseById(selectedLicense.value.licenseId)
+        .then((resp) => (license.value = resp))
     }
 
     useFetch(async () => {
-      if (!$auth.user.isAdmin) { error({ statusCode: 403, message: 'Forbidden' }) }
+      if (!$auth.user.isAdmin) {
+        error({ statusCode: 403, message: 'Forbidden' })
+      }
       await licensesStore.getLicenses({})
 
       if (route.value.query.id) {
-        licensesStore.getLicenseById(route.value.query.id)
-          .then(resp => (license.value = resp))
+        licensesStore
+          .getLicenseById(route.value.query.id)
+          .then((resp) => (license.value = resp))
         isNew.value = false
         dialog.value = true
       }
     })
 
     const deleteLicense = () => {
-      licensesStore.deleteLicense(selectedLicense.value.licenseId)
-        .then(() => {
-          dialog.value = false
-        })
+      licensesStore.deleteLicense(selectedLicense.value.licenseId).then(() => {
+        dialog.value = false
+      })
     }
 
     const upsertLicense = async () => {
       loading.value = true
-      if (!isNew.value) { await licensesStore.updateLicense(license.value) } else {
+      if (!isNew.value) {
+        await licensesStore.updateLicense(license.value)
+      } else {
         await licensesStore.createLicense(license.value)
         await licensesStore.getLicenses({})
       }
@@ -434,8 +448,8 @@ export default defineComponent({
       parseDate,
       upsertLicense,
       deleteLicense,
-      selectLicense
+      selectLicense,
     }
-  }
+  },
 })
 </script>

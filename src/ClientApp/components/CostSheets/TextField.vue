@@ -8,7 +8,7 @@
     @click="onClick"
     @keydown="keyDown"
     @focusout="onExit"
-  >
+  />
 </template>
 
 <script>
@@ -19,26 +19,26 @@ export default {
     value: {
       required: true,
     },
-    col: Number
+    col: Number,
   },
   data: () => {
     return {
-      editing: false
+      editing: false,
     }
   },
   computed: {
     dataValue: {
-      get () {
+      get() {
         return this.value
       },
-      set (v) {
+      set(v) {
         this.editing = true
         this.$emit('input', v)
-      }
-    }
+      },
+    },
   },
   methods: {
-    keyDown (event) {
+    keyDown(event) {
       if (event.keyCode === Key.up) {
         EventBus.$emit('move', this.$refs.textbox, Key.up)
       } else if (event.keyCode === Key.down) {
@@ -55,18 +55,14 @@ export default {
         }
       }
     },
-    onClick () {
+    onClick() {
       this.editing = true
     },
-    onExit () {
+    onExit() {
       if (this.$refs.textbox !== document.activeElement) {
         this.editing = false
       }
-    }
-  }
+    },
+  },
 }
 </script>
-
-<style scoped>
-
-</style>

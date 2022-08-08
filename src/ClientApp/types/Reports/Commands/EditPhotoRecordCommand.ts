@@ -1,5 +1,5 @@
 export interface EditPhotoRecordCommand {
-    reportId: number;
-    id: number;
-    label: string;
+  reportId: number
+  id: number
+  label: string
 }

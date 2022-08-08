@@ -1,16 +1,8 @@
 <template>
   <div>
-    <v-menu
-      right
-      bottom
-      fixed
-    >
+    <v-menu right bottom fixed>
       <template #activator="{ on, attrs }">
-        <v-btn
-          icon
-          v-bind="attrs"
-          v-on="on"
-        >
+        <v-btn icon v-bind="attrs" v-on="on">
           <v-icon>mdi-menu</v-icon>
         </v-btn>
       </template>
@@ -33,8 +25,6 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup () {
-
-  },
+  setup() {},
 })
 </script>

@@ -7,9 +7,7 @@
   "paths": {
     "/api/Addresses": {
       "get": {
-        "tags": [
-          "Addresses"
-        ],
+        "tags": ["Addresses"],
         "operationId": "GetAddresses",
         "parameters": [
           {
@@ -53,9 +51,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Addresses"
-        ],
+        "tags": ["Addresses"],
         "operationId": "AddAddress",
         "requestBody": {
           "content": {
@@ -142,9 +138,7 @@
     },
     "/api/Addresses/{id}": {
       "get": {
-        "tags": [
-          "Addresses"
-        ],
+        "tags": ["Addresses"],
         "parameters": [
           {
             "name": "id",
@@ -220,9 +214,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Addresses"
-        ],
+        "tags": ["Addresses"],
         "operationId": "UpdateAddress",
         "parameters": [
           {
@@ -321,9 +313,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Addresses"
-        ],
+        "tags": ["Addresses"],
         "operationId": "DeleteAddress",
         "parameters": [
           {
@@ -402,9 +392,7 @@
     },
     "/api/Auth/token": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Generates a JWT token for use in api call",
         "operationId": "Login",
         "requestBody": {
@@ -476,9 +464,7 @@
     },
     "/api/CheckLists": {
       "post": {
-        "tags": [
-          "CheckLists"
-        ],
+        "tags": ["CheckLists"],
         "operationId": "CreateCheckList",
         "requestBody": {
           "content": {
@@ -546,9 +532,7 @@
         }
       },
       "get": {
-        "tags": [
-          "CheckLists"
-        ],
+        "tags": ["CheckLists"],
         "operationId": "GetChecklists",
         "parameters": [
           {
@@ -631,9 +615,7 @@
     },
     "/api/CheckLists/{id}/items": {
       "post": {
-        "tags": [
-          "CheckLists"
-        ],
+        "tags": ["CheckLists"],
         "operationId": "AddItemToChecklist",
         "parameters": [
           {
@@ -714,9 +696,7 @@
     },
     "/api/CheckLists/{id}": {
       "put": {
-        "tags": [
-          "CheckLists"
-        ],
+        "tags": ["CheckLists"],
         "operationId": "UpdateChecklist",
         "parameters": [
           {
@@ -795,9 +775,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "CheckLists"
-        ],
+        "tags": ["CheckLists"],
         "operationId": "DeleteChecklist",
         "parameters": [
           {
@@ -857,9 +835,7 @@
         }
       },
       "get": {
-        "tags": [
-          "CheckLists"
-        ],
+        "tags": ["CheckLists"],
         "operationId": "GetCheckListbyId",
         "parameters": [
           {
@@ -921,9 +897,7 @@
     },
     "/api/CheckLists/{id}/items/{idItem}": {
       "put": {
-        "tags": [
-          "CheckLists"
-        ],
+        "tags": ["CheckLists"],
         "operationId": "UpdateChecklistItem",
         "parameters": [
           {
@@ -1011,9 +985,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "CheckLists"
-        ],
+        "tags": ["CheckLists"],
         "operationId": "DeleteChecklistItem",
         "parameters": [
           {
@@ -1084,9 +1056,7 @@
     },
     "/api/CostSheet/sheet": {
       "get": {
-        "tags": [
-          "CostSheet"
-        ],
+        "tags": ["CostSheet"],
         "responses": {
           "200": {
             "description": "Success"
@@ -1094,9 +1064,7 @@
         }
       },
       "post": {
-        "tags": [
-          "CostSheet"
-        ],
+        "tags": ["CostSheet"],
         "responses": {
           "204": {
             "description": "Success"
@@ -1144,9 +1112,7 @@
         }
       },
       "put": {
-        "tags": [
-          "CostSheet"
-        ],
+        "tags": ["CostSheet"],
         "responses": {
           "204": {
             "description": "Success"
@@ -1196,9 +1162,7 @@
     },
     "/api/CostSheet/sheet/{id}": {
       "get": {
-        "tags": [
-          "CostSheet"
-        ],
+        "tags": ["CostSheet"],
         "parameters": [
           {
             "name": "id",
@@ -1234,9 +1198,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "CostSheet"
-        ],
+        "tags": ["CostSheet"],
         "parameters": [
           {
             "name": "id",
@@ -1257,9 +1219,7 @@
     },
     "/api/CostSheet/template": {
       "get": {
-        "tags": [
-          "CostSheet"
-        ],
+        "tags": ["CostSheet"],
         "responses": {
           "200": {
             "description": "Success"
@@ -1267,9 +1227,7 @@
         }
       },
       "post": {
-        "tags": [
-          "CostSheet"
-        ],
+        "tags": ["CostSheet"],
         "responses": {
           "204": {
             "description": "Success"
@@ -1317,9 +1275,7 @@
         }
       },
       "put": {
-        "tags": [
-          "CostSheet"
-        ],
+        "tags": ["CostSheet"],
         "responses": {
           "204": {
             "description": "Success"
@@ -1369,9 +1325,7 @@
     },
     "/api/CostSheet/template/{id}": {
       "get": {
-        "tags": [
-          "CostSheet"
-        ],
+        "tags": ["CostSheet"],
         "parameters": [
           {
             "name": "id",
@@ -1407,9 +1361,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "CostSheet"
-        ],
+        "tags": ["CostSheet"],
         "parameters": [
           {
             "name": "id",
@@ -1430,9 +1382,7 @@
     },
     "/api/EMALicenses": {
       "get": {
-        "tags": [
-          "EMALicenses"
-        ],
+        "tags": ["EMALicenses"],
         "operationId": "GetLicenses",
         "responses": {
           "200": {
@@ -1464,9 +1414,7 @@
         }
       },
       "post": {
-        "tags": [
-          "EMALicenses"
-        ],
+        "tags": ["EMALicenses"],
         "operationId": "AddLicense",
         "requestBody": {
           "content": {
@@ -1533,9 +1481,7 @@
     },
     "/api/EMALicenses/{id}": {
       "get": {
-        "tags": [
-          "EMALicenses"
-        ],
+        "tags": ["EMALicenses"],
         "operationId": "GetLicense",
         "parameters": [
           {
@@ -1612,9 +1558,7 @@
         }
       },
       "put": {
-        "tags": [
-          "EMALicenses"
-        ],
+        "tags": ["EMALicenses"],
         "operationId": "UpdateLicense",
         "parameters": [
           {
@@ -1713,9 +1657,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "EMALicenses"
-        ],
+        "tags": ["EMALicenses"],
         "operationId": "DeleteLicense",
         "parameters": [
           {
@@ -1794,9 +1736,7 @@
     },
     "/api/EMALicenses/dashboard": {
       "get": {
-        "tags": [
-          "EMALicenses"
-        ],
+        "tags": ["EMALicenses"],
         "operationId": "GetLicensesDashboard",
         "responses": {
           "200": {
@@ -1856,9 +1796,7 @@
     },
     "/api/EnergyReport/category": {
       "post": {
-        "tags": [
-          "EnergyReport"
-        ],
+        "tags": ["EnergyReport"],
         "responses": {
           "204": {
             "description": "Success"
@@ -1886,9 +1824,7 @@
         }
       },
       "get": {
-        "tags": [
-          "EnergyReport"
-        ],
+        "tags": ["EnergyReport"],
         "responses": {
           "200": {
             "description": "Success"
@@ -1938,9 +1874,7 @@
     },
     "/api/EnergyReport/background": {
       "get": {
-        "tags": [
-          "EnergyReport"
-        ],
+        "tags": ["EnergyReport"],
         "responses": {
           "200": {
             "description": "Success"
@@ -1990,9 +1924,7 @@
     },
     "/api/EnergyReport/current-table/{startDate}/{endDate}": {
       "get": {
-        "tags": [
-          "EnergyReport"
-        ],
+        "tags": ["EnergyReport"],
         "parameters": [
           {
             "name": "startDate",
@@ -2046,9 +1978,7 @@
     },
     "/api/EnergyReport/current-table": {
       "post": {
-        "tags": [
-          "EnergyReport"
-        ],
+        "tags": ["EnergyReport"],
         "responses": {
           "204": {
             "description": "Success"
@@ -2098,9 +2028,7 @@
     },
     "/api/Forms": {
       "get": {
-        "tags": [
-          "Forms"
-        ],
+        "tags": ["Forms"],
         "operationId": "GetFormsDefinitions",
         "parameters": [
           {
@@ -2144,9 +2072,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Forms"
-        ],
+        "tags": ["Forms"],
         "operationId": "AddFormDefinition",
         "requestBody": {
           "content": {
@@ -2233,9 +2159,7 @@
     },
     "/api/Forms/{id}": {
       "get": {
-        "tags": [
-          "Forms"
-        ],
+        "tags": ["Forms"],
         "operationId": "GetFormDefinition",
         "parameters": [
           {
@@ -2295,9 +2219,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Forms"
-        ],
+        "tags": ["Forms"],
         "operationId": "UpdateFormDefinition",
         "parameters": [
           {
@@ -2396,9 +2318,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Forms"
-        ],
+        "tags": ["Forms"],
         "operationId": "DeleteFormDefinition",
         "parameters": [
           {
@@ -2463,9 +2383,7 @@
     },
     "/api/JobSchedule": {
       "get": {
-        "tags": [
-          "JobSchedule"
-        ],
+        "tags": ["JobSchedule"],
         "responses": {
           "200": {
             "description": "Success",
@@ -2490,9 +2408,7 @@
         }
       },
       "put": {
-        "tags": [
-          "JobSchedule"
-        ],
+        "tags": ["JobSchedule"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2538,9 +2454,7 @@
     },
     "/api/JobSchedule/sched-job": {
       "put": {
-        "tags": [
-          "JobSchedule"
-        ],
+        "tags": ["JobSchedule"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2578,9 +2492,7 @@
     },
     "/api/JobSchedule/job": {
       "put": {
-        "tags": [
-          "JobSchedule"
-        ],
+        "tags": ["JobSchedule"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2618,9 +2530,7 @@
     },
     "/api/JobSchedule/team": {
       "put": {
-        "tags": [
-          "JobSchedule"
-        ],
+        "tags": ["JobSchedule"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2658,9 +2568,7 @@
     },
     "/api/JobSchedule/options": {
       "put": {
-        "tags": [
-          "JobSchedule"
-        ],
+        "tags": ["JobSchedule"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2709,9 +2617,7 @@
     },
     "/api/PrintSection": {
       "post": {
-        "tags": [
-          "PrintSection"
-        ],
+        "tags": ["PrintSection"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2778,9 +2684,7 @@
         }
       },
       "get": {
-        "tags": [
-          "PrintSection"
-        ],
+        "tags": ["PrintSection"],
         "parameters": [
           {
             "name": "filter",
@@ -2868,9 +2772,7 @@
     },
     "/api/PrintSection/{id}": {
       "put": {
-        "tags": [
-          "PrintSection"
-        ],
+        "tags": ["PrintSection"],
         "parameters": [
           {
             "name": "id",
@@ -2948,9 +2850,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "PrintSection"
-        ],
+        "tags": ["PrintSection"],
         "parameters": [
           {
             "name": "id",
@@ -3012,9 +2912,7 @@
         }
       },
       "get": {
-        "tags": [
-          "PrintSection"
-        ],
+        "tags": ["PrintSection"],
         "parameters": [
           {
             "name": "id",
@@ -3075,9 +2973,7 @@
     },
     "/api/ReportConfiguration": {
       "post": {
-        "tags": [
-          "ReportConfiguration"
-        ],
+        "tags": ["ReportConfiguration"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -3144,9 +3040,7 @@
         }
       },
       "get": {
-        "tags": [
-          "ReportConfiguration"
-        ],
+        "tags": ["ReportConfiguration"],
         "parameters": [
           {
             "name": "filter",
@@ -3231,9 +3125,7 @@
     },
     "/api/ReportConfiguration/{id}": {
       "put": {
-        "tags": [
-          "ReportConfiguration"
-        ],
+        "tags": ["ReportConfiguration"],
         "parameters": [
           {
             "name": "id",
@@ -3331,9 +3223,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "ReportConfiguration"
-        ],
+        "tags": ["ReportConfiguration"],
         "parameters": [
           {
             "name": "id",
@@ -3392,9 +3282,7 @@
         }
       },
       "get": {
-        "tags": [
-          "ReportConfiguration"
-        ],
+        "tags": ["ReportConfiguration"],
         "parameters": [
           {
             "name": "id",
@@ -3472,9 +3360,7 @@
     },
     "/api/Reports": {
       "post": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -3541,9 +3427,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "filter",
@@ -3616,9 +3500,7 @@
     },
     "/api/Reports/{id}": {
       "put": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "id",
@@ -3695,9 +3577,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "id",
@@ -3756,9 +3636,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "id",
@@ -3819,9 +3697,7 @@
     },
     "/api/Reports/{id}/photorecord": {
       "get": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "id",
@@ -3883,9 +3759,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "id",
@@ -3953,9 +3827,7 @@
     },
     "/api/Reports/{id}/note": {
       "post": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "id",
@@ -4035,9 +3907,7 @@
     },
     "/api/Reports/{id}/note/{idNote}": {
       "put": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "id",
@@ -4124,9 +3994,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "id",
@@ -4196,9 +4064,7 @@
     },
     "/api/Reports/{id}/forms/{idForm}": {
       "put": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "operationId": "UpdateForm",
         "parameters": [
           {
@@ -4223,13 +4089,13 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { }
+              "schema": {}
             },
             "text/json": {
-              "schema": { }
+              "schema": {}
             },
             "application/*+json": {
-              "schema": { }
+              "schema": {}
             }
           }
         },
@@ -4282,9 +4148,7 @@
     },
     "/api/Reports/{id}/photorecord/{idPhoto}": {
       "put": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "id",
@@ -4371,9 +4235,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "parameters": [
           {
             "name": "id",
@@ -4443,9 +4305,7 @@
     },
     "/api/Reports/{reportId}/checklists/{checkListId}": {
       "patch": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "operationId": "BulkUpdateChecks",
         "parameters": [
           {
@@ -4504,9 +4364,7 @@
     },
     "/api/Reports/{reportId}/complete": {
       "patch": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "operationId": "CompleteReport",
         "parameters": [
           {
@@ -4548,9 +4406,7 @@
     },
     "/api/Reports/{id}/export": {
       "get": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "operationId": "Export",
         "parameters": [
           {
@@ -4579,9 +4435,7 @@
     },
     "/api/Signatures": {
       "post": {
-        "tags": [
-          "Signatures"
-        ],
+        "tags": ["Signatures"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -4648,9 +4502,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Signatures"
-        ],
+        "tags": ["Signatures"],
         "parameters": [
           {
             "name": "filter",
@@ -4761,9 +4613,7 @@
     },
     "/api/Signatures/{id}": {
       "put": {
-        "tags": [
-          "Signatures"
-        ],
+        "tags": ["Signatures"],
         "parameters": [
           {
             "name": "id",
@@ -4841,9 +4691,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Signatures"
-        ],
+        "tags": ["Signatures"],
         "parameters": [
           {
             "name": "id",
@@ -4905,9 +4753,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Signatures"
-        ],
+        "tags": ["Signatures"],
         "parameters": [
           {
             "name": "id",
@@ -4968,9 +4814,7 @@
     },
     "/api/Users": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "GetUsers",
         "responses": {
           "200": {
@@ -5005,9 +4849,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "AddUser",
         "requestBody": {
           "content": {
@@ -5094,9 +4936,7 @@
     },
     "/api/Users/{userName}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "GetUserByUserName",
         "parameters": [
           {
@@ -5172,9 +5012,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "UpdateUser",
         "parameters": [
           {
@@ -5272,9 +5110,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "DeleteUser",
         "parameters": [
           {
@@ -5350,9 +5186,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Change User Password after validated",
         "operationId": "ChangePassword",
         "parameters": [
@@ -5435,9 +5269,7 @@
     },
     "/api/Users/active": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "GetActiveUser",
         "responses": {
           "200": {
@@ -5854,10 +5686,7 @@
         "additionalProperties": false
       },
       "CheckListDisplay": {
-        "enum": [
-          "Numbered",
-          "Inline"
-        ],
+        "enum": ["Numbered", "Inline"],
         "type": "string"
       },
       "CheckListItemDTO": {
@@ -5968,12 +5797,7 @@
         "additionalProperties": false
       },
       "CheckValue": {
-        "enum": [
-          "NotAcceptableFalse",
-          "Acceptable",
-          "NotApplicable",
-          "None"
-        ],
+        "enum": ["NotAcceptableFalse", "Acceptable", "NotApplicable", "None"],
         "type": "string"
       },
       "CostSheet": {
@@ -6834,10 +6658,7 @@
         "additionalProperties": false
       },
       "PrintSectionStatus": {
-        "enum": [
-          "Inactive",
-          "Active"
-        ],
+        "enum": ["Inactive", "Active"],
         "type": "string"
       },
       "ProblemDetails": {
@@ -6865,7 +6686,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": { }
+        "additionalProperties": {}
       },
       "ReportConfigurationDto": {
         "type": "object",
@@ -7035,19 +6856,11 @@
         "additionalProperties": false
       },
       "ReportType": {
-        "enum": [
-          "Inspection"
-        ],
+        "enum": ["Inspection"],
         "type": "string"
       },
       "ResponsibleType": {
-        "enum": [
-          "Supervisor",
-          "Inspector",
-          "Witness",
-          "LEW",
-          "Other"
-        ],
+        "enum": ["Supervisor", "Inspector", "Witness", "LEW", "Other"],
         "type": "string"
       },
       "ResumenReportConfiguration": {
@@ -7096,9 +6909,7 @@
         "additionalProperties": false
       },
       "SchedJob": {
-        "required": [
-          "date"
-        ],
+        "required": ["date"],
         "type": "object",
         "properties": {
           "id": {
@@ -7595,7 +7406,7 @@
   },
   "security": [
     {
-      "jwt_auth": [ ]
+      "jwt_auth": []
     }
   ]
 }

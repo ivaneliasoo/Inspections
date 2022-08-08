@@ -13,14 +13,14 @@
         readonly
         :data-col="col"
         @keydown="keyDown"
-      >
+      />
     </div>
     <textarea
       v-else
       ref="textbox"
       v-model="dataValue"
       class="text-caption table-input"
-      style="width: 200px; padding: 0px;"
+      style="width: 200px; padding: 0"
       @focusout="onExit"
     />
   </div>
@@ -34,35 +34,35 @@ export default {
     value: {
       required: true,
     },
-    col: Number
+    col: Number,
   },
   data: () => {
     return {
-      editing: false
+      editing: false,
     }
   },
   computed: {
-    viewMode () {
+    viewMode() {
       return !this.editing && this.dataValue && this.dataValue.length > 0
     },
     dataValue: {
-      get () {
+      get() {
         return this.value
       },
-      set (v) {
+      set(v) {
         this.editing = true
         this.$emit('input', v)
-      }
-    }
+      },
+    },
   },
-  updated () {
+  updated() {
     if (this.editing) {
       const tx = this.$refs.textbox
       tx.focus()
     }
   },
   methods: {
-    keyDown (event) {
+    keyDown(event) {
       if (event.keyCode === Key.up) {
         EventBus.$emit('move', this.$refs.navbox, Key.up)
       } else if (event.keyCode === Key.down) {
@@ -77,15 +77,15 @@ export default {
         this.editing = true
       }
     },
-    onClick () {
+    onClick() {
       this.editing = true
     },
-    onExit () {
+    onExit() {
       if (this.$refs.textbox !== document.activeElement) {
         this.editing = false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -97,19 +97,23 @@ export default {
   padding-top: 2px;
   padding-bottom: 2px;
 }
+
 .text-box:focus-within {
   border: 2px solid black;
   border-radius: 5px;
 }
+
 .focus-handler {
   border-bottom: 2px solid black;
 }
+
 input {
   border: 0;
   outline: 0;
 }
+
 input:focus {
-  outline: none!important;
+  outline: none !important;
   border-left: 1px solid black;
   animation-name: blinking;
   animation-duration: 1s;

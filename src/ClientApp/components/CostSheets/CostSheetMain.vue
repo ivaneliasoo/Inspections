@@ -50,15 +50,13 @@
       <v-card>
         <v-card-title class="text-body-1" />
         <v-card-text>
-          <p class="header3" style="white-space: pre-wrap;">
+          <p class="header3" style="white-space: pre-wrap">
             {{ userMessage }}
           </p>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn @click="closeMessage">
-            OK
-          </v-btn>
+          <v-btn @click="closeMessage"> OK </v-btn>
           <v-spacer />
         </v-card-actions>
       </v-card>
@@ -68,18 +66,14 @@
       <v-card>
         <v-card-title class="text-body-1" />
         <v-card-text>
-          <p class="header3" style="white-space: pre-wrap;">
+          <p class="header3" style="white-space: pre-wrap">
             {{ userMessage }}
           </p>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn @click="confirmOk">
-            OK
-          </v-btn>
-          <v-btn @click="confirmCancel">
-            Cancel
-          </v-btn>
+          <v-btn @click="confirmOk"> OK </v-btn>
+          <v-btn @click="confirmCancel"> Cancel </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -88,11 +82,10 @@
 
 <script>
 import Vue from 'vue'
-import { Section, Item, CostSheet }
-  from '../../utils/costsheets/entity.js'
+import { Section, Item, CostSheet } from '../../utils/costsheets/entity.js'
 
 // https://stackoverflow.com/questions/51086688/mutex-in-javascript-does-this-look-like-a-correct-implementation
-function Mutex () {
+function Mutex() {
   let current = Promise.resolve()
   this.lock = () => {
     let _resolve
@@ -133,59 +126,59 @@ export default {
       materialMarkup: 10,
       labourDailyRate: 600,
       labourNightMultiplier: 2,
-      finalMarkup: 10
+      finalMarkup: 10,
     },
     updateSheet: 0,
     rules: {
-      required: value => !!value || 'Required.',
+      required: (value) => !!value || 'Required.',
       number: (value) => {
         const pattern = /^\d*\.?\d*$/
         return pattern.test(value) || 'Invalid number'
-      }
+      },
     },
     alert: false,
     confirm: false,
     userMessage: '',
-    confirmAction: null
+    confirmAction: null,
   }),
-  mounted () {
+  mounted() {
     this.init()
   },
-  updated () {
-  },
+  updated() {},
   methods: {
-    init () {
+    init() {
       this.getCostSheets(true)
       this.getTemplates(false)
     },
-    endpoint (resource, p) {
+    endpoint(resource, p) {
       const param = p ? '/' + p : ''
       // return `http://localhost:5000/api/costsheet${param}`
       return `/costsheet/${resource}${param}`
     },
-    renderSheet () {
-      Vue.prototype.$numberAlignment = this.selectedSheet.options.numberAlignment
+    renderSheet() {
+      Vue.prototype.$numberAlignment =
+        this.selectedSheet.options.numberAlignment
       this.costSheetVisible = false
       this.$nextTick(() => {
         this.costSheetVisible = true
       })
     },
-    showCostSheets () {
+    showCostSheets() {
       this.templateTable = false
       this.costSheetTable = true
     },
-    showTemplates () {
+    showTemplates() {
       this.templateTable = true
       this.costSheetTable = false
     },
-    openSelectTemplate (action) {
+    openSelectTemplate(action) {
       this.selectTemplateAction = action
       this.selectTemplateDialog = true
     },
-    closeSelectTemplate () {
+    closeSelectTemplate() {
       this.selectTemplateDialog = false
     },
-    getCostSheets (show) {
+    getCostSheets(show) {
       const self = this
       this.$axios({
         url: this.endpoint('sheet'),
@@ -199,18 +192,20 @@ export default {
             }
             return value
           })
-        }
-      }).then((response) => {
-        this.costSheets = response.data
-        this.costSheets.sort((s1, s2) => s1.id - s2.id)
-        if (show) {
-          this.showCostSheets()
-        }
-      }).catch(function (error) {
-        console.log(error)
+        },
       })
+        .then((response) => {
+          this.costSheets = response.data
+          this.costSheets.sort((s1, s2) => s1.id - s2.id)
+          if (show) {
+            this.showCostSheets()
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     },
-    getTemplates (show) {
+    getTemplates(show) {
       // const self=this;
       this.$axios({
         url: this.endpoint('template'),
@@ -224,18 +219,20 @@ export default {
             }
             return value
           })
-        }
-      }).then((response) => {
-        this.templates = response.data
-        this.templates.sort((t1, t2) => t1.id - t2.id)
-        if (show) {
-          this.showTemplates()
-        }
-      }).catch(function (error) {
-        console.log(error)
+        },
       })
+        .then((response) => {
+          this.templates = response.data
+          this.templates.sort((t1, t2) => t1.id - t2.id)
+          if (show) {
+            this.showTemplates()
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     },
-    parseResponse (response) {
+    parseResponse(response) {
       const costSheet = JSON.parse(response, (key, value) => {
         if (key == 'dateCreated') {
           return new Date(value)
@@ -252,7 +249,7 @@ export default {
       })
       return costSheet
     },
-    showCostSheet () {
+    showCostSheet() {
       this.selectedTemplate = null
       this.costSheetTable = false
       this.templateTable = false
@@ -261,23 +258,25 @@ export default {
       // this.updateSheet++;
       this.renderSheet()
     },
-    editCostSheet (index) {
+    editCostSheet(index) {
       this.$axios({
         url: this.endpoint('sheet', this.costSheets[index].id),
         method: 'GET',
         crossDomain: true,
         responseType: 'json',
-        transformResponse: this.parseResponse
-      }).then((response) => {
-        this.selectedSheet = new CostSheet(response.data)
-        // console.log("selectedSheet.options", this.selectedSheet.options);
-        this.showCostSheet()
-      }).catch(function (error) {
-        console.log(error)
+        transformResponse: this.parseResponse,
       })
+        .then((response) => {
+          this.selectedSheet = new CostSheet(response.data)
+          // console.log("selectedSheet.options", this.selectedSheet.options);
+          this.showCostSheet()
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     },
-    saveCostSheet (sheet) {
-      (async () => {
+    saveCostSheet(sheet) {
+      ;(async () => {
         const unlock = await this.mutex.lock()
         const self = this
         this.$axios({
@@ -286,7 +285,7 @@ export default {
           data: sheet,
           crossDomain: true,
           responseType: 'json',
-          transformResponse: this.parseResponse
+          transformResponse: this.parseResponse,
         })
           .then(function (response) {
             self.selectedSheet = new CostSheet(response.data)
@@ -296,18 +295,20 @@ export default {
           .catch(function (error) {
             console.log(error)
             unlock()
-            self.showMessage('There was a server error when saving the cost sheet')
+            self.showMessage(
+              'There was a server error when saving the cost sheet'
+            )
           })
       })()
     },
-    saveSheet (sheet) {
+    saveSheet(sheet) {
       if (sheet.isTemplate) {
         this.saveTemplate(sheet)
       } else {
         this.saveCostSheet(sheet)
       }
     },
-    createCostSheet (sheet) {
+    createCostSheet(sheet) {
       const self = this
       this.$axios({
         url: self.endpoint('sheet'),
@@ -315,7 +316,7 @@ export default {
         data: sheet,
         responseType: 'json',
         crossDomain: true,
-        transformResponse: this.parseResponse
+        transformResponse: this.parseResponse,
       })
         .then(function (response) {
           self.selectedSheet = new CostSheet(response.data)
@@ -326,30 +327,33 @@ export default {
           self.showMessage('Server error when creating new cost sheet')
         })
     },
-    newCostSheet () {
+    newCostSheet() {
       const costSheet = new CostSheet(this.newSheetDefaults)
       costSheet.renumberSections()
       this.createCostSheet(costSheet)
     },
-    deleteCostSheet (index) {
-      this.showConfirmMessage(`Are you sure you want to delete project: ${this.costSheets[index].project}`,
+    deleteCostSheet(index) {
+      this.showConfirmMessage(
+        `Are you sure you want to delete project: ${this.costSheets[index].project}`,
         (result) => {
           if (result === 'ok') {
             this.$axios({
               url: this.endpoint('sheet', this.costSheets[index].id),
               method: 'DELETE',
-              crossDomain: true
-            }).then((response) => {
-              console.log('Cost sheet', this.costSheets[index].id, 'deleted')
-              this.costSheets.splice(index, 1)
-            }).catch(function (error) {
-              console.log(error)
+              crossDomain: true,
             })
+              .then((response) => {
+                console.log('Cost sheet', this.costSheets[index].id, 'deleted')
+                this.costSheets.splice(index, 1)
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
           }
         }
       )
     },
-    goBack () {
+    goBack() {
       this.costSheetVisible = false
       if (this.currentPanel === 'costSheetTable') {
         // console.log("currentPanel", this.currentPanel);
@@ -358,7 +362,7 @@ export default {
         this.getTemplates(true)
       }
     },
-    createTemplate (template) {
+    createTemplate(template) {
       const self = this
       this.$axios({
         url: self.endpoint('template'),
@@ -366,7 +370,7 @@ export default {
         data: template,
         responseType: 'json',
         crossDomain: true,
-        transformResponse: this.parseResponse
+        transformResponse: this.parseResponse,
       })
         .then(function (response) {
           self.showTemplate(response.data)
@@ -376,13 +380,13 @@ export default {
           self.showMessage('Server error when creating new cost sheet')
         })
     },
-    newTemplate () {
+    newTemplate() {
       const template = new CostSheet(this.newSheetDefaults)
       template.isTemplate = true
       template.renumberSections()
       this.createTemplate(template)
     },
-    showTemplate (template) {
+    showTemplate(template) {
       this.selectedSheet = new CostSheet(template)
       this.selectedTemplate = null
       this.templateTable = false
@@ -390,7 +394,7 @@ export default {
       this.currentPanel = 'templateTable'
       this.updateSheet++
     },
-    loadTemplateAsSheet (template) {
+    loadTemplateAsSheet(template) {
       // console.log("loadTemplateAsSheet", template.id)
       this.closeSelectTemplate()
 
@@ -403,7 +407,7 @@ export default {
 
       this.createCostSheet(costSheet)
     },
-    loadTemplate (template) {
+    loadTemplate(template) {
       this.selectedTemplate = new CostSheet(template)
       const newSheet = this.selectedSheet
 
@@ -415,9 +419,9 @@ export default {
 
       this.closeSelectTemplate()
     },
-    saveTemplate (template) {
-      const self = this;
-      (async () => {
+    saveTemplate(template) {
+      const self = this
+      ;(async () => {
         const unlock = await this.mutex.lock()
         this.$axios({
           url: self.endpoint('template'),
@@ -425,7 +429,7 @@ export default {
           data: template,
           crossDomain: true,
           responseType: 'json',
-          transformResponse: this.parseResponse
+          transformResponse: this.parseResponse,
         })
           .then(function (response) {
             // console.log("Template updated");
@@ -436,77 +440,84 @@ export default {
           .catch(function (error) {
             unlock()
             console.log(error)
-            self.showMessage('There was a server error when saving the template')
+            self.showMessage(
+              'There was a server error when saving the template'
+            )
           })
       })()
     },
-    openTemplate (index, action) {
+    openTemplate(index, action) {
       console.log('openTemplate', index, action)
       this.$axios({
         url: this.endpoint('template', this.templates[index].id),
         method: 'GET',
         crossDomain: true,
         responseType: 'json',
-        transformResponse: this.parseResponse
-      }).then((response) => {
-        if (action === 'editTemplate') {
-          console.log('openTemplate', action)
-          this.showTemplate(response.data)
-        } else if (action === 'loadTemplate') {
-          this.loadTemplate(response.data)
-        } else {
-          this.loadTemplateAsSheet(response.data)
-        }
-      }).catch(function (error) {
-        console.log(error)
+        transformResponse: this.parseResponse,
       })
+        .then((response) => {
+          if (action === 'editTemplate') {
+            console.log('openTemplate', action)
+            this.showTemplate(response.data)
+          } else if (action === 'loadTemplate') {
+            this.loadTemplate(response.data)
+          } else {
+            this.loadTemplateAsSheet(response.data)
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     },
-    deleteTemplate (index) {
-      this.showConfirmMessage(`Are you sure you want to delete template: ${this.templates[index].project}`,
+    deleteTemplate(index) {
+      this.showConfirmMessage(
+        `Are you sure you want to delete template: ${this.templates[index].project}`,
         (result) => {
           if (result === 'ok') {
             this.$axios({
               url: this.endpoint('template', this.templates[index].id),
               method: 'DELETE',
-              crossDomain: true
-            }).then((response) => {
-              console.log('Template', this.templates[index].id, 'deleted')
-              this.templates.splice(index, 1)
-            }).catch(function (error) {
-              console.log(error)
+              crossDomain: true,
             })
+              .then((response) => {
+                console.log('Template', this.templates[index].id, 'deleted')
+                this.templates.splice(index, 1)
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
           }
         }
       )
     },
-    showMessage (msg) {
+    showMessage(msg) {
       this.userMessage = msg
       this.alert = true
     },
-    closeMessage () {
+    closeMessage() {
       this.userMessage = ''
       this.alert = false
     },
-    showConfirmMessage (msg, action) {
+    showConfirmMessage(msg, action) {
       this.userMessage = msg
       this.confirm = true
       this.confirmAction = action
     },
-    confirmOk () {
+    confirmOk() {
       this.userMessage = ''
       this.confirm = false
       if (this.confirmAction) {
         this.confirmAction('ok')
       }
     },
-    confirmCancel () {
+    confirmCancel() {
       this.userMessage = ''
       this.confirm = false
       if (this.confirmAction) {
         this.confirmAction('cancel')
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -515,12 +526,15 @@ html {
   overflow-y: auto;
 }
 
-.costsheet-table, td, th {
+.costsheet-table,
+td,
+th {
   width: 100%;
   border: 1px solid black;
 }
 
-.costsheet-table td, .costsheet-table th {
-  padding: 5px 5px 5px 5px;
+.costsheet-table td,
+.costsheet-table th {
+  padding: 5px;
 }
 </style>

@@ -12,7 +12,7 @@ export const responsibleTypesString: ({ id: string; text: any } | undefined)[] =
 
       return { id: key, text: key }
     })
-    .filter(i => i !== undefined)
+    .filter((i) => i !== undefined)
 
 export const responsibleTypes: ({ id: string; text: any } | undefined)[] =
   Object.keys(ResponsibleType)
@@ -23,4 +23,4 @@ export const responsibleTypes: ({ id: string; text: any } | undefined)[] =
 
       return { id: ResponsibleType[key], text: key }
     })
-    .filter(i => i !== undefined)
+    .filter((i) => i !== undefined)

@@ -15,13 +15,12 @@
       <v-card-text>
         <v-row align-center justify-center row fill-height>
           <v-col class="text-md-center" cols="2">
-            <v-icon color="warning">
-              mdi-exclamation-thick
-            </v-icon>
+            <v-icon color="warning"> mdi-exclamation-thick </v-icon>
           </v-col>
           <v-col cols="10">
             {{ message }}
-            <b>{{ code }} - {{ description }}</b>. Are you Sure?.
+            <b>{{ code }} - {{ description }}</b
+            >. Are you Sure?.
           </v-col>
         </v-row>
       </v-card-text>
@@ -31,15 +30,13 @@
           color="error"
           text
           @click="
-            $emit('yes');
-            $emit('input', false);
+            $emit('yes')
+            $emit('input', false)
           "
         >
           Yes
         </v-btn>
-        <v-btn color="default" text @click="$emit('input', false)">
-          No
-        </v-btn>
+        <v-btn color="default" text @click="$emit('input', false)"> No </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -59,30 +56,30 @@ export default defineComponent({
     },
     message: {
       type: String,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     code: {
       type: [String, Number],
-      default: ''
+      default: '',
     },
     description: {
       type: String,
-      default: ''
+      default: '',
     },
   },
-  setup (props) {
+  setup(props) {
     const dialog = computed(() => {
       return props.visible
     })
 
     return {
-      dialog
+      dialog,
     }
-  }
+  },
 })
 </script>
 <style>

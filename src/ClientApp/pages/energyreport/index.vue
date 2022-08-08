@@ -3,11 +3,8 @@
 </template>
 
 <script>
-
 export default {
   name: 'EnergyReport',
-  layout: 'default'
+  layout: 'default',
 }
-
 </script>
-

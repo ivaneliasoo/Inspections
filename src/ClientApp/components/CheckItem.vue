@@ -23,10 +23,10 @@ export default Vue.extend({
   // eslint-disable-next-line vue/require-prop-types
   props: ['item', 'index'],
   computed: {
-    localItem (): CheckListItem {
+    localItem(): CheckListItem {
       return this.item
     },
-    checkProps (): { name:string; color:string; } {
+    checkProps(): { name: string; color: string } {
       switch (this.localItem.checked) {
         case 0:
           return { name: 'cross', color: 'tw-text-red-600' }
@@ -39,13 +39,16 @@ export default Vue.extend({
         default:
           return { name: '', color: '' }
       }
-    }
+    },
   },
   methods: {
-    changeValue () {
-      this.localItem.checked = this.localItem.checked === 3 ? this.localItem.checked = 0 : this.localItem.checked + 1
+    changeValue() {
+      this.localItem.checked =
+        this.localItem.checked === 3
+          ? (this.localItem.checked = 0)
+          : this.localItem.checked + 1
       this.$emit('update:item', this.localItem)
-    }
-  }
+    },
+  },
 })
 </script>

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <label v-if="notNull() && format==='currency'" class="text-caption">$</label>
+    <label v-if="notNull() && format === 'currency'" class="text-caption"
+      >$</label
+    >
     <input
       ref="textbox"
       v-model="dataValue"
@@ -8,10 +10,10 @@
       class="text-caption text-bold table-input"
       :style="style"
       :data-col="col"
-      @change="$emit('change', $event.target.value);"
+      @change="$emit('change', $event.target.value)"
       @focusout="onExit"
       @keydown="keyDown"
-    >
+    />
     <label v-if="value" class="text-caption">{{ suffixStr }}</label>
   </div>
 </template>
@@ -21,8 +23,17 @@ import { EventBus, Key } from '../../utils/costsheets/event_bus.js'
 
 // Restricts input for the given textbox to the given inputFilter function.
 // https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input
-function setInputFilter (textbox, inputFilter) {
-  ['input', 'keydown', 'keyup', 'mousedown', 'mouseup', 'select', 'contextmenu', 'drop'].forEach(function (event) {
+function setInputFilter(textbox, inputFilter) {
+  ;[
+    'input',
+    'keydown',
+    'keyup',
+    'mousedown',
+    'mouseup',
+    'select',
+    'contextmenu',
+    'drop',
+  ].forEach(function (event) {
     textbox.addEventListener(event, function () {
       if (inputFilter(this.value)) {
         this.oldValue = this.value
@@ -49,21 +60,21 @@ export default {
     decimals: Number,
     suffix: String,
     bold: Boolean,
-    col: Number
+    col: Number,
   },
   data: () => {
     return {
-      editing: false
+      editing: false,
     }
   },
   computed: {
-    suffixStr () {
+    suffixStr() {
       if (this.format === 'percent') {
         return '%'
       }
       return this.suffix ? this.suffix : ''
     },
-    style () {
+    style() {
       let width
       // let alignment = "center";
       if (this.format === 'currency') {
@@ -78,7 +89,7 @@ export default {
       return `display: table-cell; text-align: ${this.align()}; width: ${width};`
     },
     dataValue: {
-      get () {
+      get() {
         const value = this.value
         if (this.editing) {
           return value
@@ -89,10 +100,16 @@ export default {
         }
         // return this.format === "currency" ? parseFloat(this.value).toFixed(2) : parseFloat(this.value).toFixed(dec);
         return this.format === 'currency'
-          ? value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-          : value.toLocaleString('en', { minimumFractionDigits: dec, maximumFractionDigits: dec })
+          ? value.toLocaleString('en', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : value.toLocaleString('en', {
+              minimumFractionDigits: dec,
+              maximumFractionDigits: dec,
+            })
       },
-      set (v) {
+      set(v) {
         this.editing = true
         const field = this.$refs.textbox
         const pos = field.selectionStart
@@ -103,10 +120,10 @@ export default {
 
         field.focus()
         field.setSelectionRange(pos, pos)
-      }
-    }
+      },
+    },
   },
-  mounted () {
+  mounted() {
     const textBox = this.$refs.textbox
     if (this.bold) {
       textBox.classList.add('boldtext')
@@ -117,14 +134,14 @@ export default {
       return /^\d*\,?\d*\.?\d*$/.test(value)
     })
   },
-  updated () {
+  updated() {
     if (this.editing) {
       const tx = this.$refs.textbox
       tx.focus()
     }
   },
   methods: {
-    keyDown (event) {
+    keyDown(event) {
       if (event.keyCode === Key.up) {
         EventBus.$emit('move', this.$refs.textbox, Key.up)
       } else if (event.keyCode === Key.down) {
@@ -141,23 +158,23 @@ export default {
         }
       }
     },
-    onClick () {
+    onClick() {
       this.editing = true
     },
-    onExit () {
+    onExit() {
       if (this.$refs.textbox !== document.activeElement) {
         this.editing = false
       }
     },
-    align () {
+    align() {
       return this.$numberAlignment ? this.$numberAlignment : 'center'
     },
-    notNull () {
+    notNull() {
       const value = this.value
       const isNull = value === undefined || value === null || value === ''
       return !isNull
-    }
-  }
+    },
+  },
 }
 </script>
 

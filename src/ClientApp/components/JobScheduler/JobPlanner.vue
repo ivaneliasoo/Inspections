@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-container v-show="jobScheduleVisible" fluid class="my-n2 py-n2 mx-4 px-0 fill-height">
+    <v-container
+      v-show="jobScheduleVisible"
+      fluid
+      class="my-n2 py-n2 mx-4 px-0 fill-height"
+    >
       <v-row>
         <v-col cols="10">
           <v-row>
@@ -15,7 +19,7 @@
                 @save="save"
               />
             </v-col>
-            <v-col class="mt-0 pt-0 mb-n4 pb-n4 " cols="4">
+            <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols="4">
               <div class="text-h6" style="text-align: bottomz; display: inline">
                 Job Schedule Projection
               </div>
@@ -24,7 +28,7 @@
               <div
                 id="flatpickr"
                 class="rounded text-body-2"
-                style="padding: 3px; box-shadow: 1px 3px lightgrey;"
+                style="padding: 3px; box-shadow: 1px 3px lightgrey"
               >
                 <flat-pickr
                   v-model="selectedDate"
@@ -37,35 +41,24 @@
               </div>
             </v-col>
             <v-col class="text-center mt-0 pt-0 mb-n4 pb-n4" cols="5">
-              <v-btn small @click="previousWeek">
-                Previous Week
-              </v-btn>
+              <v-btn small @click="previousWeek"> Previous Week </v-btn>
               &nbsp; &nbsp;
-              <v-btn small @click="nextWeek">
-                Next Week
-              </v-btn>
+              <v-btn small @click="nextWeek"> Next Week </v-btn>
               &nbsp; &nbsp;
-              <v-btn small @click="save">
-                Save
-              </v-btn>
+              <v-btn small @click="save"> Save </v-btn>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
               <div style="height: 80vh; overflow-y: scroll">
-                <table
-                  id="job-sched"
-                  class="my-0 py-0 job-sched"
-                >
+                <table id="job-sched" class="my-0 py-0 job-sched">
                   <colgroup>
-                    <col style="width:8%;">
-                    <col :span="jpTeams.length" :style="colWidth()">
+                    <col style="width: 8%" />
+                    <col :span="jpTeams.length" :style="colWidth()" />
                   </colgroup>
                   <thead>
                     <tr>
-                      <th class="text-caption font-weight-bold">
-                        Date
-                      </th>
+                      <th class="text-caption font-weight-bold">Date</th>
                       <th
                         v-for="(team, index) in jpTeams"
                         :key="team.id"
@@ -81,14 +74,20 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(day, index) in jobSchedule" :key="index" style="height: 0px;">
+                    <tr
+                      v-for="(day, index) in jobSchedule"
+                      :key="index"
+                      style="height: 0"
+                    >
                       <td
                         class="text-caption text-left font-weight-bold date"
                         :style="dayColor(day.date)"
-                        @contextmenu="openManpowerContextMenu($event, index, day)"
+                        @contextmenu="
+                          openManpowerContextMenu($event, index, day)
+                        "
                       >
-                        <div style="text-align: center;">
-                          {{ dayOfWeek(day.date) }}<br>
+                        <div style="text-align: center">
+                          {{ dayOfWeek(day.date) }}<br />
                           {{ monthAndDate(day.date) }}
                         </div>
                       </td>
@@ -102,25 +101,25 @@
                         @click="onTableCellClick($event, day.jobs[team.id])"
                         @drop="dropHandler($event, index, teamIndex)"
                         @dragover="dragoverHandler($event)"
-                        @dragstart="scheduledJobDragstart($event, index, teamIndex)"
+                        @dragstart="
+                          scheduledJobDragstart($event, index, teamIndex)
+                        "
                         @contextmenu="openContextMenu"
                       >
                         <div v-if="showSchedJob(day.jobs[team.id])">
                           <div v-if="splitShift(day.jobs[team.id])">
-                            <label class="font-weight-bold">
-                              Morning
-                            </label><br>
-                            {{ day.jobs[team.id].getJob1() }}<br>
-                            <label class="font-weight-bold">
-                              Afternoon
-                            </label><br>
+                            <label class="font-weight-bold"> Morning </label
+                            ><br />
+                            {{ day.jobs[team.id].getJob1() }}<br />
+                            <label class="font-weight-bold"> Afternoon </label
+                            ><br />
                             {{ day.jobs[team.id].getJob2() }}
                           </div>
                           <div v-else>
                             <label class="font-weight-bold">
                               {{ schedJobLabel(day.jobs[team.id]) }}
                             </label>
-                            <br>
+                            <br />
                             {{ day.jobs[team.id].getJob1() }}
                           </div>
                         </div>
@@ -135,7 +134,7 @@
         <v-col cols="2">
           <v-row>
             <v-col cols="12" class="mt-1 pt-0 mb-0 pb-0 d-flex text-center">
-              <div style="height:28px;" />
+              <div style="height: 28px" />
             </v-col>
           </v-row>
           <v-row>
@@ -145,7 +144,11 @@
                   v-for="(jlist, jid) in jobProjectionTable"
                   :key="jid"
                 >
-                  <v-expansion-panel-header>{{ jlist.title }} ({{ jlist.jobs.length }})</v-expansion-panel-header>
+                  <v-expansion-panel-header
+                    >{{ jlist.title }} ({{
+                      jlist.jobs.length
+                    }})</v-expansion-panel-header
+                  >
                   <v-expansion-panel-content>
                     <job-projection-category
                       :id="jid"
@@ -184,7 +187,7 @@
                       <div
                         id="flatpickr"
                         class="mt-2 pt-1 mb-0 pb-0 rounded text-body-2"
-                        style="padding: 3px; box-shadow: 1px 3px lightgrey;"
+                        style="padding: 3px; box-shadow: 1px 3px lightgrey"
                       >
                         <flat-pickr
                           v-model="jobDialog.startDate"
@@ -199,7 +202,7 @@
                       <div
                         id="flatpickr"
                         class="mt-2 pt-1 mb-0 pb-0 rounded text-body-2"
-                        style="padding: 3px; box-shadow: 1px 3px lightgrey;"
+                        style="padding: 3px; box-shadow: 1px 3px lightgrey"
                       >
                         <flat-pickr
                           v-model="jobDialog.endDate"
@@ -225,9 +228,7 @@
                         <v-icon v-if="splitShift(jobInfo)">
                           mdi-border-all-variant
                         </v-icon>
-                        <v-icon v-else>
-                          mdi-dns-outline
-                        </v-icon>
+                        <v-icon v-else> mdi-dns-outline </v-icon>
                       </v-btn>
                     </v-col>
                   </v-row>
@@ -236,9 +237,7 @@
                       <div v-if="splitShift(jobInfo)">
                         <v-row>
                           <v-col cols="10" class="my-0 py-0">
-                            <label class="font-weight-bold">
-                              Morning
-                            </label>
+                            <label class="font-weight-bold"> Morning </label>
                           </v-col>
                         </v-row>
                         <v-row>
@@ -252,9 +251,7 @@
                         </v-row>
                         <v-row>
                           <v-col cols="10" class="my-0 py-0">
-                            <label class="font-weight-bold">
-                              Afternoon
-                            </label>
+                            <label class="font-weight-bold"> Afternoon </label>
                           </v-col>
                         </v-row>
                         <v-row>
@@ -277,10 +274,7 @@
                         </v-row>
                         <v-row>
                           <v-col>
-                            <v-textarea
-                              v-model="jobInfo.job1"
-                              outlined
-                            />
+                            <v-textarea v-model="jobInfo.job1" outlined />
                           </v-col>
                         </v-row>
                       </div>
@@ -288,23 +282,10 @@
                   </v-row>
                   <v-row>
                     <v-col cols="9" class="my-0 py-0">
-                      <v-radio-group
-                        v-model="jobInfo.shift"
-                        class="ml-8"
-                        row
-                      >
-                        <v-radio
-                          label="Day"
-                          value="day"
-                        />
-                        <v-radio
-                          label="Night"
-                          value="night"
-                        />
-                        <v-radio
-                          label="TBC"
-                          value="tbc"
-                        />
+                      <v-radio-group v-model="jobInfo.shift" class="ml-8" row>
+                        <v-radio label="Day" value="day" />
+                        <v-radio label="Night" value="night" />
+                        <v-radio label="TBC" value="tbc" />
                       </v-radio-group>
                     </v-col>
                     <v-col cols="3" class="my-0 py-0">
@@ -338,8 +319,12 @@
       <div id="content" />
     </v-container>
 
-    <v-container v-show="jobProjectionVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
-      <v-row style="margin-right: 8px;">
+    <v-container
+      v-show="jobProjectionVisible"
+      fluid
+      class="my-0 py-0 mx-4 px-0 fill-height"
+    >
+      <v-row style="margin-right: 8px">
         <v-col>
           <v-row>
             <v-col class="text-left mt-0 pt-0 mb-n4 pb-n4" cols="1">
@@ -358,9 +343,7 @@
               </div>
             </v-col>
             <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols="1">
-              <v-btn small @click="save">
-                Save
-              </v-btn>
+              <v-btn small @click="save"> Save </v-btn>
             </v-col>
           </v-row>
           <v-row>
@@ -380,7 +363,11 @@
       </v-row>
     </v-container>
 
-    <v-container v-show="manPowerVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
+    <v-container
+      v-show="manPowerVisible"
+      fluid
+      class="my-0 py-0 mx-4 px-0 fill-height"
+    >
       <v-row>
         <v-col cols="12">
           <v-row>
@@ -395,7 +382,7 @@
                 @save="save"
               />
             </v-col>
-            <v-col class="mt-0 pt-0 mb-n4 pb-n4 " cols="6">
+            <v-col class="mt-0 pt-0 mb-n4 pb-n4" cols="6">
               <div class="text-h6" style="text-align: bottomz; display: inline">
                 Man Power Planning
               </div>
@@ -404,7 +391,7 @@
               <div
                 id="flatpickr"
                 class="rounded text-body-2"
-                style="padding: 3px; box-shadow: 1px 3px lightgrey;"
+                style="padding: 3px; box-shadow: 1px 3px lightgrey"
               >
                 <flat-pickr
                   v-model="selectedDate"
@@ -417,41 +404,43 @@
               </div>
             </v-col>
             <v-col class="text-center mt-0 pt-0 mb-n4 pb-n4" cols="3">
-              <v-btn small @click="previousWeek">
-                Previous week
-              </v-btn>
+              <v-btn small @click="previousWeek"> Previous week </v-btn>
               &nbsp; &nbsp;
-              <v-btn small @click="nextWeek">
-                Next week
-              </v-btn>
+              <v-btn small @click="nextWeek"> Next week </v-btn>
               &nbsp; &nbsp;
-              <v-btn small @click="save">
-                Save
-              </v-btn>
+              <v-btn small @click="save"> Save </v-btn>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <div style="height: 780px; overflow-y: scroll;">
+              <div style="height: 780px; overflow-y: scroll">
                 <table id="manpower" class="my-0 py-0 job-sched">
                   <colgroup>
-                    <col style="width:4%;">
-                    <col style="width:7%;">
-                    <col :span="teams.length" :style="colWidthMp()">
+                    <col style="width: 4%" />
+                    <col style="width: 7%" />
+                    <col :span="teams.length" :style="colWidthMp()" />
                   </colgroup>
                   <thead>
                     <tr>
                       <th
                         colspan="3"
                         class="font-weight-bold"
-                        style="font-size: 1.2em; background-color: rgb(48,84,150); color:white"
+                        style="
+                          font-size: 1.2em;
+                          background-color: rgb(48 84 150);
+                          color: white;
+                        "
                       >
                         Manpower Planning Guide
                       </th>
                       <th
-                        :colspan="teams.length-1"
+                        :colspan="teams.length - 1"
                         class="font-weight-bold"
-                        style="font-size: 1.2em; background-color: rgb(48,84,150); color:white"
+                        style="
+                          font-size: 1.2em;
+                          background-color: rgb(48 84 150);
+                          color: white;
+                        "
                       />
                     </tr>
                   </thead>
@@ -468,11 +457,19 @@
                         :style="dayStyle(day.date)"
                         @click="selectDay($event, index, day)"
                       >
-                        <div style="text-align: center; writing-mode: vertical-lr; transform: rotate(180deg);">
+                        <div
+                          style="
+                            text-align: center;
+                            writing-mode: vertical-lr;
+                            transform: rotate(180deg);
+                          "
+                        >
                           {{ dayOfWeek(day.date) }} {{ monthAndDate(day.date) }}
                         </div>
                       </td>
-                      <td class="text-caption text-center font-weight-bold foreman">
+                      <td
+                        class="text-caption text-center font-weight-bold foreman"
+                      >
                         Manpower: {{ day.manPowerTotals(teams).manPower }}
                       </td>
                       <td
@@ -481,7 +478,7 @@
                         class="text-caption text-center font-weight-bold foreman draggable"
                         draggable="true"
                         data-source="team"
-                        style="background-color: rgb(180,198,231)"
+                        style="background-color: rgb(180 198 231)"
                         @drop="dropTeam($event, index, team)"
                         @dragover="dragoverHandler($event)"
                         @dragstart="teamDragStart($event, index, team)"
@@ -491,7 +488,9 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-caption text-center font-weight-bold foreman">
+                      <td
+                        class="text-caption text-center font-weight-bold foreman"
+                      >
                         On leave: {{ day.manPowerTotals(teams).onLeave }}
                       </td>
                       <td
@@ -504,7 +503,9 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-caption text-center font-weight-bold foreman">
+                      <td
+                        class="text-caption text-center font-weight-bold foreman"
+                      >
                         Teams
                         <v-btn x-small @click="copyPreviousDay(day, 'teams')">
                           Copy from yesterday
@@ -523,7 +524,7 @@
                         <div
                           v-for="teamMember in getTeamMembers(day, team.id)"
                           :key="teamMember"
-                          style="text-align: center;"
+                          style="text-align: center"
                           class="draggable"
                           draggable="true"
                           data-source="team-member"
@@ -540,17 +541,25 @@
                           :key="idx"
                           @dragover="dragoverHandler($event)"
                         >
-                              &nbsp;
+                          &nbsp;
                         </div>
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-caption text-center font-weight-bold foreman">
+                      <td
+                        class="text-caption text-center font-weight-bold foreman"
+                      >
                         Day notes
-                        <v-btn x-small @click="copyPreviousDay(day, 'dayNotes')">
+                        <v-btn
+                          x-small
+                          @click="copyPreviousDay(day, 'dayNotes')"
+                        >
                           Copy from yesterday
                         </v-btn>
-                        <v-btn x-small @click="copyPreviousWeek(day, 'dayNotes')">
+                        <v-btn
+                          x-small
+                          @click="copyPreviousWeek(day, 'dayNotes')"
+                        >
                           Copy from last week
                         </v-btn>
                       </td>
@@ -562,20 +571,18 @@
                       >
                         <div v-if="showSchedJob(day.jobs[team.id])">
                           <div v-if="splitShift(day.jobs[team.id])">
-                            <label class="font-weight-bold">
-                              Morning
-                            </label><br>
-                            {{ day.jobs[team.id].job1 }}<br>
-                            <label class="font-weight-bold">
-                              Afternoon
-                            </label><br>
+                            <label class="font-weight-bold"> Morning </label
+                            ><br />
+                            {{ day.jobs[team.id].job1 }}<br />
+                            <label class="font-weight-bold"> Afternoon </label
+                            ><br />
                             {{ day.jobs[team.id].job2 }}
                           </div>
                           <div v-else>
                             <label class="font-weight-bold">
                               {{ schedJobLabel(day.jobs[team.id]) }}
                             </label>
-                            <br>
+                            <br />
                             {{ day.jobs[team.id].getJob1() }}
                           </div>
                         </div>
@@ -598,9 +605,7 @@
         <v-card-text>
           <v-container>
             <v-row class="my-0 py-0">
-              <v-col>
-                Foreman: {{ teamMemberDialog.team.foreman }}
-              </v-col>
+              <v-col> Foreman: {{ teamMemberDialog.team.foreman }} </v-col>
             </v-row>
             <v-row>
               <v-col>
@@ -611,8 +616,8 @@
                   height="440px"
                 >
                   <colgroup>
-                    <col style="width:8%;">
-                    <col style="width:92%;">
+                    <col style="width: 8%" />
+                    <col style="width: 92%" />
                   </colgroup>
                   <thead>
                     <tr>
@@ -625,9 +630,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="teamMember in teamMemberDialog.teamMembers" :key="teamMember.id">
+                    <tr
+                      v-for="teamMember in teamMemberDialog.teamMembers"
+                      :key="teamMember.id"
+                    >
                       <td class="text-center">
-                        <input v-model="teamMember.checked" type="checkbox">
+                        <input v-model="teamMember.checked" type="checkbox" />
                       </td>
                       <td>
                         <input
@@ -636,7 +644,7 @@
                           type="text"
                           size="54"
                           @change="validateJobTeamMember(teamMember)"
-                        >
+                        />
                       </td>
                     </tr>
                   </tbody>
@@ -658,7 +666,11 @@
       </v-card>
     </v-dialog>
 
-    <v-container v-show="manPowerForecastVisible" fluid class="my-0 py-0 mx-4 px-0 fill-height">
+    <v-container
+      v-show="manPowerForecastVisible"
+      fluid
+      class="my-0 py-0 mx-4 px-0 fill-height"
+    >
       <v-row>
         <v-col cols="12">
           <v-row>
@@ -678,11 +690,11 @@
                 4 Day Schedule and Man Power Forecast
               </div>
             </v-col>
-            <v-col class="text-right mt-0 pt-0 mb-n4 pb-n4 " cols="2">
+            <v-col class="text-right mt-0 pt-0 mb-n4 pb-n4" cols="2">
               <div
                 id="flatpickr"
                 class="rounded text-body-2"
-                style="padding: 3px; box-shadow: 1px 3px lightgrey;"
+                style="padding: 3px; box-shadow: 1px 3px lightgrey"
               >
                 <flat-pickr
                   v-model="selectedDate"
@@ -695,68 +707,82 @@
               </div>
             </v-col>
             <v-col class="text-center mt-0 pt-0 mb-n4 pb-n4" cols="3">
-              <v-btn small @click="prevDayWindow">
-                Previous
-              </v-btn>
+              <v-btn small @click="prevDayWindow"> Previous </v-btn>
               &nbsp; &nbsp;
-              <v-btn small @click="nextDayWindow">
-                Next
-              </v-btn>
+              <v-btn small @click="nextDayWindow"> Next </v-btn>
               &nbsp; &nbsp;
-              <v-btn small @click="save">
-                Save
-              </v-btn>
+              <v-btn small @click="save"> Save </v-btn>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <div style="height: 780px; overflow-y: scroll;">
-                <table
-                  id="manpower-forecast"
-                  class="my-0 py-0 job-sched"
-                >
+              <div style="height: 780px; overflow-y: scroll">
+                <table id="manpower-forecast" class="my-0 py-0 job-sched">
                   <colgroup>
-                    <col style="width:4%;">
-                    <col style="width:7%;">
-                    <col :span="teams.length" :style="colWidthMp()">
+                    <col style="width: 4%" />
+                    <col style="width: 7%" />
+                    <col :span="teams.length" :style="colWidthMp()" />
                   </colgroup>
                   <thead>
                     <tr>
                       <th
                         colspan="3"
                         class="font-weight-bold"
-                        style="font-size: 1.2em; background-color: rgb(48,84,150); color:white"
+                        style="
+                          font-size: 1.2em;
+                          background-color: rgb(48 84 150);
+                          color: white;
+                        "
                       >
                         Manpower Planning Guide
                       </th>
                       <th
-                        :colspan="teams.length-1"
+                        :colspan="teams.length - 1"
                         class="font-weight-bold"
-                        style="font-size: 1.2em; background-color: rgb(48,84,150); color:white"
+                        style="
+                          font-size: 1.2em;
+                          background-color: rgb(48 84 150);
+                          color: white;
+                        "
                       />
                     </tr>
                   </thead>
                   <tbody v-for="(day, index) in dayWindow.days" :key="index">
                     <tr>
-                      <td class="font-weight-bold date" align="center" rowspan="4" :style="dayStyle(day.date)">
-                        <div style="text-align: center; writing-mode: vertical-lr; transform: rotate(180deg);">
+                      <td
+                        class="font-weight-bold date"
+                        align="center"
+                        rowspan="4"
+                        :style="dayStyle(day.date)"
+                      >
+                        <div
+                          style="
+                            text-align: center;
+                            writing-mode: vertical-lr;
+                            transform: rotate(180deg);
+                          "
+                        >
                           {{ dayOfWeek(day.date) }} {{ monthAndDate(day.date) }}
                         </div>
                       </td>
-                      <td class="text-caption text-center font-weight-bold foreman">
+                      <td
+                        class="text-caption text-center font-weight-bold foreman"
+                      >
                         Manpower: {{ day.manPowerTotals(teams).manPower }}
                       </td>
                       <td
                         v-for="team in teams"
                         :key="team.id"
                         class="text-caption text-center font-weight-bold foreman"
-                        style="background-color: rgb(180,198,231)"
+                        style="background-color: rgb(180 198 231)"
                       >
                         {{ team.foreman }}
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-caption text-center font-weight-bold foreman">
+                      <td
+                        class="text-caption text-center font-weight-bold foreman"
+                      >
                         On leave: {{ day.manPowerTotals(teams).onLeave }}
                       </td>
                       <td
@@ -768,45 +794,51 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-caption text-center font-weight-bold foreman">
+                      <td
+                        class="text-caption text-center font-weight-bold foreman"
+                      >
                         Teams
                       </td>
-                      <td v-for="team in teams" :key="team.id" class="text-caption font-weight-bold">
+                      <td
+                        v-for="team in teams"
+                        :key="team.id"
+                        class="text-caption font-weight-bold"
+                      >
                         <div
                           v-for="teamMember in getTeamMembers(day, team.id)"
                           :key="teamMember"
-                          style="text-align: center;"
+                          style="text-align: center"
                         >
                           {{ teamMember }}
                         </div>
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-caption text-center font-weight-bold foreman">
+                      <td
+                        class="text-caption text-center font-weight-bold foreman"
+                      >
                         Day notes
                       </td>
                       <td
                         v-for="team in teams"
                         :key="team.id"
                         class="text-left"
-                        :style="jobScheduleStyle(getSchedJob(day,team.id))"
+                        :style="jobScheduleStyle(getSchedJob(day, team.id))"
                       >
                         <div v-if="showSchedJob(day.jobs[team.id])">
-                          <div v-if="splitShift(getSchedJob(day,team.id))">
-                            <label class="font-weight-bold">
-                              Morning
-                            </label><br>
-                            {{ getSchedJob(day,team.id).job1 }}<br>
-                            <label class="font-weight-bold">
-                              Afternoon
-                            </label><br>
-                            {{ getSchedJob(day,team.id).job2 }}
+                          <div v-if="splitShift(getSchedJob(day, team.id))">
+                            <label class="font-weight-bold"> Morning </label
+                            ><br />
+                            {{ getSchedJob(day, team.id).job1 }}<br />
+                            <label class="font-weight-bold"> Afternoon </label
+                            ><br />
+                            {{ getSchedJob(day, team.id).job2 }}
                           </div>
                           <div v-else>
                             <label class="font-weight-bold">
                               {{ schedJobLabel(day.jobs[team.id]) }}
                             </label>
-                            <br>
+                            <br />
                             {{ day.jobs[team.id].getJob1() }}
                           </div>
                         </div>
@@ -844,27 +876,23 @@
                   height="440px"
                 >
                   <colgroup>
-                    <col style="width:10%;">
-                    <col style="width:40%;">
-                    <col style="width:40%;">
-                    <col style="width:10%;">
+                    <col style="width: 10%" />
+                    <col style="width: 40%" />
+                    <col style="width: 40%" />
+                    <col style="width: 10%" />
                   </colgroup>
                   <thead>
                     <tr>
                       <th />
-                      <th class="text-center">
-                        Foreman
-                      </th>
-                      <th class="text-center">
-                        Vehicle license
-                      </th>
+                      <th class="text-center">Foreman</th>
+                      <th class="text-center">Vehicle license</th>
                       <th />
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(team, index) in tdTeams" :key="index">
                       <td class="text-center">
-                        {{ index+1 }}
+                        {{ index + 1 }}
                       </td>
                       <td class="text-center">
                         {{ team.foreman }}
@@ -886,7 +914,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn class="mb-2 pt-2" small @click="teamDialog.open=false">
+          <v-btn class="mb-2 pt-2" small @click="teamDialog.open = false">
             Close
           </v-btn>
         </v-card-actions>
@@ -909,10 +937,14 @@
             </v-row>
             <v-row class="my-0 py-0">
               <v-col>
-                <v-text-field v-model="teamDialog.editedTeam.vehicle" class="my-n2 py-0" label="Vehicle license" />
+                <v-text-field
+                  v-model="teamDialog.editedTeam.vehicle"
+                  class="my-n2 py-0"
+                  label="Vehicle license"
+                />
               </v-col>
             </v-row>
-            <v-row v-show="teamDialog.oper!=='new'" class="my-0 py-0">
+            <v-row v-show="teamDialog.oper !== 'new'" class="my-0 py-0">
               <v-col align="right">
                 <v-btn class="mt-0 pt-0 mb-n4 pb-n4" small @click="deleteTeam">
                   Delete Team
@@ -928,8 +960,8 @@
                   height="440px"
                 >
                   <colgroup>
-                    <col style="width:8%;">
-                    <col style="width:92%;">
+                    <col style="width: 8%" />
+                    <col style="width: 92%" />
                   </colgroup>
                   <thead>
                     <tr>
@@ -942,9 +974,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="teamMember in teamDialog.teamMembers" :key="teamMember.id">
+                    <tr
+                      v-for="teamMember in teamDialog.teamMembers"
+                      :key="teamMember.id"
+                    >
                       <td class="text-center">
-                        <input v-model="teamMember.checked" type="checkbox">
+                        <input v-model="teamMember.checked" type="checkbox" />
                       </td>
                       <td>
                         <input
@@ -953,7 +988,7 @@
                           type="text"
                           size="54"
                           @change="validateTeamMember(teamMember)"
-                        >
+                        />
                       </td>
                     </tr>
                   </tbody>
@@ -964,9 +999,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn class="mb-2 pt-2" small @click="closeTeam">
-            Cancel
-          </v-btn>
+          <v-btn class="mb-2 pt-2" small @click="closeTeam"> Cancel </v-btn>
           &nbsp; &nbsp;
           <v-btn class="mb-2 pt-2" small @click="saveTeam">
             Save &amp; Close
@@ -1021,7 +1054,7 @@
             Save as default (for all users)
           </v-btn>
           <v-spacer />
-          <v-btn color="blue darken-1" text @click="showOptionsDialog=false">
+          <v-btn color="blue darken-1" text @click="showOptionsDialog = false">
             Close
           </v-btn>
         </v-card-actions>
@@ -1037,14 +1070,10 @@
     >
       <v-list>
         <v-list-item>
-          <v-list-item-title @click="copy">
-            Copy
-          </v-list-item-title>
+          <v-list-item-title @click="copy"> Copy </v-list-item-title>
         </v-list-item>
         <v-list-item>
-          <v-list-item-title @click="paste">
-            Paste
-          </v-list-item-title>
+          <v-list-item-title @click="paste"> Paste </v-list-item-title>
         </v-list-item>
         <v-list-item>
           <v-list-item-title @click="deleteScheduleEntry">
@@ -1064,31 +1093,19 @@
       offset-y
     >
       <v-card>
-        <v-card-title class="text-body-1">
-          Copy schedule rows
-        </v-card-title>
+        <v-card-title class="text-body-1"> Copy schedule rows </v-card-title>
 
         <v-card-text>
           <v-radio-group v-model="manpowerContextMenu.mode">
-            <v-radio
-              label="Copy previous day"
-              value="day"
-            />
-            <v-radio
-              label="Copy previous Week"
-              value="week"
-            />
+            <v-radio label="Copy previous day" value="day" />
+            <v-radio label="Copy previous Week" value="week" />
           </v-radio-group>
         </v-card-text>
 
         <v-card-actions>
           <v-spacer />
-          <v-btn @click="showManpowerContextMenu=false">
-            Cancel
-          </v-btn>
-          <v-btn @click="copyPreviousScheduleData">
-            OK
-          </v-btn>
+          <v-btn @click="showManpowerContextMenu = false"> Cancel </v-btn>
+          <v-btn @click="copyPreviousScheduleData"> OK </v-btn>
           <v-spacer />
         </v-card-actions>
       </v-card>
@@ -1098,15 +1115,13 @@
       <v-card>
         <v-card-title class="text-body-1" />
         <v-card-text>
-          <p class="header3" style="white-space: pre-wrap;">
+          <p class="header3" style="white-space: pre-wrap">
             {{ userMessage }}
           </p>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn @click="closeMessage">
-            OK
-          </v-btn>
+          <v-btn @click="closeMessage"> OK </v-btn>
           <v-spacer />
         </v-card-actions>
       </v-card>
@@ -1119,23 +1134,55 @@ import flatPickr from 'vue-flatpickr-component'
 import 'flatpickr/dist/flatpickr.css'
 import 'flatpickr/dist/themes/material_blue.css'
 
-import { Job, SchedJob, Team, Shift, Selection, Clipboard, JobStatus, Day, JobState }
-  from '../../utils/jp_entity.js'
-import { datediff, date2string, string2date, addDays, isSunday, isSaturday, isMonday, addDays2Date }
-  from '../../utils/jp_util.js'
+import {
+  Job,
+  SchedJob,
+  Team,
+  Shift,
+  Selection,
+  Clipboard,
+  JobStatus,
+  Day,
+  JobState,
+} from '../../utils/jp_entity.js'
+import {
+  datediff,
+  date2string,
+  string2date,
+  addDays,
+  isSunday,
+  isSaturday,
+  isMonday,
+  addDays2Date,
+} from '../../utils/jp_util.js'
 
 const priorityColors = [
-  'tomato', 'tomato', 'orange', 'orange', 'yellow', 'yellow', 'lightgreen', 'lightgreen', 'limegreen', 'limegreen'
+  'tomato',
+  'tomato',
+  'orange',
+  'orange',
+  'yellow',
+  'yellow',
+  'lightgreen',
+  'lightgreen',
+  'limegreen',
+  'limegreen',
 ]
 
 const dayColors = [
-  'rgb(198,89,17)', 'rgb(180,198,231)', 'rgb(180,198,231)', 'rgb(180,198,231)', 'rgb(180,198,231)', 'rgb(180,198,231)', 'rgb(248,203,173)'
+  'rgb(198,89,17)',
+  'rgb(180,198,231)',
+  'rgb(180,198,231)',
+  'rgb(180,198,231)',
+  'rgb(180,198,231)',
+  'rgb(180,198,231)',
+  'rgb(248,203,173)',
 ]
 
 export default {
   name: 'JobPlanner',
   components: {
-    flatPickr
+    flatPickr,
   },
   data: () => ({
     version: 'v1.303',
@@ -1181,31 +1228,31 @@ export default {
       teamMembers: [],
       team: {},
       editedTeam: {},
-      schedJob: {}
+      schedJob: {},
     },
     teamMemberDialog: {
       open: false,
       maxTeamMembers: 8,
       team: {},
       teamMembers: [],
-      schedJob: {}
+      schedJob: {},
     },
     workerDialog: false,
     dailyPlanDialog: false,
     dateConfig: {
       altFormat: 'D, M j, Y',
       altInput: true,
-      dateFormat: 'Y-m-d'
+      dateFormat: 'Y-m-d',
     },
     jobDateConfig: {
       altFormat: 'D, M j, Y',
       altInput: true,
-      dateFormat: 'Y-m-d'
+      dateFormat: 'Y-m-d',
     },
     manpowerContextMenu: {
       mode: 0,
       index: 0,
-      day: {}
+      day: {},
     },
     jobProjectionPanel: 0,
     refreshJobProjectionTable: 0,
@@ -1217,17 +1264,17 @@ export default {
     showOptionsDialog: false,
     options: {
       scheduleWeeks: 1,
-      autosaveInterval: 120
+      autosaveInterval: 120,
     },
     numberOfWeeksRules: [
-      v => !!v || 'Required',
-      v => v >= 1 || 'Should be above 0',
-      v => v <= 3 || 'Should not be above 3',
+      (v) => !!v || 'Required',
+      (v) => v >= 1 || 'Should be above 0',
+      (v) => v <= 3 || 'Should not be above 3',
     ],
-    notify: () => {}
+    notify: () => {},
   }),
   computed: {
-    jobSchedule () {
+    jobSchedule() {
       this.currentDate
       this.jobScheduleCount
 
@@ -1238,7 +1285,9 @@ export default {
       const date = string2date(this.currentDate)
       const dayOfWeek = date.getDay()
       const adjust = dayOfWeek == 0 ? -6 : 1 // add this to make monday the first day instead of sunday
-      const firstDay = new Date(date.setDate(date.getDate() - dayOfWeek + adjust))
+      const firstDay = new Date(
+        date.setDate(date.getDate() - dayOfWeek + adjust)
+      )
       const days = []
       if (this.options.scheduleWeeks < 1) {
         this.options.scheduleWeeks = 1
@@ -1255,66 +1304,90 @@ export default {
       }
       return days
     },
-    confirmedJobs () {
+    confirmedJobs() {
       this.refreshConfirmedJobs
-      const confirmedJobs = this.jobs.filter(job => job.id > -1 && job.state === JobState.confirmed)
+      const confirmedJobs = this.jobs.filter(
+        (job) => job.id > -1 && job.state === JobState.confirmed
+      )
       this.sort(confirmedJobs)
       for (let i = confirmedJobs.length; i < 25; i++) {
-        const job = new Job({ id: 0, scope: '', value: '', status: JobStatus.blank, priority: '' })
+        const job = new Job({
+          id: 0,
+          scope: '',
+          value: '',
+          status: JobStatus.blank,
+          priority: '',
+        })
         confirmedJobs.push(job)
       }
       return confirmedJobs
     },
-    upcomingJobs () {
+    upcomingJobs() {
       this.refreshUpcomingJobs
-      const upcomingJobs = this.jobs.filter(job => job.id > -1 && job.state === JobState.upcoming)
+      const upcomingJobs = this.jobs.filter(
+        (job) => job.id > -1 && job.state === JobState.upcoming
+      )
       this.sort(upcomingJobs)
       for (let i = upcomingJobs.length; i < 25; i++) {
-        const job = new Job({ id: 0, scope: '', value: '', status: JobStatus.blank, priority: '' })
+        const job = new Job({
+          id: 0,
+          scope: '',
+          value: '',
+          status: JobStatus.blank,
+          priority: '',
+        })
         upcomingJobs.push(job)
       }
       return upcomingJobs
     },
-    editedJobTable () {
-      return (this.jobTableDialog.option === JobState.confirmed) ? this.confirmedJobs : this.upcomingJobs
+    editedJobTable() {
+      return this.jobTableDialog.option === JobState.confirmed
+        ? this.confirmedJobs
+        : this.upcomingJobs
     },
-    jobProjectionTable () {
+    jobProjectionTable() {
       this.refreshJobProjectionTable
       const jpt = {
         inProgress: {
           title: 'Confirmed jobs/in progress',
-          jobs: this.jobs
-            .filter(job => job.id > -1 && job.status === JobStatus.inProgress)
+          jobs: this.jobs.filter(
+            (job) => job.id > -1 && job.status === JobStatus.inProgress
+          ),
           // .sort( (a, b) => a.id - b.id )
         },
         onHold: {
           title: 'Confirmed but on hold jobs',
-          jobs: this.jobs
-            .filter(job => job.id > -1 && job.status === JobStatus.onHold)
+          jobs: this.jobs.filter(
+            (job) => job.id > -1 && job.status === JobStatus.onHold
+          ),
           // .sort( (a, b) => a.id - b.id )
         },
         highChance: {
           title: 'High chance jobs',
-          jobs: this.jobs
-            .filter(job => job.id > -1 && job.status === JobStatus.highChance)
+          jobs: this.jobs.filter(
+            (job) => job.id > -1 && job.status === JobStatus.highChance
+          ),
           // .sort( (a, b) => a.id - b.id )
         },
         standBy: {
           title: 'Stand-by jobs',
-          jobs: this.jobs
-            .filter(job => job.id > -1 && job.status === JobStatus.standBy)
+          jobs: this.jobs.filter(
+            (job) => job.id > -1 && job.status === JobStatus.standBy
+          ),
           // .sort( (a, b) => a.id - b.id )
-        }
+        },
       }
       return jpt
     },
-    jobShiftIcon () {
-      return this.jobInfo.splitShift ? 'mdi-dns-outline' : 'check-box-outline-blank'
+    jobShiftIcon() {
+      return this.jobInfo.splitShift
+        ? 'mdi-dns-outline'
+        : 'check-box-outline-blank'
     },
-    teams () {
+    teams() {
       this.refreshTeams
       const teams = this.teams_
-        .filter(team => team.position > -1)
+        .filter((team) => team.position > -1)
         .sort((t1, t2) => t1.position - t2.position)
         .map((team, index) => {
           team.position = team.position < 100 ? index + 1 : team.position
@@ -1322,32 +1395,38 @@ export default {
         })
       return teams
     },
-    jpTeams () {
-      return this.teams.filter(team => team.foreman.toLowerCase() !== 'on leave')
+    jpTeams() {
+      return this.teams.filter(
+        (team) => team.foreman.toLowerCase() !== 'on leave'
+      )
     },
-    tdTeams () {
-      return this.teams.filter(team => team.position < 100)
-    }
+    tdTeams() {
+      return this.teams.filter((team) => team.position < 100)
+    },
   },
-  mounted () {
+  mounted() {
     const self = this
-    document.body.addEventListener('keydown', function (e) {
-      e = e || window.event
-      // var key = e.which || e.keyCode; // keyCode detection
-      const key = e.which || e.code // keyCode detection
-      const ctrl = e.ctrlKey ? e.ctrlKey : ((key === 17)) // ctrl detection
+    document.body.addEventListener(
+      'keydown',
+      function (e) {
+        e = e || window.event
+        // var key = e.which || e.keyCode; // keyCode detection
+        const key = e.which || e.code // keyCode detection
+        const ctrl = e.ctrlKey ? e.ctrlKey : key === 17 // ctrl detection
 
-      if (key == 86 && ctrl) {
-        // console.log("Ctrl + V Pressed !");
-        self.paste()
-      } else if (key == 67 && ctrl) {
-        // console.log("Ctrl + C Pressed !");
-        self.copy()
-      }
-    }, false)
+        if (key == 86 && ctrl) {
+          // console.log("Ctrl + V Pressed !");
+          self.paste()
+        } else if (key == 67 && ctrl) {
+          // console.log("Ctrl + C Pressed !");
+          self.copy()
+        }
+      },
+      false
+    )
     this.initialize()
   },
-  updated () {
+  updated() {
     if (this.firstUpdate) {
       this.firstUpdate = false
       this.selectedDate = date2string(new Date())
@@ -1357,7 +1436,7 @@ export default {
     this.notify()
   },
   methods: {
-    openContextMenu (e) {
+    openContextMenu(e) {
       e.preventDefault()
       this.showContextMenu = false
       this.xcoord = e.clientX
@@ -1367,7 +1446,7 @@ export default {
         this.showContextMenu = true
       })
     },
-    openManpowerContextMenu (e, index, day) {
+    openManpowerContextMenu(e, index, day) {
       e.preventDefault()
 
       if (!this.options.showContextMenu) {
@@ -1388,31 +1467,33 @@ export default {
         this.showManpowerContextMenu = true
       })
     },
-    checkScheduleWeeks () {
+    checkScheduleWeeks() {
       if (this.options.scheduleWeeks < 1) {
         this.options.scheduleWeeks = 1
       } else if (this.options.scheduleWeeks > 3) {
         this.options.scheduleWeeks = 3
       }
     },
-    checkAutosaveInterval () {
+    checkAutosaveInterval() {
       if (this.options.autosaveInterval < 20) {
         this.options.autosaveInterval = 20
       } else if (this.options.autosaveInterval > 600) {
         this.options.autosaveInterval = 600
       }
     },
-    updateTeamCount () {
+    updateTeamCount() {
       this.$forceUpdate()
     },
-    showSchedJob (schedJob) {
+    showSchedJob(schedJob) {
       if (!schedJob) {
         return false
       }
-      return !((schedJob.excludeSaturday && isSaturday(schedJob.date)) ||
-            (schedJob.excludeSunday && isSunday(schedJob.date)))
+      return !(
+        (schedJob.excludeSaturday && isSaturday(schedJob.date)) ||
+        (schedJob.excludeSunday && isSunday(schedJob.date))
+      )
     },
-    getDay (sday) {
+    getDay(sday) {
       let day = this.dayIndex[sday]
       if (!day) {
         day = new Day({ date: sday, jobs: {} })
@@ -1427,39 +1508,39 @@ export default {
             shift: Shift.unasigned,
             job1: '',
             job2: '',
-            teamMembers: []
+            teamMembers: [],
           })
         }
       })
       return day
     },
-    initialize () {
+    initialize() {
       this.getSchedData()
     },
-    endpoint (op) {
+    endpoint(op) {
       if (!op) {
         op = ''
       }
       // return `http://localhost:5000/api/jobschedule${op}`
       return `/jobschedule${op}`
     },
-    getSchedData () {
+    getSchedData() {
       this.$axios({
         url: this.endpoint(),
         method: 'GET',
-        crossDomain: true
+        crossDomain: true,
       }).then((response) => {
         this.initJobSchedule(response.data, true)
       })
     },
-    initJobs (jobs) {
+    initJobs(jobs) {
       jobs.forEach((ajob) => {
         const job = new Job(ajob)
         this.jobs.push(job)
       })
     },
-    updateTeams (teams) {
-      this.teams_ = this.teams_.filter(team => team.position > -1)
+    updateTeams(teams) {
+      this.teams_ = this.teams_.filter((team) => team.position > -1)
       teams.forEach((team) => {
         this.teams_.push(new Team(team))
       })
@@ -1467,7 +1548,7 @@ export default {
       this.refreshTeams++
       this.$forceUpdate()
     },
-    updateSchedJob (schedJob) {
+    updateSchedJob(schedJob) {
       let sjGroup = this.schedJobGroups[schedJob.id]
       if (!sjGroup) {
         sjGroup = {}
@@ -1485,7 +1566,7 @@ export default {
       day.jobs[schedJob.team] = sj
       sjGroup[date] = sj
     },
-    initJobSchedule (scheduleData, updateOtions) {
+    initJobSchedule(scheduleData, updateOtions) {
       this.dayIndex = {}
       this.deletedSchedJobs = []
       this.schedJobGroups = {}
@@ -1496,7 +1577,7 @@ export default {
       this.updateTeams(scheduleData.teams)
       this.initJobs(scheduleData.jobs)
       const schedJobs = scheduleData.schedJobs
-      schedJobs.forEach(schedJob => this.updateSchedJob(schedJob))
+      schedJobs.forEach((schedJob) => this.updateSchedJob(schedJob))
 
       this.lastUpdate = scheduleData.lastUpdate
 
@@ -1514,11 +1595,11 @@ export default {
         setTimeout(this.save, this.options.autosaveInterval * 1000)
       }
     },
-    getTeamMembers (day, teamId) {
+    getTeamMembers(day, teamId) {
       const sj = day.jobs[teamId]
       return this.showSchedJob(sj) ? sj.teamMembers : []
     },
-    getBlankTeamSize (day, teamId) {
+    getBlankTeamSize(day, teamId) {
       const sj = day.jobs[teamId]
       const sjlen = sj ? sj.teamMembers.length : 0
       let max = 0
@@ -1530,18 +1611,18 @@ export default {
       const len = max === 0 ? 1 : max - sjlen
       return len
     },
-    getSchedJob (day, teamId) {
+    getSchedJob(day, teamId) {
       const sj = day.jobs[teamId]
       return sj
     },
-    getDays () {
+    getDays() {
       const days = Object.values(this.dayIndex)
       return days.sort((a, b) => a.date - b.date)
     },
-    initDayWindow () {
+    initDayWindow() {
       this.gotoDayWindow([], this.currentDate)
     },
-    gotoDayWindow (selectedDates, dateStr) {
+    gotoDayWindow(selectedDates, dateStr) {
       const days = this.getDays()
       if (days.length == 0) {
         return
@@ -1557,44 +1638,44 @@ export default {
       }
       this.$forceUpdate()
     },
-    nextDayWindow () {
+    nextDayWindow() {
       const date = addDays(string2date(this.currentDate), this.dayWindow.size)
       this.gotoDayWindow([], date2string(date))
     },
-    prevDayWindow () {
-      const date = addDays(string2date(this.currentDate), -(this.dayWindow.size))
+    prevDayWindow() {
+      const date = addDays(string2date(this.currentDate), -this.dayWindow.size)
       this.gotoDayWindow([], date2string(date))
     },
-    showJobSchedule () {
+    showJobSchedule() {
       this.refreshJobProjectionTable++
       this.manPowerVisible = false
       this.manPowerForecastVisible = false
       this.jobProjectionVisible = false
       this.jobScheduleVisible = true
     },
-    showJobProjectionOverview () {
+    showJobProjectionOverview() {
       this.manPowerVisible = false
       this.manPowerForecastVisible = false
       this.jobScheduleVisible = false
       this.jobProjectionVisible = true
     },
-    showManPower () {
+    showManPower() {
       this.jobScheduleVisible = false
       this.manPowerForecastVisible = false
       this.jobProjectionVisible = false
       this.manPowerVisible = true
     },
-    showManPowerForecast () {
+    showManPowerForecast() {
       this.jobScheduleVisible = false
       this.manPowerVisible = false
       this.jobProjectionVisible = false
       this.manPowerForecastVisible = true
     },
-    gotoDate (selectedDates, dateStr) {
+    gotoDate(selectedDates, dateStr) {
       this.unselect()
       this.currentDate = dateStr
     },
-    previousWeek () {
+    previousWeek() {
       const date = string2date(this.currentDate)
       // const currDay = date.getDay();
       const nextMonday = addDays(date, -7)
@@ -1602,7 +1683,7 @@ export default {
       this.currentDate = date2string(nextMonday)
       this.selectedDate = this.currentDate
     },
-    nextWeek () {
+    nextWeek() {
       const date = string2date(this.currentDate)
       // const currDay = date.getDay();
       const nextMonday = addDays(date, 7)
@@ -1610,27 +1691,42 @@ export default {
       this.currentDate = date2string(nextMonday)
       this.selectedDate = this.currentDate
     },
-    dayOfWeek (date) {
-      const str = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).format(string2date(date))
+    dayOfWeek(date) {
+      const str = new Intl.DateTimeFormat('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+      }).format(string2date(date))
       return str.substring(0, str.indexOf(',') + 1)
     },
-    dayStyle (strDate) {
+    dayStyle(strDate) {
       const date = string2date(strDate)
-      return `vertical-align: middle; background-color: ${dayColors[date.getDay()]};`
+      return `vertical-align: middle; background-color: ${
+        dayColors[date.getDay()]
+      };`
     },
-    dayColor (strDate) {
-      const border = strDate === date2string(new Date()) ? 'border: 3px solid blue;' : ''
-      return `${border}background-color: ${dayColors[string2date(strDate).getDay()]};`
+    dayColor(strDate) {
+      const border =
+        strDate === date2string(new Date()) ? 'border: 3px solid blue;' : ''
+      return `${border}background-color: ${
+        dayColors[string2date(strDate).getDay()]
+      };`
     },
-    monthAndDate (strDate) {
+    monthAndDate(strDate) {
       const date = string2date(strDate)
-      const str = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).format(date)
+      const str = new Intl.DateTimeFormat('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+      }).format(date)
       return str.substring(str.indexOf(',') + 1).trim()
     },
-    isBlank (job) {
-      return (!job.id && !job.scope && !job.salesPerson && !job.priority && !job.value)
+    isBlank(job) {
+      return (
+        !job.id && !job.scope && !job.salesPerson && !job.priority && !job.value
+      )
     },
-    getSchedJobs (includeDeleted) {
+    getSchedJobs(includeDeleted) {
       const schedJobs = {}
       for (const date of Object.keys(this.dayIndex)) {
         const day = this.dayIndex[date]
@@ -1649,24 +1745,30 @@ export default {
       }
       return Object.values(schedJobs)
     },
-    save () {
+    save() {
       // console.log("Saving data");
       const schedJobs = this.getSchedJobs(true)
 
-      const isBlank = job => (!job.id && !job.scope && !job.salesPerson && !job.priority && !job.value)
+      const isBlank = (job) =>
+        !job.id && !job.scope && !job.salesPerson && !job.priority && !job.value
 
       let jobs = this.jobs
-      jobs = jobs.filter(job => !isBlank(job))
-      jobs.forEach(job => job.priority === '' ? 0 : job.priority)
+      jobs = jobs.filter((job) => !isBlank(job))
+      jobs.forEach((job) => (job.priority === '' ? 0 : job.priority))
 
-      const data = { lastUpdate: this.lastUpdate, jobs, schedJobs, teams: this.teams_ }
+      const data = {
+        lastUpdate: this.lastUpdate,
+        jobs,
+        schedJobs,
+        teams: this.teams_,
+      }
 
       const self = this
       this.$axios({
         url: this.endpoint(),
         method: 'PUT',
         data,
-        crossDomain: true
+        crossDomain: true,
       })
         .then(function (response) {
           self.initJobSchedule(response.data, false)
@@ -1676,14 +1778,14 @@ export default {
           console.log(error)
         })
     },
-    saveOptions () {
+    saveOptions() {
       const data = this.options
       const self = this
       this.$axios({
         url: this.endpoint('/jobplanner-options'),
         method: 'PUT',
         data,
-        crossDomain: true
+        crossDomain: true,
       })
         .then(function (response) {
           self.showOptionsDialog = false
@@ -1692,7 +1794,7 @@ export default {
           console.log(error)
         })
     },
-    copy () {
+    copy() {
       if (!this.selection) {
         return
       }
@@ -1704,12 +1806,14 @@ export default {
       } else {
         // A scheduled job was selected
         // In this case we want to select selection.startRow - 1
-        this.copyData = new Clipboard(this.teams[this.selection.col - 1].id,
+        this.copyData = new Clipboard(
+          this.teams[this.selection.col - 1].id,
           this.jobSchedule[this.selection.startRow - 1].date,
-          this.selection.endRow - this.selection.startRow + 1)
+          this.selection.endRow - this.selection.startRow + 1
+        )
       }
     },
-    paste () {
+    paste() {
       if (!this.copyData || !this.selection) {
         return
       }
@@ -1730,12 +1834,12 @@ export default {
       const source = {
         startDate: this.copyData.startDate,
         numRows: this.copyData.numRows,
-        team: this.copyData.team
+        team: this.copyData.team,
       }
       const target = {
         startDate: this.jobSchedule[this.selection.startRow - 1].date,
         numRows: -1,
-        team
+        team,
       }
 
       this.copySchedJobs(source, target, false, true)
@@ -1743,7 +1847,7 @@ export default {
       this.unselect()
       this.$forceUpdate()
     },
-    copyPreviousScheduleData () {
+    copyPreviousScheduleData() {
       console.log('mode', this.manpowerContextMenu.mode)
       if (this.manpowerContextMenu.mode == 'day') {
         this.copyPreviousDay(this.manpowerContextMenu.day, 'all')
@@ -1751,24 +1855,33 @@ export default {
         this.copyPreviousWeek(this.manpowerContextMenu.day, 'all')
       }
     },
-    copyPreviousWeek (day, whatToCopy) {
+    copyPreviousWeek(day, whatToCopy) {
       // const strDate = this.manpowerContextMenu.day.date;
       const strDate = day.date
       const date = string2date(strDate)
       let dayOfWeek = date.getDay()
       let adjust = dayOfWeek == 0 ? -6 : 1 // add this to make monday the first day instead of sunday
-      const firstDayThisWeek = new Date(date.setDate(date.getDate() - dayOfWeek + adjust))
+      const firstDayThisWeek = new Date(
+        date.setDate(date.getDate() - dayOfWeek + adjust)
+      )
 
       const sameDayLastWeek = addDays(date, -7)
       dayOfWeek = sameDayLastWeek.getDay()
       adjust = sameDayLastWeek == 0 ? -6 : 1 // add this to make monday the first day instead of sunday
-      const firstDayLastWeek = new Date(sameDayLastWeek.setDate(sameDayLastWeek.getDate() - dayOfWeek + adjust))
+      const firstDayLastWeek = new Date(
+        sameDayLastWeek.setDate(sameDayLastWeek.getDate() - dayOfWeek + adjust)
+      )
 
       // const teams = Object.keys(this.manpowerContextMenu.day.jobs);
       const teams = Object.keys(day.jobs)
       for (let i = 0; i < 7; i++) {
-        this.copyRow(date2string(addDays(firstDayLastWeek, i)),
-          date2string(addDays(firstDayThisWeek, i)), teams, 1, whatToCopy)
+        this.copyRow(
+          date2string(addDays(firstDayLastWeek, i)),
+          date2string(addDays(firstDayThisWeek, i)),
+          teams,
+          1,
+          whatToCopy
+        )
       }
 
       this.unselect()
@@ -1777,7 +1890,7 @@ export default {
 
       this.showManpowerContextMenu = false
     },
-    copyPreviousDay (day, whatToCopy) {
+    copyPreviousDay(day, whatToCopy) {
       // const date = this.manpowerContextMenu.day.date;
       const date = day.date
       let previousDay
@@ -1799,17 +1912,17 @@ export default {
 
       this.showManpowerContextMenu = false
     },
-    copyRow (fromDate, toDate, teams, numRows, whatToCopy) {
+    copyRow(fromDate, toDate, teams, numRows, whatToCopy) {
       for (let i = 0; i < teams.length; i++) {
         const source = {
           startDate: fromDate,
           numRows,
-          team: teams[i]
+          team: teams[i],
         }
         const target = {
           startDate: toDate,
           numRows: 1,
-          team: teams[i]
+          team: teams[i],
         }
         if (!whatToCopy || whatToCopy === 'all') {
           this.copySchedJobs(source, target, false)
@@ -1818,7 +1931,7 @@ export default {
         }
       }
     },
-    pasteRow () {
+    pasteRow() {
       if (this.selection.col !== 0) {
         return
       }
@@ -1834,12 +1947,12 @@ export default {
         const source = {
           startDate: this.copyData.startDate,
           numRows: 1,
-          team: teams[i]
+          team: teams[i],
         }
         const target = {
           startDate: targetDate,
           numRows: 1,
-          team: teams[i]
+          team: teams[i],
         }
         this.copySchedJobs(source, target, false)
       }
@@ -1848,12 +1961,12 @@ export default {
       this.jobScheduleCount++
       this.$forceUpdate()
     },
-    scheduledJobDragstart (event, dayIndex, teamIndex) {
+    scheduledJobDragstart(event, dayIndex, teamIndex) {
       const source = event.target.getAttribute('data-source')
       const data = { source, dayIndex, teamIndex }
       event.dataTransfer.setData('application/json', JSON.stringify(data))
     },
-    dropJob (srcData, targetIndex, teamIndex) {
+    dropJob(srcData, targetIndex, teamIndex) {
       const teamId = this.teams[teamIndex].id
       const foreman = this.teams[teamIndex].foreman
 
@@ -1863,7 +1976,7 @@ export default {
 
       const date = this.jobSchedule[targetIndex].date
 
-      const job = this.jobs.find(item => item.id == parseInt(srcData.jobId))
+      const job = this.jobs.find((item) => item.id == parseInt(srcData.jobId))
       const currSchedJob = this.jobSchedule[targetIndex].jobs[teamId]
 
       if (currSchedJob.shift == Shift.unasigned) {
@@ -1875,30 +1988,34 @@ export default {
           shift,
           job1: job.scope,
           job2: job.scope,
-          lastUpdate: null
+          lastUpdate: null,
         })
         this.copyOneToOne(schedJob, -1, date, teamId, true)
         const currentDate = date2string(new Date())
         if (datediff(currentDate, date) >= 0) {
-          job.status = foreman === 'Store' ? JobStatus.onHold : JobStatus.inProgress
+          job.status =
+            foreman === 'Store' ? JobStatus.onHold : JobStatus.inProgress
           this.refreshJobProjectionTable++
         }
       }
 
       this.$forceUpdate()
     },
-    dropHandler (event, dayIndex, teamIndex) {
+    dropHandler(event, dayIndex, teamIndex) {
       event.preventDefault()
       const srcData = JSON.parse(event.dataTransfer.getData('application/json'))
 
-      if (srcData.source === 'confirmed-job' || srcData.source === 'upcoming-job') {
+      if (
+        srcData.source === 'confirmed-job' ||
+        srcData.source === 'upcoming-job'
+      ) {
         this.dropJob(srcData, dayIndex, teamIndex)
         return
       }
 
       this.dropScheduledJob(srcData, dayIndex, teamIndex)
     },
-    dropScheduledJob (srcData, targetIndex, teamIndex) {
+    dropScheduledJob(srcData, targetIndex, teamIndex) {
       const teamId = this.teams[teamIndex].id
       const foreman = this.teams[teamIndex].foreman
 
@@ -1911,7 +2028,7 @@ export default {
       const srcDate = this.jobSchedule[sourceIndex].date
       const targetDate = this.jobSchedule[targetIndex].date
 
-      if ((srcData.teamIndex === teamIndex) && (srcDate === targetDate)) {
+      if (srcData.teamIndex === teamIndex && srcDate === targetDate) {
         // source and target are the same cell
         return
       }
@@ -1921,23 +2038,23 @@ export default {
         sourceData = {
           startDate: srcDate,
           numRows: 1,
-          team: this.teams[srcData.teamIndex].id
+          team: this.teams[srcData.teamIndex].id,
         }
         targetData = {
           startDate: targetDate,
           numRows: 1,
-          team: teamId
+          team: teamId,
         }
       } else {
         sourceData = {
           startDate: this.jobSchedule[this.selection.startRow - 1].date,
           numRows: this.selection.endRow - this.selection.startRow + 1,
-          team: this.teams[srcData.teamIndex].id
+          team: this.teams[srcData.teamIndex].id,
         }
         targetData = {
           startDate: targetDate,
           numRows: -1,
-          team: teamId
+          team: teamId,
         }
       }
 
@@ -1946,12 +2063,12 @@ export default {
       this.jobScheduleCount++
       this.unselect()
     },
-    teamDragStart (event, index, team) {
+    teamDragStart(event, index, team) {
       const source = event.target.getAttribute('data-source')
       const data = { source, teamIndex: index, team }
       event.dataTransfer.setData('application/json', JSON.stringify(data))
     },
-    dropTeam (event, index, team) {
+    dropTeam(event, index, team) {
       const srcData = JSON.parse(event.dataTransfer.getData('application/json'))
       if (srcData.source !== 'team') {
         return
@@ -1966,7 +2083,7 @@ export default {
       this.refreshTeams++
       this.jobScheduleCount++
     },
-    sameJob (startDate, numRows, team) {
+    sameJob(startDate, numRows, team) {
       if (numRows <= 1) {
         return true
       }
@@ -1974,17 +2091,19 @@ export default {
       for (let i = 1; i < numRows; i++) {
         const d1 = date2string(addDays(d, i))
         const d2 = date2string(addDays(d, i - 1))
-        if (this.dayIndex[d1].jobs[team].id !== this.dayIndex[d2].jobs[team].id) {
+        if (
+          this.dayIndex[d1].jobs[team].id !== this.dayIndex[d2].jobs[team].id
+        ) {
           return false
         }
       }
       return true
     },
-    nextGroupId () {
+    nextGroupId() {
       const ids = Object.keys(this.schedJobGroups).sort((id1, id2) => id1 - id2)
       return ids.length == 0 ? 1 : parseInt(ids[ids.length - 1]) + 1
     },
-    nextGroupElement (dates, group, from) {
+    nextGroupElement(dates, group, from) {
       for (let i = from; i < dates.length; i++) {
         const date = dates[i]
         const sj = group[date]
@@ -1994,11 +2113,13 @@ export default {
       }
       return -1
     },
-    updateSchedJobGroup (groupId) {
+    updateSchedJobGroup(groupId) {
       let id = groupId
       const group = this.schedJobGroups[id]
       const len = Object.entries(group).length
-      const dates = Object.keys(group).sort((d1, d2) => d1 < d2 ? -1 : (d1 === d2 ? 0 : 1))
+      const dates = Object.keys(group).sort((d1, d2) =>
+        d1 < d2 ? -1 : d1 === d2 ? 0 : 1
+      )
       let newGroup = {}
       let i = this.nextGroupElement(dates, group, 0)
       for (; i < len; i++) {
@@ -2030,7 +2151,7 @@ export default {
         this.schedJobGroups[id] = newGroup
       }
     },
-    copySchedJob (source, target, whatToCopy) {
+    copySchedJob(source, target, whatToCopy) {
       const sourceSchedJob = this.dayIndex[source.startDate].jobs[source.team]
       // if (sourceSchedJob.isBlank()) {
       //   return;
@@ -2058,18 +2179,34 @@ export default {
 
       schedJob.setLastUpdate()
     },
-    copySchedJobs (source, target, deleteSource, clearFlags) {
-      const sameJob = this.sameJob(source.startDate, source.numRows, source.team)
+    copySchedJobs(source, target, deleteSource, clearFlags) {
+      const sameJob = this.sameJob(
+        source.startDate,
+        source.numRows,
+        source.team
+      )
 
       if (sameJob) {
-        const src = { startDate: source.startDate, numRows: source.numRows, team: source.team }
+        const src = {
+          startDate: source.startDate,
+          numRows: source.numRows,
+          team: source.team,
+        }
         const numRows = target.numRows == -1 ? source.numRows : target.numRows
         const trgt = { startDate: target.startDate, numRows, team: target.team }
         this.copyOneToMany(src, trgt, clearFlags)
       } else {
         for (let i = 0; i < source.numRows; i++) {
-          const src = { startDate: addDays2Date(source.startDate, i), numRows: 1, team: source.team }
-          const trgt = { startDate: addDays2Date(target.startDate, i), numRows: 1, team: target.team }
+          const src = {
+            startDate: addDays2Date(source.startDate, i),
+            numRows: 1,
+            team: source.team,
+          }
+          const trgt = {
+            startDate: addDays2Date(target.startDate, i),
+            numRows: 1,
+            team: target.team,
+          }
           this.copyOneToMany(src, trgt)
         }
       }
@@ -2079,7 +2216,7 @@ export default {
       }
       // this.printGroups();
     },
-    deleteSchedJobs (source) {
+    deleteSchedJobs(source) {
       const deleted = {}
       const startDate = string2date(source.startDate)
       for (let i = 0; i < source.numRows; i++) {
@@ -2101,7 +2238,7 @@ export default {
         this.updateSchedJobGroup(groupId)
       }
     },
-    copyOneToMany (source, target, clearFlags) {
+    copyOneToMany(source, target, clearFlags) {
       const sourceSchedJob = this.dayIndex[source.startDate].jobs[source.team]
       if (sourceSchedJob.isBlank()) {
         const targetSchedJob = this.dayIndex[target.startDate].jobs[target.team]
@@ -2139,13 +2276,13 @@ export default {
 
         newGroup[d] = schedJob
 
-        const idx = this.teams.findIndex(t => t.id == target.team)
+        const idx = this.teams.findIndex((t) => t.id == target.team)
         if (source.team !== target.team) {
           schedJob.teamMembers = this.teams[idx].teamMembers.slice()
         }
       }
     },
-    copyOneToOne (schedJob, groupId, date, team, assignTeamMembers) {
+    copyOneToOne(schedJob, groupId, date, team, assignTeamMembers) {
       let group
       if (groupId == -1) {
         group = {}
@@ -2169,21 +2306,21 @@ export default {
       group[date] = schedJob
 
       if (assignTeamMembers) {
-        const idx = this.teams.findIndex(t => t.id == team)
+        const idx = this.teams.findIndex((t) => t.id == team)
         schedJob.teamMembers = this.teams[idx].teamMembers.slice()
       }
 
       return schedJob
     },
-    teamMemberDragstart (ev) {
+    teamMemberDragstart(ev) {
       const data = {
         dayIndex: ev.target.getAttribute('data-day-index'),
         team: ev.target.getAttribute('data-team'),
-        teamMember: ev.target.getAttribute('data-team-member')
+        teamMember: ev.target.getAttribute('data-team-member'),
       }
       ev.dataTransfer.setData('application/json', JSON.stringify(data))
     },
-    dropTeamMember (event, targetJob) {
+    dropTeamMember(event, targetJob) {
       event.preventDefault()
       const blankJob = targetJob.isBlank()
       const teamMembers = targetJob.teamMembers
@@ -2197,30 +2334,36 @@ export default {
       teamMembers.push(src.teamMember)
 
       if (blankJob) {
-        this.copyOneToOne(new SchedJob(targetJob), -1, targetJob.date, targetJob.team, false)
+        this.copyOneToOne(
+          new SchedJob(targetJob),
+          -1,
+          targetJob.date,
+          targetJob.team,
+          false
+        )
       }
 
       srcJob.setLastUpdate()
       targetJob.setLastUpdate()
       this.$forceUpdate()
     },
-    dragoverHandler (event) {
+    dragoverHandler(event) {
       event.preventDefault()
       event.dataTransfer.dropEffect = 'move'
     },
-    colWidth () {
+    colWidth() {
       const str = `width:${92 / this.teams.length}%;`
       return str
     },
-    colWidthMp () {
+    colWidthMp() {
       const str = `width:${90 / this.teams.length}%;`
       return str
     },
-    findAncestor (el, tag) {
-      for (; el.tagName != tag; el = el.parentElement) { ; }
+    findAncestor(el, tag) {
+      for (; el.tagName != tag; el = el.parentElement) {}
       return el
     },
-    unselect () {
+    unselect() {
       if (!this.selection) {
         return
       }
@@ -2233,7 +2376,7 @@ export default {
       }
       this.selection = null
     },
-    unselectDay (table) {
+    unselectDay(table) {
       for (let i = this.selection.startRow; i <= this.selection.endRow; i++) {
         const tbody = table.tBodies[i]
         while (tbody.classList.contains('selected')) {
@@ -2242,7 +2385,7 @@ export default {
       }
       this.selection = null
     },
-    selectDay (event, index, day) {
+    selectDay(event, index, day) {
       if (this.selection && this.selection.col !== 0) {
         this.unselect()
       }
@@ -2268,12 +2411,12 @@ export default {
       tb.classList.add('selected')
       this.selection = new Selection(0, tbodyIndex)
     },
-    onTableCellClick (event, job) {
+    onTableCellClick(event, job) {
       if (!this.timeoutId) {
         this.timeoutId = setTimeout(() => {
           this.onTableCellSingleClick(event, job)
           this.timeoutId = null
-        }, 250)// tolerance in ms
+        }, 250) // tolerance in ms
       } else {
         // double click
         // open job dialog
@@ -2282,7 +2425,7 @@ export default {
         this.openSchedJobDialog(job)
       }
     },
-    onTableCellSingleClick (event, job) {
+    onTableCellSingleClick(event, job) {
       if (this.selection && this.selection.col === 0) {
         this.unselectDay(document.getElementById('manpower'))
       }
@@ -2302,7 +2445,10 @@ export default {
       }
 
       // Clicked on cell on another column
-      if ((this.selection.col != td.cellIndex) || (tr.rowIndex < this.selection.startRow)) {
+      if (
+        this.selection.col != td.cellIndex ||
+        tr.rowIndex < this.selection.startRow
+      ) {
         // console.log("Clicked on cell on another column. Unselect all selections and select this cell");
         this.unselect()
         td.classList.add('selected')
@@ -2311,7 +2457,10 @@ export default {
       }
 
       // Clicked on a selected cell. Unselect it
-      if ((tr.rowIndex >= this.selection.startRow && tr.rowIndex <= this.selection.endRow)) {
+      if (
+        tr.rowIndex >= this.selection.startRow &&
+        tr.rowIndex <= this.selection.endRow
+      ) {
         // console.log("Clicked on a selected cell. Unselect all selections");
         this.unselect()
         return
@@ -2325,16 +2474,16 @@ export default {
       }
       this.selection.endRow = tr.rowIndex
     },
-    splitShift (jobInfo) {
+    splitShift(jobInfo) {
       if (jobInfo) {
         return jobInfo.splitShift
       }
       return this.jobInfo.splitShift
     },
-    schedJobInfo (date, team) {
+    schedJobInfo(date, team) {
       return date + ':' + team
     },
-    schedJobLabel (jobInfo) {
+    schedJobLabel(jobInfo) {
       if (!jobInfo) {
         return ''
       }
@@ -2351,11 +2500,11 @@ export default {
         return 'Day'
       }
     },
-    getForeman (teamId) {
-      const idx = this.teams.findIndex(team => team.id === teamId)
+    getForeman(teamId) {
+      const idx = this.teams.findIndex((team) => team.id === teamId)
       return idx > -1 ? this.teams[idx].foreman : ''
     },
-    openSchedJobDialog (job) {
+    openSchedJobDialog(job) {
       this.editedJob = job
       this.jobInfo = new SchedJob(job)
       if (job.shift === Shift.unasigned) {
@@ -2365,13 +2514,16 @@ export default {
       this.jobDialog.endDate = job.endDate
       this.jobDialog.open = true
     },
-    getDayIndex (date) {
+    getDayIndex(date) {
       const jobSchedule = this.jobSchedule
-      return jobSchedule.findIndex(day => day.date === date)
+      return jobSchedule.findIndex((day) => day.date === date)
     },
-    saveSchedJob () {
-      if (!this.editedJob.isBlank() && this.editedJob.startDate === this.jobDialog.startDate &&
-            this.editedJob.endDate === this.jobDialog.endDate) {
+    saveSchedJob() {
+      if (
+        !this.editedJob.isBlank() &&
+        this.editedJob.startDate === this.jobDialog.startDate &&
+        this.editedJob.endDate === this.jobDialog.endDate
+      ) {
         this.editedJob.update(this.jobInfo)
         this.jobDialog.open = false
         return
@@ -2380,17 +2532,17 @@ export default {
       const sourceData = {
         startDate: this.editedJob.date,
         numRows: 1,
-        team: this.jobInfo.team
+        team: this.jobInfo.team,
       }
       const targetData = {
         startDate: this.jobDialog.startDate,
         numRows: datediff(this.jobDialog.startDate, this.jobDialog.endDate) + 1,
-        team: this.jobInfo.team
+        team: this.jobInfo.team,
       }
 
       this.editedJob.update(this.jobInfo)
       if (this.editedJob.shift != Shift.unasigned && this.editedJob.job1) {
-        const team = this.teams.find(team => team.id === this.jobInfo.team)
+        const team = this.teams.find((team) => team.id === this.jobInfo.team)
         this.editedJob.teamMembers = team ? team.teamMembers.slice() : []
       }
       const schedJob = this.editedJob
@@ -2399,13 +2551,14 @@ export default {
 
       const team = this.editedJob.team
       if (this.editedJob.startDate < this.jobDialog.startDate) {
-        const numRows = this.editedJob.endDate < this.jobDialog.startDate
-          ? datediff(this.editedJob.startDate, this.editedJob.endDate)
-          : datediff(this.editedJob.startDate, this.jobDialog.startDate)
+        const numRows =
+          this.editedJob.endDate < this.jobDialog.startDate
+            ? datediff(this.editedJob.startDate, this.editedJob.endDate)
+            : datediff(this.editedJob.startDate, this.jobDialog.startDate)
         var source1 = {
           startDate: this.editedJob.startDate,
           numRows,
-          team
+          team,
         }
       }
 
@@ -2413,7 +2566,7 @@ export default {
         var source2 = {
           startDate: addDays2Date(this.jobDialog.endDate, 1),
           numRows: datediff(this.jobDialog.endDate, this.editedJob.endDate),
-          team
+          team,
         }
       }
 
@@ -2437,7 +2590,7 @@ export default {
       this.$forceUpdate()
       this.jobDialog.open = false
     },
-    deleteScheduleEntry () {
+    deleteScheduleEntry() {
       if (!this.selection) {
         return
       }
@@ -2457,7 +2610,7 @@ export default {
       const source = {
         startDate: this.jobSchedule[this.selection.startRow - 1].date,
         numRows: this.selection.endRow - this.selection.startRow + 1,
-        team
+        team,
       }
 
       // this.copyOneToOne(schedJob, -1, date, team, false);
@@ -2471,27 +2624,30 @@ export default {
       this.unselect()
       this.$forceUpdate()
     },
-    flipJobs () {
+    flipJobs() {
       const temp = this.jobInfo.job1
       this.jobInfo.job1 = this.jobInfo.job2
       this.jobInfo.job2 = temp
       this.$forceUpdate()
     },
-    closeSchedJob () {
+    closeSchedJob() {
       this.jobDialog.open = false
     },
-    sort (jobTable) {
+    sort(jobTable) {
       jobTable.sort((a, b) => {
         const pa = a.priority ? a.priority : 1000000
         const pb = b.priority ? b.priority : 1000000
         return pa - pb
       })
     },
-    jobScheduleStyle (jobInfo) {
+    jobScheduleStyle(jobInfo) {
       const shift = jobInfo.shift
       const fontSize = '0.7em'
 
-      if ((jobInfo.excludeSunday && isSunday(jobInfo.date)) || (jobInfo.excludeSaturday && isSaturday(jobInfo.date))) {
+      if (
+        (jobInfo.excludeSunday && isSunday(jobInfo.date)) ||
+        (jobInfo.excludeSaturday && isSaturday(jobInfo.date))
+      ) {
         return `background-color:white;font-size:${fontSize};`
       }
 
@@ -2523,25 +2679,27 @@ export default {
         return `background-color:rgb(198,89,17);font-size:${fontSize};`
       }
     },
-    jobProjectionShiftOptionColor (value) {
+    jobProjectionShiftOptionColor(value) {
       if (value === '') {
         return 'color: grey;'
       }
       return 'color: black;'
     },
-    background (priority) {
+    background(priority) {
       if (!priority) {
         return 'background-color:white'
       }
       return `background-color:${priorityColors[priority - 1]};`
     },
-    addJob (status) {
-      this.jobs.push(new Job({ id: 0, scope: '', value: '', status, priority: 10 }))
+    addJob(status) {
+      this.jobs.push(
+        new Job({ id: 0, scope: '', value: '', status, priority: 10 })
+      )
       this.refreshJobProjectionTable++
     },
-    updateJobStatus (jobId, status) {
+    updateJobStatus(jobId, status) {
       console.log('updateJobStatus', jobId, status)
-      const idx = this.jobs.findIndex(job => job.id == jobId)
+      const idx = this.jobs.findIndex((job) => job.id == jobId)
       if (idx > -1) {
         console.log('idx', idx)
         this.jobs[idx].status = status
@@ -2550,10 +2708,10 @@ export default {
         this.$forceUpdate()
       }
     },
-    delJob (jobs) {
+    delJob(jobs) {
       for (const job of jobs) {
         if (job.id === 0) {
-          const idx = this.jobs.findIndex(element => element == job)
+          const idx = this.jobs.findIndex((element) => element == job)
           if (idx > -1) {
             this.jobs.splice(idx, 1)
           }
@@ -2564,18 +2722,21 @@ export default {
         this.refreshJobProjectionTable++
       }
     },
-    addSchedJob () {
-      if (this.jobInfo.shift === Shift.day || this.jobInfo.shift === Shift.unasigned) {
+    addSchedJob() {
+      if (
+        this.jobInfo.shift === Shift.day ||
+        this.jobInfo.shift === Shift.unasigned
+      ) {
         this.jobInfo.shift = Shift.day
         this.jobInfo.splitShift = !this.jobInfo.splitShift
         // this.jobInfo.job2 = "";
         this.$forceUpdate()
       }
     },
-    openTeamDialog () {
+    openTeamDialog() {
       this.teamDialog.open = true
     },
-    teamMembers (team) {
+    teamMembers(team) {
       const members = team.teamMembers ? team.teamMembers : []
       const teamMembers = []
 
@@ -2583,12 +2744,16 @@ export default {
         teamMembers.push({ id: i + 1, checked: false, teamMember: members[i] })
       }
 
-      for (let i = teamMembers.length; i < this.teamMemberDialog.maxTeamMembers; i++) {
+      for (
+        let i = teamMembers.length;
+        i < this.teamMemberDialog.maxTeamMembers;
+        i++
+      ) {
         teamMembers.push({ id: i + 1, checked: false, teamMember: '' })
       }
       return teamMembers
     },
-    editTeam (team, schedJob) {
+    editTeam(team, schedJob) {
       this.teamDialog.team = team
       this.teamDialog.editedTeam = new Team(team)
       this.teamDialog.schedJob = schedJob
@@ -2599,9 +2764,21 @@ export default {
       this.teamDialog.showList = false
       this.teamDialog.showForm = true
     },
-    newTeam () {
-      this.teamDialog.team = new Team({ id: 0, foreman: '', vehicle: '', position: 0, teamMembers: [] })
-      this.teamDialog.editedTeam = new Team({ id: 0, foreman: '', vehicle: '', position: 0, teamMembers: [] })
+    newTeam() {
+      this.teamDialog.team = new Team({
+        id: 0,
+        foreman: '',
+        vehicle: '',
+        position: 0,
+        teamMembers: [],
+      })
+      this.teamDialog.editedTeam = new Team({
+        id: 0,
+        foreman: '',
+        vehicle: '',
+        position: 0,
+        teamMembers: [],
+      })
 
       this.teamDialog.oper = 'new'
       this.teamDialog.title = 'New team'
@@ -2609,7 +2786,7 @@ export default {
       this.teamDialog.showList = false
       this.teamDialog.showForm = true
     },
-    copyTeamMembers (source, target) {
+    copyTeamMembers(source, target) {
       target.length = 0
       for (let i = 0; i < source.length; i++) {
         const member = source[i].teamMember
@@ -2618,7 +2795,7 @@ export default {
         }
       }
     },
-    checkTeamForeman (team) {
+    checkTeamForeman(team) {
       if (team.foreman.trim() === '') {
         return 'empty'
       }
@@ -2629,7 +2806,7 @@ export default {
       }
       return 'ok'
     },
-    validateTeamForeman (team) {
+    validateTeamForeman(team) {
       const status = this.checkTeamForeman(team)
       if (status === 'empty') {
         this.showMessage('You must enter the Foreman')
@@ -2640,28 +2817,30 @@ export default {
       }
       return true
     },
-    validateTeamMember (teamMember) {
+    validateTeamMember(teamMember) {
       // verify that the new team member doesn't exist in any other team
       teamMember.teamMember = teamMember.teamMember.trim()
       for (const team of this.teams) {
         if (team.id != teamMember.id) {
           const members = team.teamMembers
           if (members.includes(teamMember.teamMember)) {
-            this.showMessage(`${teamMember.teamMember} is in ${team.foreman}'s team`)
+            this.showMessage(
+              `${teamMember.teamMember} is in ${team.foreman}'s team`
+            )
             teamMember.teamMember = ''
             break
           }
         }
       }
     },
-    checkTeamPosition (team) {
+    checkTeamPosition(team) {
       if (parseInt(team.position) < 0) {
         team.position = 0
       } else if (parseInt(team.position) > 99) {
         team.position = 99
       }
     },
-    saveTeam () {
+    saveTeam() {
       const team = this.teamDialog.editedTeam
       if (!this.validateTeamForeman(team)) {
         return
@@ -2673,7 +2852,10 @@ export default {
       } else {
         // team.position -= 0.5;
         this.teamDialog.team.update(team)
-        this.copyTeamMembers(this.teamDialog.teamMembers, this.teamDialog.team.teamMembers)
+        this.copyTeamMembers(
+          this.teamDialog.teamMembers,
+          this.teamDialog.team.teamMembers
+        )
       }
       // this.updateTeamOrder();
       this.refreshTeams++
@@ -2681,7 +2863,7 @@ export default {
       this.teamDialog.showForm = false
       this.teamDialog.showList = true
     },
-    deleteTeam () {
+    deleteTeam() {
       // if (this.teamDialog.oper === "new") {
       //   return;
       // }
@@ -2689,7 +2871,7 @@ export default {
         return
       }
       const teamId = this.teamDialog.editedTeam.id
-      const team = this.teams_.find(t => t.id == teamId)
+      const team = this.teams_.find((t) => t.id == teamId)
       if (team) {
         team.position = -1
       }
@@ -2698,7 +2880,7 @@ export default {
       this.teamDialog.showForm = false
       this.teamDialog.showList = true
     },
-    deleteTeamMember () {
+    deleteTeamMember() {
       const teamMembers = this.teamDialog.teamMembers
       for (let i = teamMembers.length - 1; i >= 0; i--) {
         if (teamMembers[i].checked) {
@@ -2706,7 +2888,7 @@ export default {
         }
       }
     },
-    updateTeamOrder () {
+    updateTeamOrder() {
       this.teams.sort((t1, t2) => t1.position - t2.position)
       for (let i = 0; i < this.teams.length; i++) {
         if (this.teams[i].position < 100) {
@@ -2714,25 +2896,30 @@ export default {
         }
       }
     },
-    closeTeam () {
+    closeTeam() {
       this.teamDialog.showForm = false
       this.teamDialog.showList = true
     },
-    validateJobTeamMember (teamMember) {
+    validateJobTeamMember(teamMember) {
       // validadte that the new team member does not exist in any other scheduled job on the same date
       const schedJob = this.teamMemberDialog.schedJob
       const day = this.dayIndex[schedJob.date]
       teamMember.teamMember = teamMember.teamMember.trim()
       for (const sj of Object.values(day.jobs)) {
-        if (sj != this.teamMemberDialog.schedJob && sj.teamMembers.includes(teamMember.teamMember)) {
-          const team = this.teams_.find(team => team.id === sj.team)
-          this.showMessage(`${teamMember.teamMember} is in ${team.foreman}'s team`)
+        if (
+          sj != this.teamMemberDialog.schedJob &&
+          sj.teamMembers.includes(teamMember.teamMember)
+        ) {
+          const team = this.teams_.find((team) => team.id === sj.team)
+          this.showMessage(
+            `${teamMember.teamMember} is in ${team.foreman}'s team`
+          )
           teamMember.teamMember = ''
           break
         }
       }
     },
-    jobTeamMembers (schedJob) {
+    jobTeamMembers(schedJob) {
       const members = schedJob.teamMembers ? schedJob.teamMembers : []
       const teamMembers = []
 
@@ -2740,21 +2927,25 @@ export default {
         teamMembers.push({ id: i + 1, checked: false, teamMember: members[i] })
       }
 
-      for (let i = teamMembers.length; i < this.teamMemberDialog.maxTeamMembers; i++) {
+      for (
+        let i = teamMembers.length;
+        i < this.teamMemberDialog.maxTeamMembers;
+        i++
+      ) {
         teamMembers.push({ id: i + 1, checked: false, teamMember: '' })
       }
       return teamMembers
     },
-    openTeamMemberDialog (team, schedJob) {
+    openTeamMemberDialog(team, schedJob) {
       this.teamMemberDialog.open = true
       this.teamMemberDialog.team = team
       this.teamMemberDialog.schedJob = schedJob
       this.teamMemberDialog.teamMembers = this.jobTeamMembers(schedJob)
     },
-    closeTeamMemberDialog () {
+    closeTeamMemberDialog() {
       this.teamMemberDialog.open = false
     },
-    deleteJobTeamMember () {
+    deleteJobTeamMember() {
       const teamMembers = this.teamMemberDialog.teamMembers
       for (let i = teamMembers.length - 1; i >= 0; i--) {
         if (teamMembers[i].checked) {
@@ -2762,7 +2953,7 @@ export default {
         }
       }
     },
-    saveTeamMembers () {
+    saveTeamMembers() {
       const schedJob = this.teamMemberDialog.schedJob
 
       const blankJob = schedJob.isBlank()
@@ -2770,25 +2961,31 @@ export default {
       this.copyTeamMembers(teamMembers, schedJob.teamMembers)
 
       if (blankJob) {
-        this.copyOneToOne(new SchedJob(schedJob), -1, schedJob.date, schedJob.team, false)
+        this.copyOneToOne(
+          new SchedJob(schedJob),
+          -1,
+          schedJob.date,
+          schedJob.team,
+          false
+        )
       }
       schedJob.setLastUpdate()
 
       this.teamMemberDialog.open = false
       this.$forceUpdate()
     },
-    editOptions () {
+    editOptions() {
       this.showOptionsDialog = true
     },
-    showMessage (msg) {
+    showMessage(msg) {
       this.userMessage = msg
       this.alert = true
     },
-    closeMessage () {
+    closeMessage() {
       this.userMessage = ''
       this.alert = false
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -2799,6 +2996,7 @@ html {
 
 .job-sched {
   width: 99%;
+
   /* height: 99%; */
   height: 80vh;
   overflow-x: hidden;
@@ -2807,8 +3005,8 @@ html {
 }
 
 .job-sched th {
-  background-color: rgb(217,225,242);
-  padding: 6px 4px 6px 4px;
+  background-color: rgb(217 225 242);
+  padding: 6px 4px;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -2822,7 +3020,7 @@ html {
 .job-sched td {
   vertical-align: top;
   border: 1px solid #000;
-  padding: 5px 2px 0px 5px;
+  padding: 5px 2px 0 5px;
 }
 
 .job-sched .selected {
@@ -2834,7 +3032,7 @@ html {
 }
 
 .job-table {
-  width:99%;
+  width: 99%;
   height: 99%;
   overflow-x: hidden;
   overflow-y: auto;
@@ -2842,18 +3040,18 @@ html {
 }
 
 .job-table th {
-  background-color: rgb(217,225,242);
+  background-color: rgb(217 225 242);
   position: sticky;
   top: 0;
   z-index: 1;
   box-shadow: inset 1px 1px #000, 0 1px #000;
-  padding: 6px 4px 6px 4px;
+  padding: 6px 4px;
 }
 
 .job-table td {
   border: 1px solid #000;
   border-left: 2px solid #000;
-  padding: 4px 4px 4px 4px;
+  padding: 4px;
 }
 
 .job-projection {
@@ -2883,26 +3081,24 @@ html {
   border-collapse: collapse;
 }
 
-.simple-job-table th, .simple-job-table td {
+.simple-job-table th,
+.simple-job-table td {
   border: 2px solid lightgray;
-  padding: 2px 2px 2px 2px;
+  padding: 2px;
 }
 
 .table-input {
-  border-top-style: hidden;
-  border-right-style: hidden;
-  border-left-style: hidden;
-  border-bottom-style: hidden;
+  border-style: hidden;
 }
 
 .table-input:focus {
-    outline: none;
+  outline: none;
 }
 
 .textarea {
   margin-top: 4px;
   border-style: none;
-  border-color: Transparent;
+  border-color: transparent;
   overflow: hidden;
   resize: none;
 }
@@ -2915,7 +3111,7 @@ html {
   height: 100px;
   border: 1px solid black;
   border-radius: 10px;
-  margin: 0px;
+  margin: 0;
   padding: 8px;
 }
 
@@ -2924,7 +3120,7 @@ html {
   outline: none;
 }
 
-.v-expansion-panel-content :deep(.v-expansion-panel-content__wrap) {
+.v-expansion-panel-content :deep(.v-expansion-panel-content__wrap) { /* stylelint-disable-line */
   padding: 0 !important;
 }
 </style>

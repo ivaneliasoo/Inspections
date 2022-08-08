@@ -6,14 +6,10 @@
       @click:outside="close"
     >
       <v-card>
-        <v-card-title class="text-body-1">
-          Select Template
-        </v-card-title>
+        <v-card-title class="text-body-1"> Select Template </v-card-title>
         <v-card-text>
-          <div style="width: 800px;">
-            <table
-              width="98%"
-            >
+          <div style="width: 800px">
+            <table width="98%">
               <tbody>
                 <tr>
                   <td colspan="2" class="search-box">
@@ -30,13 +26,13 @@
               </tbody>
             </table>
           </div>
-          <div style="width: 800px; overflow-y: scroll;">
+          <div style="width: 800px; overflow-y: scroll">
             <table width="100%">
               <tbody>
                 <tr class="table-header">
                   <td
                     class="font-weight-bold text-center header-row"
-                    style="width:65%;"
+                    style="width: 65%"
                     title="Click to sort by project"
                     @click="sortByField('project')"
                   >
@@ -47,7 +43,7 @@
                   </td>
                   <td
                     class="font-weight-bold text-center header-row"
-                    style="width:20%;"
+                    style="width: 20%"
                     title="Click to sort by date"
                     @click="sortByField('date')"
                   >
@@ -58,7 +54,7 @@
                   </td>
                   <td
                     class="font-weight-bold text-center header-row"
-                    style="width:15%;"
+                    style="width: 15%"
                     title="Click for original sort order"
                     @click="sortById"
                   />
@@ -66,24 +62,34 @@
               </tbody>
             </table>
           </div>
-          <div class="costsheet-table" style="height: 390px; width: 800px; overflow-y: scroll;">
-            <table
-              id="select-template"
-              width="100%"
-              height="100%"
-            >
+          <div
+            class="costsheet-table"
+            style="height: 390px; width: 800px; overflow-y: scroll"
+          >
+            <table id="select-template" width="100%" height="100%">
               <tbody>
-                <tr v-for="(sheet, index) in templates" :key="index" style="height: 0px;">
-                  <td class="text-caption text-left table-row" style="width:65%;">
+                <tr
+                  v-for="(sheet, index) in templates"
+                  :key="index"
+                  style="height: 0"
+                >
+                  <td
+                    class="text-caption text-left table-row"
+                    style="width: 65%"
+                  >
                     {{ sheet.project }}
                   </td>
-                  <td class="text-caption text-center table-row" style="width:20%;">
+                  <td
+                    class="text-caption text-center table-row"
+                    style="width: 20%"
+                  >
                     {{ sheet.dateCreated }}
                   </td>
-                  <td class="text-caption text-center table-row" style="width:15%;">
-                    <v-btn small @click="selectTemplate(index)">
-                      Select
-                    </v-btn>
+                  <td
+                    class="text-caption text-center table-row"
+                    style="width: 15%"
+                  >
+                    <v-btn small @click="selectTemplate(index)"> Select </v-btn>
                   </td>
                 </tr>
               </tbody>
@@ -92,24 +98,12 @@
         </v-card-text>
         <v-card-actions>
           Search mode: &nbsp;&nbsp;
-          <v-radio-group
-            v-model="compareFunc"
-            row
-            mandatory
-          >
-            <v-radio
-              label="Row includes ..."
-              value="includes"
-            />
-            <v-radio
-              label="Row starts with ..."
-              value="startsWith"
-            />
+          <v-radio-group v-model="compareFunc" row mandatory>
+            <v-radio label="Row includes ..." value="includes" />
+            <v-radio label="Row starts with ..." value="startsWith" />
           </v-radio-group>
           <v-spacer />
-          <v-btn @click="close">
-            Close
-          </v-btn>
+          <v-btn @click="close"> Close </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -117,8 +111,7 @@
 </template>
 
 <script>
-import { Section, Item, CostSheet }
-  from '../../utils/costsheets/entity.js'
+import { Section, Item, CostSheet } from '../../utils/costsheets/entity.js'
 import { endpoint } from '../../utils/costsheets/util.js'
 import { toIsoDate } from '~/utils/jp_util.js'
 
@@ -126,7 +119,7 @@ export default {
   props: {
     templates: Array,
     selectTemplateDialog: Boolean,
-    action: String
+    action: String,
   },
   data: () => ({
     templates_: null,
@@ -135,16 +128,16 @@ export default {
     sorted: {
       project: false,
       location: false,
-      date: false
+      date: false,
     },
     descending: {
       project: true,
       location: true,
-      date: true
-    }
+      date: true,
+    },
   }),
   watch: {
-    selectTemplateDialog (oldValue, newValue) {
+    selectTemplateDialog(oldValue, newValue) {
       if (newValue) {
         this.nameSearch = ''
         this.dateSearch = ''
@@ -155,37 +148,39 @@ export default {
           this.curRow = null
         }
       }
-    }
+    },
   },
   methods: {
-    resetSortState () {
+    resetSortState() {
       this.sorted = {
         project: false,
         location: false,
-        date: false
+        date: false,
       }
       this.descending = {
         project: true,
         location: true,
-        date: true
+        date: true,
       }
     },
-    selectTemplate (index) {
+    selectTemplate(index) {
       this.$emit('select-template', index, this.action)
     },
-    close () {
+    close() {
       this.$emit('close')
     },
-    sortIcon (field) {
-      return (this.sorted[field] && this.descending[field]) ? 'mdi-arrow-down-thin' : 'mdi-arrow-up-thin'
+    sortIcon(field) {
+      return this.sorted[field] && this.descending[field]
+        ? 'mdi-arrow-down-thin'
+        : 'mdi-arrow-up-thin'
     },
-    sortById () {
+    sortById() {
       this.sortField = 'id'
       this.resetSortState()
       this.templates.sort((t1, t2) => t1.id - t2.id)
       this.$forceUpdate()
     },
-    sortByField (field) {
+    sortByField(field) {
       this.sortField = field
       const sorted = this.sorted[field]
       const descending = this.descending[field]
@@ -196,16 +191,17 @@ export default {
         this.descending[field] = true
       }
       this.sorted[field] = true
-      const getValue = (field === 'date')
-        ? row => this.toIsoDate(row.dateCreated)
-        : row => row[field]
+      const getValue =
+        field === 'date'
+          ? (row) => this.toIsoDate(row.dateCreated)
+          : (row) => row[field]
       this.sortTable(field, getValue)
     },
-    toIsoDate (date) {
+    toIsoDate(date) {
       const a = date.split('/')
       return a[2] + '-' + a[1] + '-' + a[0]
     },
-    sortTable (field, getValue) {
+    sortTable(field, getValue) {
       this.templates.sort((r1, r2) => {
         let v1, v2
         if (this.descending[field]) {
@@ -224,20 +220,20 @@ export default {
         }
       })
     },
-    scrollTo (line) {
+    scrollTo(line) {
       const rows = document.querySelectorAll('#select-template tr')
       const row = rows[line]
       row.scrollIntoView({
         behavior: 'auto',
-        block: 'start'
+        block: 'start',
       })
       if (this.curRow) {
         this.curRow.style.background = 'white'
       }
       row.style.background = 'lightgrey'
       this.curRow = row
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -263,7 +259,7 @@ html {
 .table-row {
   border-right: 1px solid black;
   border-bottom: 1px solid black;
-  padding: 5px 5px 5px 5px;
+  padding: 5px;
 }
 
 .invisible-scrollbar::-webkit-scrollbar {

@@ -8,7 +8,7 @@ import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import { CardOption } from '~/types'
 
 export default defineComponent({
-  setup () {
+  setup() {
     const cardOptions: CardOption[] = [
       {
         name: 'users',
@@ -33,7 +33,7 @@ export default defineComponent({
 
     const options = computed(() => {
       if (!$auth.user.isAdmin) {
-        return cardOptions.filter(co => co.name !== 'settings')
+        return cardOptions.filter((co) => co.name !== 'settings')
       }
 
       return cardOptions
@@ -45,6 +45,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped>
-</style>

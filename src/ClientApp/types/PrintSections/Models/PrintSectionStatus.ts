@@ -1,5 +1,4 @@
-
 export enum PrintSectionStatus {
-    Inactive,
-    Active
+  Inactive,
+  Active,
 }

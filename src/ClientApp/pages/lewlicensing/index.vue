@@ -27,9 +27,7 @@
       <v-col cols="12" md="6" sm="12">
         <v-card>
           <v-card-title class="justify-center">
-            <h3>
-              Expired Licenses
-            </h3>
+            <h3>Expired Licenses</h3>
           </v-card-title>
           <v-data-table
             :headers="licensesHeader"
@@ -53,13 +51,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, useAsync, useRouter, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  useAsync,
+  useRouter,
+  useContext,
+} from '@nuxtjs/composition-api'
 import useDateTime from '~/composables/useDateTime'
 import { CardOption } from '~/types'
 import { useLicensesStore } from '~/composables/useLicensesStore'
 
 export default defineComponent({
-  setup () {
+  setup() {
     const licensesStore = useLicensesStore()
     const router = useRouter()
     const { $auth } = useContext()
@@ -72,7 +76,7 @@ export default defineComponent({
         helpText: 'Allows to create, update, delete address',
         icon: 'mdi-cog-outline',
         color: 'accent',
-        path: '/addresses'
+        path: '/addresses',
       },
       {
         name: 'licenses',
@@ -80,8 +84,8 @@ export default defineComponent({
         helpText: 'Allows to create, update, delete licenses',
         icon: 'mdi-license',
         color: 'accent',
-        path: '/licenses'
-      }
+        path: '/licenses',
+      },
     ]
 
     const licensesHeader = [
@@ -89,26 +93,26 @@ export default defineComponent({
         text: 'ID',
         value: 'licenseId',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'License',
         value: 'number',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Valid From',
         value: 'validityStart',
         sortable: true,
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Valid To',
         value: 'validityEnd',
         sortable: true,
-        align: 'left'
-      }
+        align: 'left',
+      },
     ]
 
     useAsync(() => licensesStore.getLicensesDashboard())
@@ -121,12 +125,14 @@ export default defineComponent({
       return licensesStore.dashboard.expired
     })
 
-    const goToLicenses = (_:any, row: any) => {
+    const goToLicenses = (_: any, row: any) => {
       router.push(`/licenses?id=${row.item.licenseId}`)
     }
 
     const options = computed(() => {
-      if (!$auth.user.isAdmin) { return cardOptions.filter(co => co.name !== 'settings') }
+      if (!$auth.user.isAdmin) {
+        return cardOptions.filter((co) => co.name !== 'settings')
+      }
 
       return cardOptions
     })
@@ -139,10 +145,6 @@ export default defineComponent({
       parseDate,
       goToLicenses,
     }
-  }
+  },
 })
 </script>
-
-<style scoped>
-
-</style>

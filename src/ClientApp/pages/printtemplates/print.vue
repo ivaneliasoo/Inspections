@@ -13,7 +13,7 @@
         </div>
       </div>
     </header>
-    <div style="display: block;" class="page-break-after">
+    <div style="display: block" class="page-break-after">
       <article class="tw-text-justify">
         <PrintingTitle> Particulars Of Instalation </PrintingTitle>
         <span class="text-line tw-font-medium">
@@ -22,30 +22,39 @@
         </span>
         <span class="text-line tw-font-medium">
           Addres of Installation:
-          <span
-            class="tw-underline"
-          >{{ reportData.address }} ({{ reportData.licenseKVA }} kVA)</span>
+          <span class="tw-underline"
+            >{{ reportData.address }} ({{ reportData.licenseKVA }} kVA)</span
+          >
         </span>
         <span class="text-line tw-font-medium">
           Approved Load:
-          <span
-            class="tw-underline"
-          >{{ reportData.licenseAmp }} A /{{ reportData.licenseVolt }} V</span>
+          <span class="tw-underline"
+            >{{ reportData.licenseAmp }} A /{{ reportData.licenseVolt }} V</span
+          >
         </span>
         <div class="tw-flex tw-flex-row tw-justify-between">
-          <span
-            class="text-line tw-flex-col"
-          >Electrical Installation License: {{ reportData.licenseNumber }}</span>
-          <span
-            class="text-line tw-flex-col"
-          >Date & Time of Inspection: {{ formatedDate }}</span>
+          <span class="text-line tw-flex-col"
+            >Electrical Installation License:
+            {{ reportData.licenseNumber }}</span
+          >
+          <span class="text-line tw-flex-col"
+            >Date & Time of Inspection: {{ formatedDate }}</span
+          >
         </div>
         <PrintingReportsCheckLists
-          v-if="reportData.checkLists && configuration.checkListMetadata.display === 'Numbered'"
+          v-if="
+            reportData.checkLists &&
+            configuration.checkListMetadata.display === 'Numbered'
+          "
           :check-lists="reportData.checkLists"
         />
-        <div v-if="reportData.checkLists && configuration.checkListMetadata.display === 'Inline'">
-          {{ reportData.checkLists.map(c => c.text) }}
+        <div
+          v-if="
+            reportData.checkLists &&
+            configuration.checkListMetadata.display === 'Inline'
+          "
+        >
+          {{ reportData.checkLists.map((c) => c.text) }}
         </div>
         <PrintingReportsOperationalReadings
           v-if="operationalReadings"
@@ -69,29 +78,38 @@ import moment from 'moment'
 export default {
   name: 'PrintingReports',
   layout: 'printlayout',
-  async asyncData ({ route, $axios }) {
+  async asyncData({ route, $axios }) {
     if (route && route.query && route.query.id) {
       const id = parseInt(route.query.id)
       const token = route.query.token
 
-      const printPhotos = route.query && route.query.printPhotos ? route.query.printPhotos === 'true' : false
-      const isCompoundedPhotoRecord = route.query && route.query.compoundedPhotoRecord ? route.query.compoundedPhotoRecord === 'true' : false
+      const printPhotos =
+        route.query && route.query.printPhotos
+          ? route.query.printPhotos === 'true'
+          : false
+      const isCompoundedPhotoRecord =
+        route.query && route.query.compoundedPhotoRecord
+          ? route.query.compoundedPhotoRecord === 'true'
+          : false
       const result = await $axios.$get(`reports/${id}`, {
         headers: {
-          Authorization: `bearer ${token}`
-        }
+          Authorization: `bearer ${token}`,
+        },
       })
       const photoRecords = await $axios.$get(`reports/${id}/photorecord`, {
         headers: {
-          Authorization: `bearer ${token}`
-        }
+          Authorization: `bearer ${token}`,
+        },
       })
 
-      const configuration = await $axios.$get(`reportconfiguration/${result.reportConfigurationId}`, {
-        headers: {
-          Authorization: `bearer ${token}`
+      const configuration = await $axios.$get(
+        `reportconfiguration/${result.reportConfigurationId}`,
+        {
+          headers: {
+            Authorization: `bearer ${token}`,
+          },
         }
-      })
+      )
 
       const pagesLength = Math.ceil(photoRecords.length / 8)
       const photoRecordsPages = [[]]
@@ -99,8 +117,13 @@ export default {
 
       if (photoRecords && photoRecords.length > 0) {
         photoRecords.forEach((photo, index) => {
-          if (index > 0 && (index) % 8 === 0) { photoRecordsPages.push([]); currentPage++ }
-          if (photoRecordsPages[currentPage]) { photoRecordsPages[currentPage].push(photo) }
+          if (index > 0 && index % 8 === 0) {
+            photoRecordsPages.push([])
+            currentPage++
+          }
+          if (photoRecordsPages[currentPage]) {
+            photoRecordsPages[currentPage].push(photo)
+          }
         })
       }
 
@@ -110,7 +133,7 @@ export default {
 
       let operationalReadings = {}
       if (result) {
-        const ors = result.forms.filter(f => f.name === 'OperationalReadings')
+        const ors = result.forms.filter((f) => f.name === 'OperationalReadings')
         if (ors && ors.length > 0) {
           operationalReadings = ors[0].data
         }
@@ -124,36 +147,36 @@ export default {
         isCompoundedPhotoRecord,
         isPrintable: false,
         operationalReadings,
-        configuration
+        configuration,
       }
     }
   },
-  data () {
+  data() {
     return {
       reportId: -1,
       reportData: {},
       photoRecords: [],
-      photoRecordsPages: []
+      photoRecordsPages: [],
     }
   },
   computed: {
-    formatedDate () {
+    formatedDate() {
       if (this.reportData && this.reportData.date) {
         return moment(this.reportData.date).format('DD-MM-YYYY HH:mm')
       }
       return ''
     },
-    lastChecksCount () {
+    lastChecksCount() {
       if (this.reportData && this.reportData.checkLists) {
         return this.reportData.checkLists.length
       }
       return 0
-    }
+    },
   },
   auth: false,
-  mounted () {
+  mounted() {
     window.isPrintable = true
-  }
+  },
 }
 </script>
 
@@ -163,7 +186,7 @@ div {
 }
 
 article {
-  font-family: "Arial";
+  font-family: 'Arial';
   display: flex;
   flex-flow: column;
   .text-line {

@@ -22,14 +22,7 @@
         <li
           v-for="(check, checkIndex) in itemList.checks"
           :key="check.id"
-          class="
-            tw-flex
-            tw-flex-row
-            tw-flex-nowrap
-            tw-justify-between
-            tw-align-middle
-            tw-even
-          "
+          class="tw-flex tw-flex-row tw-flex-nowrap tw-justify-between tw-align-middle tw-even"
         >
           <div class="tw-flex-col tw-text-left">
             <div class="text-line tw-text-sm">
@@ -41,9 +34,13 @@
           </div>
           <div class="tw-flex-col tw-text-right tw-w-90">
             <div class="tw-inline-flex tw-align-middle">
-              <div class="tw-mr-12 tw-border tw-w-6 tw-h-6 tw-rounded-md tw-min-h-min tw-min-w-max tw-border-gray-600">
+              <div
+                class="tw-mr-12 tw-border tw-w-6 tw-h-6 tw-rounded-md tw-min-h-min tw-min-w-max tw-border-gray-600"
+              >
                 <div class="tw-block tw-top-0">
-                  <span v-if="check.checked === 2" class="tw-text-xs">N.A.</span>
+                  <span v-if="check.checked === 2" class="tw-text-xs"
+                    >N.A.</span
+                  >
                   <svg
                     v-if="check.checked === 0"
                     class="tw-fill-current tw--top-5"
@@ -74,7 +71,11 @@
                 </div>
               </div>
               <div class="tw-text-xs tw-text-left tw-w-40 tw-max-w-screen-lg">
-                {{ !check.remarks ? "____________________________________" : check.remarks }}
+                {{
+                  !check.remarks
+                    ? '____________________________________'
+                    : check.remarks
+                }}
               </div>
             </div>
           </div>
@@ -96,5 +97,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -2,18 +2,12 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true
+    node: true,
   },
   extends: [
     '@nuxtjs/eslint-config-typescript',
-    'plugin:nuxt/recommended'
+    'plugin:nuxt/recommended',
+    'prettier',
   ],
-  rules: {
-    semi: [2, 'never'],
-    'vue/valid-v-slot': ['error', {
-      allowModifiers: true
-    }],
-    'comma-dangle': 'off',
-    quotes: ['error', 'single'],
-  }
+  rules: {},
 }

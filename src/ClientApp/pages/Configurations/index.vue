@@ -33,9 +33,7 @@
               router.push({ name: 'Configurations-id', params: { id: -1 } })
             "
           >
-            <v-icon dark>
-              mdi-plus
-            </v-icon>
+            <v-icon dark> mdi-plus </v-icon>
           </v-btn>
         </v-toolbar>
       </template>
@@ -52,8 +50,8 @@
         <v-icon
           color="error"
           @click="
-            componentState.selectedItem = item;
-            componentState.dialogRemove = true;
+            componentState.selectedItem = item
+            componentState.dialogRemove = true
           "
         >
           mdi-delete
@@ -63,14 +61,21 @@
         </v-icon>
       </template>
       <template #[`item.type`]="{ item }">
-        {{ item.type === 0 ? "Inspection" : "Unkown" }}
+        {{ item.type === 0 ? 'Inspection' : 'Unkown' }}
       </template>
     </v-data-table>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, useContext, useFetch, useRouter } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  reactive,
+  computed,
+  useContext,
+  useFetch,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { useConfigurationStore } from '~/composables/useConfigurationStore'
 import GridFilter from '@/components/GridFilter.vue'
 import { ReportConfiguration } from '~/types'
@@ -78,9 +83,9 @@ import useGoBack from '~/composables/useGoBack'
 
 export default defineComponent({
   components: {
-    GridFilter
+    GridFilter,
   },
-  setup () {
+  setup() {
     useGoBack()
 
     const configStore = useConfigurationStore()
@@ -93,71 +98,71 @@ export default defineComponent({
         value: 'id',
         sortable: true,
         align: 'center',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Type',
         value: 'type',
         sortable: true,
         align: 'left',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Title',
         value: 'title',
         sortable: true,
         align: 'left',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Form Name',
         value: 'formName',
         sortable: true,
         align: 'left',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Remarks Label Text',
         value: 'remarksLabelText',
         sortable: true,
         align: 'left',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Defined CheckLists Qty',
         value: 'definedCheckLists',
         sortable: true,
         align: 'center',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Defined Signatures Qty',
         value: 'definedSignatures',
         sortable: true,
         align: 'center',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Used by (Reports)',
         value: 'usedByReports',
         sortable: true,
         align: 'center',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: 'Print Section',
         value: 'printSection',
         sortable: true,
         align: 'center',
-        class: 'secundary'
+        class: 'secundary',
       },
       {
         text: '',
         value: 'actions',
         sortable: true,
         align: 'center',
-        class: 'secundary'
-      }
+        class: 'secundary',
+      },
     ]
 
     const componentState = reactive({
@@ -189,8 +194,8 @@ export default defineComponent({
       configs,
       deleteConfig,
       componentState,
-      router
+      router,
     }
-  }
+  },
 })
 </script>

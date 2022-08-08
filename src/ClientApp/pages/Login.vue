@@ -8,7 +8,7 @@
               <v-card class="elevation-12">
                 <v-row>
                   <v-col cols="12" class="text-center">
-                    <img src="/Logo.jpeg" height="70px" width="150px">
+                    <img src="/Logo.jpeg" height="70px" width="150px" />
                   </v-col>
                   <v-col cols="12" class="text-center">
                     <h1>Login</h1>
@@ -74,7 +74,7 @@ import { useContext, defineComponent, reactive } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   layout: 'guest',
-  setup () {
+  setup() {
     const state = reactive({
       userName: '',
       password: '',
@@ -86,20 +86,25 @@ export default defineComponent({
 
     const login = async () => {
       state.loading = true
-      await $auth.login({ data: { userName: state.userName, password: state.password } })
+      await $auth
+        .login({ data: { userName: state.userName, password: state.password } })
         .catch((error) => {
           console.log(error)
           state.hasError = true
 
-          setTimeout(() => { state.hasError = false }, 3000)
+          setTimeout(() => {
+            state.hasError = false
+          }, 3000)
         })
-        .finally(() => { state.loading = false })
+        .finally(() => {
+          state.loading = false
+        })
     }
 
     return {
       login,
       state,
     }
-  }
+  },
 })
 </script>

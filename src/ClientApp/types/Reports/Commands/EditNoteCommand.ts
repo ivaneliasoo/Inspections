@@ -1,6 +1,6 @@
 export interface EditNoteCommand {
-    reportId: number;
-    id: number;
-    text: string;
-    checked: boolean;
+  reportId: number
+  id: number
+  text: string
+  checked: boolean
 }

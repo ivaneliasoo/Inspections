@@ -10,7 +10,7 @@ export const JobStatus = {
   onHold: 'onHold',
   standBy: 'standBy',
   highChance: 'highChance',
-  blank: 'blank'
+  blank: 'blank',
 }
 
 export class Job {
@@ -29,7 +29,7 @@ export class Job {
   lastUpdate
   updated
 
-  constructor (job) {
+  constructor(job) {
     if (job === undefined) {
       this.id = 0
       this.scope = ''
@@ -63,119 +63,121 @@ export class Job {
     }
   }
 
-  get scope () {
+  get scope() {
     return this.#scope
   }
 
-  set scope (scope) {
+  set scope(scope) {
     this.#scope = scope
     this.setlastUpdate()
   }
 
-  get state () {
+  get state() {
     if ([JobStatus.inProgress, JobStatus.onHold].includes(this.#status)) {
       return JobState.confirmed
-    } else if ([JobStatus.standBy, JobStatus.highChance].includes(this.#status)) {
+    } else if (
+      [JobStatus.standBy, JobStatus.highChance].includes(this.#status)
+    ) {
       return JobState.upcoming
     }
     return null
   }
 
-  get status () {
+  get status() {
     return this.#status
   }
 
-  set status (s) {
+  set status(s) {
     this.#status = s
     this.setlastUpdate()
   }
 
-  get priority () {
+  get priority() {
     return this.#priority
   }
 
-  set priority (p) {
+  set priority(p) {
     this.#priority = p
     this.setlastUpdate()
   }
 
-  get value () {
+  get value() {
     return this.#value
   }
 
-  set value (v) {
+  set value(v) {
     this.#value = v
     this.setlastUpdate()
   }
 
-  get tag () {
+  get tag() {
     return this.#tag
   }
 
-  set tag (t) {
+  set tag(t) {
     this.#tag = t
     this.setlastUpdate()
   }
 
-  get comments () {
+  get comments() {
     return this.#comments
   }
 
-  set comments (c) {
+  set comments(c) {
     this.#comments = c
     this.setlastUpdate()
   }
 
-  get teams () {
+  get teams() {
     return this.#teams
   }
 
-  set teams (t) {
+  set teams(t) {
     this.#teams = t
     this.setlastUpdate()
   }
 
-  get teamCount () {
+  get teamCount() {
     return this.#teamCount
   }
 
-  set teamCount (tc) {
+  set teamCount(tc) {
     this.#teamCount = tc
     this.setlastUpdate()
   }
 
-  get duration () {
+  get duration() {
     return this.#duration
   }
 
-  set duration (d) {
+  set duration(d) {
     this.#duration = d
     this.setlastUpdate()
   }
 
-  get shift () {
+  get shift() {
     return this.#shift
   }
 
-  set shift (s) {
+  set shift(s) {
     this.#shift = s
     this.setlastUpdate()
   }
 
-  get salesPerson () {
+  get salesPerson() {
     return this.#salesPerson
   }
 
-  set salesPerson (sp) {
+  set salesPerson(sp) {
     this.#salesPerson = sp
     this.setlastUpdate()
   }
 
-  setlastUpdate () {
+  setlastUpdate() {
     this.updated = true
   }
 
-  toJSON () {
+  toJSON() {
     return {
       id: this.id,
       scope: this.scope,
@@ -190,7 +192,7 @@ export class Job {
       shift: this.shift,
       salesPerson: this.salesPerson,
       lastUpdate: this.lastUpdate,
-      updated: this.updated
+      updated: this.updated,
     }
   }
 }
@@ -201,7 +203,7 @@ export const Shift = {
   tbc: 'tbc',
   // rest: 'rest',
   // onLeave: 'onLeave',
-  unasigned: 'unasigned'
+  unasigned: 'unasigned',
 }
 
 export class SchedJob {
@@ -220,7 +222,7 @@ export class SchedJob {
   lastUpdate
   updated
 
-  constructor (sj) {
+  constructor(sj) {
     if (!sj) {
       this.id = 0
       this.date = ''
@@ -235,7 +237,7 @@ export class SchedJob {
       this.lastUpdate = null
       this.updated = false
     } else {
-      this.id = (sj.id) ? sj.id : 0
+      this.id = sj.id ? sj.id : 0
       this.date = sj.date
       this.team = sj.team
       this.shift = sj.shift
@@ -243,7 +245,9 @@ export class SchedJob {
       this.job1 = sj.job1
       this.job2 = sj.job2
       this.teamMembers = sj.teamMembers
-        ? (typeof sj.teamMembers === 'string' ? JSON.parse(sj.teamMembers) : sj.teamMembers.slice())
+        ? typeof sj.teamMembers === 'string'
+          ? JSON.parse(sj.teamMembers)
+          : sj.teamMembers.slice()
         : []
       this.excludeSaturday = sj.excludeSaturday
       this.excludeSunday = sj.excludeSunday
@@ -252,29 +256,29 @@ export class SchedJob {
     }
   }
 
-  get id () {
+  get id() {
     return this.#id
   }
 
-  set id (id) {
+  set id(id) {
     this.#id = id
     this.setLastUpdate()
   }
 
-  get date () {
+  get date() {
     return this.#date
   }
 
-  set date (d) {
+  set date(d) {
     this.#date = d
     this.setLastUpdate()
   }
 
-  getPk () {
+  getPk() {
     return `${this.team}:${this.date}`
   }
 
-  get startDate () {
+  get startDate() {
     if (this.id == 0) {
       return this.date
     }
@@ -287,10 +291,10 @@ export class SchedJob {
       return ''
     }
     const group = Object.keys(SchedJob.groupIndex[this.id])
-    return group.reduce((d1, d2) => d1 < d2 ? d1 : d2, group[0])
+    return group.reduce((d1, d2) => (d1 < d2 ? d1 : d2), group[0])
   }
 
-  get endDate () {
+  get endDate() {
     if (this.id == 0) {
       return this.date
     }
@@ -303,76 +307,76 @@ export class SchedJob {
       return ''
     }
     const group = Object.keys(SchedJob.groupIndex[this.id])
-    return group.reduce((d1, d2) => d2 < d1 ? d1 : d2, group[0])
+    return group.reduce((d1, d2) => (d2 < d1 ? d1 : d2), group[0])
   }
 
-  get team () {
+  get team() {
     return this.#team
   }
 
-  set team (t) {
+  set team(t) {
     this.#team = t
     this.setLastUpdate()
   }
 
-  get splitShift () {
+  get splitShift() {
     return this.#splitShift
   }
 
-  set splitShift (isSplitShift) {
+  set splitShift(isSplitShift) {
     this.#splitShift = isSplitShift
     this.setLastUpdate()
   }
 
-  getJob1 () {
-    return (this.excludeSunday && isSunday(this.date)) ? '' : this.#job1
+  getJob1() {
+    return this.excludeSunday && isSunday(this.date) ? '' : this.#job1
   }
 
-  get job1 () {
+  get job1() {
     return this.#job1
   }
 
-  set job1 (scope) {
+  set job1(scope) {
     this.#job1 = scope
     this.setLastUpdate()
   }
 
-  getJob2 () {
-    return (this.excludeSunday && isSunday(this.date)) ? '' : this.#job2
+  getJob2() {
+    return this.excludeSunday && isSunday(this.date) ? '' : this.#job2
   }
 
-  get job2 () {
+  get job2() {
     return this.#job2
   }
 
-  set job2 (scope) {
+  set job2(scope) {
     this.#job2 = scope
     this.setLastUpdate()
   }
 
-  get shift () {
+  get shift() {
     return this.#shift
   }
 
-  set shift (s) {
+  set shift(s) {
     this.#shift = s
     this.setLastUpdate()
   }
 
-  getTeamMembers () {
+  getTeamMembers() {
     return this.teamMembers
   }
 
-  get teamMembers () {
+  get teamMembers() {
     return this.#teamMembers
   }
 
-  set teamMembers (tm) {
+  set teamMembers(tm) {
     this.#teamMembers = tm
     this.setLastUpdate()
   }
 
-  teamSize () {
+  teamSize() {
     if (this.excludeSaturday && isSaturday(this.date)) {
       return 0
     }
@@ -382,36 +386,41 @@ export class SchedJob {
     return this.teamMembers ? this.teamMembers.length : 0
   }
 
-  get excludeSaturday () {
+  get excludeSaturday() {
     return this.#excludeSaturday
   }
 
-  set excludeSaturday (es) {
+  set excludeSaturday(es) {
     this.#excludeSaturday = es
     this.setLastUpdate()
   }
 
-  get excludeSunday () {
+  get excludeSunday() {
     return this.#excludeSunday
   }
 
-  set excludeSunday (es) {
+  set excludeSunday(es) {
     this.#excludeSunday = es
     this.setLastUpdate()
   }
 
-  isBlank () {
-    if (this.id === 0 && this.job1.trim() === '' && this.job2.trim() === '' && this.teamMembers.length == 0) {
+  isBlank() {
+    if (
+      this.id === 0 &&
+      this.job1.trim() === '' &&
+      this.job2.trim() === '' &&
+      this.teamMembers.length == 0
+    ) {
       return true
     }
     return false
   }
 
-  setLastUpdate () {
+  setLastUpdate() {
     this.updated = true
   }
 
-  update (sj) {
+  update(sj) {
     // this.id = sj.id;
     this.team = sj.team
     this.date = sj.date
@@ -419,7 +428,10 @@ export class SchedJob {
     this.splitShift = sj.splitShift
     this.job1 = sj.job1
     this.job2 = sj.job2
-    this.teamMembers = typeof sj.teamMembers === 'string' ? JSON.parse(sj.teamMembers) : sj.teamMembers
+    this.teamMembers =
+      typeof sj.teamMembers === 'string'
+        ? JSON.parse(sj.teamMembers)
+        : sj.teamMembers
     this.excludeSaturday = sj.excludeSaturday
     this.excludeSunday = sj.excludeSunday
 
@@ -430,7 +442,7 @@ export class SchedJob {
     this.updated = sj.updated
   }
 
-  toJSON () {
+  toJSON() {
     return {
       id: this.id,
       date: this.date,
@@ -445,17 +457,17 @@ export class SchedJob {
       excludeSaturday: this.excludeSaturday,
       excludeSunday: this.excludeSunday,
       lastUpdate: this.lastUpdate,
-      updated: this.updated
+      updated: this.updated,
     }
   }
 
-  shiftLabel () {
-    return this.shift === 'day' ? 'Day' : (this.shift === 'night' ? 'Night' : '')
+  shiftLabel() {
+    return this.shift === 'day' ? 'Day' : this.shift === 'night' ? 'Night' : ''
   }
 }
 
 export class Day {
-  constructor (day) {
+  constructor(day) {
     if (day === undefined) {
       // this.id = 0;
       this.date
@@ -467,7 +479,7 @@ export class Day {
     }
   }
 
-  manPowerTotals (teams) {
+  manPowerTotals(teams) {
     if (teams.length === 0) {
       return { manPower: 0, onLeave: 0 }
     }
@@ -498,13 +510,12 @@ export class Team {
   updated
   lastUpdate
 
-  constructor (t) {
+  constructor(t) {
     if (!t) {
       this.#id = 0
       this.#foreman = ''
       this.#vehicle = ''
-      this.#position = '',
-      this.#teamMembers = []
+      ;(this.#position = ''), (this.#teamMembers = [])
       this.lastUpdate = toIsoDate(new Date())
       this.updated = false
     } else {
@@ -512,72 +523,78 @@ export class Team {
       this.#foreman = t.foreman
       this.#vehicle = t.vehicle
       this.#position = t.position
-      this.#teamMembers = typeof t.teamMembers === 'string' ? JSON.parse(t.teamMembers) : t.teamMembers
+      this.#teamMembers =
+        typeof t.teamMembers === 'string'
+          ? JSON.parse(t.teamMembers)
+          : t.teamMembers
       this.lastUpdate = t.lastUpdate
       this.updated = t.updated
     }
   }
 
-  get id () {
+  get id() {
     return this.#id
   }
 
-  set id (id) {
+  set id(id) {
     this.#id = id
     this.setLastUpdate()
   }
 
-  get foreman () {
+  get foreman() {
     return this.#foreman
   }
 
-  set foreman (f) {
+  set foreman(f) {
     this.#foreman = f
     this.setLastUpdate()
   }
 
-  get vehicle () {
+  get vehicle() {
     return this.#vehicle
   }
 
-  set vehicle (v) {
+  set vehicle(v) {
     this.#vehicle = v
     this.setLastUpdate()
   }
 
-  get position () {
+  get position() {
     return this.#position
   }
 
-  set position (p) {
+  set position(p) {
     this.#position = p
     this.setLastUpdate()
   }
 
-  get teamMembers () {
+  get teamMembers() {
     return this.#teamMembers
   }
 
-  set teamMembers (tm) {
+  set teamMembers(tm) {
     this.#teamMembers = tm
     this.setLastUpdate()
   }
 
-  update (t) {
+  update(t) {
     this.#id = t.id ? t.id : 0
     this.#foreman = t.foreman
     this.#vehicle = t.vehicle
     this.#position = t.position
-    this.#teamMembers = typeof t.teamMembers === 'string' ? JSON.parse(t.teamMembers) : t.teamMembers
+    this.#teamMembers =
+      typeof t.teamMembers === 'string'
+        ? JSON.parse(t.teamMembers)
+        : t.teamMembers
     this.lastUpdate = t.lastUpdate
     this.updated = t.updated
   }
 
-  setLastUpdate () {
+  setLastUpdate() {
     this.updated = true
   }
 
-  toJSON () {
+  toJSON() {
     return {
       id: this.id,
       foreman: this.foreman,
@@ -585,13 +602,13 @@ export class Team {
       position: this.position,
       teamMembers: JSON.stringify(this.teamMembers),
       lastUpdate: this.lastUpdate,
-      updated: this.updated
+      updated: this.updated,
     }
   }
 }
 
 export class Selection {
-  constructor (col, startRow) {
+  constructor(col, startRow) {
     this.col = col
     this.startRow = startRow
     this.endRow = startRow
@@ -599,7 +616,7 @@ export class Selection {
 }
 
 export class Clipboard {
-  constructor (team, startDate, numRows) {
+  constructor(team, startDate, numRows) {
     this.team = team
     this.startDate = startDate
     this.numRows = numRows

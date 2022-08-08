@@ -12,7 +12,7 @@
               item-value="id"
               item-text="text"
               label="Report Type"
-              :items="[{ id:0, text: 'Inspection' }]"
+              :items="[{ id: 0, text: 'Inspection' }]"
             />
           </ValidationProvider>
         </v-col>
@@ -60,29 +60,41 @@
         </v-col>
         <v-col cols="12" md="2">
           <ValidationProvider>
-            <v-switch v-model="componentState.newConfig.useCheckList" label="Use CheckList" />
+            <v-switch
+              v-model="componentState.newConfig.useCheckList"
+              label="Use CheckList"
+            />
           </ValidationProvider>
         </v-col>
         <v-col cols="12" md="2">
           <ValidationProvider>
-            <v-switch v-model="componentState.newConfig.usePhotoRecord" label="Use PhotoRecord" />
+            <v-switch
+              v-model="componentState.newConfig.usePhotoRecord"
+              label="Use PhotoRecord"
+            />
           </ValidationProvider>
         </v-col>
         <v-col cols="12" md="2">
           <ValidationProvider>
-            <v-switch v-model="componentState.newConfig.useNotes" label="Use Notes" />
+            <v-switch
+              v-model="componentState.newConfig.useNotes"
+              label="Use Notes"
+            />
           </ValidationProvider>
         </v-col>
         <v-col cols="12" md="1">
           <ValidationProvider>
-            <v-switch v-model="componentState.newConfig.inactive" label="Inactive" />
+            <v-switch
+              v-model="componentState.newConfig.inactive"
+              label="Inactive"
+            />
           </ValidationProvider>
         </v-col>
         <v-col cols="12" justify="space-between" md="2">
-          <nuxt-link :to="`/Configurations/${componentState.newConfig.id}/FormsSettingsList`">
-            <v-btn color="primary" outlined>
-              Configure Forms
-            </v-btn>
+          <nuxt-link
+            :to="`/Configurations/${componentState.newConfig.id}/FormsSettingsList`"
+          >
+            <v-btn color="primary" outlined> Configure Forms </v-btn>
           </nuxt-link>
         </v-col>
       </v-row>
@@ -99,7 +111,11 @@
             label="Include CheckLists"
             :items="checks"
             append-outer-icon="mdi-format-list-checks"
-            @click:append-outer="$router.push(`/checklists?configurationid=${componentState.newConfig.id}&configurationonly=true`)"
+            @click:append-outer="
+              $router.push(
+                `/checklists?configurationid=${componentState.newConfig.id}&configurationonly=true`
+              )
+            "
           />
         </v-col>
         <v-col cols="12" md="6">
@@ -116,14 +132,16 @@
               label="Include Signatures"
               :items="signatures"
               append-outer-icon="mdi-draw"
-              @click:append-outer="$router.push(`/signatures?configurationid=${componentState.newConfig.id}&configurationonly=true`)"
+              @click:append-outer="
+                $router.push(
+                  `/signatures?configurationid=${componentState.newConfig.id}&configurationonly=true`
+                )
+              "
             />
           </ValidationProvider>
         </v-col>
       </v-row>
-      <h1 class="text-left">
-        Print Options
-      </h1>
+      <h1 class="text-left">Print Options</h1>
       <v-row>
         <v-col>
           <ValidationProvider v-slot="{ errors }" rules="required">
@@ -160,7 +178,7 @@
           large
           bottom
           right
-          class="v-btn--example2"
+          class="v-btn-example2"
           @click="saveChanges"
         >
           <v-icon>mdi-content-save</v-icon>
@@ -171,8 +189,22 @@
 </template>
 <script lang="ts">
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { defineComponent, reactive, useRoute, useRouter, computed } from '@nuxtjs/composition-api'
-import { ReportConfiguration, ReportType, CheckList, FilterType, UpdateReportConfigurationCommand, ChecklistDisplayList, CheckListDisplay } from '@/types'
+import {
+  defineComponent,
+  reactive,
+  useRoute,
+  useRouter,
+  computed,
+} from '@nuxtjs/composition-api'
+import {
+  ReportConfiguration,
+  ReportType,
+  CheckList,
+  FilterType,
+  UpdateReportConfigurationCommand,
+  ChecklistDisplayList,
+  CheckListDisplay,
+} from '@/types'
 import { useChecklistStore } from '~/composables/useChecklistStore'
 import { useSignaturesStore } from '~/composables/useSignaturesStore'
 import { SignatureDTO } from '@/types/Signatures/ViewModels/SignatureDTO'
@@ -184,9 +216,9 @@ import { useConfigurationStore } from '~/composables/useConfigurationStore'
 export default defineComponent({
   components: {
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
   },
-  setup () {
+  setup() {
     useGoBack()
     const componentState = reactive({
       defaultType: ReportType.Inspection,
@@ -207,13 +239,13 @@ export default defineComponent({
       filterText: '',
       inConfigurationOnly: true,
       reportId: undefined,
-      reportConfigurationId: undefined
+      reportConfigurationId: undefined,
     }
 
     Promise.all([
       checklistsStore.getChecklists(filter),
       signaturesStore.getSignatures(filter),
-      printSectionsStore.getPrintSections(filter)
+      printSectionsStore.getPrintSections(filter),
     ])
 
     if (id > 0) {
@@ -221,14 +253,18 @@ export default defineComponent({
         componentState.newConfig = Object.assign({}, result)
         componentState.display = parseInt(result.checkListMetadata.display)
       })
-    } else { componentState.newConfig = { type: 0 } as ReportConfiguration }
+    } else {
+      componentState.newConfig = { type: 0 } as ReportConfiguration
+    }
 
     const checks = computed((): CheckList[] => {
       return checklistsStore.checkLists
     })
 
     const printSections = computed((): PrintSectionDTO[] => {
-      return printSectionsStore.printSectionsList.filter(c => c.isMainReport === true)
+      return printSectionsStore.printSectionsList.filter(
+        (c) => c.isMainReport === true
+      )
     })
 
     const signatures = computed((): SignatureDTO[] => {
@@ -253,18 +289,22 @@ export default defineComponent({
         templateName: componentState.newConfig.templateName,
         useNotes: componentState.newConfig.useNotes,
         useCheckList: componentState.newConfig.useCheckList,
-        usePhotoRecord: componentState.newConfig.usePhotoRecord
+        usePhotoRecord: componentState.newConfig.usePhotoRecord,
       }
 
       if (parseInt(route.value.params.id) > 0) {
-        await configurationStore.updateConfiguration(command)
-          .then(() => {
-            configurationStore.getConfigurationById(route.value.params.id)
-          })
+        await configurationStore.updateConfiguration(command).then(() => {
+          configurationStore.getConfigurationById(route.value.params.id)
+        })
       } else {
-        await configurationStore.createConfiguration(componentState.newConfig)
+        await configurationStore
+          .createConfiguration(componentState.newConfig)
           .then((resp) => {
-            if (parseInt(route.value.params.id) > 0) { configurationStore.getConfigurationById(route.value.params.id) } else { router.push({ name: 'Configurations-id', params: { id: resp } }) }
+            if (parseInt(route.value.params.id) > 0) {
+              configurationStore.getConfigurationById(route.value.params.id)
+            } else {
+              router.push({ name: 'Configurations-id', params: { id: resp } })
+            }
           })
       }
     }
@@ -276,16 +316,16 @@ export default defineComponent({
       printSections,
       hasPendingChanges,
       saveChanges,
-
     }
   },
 })
 </script>
 
 <style scoped>
-.v-btn--example2 {
-    bottom: 0;
-    /* position: absolute; */
-    margin: 0 46px 16px 16px;
-  }
+.v-btn-example2 {
+  bottom: 0;
+
+  /* position: absolute; */
+  margin: 0 46px 16px 16px;
+}
 </style>

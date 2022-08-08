@@ -1,8 +1,6 @@
 <template>
   <message-dialog v-if="configurations" v-model="localValue" :actions="[]">
-    <template #title="{}">
-      New Report
-    </template>
+    <template #title="{}"> New Report </template>
     <div
       v-if="!componentState.creatingReport"
       class="tw-fixed tw-z-50 tw-bg-opacity-80 tw-bg-white"
@@ -37,8 +35,8 @@
             class="tw-mx-5"
             ripple
             @click="
-              componentState.configuration = item.id;
-              createReport();
+              componentState.configuration = item.id
+              createReport()
             "
           >
             <v-card-title>{{ item.title }}</v-card-title>
@@ -54,7 +52,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, useFetch, useRoute, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  reactive,
+  computed,
+  useFetch,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 import { useConfigurationStore } from '~/composables/useConfigurationStore'
 import { useReportsStore } from '~/composables/useReportsStore'
 import { useUsersStore } from '~/composables/useUsersStore'
@@ -65,14 +70,14 @@ export default defineComponent({
   props: {
     value: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const componentState = reactive({
       creatingReport: false,
       search: '',
-      configuration: 0
+      configuration: 0,
     })
 
     const configurationStore = useConfigurationStore()
@@ -92,21 +97,31 @@ export default defineComponent({
       },
       set: (value: boolean) => {
         emit('input', value)
-      }
+      },
     })
 
     const createReport = async () => {
       try {
         componentState.creatingReport = true
-        const reportId = await reportsStore.createReport(selectedConfiguration.value)
+        const reportId = (await reportsStore
+          .createReport(selectedConfiguration.value)
           .then((resp) => {
-            reportsStore.getReports({ filter: '', closed: route.value.query.closed, orderBy: 'date', myreports: true, descending: true })
+            reportsStore.getReports({
+              filter: '',
+              closed: route.value.query.closed,
+              orderBy: 'date',
+              myreports: true,
+              descending: true,
+            })
             localValue.value = false
             emit('report-created', resp)
-          }) as number
-        await usersStore.setUserLastEditedReport({ userName: $auth.user.userName as string, lastEditedReport: reportId })
+          })) as number
+        await usersStore.setUserLastEditedReport({
+          userName: $auth.user.userName as string,
+          lastEditedReport: reportId,
+        })
       } catch (error) {
-      // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console
         console.log({ error })
       } finally {
         componentState.creatingReport = false
@@ -114,8 +129,12 @@ export default defineComponent({
     }
 
     const configurations = computed((): ReportConfiguration[] => {
-      const all = configurationStore.configurations.filter(c => c.formName !== 'Incidents Report')
-      const incident = configurationStore.configurations.filter(c => c.formName === 'Incidents Report')
+      const all = configurationStore.configurations.filter(
+        (c) => c.formName !== 'Incidents Report'
+      )
+      const incident = configurationStore.configurations.filter(
+        (c) => c.formName === 'Incidents Report'
+      )
       all.unshift(incident[0])
       return all || []
     })
@@ -126,7 +145,7 @@ export default defineComponent({
       configurations,
       localValue,
     }
-  }
+  },
 })
 </script>
 

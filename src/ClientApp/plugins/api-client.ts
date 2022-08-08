@@ -3,12 +3,14 @@ import { Configuration } from '../services/api/configuration'
 import { FormsApi, ReportConfigurationApi, ReportsApi } from '@/services/api'
 
 const apiClient: Plugin = ({ $auth, $config }, inject) => {
-  if (!$auth?.user) { return }
+  if (!$auth?.user) {
+    return
+  }
   const config: Configuration = {
     // @ts-ignore
     accessToken: `${$auth.strategy.token.get().replace('bearer ', '')}`,
     basePath: $config.axios.baseURL.replace('/api', ''),
-    isJsonMime: () => false
+    isJsonMime: () => false,
   }
   const reportsApi = new ReportsApi(config)
   const formsApi = new FormsApi(config)

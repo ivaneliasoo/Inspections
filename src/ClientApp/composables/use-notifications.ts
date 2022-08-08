@@ -5,19 +5,23 @@ export enum NotificationTypes {
   error = 'error',
   warn = 'warn',
   info = 'info',
-  success = 'success'
+  success = 'success',
 }
 
 export interface ResponseMessage {
   message: string
   type: NotificationTypes | string
 }
-const notificationErrorParser = function (defaultErrorMessage?: string, notFoundMessage?: string, error?: Error | any) {
+const notificationErrorParser = function (
+  defaultErrorMessage?: string,
+  notFoundMessage?: string,
+  error?: Error | any
+) {
   let strMsg: string = ''
 
   const msgResp: ResponseMessage = {
     message: '',
-    type: NotificationTypes.error
+    type: NotificationTypes.error,
   }
   if (error.response !== undefined) {
     if (error.response.status === 404 && error.response.data.title) {
@@ -40,21 +44,27 @@ const notificationErrorParser = function (defaultErrorMessage?: string, notFound
         if (Array.isArray(errors)) {
           // Manejo Errores API segun estandard
           // RFC 7807 - Problem Details Standard for Http APIs https://tools.ietf.org/html/rfc7807
-          strMsg += errors.map((err) => {
-            return `<li>${err.message}</li>`
-          }).join('')
+          strMsg += errors
+            .map((err) => {
+              return `<li>${err.message}</li>`
+            })
+            .join('')
         } else if (errors instanceof Object) {
           // Manejo Errores Validations del API la diferencia es que errors en este caso es un Object, y los errores son de tipo string y no otro Object
           if (errors['']) {
-            strMsg += errors[''].map((err: any) => {
-              return `<li>${err}</li>`
-            }).join('')
+            strMsg += errors['']
+              .map((err: any) => {
+                return `<li>${err}</li>`
+              })
+              .join('')
           } else {
             const keys = Object.keys(errors)
             keys.forEach((key) => {
-              strMsg += errors[key].map((err: any) => {
-                return `<li>${err}</li>`
-              }).join('')
+              strMsg += errors[key]
+                .map((err: any) => {
+                  return `<li>${err}</li>`
+                })
+                .join('')
             })
           }
         }
@@ -62,7 +72,9 @@ const notificationErrorParser = function (defaultErrorMessage?: string, notFound
 
         msgResp.message = `
         <details id=errorsContainer>
-          <summary>${defaultErrorMessage}${title ? '<br>' + title : detail ? '<br>' + detail : ''}</summary>
+          <summary>${defaultErrorMessage}${
+          title ? '<br>' + title : detail ? '<br>' + detail : ''
+        }</summary>
           <ul id="details">
             ${strMsg}
           </ul>
@@ -93,7 +105,8 @@ const notificationErrorParser = function (defaultErrorMessage?: string, notFound
 
       for (const msg in msgRequest) {
         // eslint-disable-next-line no-prototype-builtins
-        if (msgRequest.hasOwnProperty(msg)) { // TODO: Corregir esto
+        if (msgRequest.hasOwnProperty(msg)) {
+          // TODO: Corregir esto
           if (msg === 'message') {
             msgReq = `${msgReq}<br>${msgRequest[msg]}`
           }
@@ -112,22 +125,28 @@ const notificationErrorParser = function (defaultErrorMessage?: string, notFound
 }
 
 export interface Notify {
-  title: string;
-  message?: string;
-  type: NotificationTypes;
-  notFoundMessage?: string;
-  error?: Error;
+  title: string
+  message?: string
+  type: NotificationTypes
+  notFoundMessage?: string
+  error?: Error
 }
 
 export interface NotifyParams {
-  title?: string;
-  message?: string;
-  type: NotificationTypes | string;
-  notFoundMessage?: string;
-  error?: Error | any;
+  title?: string
+  message?: string
+  type: NotificationTypes | string
+  notFoundMessage?: string
+  error?: Error | any
 }
 
-const notify: any = ({ title, message, type, notFoundMessage, error }: NotifyParams): Notify => {
+const notify: any = ({
+  title,
+  message,
+  type,
+  notFoundMessage,
+  error,
+}: NotifyParams): Notify => {
   if (error instanceof Object && error !== null) {
     const parsedError = notificationErrorParser(message, notFoundMessage, error)
     message = parsedError.message
@@ -138,14 +157,22 @@ const notify: any = ({ title, message, type, notFoundMessage, error }: NotifyPar
     type = 'warning'
   }
 
-  return (iziToast as any)[type]({ message, title, timeout: 2500, displayMode: 2, resetOnHover: true, position: 'topRight', layout: 2 })
+  return (iziToast as any)[type]({
+    message,
+    title,
+    timeout: 2500,
+    displayMode: 2,
+    resetOnHover: true,
+    position: 'topRight',
+    layout: 2,
+  })
 }
 
 const useNotifications = () => {
   return {
     notify,
     NotificationTypes,
-    notificationErrorParser
+    notificationErrorParser,
   }
 }
 
