@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, useAsync, useRouter, useContext } from '@nuxtjs/composition-api'
-import useDateTime from '../../composables/useDateTime'
+import useDateTime from '~/composables/useDateTime'
 import { CardOption } from '~/types'
 import { useLicensesStore } from '~/composables/useLicensesStore'
 

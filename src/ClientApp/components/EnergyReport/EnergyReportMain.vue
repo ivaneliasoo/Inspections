@@ -1249,15 +1249,15 @@ import 'echarts/lib/component/legend'
 import { MarkLineComponent } from 'echarts/components'
 import * as d3 from 'd3'
 import { lineChartOptions, sepLineChartOptions, histogramOptions, barChartOptions }
-  from '../../composables/charts.js'
-import { adjustData, adjustDates, getColName } from '../../composables/util.js'
+  from '../../utils/charts.js'
+import { adjustData, adjustDates, getColName } from '../../utils/util.js'
 
-import colors from '../../composables/colors.js'
-import { EnergyReport } from '../../composables/entity.js'
-import document from '../../composables/document.js'
-import currentTable from '../../composables/currentTable.js'
+import colors from '../../utils/colors.js'
+import { EnergyReport } from '../../utils/entity.js'
+import document from '../../utils/document.js'
+import currentTable from '../../utils/currentTable.js'
 import { getColumns, checkTemplate }
-  from '../../composables/categories.js'
+  from '../../utils/categories.js'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 echarts.use([MarkLineComponent])
