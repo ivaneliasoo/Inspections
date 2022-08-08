@@ -912,7 +912,11 @@
                     {{ item.num }}
                   </td>
                   <td
-                    style="width: 45%; height: 20px; border: 1px solid lightgray;"
+                    style="
+                      width: 45%;
+                      height: 20px;
+                      border: 1px solid lightgray;
+                    "
                   >
                     {{ requirementTableTitle(item.num) }}
                   </td>
@@ -955,44 +959,42 @@
                   <v-list-item-title v-text="calcColumn.name" />
                 </v-list-item-content>
               </template>
-              <template>
-                <v-container>
-                  <v-row>
-                    <v-col cols="1" />
-                    <v-col cols="8">
-                      <v-simple-table class="simple-table" dense fixed-header>
-                        <thead>
-                          <tr>
-                            <th class="text-left" style="width: 50%">
-                              Param name
-                            </th>
-                            <th class="text-left" style="width: 50%">
-                              CSV column
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="(param, j) in calcColumn.params" :key="j">
-                            <td style="width: 50%; border: 1px solid lightgray">
-                              {{ param.name }}
-                            </td>
-                            <td style="width: 50%; border: 1px solid lightgray">
-                              <v-select
-                                v-model="param.col"
-                                :items="csvColumns"
-                                dense
-                                flat
-                                solo
-                                hide-details
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </v-simple-table>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </template>
+              <v-container>
+                <v-row>
+                  <v-col cols="1" />
+                  <v-col cols="8">
+                    <v-simple-table class="simple-table" dense fixed-header>
+                      <thead>
+                        <tr>
+                          <th class="text-left" style="width: 50%">
+                            Param name
+                          </th>
+                          <th class="text-left" style="width: 50%">
+                            CSV column
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(param, j) in calcColumn.params" :key="j">
+                          <td style="width: 50%; border: 1px solid lightgray">
+                            {{ param.name }}
+                          </td>
+                          <td style="width: 50%; border: 1px solid lightgray">
+                            <v-select
+                              v-model="param.col"
+                              :items="csvColumns"
+                              dense
+                              flat
+                              solo
+                              hide-details
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </v-simple-table>
+                  </v-col>
+                </v-row>
+              </v-container>
             </v-list-group>
           </v-list>
         </v-card-text>
@@ -2936,8 +2938,10 @@ export default {
   border-style: hidden;
 }
 
-.simple-table th, /* stylelint-disable-line no-descending-specificity */
-.simple-table td {/* stylelint-disable-line no-descending-specificity */
+/* stylelint-disable no-descending-specificity */
+.simple-table th,
+.simple-table td {
+  /* stylelint-enable no-descending-specificity */
   border: 1px solid lightgray;
   padding: 4px;
 }
@@ -2946,7 +2950,9 @@ export default {
   font-size: 1em;
 }
 
-.report-dialog .v-tabs__content {/* stylelint-disable-line selector-class-pattern */
+/* stylelint-disable selector-class-pattern */
+.report-dialog .v-tabs__content {
+  /* stylelint-enable selector-class-pattern */
   height: 80vh;
 }
 
@@ -3014,8 +3020,10 @@ th {
   border-style: hidden;
 }
 
-.simple-table th, /* stylelint-disable-line no-descending-specificity */
-td { /* stylelint-disable-line no-descending-specificity */
+/* stylelint-disable no-descending-specificity */
+.simple-table th,
+td {
+  /* stylelint-enable no-descending-specificity */
   border: 1px solid lightgray;
   padding: 4px;
 }
@@ -3024,7 +3032,9 @@ td { /* stylelint-disable-line no-descending-specificity */
   font-size: 1em;
 }
 
-.report-dialog .v-tabs__content {/* stylelint-disable-line selector-class-pattern */
+/* stylelint-disable selector-class-pattern */
+.report-dialog .v-tabs__content {
+  /* stylelint-enable selector-class-pattern */
   height: 80vh;
 }
 </style>

@@ -19,7 +19,7 @@
     "prepare": "cd .. && cd .. && husky install src/ClientApp/.husky"
   },
   "lint-staged": {
-    "*.{js,ts,vue}": "eslint --cache",
+    "*.{js,ts,vue}": "eslint --cache --max-warnings 0",
     "*.{css,scss,sass,html,vue}": "stylelint",
     "*.**": "prettier --check --ignore-unknown"
   },
