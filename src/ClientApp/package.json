@@ -16,7 +16,7 @@
     "lint:prettier": "prettier --check .",
     "lint": "yarn lint:js && yarn lint:style && yarn lint:prettier",
     "lintfix": "prettier --write --list-different . && yarn lint:js --fix && yarn lint:style --fix",
-    "prepare": "cd .. && cd .. && husky install scr/ClientApp/.husky"
+    "prepare": "cd .. && cd .. && husky install src/ClientApp/.husky"
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache",
