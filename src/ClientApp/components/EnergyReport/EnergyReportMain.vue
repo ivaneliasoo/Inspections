@@ -48,7 +48,7 @@
           >
             <table width="100%">
               <tbody>
-                <tr class="table-header">
+                <tr>
                   <td
                     class="font-weight-bold text-center header-row"
                     style="width: 18%"
@@ -118,7 +118,7 @@
             <table id="reports" class="report-table">
               <tbody>
                 <tr
-                  v-for="(report, index) in reports"
+                  v-for="(rep, index) in reports"
                   :key="index"
                   style="height: 0"
                 >
@@ -126,13 +126,13 @@
                     class="text-caption text-left table-row"
                     style="width: 18%"
                   >
-                    {{ report.name }}
+                    {{ rep.name }}
                   </td>
                   <td
                     class="text-caption text-left table-row"
                     style="width: 18%"
                   >
-                    {{ report.location }}
+                    {{ rep.location }}
                   </td>
                   <td
                     class="text-caption text-left table-row"
@@ -141,8 +141,8 @@
                     {{
                       templates &&
                       Object.keys(templates).length > 0 > 0 &&
-                      report.template > 0
-                        ? templates[report.template].description
+                      rep.template > 0
+                        ? templates[rep.template].description
                         : ''
                     }}
                   </td>
@@ -150,13 +150,13 @@
                     class="text-caption text-left table-row"
                     style="width: 16%"
                   >
-                    {{ report.circuit }}
+                    {{ rep.circuit }}
                   </td>
                   <td
                     class="text-caption text-center table-row"
                     style="width: 14%"
                   >
-                    {{ report.dateCreated }}
+                    {{ rep.dateCreated }}
                   </td>
                   <td
                     class="text-caption text-center table-row"
@@ -170,13 +170,10 @@
                       mdi-book-edit
                     </v-icon>
                     &nbsp;
-                    <v-icon dense @click="getReport(report.id, doReport)">
+                    <v-icon dense @click="getReport(rep.id, doReport)">
                       mdi-file-pdf-box
                     </v-icon>
-                    <v-icon
-                      large
-                      @click="getReport(report.id, genCurrentTable)"
-                    >
+                    <v-icon large @click="getReport(rep.id, genCurrentTable)">
                       mdi-alpha-i
                     </v-icon>
                     <v-icon dense @click="deleteReport(index)">
@@ -956,7 +953,9 @@
             >
               <template #activator>
                 <v-list-item-content>
-                  <v-list-item-title v-text="calcColumn.name" />
+                  <v-list-item-title>
+                    {{ calcColumn.name }}
+                  </v-list-item-title>
                 </v-list-item-content>
               </template>
               <v-container>
@@ -1314,7 +1313,10 @@ import document from '../../utils/document.js'
 import currentTable from '../../utils/currentTable.js'
 import { getColumns, checkTemplate } from '../../utils/categories.js'
 
+/* eslint-disable */
 pdfMake.vfs = pdfFonts.pdfMake.vfs
+/* eslint-enable */
+
 echarts.use([MarkLineComponent])
 
 const suffix = ' '
@@ -1761,7 +1763,6 @@ export default {
       })
     },
     initialize() {
-      console.log('getTemplates')
       const self = this
       self
         .readTemplates()
@@ -1788,6 +1789,7 @@ export default {
         )
     },
     getReports() {
+      const self = this
       this.$axios({
         url: this.endpoint('report'),
         method: 'GET',
@@ -1795,7 +1797,7 @@ export default {
         responseType: 'json',
         transformResponse: (response) => {
           return JSON.parse(response, (key, value) => {
-            if (key == 'dateCreated') {
+            if (key === 'dateCreated') {
               return new Intl.DateTimeFormat('en-SG').format(new Date(value))
             }
             return value
@@ -1809,7 +1811,7 @@ export default {
           }
         })
         .catch(function (error) {
-          console.log(error)
+          self.showMessage(error)
         })
     },
     migrateReports() {
@@ -1907,9 +1909,7 @@ export default {
           }
         })
         .catch((error) => {
-          this.errorMessage = error.message
-          // TODO: Do not log in production mode
-          console.error('There was an error! ', error)
+          this.showMessage('There was an error! ', error)
         })
     },
     column(data, colName) {
@@ -2007,7 +2007,6 @@ export default {
 
       const colMinMax = this.minMax[colName]
       if (!colMinMax) {
-        console.log('No minMax for', colName)
         return
       }
       const limits = { min: colMinMax.min, max: colMinMax.max }
@@ -2112,7 +2111,7 @@ export default {
       }
       this.genReport()
     },
-    doReport(index) {
+    doReport() {
       if (this.report.template) {
         this.selectedTemplate = this.report.template
         this.template = this.templates[this.report.template]
@@ -2192,10 +2191,11 @@ export default {
         this.minMax,
         suffix
       )
+      /* eslint-disable */
       const pdf = pdfMake.createPdf(doc)
+      /* eslint-enable */
       pdf.download(this.report.cover.title + '.pdf')
       // pdf.open();
-      // console.log("PDF created");
     },
     genCurrentTable() {
       if (this.report.template) {
@@ -2236,7 +2236,9 @@ export default {
     generateCurrentTable(circuit) {
       const ct = this.createCurrentTable(circuit)
       const doc = currentTable([ct])
+      /* eslint-disable */
       const pdf = pdfMake.createPdf(doc)
+      /* eslint-enable */
       pdf.download(`Current table, ${ct.circuit}.pdf`)
     },
     createCurrentTable(circuit) {
@@ -2255,7 +2257,6 @@ export default {
         return
       }
       const category = this.template.categories[catIndex]
-      // ISO 8601: yyy-mm-dd
       const dtf = new Intl.DateTimeFormat('sv-SE', {
         year: 'numeric',
         month: '2-digit',
@@ -2336,7 +2337,7 @@ export default {
         const timeArray = timeStr.split(' ')
         let ma = ''
         let ts = timeArray[0]
-        if (timeArray.length == 1) {
+        if (timeArray.length === 1) {
           if (ts.includes('AM')) {
             ma = 'AM'
             ts = timeArray[0].replace('AM', '')
@@ -2442,7 +2443,7 @@ export default {
           for (let i = 0; i < cols.length; i++) {
             const col = cols[i]
             let colName = col.name
-            if (colName == 'Date' || colName == 'Time') {
+            if (colName === 'Date' || colName === 'Time') {
               continue
             }
             let value = parseFloat(parsedRow.data[col.name])
@@ -2460,7 +2461,7 @@ export default {
           for (let i = 0; i < calcColumns.length; i++) {
             const column = calcColumns[i].name
             const params = calcColumns[i].params
-            const value = self[column](column, row, index, params)
+            const value = self[column](row, index, params)
             if (!row[column]) {
               row[column] = parseFloat(value)
               // update the min and max values for this column
@@ -2473,14 +2474,14 @@ export default {
         },
       })
 
-      if (data.length == 0) {
+      if (data.length === 0) {
         this.showMessage('No data rows found')
         return
       }
 
       const csvColumns = csvData.meta.fields
       self.csvColumns = csvColumns.filter(
-        (entry) => entry.trim() != '' && entry != 'Date' && entry != 'Time'
+        (entry) => entry.trim() !== '' && entry !== 'Date' && entry !== 'Time'
       )
       self.csvData = data
 
@@ -2502,7 +2503,7 @@ export default {
         const text = e.target.result
         const rawData = Papa.parse(text)
         const csvCols = self.headerCols(rawData)
-        if (csvCols.length == 0) {
+        if (csvCols.length === 0) {
           self.showMessage('File has no column definitions')
           return
         }
@@ -2538,8 +2539,8 @@ export default {
     },
     newItem() {
       if (
-        this.csvColumns.length == 0 ||
-        Object.keys(this.template).length == 0
+        this.csvColumns.length === 0 ||
+        Object.keys(this.template).length === 0
       ) {
         this.showMessage(
           'No data available. Please load a template and CSV file'
@@ -2638,24 +2639,21 @@ export default {
         `Are you sure you want to delete report: ${this.reports[index].name}`,
         (result) => {
           if (result === 'ok') {
-            ;(async () => {
-              const self = this
-              const id = this.reports[index].id
-              this.$axios({
-                url: self.endpoint('report/' + id),
-                method: 'DELETE',
-                crossDomain: true,
+            const self = this
+            const id = this.reports[index].id
+            this.$axios({
+              url: self.endpoint('report/' + id),
+              method: 'DELETE',
+              crossDomain: true,
+            })
+              .then(function () {
+                self.getReports()
               })
-                .then(function (response) {
-                  self.getReports()
-                })
-                .catch(function (error) {
-                  console.log(error)
-                  self.showMessage(
-                    'There was a server error when loading the report'
-                  )
-                })
-            })()
+              .catch(function () {
+                self.showMessage(
+                  'There was a server error when loading the report'
+                )
+              })
           }
         }
       )
@@ -2702,59 +2700,56 @@ export default {
       this.reportDialog.showReportCover = true
     },
     getReport(id, action, param) {
-      ;(async () => {
-        const self = this
-        this.$axios({
-          url: self.endpoint('report/' + id),
-          method: 'GET',
-          crossDomain: true,
-          responseType: 'json',
-          transformResponse: this.parseResponse,
+      const self = this
+      this.$axios({
+        url: self.endpoint('report/' + id),
+        method: 'GET',
+        crossDomain: true,
+        responseType: 'json',
+        transformResponse: this.parseResponse,
+      })
+        .then(function (response) {
+          self.report = new EnergyReport(response.data)
+          if (action) {
+            action(param)
+          }
         })
-          .then(function (response) {
-            self.report = new EnergyReport(response.data)
-            if (action) {
-              action(param)
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-            self.showMessage('There was a server error when loading the report')
-          })
-      })()
+        .catch(function (error) {
+          self.showMessage(
+            'There was a server error when loading the report: ',
+            error
+          )
+        })
     },
     parseResponse(response) {
       const report = JSON.parse(response, (key, value) => {
-        if (key == 'dateCreated') {
+        if (key === 'dateCreated') {
           return new Date(value)
-        } else if (key == 'rawCsvData') {
+        } else if (key === 'rawCsvData') {
           return JSON.parse(value)
         }
         return value
       })
       return report
     },
-    saveReport(report, showMessage) {
-      ;(async () => {
-        const self = this
-        this.$axios({
-          url: self.endpoint('report'),
-          method: this.reportDialog.newReport ? 'POST' : 'PUT',
-          data: report,
-          crossDomain: true,
-          responseType: 'json',
-          transformResponse: this.parseResponse,
+    saveReport(report) {
+      const self = this
+      this.$axios({
+        url: self.endpoint('report'),
+        method: this.reportDialog.newReport ? 'POST' : 'PUT',
+        data: report,
+        crossDomain: true,
+        responseType: 'json',
+        transformResponse: this.parseResponse,
+      })
+        .then(function () {
+          self.getReports()
+          self.reportDialog.showReportInfo = false
+          self.reportDialog.showReportCover = false
         })
-          .then(function (response) {
-            self.getReports()
-            self.reportDialog.showReportInfo = false
-            self.reportDialog.showReportCover = false
-          })
-          .catch(function (error) {
-            console.log(error)
-            self.showMessage('There was a server error when saving the report')
-          })
-      })()
+        .catch(function () {
+          self.showMessage('There was a server error when saving the report')
+        })
     },
     saveCover() {
       this.saveTemplates()
@@ -2763,9 +2758,7 @@ export default {
     },
     loadReport() {
       const reader = new FileReader()
-      const self = this
       reader.onload = function (e) {
-        console.log('Loading report')
         const str = e.target.result
         const report = JSON.stringify(str)
         this.selectedTemplate = report.template
@@ -2779,7 +2772,6 @@ export default {
     },
     saveTemplateName() {
       if (this.description !== this.template.description) {
-        console.log('saving template name')
         this.template.description = this.description
         this.saveTemplates()
       }
@@ -2799,8 +2791,8 @@ export default {
     },
     openPage2() {
       if (
-        this.csvColumns.length == 0 ||
-        Object.keys(this.template).length == 0
+        this.csvColumns.length === 0 ||
+        Object.keys(this.template).length === 0
       ) {
         this.showMessage(
           'No data available. Please load a template and CSV file'
@@ -2831,8 +2823,8 @@ export default {
     },
     openCalcColumns() {
       if (
-        this.csvColumns.length == 0 ||
-        Object.keys(this.template).length == 0
+        this.csvColumns.length === 0 ||
+        Object.keys(this.template).length === 0
       ) {
         this.showMessage(
           'No data available. Please load a template and CSV file'
@@ -2845,15 +2837,18 @@ export default {
       this.showCalcColumns = false
       this.saveTemplates(false)
     },
-    VoltageUnbalance(column, row, i, params) {
+    VoltageUnbalance(row, i, params) {
+      if (i < 0) {
+        return
+      }
       const voltage = Array.from(params, (param) => row[param.col])
       const av = voltage.reduce((a, b) => a + b) / voltage.length
       const mx = Math.max(...voltage)
       const value = ((mx - av) / av) * 100
       return value
     },
-    AcumEnergy(column, row, i, params) {
-      if (i == 0) {
+    AcumEnergy(row, i, params) {
+      if (i === 0) {
         this.acumEnergyData.prevTime = row.DateTime.getTime()
         this.acumEnergyData.acum = 0
         return 0
@@ -2872,8 +2867,8 @@ export default {
 
       return this.acumEnergyData.acum
     },
-    Energy(column, row, i, params) {
-      if (i == 0) {
+    Energy(row, i, params) {
+      if (i === 0) {
         this.energyData.prevTime = row.DateTime.getTime()
         return 0
       }
@@ -2886,27 +2881,45 @@ export default {
       this.energyData.prevTime = time
       return energy
     },
-    MinPowerFactor(column, row, i, params) {
+    MinPowerFactor(row, i, params) {
+      if (i < 0) {
+        return 0
+      }
       const result = row[params[0].col] / row[params[1].col]
       return result
     },
-    AvePowerFactor(column, row, i, params) {
+    AvePowerFactor(row, i, params) {
+      if (i < 0) {
+        return 0
+      }
       const result = row[params[0].col] / row[params[1].col]
       return result
     },
-    MaxPowerFactor(column, row, i, params) {
+    MaxPowerFactor(row, i, params) {
+      if (i < 0) {
+        return 0
+      }
       const result = row[params[0].col] / row[params[1].col]
       return result
     },
-    MinApparentPower(column, row, i, params) {
+    MinApparentPower(row, i, params) {
+      if (i < 0) {
+        return 0
+      }
       const result = row[params[0].col] / row[params[1].col] / 1000
       return result
     },
-    AveApparentPower(column, row, i, params) {
+    AveApparentPower(row, i, params) {
+      if (i < 0) {
+        return 0
+      }
       const result = row[params[0].col] / row[params[1].col] / 1000
       return result
     },
-    MaxApparentPower(column, row, i, params) {
+    MaxApparentPower(row, i, params) {
+      if (i < 0) {
+        return 0
+      }
       const result = row[params[0].col] / row[params[1].col] / 1000
       return result
     },
@@ -2938,10 +2951,8 @@ export default {
   border-style: hidden;
 }
 
-/* stylelint-disable no-descending-specificity */
 .simple-table th,
 .simple-table td {
-  /* stylelint-enable no-descending-specificity */
   border: 1px solid lightgray;
   padding: 4px;
 }
@@ -2971,18 +2982,9 @@ html {
   overflow-y: auto;
 }
 
-/* stylelint-disable no-descending-specificity */
-.report-table,
-td,
-th {
-  width: 100%;
-
-  /* border: 1px solid black; */
-}
-/* stylelint-enable no-descending-specificity */
-
 .report-table td,
 .report-table th {
+  width: 100%;
   padding: 5px;
 }
 
@@ -2997,44 +2999,11 @@ th {
   padding: 5px;
 }
 
-.table-header {
-  border-top: 1px solid black;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-}
-
 .header-row {
-  border-right: 1px solid black;
+  border: 1px solid black;
 }
 
 .invisible-scrollbar::-webkit-scrollbar {
   color: white;
-}
-</style>
-
-// TODO: Migrar A typesscript, pasar la configuracion de echart a un plugin
-<style scoped>
-.simple-table {
-  border-collapse: collapse;
-  border-style: hidden;
-}
-
-/* stylelint-disable no-descending-specificity */
-.simple-table th,
-td {
-  /* stylelint-enable no-descending-specificity */
-  border: 1px solid lightgray;
-  padding: 4px;
-}
-
-.v-input {
-  font-size: 1em;
-}
-
-/* stylelint-disable selector-class-pattern */
-.report-dialog .v-tabs__content {
-  /* stylelint-enable selector-class-pattern */
-  height: 80vh;
 }
 </style>

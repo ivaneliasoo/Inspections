@@ -45,8 +45,6 @@ export class EnergyReport {
         serialNumber: '',
       }
     }
-
-    this.cover.separation = parseInt(this.cover.separation)
   }
 
   toJSON() {
@@ -59,7 +57,14 @@ export class EnergyReport {
       circuit: this.circuit,
       chartLegendOption: this.chartLegendOption,
       dateCreated: this.dateCreated.toISOString(),
-      cover: this.cover,
+      cover: {
+        title: this.cover.title,
+        client: this.cover.client,
+        separation: parseInt(this.cover.separation),
+        reportAuthor: this.cover.reportAuthor,
+        instrumentUsed: this.cover.instrumentUsed,
+        serialNumber: this.cover.serialNumber,
+      },
       rawCsvData: JSON.stringify(this.rawCsvData),
       lastUpdate: this.lastUpdate,
       updated: this.updated,
