@@ -50,7 +50,14 @@ namespace Inspections.API
                     opt.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                 });
             //.AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
-            services.AddCors();
+
+            services.AddCors(options =>
+                    options.AddDefaultPolicy(
+                        policy => policy
+                            .WithOrigins(Configuration.GetSection("AllowedOrigins").Get<string[]>())
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()));
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
