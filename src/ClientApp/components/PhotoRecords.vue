@@ -21,7 +21,7 @@
             showPreview($event)
             uploadFiles()
           "
-          @click:clear="filesUrls = []"
+          @click:clear="state.filesUrls = []"
         />
       </v-col>
       <!-- <v-col cols="4" /> -->
@@ -29,33 +29,33 @@
     <v-divider />
     <v-row>
       <v-skeleton-loader
-        v-if="loadingPhotos"
+        v-if="state.loadingPhotos"
         class="mx-auto"
         min-width="400"
         type="card"
       />
       <v-skeleton-loader
-        v-if="loadingPhotos"
+        v-if="state.loadingPhotos"
         class="mx-auto"
         min-width="400"
         type="card"
       />
       <v-skeleton-loader
-        v-if="loadingPhotos"
+        v-if="state.loadingPhotos"
         class="mx-auto"
         min-width="400"
         type="card"
       />
       <PhotoRecordManager
-        v-if="files.length === 0 && !loadingPhotos"
-        v-model="photoRecords"
+        v-if="state.files.length === 0 && !state.loadingPhotos"
+        v-model="state.photoRecords"
         :report-id="reportId"
       />
       <PhotoRecordPreviewer
-        v-if="!loadingPhotos"
-        v-model="filesUrls"
-        :files="files"
-        :progress="percentCompleted"
+        v-if="!state.loadingPhotos"
+        v-model="state.filesUrls"
+        :files="state.files"
+        :progress="state.percentCompleted"
       />
     </v-row>
   </v-card>

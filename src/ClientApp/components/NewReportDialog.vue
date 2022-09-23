@@ -85,7 +85,7 @@ export default defineComponent({
     const usersStore = useUsersStore()
     useFetch(() => configurationStore.getConfigurations(''))
     const route = useRoute()
-    const { $auth } = useContext()
+    const { $auth: auth } = useContext()
 
     const selectedConfiguration = computed(() => {
       return { reportType: 0, configurationId: componentState.configuration }
@@ -117,7 +117,7 @@ export default defineComponent({
             emit('report-created', resp)
           })) as number
         await usersStore.setUserLastEditedReport({
-          userName: $auth.user.userName as string,
+          userName: auth.user.userName as string,
           lastEditedReport: reportId,
         })
       } catch (error) {

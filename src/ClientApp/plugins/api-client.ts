@@ -8,7 +8,7 @@ const apiClient: Plugin = ({ $auth, $config }, inject) => {
   }
   const config: Configuration = {
     // @ts-ignore
-    accessToken: `${$auth.strategy.token.get().replace('bearer ', '')}`,
+    accessToken: `${$auth.strategy.token.get().replace('bearer ', '').replace('Bearer ', '')}`,
     basePath: $config.axios.baseURL.replace('/api', ''),
     isJsonMime: () => false,
   }

@@ -2,6 +2,8 @@
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
+using Amazon.Extensions.NETCore.Setup;
+using Amazon.Runtime;
 using Amazon.S3;
 using Inspections.API.ApplicationServices;
 using Inspections.API.Features.Users.Services;

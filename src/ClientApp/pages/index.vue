@@ -37,7 +37,7 @@
             fab
             dark
             color="primary"
-            @click="dialog = true"
+            @click="componentState.dialog = true"
           >
             <v-icon dark> mdi-plus </v-icon>
           </v-btn>
@@ -241,7 +241,7 @@ export default defineComponent({
     }
 
     const createReport = () => {
-      componentState.dialog = false
+      // componentState.dialog = false
       componentState.dialog = true
     }
     const reports = computed(() => reportsStore.reportList)

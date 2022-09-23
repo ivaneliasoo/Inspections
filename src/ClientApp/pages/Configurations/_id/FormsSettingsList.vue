@@ -15,7 +15,6 @@
       dense
       :loading="loading"
       :headers="headers"
-      :class="$device.isTablet ? 'tablet-text' : ''"
     >
       <template #top="{}">
         <v-toolbar flat color="white">
@@ -88,12 +87,12 @@ export default defineComponent({
     useGoBack()
 
     const { notify } = useNotifications()
-    const { $formsApi, $reportsConfigApi, $auth } = useContext()
+    const { $formsApi: formsApi, $reportsConfigApi: reportsConfigApi , $auth: auth } = useContext()
     const route = useRoute()
     const router = useRouter()
     const { id } = route.value.params
     const forms = useAsync(async () => {
-      const response = await $reportsConfigApi.apiReportConfigurationIdGet(
+      const response = await reportsConfigApi.apiReportConfigurationIdGet(
         parseInt(id.toString())
       )
       return response.data.forms as unknown as FormDefinitionResponse[]
@@ -137,11 +136,11 @@ export default defineComponent({
     const dialogRemove = ref(false)
     const loading = ref(false)
 
-    const isAdmin = $auth.user.isAdmin
+    const isAdmin = auth.user.isAdmin
 
     const deleteForm = async (id: number) => {
       try {
-        await $formsApi.deleteFormDefinition(id)
+        await formsApi.deleteFormDefinition(id)
         forms.value = forms.value.filter((form) => form.id !== id)
         notify({
           title: 'Forms Settings',

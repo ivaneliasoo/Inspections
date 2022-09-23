@@ -9,7 +9,7 @@
         itemsPerPageText: 'Photos by page',
         itemsPerPageOptions: [8, 16],
       }"
-      :items-per-page.sync="itemsPerPage"
+      :items-per-page.sync="state.itemsPerPage"
       no-results-text="No photos"
     >
       <template #default="props">
@@ -84,7 +84,7 @@
     <v-dialog v-model="state.showCarousel">
       <v-carousel v-model="state.currentPhoto" height="80%">
         <v-carousel-item
-          v-for="(photo, index) in localPhotos"
+          v-for="(photo, index) in state.localPhotos"
           :key="index"
           :src="`${photo.photoUrl}`"
         />

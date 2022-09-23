@@ -47,7 +47,7 @@
               label="Print Section"
               :items="printSections"
               append-outer-icon="mdi-page-previous-outline"
-              @click:append-outer="$router.push(`/printsections`)"
+              @click:append-outer="router.push(`/printsections`)"
             />
           </ValidationProvider>
         </v-col>
@@ -112,7 +112,7 @@
             :items="checks"
             append-outer-icon="mdi-format-list-checks"
             @click:append-outer="
-              $router.push(
+              router.push(
                 `/checklists?configurationid=${componentState.newConfig.id}&configurationonly=true`
               )
             "
@@ -133,7 +133,7 @@
               :items="signatures"
               append-outer-icon="mdi-draw"
               @click:append-outer="
-                $router.push(
+                router.push(
                   `/signatures?configurationid=${componentState.newConfig.id}&configurationonly=true`
                 )
               "
