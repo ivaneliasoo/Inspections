@@ -14,12 +14,11 @@ namespace Inspections.API.ApplicationServices
         private readonly ILogger _logger;
         private readonly string _basePath;
 
-        public PhotoRecordManager(StorageDriver storage, IOptions<ClientSettings> options, IAmazonS3 amazonS3,
+        public PhotoRecordManager(StorageDriver storage, IOptions<ClientSettings> options,
             ILogger<PhotoRecordManager> logger)
         {
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
             _options = options ?? throw new ArgumentNullException(nameof(options));
-            _amazonS3 = amazonS3 ?? throw new ArgumentNullException(nameof(amazonS3));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _basePath = _options.Value.ReportsImagesFolder.Replace("\\", "/");
         }
@@ -76,23 +75,23 @@ namespace Inspections.API.ApplicationServices
                 null);
         }
 
-        internal async Task<string> GenerateAsBase64(string photoPath)
-        {
-            try
-            {
-                await using var fileStream =
-                    await _amazonS3.GetObjectStreamAsync(_options.Value.S3BucketName, photoPath, null);
-                await using var ms = new MemoryStream();
-                await fileStream.CopyToAsync(ms);
-                var content = ms.ToArray();
-                return "data:image/png;base64," + Convert.ToBase64String(content);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error while generating base64 for photo");
-                return "";
-            }
-        }
+        // internal async Task<string> GenerateAsBase64(string photoPath)
+        // {
+        //     try
+        //     {
+        //         await using var fileStream =
+        //             await _amazonS3.GetObjectStreamAsync(_options.Value.S3BucketName, photoPath, null);
+        //         await using var ms = new MemoryStream();
+        //         await fileStream.CopyToAsync(ms);
+        //         var content = ms.ToArray();
+        //         return "data:image/png;base64," + Convert.ToBase64String(content);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.LogError(ex, "Error while generating base64 for photo");
+        //         return "";
+        //     }
+        // }
 
         private async Task<StorageItem> AddPhotoThumbnail(Stream file, string album, string name, string contentType)
         {
@@ -121,7 +120,7 @@ namespace Inspections.API.ApplicationServices
 
     /// <summary>
     /// returned type when photo is added
-    /// Photo Contains the path or url path of the saved Photo depending of the used storage driver
+    /// Photo Contains the path or url path of the persisted Photo depending of the used storage driver
     /// Thumbnail Contains the path or url path of the photo thumbnail depending generated of the used storage driver
     /// </summary>
     public class PhotoItemResult

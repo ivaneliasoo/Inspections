@@ -37,6 +37,7 @@ public class ExportReportCommandHandler : IRequestHandler<ExportReportCommand, b
         await using var page = await browser.NewPageAsync();
 
         await page.GoToAsync($"{pageUrl}");
+        Console.WriteLine(pageUrl);
         await page.WaitForFunctionAsync("() => window.isPrintable === true");
 
         var pdfOptions = new PdfOptions
