@@ -10,6 +10,7 @@ using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces.Repositories;
 using Inspections.Core.QueryModels;
 using Inspections.Infrastructure.Data;
+using Inspections.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -286,8 +287,9 @@ namespace Inspections.API.Features.Reports
             var reportConfigId = (await _context.Set<Report>().FindAsync(id))!.ReportConfigurationId;
             var reportConfig = _context.Set<ReportConfiguration>().Single(rc => rc.Id == reportConfigId);
 
+            var isEnvHostPresent = Environment.GetEnvironmentVariable("UIHOST").IsPresent();
             var exportData = new ExportDto(
-                $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Host}:{Environment.GetEnvironmentVariable("UIPORT")}/{reportConfig.TemplateName}?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}",
+                $"{HttpContext.Request.Scheme}://{(isEnvHostPresent ? Environment.GetEnvironmentVariable("UIHOST") : HttpContext.Request.Host.Host)}:{Environment.GetEnvironmentVariable("UIPORT")}/{reportConfig.TemplateName}?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}",
                 8, reportConfig.Id);
             var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData))
                 .ConfigureAwait(false);
