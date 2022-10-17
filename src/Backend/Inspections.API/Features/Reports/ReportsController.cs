@@ -126,8 +126,8 @@ namespace Inspections.API.Features.Reports
             {
                 photo.PhotoUrl = _photoRecordManager.GenerateSafeUrl(photo.FileName);
                 photo.ThumbnailUrl = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
-                photo.PhotoBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileName);
-                photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized);
+                // photo.PhotoBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileName);
+                // photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized);
             }
 
             if (!photos.Any()) return NoContent();
@@ -291,6 +291,7 @@ namespace Inspections.API.Features.Reports
             var exportData = new ExportDto(
                 $"{HttpContext.Request.Scheme}://{(isEnvHostPresent ? Environment.GetEnvironmentVariable("UIHOST") : HttpContext.Request.Host.Host)}:{Environment.GetEnvironmentVariable("UIPORT")}/{reportConfig.TemplateName}?id={id}&printPhotos={printPhotos.ToString().ToLowerInvariant()}&compoundedPhotoRecord=true&token={token}",
                 8, reportConfig.Id);
+            Console.WriteLine(JsonSerializer.Serialize(exportData));
             var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData))
                 .ConfigureAwait(false);
             return File(fileContent, "application/pdf", "prueba.pdf");

@@ -147,6 +147,7 @@ namespace Inspections.API
             services.AddTransient<IUserNameResolver, UserNameResolver>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped(typeof(PhotoRecordManager));
+            // services.AddSingleton<StorageDriver, FileSystem>();
             services.AddSingleton<StorageDriver, S3Storage>();
 
             services.AddScoped<ICheckListsRepository, CheckListsRepository>();
