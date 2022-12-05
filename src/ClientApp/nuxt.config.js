@@ -33,9 +33,9 @@ export default {
     '@nuxtjs/stylelint-module',
     '@nuxtjs/composition-api/module',
     '@nuxtjs/vuetify',
-    '@nuxtjs/tailwindcss',
     '@nuxt/image',
     '@nuxtjs/auth-next',
+    '@nuxt/postcss8',
     '@nuxtjs/pwa',
     '@nuxtjs/device',
     '@braid/vue-formulate/nuxt',
@@ -122,6 +122,12 @@ export default {
    ** Build configuration
    */
   build: {
+    postcss: {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
     transpile: [
       'vee-validate/dist/rules',
       'vuex-module-decorators',
