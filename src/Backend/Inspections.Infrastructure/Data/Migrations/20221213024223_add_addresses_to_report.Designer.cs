@@ -15,14 +15,14 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    [Migration("20220623163419_add_showcontextmenu_field")]
-    partial class add_showcontextmenu_field
+    [Migration("20221213024223_add_addresses_to_report")]
+    partial class add_addresses_to_report
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -63,6 +63,12 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("AddressLine2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("AttentionTo")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Company")
                         .HasColumnType("text");
 
                     b.Property<string>("Country")
@@ -529,6 +535,63 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.ToTable("Options");
                 });
 
+            modelBuilder.Entity("Inspections.Core.Domain.PowerAnalyzerReport", b =>
+                {
+                    b.Property<long>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("id"));
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("chartLegendOption")
+                        .HasColumnType("text");
+
+                    b.Property<string>("circuit")
+                        .HasColumnType("text");
+
+                    b.Property<ReportCover>("cover")
+                        .HasColumnType("jsonb");
+
+                    b.Property<DateTime?>("dateCreated")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("fileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("lastUpdate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("location")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("rawCsvData")
+                        .HasColumnType("text");
+
+                    b.Property<int>("template")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("updated")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("id");
+
+                    b.ToTable("PowerAnalyzerReport");
+                });
+
             modelBuilder.Entity("Inspections.Core.Domain.PrintSectionsAggregate.PrintSection", b =>
                 {
                     b.Property<int>("Id")
@@ -643,6 +706,15 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("UseCheckList")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("UseNotes")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("UsePhotoRecord")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.ToTable("ReportsConfiguration", "Inspections");
@@ -692,6 +764,9 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BaseURL")
+                        .HasColumnType("text");
+
                     b.Property<string>("FileName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -712,19 +787,19 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<string>("PhotoStorageId")
-                        .HasColumnType("text");
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("bytea");
 
-                    b.Property<string>("PhotoUrl")
+                    b.Property<string>("PhotoStorageId")
                         .HasColumnType("text");
 
                     b.Property<int>("ReportId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("ThumbnailStorageId")
-                        .HasColumnType("text");
+                    b.Property<byte[]>("Thumbnail")
+                        .HasColumnType("bytea");
 
-                    b.Property<string>("ThumbnailUrl")
+                    b.Property<string>("ThumbnailStorageId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -770,6 +845,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("NeedsPhotoRecord")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("RemarksLabelText")
                         .IsRequired()
@@ -905,6 +983,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<DateTimeOffset>("Date")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("DefaultResponsibleType")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Designation")
                         .HasColumnType("text");
 
@@ -940,6 +1021,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("UseLoggedInUserAsDefault")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -1044,6 +1128,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Signature")
+                        .HasColumnType("text");
+
                     b.HasKey("UserName");
 
                     b.ToTable("Users");
@@ -1139,7 +1226,7 @@ namespace Inspections.Infrastructure.Data.Migrations
             modelBuilder.Entity("Inspections.Core.Domain.Address", b =>
                 {
                     b.HasOne("Inspections.Core.Domain.EMALicense", "License")
-                        .WithMany()
+                        .WithMany("Addresses")
                         .HasForeignKey("LicenseId");
 
                     b.Navigation("License");
@@ -1267,6 +1354,11 @@ namespace Inspections.Infrastructure.Data.Migrations
             modelBuilder.Entity("Inspections.Core.Domain.CheckListAggregate.CheckList", b =>
                 {
                     b.Navigation("Checks");
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.EMALicense", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.ReportConfigurationAggregate.ReportConfiguration", b =>

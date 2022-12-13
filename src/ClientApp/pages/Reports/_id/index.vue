@@ -367,7 +367,7 @@
                                                     checkItem.checked == 3 &&
                                                     pageOptions.shouldShowRequired
                                                       ? 'error--text'
-                                                      : '',
+                                                      : ''
                                                   ]"
                                                 >
                                                   <h3>
@@ -383,7 +383,7 @@
                                                     checkItem.checked == 3 &&
                                                     pageOptions.shouldShowRequired
                                                       ? 'error--text'
-                                                      : '',
+                                                      : ''
                                                   ]"
                                                 >
                                                   <h3
@@ -675,7 +675,7 @@ import {
   defineComponent,
   useContext,
   useRoute,
-  useFetch,
+  useFetch
 } from '@nuxtjs/composition-api'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 // eslint-disable-next-line import/named
@@ -694,7 +694,7 @@ import {
   SignatureQueryResult,
   NoteQueryResult,
   AddressDto,
-  FormDefinitionResponse,
+  FormDefinitionResponse
 } from '@/services/api'
 import { useNotifications } from '~/composables/use-notifications'
 import useGoBack from '~/composables/useGoBack'
@@ -705,7 +705,7 @@ export default defineComponent({
   name: 'ReportForm',
   components: {
     ValidationObserver,
-    ValidationProvider,
+    ValidationProvider
   },
   setup() {
     useGoBack()
@@ -745,7 +745,7 @@ export default defineComponent({
       tabs: '',
       dialogClose: false,
       signaturesChanges: false,
-      search: '',
+      search: ''
     })
 
     const currentReport = ref<ReportQueryResult>({} as ReportQueryResult)
@@ -761,9 +761,9 @@ export default defineComponent({
           getSuggestedAddresses(''),
           usersStore.setUserLastEditedReport({
             userName: $auth.user.userName as string,
-            lastEditedReport: id.value,
+            lastEditedReport: id.value
           }),
-          $auth.fetchUser(),
+          $auth.fetchUser()
         ])
         forms.value = currentReport.value.forms || []
       } catch (error) {
@@ -780,8 +780,8 @@ export default defineComponent({
     const localAddress = computed((): AddressDto[] => {
       return [
         {
-          formatedAddress: currentReport.value.address,
-        } as AddressDto,
+          formatedAddress: currentReport.value.address
+        } as AddressDto
       ]
     })
 
@@ -902,7 +902,7 @@ export default defineComponent({
             title: 'Reports',
             message: 'Error while saving the report',
             type: 'error',
-            error,
+            error
           })
         } finally {
           pageOptions.savingNewReport = false
@@ -912,7 +912,7 @@ export default defineComponent({
       {
         debounce: 1000,
         maxWait: 5000,
-        deep: true,
+        deep: true
       } as WatchDebouncedOptions<true>
     )
 
@@ -937,7 +937,7 @@ export default defineComponent({
               remarks: signature.remarks,
               date: signature.date,
               principal: signature.principal,
-              drawnSign: signature.drawnSign,
+              drawnSign: signature.drawnSign
             }
             await $axios.$put(`signatures/${signature.id}`, command)
           })
@@ -946,7 +946,7 @@ export default defineComponent({
             title: 'Reports',
             message: 'Error while saving the report',
             type: 'error',
-            error,
+            error
           })
         } finally {
           pageOptions.savingNewReport = false
@@ -956,7 +956,7 @@ export default defineComponent({
       {
         debounce: 1000,
         maxWait: 5000,
-        deep: true,
+        deep: true
       } as WatchDebouncedOptions<true>
     )
 
@@ -965,7 +965,7 @@ export default defineComponent({
         reportId: currentReport.value.id,
         text: '',
         checked: false,
-        needsCheck: false,
+        needsCheck: false
       }
       await $axios
         .$post(`reports/${route.value.params.id}/note`, newNote)
@@ -978,7 +978,7 @@ export default defineComponent({
     const removeNote = async (note: NoteQueryResult) => {
       const delNote = {
         reportId: id,
-        id: note.id ?? 0,
+        id: note.id ?? 0
       }
       await $axios
         .delete(`reports/${delNote.reportId}/note/${delNote.id}`)
@@ -1022,7 +1022,7 @@ export default defineComponent({
         reportId: parseInt(route.value.params.id),
         id: note.id!,
         text: note.text!,
-        checked: note.checked!,
+        checked: note.checked!
       }
       $axios.put(`reports/${data.reportId}/note/${note.id}`, data)
     }
@@ -1035,7 +1035,7 @@ export default defineComponent({
         required: checkItem.required!,
         checked: checkItem.checked as unknown as CheckValue,
         editable: checkItem.editable!,
-        remarks: checkItem.remarks!,
+        remarks: checkItem.remarks!
       }
       await $axios.put(
         `checklists/${command.checkListId}/items/${checkItem.id}`,
@@ -1051,7 +1051,7 @@ export default defineComponent({
         address: currentReport.address ?? pageOptions.search,
         date: currentReport.date,
         licenseNumber: currentReport.licenseNumber,
-        isClosed: currentReport.isClosed,
+        isClosed: currentReport.isClosed
       }
       await $axios.put(`reports/${route.value.params.id}`, update)
       store.dispatch('hasPendingChanges', false)
@@ -1080,16 +1080,12 @@ export default defineComponent({
         notify({
           title: 'Report Details',
           defaultMessage: 'Error Updating Checklist',
-          error,
+          error
         })
       }
     }
 
     const setLicenseFromAddress = () => {
-      if (!currentReport.value.address) {
-        currentReport.value.licenseNumber = ''
-        return
-      }
       const addressData = addresses.value.filter(
         (a) => a.formatedAddress === currentReport.value.address
       )
@@ -1103,6 +1099,13 @@ export default defineComponent({
       }
     }
 
+    function checkAddress() {
+      if (!currentReport.value.address) {
+        return false
+      }
+      return true
+    }
+
     const closeReport = async () => {
       currentReport.value.isClosed = true
       await saveReportChanges(currentReport.value)
@@ -1114,6 +1117,10 @@ export default defineComponent({
     }
 
     const saveAndLoad = async () => {
+      if (!checkAddress()) {
+        alert('You must choose an address for the report')
+        return
+      }
       await saveReportChanges(currentReport.value)
       await loadReport()
     }
@@ -1168,9 +1175,9 @@ export default defineComponent({
       obsSignatures,
       signatures,
       forms,
-      saveFormValues,
+      saveFormValues
     }
-  },
+  }
 })
 </script>
 

@@ -44,7 +44,6 @@ public class InspectionsContext : DbContext
     public DbSet<Signature> Signatures { get; set; } = default!;
     public DbSet<User> Users { get; set; } = default!;
     public DbSet<Address> Addresses { get; set; } = default!;
-
     public DbSet<EMALicense> Licenses { get; set; } = default!;
 
     // public DbSet<OperationalReadings> OperationalReadings { get; set; } = default!;
@@ -79,7 +78,6 @@ public class InspectionsContext : DbContext
             modelBuilder.Entity(entityType.Name).Property<string>("LastEditUser").IsRequired().HasMaxLength(20);
         }
 
-
         modelBuilder.Entity<User>()
             .HasKey(p => p.UserName);
 
@@ -91,6 +89,16 @@ public class InspectionsContext : DbContext
         modelBuilder.Entity<User>()
             .Property(p => p.LastName).IsRequired().HasMaxLength(50);
 
+        modelBuilder.Entity<PhotoRecord>()
+            .HasKey(p => p.Id);
+
+        modelBuilder.Entity<PhotoRecord>()
+            .Property(p => p.Id)
+            .ValueGeneratedOnAdd();
+
+        // modelBuilder.Entity<Address>()
+        //     .Property(p => p.Company)
+        //     .IsRequired(false);
 
         modelBuilder.Entity<ResumenCheckList>().HasNoKey()
             .ToTable("ResumenCheckList", m => m.ExcludeFromMigrations());
@@ -98,7 +106,7 @@ public class InspectionsContext : DbContext
             .ToTable("ResumenReportConfiguration", m => m.ExcludeFromMigrations());
 
         modelBuilder.Entity<SchedJob>()
-            .HasKey(sj => new {sj.team, sj.date});
+            .HasKey(sj => new { sj.team, sj.date });
 
         modelBuilder.Entity<CostSheet>()
             .Property(p => p.id)
@@ -111,6 +119,21 @@ public class InspectionsContext : DbContext
         modelBuilder.Entity<CSTemplate>()
             .Property(p => p.id)
             .ValueGeneratedOnAdd();
+
+        // modelBuilder.Entity<Report>()
+        //     .HasOne(r => r.ReportAddress)
+        //     .WithMany(a => a.Reports)
+        //     .HasForeignKey(r => r.AddressId);
+
+        modelBuilder.Entity<Address>()
+            .HasOne(a => a.License)
+            .WithMany(l => l.Addresses)
+            .HasForeignKey(a => a.LicenseId);
+
+        // modelBuilder.Entity<EMALicense>()
+        //     .HasMany(l => l.Addresses)
+        //     .WithOne()
+        //     .HasForeignKey(a => a.LicenseId);
 
         base.OnModelCreating(modelBuilder);
     }

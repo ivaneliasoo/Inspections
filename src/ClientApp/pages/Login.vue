@@ -79,7 +79,7 @@ export default defineComponent({
       userName: '',
       password: '',
       loading: false,
-      hasError: false,
+      hasError: false
     })
 
     const { $auth } = useContext()
@@ -89,7 +89,6 @@ export default defineComponent({
       await $auth
         .login({ data: { userName: state.userName, password: state.password } })
         .catch((error) => {
-          console.log(error)
           state.hasError = true
 
           setTimeout(() => {
@@ -103,8 +102,8 @@ export default defineComponent({
 
     return {
       login,
-      state,
+      state
     }
-  },
+  }
 })
 </script>

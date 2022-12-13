@@ -10059,6 +10059,10 @@ export const ReportsApiFp = function (configuration?: Configuration) {
     > {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.apiReportsIdPhotorecordGet(id, options)
+      // console.log("BASE_PATH", BASE_PATH)
+      // console.log("localVarAxiosArgs", localVarAxiosArgs)
+      // console.log("globalAxios", globalAxios)
+      // console.log("configuration", configuration)
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,

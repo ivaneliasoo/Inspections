@@ -1,4 +1,5 @@
 ﻿using Amazon.S3;
+using Amazon.S3.Model;
 using Inspections.API.Models.Configuration;
 using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp;
@@ -41,7 +42,9 @@ namespace Inspections.API.ApplicationServices
 
             file.Position = 0;
             using Image img = await Image.LoadAsync(file).ConfigureAwait(false);
+            // Console.WriteLine("*** After Image.LoadAsync img {0}", img == null);
             var (width, height) = (img.Width / 4, img.Height / 4);
+            // Console.WriteLine("*** img.Width {0}, img.Height {1}", img.Width, img.Height);
             img.Mutate(i => i.Resize(width, height));
             await using var ms = new MemoryStream();
             await img.SaveAsJpegAsync(ms);
@@ -58,21 +61,53 @@ namespace Inspections.API.ApplicationServices
                 throw new InvalidDataException("Error while adding photo to storage");
             }
 
-            return new PhotoItemResult
+            // Console.WriteLine("*** photo.Path {0}", photo.Path);
+            var photoUrl = GenerateSafeUrl(photo.Path);
+            // if (photoUrl is null)
+            // {
+            //     Console.WriteLine("*** photoUrl is null");
+            // }
+
+            Console.WriteLine("*** thumbnail.Path {0}", thumbnail.Path);
+            var thumbnailUrl = GenerateSafeUrl(thumbnail.Path);
+            // if (thumbnailUrl is null)
+            // {
+            //     Console.WriteLine("*** thumbnailUrl is null");
+            // }
+
+            // Console.WriteLine("*** AddPhoto. Before return");
+            var result = new PhotoItemResult
             {
                 PhotoPath = photo.Path,
                 ThumbnailPath = thumbnail.Path,
                 PhotoStorageId = photo.CloudId,
                 ThumbnailStorageId = thumbnail.CloudId,
-                ThumbnailUrl = GenerateSafeUrl(thumbnail.Path),
-                PhotoUrl = GenerateSafeUrl(thumbnail.Path)
+                // ThumbnailUrl = GenerateSafeUrl(thumbnail.Path),
+                // PhotoUrl = GenerateSafeUrl(thumbnail.Path)
+                // PhotoUrl = GenerateSafeUrl(photo.Path)
+                ThumbnailUrl = thumbnailUrl,
+                PhotoUrl = photoUrl
             };
+            Console.WriteLine("*** AddPhoto. result is null {0}", result == null);
+            return result;
         }
 
         internal string GenerateSafeUrl(string photoPath)
         {
-            return _amazonS3.GeneratePreSignedURL(_options.Value.S3BucketName, photoPath, DateTime.Now.AddHours(2),
-                null);
+            Console.WriteLine("*** GenerateSafeUrl. photoPath {0}", photoPath);
+            Console.WriteLine("*** S3BucketName {0} ", _options.Value.S3BucketName);
+            GetPreSignedUrlRequest request = new GetPreSignedUrlRequest
+            {
+                BucketName = _options.Value.S3BucketName,
+                Key = photoPath,
+                Verb = Amazon.S3.HttpVerb.GET,
+                Expires = DateTime.Now.AddDays(1)
+            };
+            var url = _amazonS3.GetPreSignedURL(request);
+            // var url = _amazonS3.GeneratePreSignedURL(_options.Value.S3BucketName, photoPath, DateTime.Now.AddHours(15),
+            //     new Dictionary<string, Object>());
+            Console.WriteLine("*** GenerateSafeUrl. url {0}", url);
+            return url;
         }
 
         // internal async Task<string> GenerateAsBase64(string photoPath)
@@ -131,5 +166,7 @@ namespace Inspections.API.ApplicationServices
         public string ThumbnailPath { get; init; } = default!;
         public string? PhotoUrl { get; init; }
         public string? ThumbnailUrl { get; init; }
+        public byte[]? Photo { get; init; }
+        public byte[]? Thumbnail { get; init; }
     }
 }

@@ -9,6 +9,7 @@ using Inspections.Core.Domain.ReportConfigurationAggregate;
 using Inspections.Core.Domain.ReportsAggregate;
 using Inspections.Core.Interfaces.Repositories;
 using Inspections.Core.QueryModels;
+using Inspections.Core.Domain;
 using Inspections.Infrastructure.Data;
 using Inspections.Shared;
 using MediatR;
@@ -91,7 +92,64 @@ namespace Inspections.API.Features.Reports
             if (result is null)
                 return NoContent();
 
+            // var addresses = result.License.Addresses;
+            // Console.WriteLine("\n*** addresses[0].Company {0}\n", addresses[0].Company);
+
             return Ok(result);
+        }
+
+        [HttpGet("plain/{id:int}")]
+        [ProducesResponseType(typeof(ReportQueryResult), 200)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> GetPlainReport(int id)
+        {
+            var result = await _context.Reports.FindAsync(id);
+
+            if (result is null)
+                return NoContent();
+
+            return Ok(result);
+        }
+
+        // GET: api/report/addresses/5
+        [HttpGet("addresses/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<Address>> GetAddressesByLicense(int id)
+        {
+            Console.WriteLine("***GetAddresses");
+            //var address = await _context.Addresses.AsNoTracking().Where(a => a.LicenseId == id).Select(ad => new AddressDto(ad)).SingleOrDefaultAsync();
+            var addresses = await _context.Addresses.Where(a => a.LicenseId == id).ToListAsync();
+            Console.WriteLine("*** id {0}", id);
+            if (addresses == null)
+            {
+                return NotFound();
+            }
+            Console.WriteLine("*** address {0}", addresses[0].AddressLine);
+
+            return Ok(addresses);
+        }
+
+        // GET: api/report/addresses
+        [HttpGet("addresses")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<Address>> GetAddresses(int id)
+        {
+            Console.WriteLine("***GetAddresses");
+            //var address = await _context.Addresses.AsNoTracking().Where(a => a.LicenseId == id).Select(ad => new AddressDto(ad)).SingleOrDefaultAsync();
+            var addresses = await _context.Addresses.ToListAsync();
+            Console.WriteLine("*** id {0}", id);
+            if (addresses == null)
+            {
+                return NotFound();
+            }
+            Console.WriteLine("*** address {0}", addresses[0].AddressLine);
+
+            return Ok(addresses);
         }
 
         [HttpDelete("{id:int}")]
@@ -117,22 +175,70 @@ namespace Inspections.API.Features.Reports
             MapperConfiguration config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<PhotoRecord, PhotoRecordResult>()
-                    .ForMember(m=>m.Timestamp, d=>d.MapFrom(m=> EF.Property<DateTimeOffset>(m, "LastEdit")));
+                    .ForMember(m => m.Timestamp, d => d.MapFrom(m => EF.Property<DateTimeOffset>(m, "LastEdit")));
             });
             var photos = _context.Set<PhotoRecord>().ProjectTo<PhotoRecordResult>(config).Where(p => p.ReportId == id)
                 .ToList();
 
             foreach (var photo in photos)
             {
-                photo.PhotoUrl = _photoRecordManager.GenerateSafeUrl(photo.FileName);
-                photo.ThumbnailUrl = _photoRecordManager.GenerateSafeUrl(photo.FileNameResized);
-                // photo.PhotoBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileName);
-                // photo.ThumbnailBase64 = await _photoRecordManager.GenerateAsBase64(photo.FileNameResized);
+                photo.PhotoBase64 = photo.PhotoUrl;
+                photo.ThumbnailBase64 = photo.ThumbnailUrl;
+                // Console.WriteLine("*** photo.PhotoURL {0}", photo.PhotoUrl);
+                // Console.WriteLine("*** photo.PhotoBase64 {0}", photo.PhotoBase64);
+                // Console.WriteLine("*** photo.ThumbnailURL {0}", photo.ThumbnailUrl);
+                // Console.WriteLine("*** photo.ThumbnailBase64 {0}", photo.ThumbnailBase64);
             }
 
             if (!photos.Any()) return NoContent();
 
             return Ok(photos);
+        }
+
+        [HttpGet("{id}/photo")]
+        public async Task<ActionResult<PhotoRecord>> GetPhoto(int Id)
+        {
+            Console.WriteLine("*** GetPhoto {0}", Id);
+            //var product = await _context.PhotoRecord.FindAsync(id);
+            var photo = await _context.Set<PhotoRecord>().FindAsync(Id);
+
+            if (photo == null)
+            {
+                // Console.WriteLine("*** GetPhoto. PhotoRecord {0} not found", Id);
+                return NotFound();
+            }
+
+            Byte[]? b = photo.Photo;
+
+            if (b == null)
+            {
+                Console.WriteLine("*** GetPhoto. Column photo is null");
+                return NotFound();
+            }
+
+            Console.WriteLine("*** GetPhoto. Returning photo", Id);
+            return File(b, "image/jpeg");
+        }
+
+        [HttpGet("{id}/thumbnail")]
+        public async Task<ActionResult<PhotoRecord>> GetThumbnail(int Id)
+        {
+            //var product = await _context.PhotoRecord.FindAsync(id);
+            var photo = await _context.Set<PhotoRecord>().FindAsync(Id);
+
+            if (photo == null)
+            {
+                return NotFound();
+            }
+
+            Byte[]? b = photo.Thumbnail;
+
+            if (b == null)
+            {
+                return NotFound();
+            }
+
+            return File(b, "image/jpeg");
         }
 
         [HttpPost("{id:int}/photorecord")]
@@ -146,8 +252,20 @@ namespace Inspections.API.Features.Reports
             if (!request.Files.Any())
                 return BadRequest("can't find a file in the request");
 
-            var result = await _mediator.Send(new AddPhotoRecordCommand(id, request.Files, label))
+            // Console.WriteLine("Adding photo");
+            var baseUrl = HttpRequestExtensions.BaseUrl(Request);
+            // Console.WriteLine("");
+            // Console.WriteLine("*** Request.Scheme {0}", Request.Scheme);
+            // Console.WriteLine("*** Request.Host {0}", Request.Host);
+            // Console.WriteLine("*** Request.Host.Port {0}", Request.Host.Port);
+            // Console.WriteLine("*** Request.PathBase {0}", Request.PathBase);
+            // Console.WriteLine("*** Request.Path {0}", Request.Path);
+            // Console.WriteLine("*** baseUrl {0}", baseUrl);
+            // Console.WriteLine("");
+
+            var result = await _mediator.Send(new AddPhotoRecordCommand(id, request.Files, label, baseUrl))
                 .ConfigureAwait(false);
+            // Console.WriteLine("result", result);
             if (result)
                 return Ok();
 
@@ -187,7 +305,7 @@ namespace Inspections.API.Features.Reports
 
             return BadRequest();
         }
-        
+
         [HttpPut("{id:int}/forms/{idForm:int}", Name = nameof(UpdateForm))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -203,7 +321,7 @@ namespace Inspections.API.Features.Reports
             }
 
             result.SetValues(values);
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
             return Ok();
 
         }
@@ -295,6 +413,21 @@ namespace Inspections.API.Features.Reports
             var fileContent = await _mediator.Send(new ExportReportCommand(id, printPhotos, exportData))
                 .ConfigureAwait(false);
             return File(fileContent, "application/pdf", "prueba.pdf");
+        }
+    }
+
+    public static class HttpRequestExtensions
+    {
+        public static string? BaseUrl(this HttpRequest req)
+        {
+            if (req == null) return null;
+            var uriBuilder = new UriBuilder(req.Scheme, req.Host.Host, req.Host.Port ?? -1);
+            if (uriBuilder.Uri.IsDefaultPort)
+            {
+                uriBuilder.Port = -1;
+            }
+
+            return uriBuilder.Uri.AbsoluteUri;
         }
     }
 }

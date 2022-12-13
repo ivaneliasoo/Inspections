@@ -49,7 +49,7 @@
     "vue-flatpickr-component": "^8",
     "vue-image-compressor": "^1.0.3",
     "vue-papa-parse": "^2.0.0",
-    "vue-signature-pad": "3.0.2",
+    "vue-signature-pad": "^3.0.2",
     "vue2-editor": "^2.10.3",
     "vuedraggable": "^2.24.3"
   },

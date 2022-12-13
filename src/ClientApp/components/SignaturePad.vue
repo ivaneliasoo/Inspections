@@ -38,13 +38,17 @@
   </div>
 </template>
 <script>
+import Vue from 'vue'
+import VueSignaturePad from 'vue-signature-pad'
+Vue.use(VueSignaturePad)
+
 export default {
   name: 'SignaturePad',
   props: {
     savedData: {
       type: String,
-      default: () => undefined,
-    },
+      default: () => undefined
+    }
   },
   mounted() {
     if (this.savedData) {
@@ -66,7 +70,7 @@ export default {
     },
     loadSaved() {
       this.$refs.signaturePad.fromDataURL(this.savedData)
-    },
-  },
+    }
+  }
 }
 </script>

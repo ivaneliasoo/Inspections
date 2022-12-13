@@ -7,7 +7,7 @@
         itemsPerPageAllText: 'todos',
         showFirstLastPage: true,
         itemsPerPageText: 'Photos by page',
-        itemsPerPageOptions: [8, 16],
+        itemsPerPageOptions: [8, 16]
       }"
       :items-per-page.sync="state.itemsPerPage"
       no-results-text="No photos"
@@ -23,17 +23,29 @@
             lg="3"
           >
             <v-card>
-              <span class="tw-text-xs">{{ photo.timestamp }}</span>
+              <span class="tw-text-xs">{{
+                new Intl.DateTimeFormat('en-SG', {
+                  dateStyle: 'full',
+                  timeStyle: 'long'
+                }).format(new Date(photo.timestamp))
+              }}</span>
               <v-img
                 :src="`${photo.thumbnailUrl}`"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="200px"
               >
+                <!-- <v-img
+                :src="thumbnailUrl(photo.id)"
+                class="white--text align-end"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                height="200px"
+              > -->
                 <v-card-title class="text-uppercase">
                   {{ photo.label }}
                 </v-card-title>
               </v-img>
+              <!-- <span class="tw-text-xs">{{ photo.photoUrl }}</span> -->
               <v-card-actions>
                 <v-text-field
                   v-if="state.showLabelEdit.findIndex((l) => l === index) >= 0"
@@ -86,7 +98,7 @@
         <v-carousel-item
           v-for="(photo, index) in state.localPhotos"
           :key="index"
-          :src="`${photo.photoUrl}`"
+          :src="photo.photoUrl"
         />
       </v-carousel>
     </v-dialog>
@@ -98,28 +110,35 @@ import {
   useContext,
   useRoute,
   defineComponent,
-  reactive,
+  reactive
 } from '@nuxtjs/composition-api'
 import {
   DeletePhotoRecordCommand,
   PhotoRecord,
-  EditPhotoRecordCommand,
+  EditPhotoRecordCommand
 } from '~/types'
+
+const imageTypes = {
+  '/': 'jpg',
+  i: 'png',
+  R: 'gif',
+  U: 'webp'
+}
 
 export default defineComponent({
   model: {
     prop: 'photos',
-    event: 'input',
+    event: 'input'
   },
   props: {
     photos: {
       type: Array as () => PhotoRecord[] | undefined,
-      required: true,
+      required: true
     },
     reportId: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const { $axios } = useContext()
@@ -130,13 +149,13 @@ export default defineComponent({
       showLabelEdit: [],
       hostName: $axios!.defaults!.baseURL!.replace('/api', ''),
       itemsPerPage: 8,
-      localPhotos: [],
+      localPhotos: props.photos
     })
 
     const removePhoto = (id: number) => {
       const delPhoto: DeletePhotoRecordCommand = {
         reportId: props.reportId!,
-        id,
+        id
       }
       $axios
         .delete(`reports/${delPhoto.reportId}/photorecord/${delPhoto.id}`)
@@ -159,9 +178,35 @@ export default defineComponent({
       const data: EditPhotoRecordCommand = {
         reportId: parseInt(route.value.params.id),
         label: photo.label,
-        id: photo.id,
+        id: photo.id
       }
       $axios.put(`reports/${data.reportId}/photorecord/${data.id}`, data)
+    }
+
+    function imageType(image) {
+      return imageTypes[image.charAt(0)]
+    }
+
+    function imageHeader(image) {
+      const imgType = imageType(image)
+      // console.log('*** imageType', imgType)
+      return imageType ? `data:image/${imgType(image)};base64,` : null
+    }
+
+    // const printPhoto = (photo: PhotoRecord) => {
+    //   console.log('photo')
+    //   $axios.get(photo.photoUrl).then((r) => {
+    //     console.log('GET ${photo.photoUrl}')
+    //     console.log(r)
+    //   })
+    // }
+
+    const photoUrl = (id: Number) => {
+      return `${$axios!.defaults!.baseURL!}/reports/${id}/photo`
+    }
+
+    const thumbnailUrl = (id: Number) => {
+      return `${$axios!.defaults!.baseURL!}/reports/${id}/thumbnail`
     }
 
     return {
@@ -169,8 +214,11 @@ export default defineComponent({
       removePhoto,
       editPhotoLabel,
       savePhoto,
+      imageHeader,
+      photoUrl,
+      thumbnailUrl
     }
-  },
+  }
 })
 </script>
 

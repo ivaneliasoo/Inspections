@@ -6,11 +6,11 @@
         <!-- <h1 class="title">Inspection Report</h1> -->
         <h4 class="subtitle">INCIDENT REPORT</h4>
         <div class="direccion">
-          HSBC Institutional<br />
-          Trust Services (Singapore) Limited As Trustee of Sabana Reit<br />
-          151 Lorong Chuan #02-03<br />
-          New Tech Park<br />
-          Singapore 556741<br />
+          <!-- {{ JSON.stringify(report) }} -->
+          {{ addresses[0].company }}<br />
+          {{ addresses[0].addressLine }}<br />
+          {{ addresses[0].country }}
+          {{ addresses[0].postalCode }}<br />
         </div>
       </div>
     </header>
@@ -22,8 +22,8 @@
               v-model="htmlForm.IncidentDetails"
               :editor-options="{
                 modules: {
-                  toolbar: false,
-                },
+                  toolbar: false
+                }
               }"
             />
           </client-only>
@@ -47,6 +47,9 @@
                 <label>
                   {{ reportData.signatures[0].designation }}
                 </label>
+              </div>
+              <div style="margin-top: 40px">
+                <label> Remarks: {{ reportData.signatures[0].remarks }} </label>
               </div>
             </div>
           </div>
@@ -77,21 +80,36 @@ export default {
           : false
       const result = await $axios.$get(`reports/${id}`, {
         headers: {
-          Authorization: `bearer ${token}`,
-        },
+          Authorization: `bearer ${token}`
+        }
       })
+      const report = await $axios.$get(`reports/plain/${id}`, {
+        headers: {
+          Authorization: `bearer ${token}`
+        }
+      })
+      // const addresses = ''
+      const addresses = await $axios.$get(
+        `reports/addresses/${report.emaLicenseId}`,
+        {
+          headers: {
+            Authorization: `bearer ${token}`
+          }
+        }
+      )
+
       const photoRecords = await $axios.$get(`reports/${id}/photorecord`, {
         headers: {
-          Authorization: `bearer ${token}`,
-        },
+          Authorization: `bearer ${token}`
+        }
       })
 
       const configuration = await $axios.$get(
         `reportconfiguration/${result.reportConfigurationId}`,
         {
           headers: {
-            Authorization: `bearer ${token}`,
-          },
+            Authorization: `bearer ${token}`
+          }
         }
       )
 
@@ -101,6 +119,11 @@ export default {
       if (photoRecords && photoRecords.length) {
         let currentPage = 0
         photoRecords.forEach((photo, index) => {
+          photo.timestamp = new Intl.DateTimeFormat('en-SG', {
+            dateStyle: 'full',
+            timeStyle: 'long'
+          }).format(new Date(photo.timestamp))
+
           if (index > 0 && index % 8 === 0) {
             photoRecordsPages.push([])
             currentPage++
@@ -113,7 +136,7 @@ export default {
         if (pagesLength % 2 !== 0) {
           photoRecordsPages[currentPage].push({
             thumbnailBase64: '',
-            label: '',
+            label: ''
           })
         }
       }
@@ -134,6 +157,8 @@ export default {
         isPrintable: false,
         htmlForm,
         configuration,
+        addresses,
+        report
       }
     }
   },
@@ -142,7 +167,7 @@ export default {
       reportId: -1,
       reportData: {},
       photoRecords: [],
-      photoRecordsPages: [],
+      photoRecordsPages: []
     }
   },
   computed: {
@@ -157,12 +182,12 @@ export default {
         return this.reportData.checkLists.length
       }
       return 0
-    },
+    }
   },
   auth: false,
   mounted() {
     window.isPrintable = true
-  },
+  }
 }
 </script>
 

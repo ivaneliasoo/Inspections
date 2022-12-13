@@ -30,7 +30,9 @@ public class AddressesController : ControllerBase
                          EF.Functions.Like(ad.Unit, $"%{filter}%") ||
                          EF.Functions.Like(ad.Country, $"%{filter}%") ||
                          EF.Functions.Like(ad.PostalCode, $"%{filter}%") ||
-                         EF.Functions.Like(ad.License!.Number, $"%{filter}%"))
+                         EF.Functions.Like(ad.License!.Number, $"%{filter}%") ||
+                         EF.Functions.Like(ad.Company!, $"%{filter}%") ||
+                         EF.Functions.Like(ad.AttentionTo!, $"%{filter}%"))
             .Select(a => new AddressDto(a))
             .AsNoTracking()
             .ToListAsync()
@@ -56,6 +58,25 @@ public class AddressesController : ControllerBase
         return address;
     }
 
+    // GET: api/Addresses/5
+    [HttpGet("/bylicense/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<Address>> GetAddressByLicense(int id)
+    {
+        //var address = await _context.Addresses.AsNoTracking().Where(a => a.LicenseId == id).Select(ad => new AddressDto(ad)).SingleOrDefaultAsync();
+        var addresses = await _context.Addresses.Where(a => a.LicenseId == id).ToListAsync();
+        Console.WriteLine("*** id {0}", id);
+        if (addresses == null)
+        {
+            return NotFound();
+        }
+        Console.WriteLine("*** address {0}", addresses[0].AddressLine);
+
+        return Ok(addresses);
+    }
+
     // PUT: api/Addresses/5
     [HttpPut("{id}", Name = "UpdateAddress")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -72,18 +93,20 @@ public class AddressesController : ControllerBase
         }
 
         var savedAddress = await _context.Set<Address>().FindAsync(id).ConfigureAwait(false);
-            
+
         if (savedAddress == null)
         {
             return NotFound("address not found");
         }
-            
+
         savedAddress.AddressLine = address.AddressLine;
         savedAddress.AddressLine2 = address.AddressLine2;
         savedAddress.Unit = address.Unit;
         savedAddress.Country = address.Country;
         savedAddress.PostalCode = address.PostalCode;
         savedAddress.LicenseId = address.LicenseId;
+        savedAddress.Company = address.Company;
+        savedAddress.AttentionTo = address.AttentionTo;
 
         _context.Entry(savedAddress).State = EntityState.Modified;
 
@@ -156,6 +179,8 @@ public class AddressesController : ControllerBase
                                            e.AddressLine2 == address.AddressLine2 &&
                                            e.Unit == address.Unit &&
                                            e.Country == address.Country &&
-                                           e.PostalCode == address.PostalCode);
+                                           e.PostalCode == address.PostalCode &&
+                                           e.Company == address.Company &&
+                                           e.AttentionTo == address.AttentionTo);
     }
 }

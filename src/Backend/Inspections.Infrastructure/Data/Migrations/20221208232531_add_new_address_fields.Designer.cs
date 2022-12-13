@@ -15,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inspections.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InspectionsContext))]
-    [Migration("20220619020455_photorecord_in_report")]
-    partial class photorecord_in_report
+    [Migration("20221208232531_add_new_address_fields")]
+    partial class add_new_address_fields
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,6 +63,12 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("AddressLine2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("AttentionTo")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Company")
                         .HasColumnType("text");
 
                     b.Property<string>("Country")
@@ -521,9 +527,69 @@ namespace Inspections.Infrastructure.Data.Migrations
                     b.Property<int>("scheduleWeeks")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("showContextMenu")
+                        .HasColumnType("boolean");
+
                     b.HasKey("id");
 
                     b.ToTable("Options");
+                });
+
+            modelBuilder.Entity("Inspections.Core.Domain.PowerAnalyzerReport", b =>
+                {
+                    b.Property<long>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("id"));
+
+                    b.Property<DateTimeOffset>("LastEdit")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastEditUser")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("chartLegendOption")
+                        .HasColumnType("text");
+
+                    b.Property<string>("circuit")
+                        .HasColumnType("text");
+
+                    b.Property<ReportCover>("cover")
+                        .HasColumnType("jsonb");
+
+                    b.Property<DateTime?>("dateCreated")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("fileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("lastUpdate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("location")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("rawCsvData")
+                        .HasColumnType("text");
+
+                    b.Property<int>("template")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("updated")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("id");
+
+                    b.ToTable("PowerAnalyzerReport");
                 });
 
             modelBuilder.Entity("Inspections.Core.Domain.PrintSectionsAggregate.PrintSection", b =>
@@ -718,6 +784,9 @@ namespace Inspections.Infrastructure.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("bytea");
+
                     b.Property<string>("PhotoStorageId")
                         .HasColumnType("text");
 
@@ -726,6 +795,9 @@ namespace Inspections.Infrastructure.Data.Migrations
 
                     b.Property<int>("ReportId")
                         .HasColumnType("integer");
+
+                    b.Property<byte[]>("Thumbnail")
+                        .HasColumnType("bytea");
 
                     b.Property<string>("ThumbnailStorageId")
                         .HasColumnType("text");

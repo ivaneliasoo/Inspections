@@ -33,11 +33,11 @@ public class CreateInspectionHandler : IRequestHandler<CreateReportCommand, int>
         var cfg = await _reportConfigurationsRepository.GetByIdAsync(request.ConfigurationId).ConfigureAwait(false);
         var cfgForms = await _context.ReportConfigurations
             .AsNoTracking()
-            .SelectMany(c => c.Forms, (c, f) => new { c.Id, Forms =f })
+            .SelectMany(c => c.Forms, (c, f) => new { c.Id, Forms = f })
             .Where(s => s.Id == request.ConfigurationId)
             .Select(f => f.Forms)
             .ToListAsync(cancellationToken);
-        
+
         var reportName = $"{DateTime.Now:yyyyMMdd}-{cfg.Title}";
 
         var reportsBuilder = new ReportsBuilder(cfg, _userNameResolver.FullName);

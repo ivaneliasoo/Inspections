@@ -10,8 +10,14 @@
         lg="3"
       >
         <v-card>
-          <v-img
+          <!-- <v-img
             :src="`${photo.url}`"
+            class="white--text align-end"
+            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+            height="200px"
+          > -->
+          <v-img
+            :src="`${$axios.defaults.baseURL}/reports/${photo.id}/photo`"
             class="white--text align-end"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="200px"
@@ -63,33 +69,33 @@ import { defineComponent, computed, reactive } from '@nuxtjs/composition-api'
 export default defineComponent({
   model: {
     prop: 'urls',
-    event: 'input',
+    event: 'input'
   },
   props: {
     urls: {
       type: Array,
-      required: true,
+      required: true
     },
     files: {
       type: Array as () => File[],
-      required: true,
+      required: true
     },
     progress: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props, { emit }) {
     const state = reactive({
       showCarousel: false,
-      currentPhoto: 0,
+      currentPhoto: 0
     })
 
     const filesSync = computed({
       get: () => props.files,
       set: (files) => {
         emit('input', files)
-      },
+      }
     })
 
     const removePhoto = (id: number) => {
@@ -100,8 +106,8 @@ export default defineComponent({
     return {
       filesSync,
       removePhoto,
-      state,
+      state
     }
-  },
+  }
 })
 </script>

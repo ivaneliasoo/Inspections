@@ -1,4 +1,5 @@
-﻿using Inspections.Shared;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Inspections.Shared;
 
 namespace Inspections.Core.Domain;
 
@@ -13,4 +14,5 @@ public class EMALicense : Entity<int>
     public decimal Volt { get; set; }
     public decimal KVA { get; set; }
     public DateTimeRange Validity { get; set; } = default!;
+    public List<Address>? Addresses { get; set; }
 }

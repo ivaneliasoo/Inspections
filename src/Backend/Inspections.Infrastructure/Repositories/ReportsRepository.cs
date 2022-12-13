@@ -101,7 +101,7 @@ public class ReportsRepository : IReportsRepository
 
         return await query.AsNoTracking()
             .Where(r => (!myReports || EF.Property<string>(r, "LastEditUser").Contains(_userNameResolver.UserName)))
-            .Where (r => (EF.Functions.Like(r.Name, $"%{filter}%") || EF.Functions.Like(r.License!.Name, $"%{filter}%")))
+            .Where(r => (EF.Functions.Like(r.Name, $"%{filter}%") || EF.Functions.Like(r.License!.Name, $"%{filter}%")))
             .ProjectTo<ReportListItem>(config)
             .ToListAsync();
     }
@@ -121,13 +121,16 @@ public class ReportsRepository : IReportsRepository
     {
         try
         {
-            return await _context.Set<Report>()
+            var result = await _context.Set<Report>()
                 .Include("CheckList")
                 .Include("Signatures")
                 .Include("PhotoRecords")
                 .Include("Notes")
                 .Include("AvailableForms")
+                //.Include("License.Addresses")
                 .SingleOrDefaultAsync(r => r.Id == id) ?? throw new NotFoundException(id.ToString(), nameof(Report));
+
+            return result;
         }
         catch (Exception ex)
         {

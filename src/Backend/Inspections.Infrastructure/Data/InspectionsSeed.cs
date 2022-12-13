@@ -35,7 +35,7 @@ public class InspectionsSeed
             {
                 await context.Users.AddAsync(new User() { UserName = "developer", Password = "developer@@P@sword", Name = "Developer", LastName = "User", IsAdmin = true });
             }
-            
+
             if (!await context.Users.AnyAsync(u => u.UserName == "reports"))
             {
                 await context.Users.AddAsync(new User() { UserName = "reports", Password = "123456", Name = "Reports", LastName = "User", IsAdmin = true });
@@ -46,28 +46,32 @@ public class InspectionsSeed
                 await context.PrintSections.AddAsync(new PrintSection() { Code = "Inspection", Content = "<h1>Inspection</h1>", Description = "Inspection" });
             }
 
-            if (!(await context.Addresses.AnyAsync(a => a.Id == 1)))
+            var address = context.Addresses.Where(ad => ad.Id == 1).FirstOrDefault();
+            if (address is null)
             {
+                Console.WriteLine("\n***No default address. Inserting new default address\n");
                 await context.Addresses.AddAsync(new Address
                 {
-                    Country = "Singapore",
-                    Unit = "unit",
-                    AddressLine = "Some Sample Address",
+                    Id = 1,
+                    Company = "",
+                    Country = "",
+                    Unit = "",
+                    AddressLine = "Not Licensed",
                     License = new EMALicense
                     {
-                        Amp = 120,
-                        Contact = "Someone",
-                        Email = "someone@anotherone.com",
-                        Name = "Some Person or Company",
-                        Number = "E123456",
+                        Amp = 0,
+                        Contact = "",
+                        Email = "",
+                        Name = "Not Licensed",
+                        Number = "",
                         Validity = new DateTimeRange { Start = DateTime.Now, End = DateTime.Now.AddMonths(1) },
-                        Volt = 120,
-                        KVA = 120,
-                        PersonInCharge = "Some Powered Person" 
+                        Volt = 0,
+                        KVA = 0,
+                        PersonInCharge = ""
                     },
-                    PostalCode = "123456"
+                    PostalCode = ""
                 });
-                
+
                 await context.Addresses.AddAsync(new Address
                 {
                     Country = "Singapore",
@@ -83,10 +87,34 @@ public class InspectionsSeed
                         Validity = new DateTimeRange { Start = DateTime.Now, End = DateTime.Now.AddYears(1) },
                         Volt = 400,
                         KVA = 400,
-                        PersonInCharge = "Some Powered Person 2" 
+                        PersonInCharge = "Some Powered Person 2"
                     },
                     PostalCode = "654321"
                 });
+            }
+            else
+            {
+                Console.WriteLine("\n***Default address found. Updating\n");
+                address.Company = "";
+                address.Country = "";
+                address.Unit = "";
+                address.AddressLine = "Not Licensed";
+                address.PostalCode = "654321";
+                address.AttentionTo = "";
+                address.AddressLine2 = "";
+                if (address.License is not null)
+                {
+                    address.License.Amp = 0;
+                    address.License.Amp = 0;
+                    address.License.Contact = "";
+                    address.License.Email = "";
+                    address.License.Name = "Not Licensed";
+                    address.License.Number = "";
+                    address.License.Validity = new DateTimeRange { Start = DateTime.Now, End = DateTime.Now.AddMonths(1) };
+                    address.License.Volt = 0;
+                    address.License.KVA = 0;
+                    address.License.PersonInCharge = "";
+                }
             }
 
             await InspectionReportSeeder.CreateInspectionReportConfiguration(context, logger);
@@ -101,7 +129,7 @@ public class InspectionsSeed
                 var reader = File.OpenText(categoriesFilePath);
                 var categories = await reader.ReadToEndAsync();
 
-                Template t = new() {id = templateId, templateDef = categories};
+                Template t = new() { id = templateId, templateDef = categories };
 
                 await context.AddAsync(t);
             }
@@ -109,7 +137,7 @@ public class InspectionsSeed
             const int optionsId = 1;
             if (!await context.Options.AnyAsync(opt => opt.id == optionsId))
             {
-                Options opt = new Options {id = 1, scheduleWeeks = 1, autosaveInterval = 120};
+                Options opt = new Options { id = 1, scheduleWeeks = 1, autosaveInterval = 120 };
 
                 await context.AddAsync(opt);
             }
@@ -130,6 +158,7 @@ public class InspectionsSeed
                 };
                 await context.AddRangeAsync(teams);
             }
+
             await context.SaveChangesAsync();
         }
         catch (Exception ex)

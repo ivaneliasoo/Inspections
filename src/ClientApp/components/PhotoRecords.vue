@@ -69,7 +69,7 @@ import {
   computed,
   useContext,
   useFetch,
-  useRoute,
+  useRoute
 } from '@nuxtjs/composition-api'
 import PhotoRecordManager from '@/components/PhotoRecordManager.vue'
 import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
@@ -77,13 +77,13 @@ import PhotoRecordPreviewer from '@/components/PhotoRecordPreviewer.vue'
 export default defineComponent({
   components: {
     PhotoRecordPreviewer,
-    PhotoRecordManager,
+    PhotoRecordManager
   },
   props: {
     reportId: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props, { emit }) {
     const state = reactive({
@@ -96,7 +96,7 @@ export default defineComponent({
       percentCompleted: 0,
 
       testurl: '',
-      testurlproc: '',
+      testurlproc: ''
     })
 
     const { $reportsApi, $axios } = useContext()
@@ -125,7 +125,7 @@ export default defineComponent({
           state.percentCompleted = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
           )
-        },
+        }
       }
 
       for (let i = 0; i < state.files.length; i++) {
@@ -185,18 +185,19 @@ export default defineComponent({
       state,
       uploadFiles,
       showPreview,
-      source,
+      source
     }
-  },
+  }
 })
 </script>
 
 <style scoped>
-:deep(.input-file) {/* stylelint-disable-line */
+:deep(.input-file) {
   justify-content: center;
 }
 
-:deep(button.v-icon.notranslate.v-icon--link.mdi.mdi-camera.theme--light) {/* stylelint-disable-line */
+/* stylelint-disable-next-line */
+:deep(button.v-icon.notranslate.v-icon--link.mdi.mdi-camera.theme--light) {
   font-size: 58px;
 }
 </style>

@@ -35,7 +35,7 @@
               componentState.item = {
                 id: 0,
                 country: 'Singapore',
-                addressLine2: '',
+                addressLine2: ''
               }
             "
           >
@@ -56,7 +56,7 @@
                 <v-card-text>
                   <v-container>
                     <v-row align="center" justify="space-between">
-                      <v-col cols="12" md="6">
+                      <v-col cols="12" md="4">
                         <ValidationProvider
                           v-slot="{ errors }"
                           rules="required"
@@ -74,7 +74,23 @@
                           />
                         </ValidationProvider>
                       </v-col>
-                      <v-col cols="12" md="6">
+                      <v-col cols="12" md="4">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                        >
+                          <v-textarea
+                            v-model="componentState.item.company"
+                            autocomplete="nope"
+                            name="company"
+                            rows="1"
+                            :error-messages="errors"
+                            label="Company"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="4">
                         <ValidationProvider
                           v-slot="{ errors }"
                           rules="required"
@@ -132,6 +148,27 @@
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="space-between">
+                      <v-col cols="12" md="4">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          immediate
+                        >
+                          <v-textarea
+                            v-model="componentState.item.attentionTo"
+                            autocomplete="nope"
+                            name="attentionTo"
+                            rows="1"
+                            :error-messages="errors"
+                            label="Attention to"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        {{ componentState.item.licenseId }}
+                      </v-col>
+                    </v-row>
+                    <v-row align="center" justify="space-between">
                       <v-col>
                         <v-textarea
                           v-model="componentState.item.addressLine2"
@@ -163,7 +200,7 @@
                       componentState.item = {
                         id: 0,
                         country: 'Singapore',
-                        addressLine2: '',
+                        addressLine2: ''
                       }
                       componentState.dialog = false
                     "
@@ -220,7 +257,7 @@ import {
   useFetch,
   reactive,
   useContext,
-  defineComponent,
+  defineComponent
 } from '@nuxtjs/composition-api'
 import { AddressDto } from '@/types/Addresses'
 import { useAddressStore } from '~/composables/useAddressStore'
@@ -230,7 +267,7 @@ import useGoBack from '~/composables/useGoBack'
 export default defineComponent({
   components: {
     ValidationObserver,
-    ValidationProvider,
+    ValidationProvider
   },
   setup() {
     useGoBack()
@@ -243,38 +280,50 @@ export default defineComponent({
         text: 'ID',
         value: 'id',
         sortable: true,
-        align: 'left',
+        align: 'left'
+      },
+      {
+        text: 'Company',
+        value: 'company',
+        sortable: true,
+        align: 'left'
       },
       {
         text: 'Address',
         value: 'addressLine',
         sortable: true,
-        align: 'left',
+        align: 'left'
       },
       {
         text: 'Unit',
         value: 'unit',
         sortable: true,
-        align: 'left',
+        align: 'left'
       },
       {
         text: 'Country',
         value: 'country',
         sortable: true,
-        align: 'left',
+        align: 'left'
       },
       {
         text: 'Postal Code',
         value: 'postalCode',
         sortable: true,
-        align: 'left',
+        align: 'left'
+      },
+      {
+        text: 'Attention to',
+        value: 'attentionTo',
+        sortable: true,
+        align: 'left'
       },
       {
         text: '',
         value: 'actions',
         sortable: false,
-        align: 'left',
-      },
+        align: 'left'
+      }
     ]
 
     const componentState = reactive({
@@ -282,11 +331,11 @@ export default defineComponent({
       dialogRemove: false,
       loading: false,
       filter: {
-        filterText: '',
+        filterText: ''
       },
       selectedItem: {} as AddressDto,
       item: { principal: false },
-      isNew: false,
+      isNew: false
     })
 
     const isAdmin = computed(() => $auth.user.isAdmin)
@@ -308,9 +357,9 @@ export default defineComponent({
           Volt: 0,
           KVA: 0,
           validityStart: null,
-          validityEnd: null,
+          validityEnd: null
         },
-        ...licensesStore.licensesList,
+        ...licensesStore.licensesList
       ]
     })
 
@@ -321,7 +370,7 @@ export default defineComponent({
 
       await Promise.all([
         addressStore.getAddresses({}),
-        licensesStore.getLicenses({}),
+        licensesStore.getLicenses({})
       ])
     })
 
@@ -363,8 +412,8 @@ export default defineComponent({
       selectItem,
       addresses,
       licenses,
-      isAdmin,
+      isAdmin
     }
-  },
+  }
 })
 </script>
