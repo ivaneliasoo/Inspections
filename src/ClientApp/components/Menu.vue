@@ -59,62 +59,86 @@ export default defineComponent({
         name: 'LEW Licensing',
         parentName: '',
         route: '/lewlicensing',
-        icon: '',
+        icon: ''
       },
       {
         name: 'Reporting',
         parentName: '',
         route: '/',
-        icon: 'mdi-file',
+        icon: 'mdi-file'
       },
       {
         name: 'Power Analyzer Report',
         parentName: '',
         route: '/energyreport',
         icon: 'mdi-graph',
-        visible: !!($auth.user && $auth.user.userName === 'reports'),
+        visible: !!(
+          $auth.user &&
+          ($auth.user.userName === 'reports' ||
+            $auth.user.userName === 'leehanpin')
+        )
       },
       {
         name: 'Job Planner',
         parentName: '',
         route: '/jobplanner',
         icon: 'mdi-calendar',
-        visible: !!($auth.user && $auth.user.userName === 'reports'),
+        visible: !!(
+          $auth.user &&
+          ($auth.user.userName === 'reports' ||
+            $auth.user.userName === 'leehanpin')
+        )
       },
       {
         name: 'Cost Sheets',
         parentName: '',
         route: '/costsheets',
         icon: 'mdi-table-large',
-        visible: !!($auth.user && $auth.user.userName === 'reports'),
+        visible: !!(
+          $auth.user &&
+          ($auth.user.userName === 'reports' ||
+            $auth.user.userName === 'leehanpin')
+        )
       },
       {
         name: 'Risk Assessment',
         parentName: '',
         route: '',
         icon: '',
-        visible: !!($auth.user && $auth.user.userName === 'reports'),
+        visible: !!(
+          $auth.user &&
+          ($auth.user.userName === 'reports' ||
+            $auth.user.userName === 'leehanpin')
+        )
       },
       {
         name: 'Method of Statement',
         parentName: '',
         route: '',
         icon: '',
-        visible: !!($auth.user && $auth.user.userName === 'reports'),
+        visible: !!(
+          $auth.user &&
+          ($auth.user.userName === 'reports' ||
+            $auth.user.userName === 'leehanpin')
+        )
       },
       {
         name: 'Manpower Scheduling',
         parentName: '',
         route: '',
         icon: '',
-        visible: !!($auth.user && $auth.user.userName === 'reports'),
+        visible: !!(
+          $auth.user &&
+          ($auth.user.userName === 'reports' ||
+            $auth.user.userName === 'leehanpin')
+        )
       },
       {
         name: 'Master Setup',
         parentName: '',
         route: '/master',
-        icon: 'mdi-cog',
-      },
+        icon: 'mdi-cog'
+      }
     ]
 
     const defaultPage = '/'
@@ -132,8 +156,8 @@ export default defineComponent({
       menuDefinition,
       defaultPage,
       initials,
-      redirect,
+      redirect
     }
-  },
+  }
 })
 </script>
