@@ -21,7 +21,7 @@ public class DeleteReportCommandHandler : IRequestHandler<DeleteReportCommand, b
         this._photoManager = photoManager ?? throw new ArgumentNullException(nameof(photoManager));
         _settings = options?.Value ?? throw new ArgumentNullException(nameof(options));
     }
-    
+
     public async Task<bool> Handle(DeleteReportCommand request, CancellationToken cancellationToken)
     {
         Guard.Against.Null(request, nameof(request));
@@ -30,10 +30,10 @@ public class DeleteReportCommandHandler : IRequestHandler<DeleteReportCommand, b
         if (report is null)
             return false;
 
-        if (report.IsClosed)
-        {
-            return false;
-        }
+        // if (report.IsClosed)
+        // {
+        //     return false;
+        // }
 
         await _photoManager.RemovePhoto(Path.Combine(Directory.GetCurrentDirectory(), _settings.ReportsImagesFolder, report.Id.ToString(CultureInfo.InvariantCulture)));
         await _reportsRepository.DeleteAsync(report).ConfigureAwait(false);

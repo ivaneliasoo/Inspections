@@ -181,7 +181,7 @@ import {
   useFetch,
   useRoute,
   computed,
-  useRouter,
+  useRouter
 } from '@nuxtjs/composition-api'
 import { useReportsStore } from '~/composables/useReportsStore'
 import { Report } from '~/types'
@@ -194,32 +194,32 @@ export default defineComponent({
         text: 'Id',
         value: 'id',
         sortable: true,
-        align: 'center',
+        align: 'center'
       },
       {
         text: 'Date',
         value: 'date',
         sortable: true,
-        align: 'center',
+        align: 'center'
       },
       {
         text: 'Report Name',
         value: 'name',
         sortable: true,
-        align: 'left',
+        align: 'left'
       },
       {
         text: 'Completed With Signatures',
         value: 'isClosed',
         sortable: true,
-        align: 'center',
+        align: 'center'
       },
       {
         text: '',
         value: 'actions',
         sortable: false,
-        align: 'center',
-      },
+        align: 'center'
+      }
     ]
 
     const reportsStore = useReportsStore()
@@ -238,7 +238,7 @@ export default defineComponent({
       dialog: false,
       filter: '',
       showOnlyMyReports: false,
-      hostName: $axios!.defaults!.baseURL!.replace('/api', ''),
+      hostName: $axios!.defaults!.baseURL!.replace('/api', '')
     })
 
     useFetch(async () => {
@@ -249,7 +249,7 @@ export default defineComponent({
         closed: route.value.query.closed,
         orderBy: 'date',
         myreports: state.showOnlyMyReports,
-        descending: true,
+        descending: true
       })
 
       state.loading = false
@@ -307,11 +307,11 @@ export default defineComponent({
       headers,
       router,
       route,
-      isAdmin,
+      isAdmin
     }
   },
   head: {
-    title: 'Reports List',
-  },
+    title: 'Reports List'
+  }
 })
 </script>

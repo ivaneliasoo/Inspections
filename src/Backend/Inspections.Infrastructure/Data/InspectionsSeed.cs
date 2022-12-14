@@ -49,7 +49,6 @@ public class InspectionsSeed
             var address = context.Addresses.Where(ad => ad.Id == 1).FirstOrDefault();
             if (address is null)
             {
-                Console.WriteLine("\n***No default address. Inserting new default address\n");
                 await context.Addresses.AddAsync(new Address
                 {
                     Id = 1,
@@ -91,30 +90,6 @@ public class InspectionsSeed
                     },
                     PostalCode = "654321"
                 });
-            }
-            else
-            {
-                Console.WriteLine("\n***Default address found. Updating\n");
-                address.Company = "";
-                address.Country = "";
-                address.Unit = "";
-                address.AddressLine = "Not Licensed";
-                address.PostalCode = "654321";
-                address.AttentionTo = "";
-                address.AddressLine2 = "";
-                if (address.License is not null)
-                {
-                    address.License.Amp = 0;
-                    address.License.Amp = 0;
-                    address.License.Contact = "";
-                    address.License.Email = "";
-                    address.License.Name = "Not Licensed";
-                    address.License.Number = "";
-                    address.License.Validity = new DateTimeRange { Start = DateTime.Now, End = DateTime.Now.AddMonths(1) };
-                    address.License.Volt = 0;
-                    address.License.KVA = 0;
-                    address.License.PersonInCharge = "";
-                }
             }
 
             await InspectionReportSeeder.CreateInspectionReportConfiguration(context, logger);

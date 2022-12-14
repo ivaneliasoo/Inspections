@@ -49,7 +49,7 @@ namespace Inspections.API
                     .UseUrls("http://0.0.0.0:5000")
                     //.UseUrls("https://0.0.0.0:443", "http://0.0.0.0:80", "https://0.0.0.0:5001", "http://0.0.0.0:5000")
 #endif
-                    
+
                     .UseStartup<Startup>();
                 });
     }

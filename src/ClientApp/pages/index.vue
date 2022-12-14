@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <alert-dialog
+    <alert-dialog
       v-model="componentState.dialogRemove"
       title="Remove Reports"
       message="This operation will remove this report and all data related"
@@ -8,7 +8,7 @@
       :description="componentState.selectedItem.name"
       @yes="deleteReport()"
       @no="componentState.dialogRemove = false"
-    /> -->
+    />
     <v-row>
       <new-report-dialog
         v-model="componentState.dialog"
@@ -95,7 +95,7 @@
         <v-tooltip top>
           <template #activator="{ on }">
             <v-icon
-              :disabled="item.isClosed"
+              :disabled="!isAdmin && item.isClosed"
               color="error"
               v-on="on"
               @click="
@@ -143,7 +143,7 @@ import {
   reactive,
   computed,
   useFetch,
-  useRoute,
+  useRoute
 } from '@nuxtjs/composition-api'
 import { Report } from '~/types'
 import { useReportsStore } from '~/composables/useReportsStore'
@@ -156,31 +156,31 @@ export default defineComponent({
         text: 'Date',
         value: 'date',
         sortable: true,
-        align: 'center',
+        align: 'center'
       },
       {
         text: 'Location',
         value: 'address',
         sortable: true,
-        align: 'left',
+        align: 'left'
       },
       {
         text: 'Report Type',
         value: 'title',
         sortable: true,
-        align: 'left',
+        align: 'left'
       },
       {
         text: '',
         value: 'actions',
         sortable: false,
-        align: 'center',
-      },
+        align: 'center'
+      }
     ]
 
     const reportsStore = useReportsStore()
 
-    const { $axios: axios } = useContext()
+    const { $auth, $axios: axios } = useContext()
 
     const route = useRoute()
     const router = useRouter()
@@ -193,7 +193,7 @@ export default defineComponent({
       selectedItem: { id: 0 },
       filter: '',
       showOnlyMyReports: false,
-      hostName: axios!.defaults!.baseURL!.replace('/api', ''),
+      hostName: axios!.defaults!.baseURL!.replace('/api', '')
     })
 
     const selectItem = (item: Report): void => {
@@ -254,11 +254,13 @@ export default defineComponent({
         closed: route.value.query.closed,
         orderBy: 'date',
         myreports: componentState.showOnlyMyReports,
-        descending: true,
+        descending: true
       })
 
       componentState.loading = false
     })
+
+    const isAdmin = computed(() => $auth.user.isAdmin)
 
     return {
       headers,
@@ -273,8 +275,9 @@ export default defineComponent({
       componentState,
       router,
       route,
+      isAdmin
     }
-  },
+  }
 })
 </script>
 
